@@ -1,0 +1,16 @@
+# Build output and deps are produced on Vercel, not uploaded.
+.next
+node_modules
+
+# Local-only tooling and notes that need not ship.
+scratch
+tests
+mobile
+docs
+*.log
+
+# Never upload credentials. The Admin SDK key grants full project access and is
+# only used by local scripts; the app itself uses the public NEXT_PUBLIC_* config.
+*-firebase-adminsdk-*.json
+service-account*.json
+.env.local

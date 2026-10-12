@@ -1,0 +1,28 @@
+rules_version = '2';
+
+// Listing photos. Every file here has already passed the checks in
+// src/lib/photo-intake.ts and been re-encoded to JPEG by the browser. These
+// rules cannot re-run those checks; they bound what a client that skips the
+// wizard can store, and moderation is the backstop for the rest.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /listing-photos/{ownerId}/{photoId} {
+      // Public: listing photos are shown to every visitor. Paths carry a
+      // random UUID, so draft photos are not discoverable by listing them.
+      allow read: if true;
+      allow create: if request.auth != null
+        && request.auth.uid == ownerId
+        && photoId.matches('[0-9a-f-]{36}\\.jpg')
+        && request.resource.contentType == 'image/jpeg'
+        && request.resource.size < 10 * 1024 * 1024;
+      // Replacing a checked photo in place would bypass the checks.
+      allow update: if false;
+      allow delete: if request.auth != null
+        && (request.auth.uid == ownerId || request.auth.token.role == 'admin');
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

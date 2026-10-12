@@ -1,0 +1,991 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+@import "leaflet.markercluster/dist/MarkerCluster.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   Dynasty property map (Leaflet)
+   Leaflet ships its own chrome; these overrides make it read as part of the
+   site rather than a default OpenStreetMap widget.
+--------------------------------------------------------------------------- */
+.leaflet-container {
+  background: transparent;
+  font-family: inherit;
+  border-radius: 26px;
+}
+
+/* OSM has no dark basemap and keyless dark providers no longer exist, so the
+   tiles themselves are filtered. Only the tile pane is touched, leaving our
+   markers, popups and controls at their true colours. */
+[data-map-theme="dark"] .leaflet-tile-pane {
+  filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.88) saturate(0.7);
+}
+
+/* Crosshair while a radius/draw tool is armed. */
+[data-drawing="true"],
+[data-drawing="true"] .leaflet-grab,
+[data-drawing="true"] .leaflet-interactive {
+  cursor: crosshair !important;
+}
+
+/* Price pins are absolutely placed by Leaflet; centre them on their point. */
+.dyn-pin-wrap,
+.dyn-cluster-wrap {
+  background: transparent !important;
+  border: 0 !important;
+}
+/* Leaflet.markercluster ships default blue bubbles; ours are drawn in the
+   divIcon above, so the stock chrome is removed. */
+.marker-cluster,
+.marker-cluster div {
+  background: transparent !important;
+  border-radius: 9999px;
+}
+.dyn-pin {
+  transform-origin: bottom center;
+  translate: -50% -100%;
+  cursor: pointer;
+}
+
+/* Glass popup matching the site's card treatment. */
+.dyn-popup .leaflet-popup-content-wrapper {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid rgb(255 255 255 / 0.85);
+  background: rgb(255 255 255 / 0.97);
+  box-shadow: 0 18px 40px rgb(15 23 42 / 0.22);
+  backdrop-filter: blur(16px);
+}
+.dyn-popup .leaflet-popup-content {
+  margin: 0;
+  width: auto !important;
+}
+.dyn-popup .leaflet-popup-tip {
+  background: rgb(255 255 255 / 0.97);
+}
+.dyn-popup a {
+  text-decoration: none;
+}
+
+.leaflet-control-zoom a {
+  border-radius: 10px !important;
+  color: #0f172a !important;
+  border-color: rgb(255 255 255 / 0.8) !important;
+}
+.leaflet-control-attribution {
+  background: rgb(255 255 255 / 0.7) !important;
+  font-size: 9px !important;
+  border-radius: 8px 0 0 0;
+}
+
+:where(.dark) .dyn-popup .leaflet-popup-content-wrapper,
+:where(.dark) .dyn-popup .leaflet-popup-tip {
+  background: rgb(12 26 28 / 0.97);
+  border-color: rgb(255 255 255 / 0.12);
+}
+:where(.dark) .leaflet-control-zoom a {
+  background: #0c1a1c !important;
+  color: #e2e8f0 !important;
+  border-color: rgb(255 255 255 / 0.12) !important;
+}
+:where(.dark) .leaflet-control-attribution {
+  background: rgb(12 26 28 / 0.75) !important;
+  color: #94a3b8 !important;
+}
+
+:root {
+  --background: #dce4e3;
+  --foreground: #0f172a;
+  --obsidian-bg: #0b0f10;
+  --obsidian-surface: rgba(17, 22, 24, 0.75);
+  --obsidian-border: rgba(255, 255, 255, 0.12);
+  --obsidian-emerald: #10b981;
+  --obsidian-emerald-glow: rgba(16, 185, 129, 0.25);
+  --obsidian-champagne: #c5a059;
+  --obsidian-champagne-light: #f5e6be;
+  
+  /* Brand Teal Jewel Accents */
+  --brand-teal-deep: #0b4d4e;
+  --brand-teal-hover: #07393a;
+  --brand-teal-glow: rgba(11, 77, 78, 0.25);
+
+  /* Height of the fixed mobile tab bar, excluding the safe-area inset it adds
+     below itself. Page-level sticky bars sit on top of this rather than
+     underneath it — the property page's action bar was previously covered for 59
+     of its 69 pixels, hiding the price and the enquiry CTA on every phone.
+     Anything pinned above the tab bar must offset by this plus the inset.
+     Declared once so the two cannot drift apart. Has no effect at lg and above,
+     where the tab bar is hidden. */
+  --dyn-mobile-nav-h: 59px;
+}
+
+.dark {
+  --background: #081012;
+  --foreground: #f1fdf9;
+  --obsidian-bg: #050b0c;
+  --obsidian-surface: rgba(10, 20, 22, 0.85);
+  --obsidian-border: rgba(20, 184, 166, 0.15);
+  --obsidian-emerald: #10b981;
+  --obsidian-emerald-glow: rgba(16, 185, 129, 0.35);
+  --obsidian-champagne: #d4af37;
+  --obsidian-champagne-light: #faecc7;
+  
+  --brand-teal-deep: #0d5f61;
+  --brand-teal-hover: #117375;
+  --brand-teal-glow: rgba(16, 185, 129, 0.35);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Dynasty champagne — the brand's second accent, beside the teal. The muted
+     metallic already in the identity (--obsidian-champagne), as a full scale so
+     it can be used as a real accent rather than as one-off hex. Centred so
+     champagne-400 is that exact token.
+
+     Used for the resilience rail on map markers. Deliberately NOT a replacement
+     for Tailwind's amber everywhere: amber still marks warnings and validation,
+     which is a universal convention rather than a borrowed one. */
+  --color-champagne-50: #fbf6ea;
+  --color-champagne-100: #f5e6be;
+  --color-champagne-200: #ead4a0;
+  --color-champagne-300: #dabd7b;
+  --color-champagne-400: #c5a059;
+  --color-champagne-500: #b18a46;
+  --color-champagne-600: #96723a;
+  --color-champagne-700: #785a2f;
+  --color-champagne-800: #5b4425;
+  --color-champagne-900: #40301a;
+  --color-champagne-950: #281e10;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Modern Luxury Select Styling: eliminates raw OS appearance across all browsers */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2.5' stroke='%230b4d4e'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E");
+  background-position: right 12px center;
+  background-repeat: no-repeat;
+  background-size: 14px 14px;
+  padding-right: 36px !important;
+  cursor: pointer;
+  transition: border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, transform 0.15s ease;
+}
+
+select:hover {
+  border-color: #059669 !important;
+  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.35), 0 0 16px rgba(16, 185, 129, 0.28) !important;
+}
+
+select:focus {
+  outline: none;
+  border-color: #0b4d4e !important;
+  box-shadow: 0 0 0 3px rgba(11, 77, 78, 0.2), 0 0 20px rgba(16, 185, 129, 0.35) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2.5' stroke='%23059669'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E");
+}
+
+select option {
+  background-color: #ffffff;
+  color: #0f172a;
+  padding: 10px 14px;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.dark select {
+  background-color: #0c181a;
+  color: #f1fdf9;
+  border-color: rgba(255, 255, 255, 0.15);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2.5' stroke='%2334d399'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E");
+}
+
+.dark select:hover {
+  border-color: #34d399 !important;
+  box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.45), 0 0 20px rgba(52, 211, 153, 0.35) !important;
+}
+
+.dark select:focus {
+  border-color: #34d399 !important;
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.25), 0 0 24px rgba(52, 211, 153, 0.45) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2.5' stroke='%236ee7b7'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E");
+}
+
+.dark select option {
+  background-color: #0c181a;
+  color: #f1fdf9;
+  padding: 10px 14px;
+}
+
+/* Google Maps Dark Mode Theme */
+.dark .google-map-iframe {
+  filter: invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+::selection {
+  background: rgba(16, 185, 129, 0.25);
+  color: #0f172a;
+}
+
+.dark ::selection {
+  background: rgba(16, 185, 129, 0.4);
+  color: #ffffff;
+}
+
+/* Obsidian Glass Design System Utility Classes */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 16px 36px rgba(36, 48, 50, 0.08);
+}
+
+.dark .glass-panel {
+  background: rgba(10, 20, 23, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.48);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 12px 30px rgba(36, 48, 50, 0.06);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+
+.dark .glass-card {
+  background: rgba(12, 24, 28, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 42px rgba(36, 48, 50, 0.12);
+}
+
+.dark .glass-card:hover {
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.5), 0 0 20px rgba(16, 185, 129, 0.12);
+  border-color: rgba(20, 184, 166, 0.3);
+}
+
+.glass-dark {
+  background: rgba(11, 15, 16, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f8fafc;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.35);
+}
+
+.dark .glass-dark {
+  background: rgba(6, 14, 16, 0.92);
+  border: 1px solid rgba(20, 184, 166, 0.2);
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dark .glass-input {
+  background: rgba(9, 19, 22, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f1fdf9;
+}
+
+.glass-input:focus {
+  outline: none;
+  border-color: var(--obsidian-emerald);
+  box-shadow: 0 0 0 3px var(--obsidian-emerald-glow);
+}
+
+.emerald-glow {
+  box-shadow: 0 0 24px var(--obsidian-emerald-glow);
+}
+
+.champagne-badge {
+  background: linear-gradient(135deg, rgba(197, 160, 89, 0.2), rgba(245, 230, 190, 0.3));
+  border: 1px solid rgba(197, 160, 89, 0.4);
+  color: #8c6d23;
+}
+
+.dark .champagne-badge {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(250, 236, 199, 0.1));
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: #f5e6be;
+}
+
+/* ==========================================================================
+   Aurora Silk — ambient hero backdrop
+   Slow-drifting emerald light fields with cursor parallax, silk sheen and grain.
+   ========================================================================== */
+
+/* Performance contract for this whole block: no filter, no blend mode and no
+   mask anywhere in the aurora. Each of those forces the compositor to
+   re-rasterize a large area every frame, and measured together they cost more
+   than half the frame budget while the cursor moves. Softness comes from the
+   gradient stops instead, which rasterize once and then only get translated. */
+.aurora {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Paused by IntersectionObserver once the hero scrolls out of view, so the
+   rest of the page never competes with animation it cannot even show. */
+.aurora--paused .aurora__orb,
+.aurora--paused .aurora__silk {
+  animation-play-state: paused;
+}
+
+/* Cursor parallax wrapper. Orb keyframes live on the child so the two
+   transforms never fight over the same property. */
+.aurora__parallax {
+  position: absolute;
+  inset: 0;
+  transform: translate3d(
+    calc(var(--px, 0) * var(--depth, 12) * 1px),
+    calc(var(--py, 0) * var(--depth, 12) * 1px),
+    0
+  );
+  will-change: transform;
+}
+
+.aurora__orb {
+  position: absolute;
+  border-radius: 9999px;
+  will-change: transform;
+}
+
+/* Many closely-spaced stops stand in for the blur that used to soften these:
+   a multi-stop gradient is rasterized once and costs nothing to move. */
+.aurora__orb--emerald {
+  left: -6%;
+  top: -22%;
+  width: 58%;
+  height: 128%;
+  background: radial-gradient(
+    closest-side circle at 50% 50%,
+    rgba(16, 185, 129, 0.26) 0%,
+    rgba(16, 185, 129, 0.22) 22%,
+    rgba(16, 185, 129, 0.15) 42%,
+    rgba(16, 185, 129, 0.08) 60%,
+    rgba(16, 185, 129, 0.03) 78%,
+    rgba(16, 185, 129, 0) 100%
+  );
+  animation: aurora-drift-a 23s ease-in-out infinite;
+}
+
+.aurora__orb--teal {
+  right: -10%;
+  top: -14%;
+  width: 52%;
+  height: 118%;
+  background: radial-gradient(
+    closest-side circle at 50% 50%,
+    rgba(13, 148, 136, 0.22) 0%,
+    rgba(20, 168, 156, 0.18) 24%,
+    rgba(45, 212, 191, 0.12) 46%,
+    rgba(45, 212, 191, 0.06) 66%,
+    rgba(13, 148, 136, 0.02) 82%,
+    rgba(13, 148, 136, 0) 100%
+  );
+  animation: aurora-drift-b 31s ease-in-out infinite;
+}
+
+.aurora__orb--deep {
+  left: 24%;
+  bottom: -46%;
+  width: 62%;
+  height: 104%;
+  background: radial-gradient(
+    closest-side circle at 50% 50%,
+    rgba(6, 95, 70, 0.18) 0%,
+    rgba(5, 130, 90, 0.14) 26%,
+    rgba(5, 150, 105, 0.09) 48%,
+    rgba(5, 150, 105, 0.045) 68%,
+    rgba(6, 95, 70, 0.015) 84%,
+    rgba(6, 95, 70, 0) 100%
+  );
+  animation: aurora-drift-c 39s ease-in-out infinite;
+}
+
+/* Champagne brand accent — small and low opacity, just enough that the hero
+   is not a flat wash of green. */
+.aurora__orb--champagne {
+  right: 14%;
+  bottom: -18%;
+  width: 26%;
+  height: 58%;
+  background: radial-gradient(
+    closest-side circle at 50% 50%,
+    rgba(197, 160, 89, 0.2) 0%,
+    rgba(214, 186, 128, 0.15) 26%,
+    rgba(245, 230, 190, 0.09) 50%,
+    rgba(245, 230, 190, 0.04) 70%,
+    rgba(197, 160, 89, 0.012) 86%,
+    rgba(197, 160, 89, 0) 100%
+  );
+  animation: aurora-drift-d 27s ease-in-out infinite;
+}
+
+/* A single broad sheen traversing the panel — the "silk" highlight. */
+.aurora__silk {
+  position: absolute;
+  inset: -30% -60%;
+  background: linear-gradient(
+    104deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.5) 47%,
+    rgba(236, 253, 245, 0.34) 52%,
+    transparent 61%
+  );
+  opacity: 0.22;
+  animation: aurora-sheen 26s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  will-change: transform;
+}
+
+/* Fine film grain. Removes the plasticky look of pure CSS gradients. */
+.aurora__grain {
+  position: absolute;
+  inset: 0;
+  /* Plain alpha rather than overlay blending: a blend mode across a layer this
+     large forces a re-composite of the whole hero on every frame. */
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes aurora-drift-a {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  34% {
+    transform: translate3d(9%, 7%, 0);
+  }
+  67% {
+    transform: translate3d(-5%, -6%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes aurora-drift-b {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  38% {
+    transform: translate3d(-11%, 9%, 0);
+  }
+  72% {
+    transform: translate3d(6%, -8%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes aurora-drift-c {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  45% {
+    transform: translate3d(12%, -10%, 0);
+  }
+  78% {
+    transform: translate3d(-9%, 4%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes aurora-drift-d {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  40% {
+    transform: translate3d(-16%, -14%, 0);
+  }
+  74% {
+    transform: translate3d(10%, 6%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes aurora-sheen {
+  0% {
+    transform: translate3d(-34%, 0, 0);
+  }
+  50% {
+    transform: translate3d(34%, 0, 0);
+  }
+  100% {
+    transform: translate3d(-34%, 0, 0);
+  }
+}
+
+/* Dwell indicator for the property hero slideshow. Driven by a keyed element so
+   it restarts on every advance; transform is used rather than width so it runs
+   on the compositor and cannot cause layout. */
+@keyframes dyn-dwell {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ==========================================================================
+   Readable type floor — mobile only
+   ========================================================================== */
+
+/* The audit counted 201 sub-12px font declarations: 122 × text-[10px], 60 ×
+   text-[11px], 18 × text-[9px]. Much of that is not decoration — it is property
+   specs, feature chips and labels carrying real meaning. At arm's length on a
+   phone, 9–10px is not readable for most adults over about forty, which is the
+   core buying demographic rather than an edge case.
+
+   Raising the three offending utilities in one place beats editing 201 call
+   sites: it cannot be missed, and it cannot drift as new markup is written.
+   Deliberately unlayered so it beats Tailwind's utility layer, and capped below
+   `lg` so the desktop view is untouched.
+
+   9px is used only for decorative micro-labels that have an accessible name
+   anyway, so it lifts to 11 rather than 12 — enough to read, not enough to
+   change the composition. */
+@media (max-width: 1023.98px) {
+  .text-\[9px\] {
+    font-size: 11px;
+  }
+
+  .text-\[10px\],
+  .text-\[11px\] {
+    font-size: 12px;
+  }
+}
+
+/* ==========================================================================
+   Touch target floor — mobile only
+   ========================================================================== */
+
+/* Expands a control's hit area to 44×44 without changing how it looks.
+   The audit measured 108 of 141 interactive elements on the homepage below
+   44×44, which is the accepted floor (WCAG 2.5.5 and both platform
+   guidelines). Inflating them visually would coarsen a deliberately compact
+   interface, so the pseudo-element grows the touchable region instead and the
+   rendered control is untouched.
+
+   Scoped below `lg` on purpose: a mouse is precise and does not need it, and
+   the constraint on this work is that the desktop view does not change.
+
+   Apply to controls with clear space around them. Do NOT apply inside tightly
+   packed rows — carousel dots, for instance — where the expanded areas would
+   overlap and steal each other's taps. */
+/* This helper does NOT set `position` — the caller must already establish a
+   positioning context, either `relative` or `absolute`, or the pseudo-element
+   will anchor to the nearest positioned ancestor instead of the control.
+   Setting it here is the obvious-looking approach and it is wrong: Tailwind 4
+   emits its utilities inside a cascade layer, and unlayered CSS beats layered
+   CSS no matter the specificity, so a `position: relative` here silently
+   overrode `absolute` on the card carousel arrows and dropped them into the
+   content flow. `:where()` does not rescue it either, because layer order
+   decides before specificity does. */
+@media (max-width: 1023.98px) {
+  .tap-44::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max(100%, 44px);
+    height: max(100%, 44px);
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The slideshow does not autoplay under reduced motion, but if the bar is ever
+     rendered it must not animate either. */
+  [style*="dyn-dwell"] {
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   Frosted emerald glass headline with cursor-tracked specular sweep
+   ========================================================================== */
+
+.hh {
+  position: relative;
+  z-index: 10;
+}
+
+.hh__inner {
+  --mx: 50%;
+  --my: 50%;
+  --hw: 100%;
+  --hh: 100%;
+  --spec: 0;
+  position: relative;
+  display: inline-block;
+}
+
+/* Words stay whole; only characters inside them are split. */
+.hh-w {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.hh-c {
+  --l: 0;
+  --cx: 0px;
+  --cy: 0px;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  /* translate3d already promotes this to its own layer; an explicit
+     will-change here would pin 30 permanent layers for no gain. */
+  transform: translate3d(0, calc(var(--l) * -7px), 0);
+}
+
+/* 1. Light diffusing through the frosted pane.
+   Deliberately ONE layer for the whole headline rather than one per character:
+   a 14px blur cannot resolve a 7px per-character lift, so 30 separate blurred
+   layers bought nothing and cost roughly half the frame budget. */
+.hh__bleed {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  color: rgba(13, 148, 136, 0.45);
+  filter: blur(14px);
+  opacity: calc(0.3 + var(--spec) * 0.34);
+  transition: opacity 600ms ease;
+}
+
+.hh-c__rim,
+.hh-c__fill,
+.hh-c__spec {
+  display: block;
+  color: transparent;
+}
+
+.hh-c__rim,
+.hh-c__spec {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* 2. The polished edge of the glass. */
+.hh-c__rim {
+  z-index: 1;
+  -webkit-text-stroke: 0.7px rgba(255, 255, 255, 0.55);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.45);
+}
+
+/* 3. The glass body — deliberately semi-transparent so the aurora reads through. */
+.hh-c__fill {
+  position: relative;
+  z-index: 2;
+  background-image: linear-gradient(
+    168deg,
+    rgba(6, 95, 70, 0.95) 0%,
+    rgba(13, 118, 110, 0.88) 34%,
+    rgba(4, 120, 87, 0.97) 68%,
+    rgba(6, 78, 59, 0.93) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* 4. Specular sweep. background-size is the full headline and background-position
+   is this glyph's negative offset, so all characters sample one shared gradient —
+   the highlight travels the line as a single continuous band. */
+.hh-c__spec {
+  z-index: 3;
+  background-repeat: no-repeat;
+  background-size: var(--hw) var(--hh);
+  background-position: var(--cx) var(--cy);
+  /* Tight and emerald-tinted: a glint catching the letter edges, not a wash.
+     Pure white at high opacity here bleaches the glyphs away entirely. */
+  background-image: radial-gradient(
+    120px circle at var(--mx) var(--my),
+    rgba(236, 253, 245, 0.95) 0%,
+    rgba(167, 243, 208, 0.7) 30%,
+    rgba(110, 231, 183, 0.3) 55%,
+    rgba(255, 255, 255, 0) 74%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  /* Plain alpha over the fill instead of `screen`. Blending 30 text-clipped
+     layers measured at ~16fps of the frame budget on its own; normal
+     compositing with a lighter tint reads near-identically. */
+  /* Gated on --l (cursor proximity) as well as --spec. The gradient is already
+     fully transparent past ~111px while --l reaches 0 at 200px, so this is
+     visually a no-op — but it lets the compositor skip painting the gradient
+     on the ~20 characters that are nowhere near the cursor. */
+  opacity: calc(var(--spec) * var(--l) * 0.7);
+  transition: none;
+}
+
+/* Accessibility: Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .aurora__orb,
+  .aurora__silk {
+    animation: none !important;
+  }
+
+  .aurora__parallax,
+  .hh-c {
+    transform: none !important;
+  }
+
+  .hh-c__spec {
+    opacity: 0 !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .glass-card:hover {
+    transform: none;
+  }
+}
+
+/* Smooth Interactive Range Sliders */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 36px;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  touch-action: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: #cbd5e1;
+  border-radius: 9999px;
+  border: none;
+}
+
+:where(.dark) input[type="range"]::-webkit-slider-runnable-track,
+.dark input[type="range"]::-webkit-slider-runnable-track {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background: #047857;
+  cursor: pointer;
+  margin-top: -8px;
+  box-shadow: 0 2px 6px rgba(4, 120, 87, 0.4), 0 0 0 2px rgba(255, 255, 255, 0.9);
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+:where(.dark) input[type="range"]::-webkit-slider-thumb,
+.dark input[type="range"]::-webkit-slider-thumb {
+  background: #10b981;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.5), 0 0 0 2px #0c1a1c;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.08);
+  background: #065f46;
+  box-shadow: 0 2px 8px rgba(4, 120, 87, 0.5), 0 0 0 3px rgba(255, 255, 255, 0.95);
+}
+
+:where(.dark) input[type="range"]::-webkit-slider-thumb:hover,
+.dark input[type="range"]::-webkit-slider-thumb:hover {
+  background: #34d399;
+  box-shadow: 0 0 18px rgba(52, 211, 153, 0.6), 0 0 0 3px #0c1a1c;
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(1.12);
+  background: #064e3b;
+  box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.25), 0 2px 8px rgba(4, 120, 87, 0.5);
+}
+
+:where(.dark) input[type="range"]::-webkit-slider-thumb:active,
+.dark input[type="range"]::-webkit-slider-thumb:active {
+  background: #059669;
+  box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.3), 0 0 22px rgba(16, 185, 129, 0.7);
+}
+
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: #cbd5e1;
+  border-radius: 9999px;
+  border: none;
+}
+
+:where(.dark) input[type="range"]::-moz-range-track,
+.dark input[type="range"]::-moz-range-track {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+input[type="range"]::-moz-range-thumb {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background: #047857;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(4, 120, 87, 0.4);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+:where(.dark) input[type="range"]::-moz-range-thumb,
+.dark input[type="range"]::-moz-range-thumb {
+  background: #10b981;
+  border: 2px solid #0c1a1c;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.5);
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.08);
+  background: #065f46;
+}
+
+:where(.dark) input[type="range"]::-moz-range-thumb:hover,
+.dark input[type="range"]::-moz-range-thumb:hover {
+  background: #34d399;
+  box-shadow: 0 0 18px rgba(52, 211, 153, 0.6);
+}
+
+input[type="range"]::-moz-range-thumb:active {
+  transform: scale(1.12);
+  background: #064e3b;
+  box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.25);
+}
+
+:where(.dark) input[type="range"]::-moz-range-thumb:active,
+.dark input[type="range"]::-moz-range-thumb:active {
+  background: #059669;
+  box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.3);
+}
+
+input[type="range"]::-moz-range-progress {
+  background-color: #047857;
+  height: 8px;
+  border-radius: 9999px;
+}
+
+:where(.dark) input[type="range"]::-moz-range-progress,
+.dark input[type="range"]::-moz-range-progress {
+  background-color: #10b981;
+}
+
+/* Custom Scrollbars & Utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.6);
+}
+
+:where(.dark) ::-webkit-scrollbar-thumb,
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+}
+:where(.dark) ::-webkit-scrollbar-thumb:hover,
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 185, 129, 0.45);
+}

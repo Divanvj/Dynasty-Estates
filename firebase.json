@@ -1,0 +1,52 @@
+{
+  "apphosting": {
+    "backendId": "dynasty-estates",
+    "rootDir": "/",
+    "ignore": [
+      "node_modules",
+      ".next",
+      ".git",
+      ".vercel",
+      "scratch",
+      "tests",
+      "mobile",
+      "firebase-debug.log",
+      "firebase-debug.*.log",
+      "*-firebase-adminsdk-*.json",
+      "service-account*.json",
+      ".env.local"
+    ]
+  },
+  "auth": {
+    "authorizedDomains": [
+      "localhost",
+      "dynasty-estates.firebaseapp.com",
+      "dynasty-estates.web.app"
+    ],
+    "providers": {
+      "emailPassword": true,
+      "googleSignIn": {
+        "oAuthBrandDisplayName": "Dynasty Estates",
+        "supportEmail": "info@tricore.enterprises"
+      }
+    }
+  },
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "emulators": {
+    "auth": {
+      "port": 9099
+    },
+    "firestore": {
+      "port": 8080
+    },
+    "ui": {
+      "enabled": true,
+      "port": 4000
+    }
+  }
+}

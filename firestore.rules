@@ -1,0 +1,117 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    function isAgentOrAdmin() {
+      return signedIn() && (
+        request.auth.token.role == 'agent' ||
+        request.auth.token.role == 'admin'
+      );
+    }
+
+    // The physical entity behind a listing (size, rooms, location). A listing in
+    // /properties references one of these, so it must be world-readable for the
+    // public catalogue, but only its creator or a practitioner may change it.
+    match /physical_properties/{physicalPropertyId} {
+      allow read: if true;
+      allow create: if signedIn() && request.resource.data.ownerId == request.auth.uid;
+      allow update: if isAgentOrAdmin()
+        || (signedIn()
+            && resource.data.ownerId == request.auth.uid
+            && request.resource.data.ownerId == resource.data.ownerId);
+      allow delete: if isAgentOrAdmin()
+        || (signedIn() && resource.data.ownerId == request.auth.uid);
+    }
+
+    match /properties/{propertyId} {
+      // This list MUST stay identical to PUBLIC_LISTING_STATUSES in
+      // src/lib/types/domain.ts. It previously held marketing labels ('Live',
+      // 'Featured', 'Open house') rather than lifecycle statuses, so the
+      // catalogue query — which asks for 'Published' — was denied outright and
+      // the site fell back to demo data with nothing reporting a failure.
+      // Sold and Rented stay readable so a listing's page still resolves after
+      // the sale.
+      function publicStatuses() {
+        return ['Published', 'Under offer', 'Sold', 'Rented'];
+      }
+
+      // An owner must also be able to read back their own drafts, or the seller
+      // portal cannot show them what they just filed; practitioners see
+      // everything in order to moderate it.
+      allow read: if resource.data.status in publicStatuses()
+      || isAgentOrAdmin()
+      || (signedIn() && resource.data.ownerId == request.auth.uid);
+      // An owner may file a listing but not publish it: the button says "Submit
+      // for Moderation", so only a practitioner may move it into a live state.
+      allow create: if signedIn()
+        && request.resource.data.ownerId == request.auth.uid
+        && (isAgentOrAdmin() || request.resource.data.status in ['Draft', 'Submitted']);
+      allow update: if isAgentOrAdmin()
+        || (signedIn()
+            && resource.data.ownerId == request.auth.uid
+            && request.resource.data.ownerId == resource.data.ownerId
+            && request.resource.data.status in ['Draft', 'Submitted', 'Paused', 'Archived']);
+      allow delete: if isAgentOrAdmin()
+        || (signedIn() && resource.data.ownerId == request.auth.uid);
+    }
+
+    match /users/{userId} {
+      allow read, create, update: if isOwner(userId);
+      allow delete: if false;
+
+      match /savedProperties/{propertyId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+
+    // Tenancy applications carry identity-document and income data, so reads are
+    // limited to the applicant and to practitioners who must vet them. Nobody
+    // may delete one, and an applicant may not edit an application after filing
+    // it or promote their own status.
+    match /applications/{applicationId} {
+      allow create: if signedIn()
+        && request.resource.data.applicantId == request.auth.uid
+        && request.resource.data.creditConsent == true
+        && request.resource.data.status == 'submitted';
+      allow read: if isAgentOrAdmin() || (signedIn() && resource.data.applicantId == request.auth.uid);
+      allow update: if isAgentOrAdmin();
+      allow delete: if false;
+    }
+
+    match /inquiries/{inquiryId} {
+      allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
+      allow read: if isAgentOrAdmin() || (signedIn() && resource.data.userId == request.auth.uid);
+      allow update: if isAgentOrAdmin();
+      allow delete: if isAgentOrAdmin();
+    }
+
+    // Perceptual hashes of every photo on a saved listing, for duplicate
+    // detection at upload (src/lib/photo-intake.ts). Any signed-in uploader
+    // must be able to query them; they hold a hash, not the image. A
+    // fingerprint may only be filed for a listing the writer owns, checked
+    // against the listing written in the same batch, so nobody can pre-register
+    // someone else's photos to block them. Immutable once written.
+    match /photo_fingerprints/{photoId} {
+      allow read: if signedIn();
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['hash', 'bands', 'ownerId', 'listingId', 'createdAt'])
+        && request.resource.data.ownerId == request.auth.uid
+        && request.resource.data.hash is string
+        && request.resource.data.hash.size() == 16
+        && request.resource.data.bands is list
+        && request.resource.data.bands.size() == 4
+        && request.resource.data.listingId is string
+        && getAfter(/databases/$(database)/documents/properties/$(request.resource.data.listingId)).data.ownerId == request.auth.uid;
+      allow update: if false;
+      allow delete: if isAgentOrAdmin();
+    }
+  }
+}
