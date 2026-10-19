@@ -661,127 +661,83 @@ select option {
 }
 
 /* ==========================================================================
-   Frosted emerald glass headline with cursor-tracked specular sweep
+   Dynasty Estates Hero Headline - Editorial Luxury Real Estate Typography
    ========================================================================== */
 
-.hh {
+.hero-headline {
   position: relative;
   z-index: 10;
-}
-
-.hh__inner {
-  --mx: 50%;
-  --my: 50%;
-  --hw: 100%;
-  --hh: 100%;
-  --spec: 0;
-  position: relative;
   display: inline-block;
+  text-align: center;
+  margin: 0 auto;
+  user-select: none;
 }
 
-/* Words stay whole; only characters inside them are split. */
-.hh-w {
-  display: inline-block;
-  white-space: nowrap;
-}
-
-.hh-c {
-  --l: 0;
-  --cx: 0px;
-  --cy: 0px;
-  position: relative;
-  display: inline-block;
-  vertical-align: top;
-  /* translate3d already promotes this to its own layer; an explicit
-     will-change here would pin 30 permanent layers for no gain. */
-  transform: translate3d(0, calc(var(--l) * -7px), 0);
-}
-
-/* 1. Light diffusing through the frosted pane.
-   Deliberately ONE layer for the whole headline rather than one per character:
-   a 14px blur cannot resolve a 7px per-character lift, so 30 separate blurred
-   layers bought nothing and cost roughly half the frame budget. */
-.hh__bleed {
+/* Ambient luminous depth behind headline (Dark mode only) */
+.hero-headline__glow {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  inset: -24px;
+  background: radial-gradient(
+    360px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(16, 185, 129, 0.16) 0%,
+    rgba(5, 150, 105, 0.08) 45%,
+    transparent 75%
+  );
+  filter: blur(28px);
   pointer-events: none;
   z-index: 0;
-  color: rgba(13, 148, 136, 0.45);
-  filter: blur(14px);
-  opacity: calc(0.3 + var(--spec) * 0.34);
-  transition: opacity 600ms ease;
+  opacity: 0;
+  transition: opacity 400ms ease;
 }
 
-.hh-c__rim,
-.hh-c__fill,
-.hh-c__spec {
-  display: block;
-  color: transparent;
+.dark .hero-headline__glow {
+  opacity: 1;
 }
 
-.hh-c__rim,
-.hh-c__spec {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-/* 2. The polished edge of the glass. */
-.hh-c__rim {
-  z-index: 1;
-  -webkit-text-stroke: 0.7px rgba(255, 255, 255, 0.55);
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.45);
-}
-
-/* 3. The glass body — deliberately semi-transparent so the aurora reads through. */
-.hh-c__fill {
+/* 
+ * Primary headline text rendering:
+ * - Pure continuous typography: preserves full OpenType font kerning & ligatures.
+ * - Symmetrical luxury aesthetic: rich deep jewel emerald in Light Mode,
+ *   luminous moonlight emerald in Dark Mode.
+ * - Flawless vector definition with zero artificial stroke/corner artifacts.
+ */
+.hero-headline__text {
   position: relative;
-  z-index: 2;
-  background-image: linear-gradient(
-    168deg,
-    rgba(6, 95, 70, 0.95) 0%,
-    rgba(13, 118, 110, 0.88) 34%,
-    rgba(4, 120, 87, 0.97) 68%,
-    rgba(6, 78, 59, 0.93) 100%
+  z-index: 1;
+  display: inline-block;
+  letter-spacing: -0.025em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Light Mode: Authoritative, rich deep emerald jewel gradient */
+  background-image: radial-gradient(
+    520px circle at var(--mx, 50%) var(--my, 50%),
+    #0f766e 0%,
+    #065f46 28%,
+    #064e3b 65%,
+    #022c22 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
+  color: transparent;
+  transition: filter 300ms ease;
 }
 
-/* 4. Specular sweep. background-size is the full headline and background-position
-   is this glyph's negative offset, so all characters sample one shared gradient —
-   the highlight travels the line as a single continuous band. */
-.hh-c__spec {
-  z-index: 3;
-  background-repeat: no-repeat;
-  background-size: var(--hw) var(--hh);
-  background-position: var(--cx) var(--cy);
-  /* Tight and emerald-tinted: a glint catching the letter edges, not a wash.
-     Pure white at high opacity here bleaches the glyphs away entirely. */
+/* Dark Mode: Luminous electric emerald with radiant moonlight highlight */
+.dark .hero-headline__text {
   background-image: radial-gradient(
-    120px circle at var(--mx) var(--my),
-    rgba(236, 253, 245, 0.95) 0%,
-    rgba(167, 243, 208, 0.7) 30%,
-    rgba(110, 231, 183, 0.3) 55%,
-    rgba(255, 255, 255, 0) 74%
+    520px circle at var(--mx, 50%) var(--my, 50%),
+    #ffffff 0%,
+    #a7f3d0 22%,
+    #34d399 48%,
+    #059669 78%,
+    #064e3b 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
-  /* Plain alpha over the fill instead of `screen`. Blending 30 text-clipped
-     layers measured at ~16fps of the frame budget on its own; normal
-     compositing with a lighter tint reads near-identically. */
-  /* Gated on --l (cursor proximity) as well as --spec. The gradient is already
-     fully transparent past ~111px while --l reaches 0 at 200px, so this is
-     visually a no-op — but it lets the compositor skip painting the gradient
-     on the ~20 characters that are nowhere near the cursor. */
-  opacity: calc(var(--spec) * var(--l) * 0.7);
-  transition: none;
+  color: transparent;
+  filter: drop-shadow(0 2px 14px rgba(16, 185, 129, 0.28));
 }
 
 /* Accessibility: Reduced motion preference */
@@ -791,13 +747,12 @@ select option {
     animation: none !important;
   }
 
-  .aurora__parallax,
-  .hh-c {
+  .aurora__parallax {
     transform: none !important;
   }
 
-  .hh-c__spec {
-    opacity: 0 !important;
+  .hero-headline__glow {
+    display: none !important;
   }
 
   html {
