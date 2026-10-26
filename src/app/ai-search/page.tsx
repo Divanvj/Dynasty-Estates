@@ -180,7 +180,8 @@ export default function AISearchPage() {
             {recommendations.map(({ property, matchScore, matchReasons, unmetCriteria }) => (
               <article
                 key={property.id}
-                className="group overflow-hidden rounded-[30px] border border-white/80 bg-white/60 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl transition-all hover:-translate-y-1 hover:shadow-2xl dark:bg-[#0c1a1c]/75 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]"
+                // `relative` anchors the .card-link overlay on the title below.
+                className="group relative overflow-hidden rounded-[30px] border border-white/80 bg-white/60 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl transition-all hover:-translate-y-1 hover:shadow-2xl dark:bg-[#0c1a1c]/75 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]"
               >
                 {/* Photo & MatchScore Pill */}
                 <div className="relative h-56 overflow-hidden bg-slate-200">
@@ -201,8 +202,12 @@ export default function AISearchPage() {
                 </div>
 
                 <div className="p-5">
+                  {/* The card's one real link; `card-link` stretches it over
+                      the whole card. See globals.css. */}
                   <h4 className="text-base font-bold text-slate-950 group-hover:text-emerald-800 transition-colors dark:text-white dark:group-hover:text-emerald-400">
-                    {property.title}
+                    <Link className="card-link" href={`/property/${property.slug || property.id}`}>
+                      {property.title}
+                    </Link>
                   </h4>
                   <p className="flex items-center gap-1 text-xs text-slate-500 mt-0.5 dark:text-slate-400">
                     <LocationPinIcon className="h-3.5 w-3.5 text-slate-400 shrink-0 dark:text-slate-400" />
@@ -246,18 +251,21 @@ export default function AISearchPage() {
                   </div>
 
                   <div className="mt-4 flex items-center justify-between">
+                    {/* z-30: comparing is not opening. */}
                     <Link
                       href={`/compare`}
-                      className="text-xs font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-emerald-400"
+                      className="relative z-30 text-xs font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-emerald-400"
                     >
                       Compare →
                     </Link>
-                    <Link
-                      href={`/property/${property.slug || property.id}`}
-                      className="rounded-full bg-slate-950 px-4 py-1.5 text-xs font-bold text-white shadow-md hover:bg-slate-800 transition-all dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+                    {/* A span, not a link: same destination as the title, so
+                        as a link it duplicated the tab stop. */}
+                    <span
+                      aria-hidden="true"
+                      className="rounded-full bg-slate-950 px-4 py-1.5 text-xs font-bold text-white shadow-md group-hover:bg-slate-800 transition-all dark:bg-emerald-600 dark:group-hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
                     >
                       View Home →
-                    </Link>
+                    </span>
                   </div>
                 </div>
               </article>

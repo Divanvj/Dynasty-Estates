@@ -100,14 +100,25 @@ export default function ComparePage() {
                         className="h-32 w-full rounded-2xl bg-cover bg-center shadow-sm"
                         style={{ backgroundImage: `url(${prop.image})` }}
                       />
+                      {/* z-30: removing a column is a different action from
+                          opening the property, so it stays above the overlay. */}
                       <button
                         onClick={() => removeProperty(prop.id)}
-                        className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-slate-900 text-white shadow-md hover:bg-rose-600 transition-colors cursor-pointer"
+                        className="absolute -top-2 -right-2 z-30 flex h-6 w-6 items-center justify-center rounded-full bg-slate-900 text-white shadow-md hover:bg-rose-600 transition-colors cursor-pointer"
                         title="Remove from comparison"
                       >
                         <XMarkIcon className="h-3 w-3" />
                       </button>
-                      <h3 className="mt-2 text-sm font-bold text-slate-900 dark:text-white">{prop.title}</h3>
+                      {/* `card-link` stretches this over the column header, so
+                          the photograph, title and price all open the property
+                          rather than only the button in the Action row. The
+                          overlay is bounded by the `relative` wrapper above, so
+                          it covers the header and not the whole column. */}
+                      <h3 className="mt-2 text-sm font-bold text-slate-900 dark:text-white">
+                        <Link className="card-link" href={`/property/${prop.slug}`}>
+                          {prop.title}
+                        </Link>
+                      </h3>
                       <p className="text-[11px] text-slate-500 dark:text-slate-400">{prop.location}</p>
                       <p className="mt-1 text-sm font-extrabold text-emerald-700 dark:text-emerald-400">{prop.price}</p>
                     </div>

@@ -164,13 +164,27 @@ export default function InquiriesPage() {
             {filteredInquiries.map((inquiry) => (
               <article
                 key={inquiry.id}
-                className="flex flex-col gap-4 rounded-[26px] border border-white/80 bg-white/60 p-5 shadow-sm backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between transition-all hover:bg-white dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/30"
+                // `group relative` so the whole row opens the property the
+                // enquiry is about, and the button reacts to a hover anywhere
+                // on it. Only applies when there is a property to open.
+                className="group relative flex flex-col gap-4 rounded-[26px] border border-white/80 bg-white/60 p-5 shadow-sm backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between transition-all hover:bg-white dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/30"
               >
                 <div>
                   <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[10px] font-bold text-slate-600 dark:bg-[#060d0e]/80 dark:text-slate-300 dark:border dark:border-white/10">
                     {labels[inquiry.kind] ?? inquiry.kind}
                   </span>
-                  <h2 className="mt-1.5 text-base font-bold text-slate-950 dark:text-white">{inquiry.propertyTitle}</h2>
+                  {/* Conditional, because the row's link is: an enquiry whose
+                      property has gone has nothing to open, so it stays plain
+                      text rather than becoming a link to nowhere. */}
+                  <h2 className="mt-1.5 text-base font-bold text-slate-950 dark:text-white">
+                    {inquiry.propertyId ? (
+                      <Link className="card-link" href={`/property/${inquiry.propertyId}`}>
+                        {inquiry.propertyTitle}
+                      </Link>
+                    ) : (
+                      inquiry.propertyTitle
+                    )}
+                  </h2>
                   <p className="text-xs text-slate-500 mt-0.5 dark:text-slate-400">
                     Logged: {inquiry.createdAt ? new Date(inquiry.createdAt).toLocaleDateString() : "Recent"}
                   </p>
@@ -187,12 +201,14 @@ export default function InquiriesPage() {
                     ● {inquiry.status}
                   </span>
                   {inquiry.propertyId && (
-                    <Link
-                      href={`/property/${inquiry.propertyId}`}
-                      className="rounded-full bg-slate-950 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 transition-all dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+                    /* A span, not a link: same destination as the title above,
+                       so as a link it duplicated the tab stop. */
+                    <span
+                      aria-hidden="true"
+                      className="rounded-full bg-slate-950 px-4 py-2 text-xs font-semibold text-white shadow-sm group-hover:bg-slate-800 transition-all dark:bg-emerald-600 dark:group-hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
                     >
                       View Home →
-                    </Link>
+                    </span>
                   )}
                 </div>
               </article>

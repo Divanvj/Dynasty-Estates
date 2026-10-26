@@ -257,8 +257,12 @@ export default async function AgentProfilePage({
                   </div>
 
                   <div className="flex flex-1 flex-col p-5">
+                    {/* The card's one real link; `card-link` stretches it over
+                        the whole card. See globals.css. */}
                     <h3 className="text-base font-bold text-slate-900 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-1 dark:text-white">
-                      {prop.title}
+                      <Link className="card-link" href={`/property/${prop.slug}`}>
+                        {prop.title}
+                      </Link>
                     </h3>
                     <p className="mt-1 flex items-center gap-1 text-xs text-slate-500 line-clamp-1 dark:text-slate-400">
                       <LocationPinIcon className="h-3.5 w-3.5 shrink-0 text-slate-400" />
@@ -280,13 +284,15 @@ export default async function AgentProfilePage({
                       </div>
                     </div>
 
-                    <Link
-                      href={`/property/${prop.slug}`}
-                      className="mt-4 flex items-center justify-center gap-1.5 rounded-xl bg-slate-950 px-4 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 transition-colors"
+                    {/* A span, not a link: same destination as the title, so
+                        as a link it duplicated the tab stop. */}
+                    <span
+                      aria-hidden="true"
+                      className="mt-4 flex items-center justify-center gap-1.5 rounded-xl bg-slate-950 px-4 py-2.5 text-xs font-bold text-white shadow-xs group-hover:bg-slate-800 dark:bg-emerald-600 dark:group-hover:bg-emerald-500 transition-colors"
                     >
                       <span>View Mandate Details</span>
                       <span>→</span>
-                    </Link>
+                    </span>
                   </div>
                 </article>
               ))}
