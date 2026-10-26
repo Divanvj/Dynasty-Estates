@@ -183,6 +183,11 @@ export async function createSellerListing(formData: ListingFormData): Promise<st
     propertyId: physicalPropertyRef.id,
     ownerId: formData.ownerId,
     ownerEmail: formData.ownerEmail,
+    // Who a buyer contacts about this listing. The creator is the contact, so
+    // it starts as the owner. It only resolves to a callable practitioner once
+    // that account is a registered agent — a private seller's listing correctly
+    // shows no phone number rather than someone else's.
+    agentId: formData.ownerId,
     title: formData.title,
     slug,
     location: formData.location,

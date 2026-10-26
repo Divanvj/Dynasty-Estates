@@ -47,5 +47,5 @@ firebase-debug.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# scratch & temporary files
-/scratch/
+.vercel
+.env*

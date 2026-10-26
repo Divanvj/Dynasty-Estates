@@ -1,0 +1,42 @@
+name: Dynasty Estates CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  validate:
+    name: Lint, Typecheck & Automated Domain Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run TypeScript typecheck
+        run: npx tsc --noEmit
+
+      - name: Run automated domain test suite
+        run: node tests/domain.test.mjs
+
+      - name: Run automated SEO test suite
+        run: node tests/seo.test.mjs
+
+      - name: Run automated duplicate detection test suite
+        run: node tests/duplicate-detector.test.mjs
+
+

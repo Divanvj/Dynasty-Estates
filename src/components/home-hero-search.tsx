@@ -27,17 +27,17 @@ export default function HomeHeroSearch() {
 
   return (
     <div className="mt-8 mx-auto w-full max-w-4xl">
-      {/* AI Concierge Teaser Banner */}
+      {/* AI Search Teaser Banner */}
       <div className="mb-3 sm:mb-4 mx-auto max-w-3xl flex items-center justify-between gap-2.5 rounded-2xl border border-emerald-500/30 bg-emerald-950/15 dark:bg-emerald-950/40 px-3 py-2 sm:px-4 sm:py-2.5 text-xs backdrop-blur-md">
         <div className="flex items-center gap-2 text-slate-800 dark:text-emerald-100 min-w-0">
           <SparklesIcon className="h-4 w-4 text-emerald-700 dark:text-emerald-400 shrink-0" />
           <p className="text-[11px] sm:text-xs truncate sm:whitespace-normal">
-            <strong className="font-bold text-emerald-900 dark:text-emerald-300">AI Concierge:</strong>{" "}
+            <strong className="font-bold text-emerald-900 dark:text-emerald-300">AI Search:</strong>{" "}
             <span className="hidden sm:inline">
               Describe your dream home in natural language, e.g. <em>&ldquo;3-bed solar estate in Pretoria East with pool under R6M&rdquo;</em>
             </span>
             <span className="sm:hidden text-slate-700 dark:text-slate-300 font-medium">
-              Search dream homes in natural language
+              Search dream homes with AI Search
             </span>
           </p>
         </div>

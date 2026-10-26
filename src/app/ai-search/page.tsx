@@ -69,7 +69,7 @@ export default function AISearchPage() {
                 </span>
               </div>
               <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">
-                <span className="hidden sm:inline">Dynasty </span>AI Concierge
+                <span className="hidden sm:inline">Dynasty </span>AI Search
               </h1>
             </div>
           </div>
@@ -113,7 +113,7 @@ export default function AISearchPage() {
                 type="submit"
                 className="rounded-2xl bg-slate-950 px-6 py-3.5 text-xs font-bold text-white shadow-lg hover:bg-slate-800 transition-all cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
               >
-                Ask Concierge →
+                Search with AI →
               </button>
             </div>
           </form>

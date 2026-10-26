@@ -245,11 +245,30 @@ export default function DynastyPropertyMap({
     });
   }, [properties, filter, radiusArea, polygonArea]);
 
-  // Let the host page narrow its listing feed to the same set.
+  /**
+   * Let the host page narrow its listing feed to the same set.
+   *
+   * Emitted by value rather than on every run. `shown.map(...)` allocates a new
+   * array each time, so calling unconditionally would hand the host a fresh
+   * array on every render; a host that keeps it in state would then re-render,
+   * re-run this effect, and never settle. The signature below is what makes the
+   * callback safe to pass inline, which is how a caller will naturally write it.
+   *
+   * "none" and "area:" are kept distinct because they mean different things: no
+   * area drawn (show everything) versus an area that happens to contain nothing
+   * (show nothing).
+   */
+  const lastEmittedRef = useRef<string | undefined>(undefined);
   useEffect(() => {
     if (!onAreaFilterChange) return;
+
     const areaActive = Boolean(radiusArea || (polygonArea && polygonArea.length > 2));
-    onAreaFilterChange(areaActive ? shown.map((p) => p.id) : null);
+    const ids = areaActive ? shown.map((p) => p.id) : null;
+    const signature = ids === null ? "none" : `area:${ids.join("\u0000")}`;
+
+    if (lastEmittedRef.current === signature) return;
+    lastEmittedRef.current = signature;
+    onAreaFilterChange(ids);
   }, [shown, radiusArea, polygonArea, onAreaFilterChange]);
 
   useEffect(() => {

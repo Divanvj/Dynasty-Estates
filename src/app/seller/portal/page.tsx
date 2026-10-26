@@ -48,7 +48,11 @@ export default function SellerPortal() {
   }, []);
 
   return (
-    <RoleGuard allowedRoles={["Seller", "Agent", "Admin"]} featureName="Seller Portal">
+    <RoleGuard
+      allowedRoles={["Seller", "Agent", "Admin"]}
+      allowAnySignedIn
+      featureName="Seller Portal"
+    >
       <main className="min-h-screen bg-[var(--background)] px-4 py-5 text-slate-900 md:px-6 lg:px-8 dark:text-white">
       <div className="mx-auto max-w-[1500px]">
         <header className="mb-6 flex items-center justify-between rounded-[28px] border border-white/45 bg-white/35 px-4 py-3 backdrop-blur-xl shadow-[0_12px_30px_rgba(15,23,42,0.06)] md:px-6 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">

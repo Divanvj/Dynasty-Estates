@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import Image from "next/image";
 
 import { ArrowLeftIcon, ArrowRightIcon } from "@/components/icons";
 
@@ -131,14 +132,24 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
           <div
             key={`${src}-${i}`}
             aria-hidden={i !== index}
-            className={`absolute inset-0 bg-cover bg-center transition-opacity ease-[cubic-bezier(0.4,0,0.2,1)] ${
-              i === index ? "opacity-100" : "opacity-0"
+            className={`absolute inset-0 transition-opacity ease-[cubic-bezier(0.4,0,0.2,1)] ${
+              i === index ? "opacity-100 z-10" : "opacity-0 z-0"
             }`}
             style={{
-              backgroundImage: isLive(i) ? `url(${src})` : undefined,
               transitionDuration: `${FADE_MS}ms`,
             }}
-          />
+          >
+            {isLive(i) && (
+              <Image
+                src={src}
+                alt={`${title} - Photograph ${i + 1}`}
+                fill
+                priority={i === 0}
+                sizes="(max-width: 1280px) 100vw, 1400px"
+                className="object-cover object-center"
+              />
+            )}
+          </div>
         ))}
 
         {/* Legibility scrim for the headline and price. */}
@@ -204,13 +215,20 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
               onClick={() => go(i, true)}
               aria-label={`Show photograph ${i + 1} of ${frames.length}`}
               aria-current={i === index}
-              className={`relative h-14 w-20 shrink-0 cursor-pointer overflow-hidden rounded-xl bg-cover bg-center transition-all sm:h-16 sm:w-24 ${
+              className={`relative h-14 w-20 shrink-0 cursor-pointer overflow-hidden rounded-xl transition-all sm:h-16 sm:w-24 ${
                 i === index
                   ? "ring-2 ring-champagne-400 brightness-100"
                   : "opacity-60 ring-1 ring-white/20 hover:opacity-100 dark:ring-white/10"
               }`}
-              style={{ backgroundImage: `url(${src})` }}
-            />
+            >
+              <Image
+                src={src}
+                alt={`Thumbnail ${i + 1} of ${title}`}
+                fill
+                sizes="96px"
+                className="object-cover object-center"
+              />
+            </button>
           ))}
         </div>
       )}

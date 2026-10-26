@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import BrandLogo from "@/components/brand-logo";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import PropertySplitMapView from "@/components/property-split-map-view";
 import AccountActions from "@/components/account-actions";
@@ -12,10 +12,13 @@ import { fallbackProperties } from "@/lib/property-data";
 export default function MapSearchPage() {
   const [activeType, setActiveType] = useState<string>("All");
 
-  const filteredProperties = fallbackProperties.filter((p) => {
-    if (activeType !== "All" && p.type !== activeType) return false;
-    return true;
-  });
+  // Memoised because this array is handed to the map, which keys its own
+  // `shown` memo off it. Rebuilt inline on every render, it invalidated that
+  // memo each time and kept the map's area-filter effect re-running.
+  const filteredProperties = useMemo(
+    () => fallbackProperties.filter((p) => activeType === "All" || p.type === activeType),
+    [activeType]
+  );
 
   return (
     <main className="min-h-screen bg-transparent px-3 py-4 text-slate-900 dark:text-slate-100 md:px-8">

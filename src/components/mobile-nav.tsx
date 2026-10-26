@@ -33,7 +33,7 @@ const NAV: Record<UserRole, NavItem[]> = {
   Buyer: [
     { href: "/search", label: "Browse", icon: SearchIcon, match: ["/for-sale", "/to-rent", "/property"] },
     { href: "/map-search", label: "Map", icon: MapSplitIcon },
-    { href: "/ai-search", label: "Concierge", icon: SparklesIcon },
+    { href: "/ai-search", label: "AI Search", icon: SparklesIcon },
     { href: "/saved", label: "Saved", icon: HeartIcon, match: ["/collections", "/compare"] },
     { href: "/insights", label: "Insights", icon: ChartBarIcon, match: ["/calculators", "/agents", "/inquiries"] },
   ],

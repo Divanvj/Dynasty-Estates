@@ -36,7 +36,9 @@ export default function PropertyListCard({
     <article
       onMouseEnter={() => onHover?.(property.id)}
       onMouseLeave={() => onHover?.(null)}
-      className={`group flex flex-col md:flex-row overflow-hidden rounded-[28px] border bg-white/70 dark:bg-[#0c1a1c]/75 shadow-[0_12px_32px_rgba(36,48,50,0.07)] dark:shadow-[0_12px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl ${
+      // `relative` anchors the .card-link overlay on the title below, which is
+      // what makes the whole card open the listing. See globals.css.
+      className={`group relative flex flex-col md:flex-row overflow-hidden rounded-[28px] border bg-white/70 dark:bg-[#0c1a1c]/75 shadow-[0_12px_32px_rgba(36,48,50,0.07)] dark:shadow-[0_12px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl ${
         isHighlighted
           ? "border-emerald-500 ring-2 ring-emerald-500/30 bg-white dark:bg-[#0f2225]"
           : "border-white/80 dark:border-white/10 hover:border-slate-300 dark:hover:border-emerald-500/30"
@@ -69,8 +71,11 @@ export default function PropertyListCard({
           )}
         </div>
 
-        {/* Save Button */}
-        <div className="absolute top-3 right-3 z-10">
+        {/* Save Button. z-30, not z-10: saving is a different action from
+            opening the listing, so it has to sit above the card overlay. The
+            badges and price overlay around it stay at z-10 on purpose — they
+            are decoration, and a click on them should open the listing. */}
+        <div className="absolute top-3 right-3 z-30">
           <SavePropertyButton propertyId={property.id} />
         </div>
 
@@ -119,7 +124,10 @@ export default function PropertyListCard({
           {/* Title & Price Row (Desktop) */}
           <div className="mt-2 flex flex-wrap items-baseline justify-between gap-3">
             <h2 className="text-lg sm:text-xl font-bold text-slate-950 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-400 transition-colors">
-              <Link href={`/property/${property.slug || property.id}`}>
+              {/* The card's one real link. `card-link` stretches it over the
+                  whole card, so the title is both the visible heading and the
+                  name a screen reader gives the card. */}
+              <Link className="card-link" href={`/property/${property.slug || property.id}`}>
                 {property.title}
               </Link>
             </h2>
@@ -181,9 +189,10 @@ export default function PropertyListCard({
         {/* Footer Action Bar */}
         <div className="mt-5 pt-3.5 border-t border-slate-200/70 dark:border-white/10 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
+            {/* z-30 for the same reason as Save: comparing is not opening. */}
             <Link
               href="/compare"
-              className="tap-44 relative text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors"
+              className="tap-44 relative z-30 text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors"
             >
               Add to Compare →
             </Link>
@@ -195,12 +204,23 @@ export default function PropertyListCard({
           </div>
 
           <div className="flex items-center gap-2">
-            <Link
-              href={`/property/${property.slug || property.id}`}
-              className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 hover:from-[#0d595b] hover:to-[#094344] dark:hover:from-emerald-500 dark:hover:to-emerald-600 px-5 py-2 text-xs font-bold text-white shadow-md shadow-emerald-950/20 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-400/30 dark:border-emerald-400/50 hover:scale-102 transition-all cursor-pointer sm:min-h-0 sm:inline-block"
+            {/*
+              A span, not a link. It pointed at the same listing as the title
+              above, so as a link it was a second tab stop and a second
+              announcement for one destination — the redundant-link problem.
+              The card overlay sits above it, so clicking it still opens the
+              listing; it is now purely the visible affordance that says so.
+
+              Its hover states moved from `hover:` to `group-hover:` for the
+              same reason: the button should light up when the pointer is
+              anywhere on the card, because anywhere on the card is the target.
+            */}
+            <span
+              aria-hidden="true"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 group-hover:from-[#0d595b] group-hover:to-[#094344] dark:group-hover:from-emerald-500 dark:group-hover:to-emerald-600 px-5 py-2 text-xs font-bold text-white shadow-md shadow-emerald-950/20 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-400/30 dark:border-emerald-400/50 group-hover:scale-102 transition-all sm:min-h-0 sm:inline-block"
             >
               {property.listingType === "rent" ? "View Rental Experience →" : "View Property Experience →"}
-            </Link>
+            </span>
           </div>
         </div>
       </div>

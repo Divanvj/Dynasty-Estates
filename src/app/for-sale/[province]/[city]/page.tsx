@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 
 import SiteNavigation from "@/components/site-navigation";
+import BrandLogo from "@/components/brand-logo";
 import { BedIcon, BathIcon, CarIcon, LocationPinIcon } from "@/components/icons";
+import { getPropertyList } from "@/lib/property-data";
 import { getListingsByLocation, enrichedListingToPropertyRecord } from "@/lib/server/property-service";
+import { absoluteUrl, SITE_URL } from "@/lib/site-url";
 
 function capitalize(str: string): string {
   return str
@@ -21,9 +25,9 @@ export async function generateMetadata({
   const provName = capitalize(province);
   const cityName = capitalize(city);
 
-  const title = `Properties For Sale in ${cityName}, ${provName} | Dynasty Estates`;
+  const title = `Properties For Sale in ${cityName}, ${provName}`;
   const description = `Browse verified luxury homes, apartments, and off-plan estates for sale in ${cityName}, ${provName}. Features solar resilience, private security, and Deeds Office insights.`;
-  const canonicalUrl = `https://dynastyestates.co.za/for-sale/${province.toLowerCase()}/${city.toLowerCase()}`;
+  const canonicalUrl = absoluteUrl(`/for-sale/${province.toLowerCase()}/${city.toLowerCase()}`);
 
   return {
     title,
@@ -32,7 +36,7 @@ export async function generateMetadata({
       canonical: canonicalUrl,
     },
     openGraph: {
-      title,
+      title: `${title} | Dynasty Estates`,
       description,
       url: canonicalUrl,
       siteName: "Dynasty Estates South Africa",
@@ -49,11 +53,15 @@ export default async function ForSaleLocationPage({
   const { province, city } = await params;
   const provName = capitalize(province);
   const cityName = capitalize(city);
+  const provSlug = province.toLowerCase();
+  const citySlug = city.toLowerCase();
 
+  const allProperties = await getPropertyList();
   const enrichedListings = getListingsByLocation({
     province: provName,
     city: cityName,
     transactionType: "sale",
+    properties: allProperties,
   });
 
   const properties = enrichedListings.map(enrichedListingToPropertyRecord);
@@ -62,11 +70,24 @@ export default async function ForSaleLocationPage({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://dynastyestates.co.za" },
-      { "@type": "ListItem", position: 2, name: "For Sale", item: "https://dynastyestates.co.za/search?intent=buy" },
-      { "@type": "ListItem", position: 3, name: provName, item: `https://dynastyestates.co.za/for-sale/${province}` },
-      { "@type": "ListItem", position: 4, name: cityName, item: `https://dynastyestates.co.za/for-sale/${province}/${city}` },
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "For Sale", item: absoluteUrl("/for-sale") },
+      { "@type": "ListItem", position: 3, name: provName, item: absoluteUrl(`/for-sale/${provSlug}`) },
+      { "@type": "ListItem", position: 4, name: cityName, item: absoluteUrl(`/for-sale/${provSlug}/${citySlug}`) },
     ],
+  };
+
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: `Properties For Sale in ${cityName}, ${provName}`,
+    numberOfItems: properties.length,
+    itemListElement: properties.map((prop, idx) => ({
+      "@type": "ListItem",
+      position: idx + 1,
+      name: prop.title,
+      url: absoluteUrl(`/property/${prop.slug}`),
+    })),
   };
 
   return (
@@ -75,7 +96,19 @@ export default async function ForSaleLocationPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <SiteNavigation />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+      />
+      {/* relative z-50: the bar below is a `backdrop-blur` stacking context, so
+          at `auto` the page content that follows painted over the Sell / Tools
+          dropdowns. See src/app/page.tsx for the full note. */}
+      <header className="relative z-50 mx-auto max-w-[1400px] px-4 pt-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between rounded-[24px] border border-white/70 bg-white/40 px-4 py-3 backdrop-blur-xl shadow-xs dark:border-white/10 dark:bg-[#0b1719]/70">
+          <BrandLogo />
+          <SiteNavigation />
+        </div>
+      </header>
 
       <main className="mx-auto max-w-[1400px] px-4 py-8 sm:px-6 lg:px-8">
         {/* Breadcrumbs Navigation */}
@@ -84,11 +117,13 @@ export default async function ForSaleLocationPage({
             Home
           </Link>
           <span>/</span>
-          <Link href="/search?intent=buy" className="hover:text-slate-950 transition-colors dark:text-white">
+          <Link href="/for-sale" className="hover:text-slate-950 transition-colors dark:text-white">
             For Sale
           </Link>
           <span>/</span>
-          <span className="text-slate-500 dark:text-slate-400">{provName}</span>
+          <Link href={`/for-sale/${provSlug}`} className="hover:text-slate-950 transition-colors dark:text-white">
+            {provName}
+          </Link>
           <span>/</span>
           <span className="text-slate-950 font-bold dark:text-white">{cityName}</span>
         </nav>
@@ -114,10 +149,16 @@ export default async function ForSaleLocationPage({
               Rentals in {cityName} →
             </Link>
             <Link
-              href="/calculators"
+              href="/calculators/transfer-duty"
               className="rounded-full bg-slate-100 hover:bg-slate-200 px-3 py-1 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40 dark:hover:text-white"
             >
-              Transfer & Bond Legal Tariffs →
+              SARS Transfer Duty in {cityName} →
+            </Link>
+            <Link
+              href="/calculators/bond-repayment"
+              className="rounded-full bg-slate-100 hover:bg-slate-200 px-3 py-1 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40 dark:hover:text-white"
+            >
+              Bond Repayments →
             </Link>
             <Link
               href="/insights"
@@ -137,12 +178,16 @@ export default async function ForSaleLocationPage({
                 className="group relative flex flex-col overflow-hidden rounded-3xl border border-white/80 bg-white/70 shadow-md backdrop-blur-xl transition-all hover:-translate-y-1 hover:shadow-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]"
               >
                 {/* Image Showcase */}
-                <div
-                  className="relative h-60 w-full bg-cover bg-center overflow-hidden"
-                  style={{ backgroundImage: `url(${prop.image})` }}
-                >
+                <div className="relative h-60 w-full overflow-hidden">
+                  <Image
+                    src={prop.image}
+                    alt={prop.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
-                  <div className="absolute top-3 left-3 flex items-center gap-1.5">
+                  <div className="absolute top-3 left-3 flex items-center gap-1.5 z-10">
                     <span className="rounded-full bg-black/60 px-3 py-1 text-[10px] font-bold text-white backdrop-blur-md">
                       {prop.type}
                     </span>
@@ -152,7 +197,7 @@ export default async function ForSaleLocationPage({
                       </span>
                     )}
                   </div>
-                  <div className="absolute bottom-3 left-3 right-3 flex items-baseline justify-between text-white">
+                  <div className="absolute bottom-3 left-3 right-3 flex items-baseline justify-between text-white z-10">
                     <p className="text-xl font-extrabold tracking-tight">{prop.price}</p>
                     <span className="text-xs font-semibold text-slate-300">{prop.area}</span>
                   </div>

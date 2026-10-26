@@ -1,7 +1,20 @@
-"use client";
-
+import type { Metadata } from "next";
 import Link from "next/link";
 import BrandLogo from "@/components/brand-logo";
+import { absoluteUrl } from "@/lib/site-url";
+
+export const metadata: Metadata = {
+  title: "POPIA Notice & Privacy Policy | Statutory Compliance",
+  description:
+    "Dynasty Estates statutory compliance notice under the Protection of Personal Information Act (POPIA) No. 4 of 2013 and Property Practitioners Act (PPA) No. 22 of 2019.",
+  alternates: {
+    canonical: absoluteUrl("/legal/privacy"),
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 export default function PrivacyPolicyPage() {
   return (

@@ -113,5 +113,40 @@ service cloud.firestore {
       allow update: if false;
       allow delete: if isAgentOrAdmin();
     }
+
+    // Shared property shortlists (src/lib/collections.ts). Access is scoped to
+    // the owner, which is exactly what the only query over this collection
+    // asks for — where('ownerId', '==', uid). A document also carries a
+    // `members` array with 'collaborator' and 'viewer' entries, but nothing
+    // grants on it: there is no invite flow, and an array of maps cannot be
+    // tested in a rule anyway. Honouring collaborators needs a queryable
+    // `memberIds` array written at create time first, so until that exists a
+    // rule referencing members would be decoration, not access control.
+    // The owner is pinned on update so a collection cannot be reassigned.
+    match /collections/{collectionId} {
+      allow read: if signedIn() && resource.data.ownerId == request.auth.uid;
+      allow create: if signedIn() && request.resource.data.ownerId == request.auth.uid;
+      allow update: if signedIn()
+        && resource.data.ownerId == request.auth.uid
+        && request.resource.data.ownerId == resource.data.ownerId;
+      allow delete: if signedIn() && resource.data.ownerId == request.auth.uid;
+    }
+
+    // Append-only record of every moderation decision (src/lib/moderation.ts).
+    // recordAuditLog() runs before the listing update it describes, so with no
+    // rule here the write was denied and every moderation decision failed
+    // before it began. An entry may only be filed by a practitioner, as
+    // themselves, so a decision cannot be attributed to someone else; and
+    // nothing may edit or remove one, because an audit trail that its own
+    // subject can rewrite is not evidence of anything.
+    match /audit_logs/{logId} {
+      allow read: if isAgentOrAdmin();
+      allow create: if isAgentOrAdmin()
+        && request.resource.data.keys().hasOnly(['actorId', 'actorEmail', 'action', 'resource', 'details', 'createdAt'])
+        && request.resource.data.actorId == request.auth.uid
+        && request.resource.data.action is string
+        && request.resource.data.resource is string;
+      allow update, delete: if false;
+    }
   }
 }

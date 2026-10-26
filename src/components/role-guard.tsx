@@ -13,22 +13,47 @@ function formatRoleList(roles: UserRole[]): string {
 export default function RoleGuard({
   allowedRoles,
   featureName,
+  allowAnySignedIn = false,
   children,
 }: {
   allowedRoles: UserRole[];
   featureName: string;
+  /**
+   * Admit any authenticated account, whatever its role. For features that are
+   * open to everyone with an account rather than reserved to a claim — selling
+   * privately being the case this exists for, since the Firestore rules already
+   * allow any signed-in owner to file a Draft listing.
+   *
+   * `allowedRoles` still matters alongside it: those roles pass without waiting
+   * for the auth state to resolve, because the role mirror is readable the
+   * moment the component mounts.
+   */
+  allowAnySignedIn?: boolean;
   children: React.ReactNode;
 }) {
   const { role, isMounted } = useUserRole();
   const { user, demoUser } = useAuth();
+  const signedIn = Boolean(user || demoUser);
 
   // If role matches, render immediately
   if (allowedRoles.includes(role)) {
     return <>{children}</>;
   }
 
-  // During SSR or initial hydration pass before client state syncs,
-  // render a neutral skeleton to prevent layout shift or access-denied flash
+  if (allowAnySignedIn && signedIn) {
+    return <>{children}</>;
+  }
+
+  // During SSR or the initial hydration pass before client state syncs, render a
+  // neutral skeleton to prevent layout shift or an access-denied flash.
+  //
+  // Deliberately NOT gated on the auth provider's `loading` flag as well. That
+  // was the first version, to spare a signed-in seller a frame of "sign in" —
+  // but `loading` is set only inside the onAuthStateChanged callback, and on a
+  // cold load with no session that callback was not observed to fire, leaving
+  // this stuck on the skeleton forever. Showing the denied panel early is
+  // recoverable: it carries a sign-in link, and the component re-renders into
+  // the content the moment the session arrives. An endless skeleton is not.
   if (!isMounted) {
     return (
       <main className="min-h-screen bg-[var(--background)] px-4 py-12 text-slate-900 flex items-center justify-center dark:text-white">
@@ -53,19 +78,33 @@ export default function RoleGuard({
         </div>
 
         <span className="mt-4 inline-block rounded-full bg-slate-200/80 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-600 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-emerald-400">
-          Role Restricted View
+          {allowAnySignedIn ? "Sign In Required" : "Role Restricted View"}
         </span>
 
         <h1 className="mt-3 text-2xl font-bold text-slate-950 dark:text-white">
           {featureName} Access
         </h1>
 
+        {/* An open feature that someone simply is not signed in for is not a
+            permissions problem, and saying "reserved for Seller accounts" to a
+            visitor who only needs an account would send them looking for a role
+            they do not need. */}
         <p className="mt-2 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
-          You are currently viewing Dynasty Estates in <strong className="text-slate-900 font-bold dark:text-white">{role} Mode</strong>.
-          This feature is reserved for <strong>{formatRoleList(allowedRoles)}</strong> accounts.
-          {isSignedIn
-            ? " Sign in with an account that holds that role to continue."
-            : ` Sign in with ${recommendedRole} credentials to continue.`}
+          {allowAnySignedIn ? (
+            <>
+              Sign in to continue. Any Dynasty Estates account can list a property
+              privately — you do not need a seller or agency role to begin.
+            </>
+          ) : (
+            <>
+              You are currently viewing Dynasty Estates in{" "}
+              <strong className="text-slate-900 font-bold dark:text-white">{role} Mode</strong>.
+              This feature is reserved for <strong>{formatRoleList(allowedRoles)}</strong> accounts.
+              {isSignedIn
+                ? " Sign in with an account that holds that role to continue."
+                : ` Sign in with ${recommendedRole} credentials to continue.`}
+            </>
+          )}
         </p>
 
         <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:justify-center">

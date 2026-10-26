@@ -119,8 +119,9 @@ export async function getUserCollections(userId: string): Promise<PropertyCollec
       };
     });
   } catch (error) {
-    // The `collections` collection has no security rules yet, so these reads are
-    // denied by default. Returning demo collections hid that completely.
+    // The rule for `collections` is owner-scoped, so this query must keep
+    // filtering on ownerId == the signed-in uid or it is denied wholesale.
+    // Returning demo collections on failure hid that completely.
     console.error("Collections query failed:", error);
     throw new Error("Unable to load your collections.", { cause: error });
   }

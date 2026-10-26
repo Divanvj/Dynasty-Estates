@@ -263,7 +263,11 @@ export default function NewListingWizardPage() {
   ];
 
   return (
-    <RoleGuard allowedRoles={["Seller", "Agent", "Admin"]} featureName="Publish Listing">
+    <RoleGuard
+      allowedRoles={["Seller", "Agent", "Admin"]}
+      allowAnySignedIn
+      featureName="Publish Listing"
+    >
       <main className="min-h-screen bg-[var(--background)] px-3 py-4 text-slate-900 md:px-8 dark:text-white">
       <div className="mx-auto max-w-4xl">
         {/* Navigation Bar */}

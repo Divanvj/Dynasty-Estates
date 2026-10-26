@@ -317,12 +317,18 @@ export function getListingsByLocation({
   province,
   city,
   transactionType,
+  properties,
 }: {
   province: string;
   city?: string;
   transactionType?: "sale" | "rent";
+  properties?: PropertyRecord[];
 }): EnrichedListing[] {
-  const listings = getEnrichedListings();
+  const source = properties && properties.length > 0 ? properties : fallbackProperties;
+  const listings = source.map((p) => {
+    const { property, listing } = decomposePropertyRecord(p);
+    return assembleEnrichedListing(listing, property);
+  });
   const normalizedProv = province.toLowerCase().replace(/[-_]/g, " ");
   const normalizedCity = city ? city.toLowerCase().replace(/[-_]/g, " ") : undefined;
 

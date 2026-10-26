@@ -1,8 +1,8 @@
 import { MetadataRoute } from "next";
 
-export default function robots(): MetadataRoute.Robots {
-  const baseUrl = "https://dynastyestates.co.za";
+import { SITE_URL } from "@/lib/site-url";
 
+export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
@@ -11,31 +11,48 @@ export default function robots(): MetadataRoute.Robots {
           "/",
           "/search",
           "/property/",
+          "/for-sale",
           "/for-sale/",
+          "/to-rent",
           "/to-rent/",
           "/calculators",
           "/insights",
           "/agents",
-          "/seller",
-          "/legal",
-          "/collections",
+          "/legal/privacy",
         ],
         disallow: [
           "/admin",
           "/admin/*",
           "/agent",
           "/agent/*",
+          "/seller",
+          "/seller/*",
           "/saved",
+          "/saved/*",
           "/inquiries",
+          "/inquiries/*",
+          "/collections",
+          "/collections/*",
+          "/compare",
+          "/compare/*",
           "/api/",
           "/api/*",
           "/auth",
-          "/*?*priceMin=*", // Prevent combinatorial query param crawl traps
-          "/*?*priceMax=*",
+          "/auth/*",
+          "/*?*minPrice=*", // Prevent combinatorial query param crawl traps
+          "/*?*maxPrice=*",
+          "/*?*beds=*",
+          "/*?*baths=*",
+          "/*?*parking=*",
+          "/*?*furnished=*",
+          "/*?*features=*",
+          "/*?*sort=*",
+          "/*?*view=*",
+          "/*?*q=*",
         ],
       },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import Image from "next/image";
 
 import { ArrowLeftIcon, ArrowRightIcon } from "@/components/icons";
 
@@ -91,14 +92,24 @@ export default function PropertyCardPhotos({ images, title, frameClassName = "" 
         <div
           key={`${src}-${i}`}
           aria-hidden={i !== index}
-          className={`absolute inset-0 bg-cover bg-center transition-opacity ${
-            i === index ? "opacity-100" : "opacity-0"
+          className={`absolute inset-0 transition-opacity ${
+            i === index ? "opacity-100 z-10" : "opacity-0 z-0"
           } ${frameClassName}`}
           style={{
-            backgroundImage: isLive(i) ? `url(${src})` : undefined,
             transitionDuration: `${FADE_MS}ms`,
           }}
-        />
+        >
+          {isLive(i) && (
+            <Image
+              src={src}
+              alt={`${title} - Photo ${i + 1}`}
+              fill
+              priority={i === 0}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover object-center"
+            />
+          )}
+        </div>
       ))}
 
       {many && (
@@ -137,7 +148,14 @@ export default function PropertyCardPhotos({ images, title, frameClassName = "" 
               Each dot instead gets its own padded button: the visual dot stays
               small while the button reaches a comfortable height, and the row
               keeps enough horizontal separation to stay tappable. */}
-          <div className="absolute inset-x-0 bottom-0 z-20 flex items-center justify-center gap-0.5 pb-1">
+          {/* `pointer-events-none` on the row, `pointer-events-auto` on each
+              dot. The row is full-width (inset-x-0) but the dots only occupy
+              its centre, so on a card whose whole surface is a link the empty
+              flanks sat above that overlay and swallowed the click — about 3%
+              of the card, in a band along the bottom of the photograph, where
+              nothing happened. Letting the gaps fall through costs the dots
+              nothing: each dot re-enables pointer events for itself. */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex items-center justify-center gap-0.5 pb-1">
             {frames.map((_, i) => (
               <button
                 key={`dot-${i}`}
@@ -149,7 +167,7 @@ export default function PropertyCardPhotos({ images, title, frameClassName = "" 
                   e.stopPropagation();
                   go(i);
                 }}
-                className="group/dot flex cursor-pointer items-center justify-center px-1.5 py-2.5"
+                className="group/dot pointer-events-auto flex cursor-pointer items-center justify-center px-1.5 py-2.5"
               >
                 <span
                   className={`block h-1.5 rounded-full transition-all ${

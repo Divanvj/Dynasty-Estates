@@ -118,6 +118,11 @@ export async function getPendingModerationQueue(): Promise<ModerationItem[]> {
   }
 
   try {
+    // Equality on status plus a descending sort needs the composite index
+    // (status ASC, createdAt DESC) declared in firestore.indexes.json. Changing
+    // either the filter field or the sort means a new index: deploy it with
+    // `npm run firebase:deploy:indexes` before the change ships, or this query
+    // starts failing on every call.
     const q = query(
       collection(db, "properties"),
       where("status", "==", "Submitted"),
@@ -143,8 +148,8 @@ export async function getPendingModerationQueue(): Promise<ModerationItem[]> {
       };
     });
   } catch (error) {
-    // This query needs a composite index that does not exist yet, so it fails
-    // every time. Returning the demo queue made the console look functional.
+    // Returning the demo queue here made the console look functional while the
+    // query was failing on every call, so the failure has to surface.
     console.error("Moderation queue query failed:", error);
     throw new Error("Unable to load the moderation queue.", { cause: error });
   }
@@ -186,9 +191,11 @@ export async function recordAuditLog({
         createdAt: serverTimestamp(),
       });
     } catch (error) {
-      // `audit_logs` has no security rules, so this write is denied by default.
-      // Swallowing it meant the audit trail existed only in an in-memory array
-      // while the console reported "Audit log recorded".
+      // The `audit_logs` rule only accepts this exact field set, from a
+      // practitioner, with actorId == their own uid — so adding a field here
+      // means updating firestore.rules in the same change. Swallowing the
+      // error meant the audit trail existed only in an in-memory array while
+      // the console reported "Audit log recorded".
       console.error("Failed to write audit log:", error);
       throw new Error("Could not record the audit log entry.", { cause: error });
     }

@@ -33,21 +33,28 @@ export default function BrandLogo({
       className={`group flex shrink-0 items-center gap-2.5 sm:gap-3 ${className}`}
     >
       {/*
-        Three brand PNGs exist and only one suits a tile. Measured opaque
-        bounding boxes:
-          dynasty-logo.png       glyph is 29% of canvas width -> renders tiny
-          dynasty-app-icon.png   has its own rounded corners + 8% margin, so
-                                 nesting it produced a double radius and halo
-          dynasty-icon-square.png full-bleed, zero padding  <- this one
-        A ring rather than a border, so no inset gap appears against the art.
+        Three brand PNGs exist. Measured opaque bounding boxes:
+          dynasty-logo.png        transparent glyph, 29% of canvas width  <- this one
+          dynasty-app-icon.png    carries its own rounded corners + 8% margin, so
+                                  nesting it produced a double radius and a halo
+          dynasty-icon-square.png full-bleed navy tile, zero padding
+
+        The square tile renders the largest mark, but it brings its own navy
+        background and would cover the black tile the brand calls for. So the
+        transparent glyph stays, and the mark is enlarged by giving it more of
+        the tile rather than by switching asset: 48px tile with 4px padding
+        leaves a 38px image box, against 26.4px before (+44%).
+
+        Keep `width`/`height` at 2x the rendered box so the optimiser serves a
+        sharp source; at the old 31px it would upscale into the larger tile.
       */}
-      <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl overflow-hidden shadow-md border border-emerald-400/40 bg-gradient-to-br from-[#0c4e50] to-[#07393a] dark:from-[#092224] dark:to-[#041315] p-2 group-hover:scale-105 group-hover:border-emerald-400 group-hover:shadow-[0_0_16px_rgba(16,185,129,0.4)] transition-all">
+      <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl overflow-hidden shadow-md border border-neutral-800 dark:border-neutral-700/80 bg-black p-1 group-hover:scale-105 group-hover:border-emerald-500/50 group-hover:shadow-[0_0_16px_rgba(16,185,129,0.3)] transition-all">
         <Image
           src="/dynasty-logo.png"
           alt="Dynasty Estates"
-          width={28}
-          height={28}
-          className="h-full w-full object-contain filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
+          width={96}
+          height={96}
+          className="h-full w-full object-contain filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"
           priority
         />
       </div>

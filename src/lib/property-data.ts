@@ -1,7 +1,7 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 
 import { db, isFirebaseConfigured } from "./firebase";
-import { ACTIVE_CATALOGUE_STATUSES } from "./types/domain";
+import { ACTIVE_CATALOGUE_STATUSES, PUBLIC_LISTING_STATUSES } from "./types/domain";
 export * from "./types/domain";
 
 export type PropertyType =
@@ -17,6 +17,13 @@ export type ListingType = "sale" | "rent";
 export type PropertyRecord = {
   id: string;
   slug: string;
+  /**
+   * The practitioner handling this listing. Set explicitly rather than inferred:
+   * guessing by area meant a private seller's listing could display a random
+   * agency's phone number. An unknown or missing id shows no direct-contact
+   * channel at all, which is the correct answer when nobody is assigned.
+   */
+  agentId?: string;
   title: string;
   location: string;
   suburb?: string;
@@ -324,11 +331,9 @@ export const amenityTaxonomy = [
   { id: "flatlet", label: "Separate Self-Contained Flatlet" },
 ];
 
-// This list used to be a mix of lifecycle statuses and marketing labels ("Live",
-// "Featured", "Open house"). Those labels are `tag` values, never statuses, and
-// asking Firestore for statuses the rules did not permit got the whole query
-// denied. It now comes from the one canonical list, which firestore.rules mirrors.
-const publicStatuses: readonly string[] = ACTIVE_CATALOGUE_STATUSES;
+// Mirror the public statuses allowed by firestore.rules ("Published", "Under offer", "Sold", "Rented").
+// This allows sold and rented listings to resolve their canonical URLs and preserve SEO authority.
+const publicStatuses: readonly string[] = PUBLIC_LISTING_STATUSES;
 
 /**
  * The marketing tag to show beside a listing's transaction badge, or null when
@@ -351,6 +356,7 @@ export const fallbackProperties: PropertyRecord[] = [
   {
     id: "rosebank-vantage",
     slug: "rosebank-vantage",
+    agentId: "agent-sherry",
     title: "The Vantage Executive Loft",
     location: "Bath Avenue, Rosebank, Johannesburg, Gauteng",
     suburb: "Rosebank",
@@ -392,6 +398,7 @@ export const fallbackProperties: PropertyRecord[] = [
   {
     id: "stellenbosch-cottage",
     slug: "stellenbosch-cottage",
+    agentId: "agent-marcus",
     title: "Brandwacht Winelands Garden Cottage",
     location: "Brandwacht, Stellenbosch, Western Cape",
     suburb: "Stellenbosch",
@@ -432,6 +439,7 @@ export const fallbackProperties: PropertyRecord[] = [
   {
     id: "sandton-skye",
     slug: "sandton-skye",
+    agentId: "agent-sherry",
     title: "Sandton Skye Executive High-Rise",
     location: "Stan Road, Sandton Central, Johannesburg, Gauteng",
     suburb: "Sandton",
@@ -464,6 +472,7 @@ export const fallbackProperties: PropertyRecord[] = [
   {
     id: "century-city-waterside",
     slug: "century-city-waterside",
+    agentId: "agent-marcus",
     title: "Century City Canal Quays Apartment",
     location: "Park Lane, Century City, Cape Town, Western Cape",
     suburb: "Century City",
@@ -496,6 +505,7 @@ export const fallbackProperties: PropertyRecord[] = [
   {
     id: "menlyn-maine",
     slug: "menlyn-maine",
+    agentId: "agent-sherry",
     title: "The Trilogy at Menlyn Maine",
     location: "Aramist Avenue, Menlyn Maine, Pretoria, Gauteng",
     suburb: "Menlyn",
@@ -528,6 +538,7 @@ export const fallbackProperties: PropertyRecord[] = [
   {
     id: "ballito-breeze",
     slug: "ballito-breeze",
+    agentId: "agent-marcus",
     title: "Seaward Estate Contemporary Townhouse",
     location: "Decagon Road, Seaward Estate, Ballito, KwaZulu-Natal",
     suburb: "Ballito",
@@ -560,6 +571,7 @@ export const fallbackProperties: PropertyRecord[] = [
   {
     id: "midrand-waterfall",
     slug: "midrand-waterfall",
+    agentId: "agent-sherry",
     title: "Waterfall Country Village Cluster",
     location: "Country Gate, Waterfall City, Midrand, Gauteng",
     suburb: "Waterfall",
@@ -591,6 +603,7 @@ export const fallbackProperties: PropertyRecord[] = [
   {
     id: "umhlanga-pearl",
     slug: "umhlanga-pearl",
+    agentId: "agent-marcus",
     title: "The Pearls of Umhlanga Sky Residence",
     location: "Lagoon Drive, Umhlanga Rocks, KwaZulu-Natal",
     suburb: "Umhlanga",
@@ -622,6 +635,7 @@ export const fallbackProperties: PropertyRecord[] = [
   {
     id: "harbor-view",
     slug: "harbor-view",
+    agentId: "agent-marcus",
     title: "The Glen Luxury Coastal Villa",
     location: "The Glen, Camps Bay, Cape Town, Western Cape",
     suburb: "Camps Bay",
@@ -654,6 +668,7 @@ export const fallbackProperties: PropertyRecord[] = [
   {
     id: "constantia-manor",
     slug: "constantia-manor",
+    agentId: "agent-marcus",
     title: "Constantia Upper Historic Manor",
     location: "Southern Cross Drive, Constantia Upper, Cape Town, Western Cape",
     suburb: "Constantia",
@@ -686,6 +701,7 @@ export const fallbackProperties: PropertyRecord[] = [
   {
     id: "oak-terrace",
     slug: "oak-terrace",
+    agentId: "agent-sherry",
     title: "Claremont Upper Courtyard Townhouse",
     location: "Keurboom Road, Claremont Upper, Cape Town, Western Cape",
     suburb: "Claremont",
@@ -724,6 +740,7 @@ export const fallbackProperties: PropertyRecord[] = [
   {
     id: "summerstrand-beachfront",
     slug: "summerstrand-beachfront",
+    agentId: "agent-marcus",
     title: "Summerstrand Oceanfront Family Residence",
     location: "Marine Drive, Summerstrand, Gqeberha, Eastern Cape",
     suburb: "Summerstrand",
@@ -753,6 +770,7 @@ export const fallbackProperties: PropertyRecord[] = [
   {
     id: "bloemfontein-woodland-hills",
     slug: "bloemfontein-woodland-hills",
+    agentId: "agent-sherry",
     title: "Woodland Hills Wildlife Estate Villa",
     location: "Bergwind Drive, Woodland Hills Wildlife Estate, Bloemfontein, Free State",
     suburb: "Woodland Hills",
@@ -782,6 +800,7 @@ export const fallbackProperties: PropertyRecord[] = [
   {
     id: "juniper-ridge",
     slug: "juniper-ridge",
+    agentId: "agent-sherry",
     title: "Mount Street Enclosure Family Homestead",
     location: "Mount Street Enclosure, Bryanston East, Sandton, Gauteng",
     suburb: "Bryanston",
@@ -820,6 +839,7 @@ export const fallbackProperties: PropertyRecord[] = [
   {
     id: "silver-lakes",
     slug: "silver-lakes",
+    agentId: "agent-sherry",
     title: "Silver Lakes Golf & Wildlife Fairway Haven",
     location: "Kingfisher Drive, Silver Lakes Golf Estate, Pretoria East, Gauteng",
     suburb: "Silver Lakes",
@@ -852,6 +872,7 @@ export const fallbackProperties: PropertyRecord[] = [
   {
     id: "waterkloof-crest",
     slug: "waterkloof-crest",
+    agentId: "agent-sherry",
     title: "Waterkloof Ridge Diplomatic Architectural Villa",
     location: "Rigel Avenue, Waterkloof Ridge, Pretoria, Gauteng",
     suburb: "Waterkloof",
@@ -898,6 +919,7 @@ export const fallbackProperties: PropertyRecord[] = [
   {
     id: "simbithi-eco-estate",
     slug: "simbithi-eco-estate",
+    agentId: "agent-marcus",
     title: "Simbithi Eco-Estate Ocean-Breeze Pavilion",
     location: "Jackalberry Way, Simbithi Eco-Estate, Ballito, KwaZulu-Natal",
     suburb: "Ballito",
@@ -927,6 +949,7 @@ export const fallbackProperties: PropertyRecord[] = [
   {
     id: "crescent-villa",
     slug: "crescent-villa",
+    agentId: "agent-sherry",
     title: "Morningside Sandhurst Border Grand Manor",
     location: "Summit Road, Morningside, Sandton, Gauteng",
     suburb: "Morningside",
@@ -956,6 +979,7 @@ export const fallbackProperties: PropertyRecord[] = [
   {
     id: "dainfern-golf-estate",
     slug: "dainfern-golf-estate",
+    agentId: "agent-sherry",
     title: "Dainfern Golf Estate Riverfront Residence",
     location: "Cedar Lakes Link, Dainfern Golf Estate, Sandton, Gauteng",
     suburb: "Dainfern",
@@ -985,6 +1009,7 @@ export const fallbackProperties: PropertyRecord[] = [
   {
     id: "steenberg-golf-estate",
     slug: "steenberg-golf-estate",
+    agentId: "agent-marcus",
     title: "Steenberg Private Winelands & Golf Estate Villa",
     location: "Steenberg Boulevard, Tokai / Constantia Valley, Cape Town, Western Cape",
     suburb: "Constantia",
@@ -1036,6 +1061,7 @@ export async function getPropertyList(): Promise<PropertyRecord[]> {
       return {
         id: docSnap.id,
         slug: data.slug ?? docSnap.id,
+        agentId: data.agentId ?? undefined,
         title: data.title ?? "Untitled property",
         location: data.location ?? "South Africa",
         suburb: data.suburb ?? "",

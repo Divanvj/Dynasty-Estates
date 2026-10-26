@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import SavePropertyButton from "@/components/save-property-button";
 import DynastyPropertyMap from "@/components/dynasty-property-map";
 import {
@@ -26,9 +26,40 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
   const [displayMode, setDisplayMode] = useState<MapDisplayMode>("map");
   const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
+  /**
+   * The listings inside the area drawn on the map, or null when none is drawn.
+   *
+   * The map has always worked this out — it filters its own pins and shows an
+   * "N in your area" badge — but nothing ever asked it for the set, so drawing
+   * an area changed the map while the feed beside it carried on showing
+   * everything. This is the connection that was missing.
+   */
+  const [areaIds, setAreaIds] = useState<string[] | null>(null);
+
+  // Stable identity matters: the map lists this callback in the dependencies of
+  // the effect that emits, so an inline arrow would re-arm it on every render.
+  const handleAreaFilterChange = useCallback((ids: string[] | null) => {
+    setAreaIds(ids);
+  }, []);
+
+  const visibleProperties = useMemo(() => {
+    if (!areaIds) return properties;
+    const inArea = new Set(areaIds);
+    return properties.filter((p) => inArea.has(p.id));
+  }, [properties, areaIds]);
+
   const activeProperty = useMemo(() => {
-    return properties.find((p) => p.id === activePropertyId) ?? properties[0];
-  }, [properties, activePropertyId]);
+    // Honour the selection only while it is still inside the drawn area, or
+    // Street View carries on inspecting a property the feed has just filtered
+    // out. Falling back to the first visible one keeps the two panels agreeing.
+    const selected = visibleProperties.find((p) => p.id === activePropertyId);
+    if (selected) return selected;
+    return (
+      visibleProperties[0] ??
+      properties.find((p) => p.id === activePropertyId) ??
+      properties[0]
+    );
+  }, [properties, visibleProperties, activePropertyId]);
 
   // When clicking a property in the feed, select it and activate Street View
   function handleSelectProperty(propertyId: string, openStreetView = false) {
@@ -61,13 +92,17 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
           ordered first on phones and returns to the right-hand column at `lg`. */}
       <div className="order-2 lg:order-none lg:col-span-7 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-2 px-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
-          <span>Showing {properties.length} mapped residences</span>
+          <span>
+            {areaIds
+              ? `Showing ${visibleProperties.length} of ${properties.length} in your area`
+              : `Showing ${properties.length} mapped residences`}
+          </span>
           <span className="text-emerald-800 dark:text-emerald-400">
             💡 Click any property or &ldquo;Street View&rdquo; to inspect
           </span>
         </div>
 
-        {properties.map((property) => {
+        {visibleProperties.map((property) => {
           const isSelected = property.id === activePropertyId;
 
           return (
@@ -195,6 +230,19 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
             </div>
           );
         })}
+
+        {/* An area can legitimately contain nothing. Without this the feed just
+            emptied, which reads as a broken page rather than a narrow search. */}
+        {areaIds && visibleProperties.length === 0 && (
+          <div className="rounded-[28px] border border-white/80 bg-white/75 p-8 text-center shadow-[0_10px_28px_rgba(36,48,50,0.06)] backdrop-blur-xl dark:border-white/10 dark:bg-[#0c1a1c]/80 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+            <p className="text-sm font-bold text-slate-900 dark:text-white">
+              No listings in this area
+            </p>
+            <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+              Draw a wider area, or clear it on the map to see all {properties.length} again.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Right Column: Sticky Google Maps & Street View Console */}
@@ -271,6 +319,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                 hoveredId={hoveredPropertyId}
                 onSelect={setActivePropertyId}
                 onHover={setHoveredPropertyId}
+                onAreaFilterChange={handleAreaFilterChange}
                 className="h-full w-full"
               />
             ) : (

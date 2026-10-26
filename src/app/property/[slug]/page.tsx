@@ -23,13 +23,18 @@ import {
   CheckIcon,
   LandPlotIcon,
   LocationPinIcon,
+  PhoneIcon,
   ReceiptIcon,
   ResidentialIcon,
   ShieldCheckIcon,
   SofaIcon,
+  WhatsAppIcon,
 } from "@/components/icons";
 import { formatNumber } from "@/lib/formatters";
+import { getListingContact } from "@/lib/listing-contact";
+import { getAgentByIdOrSlug } from "@/lib/agents-data";
 import { getPropertyBySlug } from "@/lib/property-data";
+import { absoluteUrl } from "@/lib/site-url";
 
 export async function generateMetadata({
   params,
@@ -48,7 +53,7 @@ export async function generateMetadata({
   } catch (error) {
     console.error(`Could not load metadata for property "${slug}":`, error);
     return {
-      title: "Property | Dynasty Estates",
+      title: "Property Details",
       description: "Property details are temporarily unavailable.",
       robots: { index: false, follow: true },
     };
@@ -56,15 +61,17 @@ export async function generateMetadata({
 
   if (!property) {
     return {
-      title: "Property Not Found | Dynasty Estates",
+      title: "Property Not Found",
       description: "The requested property listing could not be found.",
     };
   }
 
   const isRental = property.listingType === "rent";
-  const title = `${property.title} | ${isRental ? "To Rent" : "For Sale"} in ${property.suburb || property.city || "South Africa"}`;
+  const isConcluded = property.status === "Sold" || property.status === "Rented";
+  const statusPrefix = isConcluded ? `[${property.status}] ` : "";
+  const title = `${statusPrefix}${property.title} | ${isRental ? "To Rent" : "For Sale"} in ${property.suburb || property.city || "South Africa"}`;
   const description = `${property.beds} Bed, ${property.baths} Bath ${property.type} for ${isRental ? "rent" : "sale"} in ${property.location}. Asking ${property.price}. ${property.description.slice(0, 150)}...`;
-  const canonicalUrl = `https://dynastyestates.co.za/property/${property.slug}`;
+  const canonicalUrl = absoluteUrl(`/property/${property.slug}`);
   const primaryImage = property.gallery && property.gallery.length > 0 ? property.gallery[0] : property.image;
 
   return {
@@ -108,6 +115,9 @@ export default async function PropertyPage({
   if (!property) {
     notFound();
   }
+
+  const contact = getListingContact(property);
+  const agentProfile = property.agentId ? getAgentByIdOrSlug(property.agentId) : null;
 
   // The body already pads 68px + safe-area for the tab bar, so this only has to
   // clear the action bar stacked above it (69px). 68 + 76 = 144px against the
@@ -187,6 +197,16 @@ export default async function PropertyPage({
                     }`}>
                       {property.listingType === "rent" ? "To Rent" : "For Sale"}
                     </span>
+                    {property.status === "Sold" && (
+                      <span className="rounded-full border border-red-400 bg-red-950/90 px-3 py-1 text-[10px] uppercase tracking-widest font-extrabold text-red-200 backdrop-blur-md">
+                        Sold by Dynasty Estates
+                      </span>
+                    )}
+                    {property.status === "Rented" && (
+                      <span className="rounded-full border border-purple-400 bg-purple-950/90 px-3 py-1 text-[10px] uppercase tracking-widest font-extrabold text-purple-200 backdrop-blur-md">
+                        Let Agreed / Rented
+                      </span>
+                    )}
                     {property.onShow && (
                       <span className="rounded-full border border-rose-300/80 bg-rose-950/85 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-rose-200 backdrop-blur-md flex items-center gap-1.5">
                         <span className="h-1.5 w-1.5 rounded-full bg-rose-400 animate-pulse" />
@@ -219,6 +239,41 @@ export default async function PropertyPage({
                 </div>
               </div>
         </PropertyHeroGallery>
+
+        {/* Sold / Concluded Listing Retention & Internal Navigation */}
+        {(property.status === "Sold" || property.status === "Rented") && (
+          <div className="mt-6 rounded-[26px] border border-amber-300/80 bg-gradient-to-r from-amber-50/90 to-orange-50/80 p-5 shadow-sm backdrop-blur-xl dark:border-amber-500/20 dark:from-amber-950/30 dark:to-orange-950/20">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <span className="rounded-full bg-amber-800 px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-widest text-white">
+                  Listing Concluded · Historical Record Retained
+                </span>
+                <h2 className="text-sm sm:text-base font-bold text-slate-950 mt-1.5 dark:text-white">
+                  This mandate has been successfully {property.status.toLowerCase()}
+                </h2>
+                <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
+                  Explore other active mandates and property market trends in {property.suburb || property.city || "this region"}.
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center gap-2 shrink-0">
+                {property.province && property.city && (
+                  <Link
+                    href={`/${property.listingType === "rent" ? "to-rent" : "for-sale"}/${property.province.toLowerCase().replace(/\s+/g, "-")}/${property.city.toLowerCase().replace(/\s+/g, "-")}`}
+                    className="rounded-xl bg-slate-950 px-4 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 transition-colors"
+                  >
+                    View Active {property.city} Listings →
+                  </Link>
+                )}
+                <Link
+                  href="/search"
+                  className="rounded-xl border border-slate-300/80 bg-white/80 px-4 py-2.5 text-xs font-bold text-slate-800 shadow-xs hover:bg-white dark:bg-[#0c1a1c] dark:border-white/10 dark:text-slate-200 transition-colors"
+                >
+                  Catalogue Search →
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* On Show Weekend Viewing Showcase */}
         {property.onShow && (
@@ -395,15 +450,55 @@ export default async function PropertyPage({
             {/* Agent / Practitioner Card */}
             <div className="rounded-[30px] border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <p className="text-[10px] uppercase tracking-[0.22em] text-slate-500 font-bold dark:text-slate-400">Mandate Property Practitioner</p>
+              {/* Was hardcoded to one practitioner ("SG / Sherry Gallagher") on
+                  every listing in the catalogue. Now resolved per listing. */}
               <div className="mt-4 flex items-center gap-3 rounded-[22px] border border-white/80 bg-white/70 p-3.5 shadow-sm dark:bg-[#060d0e]/60 dark:border-white/10">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-900 text-sm font-bold text-white dark:bg-emerald-600/30 dark:border dark:border-emerald-500/40 dark:text-emerald-300 dark:shadow-[0_0_12px_rgba(16,185,129,0.25)]">
-                  SG
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-slate-900 text-sm font-bold text-white dark:bg-emerald-600/30 dark:border dark:border-emerald-500/40 dark:text-emerald-300 dark:shadow-[0_0_12px_rgba(16,185,129,0.25)]">
+                  {(contact?.name ?? "Dynasty Estates")
+                    .split(" ")
+                    .map((part) => part[0])
+                    .slice(0, 2)
+                    .join("")}
                 </div>
-                <div>
-                  <p className="font-bold text-slate-900 dark:text-white">Sherry Gallagher</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">Senior Property Practitioner · PPRA Verified</p>
+                <div className="min-w-0">
+                  <p className="font-bold text-slate-900 dark:text-white">
+                    {agentProfile ? (
+                      <Link
+                        href={`/agents/${agentProfile.slug}`}
+                        className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                      >
+                        {contact?.name ?? agentProfile.name}
+                      </Link>
+                    ) : (
+                      contact?.name ?? "Dynasty Estates"
+                    )}
+                  </p>
+                  <p className="truncate text-xs text-slate-500 dark:text-slate-400">
+                    {contact?.agencyName ?? agentProfile?.agency ?? "Property Practitioner"}
+                  </p>
                 </div>
               </div>
+
+              {contact && (
+                <div className="mt-3 grid grid-cols-2 gap-2.5">
+                  <a
+                    href={contact.whatsappHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-[#25D366] px-4 text-xs font-bold text-white shadow-sm transition-all hover:brightness-95"
+                  >
+                    <WhatsAppIcon className="h-4 w-4" />
+                    WhatsApp
+                  </a>
+                  <a
+                    href={contact.telHref}
+                    className="flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-slate-300 bg-white/80 px-4 text-xs font-bold text-slate-800 transition-all hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-200 dark:hover:bg-white/10"
+                  >
+                    <PhoneIcon className="h-4 w-4" />
+                    Call
+                  </a>
+                </div>
+              )}
 
               <div className="mt-6 flex flex-col gap-3">
                 {property.listingType === "rent" ? (
@@ -459,21 +554,37 @@ export default async function PropertyPage({
           </span>
           <span className="text-base font-extrabold text-slate-950 dark:text-white">{property.price}</span>
         </div>
+        {/* Contact first. A buyer on a phone wants to reach the agent, and in
+            this market that means WhatsApp or a call rather than a form. The
+            tenant-application button that used to sit here is a duplicate of the
+            one in the practitioner card below, so the space goes to the two
+            channels that did not exist at all. */}
         <div className="flex items-center gap-2">
-          {property.listingType === "rent" && (
-            <TenantApplicationButton
-              propertyId={property.id}
-              propertyTitle={property.title}
-              monthlyRentZAR={property.numericPrice}
-              depositZAR={property.depositRequired}
-              className="rounded-full bg-emerald-800 px-3.5 py-2.5 text-xs font-bold text-white shadow-md hover:bg-emerald-700 cursor-pointer"
-            />
+          {contact && (
+            <>
+              <a
+                href={contact.whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`WhatsApp ${contact.name} about this property`}
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white shadow-md transition-all hover:brightness-95"
+              >
+                <WhatsAppIcon className="h-5 w-5" />
+              </a>
+              <a
+                href={contact.telHref}
+                aria-label={`Call ${contact.name} on ${contact.phoneDisplay}`}
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-800 shadow-sm transition-all hover:bg-slate-50 dark:border-white/15 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
+              >
+                <PhoneIcon className="h-[18px] w-[18px]" />
+              </a>
+            </>
           )}
           <PropertyInquiryButton
             propertyId={property.id}
             propertyTitle={property.title}
             kind="tour"
-            className="flex items-center gap-1.5 rounded-full bg-slate-950 px-4 py-2.5 text-xs font-bold text-white shadow-lg cursor-pointer hover:bg-slate-800 transition-all dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+            className="flex min-h-[44px] items-center gap-1.5 rounded-full bg-slate-950 px-4 py-2.5 text-xs font-bold text-white shadow-lg cursor-pointer hover:bg-slate-800 transition-all dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
           >
             <CalendarIcon className="h-4 w-4 text-emerald-400" />
             <span>Viewing</span>

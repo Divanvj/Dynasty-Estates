@@ -150,25 +150,25 @@ export default function ThemeToggle({
           style={{
             backgroundColor: isDark ? "#060e10" : "#f1f5f9",
             border: isDark
-              ? "1px solid rgba(16, 185, 129, 0.35)"
-              : "1px solid rgba(203, 213, 225, 0.9)",
+              ? "1px solid rgba(16, 185, 129, 0.25)"
+              : "1px solid rgba(203, 213, 225, 0.7)",
+            // The last shadow in each list used to be an emerald bloom
+            // (`0 0 10px rgba(16,185,129,0.15)`) that lit the header around the
+            // switch. It is now an ordinary drop shadow, so the control reads as
+            // a raised physical object rather than something emitting light.
+            // The `inset 0 0 Npx -2px` layer is the ambient occlusion: a zero
+            // offset with negative spread hugs the perimeter, so it darkens the
+            // rounded ends rather than pooling in the middle.
             boxShadow: isDark
-              ? "inset 0 3px 6px rgba(0,0,0,0.95), inset 0 -1px 2px rgba(255,255,255,0.06), 0 0 16px rgba(16,185,129,0.25)"
-              : "inset 0 2px 4px rgba(0,0,0,0.12), inset 0 1px 2px rgba(0,0,0,0.08), inset 0 -1px 2px #ffffff, 0 1px 3px rgba(0,0,0,0.05)",
+              ? "inset 0 3px 8px rgba(0,0,0,0.85), inset 0 0 10px -2px rgba(0,0,0,0.8), inset 0 -1px 2px rgba(255,255,255,0.05), 0 2px 6px rgba(0,0,0,0.55)"
+              : "inset 0 3px 6px rgba(0,0,0,0.12), inset 0 0 8px -2px rgba(0,0,0,0.16), inset 0 -1px 1px #ffffff, 0 2px 5px rgba(0,0,0,0.10)",
           }}
         >
-          {/* Subtle outer metallic/bezel rim line */}
-          <div
-            className={`absolute inset-0 rounded-full pointer-events-none transition-colors duration-300 ${
-              isDark ? "border border-black/50" : "border border-white/80"
-            }`}
-          />
-
           {/* =============================================================== */}
-          {/* 2. ILLUMINATED NEON CHAMBERS                                    */}
+          {/* 2. ILLUMINATED RECESSED CHAMBERS                                */}
           {/* =============================================================== */}
 
-          {/* RIGHT CHAMBER: DYNASTY ELECTRIC EMERALD ("DARK" / DARK MODE) */}
+          {/* RIGHT CHAMBER: DYNASTY EMERALD ("DARK" / DARK MODE) */}
           <div
             className={`absolute top-[2px] bottom-[2px] right-[2px] flex items-center justify-center rounded-r-full transition-all duration-300 ${
               isDark ? "opacity-100 scale-100" : "opacity-0 scale-90 pointer-events-none"
@@ -176,17 +176,27 @@ export default function ThemeToggle({
             style={{
               width: `${config.chamberW}px`,
               background:
-                "radial-gradient(ellipse at 55% 50%, #00ffaa 0%, #10b981 35%, #059669 65%, #022c22 100%)",
+                "radial-gradient(ellipse at 55% 50%, #059669 0%, #047857 45%, #022c22 100%)",
               boxShadow:
-                "inset 0 2px 4px rgba(0,0,0,0.45), inset 0 -2px 4px rgba(0,0,0,0.35), 0 0 16px rgba(16,185,129,0.85)",
+                "inset 0 2px 4px rgba(0,0,0,0.4), inset 0 -1px 2px rgba(0,0,0,0.3)",
+              // The chamber is exactly `chamberW` wide and the knob is opaque and
+              // exactly `knobW` wide, so their edges met at a single column of
+              // pixels and drew a hard vertical seam across the track — the
+              // "separation line". Fading the edge that faces the knob dissolves
+              // the seam without resizing either part or moving the label, which
+              // sits centred well clear of the 22% fade.
+              WebkitMaskImage: "linear-gradient(to right, transparent 0%, #000 22%)",
+              maskImage: "linear-gradient(to right, transparent 0%, #000 22%)",
             }}
           >
-            {/* Glowing Typography */}
+            {/* Legibility shadow only. The second layer here was a
+                `0 0 4px rgba(16,185,129,0.35)` emerald halo around the glyphs,
+                which is the text glow the brief asks to reduce; the remaining
+                drop shadow is what keeps the label readable on the gradient. */}
             <span
-              className={`font-black tracking-wider text-white uppercase select-none ${config.textSize}`}
+              className={`font-black tracking-wider text-emerald-100 uppercase select-none ${config.textSize}`}
               style={{
-                textShadow:
-                  "0 0 4px #ffffff, 0 0 10px #10b981, 0 0 18px #059669, 0 1px 2px rgba(0,0,0,0.8)",
+                textShadow: "0 1px 2px rgba(0,0,0,0.7)",
               }}
             >
               DARK
@@ -201,17 +211,20 @@ export default function ThemeToggle({
             style={{
               width: `${config.chamberW}px`,
               background:
-                "radial-gradient(ellipse at 45% 50%, #fef3c7 0%, #fde68a 35%, #f59e0b 70%, #d97706 100%)",
+                "radial-gradient(ellipse at 45% 50%, #fef3c7 0%, #fde68a 45%, #f59e0b 80%, #d97706 100%)",
               boxShadow:
-                "inset 0 2px 4px rgba(0,0,0,0.18), inset 0 -1px 2px rgba(255,255,255,0.4), 0 0 12px rgba(245,158,11,0.5)",
+                "inset 0 2px 4px rgba(0,0,0,0.12), inset 0 -1px 1px rgba(255,255,255,0.4)",
+              // Mirror of the dark chamber: this one sits on the left, so the
+              // edge facing the knob is its right edge. See the note there.
+              WebkitMaskImage: "linear-gradient(to left, transparent 0%, #000 22%)",
+              maskImage: "linear-gradient(to left, transparent 0%, #000 22%)",
             }}
           >
-            {/* Glowing Typography */}
+            {/* Crisp Refined Typography with reduced glow */}
             <span
-              className={`font-black tracking-wider text-white uppercase select-none ${config.textSize}`}
+              className={`font-black tracking-wider text-amber-950 uppercase select-none ${config.textSize}`}
               style={{
-                textShadow:
-                  "0 0 4px #ffffff, 0 0 10px #f59e0b, 0 0 14px #d97706, 0 1px 2px rgba(0,0,0,0.5)",
+                textShadow: "0 1px 1px rgba(255,255,255,0.6)",
               }}
             >
               LIGHT
@@ -270,8 +283,8 @@ export default function ThemeToggle({
           <div
             className={`absolute inset-0 rounded-full pointer-events-none transition-opacity duration-300 ${
               isDark
-                ? "shadow-[inset_-2px_0_4px_rgba(52,211,153,0.3)] opacity-90"
-                : "shadow-[inset_2px_0_4px_rgba(245,158,11,0.2)] opacity-80"
+                ? "shadow-[inset_-2px_0_4px_rgba(52,211,153,0.16)] opacity-90"
+                : "shadow-[inset_2px_0_4px_rgba(245,158,11,0.16)] opacity-80"
             }`}
           />
         </div>

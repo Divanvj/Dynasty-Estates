@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import BrandLogo from "@/components/brand-logo";
 import { useState } from "react";
@@ -12,62 +13,7 @@ import {
   TagIcon,
   XMarkIcon,
 } from "@/components/icons";
-
-type AgentRecord = {
-  id: string;
-  name: string;
-  agency: string;
-  ffcNumber: string; // PPRA Fidelity Fund Certificate
-  specialty: string;
-  location: string;
-  activeMandates: number;
-  phone: string;
-  email: string;
-  image: string;
-  bio: string;
-};
-
-const agentsList: AgentRecord[] = [
-  {
-    id: "sherry-gallagher",
-    name: "Sherry Gallagher",
-    agency: "Dynasty Prestige Mandates",
-    ffcNumber: "PPRA-2026-781920",
-    specialty: "Luxury Estates & Diplomatic Residences",
-    location: "Waterkloof & Pretoria East",
-    activeMandates: 6,
-    phone: "+27 82 890 1234",
-    email: "sherry.g@dynastyestates.co.za",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80",
-    bio: "With over 14 years specializing in prime Pretoria East estates and ambassadorial residences, Sherry provides discrete, high-touch property advisory with verified PPRA certification.",
-  },
-  {
-    id: "marcus-vander-merwe",
-    name: "Marcus van der Merwe",
-    agency: "Dynasty Atlantic Seaboard",
-    ffcNumber: "PPRA-2026-554219",
-    specialty: "Atlantic Seaboard Villas & Penthouses",
-    location: "Camps Bay & Clifton, Cape Town",
-    activeMandates: 8,
-    phone: "+27 83 456 7890",
-    email: "marcus.v@dynastyestates.co.za",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80",
-    bio: "Marcus heads Atlantic Seaboard prime transactions, delivering exceptional marketing and buyer matching across Camps Bay, Clifton, and the V&A Waterfront.",
-  },
-  {
-    id: "thandi-khumalo",
-    name: "Thandi Khumalo",
-    agency: "Dynasty Sandton Commercial & Residential",
-    ffcNumber: "PPRA-2026-904321",
-    specialty: "High-Yield Clusters & Family Estates",
-    location: "Sandton & Bryanston, Johannesburg",
-    activeMandates: 5,
-    phone: "+27 81 234 5678",
-    email: "thandi.k@dynastyestates.co.za",
-    image: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&w=600&q=80",
-    bio: "An energetic practitioner known for deep market valuation accuracy and rapid negotiation turnaround across Sandton, Morningside, and Bryanston cluster developments.",
-  },
-];
+import { verifiedPractitioners as agentsList, type AgentProfile as AgentRecord } from "@/lib/agents-data";
 
 export default function AgentsPage() {
   const [selectedAgent, setSelectedAgent] = useState<AgentRecord | null>(null);
@@ -120,12 +66,21 @@ export default function AgentsPage() {
             >
               <div>
                 <div className="flex items-center gap-3">
-                  <div
-                    className="h-16 w-16 rounded-2xl bg-cover bg-center shadow-md shrink-0 ring-1 ring-black/5 dark:ring-white/15"
-                    style={{ backgroundImage: `url(${agent.image})` }}
-                  />
+                  <div className="relative h-16 w-16 rounded-2xl overflow-hidden shadow-md shrink-0 ring-1 ring-black/5 dark:ring-white/15">
+                    <Image
+                      src={agent.image}
+                      alt={agent.name}
+                      fill
+                      sizes="64px"
+                      className="object-cover"
+                    />
+                  </div>
                   <div>
-                    <h3 className="text-base font-bold text-slate-950 dark:text-white">{agent.name}</h3>
+                    <h3 className="text-base font-bold text-slate-950 dark:text-white">
+                      <Link href={`/agents/${agent.slug}`} className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                        {agent.name}
+                      </Link>
+                    </h3>
                     <p className="text-[11px] text-slate-500 font-medium dark:text-slate-400">{agent.agency}</p>
                     <span className="mt-1 inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[9px] font-bold text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.2)]">
                       <CheckIcon className="h-3 w-3" />
@@ -153,19 +108,27 @@ export default function AgentsPage() {
               </div>
 
               <div className="mt-6 flex flex-col gap-2 pt-3 border-t border-slate-200/60 dark:border-white/10">
-                <button
-                  type="button"
-                  onClick={() => setSelectedAgent(agent)}
-                  className="w-full rounded-xl bg-slate-950 py-2.5 text-xs font-bold text-white shadow-md hover:bg-slate-800 transition-all cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
-                >
-                  Contact Practitioner →
-                </button>
                 <Link
-                  href={`/search?q=${encodeURIComponent(agent.location.split("&")[0].trim())}`}
-                  className="w-full rounded-xl border border-slate-300/80 bg-white/60 py-2 text-center text-xs font-semibold text-slate-700 hover:bg-white dark:bg-[#060d0e]/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
+                  href={`/agents/${agent.slug}`}
+                  className="w-full rounded-xl bg-slate-950 py-2.5 text-center text-xs font-bold text-white shadow-md hover:bg-slate-800 transition-all cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
                 >
-                  View Active Mandates
+                  View Practitioner Profile →
                 </Link>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedAgent(agent)}
+                    className="rounded-xl border border-slate-300/80 bg-white/60 py-2 text-center text-xs font-semibold text-slate-700 hover:bg-white dark:bg-[#060d0e]/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10 cursor-pointer"
+                  >
+                    Quick Enquiry
+                  </button>
+                  <Link
+                    href={`/search?q=${encodeURIComponent(agent.location.split("&")[0].trim())}`}
+                    className="rounded-xl border border-slate-300/80 bg-white/60 py-2 text-center text-xs font-semibold text-slate-700 hover:bg-white dark:bg-[#060d0e]/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
+                  >
+                    All Mandates
+                  </Link>
+                </div>
               </div>
             </article>
           ))}

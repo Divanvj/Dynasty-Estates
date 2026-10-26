@@ -27,8 +27,21 @@ export default async function Home() {
   return (
     <main className="min-h-screen bg-transparent px-3 py-4 text-slate-900 dark:text-slate-100 md:px-6 lg:px-8">
       <div className="mx-auto max-w-[1500px]">
-        {/* Navigation Header */}
-        <header className="relative z-30 mx-auto flex max-w-[1440px] items-center justify-between rounded-[28px] border border-white/70 bg-white/40 dark:border-white/10 dark:bg-[#0b1719]/70 px-3.5 sm:px-6 py-3 backdrop-blur-xl shadow-[0_12px_30px_rgba(36,48,50,0.06)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
+        {/*
+          Navigation Header.
+
+          z-50, not z-30. A positioned element with a z-index creates a stacking
+          context, so the Sell / Tools / Profile dropdowns inside this header can
+          never paint above a *sibling* that outranks the header itself, however
+          high their own z-index is. At z-30 the hero below (z-40) won, and all
+          three dropdowns opened behind the hero panel. Every other page that
+          carries these dropdowns already uses z-50; this one was the exception.
+
+          If you add a section here that must cover the header, portal it to the
+          body as ExpandableSearchPanel does rather than raising its z-index —
+          that is what keeps its overlay clear of this stacking context.
+        */}
+        <header className="relative z-50 mx-auto flex max-w-[1440px] items-center justify-between rounded-[28px] border border-white/70 bg-white/40 dark:border-white/10 dark:bg-[#0b1719]/70 px-3.5 sm:px-6 py-3 backdrop-blur-xl shadow-[0_12px_30px_rgba(36,48,50,0.06)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
           <BrandLogo />
 
           <SiteNavigation />
@@ -41,7 +54,15 @@ export default async function Home() {
           <div className="relative rounded-[28px] sm:rounded-[32px] border border-white/70 bg-white/45 dark:border-white/10 dark:bg-[#0c1a1c]/65 p-3.5 sm:p-6 shadow-[0_20px_45px_rgba(36,48,50,0.08)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)] backdrop-blur-xl md:p-8 lg:p-10">
             <AmbientCursorHue heroScoped />
 
-            <div className="relative z-10 mx-auto max-w-3xl text-center">
+            {/*
+              max-w-5xl, not 3xl. This wrapper holds only the headline, and the
+              approved hero copy includes four deliberate two-line couplets. At
+              768px each half of a couplet wrapped on its own, so a two-line
+              couplet rendered as four rows and the hero's height swung as the
+              copy rotated. At 1024px the halves fit their own lines, which is
+              what the couplets were written to do.
+            */}
+            <div className="relative z-10 mx-auto max-w-5xl text-center">
               <HeroHeadline />
             </div>
 
@@ -166,7 +187,7 @@ export default async function Home() {
                 <li>
                   <Link href="/ai-search" className="inline-flex items-center gap-1.5 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">
                     <SparklesIcon className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
-                    <span>AI Property Concierge</span>
+                    <span>AI Search</span>
                   </Link>
                 </li>
                 <li><Link href="/calculators" className="hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Bond & True Cost™ Calculator</Link></li>

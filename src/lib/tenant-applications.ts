@@ -81,6 +81,8 @@ export async function createTenantApplication(
 export async function getApplicationsForUser(applicantId: string): Promise<TenantApplication[]> {
   if (!isFirebaseConfigured || !db) return [];
 
+  // Needs the composite index (applicantId ASC, createdAt DESC) from
+  // firestore.indexes.json; without it every call is rejected outright.
   const snapshot = await getDocs(
     query(collection(db, "applications"), where("applicantId", "==", applicantId), orderBy("createdAt", "desc")),
   );

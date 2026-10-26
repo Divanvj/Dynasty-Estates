@@ -1,17 +1,22 @@
 "use client";
 
 import Link from "next/link";
-
+import React, { useEffect, useRef, useState } from "react";
 import {
   BriefcaseIcon,
+  ChevronDownIcon,
+  FolderIcon,
   HeartIcon,
   HomeIcon,
+  InfoCircleIcon,
   ShieldIcon,
+  TagIcon,
   UserIcon,
+  XMarkIcon,
 } from "@/components/icons";
 import ThemeToggle from "@/components/theme-toggle";
 import { useAuth } from "@/components/auth-provider";
-import { useUserRole, type UserRole } from "@/lib/use-user-role";
+import { accountCan, useUserRole, type UserRole } from "@/lib/use-user-role";
 
 const ROLE_BADGES: Record<UserRole, { label: string; icon: typeof UserIcon; tone: string }> = {
   Buyer: { label: "Buyer / Renter", icon: UserIcon, tone: "text-slate-500" },
@@ -24,6 +29,13 @@ export default function AccountActions() {
   const { user: firebaseUser, demoUser, profile, signOut } = useAuth();
   const { role: activeRole } = useUserRole();
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [showSupportModal, setShowSupportModal] = useState(false);
+  const [supportMessage, setSupportMessage] = useState("");
+  const [supportSent, setSupportSent] = useState(false);
+
+  const menuRef = useRef<HTMLDivElement>(null);
+
   const user = firebaseUser || demoUser;
   const userDisplayName =
     profile?.displayName ||
@@ -31,135 +43,334 @@ export default function AccountActions() {
     user?.email?.split("@")[0] ||
     "Account";
 
+  // Capabilities need the auth state as well as the role — selling privately
+  // turns on having an account, not on holding a claim.
+  const can = (capability: Parameters<typeof accountCan>[0]) =>
+    accountCan(capability, { role: activeRole, signedIn: Boolean(user) });
+
+  const userEmail = user?.email || (demoUser ? `${demoUser.email}` : "Guest Explorer");
   const roleBadge = ROLE_BADGES[activeRole];
   const RoleBadgeIcon = roleBadge.icon;
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+        setShowSupportModal(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   async function handleSignOut() {
+    setIsOpen(false);
     await signOut();
   }
 
-  const renderAuthButton = () => {
-    if (user) {
-      return (
-        <div className="flex items-center gap-1.5 shrink-0">
-          <span
-            title={userDisplayName}
-            className="hidden xl:inline-flex max-w-[110px] truncate text-xs font-semibold text-slate-700 dark:text-slate-200"
-          >
-            {userDisplayName}
-          </span>
-          <button
-            type="button"
-            onClick={() => {
-              void handleSignOut();
-            }}
-            className="rounded-full border border-slate-300/80 bg-white/60 dark:border-white/10 dark:bg-[#060d0e]/60 px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-white/10 hover:text-emerald-900 dark:hover:text-emerald-300 transition-all cursor-pointer whitespace-nowrap shrink-0"
-          >
-            Sign out
-          </button>
-        </div>
-      );
-    }
-
-    return (
-      <Link
-        href="/auth/login"
-        className="tap-44 relative rounded-full border border-slate-300/80 bg-white/60 dark:border-white/10 dark:bg-[#060d0e]/60 px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-white/10 hover:text-emerald-900 dark:hover:text-emerald-300 transition-all whitespace-nowrap shrink-0"
-      >
-        Sign in
-      </Link>
-    );
-  };
+  function handleSupportSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!supportMessage.trim()) return;
+    setSupportSent(true);
+    setTimeout(() => {
+      setShowSupportModal(false);
+      setSupportSent(false);
+      setSupportMessage("");
+    }, 2000);
+  }
 
   return (
-    <div className="relative z-50 flex min-w-0 flex-wrap items-center justify-end gap-1.5 sm:gap-2">
-      {/* Theme Toggle (Light / Dark Mode Switcher) */}
-      <ThemeToggle />
+    <div className="relative z-50 flex items-center gap-2 sm:gap-3 shrink-0">
+      {/*
+        The theme switch used to sit here, outside the menu. At `lg` — the width
+        at which the desktop nav first appears — a signed-in header measured only
+        40px between the nav and these controls, and the switch plus its gap
+        accounted for 100px of the row. It now lives inside the menu below with
+        the other per-account preferences, which is also where the brief asks for
+        account items to be consolidated. It is one click away, not removed.
+      */}
 
-      {/* Read-only role badge — the role comes from the signed-in account */}
-      {user && (
-        <div
-          title={roleBadge.label}
-          className="flex items-center gap-1 sm:gap-1.5 rounded-full border border-slate-300/80 bg-white/70 dark:border-white/10 dark:bg-[#060d0e]/80 px-2.5 sm:px-3.5 py-1.5 text-[11px] font-bold text-slate-800 dark:text-slate-200 shadow-sm whitespace-nowrap"
+      {/* 1. Unified Profile Icon Button with Reveal Text Hover Animation */}
+      <div className="relative" ref={menuRef}>
+        <button
+          type="button"
+          onClick={() => setIsOpen((prev) => !prev)}
+          className="group relative flex items-center gap-1.5 sm:gap-2 rounded-full border border-slate-300/80 bg-white/70 dark:border-white/10 dark:bg-[#060d0e]/80 p-1 sm:p-1.5 pr-2.5 sm:pr-3 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:bg-white dark:hover:bg-[#0c1a1c] hover:border-emerald-500/50 dark:hover:border-emerald-400/50 transition-all cursor-pointer shadow-xs"
+          aria-expanded={isOpen}
+          aria-haspopup="true"
+          title="Account & Profile Menu"
         >
-          <RoleBadgeIcon className={`h-3.5 w-3.5 ${roleBadge.tone}`} />
-          <span className="hidden sm:inline uppercase tracking-wider text-[10px] text-slate-400 dark:text-slate-500">Role:</span>
-          {/* Narrow phones get the icon alone — the role is already evident from
-              the workspace you are in, and the words cost ~40px of header. */}
-          <span className="hidden min-[400px]:inline">{activeRole}</span>
+          {/* Avatar Icon */}
+          <div className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 group-hover:bg-emerald-500/10 dark:group-hover:bg-emerald-500/20 group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors">
+            <UserIcon className="h-4 w-4" />
+          </div>
+
+          {/* Reveal Text Hover Animation: Smoothly expands on hover */}
+          <span className="inline-block max-w-[55px] sm:max-w-[80px] lg:max-w-[70px] lg:group-hover:max-w-[120px] overflow-hidden text-ellipsis whitespace-nowrap transition-all duration-300 ease-out">
+            {user ? userDisplayName : "Profile"}
+          </span>
+
+          <ChevronDownIcon
+            className={`h-3 w-3 text-slate-400 transition-transform duration-200 ${
+              isOpen ? "rotate-180 text-emerald-600 dark:text-emerald-400" : ""
+            }`}
+          />
+        </button>
+
+        {/* 2. Consolidated Profile Dropdown Menu */}
+        {isOpen && (
+          <div className="absolute right-0 top-full mt-2 w-76 sm:w-80 rounded-2xl border border-slate-200/90 dark:border-white/10 bg-white/95 dark:bg-[#071315]/95 p-3 shadow-2xl backdrop-blur-xl z-50 animate-in fade-in-0 zoom-in-95 duration-150">
+            {/* User Identity Header */}
+            <div className="flex items-center gap-3 pb-3 border-b border-slate-200/80 dark:border-white/10">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 font-bold text-sm">
+                {userDisplayName.charAt(0).toUpperCase()}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
+                  {userDisplayName}
+                </p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
+                  {userEmail}
+                </p>
+                <div className="mt-1 inline-flex items-center gap-1 rounded-full bg-slate-100 dark:bg-white/10 px-2 py-0.5 text-[10px] font-semibold text-slate-600 dark:text-slate-300">
+                  <RoleBadgeIcon className={`h-3 w-3 ${roleBadge.tone}`} />
+                  <span>{activeRole}</span>
+                </div>
+              </div>
+            </div>
+
+            {/*
+              This was a Buyer / Seller / Agent picker, which let anyone — including
+              a signed-out visitor — award themselves a role by clicking it.
+
+              Roles are not preferences. Under the Property Practitioners Act a
+              person may not act as a property practitioner in South Africa without
+              a valid Fidelity Fund Certificate, so "Agent" is a verified status.
+              Both SA portals reflect that: Property24 and Private Property put
+              agents behind a separate admin subdomain reached by application,
+              with no switcher anywhere in the consumer site.
+
+              So the account states what it is, and the menu below follows from it.
+              Changing it is an auth-layer concern — a claim set server-side and
+              read back by resolveUserRole — not a button.
+            */}
+            <div className="py-2.5 border-b border-slate-200/80 dark:border-white/10">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1.5">
+                Account Type
+              </p>
+              <div className="flex items-center gap-2 rounded-xl border border-slate-200/80 bg-slate-100 px-2.5 py-2 dark:border-white/10 dark:bg-[#040e10]">
+                <RoleBadgeIcon className={`h-3.5 w-3.5 shrink-0 ${roleBadge.tone}`} />
+                <span className="text-[11px] font-bold text-slate-900 dark:text-white">
+                  {roleBadge.label}
+                </span>
+              </div>
+            </div>
+
+            {/* Appearance — the theme switch, relocated from the header row. */}
+            <div className="flex items-center justify-between gap-3 py-2.5 border-b border-slate-200/80 dark:border-white/10">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                Appearance
+              </p>
+              <ThemeToggle size="sm" />
+            </div>
+
+            {/* Menu Links */}
+            <div className="py-2 space-y-0.5">
+              <Link
+                href="/saved"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center justify-between rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
+              >
+                <span className="flex items-center gap-2.5">
+                  <HeartIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                  <span>Saved Properties</span>
+                </span>
+                <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold">View →</span>
+              </Link>
+
+              <Link
+                href="/collections"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center justify-between rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
+              >
+                <span className="flex items-center gap-2.5">
+                  <FolderIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                  <span>Collections</span>
+                </span>
+                <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold">Collab →</span>
+              </Link>
+
+              <Link
+                href="/inquiries"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center justify-between rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
+              >
+                <span className="flex items-center gap-2.5">
+                  <TagIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                  <span>Enquiries & Requests</span>
+                </span>
+                <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold">Inbox →</span>
+              </Link>
+
+              {/* Any signed-in account, matching the `allowAnySignedIn` guard on
+                  /seller/portal and the Firestore rule behind it. Hiding it is
+                  courtesy, not security — the guard and the rules enforce. */}
+              {can("sell") && (
+              <Link
+                href="/seller/portal"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center justify-between rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
+              >
+                <span className="flex items-center gap-2.5">
+                  <HomeIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                  <span>My Listings & Stats</span>
+                </span>
+                <span className="text-[10px] text-emerald-700 dark:text-emerald-400 font-bold">+ Add</span>
+              </Link>
+              )}
+
+              {/* Mirrors RoleGuard allowedRoles={["Agent","Admin"]} on
+                  /agent/dashboard. A Buyer was being offered an agent console. */}
+              {can("agency") && (
+              <Link
+                href="/agent/dashboard"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center justify-between rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
+              >
+                <span className="flex items-center gap-2.5">
+                  <BriefcaseIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                  <span>My Agency / Console</span>
+                </span>
+                <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold">Manage →</span>
+              </Link>
+              )}
+
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  setShowSupportModal(true);
+                }}
+                className="w-full flex items-center justify-between rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer text-left"
+              >
+                <span className="flex items-center gap-2.5">
+                  <InfoCircleIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                  <span>Support & Guidance</span>
+                </span>
+                <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold">Help →</span>
+              </button>
+            </div>
+
+            {/* Authentication Action */}
+            <div className="pt-2 border-t border-slate-200/80 dark:border-white/10 flex items-center justify-between">
+              {user ? (
+                <button
+                  type="button"
+                  onClick={() => void handleSignOut()}
+                  className="w-full text-center rounded-xl py-2 text-xs font-bold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors cursor-pointer"
+                >
+                  Sign Out of Account
+                </button>
+              ) : (
+                <Link
+                  href="/auth/login"
+                  onClick={() => setIsOpen(false)}
+                  className="w-full text-center rounded-xl py-2 text-xs font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-colors"
+                >
+                  Sign In / Register
+                </Link>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* 3. Support & Guidance Modal */}
+      {showSupportModal && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+        >
+          <div className="relative w-full max-w-md rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#071315] p-6 shadow-2xl text-slate-900 dark:text-white">
+            <button
+              type="button"
+              onClick={() => setShowSupportModal(false)}
+              className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-white/10 text-slate-500 cursor-pointer"
+            >
+              <XMarkIcon className="h-5 w-5" />
+            </button>
+
+            <div className="flex items-center gap-3 mb-4">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                <InfoCircleIcon className="h-5 w-5" />
+              </div>
+              <div>
+                <h2 className="text-base font-bold">Support & Guidance</h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Tricore Enterprises Customer Care</p>
+              </div>
+            </div>
+
+            {supportSent ? (
+              <div className="rounded-2xl bg-emerald-500/10 border border-emerald-500/30 p-4 text-center">
+                <p className="text-sm font-bold text-emerald-800 dark:text-emerald-300">Message Received</p>
+                <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
+                  Our South African property concierges will respond to {userEmail} shortly.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSupportSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">
+                    How can we assist you?
+                  </label>
+                  <textarea
+                    rows={3}
+                    value={supportMessage}
+                    onChange={(e) => setSupportMessage(e.target.value)}
+                    placeholder="Describe your question regarding listing, buying, or valuation..."
+                    className="w-full rounded-xl border border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-white/5 p-3 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-emerald-500"
+                    required
+                  />
+                </div>
+
+                <div className="rounded-xl bg-slate-100 dark:bg-white/5 p-3 text-xs space-y-1.5">
+                  <p className="font-bold text-slate-800 dark:text-slate-200">Helpful Resources:</p>
+                  <Link
+                    href="/calculators"
+                    onClick={() => setShowSupportModal(false)}
+                    className="block text-emerald-700 dark:text-emerald-400 hover:underline"
+                  >
+                    • SARS Transfer Duty & Bond Calculator
+                  </Link>
+                  <Link
+                    href="/insights"
+                    onClick={() => setShowSupportModal(false)}
+                    className="block text-emerald-700 dark:text-emerald-400 hover:underline"
+                  >
+                    • South African Metro Property Trends & Deeds Data
+                  </Link>
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full rounded-xl bg-gradient-to-r from-[#0b4d4e] to-[#07393a] py-2.5 text-xs font-bold text-white hover:from-[#0d595b] hover:to-[#094344] transition-all cursor-pointer shadow-md"
+                >
+                  Send Inquiry to Support
+                </button>
+              </form>
+            )}
+          </div>
         </div>
-      )}
-
-      {/* Role-Specific Action Buttons */}
-      {activeRole === "Buyer" && (
-        <>
-          <Link
-            href="/saved"
-            className="hidden lg:flex items-center gap-1 rounded-full border border-slate-300/80 bg-white/60 dark:border-white/10 dark:bg-[#060d0e]/60 px-2 sm:px-3.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-white/10 hover:text-emerald-900 dark:hover:text-emerald-300 transition-all whitespace-nowrap shrink-0"
-            title="Saved Properties"
-          >
-            <HeartIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400 sm:hidden" />
-            <span className="hidden sm:inline">Saved</span>
-          </Link>
-          <Link
-            href="/inquiries"
-            className="hidden rounded-full border border-slate-300/80 bg-white/60 dark:border-white/10 dark:bg-[#060d0e]/60 px-3.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-white/10 hover:text-emerald-900 dark:hover:text-emerald-300 transition-all md:block shrink-0"
-          >
-            Requests
-          </Link>
-          {renderAuthButton()}
-        </>
-      )}
-
-      {activeRole === "Seller" && (
-        <>
-          <Link
-            href="/seller/portal"
-            className="hidden rounded-full border border-slate-300/80 bg-white/60 dark:border-white/10 dark:bg-[#060d0e]/60 px-3.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-white/10 sm:block shrink-0"
-          >
-            Portal
-          </Link>
-          <Link
-            href="/seller/listings/new"
-            className="hidden lg:block rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] hover:from-[#0d595b] hover:to-[#094344] dark:from-emerald-700 dark:to-emerald-800 dark:hover:from-emerald-600 dark:hover:to-emerald-700 px-2.5 sm:px-4 py-1.5 text-xs font-bold text-white shadow-md shadow-emerald-950/20 border border-emerald-400/30 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] transition-all whitespace-nowrap shrink-0"
-          >
-            <span className="hidden sm:inline">List Property</span>
-            <span className="sm:hidden">+ List</span>
-          </Link>
-          {renderAuthButton()}
-        </>
-      )}
-
-      {activeRole === "Agent" && (
-        <>
-          <Link
-            href="/agent/dashboard"
-            className="hidden rounded-full border border-slate-300/80 bg-white/60 dark:border-white/10 dark:bg-[#060d0e]/60 px-3.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-white/10 sm:block shrink-0"
-          >
-            Console
-          </Link>
-          <Link
-            href="/seller/listings/new"
-            className="hidden lg:block rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#063334] hover:from-[#0d595b] hover:to-[#094344] dark:from-emerald-700 dark:to-emerald-800 dark:hover:from-emerald-600 dark:hover:to-emerald-700 px-2.5 sm:px-4 py-1.5 text-xs font-bold text-white shadow-md shadow-emerald-950/20 border border-emerald-400/30 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] transition-all whitespace-nowrap shrink-0"
-          >
-            <span className="hidden sm:inline">+ Add Mandate</span>
-            <span className="sm:hidden">+ Add</span>
-          </Link>
-          {renderAuthButton()}
-        </>
-      )}
-
-      {activeRole === "Admin" && (
-        <>
-          <Link
-            href="/admin"
-            className="hidden lg:block rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#1e1b4b] hover:from-[#0d595b] hover:to-[#2e1065] dark:from-emerald-700 dark:to-indigo-900 dark:hover:from-emerald-600 dark:hover:to-indigo-800 px-2.5 sm:px-4 py-1.5 text-xs font-bold text-white shadow-md shadow-emerald-950/20 border border-emerald-400/30 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] transition-all whitespace-nowrap shrink-0"
-          >
-            <span className="hidden sm:inline">Admin Console</span>
-            <span className="sm:hidden">Admin</span>
-          </Link>
-          {renderAuthButton()}
-        </>
       )}
     </div>
   );

@@ -1,7 +1,15 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { createPortal } from "react-dom";
 import {
   BathIcon,
@@ -23,12 +31,7 @@ import {
 import CustomSelect from "@/components/custom-select";
 import { parseNaturalLanguageQuery } from "@/lib/ai-concierge";
 import { formatNumber } from "@/lib/formatters";
-import {
-  getPropertyList,
-  matchProvinceName,
-  southAfricanProvinces,
-  type PropertyRecord,
-} from "@/lib/property-data";
+import { matchProvinceName, southAfricanProvinces } from "@/lib/property-data";
 import { getAllCitiesAlphabetical, searchCities } from "@/lib/location-data";
 
 export type SearchFilters = {
@@ -149,6 +152,21 @@ const lifestyleFeatureOptions = [
   { id: "braai_area", label: "Braai Area / Patio" },
 ];
 
+/**
+ * How long the panel stays mounted after a close is requested, so its exit
+ * animation can play. Keep in step with the `duration-200` on the backdrop and
+ * card below — if this is shorter the panel is pulled out mid-animation.
+ */
+const EXIT_MS = 200;
+
+/**
+ * Scale the panel enters from. Lower than the `zoom-in-95` the card carries,
+ * because here it is paired with a transform origin pinned to the search bar:
+ * the extra travel is what makes it read as the bar expanding rather than as a
+ * dialog fading in over the top of it.
+ */
+const ENTER_SCALE = 0.92;
+
 export default function ExpandableSearchPanel({
   defaultIntent = "rent",
   initialLocations = [],
@@ -170,13 +188,143 @@ export default function ExpandableSearchPanel({
 }: ExpandableSearchPanelProps) {
   const router = useRouter();
 
-  // Dropdown Visibility State
-  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const modalSearchInputRef = useRef<HTMLInputElement>(null);
+  const modalCardRef = useRef<HTMLDivElement>(null);
+  const aiInputRef = useRef<HTMLInputElement>(null);
+
+  // Dropdown Visibility State.
+  //
+  // `isOpen` means the panel is mounted; `closing` means it is mounted but
+  // playing its exit animation. The panel used to be a bare conditional render,
+  // so closing it removed the node in the same frame and there was nothing left
+  // on screen to animate — it vanished. Keeping it mounted for the length of
+  // the exit is what gives it a close as well as an open.
+  const [isOpen, setIsOpenRaw] = useState(false);
+  const [closing, setClosing] = useState(false);
+  const closingRef = useRef(false);
+  const closeTimerRef = useRef<number | undefined>(undefined);
+
   const mounted = useSyncExternalStore(
     () => () => {},
     () => true,
     () => false
   );
+
+  /** Where the compact bar was when the panel was opened, in viewport coords. */
+  const originRef = useRef<{ x: number; y: number } | null>(null);
+  /** Set when a close should hand focus back to the resting search bar. */
+  const restoreFocusRef = useRef(false);
+  /** Suppresses the focus-opens-the-panel behaviour for one programmatic focus. */
+  const suppressOpenOnFocusRef = useRef(false);
+
+  /**
+   * Stands in for the raw setter so every existing `setIsOpen(false)` call site
+   * — escape, click-outside, the cancel button, executing a search — gets the
+   * exit animation without being rewritten.
+   */
+  const setIsOpen = useCallback((next: boolean) => {
+    if (next) {
+      if (closeTimerRef.current !== undefined) {
+        window.clearTimeout(closeTimerRef.current);
+        closeTimerRef.current = undefined;
+      }
+      closingRef.current = false;
+      // Remember the bar's position so the panel can grow out of it rather than
+      // appearing from the middle of the viewport.
+      const bar = searchInputRef.current?.getBoundingClientRect();
+      originRef.current = bar
+        ? { x: bar.left + bar.width / 2, y: bar.top + bar.height / 2 }
+        : null;
+      setClosing(false);
+      setIsOpenRaw(true);
+      return;
+    }
+
+    // Guard with a ref, not state: a second close (escape landing on top of a
+    // click-outside) would otherwise queue a second timer.
+    if (closingRef.current) return;
+    closingRef.current = true;
+    setClosing(true);
+    closeTimerRef.current = window.setTimeout(() => {
+      closingRef.current = false;
+      closeTimerRef.current = undefined;
+      // Focus is handed back by the effect below rather than here: React has not
+      // re-rendered at this point, so the resting console still carries `inert`
+      // and focusing anything inside it silently does nothing.
+      restoreFocusRef.current = true;
+      setIsOpenRaw(false);
+      setClosing(false);
+    }, EXIT_MS);
+  }, []);
+
+  useEffect(
+    () => () => {
+      if (closeTimerRef.current !== undefined) window.clearTimeout(closeTimerRef.current);
+    },
+    []
+  );
+
+  /**
+   * Hand focus back to the resting search bar once the panel has gone, so a
+   * keyboard user carries on from where they were rather than from the top of
+   * the document.
+   *
+   * This has to be an effect rather than part of the close timer. The resting
+   * console carries `inert` while the panel is open, and nothing inside an inert
+   * subtree can take focus — calling focus() before React has re-rendered fails
+   * silently, which is exactly what it did.
+   */
+  useEffect(() => {
+    if (isOpen || !restoreFocusRef.current) return;
+    restoreFocusRef.current = false;
+
+    const bar = searchInputRef.current;
+    // Gone, because executing a search navigated away. Leave focus alone.
+    if (!bar || !document.contains(bar)) return;
+
+    // Focusing this field is itself what opens the panel, so this one
+    // programmatic focus has to be exempt or closing would immediately reopen.
+    suppressOpenOnFocusRef.current = true;
+    bar.focus();
+  }, [isOpen]);
+
+  /**
+   * Pin the panel's transform origin to the search bar before it paints.
+   *
+   * The panel is centred in the viewport, so by default it scaled out of its
+   * own middle — which, with the bar sitting a few hundred pixels below, read as
+   * an unrelated dialog arriving rather than as the bar opening up. Anchoring
+   * the origin to where the bar actually is makes the growth point to the thing
+   * that was clicked.
+   *
+   * Clamped to the card's own box: when the bar is outside it the origin lands
+   * on the nearest edge, which still points the right way.
+   */
+  useLayoutEffect(() => {
+    if (!isOpen || closing) return;
+    const card = modalCardRef.current;
+    const origin = originRef.current;
+    if (!card || !origin) return;
+
+    // offsetLeft/Top/Width/Height, not getBoundingClientRect: the enter
+    // animation has `fill-mode: both`, so by the time this runs the element is
+    // already holding its opening frame and the client rect reports the box
+    // scaled down by ENTER_SCALE. Measuring that would pull the origin toward
+    // the card's centre — exactly the behaviour this is meant to replace. The
+    // offset values are layout, which transforms do not touch.
+    //
+    // The card's offsetParent is the `fixed inset-0` dialog wrapper, so these
+    // are already viewport coordinates.
+    const width = card.offsetWidth;
+    const height = card.offsetHeight;
+    if (width === 0 || height === 0) return;
+
+    const x = Math.min(Math.max(origin.x - card.offsetLeft, 0), width);
+    const y = Math.min(Math.max(origin.y - card.offsetTop, 0), height);
+    card.style.transformOrigin = `${x.toFixed(1)}px ${y.toFixed(1)}px`;
+  }, [isOpen, closing]);
 
   // Filter States
   const [intent, setIntent] = useState<"rent" | "buy">(defaultIntent);
@@ -199,29 +347,6 @@ export default function ExpandableSearchPanel({
   // AI Search Inline States
   const [aiQuery, setAiQuery] = useState("");
   const [aiExtractionSummary, setAiExtractionSummary] = useState("");
-
-  const [allProperties, setAllProperties] = useState<PropertyRecord[]>([]);
-
-  const containerRef = useRef<HTMLDivElement>(null);
-  const searchInputRef = useRef<HTMLInputElement>(null);
-  const modalSearchInputRef = useRef<HTMLInputElement>(null);
-  const modalCardRef = useRef<HTMLDivElement>(null);
-  const aiInputRef = useRef<HTMLInputElement>(null);
-
-  // Load properties for live count feedback
-  useEffect(() => {
-    async function load() {
-      try {
-        const list = await getPropertyList();
-        setAllProperties(list);
-      } catch (error) {
-        // Non-fatal: this panel only powers suggestions, and the search page
-        // surfaces the same failure properly. Still log it rather than swallow.
-        console.error("Search panel could not load the catalogue for suggestions:", error);
-      }
-    }
-    void load();
-  }, []);
 
   // Listen to external intent changes
   useEffect(() => {
@@ -246,7 +371,9 @@ export default function ExpandableSearchPanel({
     }
     window.addEventListener("dynasty:open-ai-search", handleOpenAI);
     return () => window.removeEventListener("dynasty:open-ai-search", handleOpenAI);
-  }, []);
+    // setIsOpen is a useCallback with no dependencies, so it is stable for the
+    // life of the component and listed here only to satisfy the lint rule.
+  }, [setIsOpen]);
 
   // Handle click outside modal card to dismiss
   useEffect(() => {
@@ -265,7 +392,7 @@ export default function ExpandableSearchPanel({
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("touchstart", handleClickOutside);
     };
-  }, [isOpen]);
+  }, [isOpen, setIsOpen]);
 
   // Handle ESC key, body scroll lock, and auto-focus when search expands
   useEffect(() => {
@@ -290,7 +417,7 @@ export default function ExpandableSearchPanel({
       document.body.style.overflow = originalOverflow;
       clearTimeout(focusTimer);
     };
-  }, [isOpen]);
+  }, [isOpen, setIsOpen]);
 
   // Autocomplete Suggestions categorized by Province and City/Suburb (Alphabetical & Real-time)
   const categorizedSuggestions = useMemo(() => {
@@ -489,97 +616,6 @@ export default function ExpandableSearchPanel({
     executeAISearch(aiQuery);
   }
 
-  // Live Count of Properties Matching Active Modal Filters
-  const liveMatchingCount = useMemo(() => {
-    if (allProperties.length === 0) return 0;
-
-    return allProperties.filter((property) => {
-      // 1. Intent filter (Rent vs Buy)
-      if (intent === "buy" && property.listingType === "rent") return false;
-      if (intent === "rent" && property.listingType !== "rent") return false;
-
-      // 2. Locations / Suburbs
-      if (locations.length > 0) {
-        const haystack = `${property.title} ${property.location} ${property.city ?? ""} ${
-          property.suburb ?? ""
-        } ${property.province ?? ""}`.toLowerCase();
-        const matchesAny = locations.some((loc) => haystack.includes(loc.toLowerCase()));
-        if (!matchesAny) return false;
-      }
-
-      // 3. Property Type
-      if (!selectedTypes.includes("All types") && selectedTypes.length > 0) {
-        const matchesType = selectedTypes.some(
-          (t) => property.type === t || property.category.toLowerCase().includes(t.toLowerCase())
-        );
-        if (!matchesType) return false;
-      }
-
-      // 4. Min Price & Max Price
-      if (minPrice > 0 && property.numericPrice < minPrice) return false;
-      if (maxPrice > 0 && property.numericPrice > maxPrice) return false;
-
-      // 5. Bedrooms
-      if (beds !== "Any") {
-        const requiredBeds = parseInt(beds.replace("+", ""), 10);
-        if (!isNaN(requiredBeds) && property.beds < requiredBeds) return false;
-      }
-
-      // 6. Bathrooms
-      if (baths !== "Any") {
-        const requiredBaths = parseInt(baths.replace("+", ""), 10);
-        if (!isNaN(requiredBaths) && property.baths < requiredBaths) return false;
-      }
-
-      // 7. Parking / Garages
-      if (parking !== "Any") {
-        const requiredParking = parseInt(parking.replace("+", ""), 10);
-        if (!isNaN(requiredParking) && property.parking < requiredParking) return false;
-      }
-
-      // 8. Furnished Status
-      if (furnishedStatus !== "Any" && property.furnishedStatus !== furnishedStatus) {
-        return false;
-      }
-
-      // 9. Category (Developments)
-      if (
-        category === "Developments" &&
-        !property.isDevelopment &&
-        !property.category.toLowerCase().includes("development")
-      ) {
-        return false;
-      }
-
-      // 10. On Show Weekend Viewing Filter
-      if (onShowOnly && !property.onShow) {
-        return false;
-      }
-
-      // 11. Lifestyle Features
-      if (selectedFeatures.length > 0) {
-        const hasAll = selectedFeatures.every((f) => property.features?.includes(f));
-        if (!hasAll) return false;
-      }
-
-      return true;
-    }).length;
-  }, [
-    allProperties,
-    intent,
-    locations,
-    category,
-    selectedTypes,
-    minPrice,
-    maxPrice,
-    beds,
-    baths,
-    parking,
-    furnishedStatus,
-    selectedFeatures,
-    onShowOnly,
-  ]);
-
   function handleExecuteSearch(e?: React.FormEvent) {
     if (e) e.preventDefault();
 
@@ -699,8 +735,17 @@ export default function ExpandableSearchPanel({
   return (
     <>
       {/* 1. HERO RESTING SEARCH CONSOLE */}
+      {/*
+        `inert` while the panel is open. The expanded panel carries its own copy
+        of this search field, so with both live the page exposed two search
+        inputs at once: a screen reader announced the resting one behind the
+        dialog, and Tab could land in it under the backdrop. Marking the resting
+        console inert takes it out of the accessibility tree and the tab order
+        without hiding it visually, which the backdrop is already handling.
+      */}
       <div
         ref={containerRef}
+        inert={isOpen}
         className={`relative z-30 mx-auto w-full max-w-3xl ${className}`}
       >
         {/* Category Intent Pill Slider */}
@@ -789,6 +834,11 @@ export default function ExpandableSearchPanel({
                   setIsOpen(true);
                 }}
                 onFocus={() => {
+                  // Focus restored after a close should not reopen the panel.
+                  if (suppressOpenOnFocusRef.current) {
+                    suppressOpenOnFocusRef.current = false;
+                    return;
+                  }
                   setIsOpen(true);
                 }}
                 onKeyDown={(e) => {
@@ -877,7 +927,9 @@ export default function ExpandableSearchPanel({
           {/* Soft Dimming Backdrop */}
           <div
             onClick={() => setIsOpen(false)}
-            className="fixed inset-0 z-[9999] bg-slate-950/50 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
+            className={`fixed inset-0 z-[9999] bg-slate-950/50 backdrop-blur-xs duration-200 ${
+              closing ? "animate-out fade-out" : "animate-in fade-in"
+            }`}
             aria-hidden="true"
           />
 
@@ -894,7 +946,12 @@ export default function ExpandableSearchPanel({
           >
             <div
               ref={modalCardRef}
-              className="relative w-full max-w-4xl max-h-[85vh] sm:max-h-[88vh] flex flex-col rounded-3xl border border-slate-200/90 dark:border-white/10 bg-white dark:bg-[#0a1517] shadow-[0_25px_90px_rgba(15,23,42,0.4)] dark:shadow-[0_25px_90px_rgba(0,0,0,0.8)] overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+              // --dyn-enter-scale overrides what `zoom-in-95` sets, to pair with
+              // the origin pinned to the search bar in the layout effect above.
+              style={{ "--dyn-enter-scale": ENTER_SCALE } as React.CSSProperties}
+              className={`relative w-full max-w-4xl max-h-[85vh] sm:max-h-[88vh] flex flex-col rounded-3xl border border-slate-200/90 dark:border-white/10 bg-white dark:bg-[#0a1517] shadow-[0_25px_90px_rgba(15,23,42,0.4)] dark:shadow-[0_25px_90px_rgba(0,0,0,0.8)] overflow-hidden duration-200 ${
+                closing ? "animate-out fade-out zoom-out-95" : "animate-in fade-in zoom-in-95"
+              }`}
             >
               {/* UNIFIED CONTINUOUS BOX HEADER: SEARCH CONSOLE */}
               <div className="border-b border-slate-100 dark:border-white/10 bg-white dark:bg-[#0a1517] p-3 sm:p-4 flex items-center justify-between gap-2.5 sm:gap-3 shrink-0">
@@ -976,7 +1033,7 @@ export default function ExpandableSearchPanel({
                     onClick={() => handleExecuteSearch()}
                     className="flex h-10 sm:h-11 items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 hover:from-[#0d595b] hover:to-[#094344] dark:hover:from-emerald-500 dark:hover:to-emerald-600 px-5 sm:px-6 text-xs sm:text-sm font-bold text-white shadow-md shadow-emerald-950/20 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-400/30 dark:border-emerald-400/50 hover:border-emerald-400 transition-all hover:scale-102 cursor-pointer"
                   >
-                    <span>{liveMatchingCount > 0 ? `View ${liveMatchingCount}` : "Search"}</span>
+                    <span>Search</span>
                     <span className="text-emerald-300">→</span>
                   </button>
 
@@ -1427,11 +1484,7 @@ export default function ExpandableSearchPanel({
                 onClick={() => handleExecuteSearch()}
                 className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 hover:from-[#0d595b] hover:to-[#094344] dark:hover:from-emerald-500 dark:hover:to-emerald-600 border border-emerald-400/30 dark:border-emerald-400/50 px-6 py-2.5 text-xs sm:text-sm font-bold text-white shadow-md shadow-emerald-950/20 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] hover:border-emerald-400 transition-all cursor-pointer hover:scale-102"
               >
-                <span>
-                  {liveMatchingCount > 0
-                    ? `View ${liveMatchingCount} Properties`
-                    : "Search Properties"}
-                </span>
+                <span>Search Properties</span>
                 <span className="text-emerald-300">→</span>
               </button>
             </div>

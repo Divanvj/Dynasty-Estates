@@ -33,7 +33,11 @@ export default function ComparePage() {
     <main className="min-h-screen bg-[var(--background)] px-3 py-4 text-slate-900 md:px-8 dark:text-white">
       <div className="mx-auto max-w-6xl">
         {/* Navigation Header */}
-        <header className="mb-6 flex items-center justify-between rounded-[26px] border border-white/75 bg-white/45 px-3.5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl sm:px-5 dark:bg-[#0c1a1c]/70 dark:border-white/10 dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
+        {/* relative z-50: `backdrop-blur-xl` already makes this bar a stacking
+            context, so without an explicit z-index it sits at `auto` and the
+            blurred comparison table below — also `auto`, but later in the DOM —
+            painted over the Profile dropdown. See src/app/page.tsx. */}
+        <header className="relative z-50 mb-6 flex items-center justify-between rounded-[26px] border border-white/75 bg-white/45 px-3.5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl sm:px-5 dark:bg-[#0c1a1c]/70 dark:border-white/10 dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
           <div className="flex items-center gap-2.5 sm:gap-3">
             <BrandLogo markOnly />
             <div>
