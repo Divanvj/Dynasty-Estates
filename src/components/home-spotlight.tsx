@@ -151,7 +151,10 @@ export default function HomeSpotlight({ properties }: { properties: PropertyReco
                   type="button"
                   onClick={() => go(safeIndex - 1, true)}
                   aria-label="Previous property"
-                  className="absolute left-3 top-[32%] flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white opacity-85 shadow-lg backdrop-blur-md transition-all hover:bg-black/65 hover:opacity-100 sm:left-5 sm:top-1/2"
+                  // z-30: browsing the carousel is a different action from
+                  // opening the listing, so the arrows stay above the card
+                  // overlay that now covers the whole showcase.
+                  className="absolute left-3 top-[32%] z-30 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white opacity-85 shadow-lg backdrop-blur-md transition-all hover:bg-black/65 hover:opacity-100 sm:left-5 sm:top-1/2"
                 >
                   <ArrowLeftIcon className="h-4 w-4" />
                 </button>
@@ -159,7 +162,7 @@ export default function HomeSpotlight({ properties }: { properties: PropertyReco
                   type="button"
                   onClick={() => go(safeIndex + 1, true)}
                   aria-label="Next property"
-                  className="absolute right-3 top-[32%] flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white opacity-85 shadow-lg backdrop-blur-md transition-all hover:bg-black/65 hover:opacity-100 sm:right-5 sm:top-1/2"
+                  className="absolute right-3 top-[32%] z-30 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white opacity-85 shadow-lg backdrop-blur-md transition-all hover:bg-black/65 hover:opacity-100 sm:right-5 sm:top-1/2"
                 >
                   <ArrowRightIcon className="h-4 w-4" />
                 </button>
@@ -175,6 +178,26 @@ export default function HomeSpotlight({ properties }: { properties: PropertyReco
                 )}
               </>
             )}
+
+            {/*
+              The showcase's one real link, and the reason the whole slide is
+              clickable. It sits here, as a direct child of the carousel, rather
+              than wrapping the title inside the frosted bar below: that bar is
+              `absolute`, so it would have become the containing block and the
+              overlay would have covered only the bar — 1118x148 of a 1160x500
+              showcase, leaving the photograph dead, which is the part people
+              aim at.
+
+              It carries no visible text, so the title supplies its accessible
+              name; the carousel arrows sit above it at z-30.
+            */}
+            <Link
+              href={`/property/${active.slug}`}
+              className="card-link"
+              aria-label={`${active.title}, ${active.location}, ${active.price}`}
+            >
+              <span className="sr-only">View this residence</span>
+            </Link>
 
             {/* Frosted showcase bar */}
             <div className="absolute inset-x-4 bottom-4 rounded-[24px] border border-white/20 bg-black/50 p-5 text-white backdrop-blur-xl sm:inset-x-6 sm:bottom-6 sm:p-6 dark:border-white/10">
@@ -204,12 +227,14 @@ export default function HomeSpotlight({ properties }: { properties: PropertyReco
                 </div>
 
                 <div className="flex shrink-0 items-center gap-3">
-                  <Link
-                    href={`/property/${active.slug}`}
-                    className="cursor-pointer whitespace-nowrap rounded-2xl border border-emerald-400/30 bg-gradient-to-r from-[#0b4d4e] to-[#07393a] px-6 py-3 text-center text-xs font-bold text-white shadow-lg transition-all hover:scale-102 hover:from-[#0d595b] hover:to-[#094344] sm:text-sm dark:bg-gradient-to-r dark:from-emerald-600 dark:to-emerald-700 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_20px_rgba(16,185,129,0.4)] dark:hover:from-emerald-500 dark:hover:to-emerald-600"
+                  {/* A span, not a link: same destination as the title, so as
+                      a link it duplicated the tab stop. */}
+                  <span
+                    aria-hidden="true"
+                    className="whitespace-nowrap rounded-2xl border border-emerald-400/30 bg-gradient-to-r from-[#0b4d4e] to-[#07393a] px-6 py-3 text-center text-xs font-bold text-white shadow-lg transition-all group-hover:scale-102 group-hover:from-[#0d595b] group-hover:to-[#094344] sm:text-sm dark:bg-gradient-to-r dark:from-emerald-600 dark:to-emerald-700 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_20px_rgba(16,185,129,0.4)] dark:group-hover:from-emerald-500 dark:group-hover:to-emerald-600"
                   >
                     View this residence →
-                  </Link>
+                  </span>
                 </div>
               </div>
             </div>

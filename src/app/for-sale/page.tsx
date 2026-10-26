@@ -163,7 +163,13 @@ export default async function ForSaleNationalPage() {
 
                 <div className="flex flex-1 flex-col p-5">
                   <h3 className="text-base font-bold text-slate-900 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-1 dark:text-white">
-                    {prop.title}
+                    {/* The card's one real link. `card-link` stretches it over
+                        the whole card, and naming it with the title replaces
+                        "View Property Details" as the link text, which said
+                        nothing about which property it led to. */}
+                    <Link className="card-link" href={`/property/${prop.slug}`}>
+                      {prop.title}
+                    </Link>
                   </h3>
                   <p className="mt-1 flex items-center gap-1 text-xs text-slate-500 line-clamp-1 dark:text-slate-400">
                     <LocationPinIcon className="h-3.5 w-3.5 shrink-0 text-slate-400 dark:text-slate-400" />
@@ -185,13 +191,17 @@ export default async function ForSaleNationalPage() {
                     </div>
                   </div>
 
-                  <Link
-                    href={`/property/${prop.slug}`}
-                    className="mt-4 flex items-center justify-center gap-1.5 rounded-xl bg-slate-950 px-4 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-slate-800 dark:bg-gradient-to-r dark:from-emerald-600 dark:to-emerald-700 dark:text-white dark:border dark:border-emerald-500/30 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] transition-all"
+                  {/* A span, not a link: it led to the same listing as the
+                      title, so as a link it was a second tab stop and a second
+                      announcement for one destination. The card overlay covers
+                      it, so clicking it still opens the listing. */}
+                  <span
+                    aria-hidden="true"
+                    className="mt-4 flex items-center justify-center gap-1.5 rounded-xl bg-slate-950 px-4 py-2.5 text-xs font-bold text-white shadow-sm group-hover:bg-slate-800 dark:bg-gradient-to-r dark:from-emerald-600 dark:to-emerald-700 dark:text-white dark:border dark:border-emerald-500/30 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] transition-all"
                   >
                     <span>View Property Details</span>
                     <span>→</span>
-                  </Link>
+                  </span>
                 </div>
               </article>
             ))}
