@@ -47,6 +47,11 @@ export default function TrueCostCalculator({
   const [showUpfrontModal, setShowUpfrontModal] = useState<boolean>(false);
   const [showPreApprovalModal, setShowPreApprovalModal] = useState<boolean>(false);
   const [showCustomSettings, setShowCustomSettings] = useState<boolean>(false);
+  /* Collapsed only below `md` — see the toggle beside each controls block.
+     It starts closed on both server and client, so there is nothing for
+     hydration to disagree about; the breakpoint does the rest in CSS. */
+  const [controlsOpen, setControlsOpen] = useState<boolean>(false);
+  const controlsId = useId();
 
   // Rental specific state
   const [monthlyRent, setMonthlyRent] = useState<number>(askingPriceZAR);
@@ -225,8 +230,26 @@ export default function TrueCostCalculator({
           </div>
         </div>
 
+        {/* The controls are the long part of this card — 948px of sliders on a
+            phone, below a total they have already produced. Property24 and
+            Private Property both put their calculator behind a tap. Open from
+            `md` up, where the sidebar has the room; behind this button below. */}
+        <button
+          type="button"
+          onClick={() => setControlsOpen((wasOpen) => !wasOpen)}
+          aria-expanded={controlsOpen}
+          aria-controls={controlsId}
+          className="tap-44 relative mt-4 flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-full border border-slate-300 bg-white/80 px-4 py-2.5 font-bold text-slate-800 transition-all hover:bg-white md:hidden dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-200 dark:hover:bg-white/10"
+        >
+          {controlsOpen ? "Hide the calculator" : "Adjust the figures"}
+          <ChevronDownIcon className={`h-4 w-4 transition-transform ${controlsOpen ? "rotate-180" : ""}`} />
+        </button>
+
         {/* Interactive Sliders & Controls */}
-        <div className="mt-5 space-y-5 text-xs text-slate-700 border-t border-slate-200/60 pt-4 dark:text-slate-300 dark:border-white/10">
+        <div
+          id={controlsId}
+          className={`mt-5 space-y-5 text-xs text-slate-700 border-t border-slate-200/60 pt-4 dark:text-slate-300 dark:border-white/10 ${controlsOpen ? "" : "max-md:hidden"}`}
+        >
           {/* The advertised rent, stated rather than adjustable.
               This used to be an offer slider with -5% / +5% chips. A rental is
               not negotiated on a listing page the way a purchase is: the
@@ -573,8 +596,23 @@ export default function TrueCostCalculator({
         </div>
       </div>
 
+      {/* Same disclosure as the rental branch above, and for the same reason. */}
+      <button
+        type="button"
+        onClick={() => setControlsOpen((wasOpen) => !wasOpen)}
+        aria-expanded={controlsOpen}
+        aria-controls={controlsId}
+        className="tap-44 relative mt-4 flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-full border border-slate-300 bg-white/80 px-4 py-2.5 font-bold text-slate-800 transition-all hover:bg-white md:hidden dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-200 dark:hover:bg-white/10"
+      >
+        {controlsOpen ? "Hide the calculator" : "Adjust the figures"}
+        <ChevronDownIcon className={`h-4 w-4 transition-transform ${controlsOpen ? "rotate-180" : ""}`} />
+      </button>
+
       {/* Interactive Sliders & Controls */}
-      <div className="mt-5 space-y-5 text-xs text-slate-700 border-t border-slate-200/60 pt-4 dark:text-slate-300 dark:border-white/10">
+      <div
+        id={controlsId}
+        className={`mt-5 space-y-5 text-xs text-slate-700 border-t border-slate-200/60 pt-4 dark:text-slate-300 dark:border-white/10 ${controlsOpen ? "" : "max-md:hidden"}`}
+      >
         {/* Purchase Price / Offer Slider */}
         <div>
           <div className="flex items-center justify-between font-semibold mb-1">

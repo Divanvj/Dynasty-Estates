@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import SiteNavigation from "@/components/site-navigation";
 import BrandLogo from "@/components/brand-logo";
+import AccountActions from "@/components/account-actions";
 import { BedIcon, BathIcon, CarIcon, LocationPinIcon } from "@/components/icons";
 import { getPropertyList, southAfricanProvinces } from "@/lib/property-data";
 import { absoluteUrl, SITE_URL } from "@/lib/site-url";
@@ -59,6 +60,10 @@ export default async function ToRentNationalPage() {
         <div className="flex items-center justify-between rounded-[24px] border border-white/70 bg-white/40 px-4 py-3 backdrop-blur-xl shadow-xs dark:border-white/10 dark:bg-[#0b1719]/70">
           <BrandLogo />
           <SiteNavigation />
+          {/* Without this the header had no account control at all: no profile,
+              no sign out, and — since the theme switch moved into this menu — no
+              way to change theme on any of the browse routes. */}
+          <AccountActions />
         </div>
       </header>
 
@@ -140,8 +145,18 @@ export default async function ToRentNationalPage() {
                 key={prop.id}
                 className="group relative flex flex-col overflow-hidden rounded-3xl border border-white/80 bg-white/70 shadow-md backdrop-blur-xl transition-all hover:-translate-y-1 hover:shadow-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]"
               >
-                {/* Image Showcase */}
-                <div className="relative h-60 w-full overflow-hidden">
+                {/*
+                  Image Showcase.
+
+                  Mobile sizing across this tile is tuned against the market:
+                  it measured 455px on a 375px screen, where Private Property
+                  sits at 393 and Property24 at 399, so a visitor here saw 1.8
+                  listings per screen against their 2.0. The photograph, the
+                  padding and the redundant footer button carry that difference.
+                  This is the grid tile, not the horizontal card the home feed
+                  and /search use — it keeps its own layout.
+                */}
+                <div className="relative h-52 md:h-60 w-full overflow-hidden">
                   <Image
                     src={prop.image}
                     alt={prop.title}
@@ -164,7 +179,7 @@ export default async function ToRentNationalPage() {
                   </div>
                 </div>
 
-                <div className="flex flex-1 flex-col p-5">
+                <div className="flex flex-1 flex-col p-4 md:p-5">
                   <h3 className="text-base font-bold text-slate-900 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-1 dark:text-white">
                     {/* The card's one real link. `card-link` stretches it over
                         the whole card, and naming it with the title replaces
@@ -197,10 +212,16 @@ export default async function ToRentNationalPage() {
                   {/* A span, not a link: it led to the same listing as the
                       title, so as a link it was a second tab stop and a second
                       announcement for one destination. The card overlay covers
-                      it, so clicking it still opens the listing. */}
+                      it, so clicking it still opens the listing.
+
+                      Desktop only. It is already `aria-hidden` on a tile whose
+                      whole surface opens the listing, so on a phone it was 56px
+                      of every card restating what tapping anywhere already did.
+                      Neither Property24 nor Private Property puts a button on a
+                      feed tile. */}
                   <span
                     aria-hidden="true"
-                    className="mt-4 flex items-center justify-center gap-1.5 rounded-xl bg-slate-950 px-4 py-2.5 text-xs font-bold text-white shadow-sm group-hover:bg-slate-800 dark:bg-gradient-to-r dark:from-emerald-600 dark:to-emerald-700 dark:text-white dark:border dark:border-emerald-500/30 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] transition-all"
+                    className="mt-4 hidden md:flex items-center justify-center gap-1.5 rounded-xl bg-slate-950 px-4 py-2.5 text-xs font-bold text-white shadow-sm group-hover:bg-slate-800 dark:bg-gradient-to-r dark:from-emerald-600 dark:to-emerald-700 dark:text-white dark:border dark:border-emerald-500/30 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] transition-all"
                   >
                     <span>View Rental Details</span>
                     <span>→</span>

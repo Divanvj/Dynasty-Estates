@@ -88,7 +88,7 @@ export default function InsightsPage() {
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5 gap-y-2 sm:gap-3">
             <Link
               href="/search"
-              className="flex items-center gap-1.5 rounded-full border border-slate-300/80 bg-white/60 px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 hover:bg-white transition-all whitespace-nowrap shrink-0 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
+              className="pill gap-1.5 border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
             >
               <ArrowLeftIcon className="h-3.5 w-3.5 sm:hidden" />
               <span className="hidden sm:inline">← View Catalogue</span>
@@ -163,11 +163,7 @@ export default function InsightsPage() {
                 key={node}
                 type="button"
                 onClick={() => setSelectedNode(node)}
-                className={`rounded-full px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer ${
-                  selectedNode === node
-                    ? "bg-slate-900 text-white shadow-sm dark:bg-emerald-600 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
-                    : "border border-slate-200 bg-white/70 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
-                }`}
+                className={`pill-sm font-bold transition-all cursor-pointer ${ selectedNode === node ? "bg-slate-900 text-white shadow-sm dark:bg-emerald-600 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
               >
                 {node}
               </button>

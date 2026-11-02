@@ -84,13 +84,13 @@ export default function InquiriesPage() {
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-2.5 gap-y-2">
             <Link
               href="/saved"
-              className="rounded-full border border-slate-300/80 bg-white/60 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-white transition-all dark:bg-[#060d0e]/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
+              className="pill border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all dark:bg-[#060d0e]/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
             >
               Saved Homes
             </Link>
             <Link
               href="/search"
-              className="rounded-full bg-slate-950 px-4 py-2 text-xs font-bold text-white shadow-md hover:bg-slate-800 transition-all dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+              className="pill bg-slate-950 font-bold text-white shadow-md hover:bg-slate-800 transition-all dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
             >
               Browse Catalogue
             </Link>
@@ -131,11 +131,7 @@ export default function InquiriesPage() {
             <button
               key={tab.id}
               onClick={() => setFilterKind(tab.id)}
-              className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
-                filterKind === tab.id
-                  ? "bg-slate-950 text-white shadow-sm dark:bg-emerald-600 dark:text-white dark:border dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
-                  : "border border-slate-200 bg-white/60 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-white/10"
-              }`}
+              className={`pill-sm font-semibold transition-all cursor-pointer ${ filterKind === tab.id ? "bg-slate-950 text-white shadow-sm dark:bg-emerald-600 dark:text-white dark:border dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/60 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-white/10" }`}
             >
               {tab.label}
             </button>
@@ -154,7 +150,7 @@ export default function InquiriesPage() {
             <p className="text-sm font-semibold text-slate-800 dark:text-slate-300">No requests under this category</p>
             <Link
               href="/search"
-              className="mt-4 inline-block rounded-full bg-slate-950 px-5 py-2 text-xs font-bold text-white transition-all dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+              className="pill-lg mt-4 bg-slate-950 font-bold text-white transition-all dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
             >
               Browse Properties →
             </Link>

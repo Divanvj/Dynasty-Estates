@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import OnShowBanner from "@/components/on-show-banner";
+import ExpandableText from "@/components/expandable-text";
 import PropertyHeroGallery from "@/components/property-hero-gallery";
 import PropertyInquiryButton from "@/components/property-inquiry-button";
 import PropertyMediaTabs from "@/components/property-media-tabs";
@@ -316,7 +317,10 @@ export default async function PropertyPage({
             {/* Overview & Key Specs */}
             <div className="rounded-[30px] border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] backdrop-blur-xl md:p-8 dark:bg-[#0c1a1c]/75 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <h2 className="text-lg font-bold text-slate-950 dark:text-white">Property Overview</h2>
-              <p className="mt-4 leading-7 text-sm text-slate-700 dark:text-slate-300">{property.description}</p>
+              <ExpandableText
+                text={property.description}
+                className="leading-7 text-sm text-slate-700 dark:text-slate-300"
+              />
 
               <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {[
@@ -352,15 +356,27 @@ export default async function PropertyPage({
                 ].map((item) => {
                   const Icon = item.icon;
                   return (
+                    /*
+                      A row on a phone, the original stacked tile from `md` up.
+
+                      Stacked, each fact was its own ~138px block and these
+                      eight filled 552px — Property24 states the same eight in
+                      about 400. Turning the tile on its side puts the icon
+                      beside the label and value instead of above them, which
+                      is the whole saving: no text is smaller (the 14px type
+                      floor is deliberate) and no fact is dropped.
+                    */
                     <div
                       key={item.label}
-                      className="group flex flex-col items-center justify-center rounded-[20px] border border-white/80 bg-white/70 p-3.5 text-center transition-all hover:bg-white/90 dark:bg-[#060d0e]/60 dark:border-white/10 dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/30"
+                      className="group flex items-center gap-2.5 rounded-[20px] border border-white/80 bg-white/70 p-2.5 text-left transition-all hover:bg-white/90 md:flex-col md:items-center md:justify-center md:p-3.5 md:text-center dark:bg-[#060d0e]/60 dark:border-white/10 dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/30"
                     >
-                      <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition-colors group-hover:bg-emerald-50 group-hover:text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border dark:border-emerald-500/20 dark:group-hover:bg-emerald-500/20">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition-colors group-hover:bg-emerald-50 group-hover:text-emerald-700 md:mb-2 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border dark:border-emerald-500/20 dark:group-hover:bg-emerald-500/20">
                         <Icon className="h-4 w-4 shrink-0" />
                       </div>
-                      <p className="text-xs uppercase tracking-wider text-slate-400 font-bold dark:text-slate-400">{item.label}</p>
-                      <p className="mt-1 text-base font-extrabold text-slate-900 dark:text-white">{item.value}</p>
+                      <div className="min-w-0">
+                        <p className="text-xs uppercase tracking-wider text-slate-400 font-bold dark:text-slate-400">{item.label}</p>
+                        <p className="text-base font-extrabold text-slate-900 md:mt-1 dark:text-white">{item.value}</p>
+                      </div>
                     </div>
                   );
                 })}
@@ -479,8 +495,14 @@ export default async function PropertyPage({
                 </div>
               </div>
 
+              {/* Desktop only. The sticky bar at the foot of this page already
+                  carries WhatsApp and Call on a phone, under the same `contact`
+                  condition, and it is on screen the whole way down rather than
+                  only where the card happens to sit. Two sets of the same two
+                  buttons is what the sticky bar's own note warned about when
+                  the duplicate tenant-application button was taken out of it. */}
               {contact && (
-                <div className="mt-3 grid grid-cols-2 gap-2.5">
+                <div className="mt-3 hidden md:grid grid-cols-2 gap-2.5">
                   <a
                     href={contact.whatsappHref}
                     target="_blank"
@@ -500,7 +522,7 @@ export default async function PropertyPage({
                 </div>
               )}
 
-              <div className="mt-6 flex flex-col gap-3">
+              <div className="mt-4 md:mt-6 flex flex-col gap-3">
                 {property.listingType === "rent" ? (
                   <TenantApplicationButton
                     propertyId={property.id}
@@ -528,7 +550,7 @@ export default async function PropertyPage({
                 </PropertyInquiryButton>
               </div>
 
-              <div className="mt-6 border-t border-slate-200/60 dark:border-white/10 pt-4 flex justify-between text-xs font-semibold text-slate-600 dark:text-slate-300">
+              <div className="mt-4 md:mt-6 border-t border-slate-200/60 dark:border-white/10 pt-4 flex justify-between text-xs font-semibold text-slate-600 dark:text-slate-300">
                 <Link href="/compare" className="hover:text-slate-950 underline dark:text-white dark:hover:text-emerald-400">
                   Compare with other homes →
                 </Link>

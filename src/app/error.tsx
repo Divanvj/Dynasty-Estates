@@ -53,13 +53,13 @@ export default function Error({
           <button
             type="button"
             onClick={() => retry()}
-            className="cursor-pointer rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] px-6 py-2.5 text-xs font-bold text-white shadow-md transition-all hover:from-[#093e3f] hover:to-[#052c2d] dark:hover:from-emerald-500 dark:hover:to-emerald-600"
+            className="pill-lg cursor-pointer bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] font-bold text-white shadow-md transition-all hover:from-[#093e3f] hover:to-[#052c2d] dark:hover:from-emerald-500 dark:hover:to-emerald-600"
           >
             Try again
           </button>
           <Link
             href="/"
-            className="rounded-full border border-slate-300/80 bg-white/60 px-6 py-2.5 text-xs font-semibold text-slate-700 transition-all hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-white"
+            className="pill-lg border border-slate-300/80 bg-white/60 font-semibold text-slate-700 transition-all hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-white"
           >
             Back to home
           </Link>

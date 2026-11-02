@@ -201,7 +201,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                       <button
                         type="button"
                         onClick={() => handleSelectProperty(property.id, true)}
-                        className="rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 border border-emerald-500/50 px-3 py-1 text-xs font-bold text-white shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] hover:from-[#093e3f] hover:to-[#052c2d] dark:hover:from-emerald-500 dark:hover:to-emerald-600 transition-all cursor-pointer inline-flex items-center gap-1"
+                        className="pill-sm bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 border border-emerald-500/50 font-bold text-white shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] hover:from-[#093e3f] hover:to-[#052c2d] dark:hover:from-emerald-500 dark:hover:to-emerald-600 transition-all cursor-pointer gap-1"
                         title="View Street View for this property"
                       >
                         <span>👁️ Street View</span>
@@ -212,7 +212,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                           handleSelectProperty(property.id, false);
                           setDisplayMode("map");
                         }}
-                        className="rounded-full border border-slate-200 dark:border-white/10 bg-white dark:bg-[#060d0e]/60 px-2.5 py-1 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#0c1a1c] dark:hover:text-white transition-all cursor-pointer"
+                        className="pill-sm border border-slate-200 dark:border-white/10 bg-white dark:bg-[#060d0e]/60 font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#0c1a1c] dark:hover:text-white transition-all cursor-pointer"
                       >
                         🗺️ Locate
                       </button>
@@ -220,7 +220,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
 
                     <Link
                       href={`/property/${property.slug || property.id}`}
-                      className="rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 hover:from-[#093e3f] hover:to-[#052c2d] dark:hover:from-emerald-500 dark:hover:to-emerald-600 px-3.5 py-1 text-xs font-bold text-white shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] border border-emerald-500/30 transition-all"
+                      className="pill-sm bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 hover:from-[#093e3f] hover:to-[#052c2d] dark:hover:from-emerald-500 dark:hover:to-emerald-600 font-bold text-white shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] border border-emerald-500/30 transition-all"
                     >
                       Details →
                     </Link>
@@ -263,22 +263,14 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                 <button
                   type="button"
                   onClick={() => setDisplayMode("map")}
-                  className={`whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold transition-all cursor-pointer ${
-                    displayMode === "map"
-                      ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] shadow-xs"
-                      : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
-                  }`}
+                  className={`pill-sm font-bold transition-all cursor-pointer ${ displayMode === "map" ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white" }`}
                 >
                   🗺️ Map
                 </button>
                 <button
                   type="button"
                   onClick={() => setDisplayMode("street")}
-                  className={`whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold transition-all cursor-pointer ${
-                    displayMode === "street"
-                      ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] shadow-xs"
-                      : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
-                  }`}
+                  className={`pill-sm font-bold transition-all cursor-pointer ${ displayMode === "street" ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white" }`}
                 >
                   👁️ Street View
                 </button>
@@ -293,7 +285,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                 <button
                   type="button"
                   onClick={() => setDisplayMode("map")}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] px-3.5 py-1 text-xs font-bold shadow-md hover:opacity-90 transition-all cursor-pointer"
+                  className="pill-sm gap-1.5 bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] font-bold shadow-md hover:opacity-90 transition-all cursor-pointer"
                 >
                   <span>←</span>
                   <span>Back to Map Overview</span>
@@ -342,7 +334,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                   <button
                     type="button"
                     onClick={() => setDisplayMode("map")}
-                    className="inline-flex items-center gap-1.5 rounded-full bg-slate-900/95 text-white dark:bg-emerald-600/95 dark:text-white border border-white/10 dark:border-emerald-500/60 dark:shadow-[0_0_20px_rgba(16,185,129,0.4)] px-4 py-2 text-xs font-bold shadow-2xl backdrop-blur-xl hover:opacity-90 transition-all cursor-pointer"
+                    className="pill gap-1.5 bg-slate-900/95 text-white dark:bg-emerald-600/95 dark:text-white border border-white/10 dark:border-emerald-500/60 dark:shadow-[0_0_20px_rgba(16,185,129,0.4)] font-bold shadow-2xl backdrop-blur-xl hover:opacity-90 transition-all cursor-pointer"
                   >
                     <span>←</span>
                     <span>Exit Street View & Return to Map</span>
@@ -379,7 +371,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                     <button
                       type="button"
                       onClick={() => setDisplayMode("street")}
-                      className="flex-1 sm:flex-none whitespace-nowrap rounded-full bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] px-3 py-2 sm:py-1.5 text-xs font-bold shadow-xs hover:opacity-90 transition-all cursor-pointer"
+                      className="pill flex-1 sm:flex-none bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] font-bold shadow-xs hover:opacity-90 transition-all cursor-pointer"
                       title="Inspect Street View"
                     >
                       👁️ Street View
@@ -388,7 +380,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                       href={externalGoogleMapsUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="shrink-0 rounded-full border border-slate-200 dark:border-white/10 bg-white dark:bg-[#060d0e]/60 px-2.5 py-2 sm:py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#0c1a1c] dark:hover:text-white transition-all"
+                      className="pill border border-slate-200 dark:border-white/10 bg-white dark:bg-[#060d0e]/60 font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#0c1a1c] dark:hover:text-white transition-all"
                       title="Open in Google Maps tab"
                     >
                       ↗

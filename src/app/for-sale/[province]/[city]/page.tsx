@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import SiteNavigation from "@/components/site-navigation";
 import BrandLogo from "@/components/brand-logo";
+import AccountActions from "@/components/account-actions";
 import { BedIcon, BathIcon, CarIcon, LocationPinIcon } from "@/components/icons";
 import { getPropertyList } from "@/lib/property-data";
 import { getListingsByLocation, enrichedListingToPropertyRecord } from "@/lib/server/property-service";
@@ -107,6 +108,9 @@ export default async function ForSaleLocationPage({
         <div className="flex items-center justify-between rounded-[24px] border border-white/70 bg-white/40 px-4 py-3 backdrop-blur-xl shadow-xs dark:border-white/10 dark:bg-[#0b1719]/70">
           <BrandLogo />
           <SiteNavigation />
+          {/* See the note in src/app/for-sale/page.tsx — these browse routes had
+              no account control at all. */}
+          <AccountActions />
         </div>
       </header>
 

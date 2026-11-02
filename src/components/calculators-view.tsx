@@ -290,7 +290,7 @@ export default function CalculatorsView({
           </div>
           <Link
             href="/search"
-            className="flex items-center gap-1.5 rounded-full border border-slate-300/80 dark:border-white/10 bg-white/60 dark:bg-[#060d0e]/60 px-3 sm:px-4 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40 dark:hover:text-emerald-300 transition-all whitespace-nowrap shrink-0"
+            className="pill gap-1.5 border border-slate-300/80 dark:border-white/10 bg-white/60 dark:bg-[#060d0e]/60 font-semibold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40 dark:hover:text-emerald-300 transition-all"
           >
             <ArrowLeftIcon className="h-3.5 w-3.5" />
             <span className="hidden sm:inline">Browse Properties</span>
@@ -373,11 +373,7 @@ export default function CalculatorsView({
                       key={val}
                       type="button"
                       onClick={() => setPurchasePrice(val)}
-                      className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
-                        purchasePrice === val
-                          ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                          : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
-                      }`}
+                      className={`pill-sm font-semibold transition-all cursor-pointer ${ purchasePrice === val ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                     >
                       R {(val / 1000000).toFixed(val % 1000000 === 0 ? 0 : 2)}M
                     </button>
@@ -427,11 +423,7 @@ export default function CalculatorsView({
                       key={pct}
                       type="button"
                       onClick={() => setDepositPct(pct)}
-                      className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
-                        depositPct === pct
-                          ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                          : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
-                      }`}
+                      className={`pill-sm font-semibold transition-all cursor-pointer ${ depositPct === pct ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                     >
                       {pct === 0 ? "0% (100% Bond)" : `${pct}%`}
                     </button>
@@ -485,11 +477,7 @@ export default function CalculatorsView({
                       key={chip.label}
                       type="button"
                       onClick={() => setInterestRate(chip.val)}
-                      className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
-                        Math.abs(interestRate - chip.val) < 0.01
-                          ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                          : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
-                      }`}
+                      className={`pill-sm font-semibold transition-all cursor-pointer ${ Math.abs(interestRate - chip.val) < 0.01 ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                     >
                       {chip.label}
                     </button>
@@ -638,11 +626,7 @@ export default function CalculatorsView({
                       key={val}
                       type="button"
                       onClick={() => setGrossIncome(val)}
-                      className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
-                        grossIncome === val
-                          ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                          : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
-                      }`}
+                      className={`pill-sm font-semibold transition-all cursor-pointer ${ grossIncome === val ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                     >
                       R {(val / 1000).toFixed(0)}k
                     </button>
@@ -692,11 +676,7 @@ export default function CalculatorsView({
                       key={val}
                       type="button"
                       onClick={() => setMonthlyExpenses(val)}
-                      className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
-                        monthlyExpenses === val
-                          ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                          : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
-                      }`}
+                      className={`pill-sm font-semibold transition-all cursor-pointer ${ monthlyExpenses === val ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                     >
                       R {(val / 1000).toFixed(0)}k
                     </button>
@@ -815,11 +795,7 @@ export default function CalculatorsView({
                       key={p}
                       type="button"
                       onClick={() => setCustomTransferPrice(p)}
-                      className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
-                        customTransferPrice === p
-                          ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                          : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
-                      }`}
+                      className={`pill-sm font-semibold transition-all cursor-pointer ${ customTransferPrice === p ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                     >
                       R {(p / 1000000).toFixed(p % 1000000 === 0 ? 0 : 1)}M
                     </button>
@@ -942,11 +918,7 @@ export default function CalculatorsView({
                           setConveyPrice(val);
                           setConveyBond(Math.round(val * 0.9));
                         }}
-                        className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
-                          conveyPrice === val
-                            ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                            : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
-                        }`}
+                        className={`pill-sm font-semibold transition-all cursor-pointer ${ conveyPrice === val ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                       >
                         R {(val / 1000000).toFixed(val % 1000000 === 0 ? 0 : 1)}M
                       </button>
@@ -1004,11 +976,7 @@ export default function CalculatorsView({
                           key={b.label}
                           type="button"
                           onClick={() => setConveyBond(targetVal)}
-                          className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
-                            conveyBond === targetVal
-                              ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                              : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
-                          }`}
+                          className={`pill-sm font-semibold transition-all cursor-pointer ${ conveyBond === targetVal ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                         >
                           {b.label}
                         </button>
@@ -1236,11 +1204,7 @@ export default function CalculatorsView({
                         key={val}
                         type="button"
                         onClick={() => setAmortExtraMonthly(val)}
-                        className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
-                          amortExtraMonthly === val
-                            ? "bg-emerald-800 dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] text-white"
-                            : "border border-emerald-300 dark:border-white/10 bg-white dark:bg-[#060d0e]/60 text-emerald-900 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
-                        }`}
+                        className={`pill-sm font-semibold transition-all cursor-pointer ${ amortExtraMonthly === val ? "bg-emerald-800 dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] text-white" : "border border-emerald-300 dark:border-white/10 bg-white dark:bg-[#060d0e]/60 text-emerald-900 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                       >
                         +R {formatNumber(val)}
                       </button>

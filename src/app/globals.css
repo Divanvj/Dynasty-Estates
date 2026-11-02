@@ -739,6 +739,80 @@ select option {
 }
 
 /* ==========================================================================
+   Pill controls
+   ========================================================================== */
+
+/* Three sizes for pill-shaped buttons and links, differing ONLY in width and
+   horizontal padding. The font size and the HEIGHT are fixed and identical
+   within a tier, which is the whole point: two controls side by side cannot
+   drift apart.
+
+   An audit of this app counted 29 distinct padding/text combinations across
+   135 interactive pills, and three different heights inside one header row.
+   Most of that was never sloppy padding. A <Link> and a <button> written with
+   byte-identical classes rendered 38px and 40px, because `text-xs` applies to
+   the link and is inert on the button — see the form-control reset above.
+   Owning the font size here instead of restating it per call site removes the
+   whole class of bug: there is no `text-*` left on a pill to be inert.
+
+   16px rather than 14px because buttons already render 16px, so the links come
+   UP to meet them. The other direction shrinks 67 controls and gives back a
+   chunk of the type floor.
+
+   The height is explicit rather than padding-derived, and that is deliberate:
+   `box-sizing: border-box` is set globally, so a fixed height absorbs the
+   border, while vertical padding does not. Without it an outlined pill stands
+   2px taller than a filled one next to it — which is exactly the mismatch on
+   the collections header, where Compare has a border and New Collection has
+   not.
+
+      pill-sm   32px tall   chips, tags, dense rows
+      pill      40px tall   the default: header and card actions
+      pill-lg   44px tall   primary calls to action, and the 44px touch target
+
+   Inside `@layer components` deliberately. Tailwind's utilities sit in a later
+   layer, so a one-off `px-8` or `h-12` in markup still wins. Defining these
+   unlayered would invert that and silently swallow per-instance overrides,
+   which is the trap this file has now documented four times.
+
+   Geometry only. Colour, border, weight, shadow and hover stay in the markup,
+   so a pill can be filled, outlined or ghost without a variant explosion here.
+
+   NOT for every rounded-full control: a pill wrapping an avatar (the Profile
+   trigger is 46px because of a 32px avatar) or wrapping two lines of text is a
+   different shape and a fixed height would squeeze it. */
+@layer components {
+  .pill-sm,
+  .pill,
+  .pill-lg {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    border-radius: 9999px;
+    font-size: 1rem;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .pill-sm {
+    height: 2rem;
+    padding-inline: 0.75rem;
+  }
+
+  .pill {
+    height: 2.5rem;
+    padding-inline: 1rem;
+  }
+
+  .pill-lg {
+    height: 2.75rem;
+    padding-inline: 1.5rem;
+  }
+}
+
+/* ==========================================================================
    Frosted emerald glass headline with cursor-tracked specular sweep
    ========================================================================== */
 

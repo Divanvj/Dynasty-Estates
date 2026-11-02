@@ -51,7 +51,7 @@ export default function ComparePage() {
             <button
               type="button"
               onClick={() => window.print()}
-              className="flex shrink-0 cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-full border border-slate-300/80 bg-white/60 px-2.5 py-1.5 text-xs font-semibold text-slate-700 transition-all hover:bg-white sm:px-4 sm:py-2 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-white/10"
+              className="pill cursor-pointer gap-1.5 border border-slate-300/80 bg-white/60 font-semibold text-slate-700 transition-all hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-white/10"
               title="Print / Export PDF"
             >
               <PrinterIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-300" />
@@ -60,7 +60,7 @@ export default function ComparePage() {
             <AccountActions />
             <Link
               href="/collections"
-              className="flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full border border-slate-300/80 bg-white/60 px-2.5 py-1.5 text-xs font-semibold text-slate-700 transition-all hover:bg-white sm:px-4 sm:py-2 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-white/10"
+              className="pill gap-1 border border-slate-300/80 bg-white/60 font-semibold text-slate-700 transition-all hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-white/10"
               title="Back to Collections"
             >
               <ArrowLeftIcon className="h-3.5 w-3.5 sm:hidden" />
@@ -179,7 +179,7 @@ export default function ComparePage() {
                   <td key={p.id} className="py-3.5 px-3 text-center">
                     <Link
                       href={`/property/${p.slug}`}
-                      className="inline-block rounded-full bg-slate-900 px-4 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500"
+                      className="pill bg-slate-900 font-semibold text-white shadow-sm hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500"
                     >
                       View Details
                     </Link>

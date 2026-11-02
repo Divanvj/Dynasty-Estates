@@ -107,11 +107,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
             key={col}
             type="button"
             onClick={() => handleHeaderClick(col)}
-            className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold transition-all ${
-              sortCol === col
-                ? "bg-slate-950 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                : "border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-[#060d0e]/60 text-slate-700 dark:text-slate-300"
-            }`}
+            className={`pill-sm font-semibold transition-all ${ sortCol === col ? "bg-slate-950 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-[#060d0e]/60 text-slate-700 dark:text-slate-300" }`}
           >
             {label}
             {sortCol === col && <span className="ml-1">{sortDir === "asc" ? "▲" : "▼"}</span>}
@@ -207,7 +203,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
 
               <Link
                 href={`/property/${prop.slug || prop.id}`}
-                className="mt-3 flex min-h-[44px] items-center justify-center rounded-full bg-slate-950 px-4 text-xs font-bold text-white transition-colors hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+                className="pill-lg mt-3 bg-slate-950 font-bold text-white transition-colors hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
               >
                 View Home →
               </Link>
