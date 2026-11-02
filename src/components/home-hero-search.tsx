@@ -31,7 +31,13 @@ export default function HomeHeroSearch() {
       <div className="mb-3 sm:mb-4 mx-auto max-w-3xl flex items-center justify-between gap-2.5 rounded-2xl border border-emerald-500/30 bg-emerald-950/15 dark:bg-emerald-950/40 px-3 py-2 sm:px-4 sm:py-2.5 text-xs backdrop-blur-md">
         <div className="flex items-center gap-2 text-slate-800 dark:text-emerald-100 min-w-0">
           <SparklesIcon className="h-4 w-4 text-emerald-700 dark:text-emerald-400 shrink-0" />
-          <p className="text-xs truncate sm:whitespace-normal">
+          {/* Wraps rather than truncating. At the 14px floor the short mobile
+              variant below overflowed this flex row by 140px, so `truncate`
+              was cutting the instruction mid-sentence — and an instruction is
+              the one thing that has to survive intact. Two lines on a phone is
+              the better trade. `sm:whitespace-normal` went with it: it existed
+              only to undo the truncation further up. */}
+          <p className="text-xs">
             <strong className="font-bold text-emerald-900 dark:text-emerald-300">AI Search:</strong>{" "}
             <span className="hidden sm:inline">
               Describe your dream home in natural language, e.g. <em>&ldquo;3-bed solar estate in Pretoria East with pool under R6M&rdquo;</em>

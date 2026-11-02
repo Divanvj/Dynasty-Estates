@@ -206,6 +206,27 @@ body {
   box-sizing: border-box;
 }
 
+/* Form controls inherit the page font. Note what this costs, because it is
+   not obvious and it has already been mistaken for a Tailwind bug:
+
+   This rule is UNLAYERED, and unlayered CSS beats every cascade layer no
+   matter the specificity. Tailwind emits `text-xs` and friends inside
+   `@layer utilities`, so `font: inherit` here wins and a `text-*` class on a
+   button, input, select or textarea does NOTHING. Verified against a 40px
+   parent: `button.text-xs` computes to 40px while `span.text-xs` computes to
+   14px. It is the `font` shorthand that does it — it resets size, weight and
+   line-height along with the family.
+
+   Do not "fix" this by moving it into `@layer base` without reviewing every
+   control first. Those inert classes are overwhelmingly `text-xs`, left from
+   when the scale's xs was 12px, so letting them apply would SHRINK controls
+   rather than correct them: measured on the homepage alone, 34 controls drop
+   from 16px to 14px and none grow — Profile, To Rent / For Sale, Filters,
+   Search and every suburb chip among them.
+
+   So the rendered 16px is right and the markup is what is stale. Making the
+   controls obey their classes means first deciding what size each should be,
+   which is a separate piece of work from the type floor. */
 button,
 input,
 select,

@@ -444,9 +444,15 @@ export default function DynastyPropertyMap({
       iconCreateFunction: (c) => {
         const n = c.getChildCount();
         const size = n < 10 ? 38 : n < 50 ? 46 : 54;
+        // `text-xs` rather than an inline font-size, so the count tracks the
+        // type scale like the pin label does. It used to be 13px for one digit
+        // and 12px for two or more, which sat under the 14px floor. The circle
+        // grows with the count (38/46/54px for 1/2/3 digits), so 14px has room
+        // in all three; nothing inside a Leaflet divIcon inherits the page font
+        // size, which is why this needs saying explicitly at all.
         return L.divIcon({
           className: "dyn-cluster-wrap",
-          html: `<div class="flex items-center justify-center rounded-full border-2 border-white/80 bg-gradient-to-br from-[#0b4d4e] to-[#07393a] font-extrabold text-white shadow-[0_6px_18px_rgba(6,78,59,0.45)]" style="width:${size}px;height:${size}px;font-size:${n < 10 ? 13 : 12}px">${n}</div>`,
+          html: `<div class="flex items-center justify-center rounded-full border-2 border-white/80 bg-gradient-to-br from-[#0b4d4e] to-[#07393a] text-xs font-extrabold text-white shadow-[0_6px_18px_rgba(6,78,59,0.45)]" style="width:${size}px;height:${size}px">${n}</div>`,
           iconSize: [size, size],
         });
       },
