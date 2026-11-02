@@ -8,7 +8,9 @@ import ExpandableSearchPanel from "@/components/expandable-search-panel";
 
 export default function HomeHeroSearch() {
   const router = useRouter();
-  const [intent, setIntent] = useState<"rent" | "buy">("rent");
+  // "buy" (For Sale) is the default per the Improvement Notes: the platform
+  // leads with sales, so the hero should open there rather than on rentals.
+  const [intent, setIntent] = useState<"rent" | "buy">("buy");
 
   useEffect(() => {
     function handleExternalIntent(e: Event) {
@@ -66,7 +68,7 @@ export default function HomeHeroSearch() {
       {/* Unified Expandable Single Search Bar & Filter Dropdown */}
       <div className="relative z-50">
         <ExpandableSearchPanel
-          defaultIntent="rent"
+          defaultIntent="buy"
           placeholder="Search city or suburb..."
         />
       </div>

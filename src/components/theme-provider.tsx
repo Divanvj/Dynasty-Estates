@@ -51,19 +51,34 @@ function subscribeStoredTheme(onChange: () => void) {
  */
 let sessionTheme: Theme | null = null;
 
+/**
+ * Light is the default for anyone who has not chosen, per the Improvement
+ * Notes. "system" stays a selectable option — it simply stops being what you
+ * get by saying nothing, which previously handed every dark-OS visitor a dark
+ * site on their first view.
+ *
+ * Only the no-preference case changed: a stored "dark" or "system" is returned
+ * untouched, so nobody's saved choice is overwritten by this default moving.
+ *
+ * Keep in step with the pre-paint script in src/app/layout.tsx. The two decide
+ * the same thing at different moments, and if they disagree the page paints one
+ * theme and then flips to the other.
+ */
+const DEFAULT_THEME: Theme = "light";
+
 function getStoredTheme(): Theme {
   if (sessionTheme) return sessionTheme;
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
-    return isTheme(stored) ? stored : "system";
+    return isTheme(stored) ? stored : DEFAULT_THEME;
   } catch {
-    return "system";
+    return DEFAULT_THEME;
   }
 }
 
 /** Server and pre-hydration snapshot. Matches the markup React sent. */
 function getServerTheme(): Theme {
-  return "system";
+  return DEFAULT_THEME;
 }
 
 function subscribeSystemDark(onChange: () => void) {
@@ -92,11 +107,27 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const resolvedTheme: ResolvedTheme =
     theme === "system" ? (systemPrefersDark ? "dark" : "light") : theme;
 
-  // The one legitimate effect here — writing the resolved theme out to the DOM,
-  // which is an external system. It sets no state.
+  /**
+   * The one legitimate effect here — writing the resolved theme out to the DOM,
+   * which is an external system. It sets no state.
+   *
+   * It reads the preference live rather than using `resolvedTheme`, which is
+   * only the trigger. During hydration `useSyncExternalStore` returns the
+   * *server* snapshot, so `resolvedTheme` is DEFAULT_THEME no matter what the
+   * visitor chose. Writing that to the DOM stripped the `dark` class the
+   * pre-paint script had set, and the store's correction a moment later put it
+   * back: a measured 345ms flash of light theme on every load for anyone using
+   * dark. Reading the store directly agrees with the pre-paint script, so the
+   * first write is a no-op — and unlike a "skip the first run" flag it still
+   * behaves under StrictMode's double-invoked effects.
+   */
   useEffect(() => {
+    const stored = getStoredTheme();
+    const effective: ResolvedTheme =
+      stored === "system" ? (getSystemDark() ? "dark" : "light") : stored;
+
     const root = document.documentElement;
-    if (resolvedTheme === "dark") {
+    if (effective === "dark") {
       root.classList.add("dark");
     } else {
       root.classList.remove("dark");

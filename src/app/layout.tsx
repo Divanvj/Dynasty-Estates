@@ -68,7 +68,11 @@ export default function RootLayout({
               try {
                 var stored = localStorage.getItem("dynasty_theme");
                 var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-                var isDark = stored === "dark" || (!stored && prefersDark) || (stored === "system" && prefersDark);
+                // No stored preference means light, not "follow the OS" — see
+                // DEFAULT_THEME in src/components/theme-provider.tsx, which must
+                // agree with this line or the page paints twice. Someone who has
+                // explicitly chosen "system" still follows the OS.
+                var isDark = stored === "dark" || (stored === "system" && prefersDark);
                 if (isDark) {
                   document.documentElement.classList.add("dark");
                 } else {

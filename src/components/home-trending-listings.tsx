@@ -24,7 +24,11 @@ export type ViewMode = "grid" | "list" | "map" | "compact";
 const filters = ["All", "House", "Villa", "Estate Home", "Apartment", "Penthouse", "Townhouse"];
 
 export default function HomeTrendingListings({ properties }: { properties: PropertyRecord[] }) {
-  const [intent, setIntent] = useState<"rent" | "buy">("rent");
+  // Must match the hero search panel's default ("buy"). The two only sync
+  // through `dynasty:intent-change`, which fires on a *change* — so if they
+  // start on different values the page loads contradicting itself, with the
+  // hero on For Sale and this feed listing rentals underneath it.
+  const [intent, setIntent] = useState<"rent" | "buy">("buy");
   const [activeFilter, setActiveFilter] = useState("All");
   const [viewMode, setViewMode] = useState<ViewMode>("list");
 
@@ -81,17 +85,6 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
             <div className="inline-flex rounded-full border border-slate-200/90 bg-white/80 dark:border-white/10 dark:bg-[#060d0e]/60 p-0.5 shadow-sm">
               <button
                 type="button"
-                onClick={() => handleIntentChange("rent")}
-                className={`rounded-full px-3.5 py-1 text-xs font-bold transition-all cursor-pointer ${
-                  intent === "rent"
-                    ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white"
-                }`}
-              >
-                To Rent
-              </button>
-              <button
-                type="button"
                 onClick={() => handleIntentChange("buy")}
                 className={`rounded-full px-3.5 py-1 text-xs font-bold transition-all cursor-pointer ${
                   intent === "buy"
@@ -100,6 +93,17 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
                 }`}
               >
                 For Sale
+              </button>
+              <button
+                type="button"
+                onClick={() => handleIntentChange("rent")}
+                className={`rounded-full px-3.5 py-1 text-xs font-bold transition-all cursor-pointer ${
+                  intent === "rent"
+                    ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
+                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white"
+                }`}
+              >
+                To Rent
               </button>
             </div>
           </div>

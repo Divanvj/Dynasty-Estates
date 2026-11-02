@@ -168,7 +168,9 @@ const EXIT_MS = 200;
 const ENTER_SCALE = 0.92;
 
 export default function ExpandableSearchPanel({
-  defaultIntent = "rent",
+  // For Sale unless a caller says otherwise. /search overrides this from the
+  // URL, so a rental search still opens on To Rent.
+  defaultIntent = "buy",
   initialLocations = [],
   initialCategory = "Residential",
   initialTypes = ["All types"],
@@ -755,23 +757,14 @@ export default function ExpandableSearchPanel({
           }`}
         >
           <div className="relative grid grid-cols-2 w-52 sm:w-56 p-1 rounded-full bg-white/90 dark:bg-[#071315]/90 backdrop-blur-md border border-slate-200/90 dark:border-white/10 shadow-sm transition-all duration-300 hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_18px_rgba(16,185,129,0.38)] dark:hover:shadow-[0_0_22px_rgba(52,211,153,0.38)]">
-            {/* Sliding indicator pill */}
+            {/* Sliding indicator pill. For Sale is the first column, so the
+                pill slides right for "rent" — invert this if the buttons are
+                ever reordered again, or it animates away from the click. */}
             <span
               className={`absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 border border-emerald-400/50 dark:border-emerald-400/60 shadow-[0_0_12px_rgba(16,185,129,0.3)] dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] transition-transform duration-200 ease-out pointer-events-none ${
-                intent === "buy" ? "translate-x-full" : "translate-x-0"
+                intent === "rent" ? "translate-x-full" : "translate-x-0"
               }`}
             />
-            <button
-              type="button"
-              onClick={() => handleIntentChange("rent")}
-              className={`relative z-10 py-1.5 text-xs font-bold transition-all cursor-pointer text-center rounded-full select-none ${
-                intent === "rent"
-                  ? "text-white"
-                  : "text-slate-600 dark:text-slate-400 hover:text-emerald-900 dark:hover:text-emerald-200 hover:bg-emerald-500/10"
-              }`}
-            >
-              To Rent
-            </button>
             <button
               type="button"
               onClick={() => handleIntentChange("buy")}
@@ -782,6 +775,17 @@ export default function ExpandableSearchPanel({
               }`}
             >
               For Sale
+            </button>
+            <button
+              type="button"
+              onClick={() => handleIntentChange("rent")}
+              className={`relative z-10 py-1.5 text-xs font-bold transition-all cursor-pointer text-center rounded-full select-none ${
+                intent === "rent"
+                  ? "text-white"
+                  : "text-slate-600 dark:text-slate-400 hover:text-emerald-900 dark:hover:text-emerald-200 hover:bg-emerald-500/10"
+              }`}
+            >
+              To Rent
             </button>
           </div>
         </div>
@@ -1128,23 +1132,13 @@ export default function ExpandableSearchPanel({
             {/* Category Intent Pill Slider */}
             <div className="flex items-center justify-between pb-1">
               <div className="relative grid grid-cols-2 w-56 sm:w-64 p-1 rounded-full bg-slate-100 dark:bg-[#061214] border border-slate-200 dark:border-white/10 shadow-inner transition-all duration-300 hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_18px_rgba(16,185,129,0.38)] dark:hover:shadow-[0_0_22px_rgba(52,211,153,0.38)]">
-                {/* Sliding indicator pill */}
+                {/* Sliding indicator pill — see the collapsed bar's copy of
+                    this above: For Sale is column one, so "rent" slides right. */}
                 <span
                   className={`absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 border border-emerald-400/50 dark:border-emerald-400/60 shadow-[0_0_12px_rgba(16,185,129,0.3)] dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] transition-transform duration-200 ease-out pointer-events-none ${
-                    intent === "buy" ? "translate-x-full" : "translate-x-0"
+                    intent === "rent" ? "translate-x-full" : "translate-x-0"
                   }`}
                 />
-                <button
-                  type="button"
-                  onClick={() => handleIntentChange("rent")}
-                  className={`relative z-10 py-1.5 text-xs sm:text-sm font-bold transition-all cursor-pointer text-center rounded-full select-none ${
-                    intent === "rent"
-                      ? "text-white"
-                      : "text-slate-500 dark:text-slate-400 hover:text-emerald-900 dark:hover:text-emerald-200 hover:bg-emerald-500/10"
-                  }`}
-                >
-                  To Rent
-                </button>
                 <button
                   type="button"
                   onClick={() => handleIntentChange("buy")}
@@ -1155,6 +1149,17 @@ export default function ExpandableSearchPanel({
                   }`}
                 >
                   For Sale
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleIntentChange("rent")}
+                  className={`relative z-10 py-1.5 text-xs sm:text-sm font-bold transition-all cursor-pointer text-center rounded-full select-none ${
+                    intent === "rent"
+                      ? "text-white"
+                      : "text-slate-500 dark:text-slate-400 hover:text-emerald-900 dark:hover:text-emerald-200 hover:bg-emerald-500/10"
+                  }`}
+                >
+                  To Rent
                 </button>
               </div>
 

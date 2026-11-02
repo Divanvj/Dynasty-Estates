@@ -382,25 +382,17 @@ function SearchContent() {
             <div className="flex flex-wrap items-center gap-2 mb-1.5">
               <span className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400 font-bold">Catalogue</span>
               <span className="text-slate-300 dark:text-slate-600">•</span>
-              {/* Category Segmented Control: Strict Separation (Rent Default) */}
+              {/* Category Segmented Control: Strict Separation. Order matches
+                  the search panel rendered further down this same page — they
+                  sit ~160px apart, so a mismatch is immediately visible.
+                  The selected category still comes from the URL, not from here. */}
               <div className="relative grid grid-cols-2 w-44 p-0.5 rounded-full border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-[#071315]/80 shadow-xs transition-all duration-300 hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_16px_rgba(16,185,129,0.38)] dark:hover:shadow-[0_0_20px_rgba(52,211,153,0.38)]">
                 {/* Sliding indicator pill */}
                 <span
                   className={`absolute top-0.5 bottom-0.5 left-0.5 w-[calc(50%-2px)] rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-900 dark:to-[#073031] border border-emerald-400/50 shadow-[0_0_10px_rgba(16,185,129,0.3)] transition-transform duration-200 ease-out pointer-events-none ${
-                    listingCategory === "buy" ? "translate-x-full" : "translate-x-0"
+                    listingCategory === "rent" ? "translate-x-full" : "translate-x-0"
                   }`}
                 />
-                <button
-                  type="button"
-                  onClick={() => handleCategoryChange("rent")}
-                  className={`relative z-10 flex min-h-[44px] items-center justify-center py-1 text-xs font-bold transition-all cursor-pointer text-center rounded-full select-none sm:block sm:min-h-0 ${
-                    listingCategory === "rent"
-                      ? "text-white"
-                      : "text-slate-600 dark:text-slate-400 hover:text-emerald-900 dark:hover:text-emerald-200 hover:bg-emerald-500/10"
-                  }`}
-                >
-                  To Rent
-                </button>
                 <button
                   type="button"
                   onClick={() => handleCategoryChange("buy")}
@@ -411,6 +403,17 @@ function SearchContent() {
                   }`}
                 >
                   For Sale
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleCategoryChange("rent")}
+                  className={`relative z-10 flex min-h-[44px] items-center justify-center py-1 text-xs font-bold transition-all cursor-pointer text-center rounded-full select-none sm:block sm:min-h-0 ${
+                    listingCategory === "rent"
+                      ? "text-white"
+                      : "text-slate-600 dark:text-slate-400 hover:text-emerald-900 dark:hover:text-emerald-200 hover:bg-emerald-500/10"
+                  }`}
+                >
+                  To Rent
                 </button>
               </div>
             </div>
