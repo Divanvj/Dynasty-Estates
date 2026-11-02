@@ -9,6 +9,7 @@ import {
   CarIcon,
   LocationPinIcon,
 } from "@/components/icons";
+import { formatNumber } from "@/lib/formatters";
 import type { PropertyRecord } from "@/lib/property-data";
 
 export interface PropertyCompactTableProps {
@@ -181,7 +182,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
                 {prop.pricePerM2 > 0 && (
                   <>
                     <span className="text-slate-400 dark:text-slate-500">·</span>
-                    <span className="font-semibold">R {prop.pricePerM2.toLocaleString("en-ZA")}/m²</span>
+                    <span className="font-semibold">R {formatNumber(prop.pricePerM2)}/m²</span>
                   </>
                 )}
               </div>
@@ -353,7 +354,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
                   <td className="py-3.5 px-3 whitespace-nowrap">
                     {prop.pricePerM2 > 0 ? (
                       <span className="rounded-md bg-slate-100 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 px-2 py-1 text-slate-700 dark:text-slate-300 font-semibold font-mono text-xs">
-                        R {prop.pricePerM2.toLocaleString()}/m²
+                        R {formatNumber(prop.pricePerM2)}/m²
                       </span>
                     ) : (
                       <span className="text-slate-400 dark:text-slate-500">—</span>

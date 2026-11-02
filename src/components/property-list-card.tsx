@@ -11,6 +11,7 @@ import {
   LocationPinIcon,
   SparklesIcon,
 } from "@/components/icons";
+import { formatNumber } from "@/lib/formatters";
 import { getDisplayTag, type PropertyRecord } from "@/lib/property-data";
 
 export interface PropertyListCardProps {
@@ -176,7 +177,7 @@ export default function PropertyListCard({
             </span>
             {pricePerM2 && (
               <span className="hidden lg:inline text-slate-400 font-normal dark:text-slate-400">
-                (approx. R {pricePerM2.toLocaleString()}/m²)
+                (approx. R {formatNumber(pricePerM2)}/m²)
               </span>
             )}
           </div>

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 import AccountActions from "@/components/account-actions";
 import { auth } from "@/lib/firebase";
+import { formatDate } from "@/lib/formatters";
 import { getUserInquiries, type UserInquiry } from "@/lib/user-inquiries";
 
 const labels: Record<string, string> = {
@@ -182,7 +183,7 @@ export default function InquiriesPage() {
                     )}
                   </h2>
                   <p className="text-xs text-slate-500 mt-0.5 dark:text-slate-400">
-                    Logged: {inquiry.createdAt ? new Date(inquiry.createdAt).toLocaleDateString() : "Recent"}
+                    Logged: {inquiry.createdAt ? formatDate(inquiry.createdAt) : "Recent"}
                   </p>
                 </div>
 

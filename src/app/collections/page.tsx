@@ -6,6 +6,7 @@ import { onAuthStateChanged, type User } from "firebase/auth";
 import { useEffect, useState } from "react";
 
 import AccountActions from "@/components/account-actions";
+import { formatDate } from "@/lib/formatters";
 import {
   AreaIcon,
   BathIcon,
@@ -490,7 +491,7 @@ export default function CollectionsPage() {
                             <div key={comm.id} className="rounded-xl border border-white/70 bg-white/70 p-2.5 text-xs dark:bg-[#060d0e]/60 dark:border-white/10">
                               <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                                 <span className="font-semibold text-slate-800 dark:text-slate-300">{comm.userName}</span>
-                                <span>{new Date(comm.createdAt).toLocaleDateString()}</span>
+                                <span>{formatDate(comm.createdAt)}</span>
                               </div>
                               <p className="mt-1 text-slate-700 dark:text-slate-300">{comm.text}</p>
                             </div>
