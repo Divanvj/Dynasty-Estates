@@ -158,7 +158,7 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
         {many && (
           <>
             {/* Frame counter, set in the editorial style the rest of the page uses. */}
-            <div className="pointer-events-none absolute right-4 top-4 rounded-full border border-white/25 bg-black/35 px-3 py-1 text-[10px] font-bold tracking-[0.2em] text-white backdrop-blur-md sm:right-6 sm:top-6">
+            <div className="pointer-events-none absolute right-4 top-4 rounded-full border border-white/25 bg-black/35 px-3 py-1 text-xs font-bold tracking-[0.2em] text-white backdrop-blur-md sm:right-6 sm:top-6">
               {String(index + 1).padStart(2, "0")}
               <span className="opacity-50"> / {String(frames.length).padStart(2, "0")}</span>
             </div>

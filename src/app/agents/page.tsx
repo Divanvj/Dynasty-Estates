@@ -38,7 +38,7 @@ export default function AgentsPage() {
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
             <BrandLogo markOnly />
             <div>
-              <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold hidden sm:block dark:text-slate-400">Practitioners Directory</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-500 font-bold hidden sm:block dark:text-slate-400">Practitioners Directory</p>
               <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">
                 <span className="hidden sm:inline">PPRA Verified </span>Property Practitioners
               </h1>
@@ -81,8 +81,8 @@ export default function AgentsPage() {
                         {agent.name}
                       </Link>
                     </h3>
-                    <p className="text-[11px] text-slate-500 font-medium dark:text-slate-400">{agent.agency}</p>
-                    <span className="mt-1 inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[9px] font-bold text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.2)]">
+                    <p className="text-xs text-slate-500 font-medium dark:text-slate-400">{agent.agency}</p>
+                    <span className="mt-1 inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-bold text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.2)]">
                       <CheckIcon className="h-3 w-3" />
                       <span>{agent.ffcNumber}</span>
                     </span>
@@ -148,7 +148,7 @@ export default function AgentsPage() {
             >
               <div className="flex items-start justify-between border-b border-slate-200 pb-3 dark:border-white/10">
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-emerald-800 tracking-wider dark:text-emerald-400">Direct Message</span>
+                  <span className="text-xs uppercase font-bold text-emerald-800 tracking-wider dark:text-emerald-400">Direct Message</span>
                   <h3 className="text-base font-bold text-slate-950 dark:text-white">{selectedAgent.name}</h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400">{selectedAgent.agency}</p>
                 </div>
@@ -172,7 +172,7 @@ export default function AgentsPage() {
               ) : (
                 <form onSubmit={handleSendMessage} className="mt-4 space-y-3 text-xs">
                   <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1 dark:text-slate-400">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1 dark:text-slate-400">
                       Your Message or Mandate Enquiry
                     </label>
                     <textarea

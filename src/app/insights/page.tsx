@@ -79,7 +79,7 @@ export default function InsightsPage() {
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
             <BrandLogo markOnly />
             <div>
-              <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold hidden sm:block dark:text-emerald-400">Market Intelligence</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-500 font-bold hidden sm:block dark:text-emerald-400">Market Intelligence</p>
               <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">
                 <span className="hidden sm:inline">South African PropTech </span>Market Pulse
               </h1>
@@ -100,7 +100,7 @@ export default function InsightsPage() {
 
         {/* Hero Banner */}
         <section className="rounded-[32px] border border-white/80 bg-white/55 p-6 shadow-sm backdrop-blur-xl mb-6 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-          <span className="rounded-full bg-emerald-100 px-3 py-1 text-[10px] uppercase font-bold tracking-widest text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-400 dark:border dark:border-emerald-500/30">
+          <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs uppercase font-bold tracking-widest text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-400 dark:border dark:border-emerald-500/30">
             Q3 2026 Property Intelligence
           </span>
           <h2 className="mt-3 text-3xl font-light tracking-tight text-slate-950 dark:text-white">
@@ -116,7 +116,7 @@ export default function InsightsPage() {
           <h3 className="text-lg font-bold text-slate-950 mb-4 dark:text-white">Metro Growth & Velocity Benchmarks</h3>
           <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-sm dark:bg-[#060d0e]/60 dark:border-white/10">
             <table className="w-full text-left text-xs">
-              <thead className="border-b border-slate-200 bg-slate-50 text-[10px] uppercase font-bold text-slate-500 dark:border-white/10 dark:bg-[#060d0e]/90 dark:text-slate-300">
+              <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase font-bold text-slate-500 dark:border-white/10 dark:bg-[#060d0e]/90 dark:text-slate-300">
                 <tr>
                   <th className="py-3 px-4">Market Node</th>
                   <th className="py-3 px-4">12-Mo Growth</th>
@@ -132,7 +132,7 @@ export default function InsightsPage() {
                     <td className="py-3.5 px-4 font-extrabold text-emerald-800 dark:text-emerald-400 dark:drop-shadow-[0_0_10px_rgba(16,185,129,0.3)]">{row.growth}</td>
                     <td className="py-3.5 px-4 font-semibold text-slate-900 dark:text-white">{row.avgPrice}</td>
                     <td className="py-3.5 px-4">{row.daysOnMarket} days</td>
-                    <td className="py-3.5 px-4 text-slate-600 text-[11px] dark:text-slate-300">{row.driver}</td>
+                    <td className="py-3.5 px-4 text-slate-600 text-xs dark:text-slate-300">{row.driver}</td>
                   </tr>
                 ))}
               </tbody>
@@ -144,7 +144,7 @@ export default function InsightsPage() {
         <section className="rounded-[32px] border border-white/80 bg-white/55 p-6 shadow-sm backdrop-blur-xl mb-6 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
             <div>
-              <span className="rounded-full bg-slate-900 px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-widest text-white dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-500/30">
+              <span className="rounded-full bg-slate-900 px-3 py-0.5 text-xs font-extrabold uppercase tracking-widest text-white dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-500/30">
                 Official Registrar of Deeds Records
               </span>
               <h3 className="text-lg font-bold text-slate-950 mt-1 dark:text-white">
@@ -177,35 +177,35 @@ export default function InsightsPage() {
           {/* Suburb Metric Highlights */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
             <div className="rounded-2xl border border-white/80 bg-white/80 p-4 shadow-2xs dark:bg-[#060d0e]/70 dark:border-white/10 dark:shadow-inner">
-              <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold dark:text-slate-400">
+              <span className="text-xs uppercase tracking-wider text-slate-400 font-bold dark:text-slate-400">
                 5-Year Capital Appreciation
               </span>
               <p className="mt-1 text-2xl font-extrabold text-emerald-800 dark:text-emerald-400 dark:drop-shadow-[0_0_12px_rgba(16,185,129,0.3)]">
                 {activeNodeData.fiveYearAppreciation}
               </p>
-              <p className="text-[11px] text-slate-500 mt-0.5 dark:text-slate-400">Compound value trajectory</p>
+              <p className="text-xs text-slate-500 mt-0.5 dark:text-slate-400">Compound value trajectory</p>
             </div>
             <div className="rounded-2xl border border-white/80 bg-white/80 p-4 shadow-2xs dark:bg-[#060d0e]/70 dark:border-white/10 dark:shadow-inner">
-              <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold dark:text-slate-400">
+              <span className="text-xs uppercase tracking-wider text-slate-400 font-bold dark:text-slate-400">
                 Median Period of Ownership
               </span>
               <p className="mt-1 text-2xl font-extrabold text-slate-900 dark:text-white">
                 {activeNodeData.avgOwnershipYears}
               </p>
-              <p className="text-[11px] text-slate-500 mt-0.5 dark:text-slate-400">High retention & low turnover</p>
+              <p className="text-xs text-slate-500 mt-0.5 dark:text-slate-400">High retention & low turnover</p>
             </div>
             <div className="rounded-2xl border border-white/80 bg-white/80 p-4 shadow-2xs dark:bg-[#060d0e]/70 dark:border-white/10 dark:shadow-inner">
-              <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold dark:text-slate-400">
+              <span className="text-xs uppercase tracking-wider text-slate-400 font-bold dark:text-slate-400">
                 Buyer Age Demographic
               </span>
               <div className="mt-2 flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-300">
-                <span className="rounded-md bg-slate-100 px-2 py-0.5 text-[10px] dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-slate-300">
+                <span className="rounded-md bg-slate-100 px-2 py-0.5 text-xs dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-slate-300">
                   &lt;35: {activeNodeData.buyerDemographics.under35}
                 </span>
-                <span className="rounded-md bg-emerald-100 text-emerald-900 px-2 py-0.5 text-[10px] dark:bg-emerald-500/25 dark:text-emerald-300 dark:border dark:border-emerald-500/40 dark:shadow-[0_0_10px_rgba(16,185,129,0.25)]">
+                <span className="rounded-md bg-emerald-100 text-emerald-900 px-2 py-0.5 text-xs dark:bg-emerald-500/25 dark:text-emerald-300 dark:border dark:border-emerald-500/40 dark:shadow-[0_0_10px_rgba(16,185,129,0.25)]">
                   36-49: {activeNodeData.buyerDemographics.age36to49}
                 </span>
-                <span className="rounded-md bg-slate-100 px-2 py-0.5 text-[10px] dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-slate-300">
+                <span className="rounded-md bg-slate-100 px-2 py-0.5 text-xs dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-slate-300">
                   50+: {activeNodeData.buyerDemographics.age50plus}
                 </span>
               </div>
@@ -218,12 +218,12 @@ export default function InsightsPage() {
               <span className="text-xs font-bold text-slate-900 dark:text-white">
                 Recent Verified Deeds Registrations in {selectedNode}
               </span>
-              <span className="text-[11px] text-emerald-800 font-semibold dark:text-emerald-400">
+              <span className="text-xs text-emerald-800 font-semibold dark:text-emerald-400">
                 ✓ Verified Registrar Data
               </span>
             </div>
             <table className="w-full text-left text-xs">
-              <thead className="border-b border-slate-200 bg-white text-[10px] uppercase font-bold text-slate-500 dark:border-white/10 dark:bg-[#060d0e]/90 dark:text-slate-300">
+              <thead className="border-b border-slate-200 bg-white text-xs uppercase font-bold text-slate-500 dark:border-white/10 dark:bg-[#060d0e]/90 dark:text-slate-300">
                 <tr>
                   <th className="py-2.5 px-4">Street & Complex</th>
                   <th className="py-2.5 px-4">Property Type</th>

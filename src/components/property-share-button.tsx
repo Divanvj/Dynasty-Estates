@@ -43,7 +43,7 @@ export default function PropertyShareButton({ title }: { title: string }) {
         <span className="hidden sm:inline">Share</span>
       </button>
       {copied && (
-        <span className="absolute right-0 top-10 z-20 whitespace-nowrap rounded-xl bg-slate-950 dark:bg-[#0c1a1c] border border-slate-800 dark:border-white/10 px-2.5 py-1 text-[11px] font-bold text-white dark:text-emerald-300 shadow-xl dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] animate-fade-in">
+        <span className="absolute right-0 top-10 z-20 whitespace-nowrap rounded-xl bg-slate-950 dark:bg-[#0c1a1c] border border-slate-800 dark:border-white/10 px-2.5 py-1 text-xs font-bold text-white dark:text-emerald-300 shadow-xl dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] animate-fade-in">
           Link copied!
         </span>
       )}

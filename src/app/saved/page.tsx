@@ -145,7 +145,7 @@ export default function SavedPropertiesPage() {
 
         {/* Hero Title */}
         <section className="rounded-[32px] border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.08)] backdrop-blur-xl mb-6 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-          <span className="rounded-full bg-emerald-100 dark:bg-emerald-950/60 border border-emerald-200/60 dark:border-emerald-500/30 px-3 py-1 text-[10px] uppercase font-bold tracking-widest text-emerald-800 dark:text-emerald-300">
+          <span className="rounded-full bg-emerald-100 dark:bg-emerald-950/60 border border-emerald-200/60 dark:border-emerald-500/30 px-3 py-1 text-xs uppercase font-bold tracking-widest text-emerald-800 dark:text-emerald-300">
             Buyer Shortlist
           </span>
           <h1 className="mt-2 text-3xl font-light tracking-tight text-slate-950 md:text-4xl dark:text-white">
@@ -216,7 +216,7 @@ export default function SavedPropertiesPage() {
                 </div>
 
                 <div className="p-5">
-                  <span className="rounded-full bg-slate-100 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 px-2.5 py-0.5 text-[10px] font-bold text-slate-600 dark:text-slate-300">
+                  <span className="rounded-full bg-slate-100 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 px-2.5 py-0.5 text-xs font-bold text-slate-600 dark:text-slate-300">
                     {property.type}
                   </span>
                   {/* The card's one real link; `card-link` stretches it over

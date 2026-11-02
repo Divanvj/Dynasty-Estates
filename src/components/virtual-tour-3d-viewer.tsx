@@ -281,7 +281,7 @@ export default function VirtualTour3DViewer({
       <div className="absolute top-4 left-4 right-4 z-30 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
         {/* Left: Room Badge & Title */}
         <div className="flex items-center gap-2 pointer-events-auto">
-          <span className="flex items-center gap-1.5 rounded-full bg-rose-600/90 px-3 py-1 text-[10px] font-extrabold uppercase tracking-widest text-white backdrop-blur-md shadow-md">
+          <span className="flex items-center gap-1.5 rounded-full bg-rose-600/90 px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-white backdrop-blur-md shadow-md">
             <span className="h-2 w-2 rounded-full bg-white animate-pulse" />
             <span>{title ? `${title} · 3D Tour` : "3D Interactive Live Tour"}</span>
           </span>
@@ -437,7 +437,7 @@ export default function VirtualTour3DViewer({
           )}
 
           {/* Instructions Overlay Banner (Fades out when interacting) */}
-          <div className="absolute bottom-24 left-1/2 -translate-x-1/2 pointer-events-none rounded-full bg-black/60 border border-white/20 px-4 py-1.5 text-[11px] font-medium text-slate-300 backdrop-blur-md dark:border-white/10">
+          <div className="absolute bottom-24 left-1/2 -translate-x-1/2 pointer-events-none rounded-full bg-black/60 border border-white/20 px-4 py-1.5 text-xs font-medium text-slate-300 backdrop-blur-md dark:border-white/10">
             Click & drag to look around 360° • Click room beacons to walk through
           </div>
         </div>
@@ -447,7 +447,7 @@ export default function VirtualTour3DViewer({
       {viewMode === "dollhouse" && (
         <div className="relative h-full w-full flex flex-col items-center justify-center p-6 bg-radial from-slate-900 via-slate-950 to-black">
           <div className="text-center max-w-md mb-6">
-            <span className="rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/30 px-3 py-1 text-[10px] font-extrabold uppercase tracking-widest">
+            <span className="rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/30 px-3 py-1 text-xs font-extrabold uppercase tracking-widest">
               3D Floor Cutaway Blueprint
             </span>
             <h3 className="mt-2 text-xl font-bold text-white">
@@ -482,8 +482,8 @@ export default function VirtualTour3DViewer({
                 <p className="text-xs font-bold text-white group-hover:text-rose-400 transition-colors">
                   {room.name}
                 </p>
-                <p className="text-[10px] text-slate-400 line-clamp-1 mt-0.5 dark:text-slate-400">{room.description}</p>
-                <span className="mt-2 inline-block text-[10px] font-bold text-rose-400 group-hover:underline">
+                <p className="text-xs text-slate-400 line-clamp-1 mt-0.5 dark:text-slate-400">{room.description}</p>
+                <span className="mt-2 inline-block text-xs font-bold text-rose-400 group-hover:underline">
                   Enter 3D Scan →
                 </span>
               </button>
@@ -510,7 +510,7 @@ export default function VirtualTour3DViewer({
             <div
               key={idx}
               style={{ left: `${pt.x}%`, top: `${pt.y}%` }}
-              className="absolute -translate-x-1/2 -translate-y-1/2 flex items-center justify-center h-5 w-5 rounded-full bg-emerald-400 text-slate-950 text-[10px] font-bold shadow-lg ring-4 ring-emerald-400/40 dark:text-white"
+              className="absolute -translate-x-1/2 -translate-y-1/2 flex items-center justify-center h-5 w-5 rounded-full bg-emerald-400 text-slate-950 text-xs font-bold shadow-lg ring-4 ring-emerald-400/40 dark:text-white"
             >
               {idx + 1}
             </div>
@@ -532,7 +532,7 @@ export default function VirtualTour3DViewer({
 
           {/* Measurement Result Overlay Card */}
           <div className="absolute bottom-20 left-1/2 -translate-x-1/2 rounded-2xl border border-white/20 bg-slate-900/90 px-6 py-3 text-center backdrop-blur-xl shadow-2xl dark:border-white/10">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">
+            <p className="text-xs font-bold uppercase tracking-wider text-emerald-400">
               {measureDistance ? "Laser Measurement Result" : "Click 2 points to measure span"}
             </p>
             {measureDistance ? (
@@ -549,7 +549,7 @@ export default function VirtualTour3DViewer({
                 setMeasurePoints([]);
                 setMeasureDistance(null);
               }}
-              className="mt-2 text-[10px] text-slate-400 underline hover:text-white dark:text-slate-400"
+              className="mt-2 text-xs text-slate-400 underline hover:text-white dark:text-slate-400"
             >
               Reset Points
             </button>
@@ -602,7 +602,7 @@ export default function VirtualTour3DViewer({
             >
               -
             </button>
-            <span className="text-[10px] text-slate-400 px-1 font-mono dark:text-slate-400">{(zoom * 100).toFixed(0)}%</span>
+            <span className="text-xs text-slate-400 px-1 font-mono dark:text-slate-400">{(zoom * 100).toFixed(0)}%</span>
             <button
               type="button"
               onClick={() => setZoom((z) => Math.min(1.6, z + 0.2))}

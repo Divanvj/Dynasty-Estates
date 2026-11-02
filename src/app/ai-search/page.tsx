@@ -63,8 +63,8 @@ export default function AISearchPage() {
             <BrandLogo markOnly />
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-emerald-800 font-bold dark:text-emerald-400">Grounded AI</span>
-                <span className="rounded-full bg-emerald-500/20 text-emerald-800 px-2 py-0.5 text-[9px] font-bold dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-500/30">
+                <span className="text-xs uppercase tracking-[0.2em] text-emerald-800 font-bold dark:text-emerald-400">Grounded AI</span>
+                <span className="rounded-full bg-emerald-500/20 text-emerald-800 px-2 py-0.5 text-xs font-bold dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-500/30">
                   BETA
                 </span>
               </div>
@@ -87,7 +87,7 @@ export default function AISearchPage() {
 
         {/* AI Query Console */}
         <section className="rounded-[32px] border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.1)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-          <p className="text-[10px] uppercase tracking-[0.24em] text-slate-500 font-bold dark:text-slate-400">
+          <p className="text-xs uppercase tracking-[0.24em] text-slate-500 font-bold dark:text-slate-400">
             Conversational Discovery
           </p>
           <h2 className="mt-1 text-2xl font-light text-slate-950 dark:text-white">
@@ -120,13 +120,13 @@ export default function AISearchPage() {
 
           {/* Quick Suggestions */}
           <div className="mt-4 flex flex-wrap items-center gap-2">
-            <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Try asking:</span>
+            <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Try asking:</span>
             {promptSuggestions.map((suggestion) => (
               <button
                 key={suggestion}
                 type="button"
                 onClick={() => handleSearchWith(suggestion)}
-                className="rounded-full border border-slate-200 bg-white/70 px-3 py-1 text-[11px] font-medium text-slate-700 hover:bg-white hover:border-emerald-400 transition-all cursor-pointer dark:bg-[#060d0e]/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-emerald-400"
+                className="rounded-full border border-slate-200 bg-white/70 px-3 py-1 text-xs font-medium text-slate-700 hover:bg-white hover:border-emerald-400 transition-all cursor-pointer dark:bg-[#060d0e]/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-emerald-400"
               >
                 &ldquo;{suggestion}&rdquo;
               </button>
@@ -135,7 +135,7 @@ export default function AISearchPage() {
 
           {/* Parsed Semantic Constraints Bar */}
           <div className="mt-6 rounded-2xl border border-emerald-300/60 bg-emerald-50/80 p-4 dark:border-emerald-500/25 dark:bg-emerald-950/25 dark:shadow-[0_4px_20px_rgba(16,185,129,0.06)]">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-900 dark:text-emerald-400">
+            <p className="text-xs font-bold uppercase tracking-wider text-emerald-900 dark:text-emerald-400">
               Extracted Intent Constraints:
             </p>
             <div className="mt-2 flex flex-wrap gap-2 text-xs">
@@ -215,8 +215,8 @@ export default function AISearchPage() {
                   </p>
 
                   {/* AI Explanation / Reasoning */}
-                  <div className="mt-3 rounded-xl border border-slate-200/80 bg-slate-50 p-2.5 text-[11px] text-slate-700 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300">
-                    <p className="font-bold text-[10px] uppercase tracking-wider text-slate-400 mb-1 dark:text-slate-400">
+                  <div className="mt-3 rounded-xl border border-slate-200/80 bg-slate-50 p-2.5 text-xs text-slate-700 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300">
+                    <p className="font-bold text-xs uppercase tracking-wider text-slate-400 mb-1 dark:text-slate-400">
                       Why this fits:
                     </p>
                     <ul className="space-y-1">

@@ -163,7 +163,7 @@ export default function CustomSelect({
           {icon && <span className="shrink-0 text-emerald-600 dark:text-emerald-400">{icon}</span>}
           <div className="min-w-0 flex-1 flex flex-col justify-center">
             {label && (
-              <span className="block text-[9px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 leading-none truncate mb-0.5">
+              <span className="block text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 leading-none truncate mb-0.5">
                 {label}
               </span>
             )}
@@ -248,7 +248,7 @@ export default function CustomSelect({
                         <span className="block truncate">{option.label}</span>
                         {option.sublabel && (
                           <span
-                            className={`block truncate text-[10px] font-normal ${
+                            className={`block truncate text-xs font-normal ${
                               isSelected ? "text-emerald-100" : "text-slate-400 dark:text-slate-500"
                             }`}
                           >

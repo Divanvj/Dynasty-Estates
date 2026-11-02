@@ -98,8 +98,8 @@ export default function AdminPage() {
             <BrandLogo markOnly />
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-slate-500 hidden sm:inline dark:text-emerald-400 font-bold">Governance & Trust</span>
-                <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[9px] font-bold text-white dark:bg-emerald-600">ADMIN</span>
+                <span className="text-xs uppercase tracking-[0.2em] text-slate-500 hidden sm:inline dark:text-emerald-400 font-bold">Governance & Trust</span>
+                <span className="rounded-full bg-slate-900 px-2 py-0.5 text-xs font-bold text-white dark:bg-emerald-600">ADMIN</span>
               </div>
               <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">
                 <span className="hidden sm:inline">Platform </span>Command Console
@@ -177,14 +177,14 @@ export default function AdminPage() {
                   <div className="flex flex-col justify-between gap-3 md:flex-row md:items-start">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="rounded-full bg-slate-900/10 px-2.5 py-0.5 text-[10px] font-bold text-slate-800 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-slate-300">
+                        <span className="rounded-full bg-slate-900/10 px-2.5 py-0.5 text-xs font-bold text-slate-800 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-slate-300">
                           {item.status}
                         </span>
-                        <span className="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border dark:border-emerald-500/30">
+                        <span className="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border dark:border-emerald-500/30">
                           Quality {item.qualityScore}%
                         </span>
                         {item.fraudSignals && item.fraudSignals.length > 0 ? (
-                          <span className="rounded-full bg-rose-500/15 px-2.5 py-0.5 text-[10px] font-bold text-rose-700 dark:bg-rose-500/20 dark:text-rose-300 dark:border dark:border-rose-500/30">
+                          <span className="rounded-full bg-rose-500/15 px-2.5 py-0.5 text-xs font-bold text-rose-700 dark:bg-rose-500/20 dark:text-rose-300 dark:border dark:border-rose-500/30">
                             Fraud Signal
                           </span>
                         ) : null}
@@ -283,7 +283,7 @@ export default function AdminPage() {
                   <div className="flex items-center justify-between">
                     <h3 className="text-base font-bold text-slate-900 dark:text-white">{pkg.name}</h3>
                     {pkg.isPopular && (
-                      <span className="rounded-full bg-emerald-500 px-2 py-0.5 text-[9px] font-bold text-white dark:bg-emerald-600">
+                      <span className="rounded-full bg-emerald-500 px-2 py-0.5 text-xs font-bold text-white dark:bg-emerald-600">
                         POPULAR
                       </span>
                     )}
@@ -317,7 +317,7 @@ export default function AdminPage() {
 
             <div className="overflow-hidden rounded-[26px] border border-white/80 bg-white/55 shadow-sm backdrop-blur-xl dark:bg-[#060d0e]/60 dark:border-white/10">
               <table className="w-full text-left text-xs">
-                <thead className="border-b border-slate-200/80 bg-white/40 text-[10px] uppercase tracking-wider text-slate-500 dark:border-white/10 dark:bg-[#0c1a1c] dark:text-slate-400">
+                <thead className="border-b border-slate-200/80 bg-white/40 text-xs uppercase tracking-wider text-slate-500 dark:border-white/10 dark:bg-[#0c1a1c] dark:text-slate-400">
                   <tr>
                     <th className="py-3 px-4">Timestamp</th>
                     <th className="py-3 px-4">Actor</th>
@@ -336,11 +336,11 @@ export default function AdminPage() {
                         {log.actorEmail ?? log.actorId}
                       </td>
                       <td className="py-3 px-4">
-                        <span className="rounded-full bg-slate-900/10 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-emerald-300 px-2.5 py-0.5 font-mono text-[10px] font-bold">
+                        <span className="rounded-full bg-slate-900/10 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-emerald-300 px-2.5 py-0.5 font-mono text-xs font-bold">
                           {log.action}
                         </span>
                       </td>
-                      <td className="py-3 px-4 font-mono text-[11px] text-slate-600 dark:text-slate-300">{log.resource}</td>
+                      <td className="py-3 px-4 font-mono text-xs text-slate-600 dark:text-slate-300">{log.resource}</td>
                       <td className="py-3 px-4 text-slate-600 dark:text-slate-300">{log.details}</td>
                     </tr>
                   ))}

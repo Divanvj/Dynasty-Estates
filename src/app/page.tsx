@@ -72,11 +72,11 @@ export default async function Home() {
             <div className="relative z-10 mx-auto mt-6 sm:mt-8 grid grid-cols-2 max-w-4xl gap-2.5 sm:gap-3">
               <Link href="/search?intent=rent" className="block rounded-[18px] sm:rounded-[22px] border border-white/70 bg-white/60 dark:border-white/10 dark:bg-[#060d0e]/60 p-3 sm:p-4 backdrop-blur-md hover:bg-white dark:hover:bg-[#0c1a1c] transition-all text-center sm:text-left">
                 <p className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">20 Active</p>
-                <p className="mt-1 text-[9px] sm:text-[10px] uppercase tracking-[0.12em] sm:tracking-[0.14em] text-slate-500 dark:text-slate-400">Verified rentals & homes →</p>
+                <p className="mt-1 text-xs uppercase tracking-[0.12em] sm:tracking-[0.14em] text-slate-500 dark:text-slate-400">Verified rentals & homes →</p>
               </Link>
               <Link href="/search?q=solar&intent=rent" className="block rounded-[18px] sm:rounded-[22px] border border-white/70 bg-white/60 dark:border-white/10 dark:bg-[#060d0e]/60 p-3 sm:p-4 backdrop-blur-md hover:bg-white dark:hover:bg-[#0c1a1c] transition-all text-center sm:text-left">
                 <p className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">100% Solar</p>
-                <p className="mt-1 text-[9px] sm:text-[10px] uppercase tracking-[0.12em] sm:tracking-[0.14em] text-slate-500 dark:text-slate-400">Energy resilience →</p>
+                <p className="mt-1 text-xs uppercase tracking-[0.12em] sm:tracking-[0.14em] text-slate-500 dark:text-slate-400">Energy resilience →</p>
               </Link>
             </div>
           </div>
@@ -93,7 +93,7 @@ export default async function Home() {
         <section id="insights" className="mx-auto mt-8 grid max-w-[1440px] gap-4 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="rounded-[30px] border border-white/70 bg-white/45 dark:border-white/10 dark:bg-[#0c1a1c]/65 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl">
             <div className="flex items-center justify-between">
-              <p className="text-[10px] uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400 font-bold">Market intelligence</p>
+              <p className="text-xs uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400 font-bold">Market intelligence</p>
               <Link href="/insights" className="text-xs font-bold text-emerald-800 dark:text-emerald-400 hover:underline">
                 Full Report →
               </Link>
@@ -122,7 +122,7 @@ export default async function Home() {
           <div className="rounded-[30px] border border-emerald-500/25 bg-gradient-to-br from-[#082224] to-[#041416] p-6 text-white shadow-[0_20px_45px_rgba(4,20,22,0.35)] backdrop-blur-xl">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-emerald-400 font-semibold">Collaboration & Shortlisting</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-emerald-400 font-semibold">Collaboration & Shortlisting</p>
                 <h3 className="mt-1 text-2xl font-light text-white">Find homes with your partner</h3>
               </div>
               <Link
@@ -216,7 +216,7 @@ export default async function Home() {
             </div>
           </div>
 
-          <div className="mt-8 border-t border-slate-200/80 dark:border-white/10 pt-4 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
+          <div className="mt-8 border-t border-slate-200/80 dark:border-white/10 pt-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400">
             <p>© 2026 Dynasty Estates / Tricore Enterprises. All rights reserved.</p>
             <p>Built with Next.js, TypeScript & Obsidian Glass.</p>
           </div>

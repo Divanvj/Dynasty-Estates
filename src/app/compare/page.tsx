@@ -41,7 +41,7 @@ export default function ComparePage() {
           <div className="flex items-center gap-2.5 sm:gap-3">
             <BrandLogo markOnly />
             <div>
-              <p className="hidden text-[9px] uppercase tracking-[0.2em] text-slate-500 sm:block sm:text-[10px] dark:text-slate-400">Buyer Decision Support</p>
+              <p className="hidden text-xs uppercase tracking-[0.2em] text-slate-500 sm:block sm:text-xs dark:text-slate-400">Buyer Decision Support</p>
               <h1 className="text-xs font-semibold tracking-wide text-slate-900 sm:text-sm dark:text-white">
                 <span className="hidden sm:inline">Side-by-Side </span>Comparison
               </h1>
@@ -119,7 +119,7 @@ export default function ComparePage() {
                           {prop.title}
                         </Link>
                       </h3>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400">{prop.location}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">{prop.location}</p>
                       <p className="mt-1 text-sm font-extrabold text-emerald-700 dark:text-emerald-400">{prop.price}</p>
                     </div>
                   </th>
@@ -159,7 +159,7 @@ export default function ComparePage() {
                 <td className="py-3.5 font-semibold text-slate-600 dark:text-slate-300">Energy & Resilience</td>
                 {comparedProperties.map((p) => (
                   <td key={p.id} className="py-3.5 px-3 text-center">
-                    <span className="inline-block rounded-full bg-emerald-100 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border dark:border-emerald-500/30">
+                    <span className="inline-block rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border dark:border-emerald-500/30">
                       Solar + Inverter Ready
                     </span>
                   </td>

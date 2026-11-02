@@ -102,7 +102,7 @@ export default function InquiriesPage() {
         <section className="rounded-[32px] border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.08)] backdrop-blur-xl mb-6 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <span className="rounded-full bg-emerald-100 px-3 py-1 text-[10px] uppercase font-bold tracking-widest text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.2)]">
+              <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs uppercase font-bold tracking-widest text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.2)]">
                 Buyer Communication Hub
               </span>
               <h1 className="mt-2 text-3xl font-light tracking-tight text-slate-950 md:text-4xl dark:text-white">
@@ -170,7 +170,7 @@ export default function InquiriesPage() {
                 className="group relative flex flex-col gap-4 rounded-[26px] border border-white/80 bg-white/60 p-5 shadow-sm backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between transition-all hover:bg-white dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/30"
               >
                 <div>
-                  <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[10px] font-bold text-slate-600 dark:bg-[#060d0e]/80 dark:text-slate-300 dark:border dark:border-white/10">
+                  <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-bold text-slate-600 dark:bg-[#060d0e]/80 dark:text-slate-300 dark:border dark:border-white/10">
                     {labels[inquiry.kind] ?? inquiry.kind}
                   </span>
                   {/* Conditional, because the row's link is: an enquiry whose

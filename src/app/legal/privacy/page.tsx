@@ -25,7 +25,7 @@ export default function PrivacyPolicyPage() {
           <div className="flex items-center gap-3">
             <BrandLogo markOnly />
             <div>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold dark:text-slate-400">Compliance & Trust</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-500 font-bold dark:text-slate-400">Compliance & Trust</p>
               <h1 className="text-sm font-semibold tracking-wide text-slate-900 dark:text-white">POPIA & Privacy Policy</h1>
             </div>
           </div>
@@ -40,7 +40,7 @@ export default function PrivacyPolicyPage() {
         {/* Legal Document Container */}
         <article className="rounded-[32px] border border-white/80 bg-white/65 p-6 shadow-sm backdrop-blur-xl md:p-10 space-y-6 text-xs leading-relaxed text-slate-700 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] dark:text-slate-300">
           <div>
-            <span className="rounded-full bg-emerald-100 px-3 py-1 text-[10px] font-bold text-emerald-800 uppercase tracking-widest dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.2)]">
+            <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800 uppercase tracking-widest dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.2)]">
               Statutory Compliance
             </span>
             <h2 className="mt-3 text-2xl font-bold text-slate-950 dark:text-white">

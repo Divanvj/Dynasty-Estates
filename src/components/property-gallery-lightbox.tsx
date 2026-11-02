@@ -43,7 +43,7 @@ export default function PropertyGalleryLightbox({
               style={{ backgroundImage: `url(${image})` }}
             />
             <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/25" />
-            <span className="absolute bottom-2.5 right-2.5 inline-flex items-center gap-1 rounded-full bg-black/60 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity">
+            <span className="absolute bottom-2.5 right-2.5 inline-flex items-center gap-1 rounded-full bg-black/60 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity">
               <SearchIcon className="h-3 w-3" />
               <span>Expand</span>
             </span>
@@ -68,7 +68,7 @@ export default function PropertyGalleryLightbox({
             <div className="flex items-center justify-between px-4 py-3 text-white">
               <div>
                 <p className="text-xs font-bold text-slate-200">{title}</p>
-                <p className="text-[10px] text-slate-400 dark:text-slate-400">
+                <p className="text-xs text-slate-400 dark:text-slate-400">
                   Photo {activeIndex + 1} of {images.length}
                 </p>
               </div>

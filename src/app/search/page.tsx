@@ -380,7 +380,7 @@ function SearchContent() {
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 dark:border-white/10 pb-4">
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-1.5">
-              <span className="text-[10px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400 font-bold">Catalogue</span>
+              <span className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400 font-bold">Catalogue</span>
               <span className="text-slate-300 dark:text-slate-600">•</span>
               {/* Category Segmented Control: Strict Separation (Rent Default) */}
               <div className="relative grid grid-cols-2 w-44 p-0.5 rounded-full border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-[#071315]/80 shadow-xs transition-all duration-300 hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_16px_rgba(16,185,129,0.38)] dark:hover:shadow-[0_0_20px_rgba(52,211,153,0.38)]">
@@ -533,7 +533,7 @@ function SearchContent() {
         {/* One swipeable row on phones — wrapping these chips cost four rows and
             pushed the first listing off the screen. Unchanged from `sm` up. */}
         <div className="mt-4 border-t border-slate-200/60 dark:border-white/10 pt-3 -mx-4 px-4 sm:mx-0 sm:px-0 flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:overflow-visible sm:flex-wrap sm:justify-center">
-          <span className="hidden sm:inline text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1">
+          <span className="hidden sm:inline text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1">
             Quick Filters:
           </span>
           {[
@@ -613,7 +613,7 @@ function SearchContent() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
 
                       <div className="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap">
-                        <span className={`rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider backdrop-blur-md ${
+                        <span className={`rounded-full border px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider backdrop-blur-md ${
                           property.listingType === "rent"
                             ? "border-amber-300/60 bg-amber-950/80 text-amber-200"
                             : "border-emerald-300/60 bg-emerald-950/80 text-emerald-200"
@@ -621,7 +621,7 @@ function SearchContent() {
                           {property.listingType === "rent" ? "To Rent" : "For Sale"}
                         </span>
                         {getDisplayTag(property) && (
-                          <span className="rounded-full border border-white/30 bg-black/40 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-md dark:border-white/10">
+                          <span className="rounded-full border border-white/30 bg-black/40 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-md dark:border-white/10">
                             {getDisplayTag(property)}
                           </span>
                         )}
@@ -636,7 +636,7 @@ function SearchContent() {
                       <div className="absolute bottom-3 left-3 text-white">
                         <p className="text-2xl font-extrabold">{property.price}</p>
                         {property.listingType === "rent" && property.leaseTerm && (
-                          <p className="text-[11px] text-amber-200 font-medium">
+                          <p className="text-xs text-amber-200 font-medium">
                             {property.leaseTerm} Lease {property.furnishedStatus ? `· ${property.furnishedStatus}` : ""}
                           </p>
                         )}
@@ -659,7 +659,7 @@ function SearchContent() {
                             <span>{property.location}</span>
                           </p>
                         </div>
-                        <span className="rounded-full bg-slate-100 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 px-2.5 py-0.5 text-[10px] font-bold text-slate-700 dark:text-slate-300 shrink-0">
+                        <span className="rounded-full bg-slate-100 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 px-2.5 py-0.5 text-xs font-bold text-slate-700 dark:text-slate-300 shrink-0">
                           {property.type}
                         </span>
                       </div>
@@ -690,12 +690,12 @@ function SearchContent() {
                       {/* Feature Badges */}
                       <div className="mt-3.5 flex flex-wrap gap-1.5">
                         {property.features?.slice(0, 3).map((f) => (
-                          <span key={f} className="rounded-md bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 text-[10px] font-semibold text-emerald-800 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-500/20">
+                          <span key={f} className="rounded-md bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 text-xs font-semibold text-emerald-800 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-500/20">
                             {f.replace("_", " ")}
                           </span>
                         ))}
                         {(property.features?.length ?? 0) > 3 && (
-                          <span className="text-[10px] text-slate-400 dark:text-slate-500 self-center">
+                          <span className="text-xs text-slate-400 dark:text-slate-500 self-center">
                             +{(property.features?.length ?? 0) - 3} more
                           </span>
                         )}

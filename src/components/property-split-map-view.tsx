@@ -134,7 +134,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                   {/* Badges */}
                   <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5 z-10">
                     <span
-                      className="rounded-full px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wider backdrop-blur-md bg-emerald-950/90 text-emerald-200 border border-emerald-500/50 dark:bg-emerald-600/90 dark:text-white dark:border-emerald-400/50 dark:shadow-[0_0_10px_rgba(16,185,129,0.3)]"
+                      className="rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider backdrop-blur-md bg-emerald-950/90 text-emerald-200 border border-emerald-500/50 dark:bg-emerald-600/90 dark:text-white dark:border-emerald-400/50 dark:shadow-[0_0_10px_rgba(16,185,129,0.3)]"
                     >
                       {property.listingType === "rent" ? "To Rent" : "For Sale"}
                     </span>
@@ -147,7 +147,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                   <div className="absolute bottom-2.5 left-2.5 text-white z-10">
                     <p className="text-xl font-extrabold">{property.price}</p>
                     {property.listingType === "rent" && property.leaseTerm && (
-                      <p className="text-[10px] text-emerald-200 font-medium">
+                      <p className="text-xs text-emerald-200 font-medium">
                         {property.leaseTerm} Lease
                       </p>
                     )}
@@ -162,7 +162,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                         <LocationPinIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
                         <span>{property.suburb || property.location.split(",")[0]}</span>
                       </span>
-                      <span className="rounded-full bg-slate-100 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 px-2.5 py-0.5 text-[10px] font-bold text-slate-700 dark:text-slate-300">
+                      <span className="rounded-full bg-slate-100 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 px-2.5 py-0.5 text-xs font-bold text-slate-700 dark:text-slate-300">
                         {property.type}
                       </span>
                     </div>
@@ -201,7 +201,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                       <button
                         type="button"
                         onClick={() => handleSelectProperty(property.id, true)}
-                        className="rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 border border-emerald-500/50 px-3 py-1 text-[11px] font-bold text-white shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] hover:from-[#093e3f] hover:to-[#052c2d] dark:hover:from-emerald-500 dark:hover:to-emerald-600 transition-all cursor-pointer inline-flex items-center gap-1"
+                        className="rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 border border-emerald-500/50 px-3 py-1 text-xs font-bold text-white shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] hover:from-[#093e3f] hover:to-[#052c2d] dark:hover:from-emerald-500 dark:hover:to-emerald-600 transition-all cursor-pointer inline-flex items-center gap-1"
                         title="View Street View for this property"
                       >
                         <span>👁️ Street View</span>
@@ -212,7 +212,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                           handleSelectProperty(property.id, false);
                           setDisplayMode("map");
                         }}
-                        className="rounded-full border border-slate-200 dark:border-white/10 bg-white dark:bg-[#060d0e]/60 px-2.5 py-1 text-[11px] font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#0c1a1c] dark:hover:text-white transition-all cursor-pointer"
+                        className="rounded-full border border-slate-200 dark:border-white/10 bg-white dark:bg-[#060d0e]/60 px-2.5 py-1 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#0c1a1c] dark:hover:text-white transition-all cursor-pointer"
                       >
                         🗺️ Locate
                       </button>
@@ -220,7 +220,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
 
                     <Link
                       href={`/property/${property.slug || property.id}`}
-                      className="rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 hover:from-[#093e3f] hover:to-[#052c2d] dark:hover:from-emerald-500 dark:hover:to-emerald-600 px-3.5 py-1 text-[11px] font-bold text-white shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] border border-emerald-500/30 transition-all"
+                      className="rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 hover:from-[#093e3f] hover:to-[#052c2d] dark:hover:from-emerald-500 dark:hover:to-emerald-600 px-3.5 py-1 text-xs font-bold text-white shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] border border-emerald-500/30 transition-all"
                     >
                       Details →
                     </Link>
@@ -263,7 +263,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                 <button
                   type="button"
                   onClick={() => setDisplayMode("map")}
-                  className={`whitespace-nowrap rounded-full px-2.5 py-1 text-[11px] font-bold transition-all cursor-pointer ${
+                  className={`whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold transition-all cursor-pointer ${
                     displayMode === "map"
                       ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] shadow-xs"
                       : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
@@ -274,7 +274,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                 <button
                   type="button"
                   onClick={() => setDisplayMode("street")}
-                  className={`whitespace-nowrap rounded-full px-2.5 py-1 text-[11px] font-bold transition-all cursor-pointer ${
+                  className={`whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold transition-all cursor-pointer ${
                     displayMode === "street"
                       ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] shadow-xs"
                       : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
@@ -299,7 +299,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                   <span>Back to Map Overview</span>
                 </button>
 
-                <span className="text-[11px] font-semibold text-slate-700 dark:text-slate-300 truncate max-w-[200px]">
+                <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 truncate max-w-[200px]">
                   {activeProperty ? activeProperty.location : "South Africa"}
                 </span>
               </div>
@@ -363,7 +363,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                       style={{ backgroundImage: `url(${activeProperty.image})` }}
                     />
                     <div className="min-w-0">
-                      <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400 truncate">
+                      <p className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400 truncate">
                         {activeProperty.location}
                       </p>
                       <h4 className="text-xs font-bold text-slate-900 dark:text-white truncate">

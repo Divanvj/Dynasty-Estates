@@ -28,7 +28,7 @@ export default function MapSearchPage() {
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
             <BrandLogo markOnly />
             <div>
-              <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400/80 font-bold hidden sm:block">Geospatial Intelligence</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400/80 font-bold hidden sm:block">Geospatial Intelligence</p>
               <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">
                 <span className="hidden sm:inline">Dynasty Live </span>Map &amp; Street View
               </h1>
@@ -72,7 +72,7 @@ export default function MapSearchPage() {
             ))}
           </div>
 
-          <span className="rounded-full bg-emerald-100/90 dark:bg-emerald-500/20 px-3 py-1 text-[11px] font-bold text-emerald-800 dark:text-emerald-400 border border-transparent dark:border-emerald-500/30">
+          <span className="rounded-full bg-emerald-100/90 dark:bg-emerald-500/20 px-3 py-1 text-xs font-bold text-emerald-800 dark:text-emerald-400 border border-transparent dark:border-emerald-500/30">
             {filteredProperties.length} Properties Mapped
           </span>
         </div>

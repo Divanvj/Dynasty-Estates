@@ -143,6 +143,31 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
+  /* Type floor — nothing below 14px, body copy at 16px.
+
+     Tailwind generates `text-xs` and `text-sm` from these tokens rather than
+     hardcoding the rules, so shifting the two up one step moves all 710
+     usages across 94 files at once. `text-base` and the headings above it
+     are deliberately left alone: moving those would cascade into every
+     heading on the site.
+
+     The paired line-heights have to move with the sizes. They are separate
+     tokens, so leaving them behind puts 14px text in a 16px line box, which
+     reads as a bug. These two values are the ratios Tailwind already pairs
+     with each size one step up.
+
+     This makes `text-sm` and `text-base` render identically at 16px. That
+     redundancy is deliberate and harmless; the alternative is shifting the
+     whole scale, which moves the headings.
+
+     Arbitrary sizes — `text-[10px]` and friends — are baked into the class
+     name, not read from a token, so they are NOT reached by this and stay
+     small until they are converted to scale classes. */
+  --text-xs: 0.875rem;                        /* 12px -> 14px */
+  --text-xs--line-height: calc(1.25 / 0.875);
+  --text-sm: 1rem;                            /* 14px -> 16px */
+  --text-sm--line-height: calc(1.5 / 1);
+
   /* Dynasty champagne — the brand's second accent, beside the teal. The muted
      metallic already in the identity (--obsidian-champagne), as a full scale so
      it can be used as a real accent rather than as one-off hex. Centred so
@@ -586,33 +611,24 @@ select option {
 }
 
 /* ==========================================================================
-   Readable type floor — mobile only
+   Readable type floor — now in the scale itself
    ========================================================================== */
 
-/* The audit counted 201 sub-12px font declarations: 122 × text-[10px], 60 ×
-   text-[11px], 18 × text-[9px]. Much of that is not decoration — it is property
-   specs, feature chips and labels carrying real meaning. At arm's length on a
-   phone, 9–10px is not readable for most adults over about forty, which is the
-   core buying demographic rather than an edge case.
+/* Superseded, and removed. This used to raise `.text-[9px]`, `.text-[10px]`
+   and `.text-[11px]` to 11-12px below `lg`, as unlayered CSS so that it would
+   beat Tailwind's utility layer. It reached 201 call sites, but only on
+   mobile: from `lg` up the desktop view still rendered the literal 9-11px.
 
-   Raising the three offending utilities in one place beats editing 201 call
-   sites: it cannot be missed, and it cannot drift as new markup is written.
-   Deliberately unlayered so it beats Tailwind's utility layer, and capped below
-   `lg` so the desktop view is untouched.
+   The floor now lives in the type scale. `--text-xs` is 14px (see the token
+   block above) and those call sites were converted from arbitrary values to
+   `text-xs`, so the floor holds at every breakpoint instead of only below
+   `lg`, and no unlayered override is needed to enforce it. An arbitrary size
+   added in new markup is no longer silently rescued on mobile, which is the
+   point: it shows up at the size it asks for and gets fixed at the call site.
 
-   9px is used only for decorative micro-labels that have an accessible name
-   anyway, so it lifts to 11 rather than 12 — enough to read, not enough to
-   change the composition. */
-@media (max-width: 1023.98px) {
-  .text-\[9px\] {
-    font-size: 11px;
-  }
-
-  .text-\[10px\],
-  .text-\[11px\] {
-    font-size: 12px;
-  }
-}
+   The theme switch keeps its own 7.5/8.5/10px chamber labels. They sit inside
+   a 26-40px track that cannot take 14px, and they are the documented
+   exception rather than an oversight. */
 
 /* ==========================================================================
    Touch target floor — mobile only

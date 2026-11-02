@@ -106,7 +106,7 @@ export default function MobileNav() {
                 >
                   <Icon className="h-[18px] w-[18px]" />
                 </span>
-                <span className="max-w-full truncate text-[11px] font-semibold leading-none tracking-tight">
+                <span className="max-w-full truncate text-xs font-semibold leading-none tracking-tight">
                   {item.label}
                 </span>
               </Link>

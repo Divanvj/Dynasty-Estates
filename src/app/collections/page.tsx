@@ -180,7 +180,7 @@ export default function CollectionsPage() {
           <div className="flex items-center gap-2.5 sm:gap-3">
             <BrandLogo markOnly />
             <div>
-              <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-slate-500 hidden sm:block dark:text-slate-400">Collaborative Discovery</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-500 hidden sm:block dark:text-slate-400">Collaborative Discovery</p>
               <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">Collections</h1>
             </div>
           </div>
@@ -280,7 +280,7 @@ export default function CollectionsPage() {
             >
               <FolderIcon className="h-4 w-4" />
               <span>{col.title}</span>
-              <span className="rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-bold dark:bg-[#0c1a1c] dark:border dark:border-white/10">
+              <span className="rounded-full bg-white/20 px-2 py-0.5 text-xs font-bold dark:bg-[#0c1a1c] dark:border dark:border-white/10">
                 {col.propertyIds.length}
               </span>
             </button>
@@ -294,7 +294,7 @@ export default function CollectionsPage() {
             <div className="rounded-[30px] border border-white/80 bg-white/50 p-6 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
                 <div>
-                  <span className="text-[10px] uppercase tracking-[0.24em] text-emerald-700 dark:text-emerald-400">Collaborative Shortlist</span>
+                  <span className="text-xs uppercase tracking-[0.24em] text-emerald-700 dark:text-emerald-400">Collaborative Shortlist</span>
                   <h2 className="mt-1 text-2xl font-semibold text-slate-950 md:text-3xl dark:text-white">{activeCollection.title}</h2>
                   <p className="mt-1 text-xs text-slate-600 md:text-sm dark:text-slate-300">{activeCollection.description}</p>
                 </div>
@@ -304,7 +304,7 @@ export default function CollectionsPage() {
                       <span
                         key={idx}
                         title={`${m.email} (${m.role})`}
-                        className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-slate-800 text-[10px] font-bold text-white shadow-sm dark:border-white/10"
+                        className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-slate-800 text-xs font-bold text-white shadow-sm dark:border-white/10"
                       >
                         {m.email.substring(0, 2).toUpperCase()}
                       </span>
@@ -336,7 +336,7 @@ export default function CollectionsPage() {
                 >
                   <div className="flex items-start justify-between border-b border-slate-200 pb-3 dark:border-white/10">
                     <div>
-                      <span className="text-[10px] uppercase font-bold text-emerald-800 tracking-wider dark:text-emerald-400">
+                      <span className="text-xs uppercase font-bold text-emerald-800 tracking-wider dark:text-emerald-400">
                         Shared Collaboration
                       </span>
                       <h3 className="text-base font-bold text-slate-950 dark:text-white">Invite to {activeCollection.title}</h3>
@@ -358,7 +358,7 @@ export default function CollectionsPage() {
                   ) : (
                     <form onSubmit={handleSendInvite} className="mt-4 space-y-3 text-xs">
                       <div>
-                        <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1 dark:text-slate-400">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1 dark:text-slate-400">
                           Partner / Collaborator Email
                         </label>
                         <input
@@ -453,7 +453,7 @@ export default function CollectionsPage() {
 
                       {/* Collaborative Voting Controls */}
                       <div className="mt-4 rounded-2xl border border-white/60 bg-white/40 p-3 dark:bg-[#060d0e]/60 dark:border-white/10">
-                        <p className="mb-2 text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400">Group Decision Votes</p>
+                        <p className="mb-2 text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Group Decision Votes</p>
                         <div className="flex items-center justify-between gap-2">
                           <button
                             onClick={() => void handleVote(prop.id, "love")}
@@ -461,7 +461,7 @@ export default function CollectionsPage() {
                           >
                             <HeartIcon className="h-3.5 w-3.5 text-rose-600 fill-current dark:text-rose-400" />
                             <span>Love</span>
-                            <span className="rounded-full bg-rose-200/80 px-1.5 text-[10px] dark:bg-rose-900/50 dark:text-rose-200">{loves}</span>
+                            <span className="rounded-full bg-rose-200/80 px-1.5 text-xs dark:bg-rose-900/50 dark:text-rose-200">{loves}</span>
                           </button>
                           <button
                             onClick={() => void handleVote(prop.id, "like")}
@@ -469,7 +469,7 @@ export default function CollectionsPage() {
                           >
                             <ThumbsUpIcon className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
                             <span>Like</span>
-                            <span className="rounded-full bg-emerald-200/80 px-1.5 text-[10px] dark:bg-emerald-500/30 dark:text-emerald-200">{likes}</span>
+                            <span className="rounded-full bg-emerald-200/80 px-1.5 text-xs dark:bg-emerald-500/30 dark:text-emerald-200">{likes}</span>
                           </button>
                           <button
                             onClick={() => void handleVote(prop.id, "reject")}
@@ -477,18 +477,18 @@ export default function CollectionsPage() {
                           >
                             <XMarkIcon className="h-3.5 w-3.5 text-slate-500 dark:text-slate-400" />
                             <span>Reject</span>
-                            <span className="rounded-full bg-slate-200/80 px-1.5 text-[10px] dark:bg-[#060d0e]/80 dark:text-slate-300">{rejects}</span>
+                            <span className="rounded-full bg-slate-200/80 px-1.5 text-xs dark:bg-[#060d0e]/80 dark:text-slate-300">{rejects}</span>
                           </button>
                         </div>
                       </div>
 
                       {/* Threaded Discussion Comments */}
                       <div className="mt-4 space-y-2">
-                        <p className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400">Shared Notes ({propComments.length})</p>
+                        <p className="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Shared Notes ({propComments.length})</p>
                         <div className="max-h-36 space-y-2 overflow-y-auto pr-1">
                           {propComments.map((comm) => (
                             <div key={comm.id} className="rounded-xl border border-white/70 bg-white/70 p-2.5 text-xs dark:bg-[#060d0e]/60 dark:border-white/10">
-                              <div className="flex items-center justify-between text-[10px] text-slate-500 dark:text-slate-400">
+                              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                                 <span className="font-semibold text-slate-800 dark:text-slate-300">{comm.userName}</span>
                                 <span>{new Date(comm.createdAt).toLocaleDateString()}</span>
                               </div>

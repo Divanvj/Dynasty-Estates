@@ -59,13 +59,13 @@ export default function SignupPage() {
                 D
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-[0.24em] text-slate-200 dark:text-slate-400">Dynasty</p>
+                <p className="text-xs uppercase tracking-[0.24em] text-slate-200 dark:text-slate-400">Dynasty</p>
                 <p className="text-lg font-semibold">Estates</p>
               </div>
             </div>
 
             <div>
-              <p className="text-[10px] uppercase tracking-[0.24em] text-emerald-200 dark:text-emerald-400">Your next move</p>
+              <p className="text-xs uppercase tracking-[0.24em] text-emerald-200 dark:text-emerald-400">Your next move</p>
               <h1 className="mt-4 max-w-md text-4xl font-semibold leading-tight tracking-[-0.06em]">
                 Save homes, compare matches, and move faster.
               </h1>
@@ -84,7 +84,7 @@ export default function SignupPage() {
           <div className="p-6 md:p-8 lg:p-10">
             <div className="mb-8 flex items-center justify-between">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">New account</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">New account</p>
                 <h2 className="mt-2 text-3xl font-semibold tracking-[-0.06em] text-slate-900 dark:text-white">Create profile</h2>
               </div>
               <Link href="/" className="text-sm text-slate-600 hover:text-slate-900 transition-colors dark:text-slate-300 dark:hover:text-emerald-400">Home</Link>
@@ -102,7 +102,7 @@ export default function SignupPage() {
               </button>
             </div>
 
-            <div className="my-5 flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
+            <div className="my-5 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
               <div className="h-px flex-1 bg-slate-300 dark:bg-white/10" />
               or with email & password
               <div className="h-px flex-1 bg-slate-300 dark:bg-white/10" />

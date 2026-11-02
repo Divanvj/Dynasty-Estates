@@ -143,13 +143,13 @@ export default function LoginPage() {
                 D
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-[0.24em] text-slate-200 dark:text-slate-400">Dynasty</p>
+                <p className="text-xs uppercase tracking-[0.24em] text-slate-200 dark:text-slate-400">Dynasty</p>
                 <p className="text-lg font-semibold">Estates</p>
               </div>
             </div>
 
             <div>
-              <p className="text-[10px] uppercase tracking-[0.24em] text-emerald-200 dark:text-emerald-400">Property intelligence</p>
+              <p className="text-xs uppercase tracking-[0.24em] text-emerald-200 dark:text-emerald-400">Property intelligence</p>
               <h1 className="mt-4 max-w-md text-4xl font-semibold leading-tight tracking-[-0.06em]">
                 Find homes that fit the way you live.
               </h1>
@@ -162,7 +162,7 @@ export default function LoginPage() {
                   <p className="text-2xl font-semibold">R 8.9M</p>
                   <p className="text-sm text-slate-300 dark:text-slate-400">Morningside • 4 bed • 3 bath</p>
                 </div>
-                <div className="rounded-full border border-emerald-300/40 bg-emerald-500/10 px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-emerald-200 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border-emerald-500/40 dark:shadow-[0_0_10px_rgba(16,185,129,0.25)]">
+                <div className="rounded-full border border-emerald-300/40 bg-emerald-500/10 px-2.5 py-1 text-xs uppercase tracking-[0.14em] text-emerald-200 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border-emerald-500/40 dark:shadow-[0_0_10px_rgba(16,185,129,0.25)]">
                   4.8 match
                 </div>
               </div>
@@ -172,14 +172,14 @@ export default function LoginPage() {
           <div className="p-6 md:p-8 lg:p-10">
             <div className="mb-6 flex items-center justify-between">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Welcome back</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Welcome back</p>
                 <h2 className="mt-2 text-3xl font-semibold tracking-[-0.06em] text-slate-900 dark:text-white">Sign in</h2>
               </div>
               <Link href="/" className="text-sm text-slate-600 hover:text-slate-900 transition-colors dark:text-slate-300 dark:hover:text-emerald-400">Back home</Link>
             </div>
 
             <div className="mb-6 rounded-2xl border border-slate-300/50 bg-white/50 p-4 backdrop-blur-md dark:bg-[#060d0e]/60 dark:border-white/10">
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-700 dark:text-emerald-400">
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-700 dark:text-emerald-400">
                 Role-based access
               </span>
               <p className="mt-1 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
@@ -209,7 +209,7 @@ export default function LoginPage() {
               </button>
             </div>
 
-            <div className="my-5 flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
+            <div className="my-5 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
               <div className="h-px flex-1 bg-slate-300 dark:bg-white/10" />
               {mode === "email" ? "or with email & password" : "or with your phone"}
               <div className="h-px flex-1 bg-slate-300 dark:bg-white/10" />
@@ -303,7 +303,7 @@ export default function LoginPage() {
                       required
                       className="w-full rounded-[18px] border border-slate-200 bg-[#f6f8f8] px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-emerald-500"
                     />
-                    <p className="mt-1.5 text-[11px] text-slate-500 dark:text-slate-400">
+                    <p className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">
                       South African numbers may be entered as 082…; others need a country code.
                     </p>
                   </div>

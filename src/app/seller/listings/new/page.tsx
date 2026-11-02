@@ -335,7 +335,7 @@ export default function NewListingWizardPage() {
           {currentStep === 1 && (
             <section className="space-y-5">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Step 1 of 6</p>
+                <p className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Step 1 of 6</p>
                 <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-950 dark:text-white">Property Headline & Location</h1>
                 <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Establish the primary geographic identity for your property.</p>
               </div>
@@ -356,7 +356,7 @@ export default function NewListingWizardPage() {
                       }`}
                     >
                       <span className="text-sm font-bold">To Rent</span>
-                      <span className="text-[11px] text-slate-500 dark:text-slate-400">Lease to verified tenants</span>
+                      <span className="text-xs text-slate-500 dark:text-slate-400">Lease to verified tenants</span>
                     </button>
                     <button
                       type="button"
@@ -368,7 +368,7 @@ export default function NewListingWizardPage() {
                       }`}
                     >
                       <span className="text-sm font-bold">For Sale</span>
-                      <span className="text-[11px] text-slate-500 dark:text-slate-400">Sell property to buyers</span>
+                      <span className="text-xs text-slate-500 dark:text-slate-400">Sell property to buyers</span>
                     </button>
                   </div>
                 </div>
@@ -446,7 +446,7 @@ export default function NewListingWizardPage() {
           {currentStep === 2 && (
             <section className="space-y-5">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Step 2 of 6</p>
+                <p className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Step 2 of 6</p>
                 <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-950 dark:text-white">Physical Specifications</h1>
                 <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Define the immutable architectural footprint of the physical property.</p>
               </div>
@@ -546,7 +546,7 @@ export default function NewListingWizardPage() {
           {currentStep === 3 && (
             <section className="space-y-5">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Step 3 of 6</p>
+                <p className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Step 3 of 6</p>
                 <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-950 dark:text-white">Features & Amenities</h1>
                 <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Select verified South African lifestyle and energy resilience features.</p>
               </div>
@@ -580,7 +580,7 @@ export default function NewListingWizardPage() {
           {currentStep === 4 && (
             <section className="space-y-5">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Step 4 of 6</p>
+                <p className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Step 4 of 6</p>
                 <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-950 dark:text-white">
                   {formData.listingType === "rent" ? "Rental Pricing & Lease Terms" : "Pricing & True Cost"}
                 </h1>
@@ -700,7 +700,7 @@ export default function NewListingWizardPage() {
           {currentStep === 5 && (
             <section className="space-y-5">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Step 5 of 6</p>
+                <p className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Step 5 of 6</p>
                 <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-950 dark:text-white">Photography & Copy</h1>
                 <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">High-resolution imagery powers visual recommendations and buyer interest.</p>
               </div>
@@ -738,7 +738,7 @@ export default function NewListingWizardPage() {
           {currentStep === 6 && (
             <section className="space-y-6">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Step 6 of 6</p>
+                <p className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Step 6 of 6</p>
                 <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-950 dark:text-white">Review & Submission</h1>
                 <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Inspect how your listing will appear to buyers and verify quality score.</p>
               </div>
@@ -747,7 +747,7 @@ export default function NewListingWizardPage() {
               <div className="rounded-[24px] border border-slate-700/40 bg-slate-900/90 dark:bg-[#0c1a1c] dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)] p-5 text-white shadow-xl">
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-emerald-400">Listing Quality Score</span>
+                    <span className="text-xs uppercase tracking-[0.2em] text-emerald-400">Listing Quality Score</span>
                     <h2 className="mt-1 text-4xl font-light">{qualityScore}/100</h2>
                   </div>
                   <span className={`rounded-full px-3 py-1 text-xs font-semibold ${qualityScore >= 80 ? "bg-emerald-400/20 text-emerald-300 border border-emerald-500/30" : "bg-amber-400/20 text-amber-300 border border-amber-500/30"}`}>
@@ -768,7 +768,7 @@ export default function NewListingWizardPage() {
 
               {/* Live Preview Card */}
               <div className="rounded-[28px] border border-white/80 bg-white/50 p-4 shadow-lg backdrop-blur-xl dark:bg-[#060d0e]/60 dark:border-white/10">
-                <p className="mb-3 text-[10px] uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">Live Card Preview</p>
+                <p className="mb-3 text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">Live Card Preview</p>
                 <div className="overflow-hidden rounded-[22px] border border-white/70 bg-white/70 shadow-sm md:flex dark:bg-[#0c1a1c]/90 dark:border-white/10">
                   {coverUrl ? (
                     <div
@@ -794,7 +794,7 @@ export default function NewListingWizardPage() {
                           {formData.type}
                         </span>
                         {formData.listingType === "rent" && formData.furnishedStatus && (
-                          <span className="rounded-full bg-slate-200/80 px-2 py-0.5 text-[10px] font-medium text-slate-700 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-slate-300">
+                          <span className="rounded-full bg-slate-200/80 px-2 py-0.5 text-xs font-medium text-slate-700 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-slate-300">
                             {formData.furnishedStatus}
                           </span>
                         )}

@@ -130,7 +130,7 @@ export default async function ForSaleLocationPage({
 
         {/* Location Hub Header */}
         <div className="rounded-3xl border border-white/80 bg-white/60 p-6 sm:p-8 backdrop-blur-xl shadow-[0_20px_45px_rgba(36,48,50,0.06)] mb-8 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-          <span className="rounded-full bg-rose-100 text-[#E11D48] text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 dark:bg-rose-500/20 dark:text-rose-300 dark:border dark:border-rose-500/30">
+          <span className="rounded-full bg-rose-100 text-[#E11D48] text-xs font-extrabold uppercase tracking-widest px-3 py-1 dark:bg-rose-500/20 dark:text-rose-300 dark:border dark:border-rose-500/30">
             Verified Metro Catalogue
           </span>
           <h1 className="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-950 dark:text-white">
@@ -188,11 +188,11 @@ export default async function ForSaleLocationPage({
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
                   <div className="absolute top-3 left-3 flex items-center gap-1.5 z-10">
-                    <span className="rounded-full bg-black/60 px-3 py-1 text-[10px] font-bold text-white backdrop-blur-md">
+                    <span className="rounded-full bg-black/60 px-3 py-1 text-xs font-bold text-white backdrop-blur-md">
                       {prop.type}
                     </span>
                     {prop.onShow && (
-                      <span className="rounded-full bg-amber-500/90 text-white text-[10px] font-extrabold px-2.5 py-1 backdrop-blur-md">
+                      <span className="rounded-full bg-amber-500/90 text-white text-xs font-extrabold px-2.5 py-1 backdrop-blur-md">
                         On Show Sunday
                       </span>
                     )}

@@ -84,14 +84,14 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
           <span>Investor & Power-User Comparison Table</span>
           <span className="text-slate-400 dark:text-slate-500 font-normal">({properties.length} active listings)</span>
         </div>
-        <p className="hidden md:block text-[11px] text-slate-500 dark:text-slate-400">
+        <p className="hidden md:block text-xs text-slate-500 dark:text-slate-400">
           💡 Click column headers to sort by price, square meters, bedrooms, or yield/m².
         </p>
       </div>
 
       {/* Sorting on phones, where there are no column headers to click. */}
       <div className="md:hidden flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden border-b border-slate-200/80 dark:border-white/10 px-4 py-2.5">
-        <span className="shrink-0 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+        <span className="shrink-0 text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
           Sort
         </span>
         {(
@@ -147,7 +147,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
                     <SavePropertyButton propertyId={prop.id} />
                   </div>
 
-                  <p className="mt-1 flex items-center gap-1 text-[11px] text-slate-500 dark:text-slate-400">
+                  <p className="mt-1 flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400">
                     <LocationPinIcon className="h-3 w-3 shrink-0" />
                     <span className="truncate">
                       {prop.suburb || prop.location.split(",")[0]}
@@ -159,7 +159,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
                     {prop.price}
                   </p>
                   {prop.listingType === "rent" && (
-                    <p className="text-[10px] font-medium text-amber-800 dark:text-amber-300">
+                    <p className="text-xs font-medium text-amber-800 dark:text-amber-300">
                       {prop.leaseTerm || "12M"}
                       {prop.furnishedStatus ? ` · ${prop.furnishedStatus}` : ""}
                     </p>
@@ -193,12 +193,12 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
               {(hasSolar || hasBorehole) && (
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   {hasSolar && (
-                    <span className="rounded-full bg-amber-100 dark:bg-amber-950/50 px-2 py-0.5 text-[10px] font-bold text-amber-900 dark:text-amber-300 border border-amber-200 dark:border-amber-500/20">
+                    <span className="rounded-full bg-amber-100 dark:bg-amber-950/50 px-2 py-0.5 text-xs font-bold text-amber-900 dark:text-amber-300 border border-amber-200 dark:border-amber-500/20">
                       Solar / Backup
                     </span>
                   )}
                   {hasBorehole && (
-                    <span className="rounded-full bg-sky-100 dark:bg-sky-950/50 px-2 py-0.5 text-[10px] font-bold text-sky-900 dark:text-sky-300 border border-sky-200 dark:border-sky-500/20">
+                    <span className="rounded-full bg-sky-100 dark:bg-sky-950/50 px-2 py-0.5 text-xs font-bold text-sky-900 dark:text-sky-300 border border-sky-200 dark:border-sky-500/20">
                       Water Backup
                     </span>
                   )}
@@ -220,7 +220,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
       <div className="hidden md:block overflow-x-auto">
         <table className="w-full text-left border-collapse text-xs">
           <thead>
-            <tr className="border-b border-slate-200 dark:border-white/10 bg-slate-100/50 dark:bg-[#060d0e]/80 text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 select-none">
+            <tr className="border-b border-slate-200 dark:border-white/10 bg-slate-100/50 dark:bg-[#060d0e]/80 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 select-none">
               <th className="py-3.5 pl-5 pr-3">Property</th>
               <th className="py-3.5 px-3">Location</th>
               <th
@@ -293,7 +293,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
                         </Link>
                         <div className="flex items-center gap-1.5 mt-0.5">
                           <span
-                            className={`rounded-md px-1.5 py-0.2 text-[9px] font-bold uppercase tracking-wider ${
+                            className={`rounded-md px-1.5 py-0.2 text-xs font-bold uppercase tracking-wider ${
                               prop.listingType === "rent"
                                 ? "bg-amber-100 dark:bg-amber-950/50 text-amber-900 dark:text-amber-300 border border-amber-200 dark:border-amber-500/20"
                                 : "bg-emerald-100 dark:bg-emerald-950/50 text-emerald-900 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/20"
@@ -301,7 +301,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
                           >
                             {prop.listingType === "rent" ? "To Rent" : "For Sale"}
                           </span>
-                          <span className="text-[11px] text-slate-500 dark:text-slate-400 font-normal">
+                          <span className="text-xs text-slate-500 dark:text-slate-400 font-normal">
                             {prop.type}
                           </span>
                         </div>
@@ -315,7 +315,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
                       <LocationPinIcon className="h-3 w-3 text-slate-400 dark:text-slate-500" />
                       <span>{prop.suburb || prop.location.split(",")[0]}</span>
                     </p>
-                    <p className="text-[11px] text-slate-400 dark:text-slate-500 pl-4">
+                    <p className="text-xs text-slate-400 dark:text-slate-500 pl-4">
                       {prop.city || prop.location.split(",")[1] || prop.province}
                     </p>
                   </td>
@@ -324,7 +324,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
                   <td className="py-3.5 px-3 whitespace-nowrap">
                     <p className="font-extrabold text-slate-950 dark:text-white text-sm">{prop.price}</p>
                     {prop.listingType === "rent" && (
-                      <p className="text-[10px] text-amber-800 dark:text-amber-300 font-medium">
+                      <p className="text-xs text-amber-800 dark:text-amber-300 font-medium">
                         {prop.leaseTerm || "12M"} {prop.furnishedStatus ? `· ${prop.furnishedStatus}` : ""}
                       </p>
                     )}
@@ -356,7 +356,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
                   {/* Rate per m² */}
                   <td className="py-3.5 px-3 whitespace-nowrap">
                     {prop.pricePerM2 > 0 ? (
-                      <span className="rounded-md bg-slate-100 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 px-2 py-1 text-slate-700 dark:text-slate-300 font-semibold font-mono text-[11px]">
+                      <span className="rounded-md bg-slate-100 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 px-2 py-1 text-slate-700 dark:text-slate-300 font-semibold font-mono text-xs">
                         R {prop.pricePerM2.toLocaleString()}/m²
                       </span>
                     ) : (
@@ -369,7 +369,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
                     <div className="flex items-center gap-1">
                       {hasSolar && (
                         <span
-                          className="rounded-md bg-amber-50 dark:bg-amber-950/40 px-1.5 py-0.5 text-[10px] font-bold text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-500/20"
+                          className="rounded-md bg-amber-50 dark:bg-amber-950/40 px-1.5 py-0.5 text-xs font-bold text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-500/20"
                           title="Solar Inverter & Battery"
                         >
                           ⚡ Solar
@@ -377,14 +377,14 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
                       )}
                       {hasBorehole && (
                         <span
-                          className="rounded-md bg-sky-50 dark:bg-sky-950/40 px-1.5 py-0.5 text-[10px] font-bold text-sky-800 dark:text-sky-300 border border-sky-200 dark:border-sky-500/20"
+                          className="rounded-md bg-sky-50 dark:bg-sky-950/40 px-1.5 py-0.5 text-xs font-bold text-sky-800 dark:text-sky-300 border border-sky-200 dark:border-sky-500/20"
                           title="Borehole / Backup Water"
                         >
                           💧 Water
                         </span>
                       )}
                       {!hasSolar && !hasBorehole && (
-                        <span className="text-[11px] text-slate-400 dark:text-slate-500">Standard Grid</span>
+                        <span className="text-xs text-slate-400 dark:text-slate-500">Standard Grid</span>
                       )}
                     </div>
                   </td>

@@ -77,7 +77,7 @@ export default function RoleGuard({
           <LockIcon className="h-6 w-6 text-white dark:text-emerald-400" />
         </div>
 
-        <span className="mt-4 inline-block rounded-full bg-slate-200/80 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-600 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-emerald-400">
+        <span className="mt-4 inline-block rounded-full bg-slate-200/80 px-3 py-1 text-xs font-bold uppercase tracking-widest text-slate-600 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-emerald-400">
           {allowAnySignedIn ? "Sign In Required" : "Role Restricted View"}
         </span>
 

@@ -80,7 +80,7 @@ export default function PhotoRejectionDialog({
                     className="h-20 w-20 shrink-0 rounded-xl object-cover sm:h-24 sm:w-24"
                   />
                 ) : (
-                  <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-slate-200 text-[10px] font-semibold uppercase tracking-wider text-slate-500 sm:h-24 sm:w-24 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-slate-400">
+                  <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-slate-200 text-xs font-semibold uppercase tracking-wider text-slate-500 sm:h-24 sm:w-24 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-slate-400">
                     No preview
                   </div>
                 )}

@@ -137,7 +137,7 @@ export default async function PropertyPage({
               D
             </div>
             <div>
-              <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Dynasty</p>
+              <p className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Dynasty</p>
               <p className="text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-300">Estates</p>
             </div>
           </Link>
@@ -190,7 +190,7 @@ export default async function PropertyPage({
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                 <div>
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className={`rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-bold backdrop-blur-md border ${
+                    <span className={`rounded-full px-3 py-1 text-xs uppercase tracking-[0.2em] font-bold backdrop-blur-md border ${
                       property.listingType === "rent"
                         ? "border-amber-300/60 bg-amber-950/70 text-amber-200"
                         : "border-emerald-300/60 bg-emerald-950/70 text-emerald-200"
@@ -198,27 +198,27 @@ export default async function PropertyPage({
                       {property.listingType === "rent" ? "To Rent" : "For Sale"}
                     </span>
                     {property.status === "Sold" && (
-                      <span className="rounded-full border border-red-400 bg-red-950/90 px-3 py-1 text-[10px] uppercase tracking-widest font-extrabold text-red-200 backdrop-blur-md">
+                      <span className="rounded-full border border-red-400 bg-red-950/90 px-3 py-1 text-xs uppercase tracking-widest font-extrabold text-red-200 backdrop-blur-md">
                         Sold by Dynasty Estates
                       </span>
                     )}
                     {property.status === "Rented" && (
-                      <span className="rounded-full border border-purple-400 bg-purple-950/90 px-3 py-1 text-[10px] uppercase tracking-widest font-extrabold text-purple-200 backdrop-blur-md">
+                      <span className="rounded-full border border-purple-400 bg-purple-950/90 px-3 py-1 text-xs uppercase tracking-widest font-extrabold text-purple-200 backdrop-blur-md">
                         Let Agreed / Rented
                       </span>
                     )}
                     {property.onShow && (
-                      <span className="rounded-full border border-rose-300/80 bg-rose-950/85 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-rose-200 backdrop-blur-md flex items-center gap-1.5">
+                      <span className="rounded-full border border-rose-300/80 bg-rose-950/85 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-rose-200 backdrop-blur-md flex items-center gap-1.5">
                         <span className="h-1.5 w-1.5 rounded-full bg-rose-400 animate-pulse" />
                         <span>On Show {property.onShow.date.split(",")[0]}</span>
                       </span>
                     )}
                     {property.developmentInfo?.noTransferDuty && (
-                      <span className="rounded-full border border-sky-300/80 bg-sky-950/85 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-sky-200 backdrop-blur-md">
+                      <span className="rounded-full border border-sky-300/80 bg-sky-950/85 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-sky-200 backdrop-blur-md">
                         0% Transfer Duty
                       </span>
                     )}
-                    <span className="rounded-full bg-black/40 border border-white/30 px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-bold text-white backdrop-blur-md dark:border-white/10">
+                    <span className="rounded-full bg-black/40 border border-white/30 px-3 py-1 text-xs uppercase tracking-[0.2em] font-bold text-white backdrop-blur-md dark:border-white/10">
                       {property.category}
                     </span>
                   </div>
@@ -232,7 +232,7 @@ export default async function PropertyPage({
                 </div>
 
                 <div className="text-left md:text-right">
-                  <span className="text-[10px] uppercase tracking-widest text-slate-300 block">
+                  <span className="text-xs uppercase tracking-widest text-slate-300 block">
                     {property.listingType === "rent" ? "Monthly Rental" : "Asking Price"}
                   </span>
                   <span className="text-2xl sm:text-3xl font-extrabold text-white md:text-4xl">{property.price}</span>
@@ -245,7 +245,7 @@ export default async function PropertyPage({
           <div className="mt-6 rounded-[26px] border border-amber-300/80 bg-gradient-to-r from-amber-50/90 to-orange-50/80 p-5 shadow-sm backdrop-blur-xl dark:border-amber-500/20 dark:from-amber-950/30 dark:to-orange-950/20">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <span className="rounded-full bg-amber-800 px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-widest text-white">
+                <span className="rounded-full bg-amber-800 px-3 py-0.5 text-xs font-extrabold uppercase tracking-widest text-white">
                   Listing Concluded · Historical Record Retained
                 </span>
                 <h2 className="text-sm sm:text-base font-bold text-slate-950 mt-1.5 dark:text-white">
@@ -291,7 +291,7 @@ export default async function PropertyPage({
           <div className="mt-6 rounded-[26px] border border-sky-200/90 bg-gradient-to-r from-sky-50 via-sky-50/70 to-emerald-50/40 p-4 sm:p-5 shadow-sm backdrop-blur-xl dark:border-sky-500/20 dark:from-sky-950/40 dark:via-sky-950/20 dark:to-emerald-950/20">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <span className="rounded-full bg-sky-800 px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-widest text-white shadow-xs">
+                <span className="rounded-full bg-sky-800 px-3 py-0.5 text-xs font-extrabold uppercase tracking-widest text-white shadow-xs">
                   Official Off-Plan Development Release
                 </span>
                 <h2 className="text-sm sm:text-base font-bold text-slate-950 mt-1.5 dark:text-white">
@@ -303,7 +303,7 @@ export default async function PropertyPage({
                 </p>
               </div>
               <div className="rounded-2xl border border-sky-300 bg-white/95 px-4 py-2 text-center shadow-xs shrink-0 self-start sm:self-auto dark:bg-sky-950/60 dark:border-sky-500/30">
-                <span className="text-[10px] uppercase font-bold text-slate-500 block dark:text-slate-400">SARS Tax Exemption</span>
+                <span className="text-xs uppercase font-bold text-slate-500 block dark:text-slate-400">SARS Tax Exemption</span>
                 <span className="text-xs font-extrabold text-sky-800 dark:text-sky-300">0% Transfer Duty (VAT Inclusive)</span>
               </div>
             </div>
@@ -359,7 +359,7 @@ export default async function PropertyPage({
                       <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition-colors group-hover:bg-emerald-50 group-hover:text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border dark:border-emerald-500/20 dark:group-hover:bg-emerald-500/20">
                         <Icon className="h-4 w-4 shrink-0" />
                       </div>
-                      <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold dark:text-slate-400">{item.label}</p>
+                      <p className="text-xs uppercase tracking-wider text-slate-400 font-bold dark:text-slate-400">{item.label}</p>
                       <p className="mt-1 text-base font-extrabold text-slate-900 dark:text-white">{item.value}</p>
                     </div>
                   );
@@ -410,7 +410,7 @@ export default async function PropertyPage({
             {/* Move-In Cost Schedule for Rentals */}
             {property.listingType === "rent" && (
               <div className="rounded-[30px] border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] backdrop-blur-xl dark:bg-[#0c1a1c]/75 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-                <span className="text-[10px] uppercase tracking-[0.22em] text-emerald-800 dark:text-emerald-400 font-bold">
+                <span className="text-xs uppercase tracking-[0.22em] text-emerald-800 dark:text-emerald-400 font-bold">
                   Move-In Capital Transparency
                 </span>
                 <h3 className="mt-1 text-sm font-bold text-slate-950 dark:text-white">Estimated Move-In Schedule</h3>
@@ -449,7 +449,7 @@ export default async function PropertyPage({
 
             {/* Agent / Practitioner Card */}
             <div className="rounded-[30px] border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-              <p className="text-[10px] uppercase tracking-[0.22em] text-slate-500 font-bold dark:text-slate-400">Mandate Property Practitioner</p>
+              <p className="text-xs uppercase tracking-[0.22em] text-slate-500 font-bold dark:text-slate-400">Mandate Property Practitioner</p>
               {/* Was hardcoded to one practitioner ("SG / Sherry Gallagher") on
                   every listing in the catalogue. Now resolved per listing. */}
               <div className="mt-4 flex items-center gap-3 rounded-[22px] border border-white/80 bg-white/70 p-3.5 shadow-sm dark:bg-[#060d0e]/60 dark:border-white/10">
@@ -549,7 +549,7 @@ export default async function PropertyPage({
           step. Unchanged at md and above, where this bar is hidden anyway. */}
       <div className="fixed bottom-[calc(var(--dyn-mobile-nav-h)+env(safe-area-inset-bottom))] inset-x-0 z-40 p-3 bg-white/95 border-t border-slate-200/80 backdrop-blur-xl md:hidden flex items-center justify-between shadow-[0_-8px_24px_rgba(15,23,42,0.12)] dark:bg-[#081012]/95 dark:border-white/10">
         <div>
-          <span className="text-[9px] uppercase tracking-wider text-slate-500 font-bold block dark:text-slate-400">
+          <span className="text-xs uppercase tracking-wider text-slate-500 font-bold block dark:text-slate-400">
             {property.listingType === "rent" ? "Monthly Rental" : "Asking Price"}
           </span>
           <span className="text-base font-extrabold text-slate-950 dark:text-white">{property.price}</span>

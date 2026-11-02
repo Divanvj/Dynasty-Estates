@@ -144,7 +144,7 @@ function markerHtml(
     <div class="dyn-pin flex flex-col items-center transition-transform duration-150 ${lift}">
       <div class="flex items-stretch overflow-hidden rounded-[10px] ring-1 ${edge} ${fill}"${title ? ` title="${title}"` : ""}>
         ${rail}
-        <span class="whitespace-nowrap px-2 py-[5px] text-[11px] font-bold tracking-tight tabular-nums">${label}</span>
+        <span class="whitespace-nowrap px-2 py-[5px] text-xs font-bold tracking-tight tabular-nums">${label}</span>
       </div>
       <span class="h-2 w-px ${mode === "value" ? "bg-slate-500/70" : "bg-[#0b4d4e]/70"}"></span>
       <span class="h-[5px] w-[5px] rounded-full ring-[1.5px] ring-white ${mode === "value" ? VALUE_DOT[value.band] : "bg-[#0b4d4e]"}"></span>
@@ -159,10 +159,10 @@ function popupHtml(p: PropertyRecord, stats: PriceStats) {
   // the same edge-rail language as the marker: a coloured bar, then the word.
   const badges = [
     solar
-      ? '<span class="inline-flex items-center gap-1.5 rounded-md bg-champagne-50 py-0.5 pr-2 pl-0 text-[10px] font-bold text-champagne-900 overflow-hidden"><i class="h-3.5 w-[3px] bg-champagne-400"></i>Solar</span>'
+      ? '<span class="inline-flex items-center gap-1.5 rounded-md bg-champagne-50 py-0.5 pr-2 pl-0 text-xs font-bold text-champagne-900 overflow-hidden"><i class="h-3.5 w-[3px] bg-champagne-400"></i>Solar</span>'
       : "",
     water
-      ? '<span class="inline-flex items-center gap-1.5 rounded-md bg-sky-50 py-0.5 pr-2 pl-0 text-[10px] font-bold text-sky-900 overflow-hidden"><i class="h-3.5 w-[3px] bg-sky-400"></i>Water</span>'
+      ? '<span class="inline-flex items-center gap-1.5 rounded-md bg-sky-50 py-0.5 pr-2 pl-0 text-xs font-bold text-sky-900 overflow-hidden"><i class="h-3.5 w-[3px] bg-sky-400"></i>Water</span>'
       : "",
   ].join("");
 
@@ -173,7 +173,7 @@ function popupHtml(p: PropertyRecord, stats: PriceStats) {
   const insight =
     v.band === "unknown"
       ? ""
-      : `<p class="mt-1.5 rounded-lg px-2 py-1 text-[10px] font-bold ${
+      : `<p class="mt-1.5 rounded-lg px-2 py-1 text-xs font-bold ${
           v.band === "below"
             ? "bg-emerald-100 text-emerald-900"
             : v.band === "above"
@@ -189,13 +189,13 @@ function popupHtml(p: PropertyRecord, stats: PriceStats) {
     <a href="/property/${p.slug || p.id}" class="block w-[230px] overflow-hidden rounded-2xl no-underline">
       <div class="h-28 w-full bg-cover bg-center" style="background-image:url('${p.image}')"></div>
       <div class="p-2.5">
-        <p class="text-[13px] font-extrabold text-slate-950">${p.price}</p>
-        <p class="mt-0.5 text-[12px] font-bold leading-snug text-slate-800">${p.title}</p>
-        <p class="mt-0.5 text-[11px] text-slate-500">${p.suburb ?? ""}${p.city ? `, ${p.city}` : ""}</p>
-        <p class="mt-1.5 text-[11px] text-slate-600">${p.beds} bed · ${p.baths} bath · ${p.area}</p>
+        <p class="text-xs font-extrabold text-slate-950">${p.price}</p>
+        <p class="mt-0.5 text-xs font-bold leading-snug text-slate-800">${p.title}</p>
+        <p class="mt-0.5 text-xs text-slate-500">${p.suburb ?? ""}${p.city ? `, ${p.city}` : ""}</p>
+        <p class="mt-1.5 text-xs text-slate-600">${p.beds} bed · ${p.baths} bath · ${p.area}</p>
         ${insight}
         ${badges ? `<div class="mt-1.5 flex gap-1">${badges}</div>` : ""}
-        <span class="mt-2 block rounded-full bg-slate-950 py-1.5 text-center text-[11px] font-bold text-white">View Home →</span>
+        <span class="mt-2 block rounded-full bg-slate-950 py-1.5 text-center text-xs font-bold text-white">View Home →</span>
       </div>
     </a>`;
 }
@@ -545,7 +545,7 @@ export default function DynastyPropertyMap({
             key={v.label}
             type="button"
             onClick={() => jumpTo(v)}
-            className="shrink-0 rounded-full px-2 sm:px-2.5 py-0.5 sm:py-1 text-[10px] sm:text-[11px] font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-900 hover:text-white dark:hover:bg-emerald-600 dark:hover:text-white transition-colors"
+            className="shrink-0 rounded-full px-2 sm:px-2.5 py-0.5 sm:py-1 text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-900 hover:text-white dark:hover:bg-emerald-600 dark:hover:text-white transition-colors"
           >
             {v.label}
           </button>
@@ -558,7 +558,7 @@ export default function DynastyPropertyMap({
           type="button"
           onClick={() => setTool(tool === "radius" ? "none" : "radius")}
           title="Drag on the map to search within a radius"
-          className={`rounded-full px-2 sm:px-2.5 py-1 text-[10px] sm:text-[11px] font-bold transition-all ${
+          className={`rounded-full px-2 sm:px-2.5 py-1 text-xs font-bold transition-all ${
             tool === "radius"
               ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
               : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10"
@@ -570,7 +570,7 @@ export default function DynastyPropertyMap({
           type="button"
           onClick={() => setTool(tool === "draw" ? "none" : "draw")}
           title="Draw your own search area"
-          className={`rounded-full px-2 sm:px-2.5 py-1 text-[10px] sm:text-[11px] font-bold transition-all ${
+          className={`rounded-full px-2 sm:px-2.5 py-1 text-xs font-bold transition-all ${
             tool === "draw"
               ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
               : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10"
@@ -582,7 +582,7 @@ export default function DynastyPropertyMap({
           <button
             type="button"
             onClick={clearArea}
-            className="rounded-full px-2 py-1 text-[10px] sm:text-[11px] font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all"
+            className="rounded-full px-2 py-1 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all"
           >
             ✕ Clear
           </button>
@@ -591,14 +591,14 @@ export default function DynastyPropertyMap({
 
       {/* Prompt while a tool is armed */}
       {tool !== "none" && (
-        <div className="pointer-events-none absolute left-1/2 top-16 z-[500] -translate-x-1/2 rounded-full bg-slate-950/90 dark:bg-[#0c1a1c]/95 dark:border dark:border-white/15 px-3 py-1.5 text-[11px] font-bold text-white shadow-lg">
+        <div className="pointer-events-none absolute left-1/2 top-16 z-[500] -translate-x-1/2 rounded-full bg-slate-950/90 dark:bg-[#0c1a1c]/95 dark:border dark:border-white/15 px-3 py-1.5 text-xs font-bold text-white shadow-lg">
           {tool === "radius" ? "Press and drag to set your radius" : "Press and drag to draw your area"}
         </div>
       )}
 
       {/* Result count while an area is applied */}
       {areaActive && (
-        <div className="pointer-events-none absolute left-1/2 bottom-3 z-[500] -translate-x-1/2 rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 px-3 py-1.5 text-[11px] font-bold text-white shadow-lg dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]">
+        <div className="pointer-events-none absolute left-1/2 bottom-3 z-[500] -translate-x-1/2 rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 px-3 py-1.5 text-xs font-bold text-white shadow-lg dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]">
           {shown.length} in your area
         </div>
       )}
@@ -621,7 +621,7 @@ export default function DynastyPropertyMap({
               type="button"
               onClick={() => setFilter(id)}
               title={id === "solar" ? "Solar / backup power" : id === "water" ? "Borehole / water backup" : "All residences"}
-              className={`flex items-center gap-1.5 overflow-hidden rounded-[10px] py-1 pr-2 text-[10px] sm:text-[11px] font-bold transition-all ${
+              className={`flex items-center gap-1.5 overflow-hidden rounded-[10px] py-1 pr-2 text-xs font-bold transition-all ${
                 rail ? "pl-0" : "pl-2"
               } ${
                 filter === id
@@ -641,7 +641,7 @@ export default function DynastyPropertyMap({
             type="button"
             onClick={() => setPinMode(pinMode === "price" ? "value" : "price")}
             title="Colour pins by price, or by how each home prices against its own suburb median"
-            className={`rounded-full px-2 sm:px-2.5 py-1 text-[10px] sm:text-[11px] font-bold transition-all cursor-pointer ${
+            className={`rounded-full px-2 sm:px-2.5 py-1 text-xs font-bold transition-all cursor-pointer ${
               pinMode === "value"
                 ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                 : "border border-slate-200 dark:border-white/10 bg-white/70 dark:bg-[#060d0e]/60 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-[#0c1a1c] dark:hover:text-white"
@@ -652,7 +652,7 @@ export default function DynastyPropertyMap({
         </div>
 
         {pinMode === "value" && (
-          <div className="mt-1.5 flex items-center gap-2 px-1 text-[9px] font-bold text-slate-500 dark:text-slate-400">
+          <div className="mt-1.5 flex items-center gap-2 px-1 text-xs font-bold text-slate-500 dark:text-slate-400">
             <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-emerald-600" />Under</span>
             <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-slate-600" />Par</span>
             <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-rose-500" />Over</span>

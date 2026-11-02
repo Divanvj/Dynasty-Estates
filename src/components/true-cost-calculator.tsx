@@ -176,10 +176,10 @@ export default function TrueCostCalculator({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200/80 pb-4 gap-3 dark:border-white/10">
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-[10px] uppercase tracking-[0.24em] text-amber-800 font-bold dark:text-amber-400">
+              <span className="text-xs uppercase tracking-[0.24em] text-amber-800 font-bold dark:text-amber-400">
                 Dynasty True Cost™
               </span>
-              <span className="rounded-full bg-amber-100 text-amber-900 border border-amber-200 text-[9px] font-bold px-2 py-0.5 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-500/30">
+              <span className="rounded-full bg-amber-100 text-amber-900 border border-amber-200 text-xs font-bold px-2 py-0.5 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-500/30">
                 Tenant Lease Model
               </span>
             </div>
@@ -191,7 +191,7 @@ export default function TrueCostCalculator({
             <span className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-amber-400">
               R {formatNumber(totalMonthlyRentalCost)}
             </span>
-            <span className="block text-[10px] text-slate-500 uppercase tracking-wider dark:text-slate-400">
+            <span className="block text-xs text-slate-500 uppercase tracking-wider dark:text-slate-400">
               Rent + Utilities / month
             </span>
           </div>
@@ -200,7 +200,7 @@ export default function TrueCostCalculator({
         {/* Breakdown Cards */}
         <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
           <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-[#060d0e]/60 dark:border-white/10 dark:shadow-none">
-            <p className="text-[9px] sm:text-[10px] uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
+            <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
               Monthly Rent
             </p>
             <p className="mt-1 text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
@@ -208,7 +208,7 @@ export default function TrueCostCalculator({
             </p>
           </div>
           <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-[#060d0e]/60 dark:border-white/10 dark:shadow-none">
-            <p className="text-[9px] sm:text-[10px] uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
+            <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
               Est. Utilities
             </p>
             <p className="mt-1 text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
@@ -216,7 +216,7 @@ export default function TrueCostCalculator({
             </p>
           </div>
           <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-[#060d0e]/60 dark:border-white/10 dark:shadow-none">
-            <p className="text-[9px] sm:text-[10px] uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
+            <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
               Insurance
             </p>
             <p className="mt-1 text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
@@ -238,7 +238,7 @@ export default function TrueCostCalculator({
           <div className="flex items-center justify-between rounded-xl border border-slate-200/70 bg-white/60 px-3 py-2.5 dark:border-white/10 dark:bg-[#060d0e]/60">
             <div>
               <span className="font-semibold">Advertised monthly rent</span>
-              <p className="mt-0.5 text-[10px] text-slate-500 dark:text-slate-400">
+              <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
                 Set by the landlord. Any variation is agreed on application.
               </p>
             </div>
@@ -311,7 +311,7 @@ export default function TrueCostCalculator({
                 onChange={(e) => setIncludeTenantInsurance(e.target.checked)}
                 className="h-4 w-4 rounded border-slate-300 text-slate-900 accent-slate-900 cursor-pointer dark:accent-amber-400"
               />
-              <span className="text-[11px] text-slate-700 font-medium dark:text-slate-300">
+              <span className="text-xs text-slate-700 font-medium dark:text-slate-300">
                 Include Tenant Contents & Liability Insurance (+R 350/mo)
               </span>
             </label>
@@ -321,7 +321,7 @@ export default function TrueCostCalculator({
           <div className="rounded-2xl border border-amber-300/80 bg-amber-50/80 p-3.5 shadow-sm dark:border-amber-500/25 dark:bg-amber-950/25 dark:shadow-[0_4px_20px_rgba(245,158,11,0.06)]">
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-[10px] uppercase tracking-wider font-bold text-amber-900 dark:text-amber-400">
+                <span className="text-xs uppercase tracking-wider font-bold text-amber-900 dark:text-amber-400">
                   Total Move-In Cash Required
                 </span>
                 <p className="text-lg font-extrabold text-amber-950 dark:text-amber-200">
@@ -336,7 +336,7 @@ export default function TrueCostCalculator({
                 Breakdown →
               </button>
             </div>
-            <p className="mt-1 text-[10px] text-amber-800/80 dark:text-amber-300/70">
+            <p className="mt-1 text-xs text-amber-800/80 dark:text-amber-300/70">
               Includes 1st month&apos;s rent (R {formatNumber(monthlyRent)}) + deposit (R {formatNumber(depositZAR)}) + lease admin fee (R 1,450).
             </p>
           </div>
@@ -356,13 +356,13 @@ export default function TrueCostCalculator({
               <button
                 type="button"
                 onClick={handleRentalReset}
-                className="text-[11px] font-semibold text-slate-500 hover:text-slate-900 underline cursor-pointer dark:text-slate-400 dark:hover:text-white"
+                className="text-xs font-semibold text-slate-500 hover:text-slate-900 underline cursor-pointer dark:text-slate-400 dark:hover:text-white"
               >
                 Reset to Listing Defaults
               </button>
               <Link
                 href="/calculators"
-                className="text-[11px] font-semibold text-amber-800 hover:text-amber-950 flex items-center gap-1 dark:text-amber-400 dark:hover:text-amber-300"
+                className="text-xs font-semibold text-amber-800 hover:text-amber-950 flex items-center gap-1 dark:text-amber-400 dark:hover:text-amber-300"
               >
                 <span>Full Financial Hub</span>
                 <ArrowRightIcon className="h-3 w-3" />
@@ -377,7 +377,7 @@ export default function TrueCostCalculator({
             <div className="w-full max-w-md rounded-3xl border border-white/80 bg-white p-6 shadow-2xl space-y-4 dark:bg-[#0c1a1c] dark:border-white/10 dark:shadow-[0_25px_60px_rgba(0,0,0,0.8)]">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-white/10">
                 <div>
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-amber-700 dark:text-amber-400">
+                  <span className="text-xs uppercase font-bold tracking-widest text-amber-700 dark:text-amber-400">
                     Tenant Move-In Requirements
                   </span>
                   <h3 className="text-base font-bold text-slate-900 dark:text-white">
@@ -401,7 +401,7 @@ export default function TrueCostCalculator({
                 <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-white/10">
                   <div>
                     <span>Security Deposit ({depositMultiple}x rent):</span>
-                    <p className="text-[10px] text-slate-400 dark:text-slate-400">Held in interest-bearing account</p>
+                    <p className="text-xs text-slate-400 dark:text-slate-400">Held in interest-bearing account</p>
                   </div>
                   <span className="font-bold text-amber-900 dark:text-amber-400">R {formatNumber(depositZAR)}</span>
                 </div>
@@ -415,7 +415,7 @@ export default function TrueCostCalculator({
                 </div>
               </div>
 
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-[11px] text-slate-600 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300">
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300">
                 Under South African Rental Housing Act regulations, the tenant security deposit must be invested in an interest-bearing account and refunded with interest upon successful exit inspection.
               </div>
 
@@ -440,7 +440,7 @@ export default function TrueCostCalculator({
                     <CheckIcon className="h-5 w-5" />
                   </div>
                   <div>
-                    <span className="text-[10px] uppercase font-bold tracking-widest text-amber-700 dark:text-amber-400">
+                    <span className="text-xs uppercase font-bold tracking-widest text-amber-700 dark:text-amber-400">
                       Tenant Vetting Guideline
                     </span>
                     <h3 className="text-base font-bold text-slate-900 dark:text-white">
@@ -459,13 +459,13 @@ export default function TrueCostCalculator({
 
               <div className="space-y-3 text-xs text-slate-700 dark:text-slate-300">
                 <div className="rounded-2xl border border-amber-200 bg-amber-50/80 p-3.5 dark:border-amber-500/25 dark:bg-amber-950/25">
-                  <p className="text-[10px] uppercase font-bold text-amber-900 tracking-wider dark:text-amber-400">
+                  <p className="text-xs uppercase font-bold text-amber-900 tracking-wider dark:text-amber-400">
                     Recommended Monthly Gross Income (30% Rule)
                   </p>
                   <p className="mt-1 text-2xl font-extrabold text-amber-950 dark:text-amber-200">
                     R {formatNumber(recommendedGrossIncome)}
                   </p>
-                  <p className="text-[11px] text-amber-900 mt-0.5 dark:text-amber-300/80">
+                  <p className="text-xs text-amber-900 mt-0.5 dark:text-amber-300/80">
                     Landlords and managing agents typically require that the total monthly rental outlays do not exceed 30% of combined gross household income.
                   </p>
                 </div>
@@ -524,10 +524,10 @@ export default function TrueCostCalculator({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200/80 pb-4 gap-3 dark:border-white/10">
         <div>
           <div className="flex items-center gap-1.5">
-            <span className="text-[10px] uppercase tracking-[0.24em] text-emerald-800 font-bold dark:text-emerald-400">
+            <span className="text-xs uppercase tracking-[0.24em] text-emerald-800 font-bold dark:text-emerald-400">
               Dynasty True Cost™
             </span>
-            <span className="rounded-full bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border dark:border-emerald-500/30">
+            <span className="rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-0.5 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border dark:border-emerald-500/30">
               Live Model
             </span>
           </div>
@@ -539,7 +539,7 @@ export default function TrueCostCalculator({
           <span className="text-2xl sm:text-3xl font-extrabold text-emerald-800 dark:text-emerald-400">
             R {formatNumber(totalMonthlyCost)}
           </span>
-          <span className="block text-[10px] text-slate-500 uppercase tracking-wider dark:text-slate-400">
+          <span className="block text-xs text-slate-500 uppercase tracking-wider dark:text-slate-400">
             Total All-Inclusive / month
           </span>
         </div>
@@ -548,7 +548,7 @@ export default function TrueCostCalculator({
       {/* Breakdown Cards */}
       <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
         <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-[#060d0e]/60 dark:border-white/10 dark:shadow-none">
-          <p className="text-[9px] sm:text-[10px] uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
+          <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
             Bond
           </p>
           <p className="mt-1 text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
@@ -556,7 +556,7 @@ export default function TrueCostCalculator({
           </p>
         </div>
         <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-[#060d0e]/60 dark:border-white/10 dark:shadow-none">
-          <p className="text-[9px] sm:text-[10px] uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
+          <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
             Levies
           </p>
           <p className="mt-1 text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
@@ -564,7 +564,7 @@ export default function TrueCostCalculator({
           </p>
         </div>
         <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-[#060d0e]/60 dark:border-white/10 dark:shadow-none">
-          <p className="text-[9px] sm:text-[10px] uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
+          <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
             Rates & Taxes
           </p>
           <p className="mt-1 text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
@@ -581,7 +581,7 @@ export default function TrueCostCalculator({
             <label htmlFor={priceId} className="flex items-center gap-1.5">
               <span>Purchase / Offer Price</span>
               {purchasePrice !== askingPriceZAR && (
-                <span className="rounded bg-amber-100 px-1.5 py-0.5 text-[9px] font-bold text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 dark:border dark:border-amber-500/30">
+                <span className="rounded bg-amber-100 px-1.5 py-0.5 text-xs font-bold text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 dark:border dark:border-amber-500/30">
                   Custom Offer
                 </span>
               )}
@@ -628,7 +628,7 @@ export default function TrueCostCalculator({
             <button
               type="button"
               onClick={() => setPurchasePrice(Math.round(askingPriceZAR * 0.95))}
-              className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold transition-all cursor-pointer ${
+              className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
                 purchasePrice === Math.round(askingPriceZAR * 0.95)
                   ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
                   : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
@@ -639,7 +639,7 @@ export default function TrueCostCalculator({
             <button
               type="button"
               onClick={() => setPurchasePrice(askingPriceZAR)}
-              className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold transition-all cursor-pointer ${
+              className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
                 purchasePrice === askingPriceZAR
                   ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
                   : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
@@ -650,7 +650,7 @@ export default function TrueCostCalculator({
             <button
               type="button"
               onClick={() => setPurchasePrice(Math.round(askingPriceZAR * 1.05))}
-              className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold transition-all cursor-pointer ${
+              className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
                 purchasePrice === Math.round(askingPriceZAR * 1.05)
                   ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
                   : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
@@ -711,7 +711,7 @@ export default function TrueCostCalculator({
                 key={pct}
                 type="button"
                 onClick={() => setDepositPercent(pct)}
-                className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold transition-all cursor-pointer ${
+                className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
                   depositPercent === pct
                     ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
                     : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
@@ -729,7 +729,7 @@ export default function TrueCostCalculator({
             <label htmlFor={rateId}>
               Interest Rate ({interestRate.toFixed(2)}%)
             </label>
-            <span className="text-slate-500 font-medium text-[11px] dark:text-slate-400">
+            <span className="text-slate-500 font-medium text-xs dark:text-slate-400">
               Benchmark Prime = 11.75%
             </span>
           </div>
@@ -777,7 +777,7 @@ export default function TrueCostCalculator({
                 key={chip.label}
                 type="button"
                 onClick={() => setInterestRate(chip.value)}
-                className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold transition-all cursor-pointer ${
+                className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
                   Math.abs(interestRate - chip.value) < 0.01
                     ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
                     : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
@@ -816,7 +816,7 @@ export default function TrueCostCalculator({
         <div className="flex items-center justify-between rounded-xl border border-slate-200/80 bg-white/60 p-3 dark:border-white/10 dark:bg-[#060d0e]/60">
           <div>
             <p className="font-bold text-slate-900 text-xs dark:text-white">Include HOC & Life Assurance</p>
-            <p className="text-[10px] text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Estimated R {formatNumber(Math.round(purchasePrice * 0.00035 + principal * 0.00045))}/mo
             </p>
           </div>
@@ -855,7 +855,7 @@ export default function TrueCostCalculator({
           {showCustomSettings && (
             <div className="mt-2 grid grid-cols-2 gap-2.5 rounded-xl border border-slate-200 bg-white/70 p-3 dark:border-white/10 dark:bg-[#060d0e]/60">
               <div>
-                <label className="block text-[10px] uppercase tracking-wider font-bold text-slate-500 mb-1 dark:text-slate-400">
+                <label className="block text-xs uppercase tracking-wider font-bold text-slate-500 mb-1 dark:text-slate-400">
                   Monthly Levy (HOA)
                 </label>
                 <div className="relative">
@@ -873,7 +873,7 @@ export default function TrueCostCalculator({
                 </div>
               </div>
               <div>
-                <label className="block text-[10px] uppercase tracking-wider font-bold text-slate-500 mb-1 dark:text-slate-400">
+                <label className="block text-xs uppercase tracking-wider font-bold text-slate-500 mb-1 dark:text-slate-400">
                   Municipal Rates
                 </label>
                 <div className="relative">
@@ -898,7 +898,7 @@ export default function TrueCostCalculator({
         <div className="rounded-2xl border border-emerald-200/80 bg-emerald-50/70 p-3.5 dark:border-emerald-500/25 dark:bg-emerald-950/25 dark:shadow-[0_4px_20px_rgba(16,185,129,0.06)]">
           <div className="flex items-center justify-between">
             <div>
-              <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-900 dark:text-emerald-400">
+              <span className="text-xs uppercase font-bold tracking-wider text-emerald-900 dark:text-emerald-400">
                 Upfront Cash Required
               </span>
               <p className="text-lg font-extrabold text-emerald-900 dark:text-emerald-200">
@@ -913,7 +913,7 @@ export default function TrueCostCalculator({
               Breakdown →
             </button>
           </div>
-          <p className="mt-1 text-[10px] text-emerald-800/80 dark:text-emerald-300/70">
+          <p className="mt-1 text-xs text-emerald-800/80 dark:text-emerald-300/70">
             Includes R {formatNumber(depositAmount)} deposit + R {formatNumber(transferDuty)} SARS duty + legal registration.
           </p>
         </div>
@@ -933,13 +933,13 @@ export default function TrueCostCalculator({
             <button
               type="button"
               onClick={handleReset}
-              className="text-[11px] font-semibold text-slate-500 hover:text-slate-900 underline cursor-pointer dark:text-slate-400 dark:hover:text-white"
+              className="text-xs font-semibold text-slate-500 hover:text-slate-900 underline cursor-pointer dark:text-slate-400 dark:hover:text-white"
             >
               Reset to Listing Defaults
             </button>
             <Link
               href="/calculators"
-              className="text-[11px] font-semibold text-emerald-700 hover:text-emerald-900 flex items-center gap-1 dark:text-emerald-400 dark:hover:text-emerald-300"
+              className="text-xs font-semibold text-emerald-700 hover:text-emerald-900 flex items-center gap-1 dark:text-emerald-400 dark:hover:text-emerald-300"
             >
               <span>Full Financial Hub</span>
               <ArrowRightIcon className="h-3 w-3" />
@@ -954,7 +954,7 @@ export default function TrueCostCalculator({
           <div className="w-full max-w-md rounded-3xl border border-white/80 bg-white p-6 shadow-2xl space-y-4 dark:bg-[#0c1a1c] dark:border-white/10 dark:shadow-[0_25px_60px_rgba(0,0,0,0.8)]">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-white/10">
               <div>
-                <span className="text-[10px] uppercase font-bold tracking-widest text-emerald-700 dark:text-emerald-400">
+                <span className="text-xs uppercase font-bold tracking-widest text-emerald-700 dark:text-emerald-400">
                   Transaction Cash Outlay
                 </span>
                 <h3 className="text-base font-bold text-slate-900 dark:text-white">
@@ -1002,7 +1002,7 @@ export default function TrueCostCalculator({
               </div>
             </div>
 
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-[11px] text-slate-600 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300">
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300">
               Official South African statutory tariffs apply. Exact conveyancing disbursements and Deeds Office levies will be billed by the transfer attorney.
             </div>
 
@@ -1027,7 +1027,7 @@ export default function TrueCostCalculator({
                   <CheckIcon className="h-5 w-5" />
                 </div>
                 <div>
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-emerald-700 dark:text-emerald-400">
+                  <span className="text-xs uppercase font-bold tracking-widest text-emerald-700 dark:text-emerald-400">
                     Bond Qualification Check
                   </span>
                   <h3 className="text-base font-bold text-slate-900 dark:text-white">
@@ -1046,13 +1046,13 @@ export default function TrueCostCalculator({
 
             <div className="space-y-3 text-xs text-slate-700 dark:text-slate-300">
               <div className="rounded-2xl border border-emerald-200 bg-emerald-50/80 p-3.5 dark:border-emerald-500/25 dark:bg-emerald-950/25">
-                <p className="text-[10px] uppercase font-bold text-emerald-900 tracking-wider dark:text-emerald-400">
+                <p className="text-xs uppercase font-bold text-emerald-900 tracking-wider dark:text-emerald-400">
                   Required Monthly Gross Income (30% Rule)
                 </p>
                 <p className="mt-1 text-2xl font-extrabold text-emerald-900 dark:text-emerald-200">
                   R {formatNumber(Math.round(monthlyBond / 0.3))}
                 </p>
-                <p className="text-[11px] text-emerald-800 mt-0.5 dark:text-emerald-300/80">
+                <p className="text-xs text-emerald-800 mt-0.5 dark:text-emerald-300/80">
                   Combined household gross income recommended to service this bond.
                 </p>
               </div>

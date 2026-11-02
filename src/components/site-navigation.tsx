@@ -60,7 +60,7 @@ export default function SiteNavigation() {
     <nav
       ref={navRef}
       aria-label="Main Navigation"
-      className="hidden items-center gap-1.5 md:gap-2.5 lg:gap-4 xl:gap-6 text-xs sm:text-[13px] font-semibold text-slate-700 dark:text-slate-200 lg:flex"
+      className="hidden items-center gap-1.5 md:gap-2.5 lg:gap-4 xl:gap-6 text-xs font-semibold text-slate-700 dark:text-slate-200 lg:flex"
     >
       {/* 1. Home */}
       <Link
@@ -132,7 +132,7 @@ export default function SiteNavigation() {
                 <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
                   Sell Privately
                 </p>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-snug">
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-snug">
                   List directly to buyers with zero agent commissions.
                 </p>
               </div>
@@ -149,7 +149,7 @@ export default function SiteNavigation() {
                 <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
                   Sell as an Agency
                 </p>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-snug">
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-snug">
                   Agent console, team mandates & listing distribution.
                 </p>
               </div>
@@ -190,7 +190,7 @@ export default function SiteNavigation() {
                 <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
                   Compare
                 </p>
-                <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">Side-by-side property matrix</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">Side-by-side property matrix</p>
               </div>
             </Link>
 
@@ -203,7 +203,7 @@ export default function SiteNavigation() {
                 <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
                   Map Search
                 </p>
-                <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">Geospatial interactive exploration</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">Geospatial interactive exploration</p>
               </div>
             </Link>
 
@@ -216,7 +216,7 @@ export default function SiteNavigation() {
                 <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
                   Advanced Search
                 </p>
-                <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">Detailed filters, solar, levies & specs</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">Detailed filters, solar, levies & specs</p>
               </div>
             </Link>
 
@@ -229,7 +229,7 @@ export default function SiteNavigation() {
                 <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
                   Calculators
                 </p>
-                <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">Bond repayments, transfer duty & SARS</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">Bond repayments, transfer duty & SARS</p>
               </div>
             </Link>
 
@@ -242,7 +242,7 @@ export default function SiteNavigation() {
                 <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
                   Alerts & Notifications
                 </p>
-                <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">Saved searches & price drop alerts</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">Saved searches & price drop alerts</p>
               </div>
             </Link>
 
@@ -255,7 +255,7 @@ export default function SiteNavigation() {
                 <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
                   Find an Agent
                 </p>
-                <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">PPRA verified + Register Agency</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">PPRA verified + Register Agency</p>
               </div>
             </Link>
 
@@ -270,7 +270,7 @@ export default function SiteNavigation() {
               </span>
               <div className="min-w-0">
                 <p className="text-xs font-bold">Add a Listing (Sell / Rent)</p>
-                <p className="text-[10px] text-emerald-700 dark:text-emerald-300/80 truncate">6-Step configuration wizard</p>
+                <p className="text-xs text-emerald-700 dark:text-emerald-300/80 truncate">6-Step configuration wizard</p>
               </div>
             </Link>
           </div>
@@ -288,7 +288,7 @@ export default function SiteNavigation() {
       >
         <SparklesIcon className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
         <span>AI Search</span>
-        <span className="text-[10px] text-emerald-500 dark:text-emerald-400">✦</span>
+        <span className="text-xs text-emerald-500 dark:text-emerald-400">✦</span>
       </Link>
     </nav>
   );

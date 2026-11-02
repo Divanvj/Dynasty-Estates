@@ -132,17 +132,17 @@ export default function HomeSpotlight({ properties }: { properties: PropertyReco
 
             {/* Top badges. The first says plainly why this home is here. */}
             <div className="absolute left-4 top-4 flex flex-wrap items-center gap-2 sm:left-6 sm:top-6">
-              <span className="rounded-full border border-white/30 bg-black/40 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-white backdrop-blur-md dark:border-white/10">
+              <span className="rounded-full border border-white/30 bg-black/40 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-white backdrop-blur-md dark:border-white/10">
                 {personalised ? "Recently viewed by you" : "Premier spotlight"}
               </span>
-              <span className="rounded-full border border-emerald-400/40 bg-emerald-500/30 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-200 backdrop-blur-md">
+              <span className="rounded-full border border-emerald-400/40 bg-emerald-500/30 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-200 backdrop-blur-md">
                 {active.suburb || active.city || active.province}
               </span>
             </div>
 
             {many && (
               <>
-                <div className="pointer-events-none absolute right-4 top-4 rounded-full border border-white/25 bg-black/35 px-3 py-1 text-[10px] font-bold tracking-[0.2em] text-white backdrop-blur-md sm:right-6 sm:top-6">
+                <div className="pointer-events-none absolute right-4 top-4 rounded-full border border-white/25 bg-black/35 px-3 py-1 text-xs font-bold tracking-[0.2em] text-white backdrop-blur-md sm:right-6 sm:top-6">
                   {String(safeIndex + 1).padStart(2, "0")}
                   <span className="opacity-50"> / {String(slides.length).padStart(2, "0")}</span>
                 </div>
@@ -203,7 +203,7 @@ export default function HomeSpotlight({ properties }: { properties: PropertyReco
             <div className="absolute inset-x-4 bottom-4 rounded-[24px] border border-white/20 bg-black/50 p-5 text-white backdrop-blur-xl sm:inset-x-6 sm:bottom-6 sm:p-6 dark:border-white/10">
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div className="min-w-0">
-                  <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-300 sm:text-xs">
+                  <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.2em] text-slate-300 sm:text-xs">
                     <LocationPinIcon className="h-3.5 w-3.5 shrink-0 text-emerald-300" />
                     <span className="truncate">{active.location}</span>
                   </div>
@@ -217,7 +217,12 @@ export default function HomeSpotlight({ properties }: { properties: PropertyReco
                       </span>
                     )}
                   </div>
-                  <p className="mt-1 truncate text-xs text-slate-200 sm:text-sm">
+                  {/* No `truncate` here: at the 14px type floor a long title
+                      such as "Morningside Sandhurst Border Grand Manor" is
+                      26px wider than this bar at 390px, so truncating cut the
+                      name. It wraps to a second line instead — the bar is
+                      anchored at `bottom-4`, so it grows upward. */}
+                  <p className="mt-1 text-xs text-slate-200 sm:text-sm">
                     {active.title}
                   </p>
                   <p className="mt-0.5 text-xs text-slate-300">

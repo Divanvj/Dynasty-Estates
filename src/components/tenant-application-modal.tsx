@@ -146,7 +146,7 @@ export default function TenantApplicationModal({
         {step === "form" ? (
           <div>
             <div className="mb-5">
-              <span className="rounded-full bg-emerald-100 dark:bg-emerald-500/20 px-3 py-1 text-[10px] font-extrabold uppercase tracking-widest text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.2)]">
+              <span className="rounded-full bg-emerald-100 dark:bg-emerald-500/20 px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.2)]">
                 Digital Tenant Onboarding
               </span>
               <h2 id="tenant-modal-title" className="mt-2 text-xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-2xl">
@@ -159,7 +159,7 @@ export default function TenantApplicationModal({
 
             {/* Move-in Cost Schedule Preview */}
             <div className="mb-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/80 dark:bg-[#060d0e]/60 p-4 text-xs">
-              <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
+              <p className="text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
                 Mandatory Move-In Cost Schedule
               </p>
               <div className="space-y-1.5 text-slate-700 dark:text-slate-300">
@@ -319,7 +319,7 @@ export default function TenantApplicationModal({
                     onChange={(e) => setCreditConsent(e.target.checked)}
                     className="mt-0.5 h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer accent-emerald-500"
                   />
-                  <span className="text-[11px] leading-relaxed text-slate-600 dark:text-slate-300">
+                  <span className="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
                     I hereby give consent to Dynasty Estates to perform a credit bureau verification via{" "}
                     <span className="font-bold text-slate-900 dark:text-emerald-400">TPN (Tenant Profile Network)</span> and contact my employer and prior landlord for references under the National Credit Act and POPIA.
                   </span>
@@ -329,7 +329,7 @@ export default function TenantApplicationModal({
               {error ? (
                 <p
                   role="alert"
-                  className="rounded-xl border border-red-200 dark:border-red-500/30 bg-red-50 dark:bg-red-950/40 px-3 py-2 text-[11px] leading-relaxed text-red-700 dark:text-red-300"
+                  className="rounded-xl border border-red-200 dark:border-red-500/30 bg-red-50 dark:bg-red-950/40 px-3 py-2 text-xs leading-relaxed text-red-700 dark:text-red-300"
                 >
                   {error}
                 </p>

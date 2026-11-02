@@ -27,7 +27,7 @@ export default function OnShowBanner({ propertyTitle, location, onShow }: OnShow
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="rounded-full bg-rose-600 px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-widest text-white shadow-xs flex items-center gap-1.5 dark:shadow-[0_0_12px_rgba(225,29,72,0.4)]">
+            <span className="rounded-full bg-rose-600 px-3 py-0.5 text-xs font-extrabold uppercase tracking-widest text-white shadow-xs flex items-center gap-1.5 dark:shadow-[0_0_12px_rgba(225,29,72,0.4)]">
               <span className="h-2 w-2 rounded-full bg-white animate-pulse" />
               <span>On Show This Weekend</span>
             </span>

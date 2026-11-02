@@ -895,7 +895,7 @@ export default function ExpandableSearchPanel({
               <FilterSlidersIcon className={`h-4 w-4 ${activeFilterCount > 0 ? "text-white" : "text-slate-700 dark:text-slate-300"}`} />
               <span className="hidden min-[480px]:inline">Filters</span>
               {activeFilterCount > 0 && (
-                <span className="flex h-4 w-4 items-center justify-center rounded-full bg-emerald-600 text-[10px] font-bold text-white">
+                <span className="flex h-4 w-4 items-center justify-center rounded-full bg-emerald-600 text-xs font-bold text-white">
                   {activeFilterCount}
                 </span>
               )}
@@ -1070,7 +1070,7 @@ export default function ExpandableSearchPanel({
 
               {(categorizedSuggestions.cities.length > 0 || categorizedSuggestions.provinces.length > 0) && (
                 <div className="mt-2.5 flex flex-wrap gap-1.5">
-                  <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 self-center mr-1">Matching SA areas:</span>
+                  <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 self-center mr-1">Matching SA areas:</span>
                   {categorizedSuggestions.cities.map((city) => (
                     <button
                       key={city}
@@ -1080,7 +1080,7 @@ export default function ExpandableSearchPanel({
                     >
                       <LocationPinIcon className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
                       <span>{city}</span>
-                      <span className="text-[10px] text-slate-400 dark:text-slate-400">+</span>
+                      <span className="text-xs text-slate-400 dark:text-slate-400">+</span>
                     </button>
                   ))}
                   {categorizedSuggestions.provinces.map((prov) => (
@@ -1092,7 +1092,7 @@ export default function ExpandableSearchPanel({
                     >
                       <HomeIcon className="h-3 w-3 text-slate-400 dark:text-slate-500" />
                       <span>{prov}</span>
-                      <span className="text-[10px] text-slate-400 dark:text-slate-400">+</span>
+                      <span className="text-xs text-slate-400 dark:text-slate-400">+</span>
                     </button>
                   ))}
                 </div>
@@ -1101,10 +1101,10 @@ export default function ExpandableSearchPanel({
           ) : (
             <div className="border-b border-slate-100 dark:border-white/10 bg-slate-50/60 dark:bg-[#071113] px-4 py-2.5 text-xs">
               <div className="flex items-center justify-between mb-1.5">
-                <span className="text-[11px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
+                <span className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
                   Premier Metros & Locations
                 </span>
-                <span className="text-[10px] text-slate-400 dark:text-slate-500">Click to add to search</span>
+                <span className="text-xs text-slate-400 dark:text-slate-500">Click to add to search</span>
               </div>
               <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
                 {getAllCitiesAlphabetical()
@@ -1114,7 +1114,7 @@ export default function ExpandableSearchPanel({
                       key={city.name}
                       type="button"
                       onClick={() => addLocationTag(city.name)}
-                      className="rounded-full border border-slate-200/90 dark:border-white/10 bg-white dark:bg-[#0c181a] px-3 py-1 text-[11px] font-medium text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-white/10 hover:text-emerald-950 dark:hover:text-emerald-300 hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_12px_rgba(16,185,129,0.3)] dark:hover:shadow-[0_0_16px_rgba(52,211,153,0.35)] transition-all cursor-pointer shrink-0 shadow-2xs"
+                      className="rounded-full border border-slate-200/90 dark:border-white/10 bg-white dark:bg-[#0c181a] px-3 py-1 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-white/10 hover:text-emerald-950 dark:hover:text-emerald-300 hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_12px_rgba(16,185,129,0.3)] dark:hover:shadow-[0_0_16px_rgba(52,211,153,0.35)] transition-all cursor-pointer shrink-0 shadow-2xs"
                     >
                       + {city.name}
                     </button>
@@ -1158,7 +1158,7 @@ export default function ExpandableSearchPanel({
                 </button>
               </div>
 
-              <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 hidden sm:inline">
+              <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 hidden sm:inline">
                 {intent === "rent" ? "Browsing long-term rentals" : "Browsing properties for sale"}
               </span>
             </div>
@@ -1170,7 +1170,7 @@ export default function ExpandableSearchPanel({
                   <SparklesIcon className="h-4 w-4 text-emerald-700 dark:text-emerald-400 shrink-0" />
                   <span>AI Natural Language Search</span>
                 </div>
-                <span className="rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 text-[10px] font-bold px-2 py-0.5 border border-emerald-200 dark:border-emerald-500/30">
+                <span className="rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 text-xs font-bold px-2 py-0.5 border border-emerald-200 dark:border-emerald-500/30">
                   Instant Filter
                 </span>
               </div>
@@ -1212,7 +1212,7 @@ export default function ExpandableSearchPanel({
                 <div className="mt-2.5 flex items-center justify-between rounded-lg bg-emerald-100/90 dark:bg-emerald-950/60 px-2.5 py-1.5 text-xs text-emerald-900 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-500/30 animate-in fade-in duration-150">
                   <div className="flex items-center gap-1.5 min-w-0">
                     <SparklesIcon className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-400 shrink-0" />
-                    <span className="font-semibold text-[11px] leading-tight truncate">
+                    <span className="font-semibold text-xs leading-tight truncate">
                       ✨ AI applied: {aiExtractionSummary}
                     </span>
                   </div>
@@ -1234,7 +1234,7 @@ export default function ExpandableSearchPanel({
                 <label className="text-xs font-bold text-slate-900 dark:text-white tracking-wide">
                   Estate Portfolio
                 </label>
-                <span className="text-[10px] uppercase tracking-wider text-slate-400 dark:text-slate-500 font-medium">
+                <span className="text-xs uppercase tracking-wider text-slate-400 dark:text-slate-500 font-medium">
                   Asset Class
                 </span>
               </div>
@@ -1260,7 +1260,7 @@ export default function ExpandableSearchPanel({
                     >
                       <Icon className={`h-4 w-4 mb-1 ${isSelected ? "text-emerald-300" : "text-slate-500 dark:text-slate-400"}`} />
                       <span className="text-xs font-bold">{item.label}</span>
-                      <span className={`text-[9px] mt-0.5 ${isSelected ? "text-emerald-100" : "text-slate-400 dark:text-slate-500"}`}>{item.desc}</span>
+                      <span className={`text-xs mt-0.5 ${isSelected ? "text-emerald-100" : "text-slate-400 dark:text-slate-500"}`}>{item.desc}</span>
                     </button>
                   );
                 })}
@@ -1414,11 +1414,11 @@ export default function ExpandableSearchPanel({
                   <div>
                     <p className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
                       <span>Show Days & Weekend Viewings</span>
-                      <span className="rounded-full bg-amber-100 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200 text-[10px] font-extrabold px-2 py-0.5">
+                      <span className="rounded-full bg-amber-100 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200 text-xs font-extrabold px-2 py-0.5">
                         On Show
                       </span>
                     </p>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
                       Properties open for Sunday viewing (14:00 – 17:00)
                     </p>
                   </div>
@@ -1477,7 +1477,7 @@ export default function ExpandableSearchPanel({
 
             <div className="flex items-center gap-3">
               <span className="text-xs text-slate-400 dark:text-slate-500 hidden sm:inline">
-                Press <kbd className="font-mono text-[10px] bg-slate-200 dark:bg-[#060d0e] dark:border dark:border-white/10 text-slate-700 dark:text-slate-300 px-1.5 py-0.5 rounded">Esc</kbd> to close
+                Press <kbd className="font-mono text-xs bg-slate-200 dark:bg-[#060d0e] dark:border dark:border-white/10 text-slate-700 dark:text-slate-300 px-1.5 py-0.5 rounded">Esc</kbd> to close
               </span>
               <button
                 type="button"

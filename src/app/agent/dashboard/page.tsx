@@ -91,10 +91,10 @@ export default function AgentDashboard() {
         <section className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {metrics.map((metric) => (
             <div key={metric.label} className="rounded-[28px] border border-white/45 bg-white/40 p-5 shadow-[0_18px_35px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-              <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-bold">{metric.label}</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-bold">{metric.label}</p>
               <div className="mt-4 flex items-end justify-between">
                 <p className="text-3xl font-semibold text-slate-900 dark:text-white">{metric.value}</p>
-                <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 dark:bg-emerald-500/20 px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-emerald-800 dark:text-emerald-300 dark:border-emerald-500/40 font-bold">
+                <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 dark:bg-emerald-500/20 px-2.5 py-1 text-xs uppercase tracking-[0.14em] text-emerald-800 dark:text-emerald-300 dark:border-emerald-500/40 font-bold">
                   {metric.delta}
                 </span>
               </div>
@@ -106,7 +106,7 @@ export default function AgentDashboard() {
           <div className="rounded-[32px] border border-white/45 bg-white/40 p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-6 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
             <div className="mb-5 flex items-center justify-between">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400 font-bold">Portfolio</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400 font-bold">Portfolio</p>
                 <h2 className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white">Listings overview</h2>
               </div>
               <Link
@@ -126,7 +126,7 @@ export default function AgentDashboard() {
                     <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 font-medium">{formatNumber(item.views)} views</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="rounded-full border border-slate-200 bg-white/70 px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-slate-600 dark:border-white/10 dark:bg-[#060d0e]/80 dark:text-slate-300 font-bold">
+                    <span className="rounded-full border border-slate-200 bg-white/70 px-2.5 py-1 text-xs uppercase tracking-[0.14em] text-slate-600 dark:border-white/10 dark:bg-[#060d0e]/80 dark:text-slate-300 font-bold">
                       {item.status}
                     </span>
                     <span className="text-sm font-bold text-slate-900 dark:text-emerald-400">{item.price}</span>
@@ -139,7 +139,7 @@ export default function AgentDashboard() {
           <div className="rounded-[32px] border border-white/45 bg-white/40 p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-6 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
             <div className="mb-5 flex items-center justify-between">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400 font-bold">Pipeline</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400 font-bold">Pipeline</p>
                 <h2 className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white">Hot leads</h2>
               </div>
               <Link
@@ -160,7 +160,7 @@ export default function AgentDashboard() {
                   </div>
 
                   <div className="text-right">
-                    <p className="text-[10px] uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400 font-bold">Last contact</p>
+                    <p className="text-xs uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400 font-bold">Last contact</p>
                     <p className="mt-1 text-sm font-semibold text-emerald-800 dark:text-emerald-400">{lead.status}</p>
                   </div>
                 </div>

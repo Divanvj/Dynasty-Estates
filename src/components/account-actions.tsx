@@ -138,10 +138,10 @@ export default function AccountActions() {
                 <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
                   {userDisplayName}
                 </p>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
+                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
                   {userEmail}
                 </p>
-                <div className="mt-1 inline-flex items-center gap-1 rounded-full bg-slate-100 dark:bg-white/10 px-2 py-0.5 text-[10px] font-semibold text-slate-600 dark:text-slate-300">
+                <div className="mt-1 inline-flex items-center gap-1 rounded-full bg-slate-100 dark:bg-white/10 px-2 py-0.5 text-xs font-semibold text-slate-600 dark:text-slate-300">
                   <RoleBadgeIcon className={`h-3 w-3 ${roleBadge.tone}`} />
                   <span>{activeRole}</span>
                 </div>
@@ -164,12 +164,12 @@ export default function AccountActions() {
               read back by resolveUserRole — not a button.
             */}
             <div className="py-2.5 border-b border-slate-200/80 dark:border-white/10">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1.5">
+              <p className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1.5">
                 Account Type
               </p>
               <div className="flex items-center gap-2 rounded-xl border border-slate-200/80 bg-slate-100 px-2.5 py-2 dark:border-white/10 dark:bg-[#040e10]">
                 <RoleBadgeIcon className={`h-3.5 w-3.5 shrink-0 ${roleBadge.tone}`} />
-                <span className="text-[11px] font-bold text-slate-900 dark:text-white">
+                <span className="text-xs font-bold text-slate-900 dark:text-white">
                   {roleBadge.label}
                 </span>
               </div>
@@ -177,7 +177,7 @@ export default function AccountActions() {
 
             {/* Appearance — the theme switch, relocated from the header row. */}
             <div className="flex items-center justify-between gap-3 py-2.5 border-b border-slate-200/80 dark:border-white/10">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+              <p className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                 Appearance
               </p>
               <ThemeToggle size="sm" />
@@ -194,7 +194,7 @@ export default function AccountActions() {
                   <HeartIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                   <span>Saved Properties</span>
                 </span>
-                <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold">View →</span>
+                <span className="text-xs text-slate-400 dark:text-slate-500 font-bold">View →</span>
               </Link>
 
               <Link
@@ -206,7 +206,7 @@ export default function AccountActions() {
                   <FolderIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                   <span>Collections</span>
                 </span>
-                <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold">Collab →</span>
+                <span className="text-xs text-slate-400 dark:text-slate-500 font-bold">Collab →</span>
               </Link>
 
               <Link
@@ -218,7 +218,7 @@ export default function AccountActions() {
                   <TagIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                   <span>Enquiries & Requests</span>
                 </span>
-                <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold">Inbox →</span>
+                <span className="text-xs text-slate-400 dark:text-slate-500 font-bold">Inbox →</span>
               </Link>
 
               {/* Any signed-in account, matching the `allowAnySignedIn` guard on
@@ -234,7 +234,7 @@ export default function AccountActions() {
                   <HomeIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                   <span>My Listings & Stats</span>
                 </span>
-                <span className="text-[10px] text-emerald-700 dark:text-emerald-400 font-bold">+ Add</span>
+                <span className="text-xs text-emerald-700 dark:text-emerald-400 font-bold">+ Add</span>
               </Link>
               )}
 
@@ -250,7 +250,7 @@ export default function AccountActions() {
                   <BriefcaseIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                   <span>My Agency / Console</span>
                 </span>
-                <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold">Manage →</span>
+                <span className="text-xs text-slate-400 dark:text-slate-500 font-bold">Manage →</span>
               </Link>
               )}
 
@@ -266,7 +266,7 @@ export default function AccountActions() {
                   <InfoCircleIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                   <span>Support & Guidance</span>
                 </span>
-                <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold">Help →</span>
+                <span className="text-xs text-slate-400 dark:text-slate-500 font-bold">Help →</span>
               </button>
             </div>
 

@@ -282,7 +282,7 @@ export default function CalculatorsView({
           <div className="flex items-center gap-2.5 sm:gap-3">
             <BrandLogo markOnly />
             <div>
-              <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold dark:text-slate-400">Property Finance</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-500 font-bold dark:text-slate-400">Property Finance</p>
               <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">
                 <span className="hidden sm:inline">South African Financial </span>Calculators
               </h1>
@@ -373,7 +373,7 @@ export default function CalculatorsView({
                       key={val}
                       type="button"
                       onClick={() => setPurchasePrice(val)}
-                      className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold transition-all cursor-pointer ${
+                      className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
                         purchasePrice === val
                           ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                           : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
@@ -427,7 +427,7 @@ export default function CalculatorsView({
                       key={pct}
                       type="button"
                       onClick={() => setDepositPct(pct)}
-                      className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold transition-all cursor-pointer ${
+                      className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
                         depositPct === pct
                           ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                           : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
@@ -443,7 +443,7 @@ export default function CalculatorsView({
               <div>
                 <div className="flex justify-between font-semibold mb-1">
                   <label htmlFor={rateId}>Interest Rate ({interestRate.toFixed(2)}%)</label>
-                  <span className="text-slate-500 font-medium text-[11px] dark:text-slate-400">Benchmark Prime = 11.75%</span>
+                  <span className="text-slate-500 font-medium text-xs dark:text-slate-400">Benchmark Prime = 11.75%</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <button
@@ -485,7 +485,7 @@ export default function CalculatorsView({
                       key={chip.label}
                       type="button"
                       onClick={() => setInterestRate(chip.val)}
-                      className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold transition-all cursor-pointer ${
+                      className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
                         Math.abs(interestRate - chip.val) < 0.01
                           ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                           : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
@@ -548,7 +548,7 @@ export default function CalculatorsView({
             {/* Results Output */}
             <div className="rounded-[30px] border border-white/80 bg-white/70 p-5 sm:p-6 shadow-md backdrop-blur-xl flex flex-col justify-between dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <div>
-                <span className="text-[10px] uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
+                <span className="text-xs uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
                   Total Monthly Outlay
                 </span>
                 <p className="mt-2 text-3xl sm:text-4xl font-extrabold text-emerald-800 dark:text-emerald-400 dark:drop-shadow-[0_0_20px_rgba(16,185,129,0.3)]">
@@ -638,7 +638,7 @@ export default function CalculatorsView({
                       key={val}
                       type="button"
                       onClick={() => setGrossIncome(val)}
-                      className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold transition-all cursor-pointer ${
+                      className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
                         grossIncome === val
                           ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                           : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
@@ -692,7 +692,7 @@ export default function CalculatorsView({
                       key={val}
                       type="button"
                       onClick={() => setMonthlyExpenses(val)}
-                      className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold transition-all cursor-pointer ${
+                      className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
                         monthlyExpenses === val
                           ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                           : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
@@ -704,7 +704,7 @@ export default function CalculatorsView({
                 </div>
               </div>
 
-              <div className="flex items-start gap-2 rounded-2xl border border-slate-200 bg-white/70 p-4 text-[11px] text-slate-600 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300">
+              <div className="flex items-start gap-2 rounded-2xl border border-slate-200 bg-white/70 p-4 text-xs text-slate-600 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300">
                 <InfoCircleIcon className="h-4 w-4 shrink-0 text-slate-500 mt-0.5 dark:text-slate-400" />
                 <span>Major South African commercial banks (Standard Bank, FNB, Nedbank, ABSA) evaluate bond applications against the 30% gross income installment ratio and National Credit Act (NCA) debt affordability limits.</span>
               </div>
@@ -712,7 +712,7 @@ export default function CalculatorsView({
 
             <div className="rounded-[30px] border border-white/80 bg-white/70 p-5 sm:p-6 shadow-md backdrop-blur-xl flex flex-col justify-between dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <div>
-                <span className="text-[10px] uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
+                <span className="text-xs uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
                   Estimated Qualified Purchase Price
                 </span>
                 <p className="mt-2 text-3xl sm:text-4xl font-extrabold text-emerald-800 dark:text-emerald-400 dark:drop-shadow-[0_0_20px_rgba(16,185,129,0.3)]">
@@ -755,7 +755,7 @@ export default function CalculatorsView({
             <div className="rounded-[30px] border border-white/80 bg-white/70 p-5 sm:p-6 shadow-md backdrop-blur-xl space-y-4 text-xs dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200 dark:border-white/10 pb-3 gap-2">
                 <div>
-                  <span className="text-[10px] uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
+                  <span className="text-xs uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
                     Interactive SARS Tax Calculator
                   </span>
                   <h2 className="text-lg font-bold text-slate-950 dark:text-white">
@@ -766,7 +766,7 @@ export default function CalculatorsView({
                   <span className="text-2xl font-extrabold text-emerald-800 dark:text-emerald-400 dark:drop-shadow-[0_0_20px_rgba(16,185,129,0.3)]">
                     {customDutyCalc.duty === 0 ? "R 0 (Exempt)" : `R ${formatNumber(customDutyCalc.duty)}`}
                   </span>
-                  <span className="block text-[10px] text-slate-500 dark:text-slate-400">
+                  <span className="block text-xs text-slate-500 dark:text-slate-400">
                     Effective Tax Rate: {customDutyCalc.effectiveRate.toFixed(2)}%
                   </span>
                 </div>
@@ -815,7 +815,7 @@ export default function CalculatorsView({
                       key={p}
                       type="button"
                       onClick={() => setCustomTransferPrice(p)}
-                      className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold transition-all cursor-pointer ${
+                      className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
                         customTransferPrice === p
                           ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                           : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
@@ -842,7 +842,7 @@ export default function CalculatorsView({
 
               <div className="overflow-hidden rounded-2xl border border-white/80 bg-white/80 shadow-sm dark:bg-[#060d0e]/60 dark:border-white/10">
                 <table className="w-full text-left">
-                  <thead className="border-b border-slate-200 bg-slate-50 text-[10px] uppercase font-bold text-slate-500 dark:border-white/10 dark:bg-[#060d0e]/90 dark:text-slate-300">
+                  <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase font-bold text-slate-500 dark:border-white/10 dark:bg-[#060d0e]/90 dark:text-slate-300">
                     <tr>
                       <th className="py-3 px-4">Property Value Range</th>
                       <th className="py-3 px-4">Rate of Tax</th>
@@ -883,7 +883,7 @@ export default function CalculatorsView({
               {/* Inputs */}
               <div className="rounded-[30px] border border-white/80 bg-white/70 p-5 sm:p-6 shadow-md backdrop-blur-xl space-y-5 text-xs dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
                 <div>
-                  <span className="text-[10px] uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
+                  <span className="text-xs uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
                     Legal Practice Council (LSSA) Fee Guidelines
                   </span>
                   <h2 className="text-lg font-bold text-slate-950 mt-1 dark:text-white">
@@ -942,7 +942,7 @@ export default function CalculatorsView({
                           setConveyPrice(val);
                           setConveyBond(Math.round(val * 0.9));
                         }}
-                        className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold transition-all cursor-pointer ${
+                        className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
                           conveyPrice === val
                             ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                             : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
@@ -1004,7 +1004,7 @@ export default function CalculatorsView({
                           key={b.label}
                           type="button"
                           onClick={() => setConveyBond(targetVal)}
-                          className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold transition-all cursor-pointer ${
+                          className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
                             conveyBond === targetVal
                               ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                               : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
@@ -1017,7 +1017,7 @@ export default function CalculatorsView({
                   </div>
                 </div>
 
-                <div className="flex items-start gap-2 rounded-2xl border border-slate-200 bg-slate-50/80 p-3 text-[11px] text-slate-600 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300">
+                <div className="flex items-start gap-2 rounded-2xl border border-slate-200 bg-slate-50/80 p-3 text-xs text-slate-600 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300">
                   <InfoCircleIcon className="h-4 w-4 shrink-0 text-slate-500 mt-0.5 dark:text-slate-400" />
                   <span>
                     In South Africa, you pay two independent sets of attorneys: the <strong>Transfer Attorney</strong> (appointed by seller, paid by buyer) and the <strong>Bond Attorney</strong> (appointed by bank, paid by buyer).
@@ -1028,7 +1028,7 @@ export default function CalculatorsView({
               {/* Total Upfront Cash Summary */}
               <div className="rounded-[30px] border border-white/80 bg-white/70 p-5 sm:p-6 shadow-md backdrop-blur-xl flex flex-col justify-between dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
                 <div>
-                  <span className="text-[10px] uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
+                  <span className="text-xs uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
                     Total Upfront Cash Required
                   </span>
                   <p className="mt-2 text-3xl sm:text-4xl font-extrabold text-emerald-800 dark:text-emerald-400 dark:drop-shadow-[0_0_20px_rgba(16,185,129,0.3)]">
@@ -1050,19 +1050,19 @@ export default function CalculatorsView({
                         <span>Transfer Costs (Conveyancer):</span>
                         <span>R {formatNumber(conveyancingSchedule.totalTransferCosts)}</span>
                       </div>
-                      <div className="flex justify-between pl-3 text-[11px]">
+                      <div className="flex justify-between pl-3 text-xs">
                         <span>• Conveyancer Legal Fee:</span>
                         <span>R {formatNumber(conveyancingSchedule.transferAttorneyFee)}</span>
                       </div>
-                      <div className="flex justify-between pl-3 text-[11px]">
+                      <div className="flex justify-between pl-3 text-xs">
                         <span>• 15% VAT on Legal Fee:</span>
                         <span>R {formatNumber(conveyancingSchedule.transferVat)}</span>
                       </div>
-                      <div className="flex justify-between pl-3 text-[11px]">
+                      <div className="flex justify-between pl-3 text-xs">
                         <span>• Deeds Office Transfer Levy:</span>
                         <span>R {formatNumber(conveyancingSchedule.deedsTransferFee)}</span>
                       </div>
-                      <div className="flex justify-between pl-3 text-[11px]">
+                      <div className="flex justify-between pl-3 text-xs">
                         <span>• SARS Transfer Duty:</span>
                         <span className="font-bold text-emerald-800 dark:text-emerald-400">
                           {conveyancingSchedule.duty === 0 ? "R 0 (Exempt)" : `R ${formatNumber(conveyancingSchedule.duty)}`}
@@ -1077,19 +1077,19 @@ export default function CalculatorsView({
                           <span>Bond Registration Costs:</span>
                           <span>R {formatNumber(conveyancingSchedule.totalBondCosts)}</span>
                         </div>
-                        <div className="flex justify-between pl-3 text-[11px]">
+                        <div className="flex justify-between pl-3 text-xs">
                           <span>• Bond Attorney Fee:</span>
                           <span>R {formatNumber(conveyancingSchedule.bondAttorneyFee)}</span>
                         </div>
-                        <div className="flex justify-between pl-3 text-[11px]">
+                        <div className="flex justify-between pl-3 text-xs">
                           <span>• 15% VAT on Bond Fee:</span>
                           <span>R {formatNumber(conveyancingSchedule.bondVat)}</span>
                         </div>
-                        <div className="flex justify-between pl-3 text-[11px]">
+                        <div className="flex justify-between pl-3 text-xs">
                           <span>• Deeds Office Bond Levy:</span>
                           <span>R {formatNumber(conveyancingSchedule.deedsBondFee)}</span>
                         </div>
-                        <div className="flex justify-between pl-3 text-[11px]">
+                        <div className="flex justify-between pl-3 text-xs">
                           <span>• Bank Initiation Fee (NCA):</span>
                           <span>R {formatNumber(conveyancingSchedule.bankInitiationFee)}</span>
                         </div>
@@ -1116,7 +1116,7 @@ export default function CalculatorsView({
               {/* Controls */}
               <div className="rounded-[30px] border border-white/80 dark:border-white/10 bg-white/70 dark:bg-[#0c1a1c]/80 p-5 sm:p-6 shadow-md dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl space-y-5 text-xs">
                 <div>
-                  <span className="text-[10px] uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
+                  <span className="text-xs uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
                     Wealth Accelerator Simulator
                   </span>
                   <h2 className="text-lg font-bold text-slate-950 dark:text-white mt-1">
@@ -1236,7 +1236,7 @@ export default function CalculatorsView({
                         key={val}
                         type="button"
                         onClick={() => setAmortExtraMonthly(val)}
-                        className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold transition-all cursor-pointer ${
+                        className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
                           amortExtraMonthly === val
                             ? "bg-emerald-800 dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] text-white"
                             : "border border-emerald-300 dark:border-white/10 bg-white dark:bg-[#060d0e]/60 text-emerald-900 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
@@ -1252,7 +1252,7 @@ export default function CalculatorsView({
               {/* Savings Results Showcase */}
               <div className="rounded-[30px] border border-white/80 dark:border-white/10 bg-white/70 dark:bg-[#0c1a1c]/80 p-5 sm:p-6 shadow-md dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl flex flex-col justify-between">
                 <div>
-                  <span className="text-[10px] uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
+                  <span className="text-xs uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
                     Compound Interest Saved
                   </span>
                   <p className="mt-2 text-3xl sm:text-4xl font-extrabold text-emerald-800 dark:text-emerald-400 dark:drop-shadow-[0_0_20px_rgba(16,185,129,0.3)]">
@@ -1297,7 +1297,7 @@ export default function CalculatorsView({
                   </div>
                 </div>
 
-                <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-3 text-[11px] text-slate-600 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300">
+                <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300">
                   <span>
                     💡 <strong>Pro-Tip:</strong> In South Africa, paying extra into an access bond also functions as a tax-free emergency fund yielding your bond rate (e.g. {amortRate}% return).
                   </span>

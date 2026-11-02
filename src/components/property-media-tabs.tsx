@@ -107,7 +107,7 @@ export default function PropertyMediaTabs({
               className="relative mx-auto h-[360px] sm:h-[460px] w-full max-w-2xl rounded-xl bg-contain bg-center bg-no-repeat shadow-inner"
               style={{ backgroundImage: `url(${defaultFloorPlan})` }}
             >
-              <div className="absolute bottom-3 right-3 rounded-full bg-slate-900/80 px-3 py-1 text-[11px] font-bold text-white backdrop-blur-md dark:border dark:border-white/10">
+              <div className="absolute bottom-3 right-3 rounded-full bg-slate-900/80 px-3 py-1 text-xs font-bold text-white backdrop-blur-md dark:border dark:border-white/10">
                 Floor Area: {area} {erfSize ? `· Erf: ${erfSize}` : ""}
               </div>
             </div>

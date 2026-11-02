@@ -60,7 +60,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between border-b border-slate-200/60 dark:border-white/10 pb-4">
         <div>
           <div className="flex items-center gap-3">
-            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-emerald-800 dark:text-emerald-400">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-emerald-800 dark:text-emerald-400">
               {intent === "rent" ? "Trending Rentals" : "Properties For Sale"}
             </p>
             <span className="text-slate-300 dark:text-slate-600">•</span>
@@ -193,11 +193,11 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
                       <SavePropertyButton propertyId={card.id} />
                     </div>
                     <div className="absolute left-3 top-3 flex items-center gap-1.5">
-                      <span className="rounded-full px-2.5 py-1 text-[10px] font-bold backdrop-blur-sm border border-emerald-500/40 bg-emerald-950/80 text-emerald-200">
+                      <span className="rounded-full px-2.5 py-1 text-xs font-bold backdrop-blur-sm border border-emerald-500/40 bg-emerald-950/80 text-emerald-200">
                         {card.listingType === "rent" ? "To Rent" : card.tag || "For Sale"}
                       </span>
                       {card.furnishedStatus && (
-                        <span className="rounded-full border border-white/30 bg-black/30 px-2 py-0.5 text-[9px] font-medium text-white/90 backdrop-blur-sm dark:border-white/10">
+                        <span className="rounded-full border border-white/30 bg-black/30 px-2 py-0.5 text-xs font-medium text-white/90 backdrop-blur-sm dark:border-white/10">
                           {card.furnishedStatus}
                         </span>
                       )}
@@ -205,7 +205,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
                     <div className="absolute bottom-3 left-3 text-white">
                       <p className="text-xl font-bold">{card.price}</p>
                       {card.leaseTerm && (
-                        <p className="text-[10px] text-white/80 font-medium">Lease: {card.leaseTerm}</p>
+                        <p className="text-xs text-white/80 font-medium">Lease: {card.leaseTerm}</p>
                       )}
                     </div>
                   </div>
@@ -221,7 +221,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
                           <span>{card.location}</span>
                         </p>
                       </div>
-                      <span className="rounded-full bg-slate-100 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 px-2 py-0.5 text-[10px] font-bold text-slate-600 dark:text-slate-300">
+                      <span className="rounded-full bg-slate-100 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 px-2 py-0.5 text-xs font-bold text-slate-600 dark:text-slate-300">
                         {card.type}
                       </span>
                     </div>
@@ -244,7 +244,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
                     <div className="mt-4 flex items-center justify-between">
                       <div className="flex flex-wrap gap-1">
                         {card.features?.slice(0, 2).map((f) => (
-                          <span key={f} className="rounded-md bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 text-[10px] font-medium text-emerald-800 dark:text-emerald-300">
+                          <span key={f} className="rounded-md bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 text-xs font-medium text-emerald-800 dark:text-emerald-300">
                             {f.replace("_", " ")}
                           </span>
                         ))}

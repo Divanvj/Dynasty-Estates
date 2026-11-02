@@ -200,14 +200,14 @@ export default function ListingPhotoUploader({
               {/* eslint-disable-next-line @next/next/no-img-element -- Storage download URL, sized by the grid */}
               <img src={photo.url} alt={`Listing photo ${index + 1}`} className="h-full w-full object-cover" />
               {index === 0 ? (
-                <span className="absolute left-2 top-2 rounded-full bg-emerald-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow">
+                <span className="absolute left-2 top-2 rounded-full bg-emerald-600 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-white shadow">
                   Cover
                 </span>
               ) : (
                 <button
                   type="button"
                   onClick={() => makeCover(photo.id)}
-                  className="absolute left-2 top-2 rounded-full bg-black/55 px-2 py-0.5 text-[10px] font-semibold text-white opacity-100 backdrop-blur-sm transition-opacity hover:bg-black/75 sm:opacity-0 sm:group-hover:opacity-100 sm:focus:opacity-100"
+                  className="absolute left-2 top-2 rounded-full bg-black/55 px-2 py-0.5 text-xs font-semibold text-white opacity-100 backdrop-blur-sm transition-opacity hover:bg-black/75 sm:opacity-0 sm:group-hover:opacity-100 sm:focus:opacity-100"
                 >
                   Make cover
                 </button>
@@ -227,7 +227,7 @@ export default function ListingPhotoUploader({
               {/* eslint-disable-next-line @next/next/no-img-element -- local object URL preview */}
               <img src={item.previewUrl} alt="" className="h-full w-full object-cover opacity-40" />
               <span className="absolute inset-0 flex items-center justify-center">
-                <span className="rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-semibold text-slate-800 shadow dark:bg-[#0c1a1c]/90 dark:border dark:border-white/10 dark:text-white">
+                <span className="rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold text-slate-800 shadow dark:bg-[#0c1a1c]/90 dark:border dark:border-white/10 dark:text-white">
                   {item.stage === "checking" ? "Checking…" : "Uploading…"}
                 </span>
               </span>

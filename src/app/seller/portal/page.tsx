@@ -70,7 +70,7 @@ export default function SellerPortal() {
         <section className="mb-6 rounded-[32px] border border-white/45 bg-[linear-gradient(135deg,rgba(255,255,255,0.6),rgba(220,238,244,0.72))] dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-7">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400 font-bold">Seller portal</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400 font-bold">Seller portal</p>
               <h1 className="mt-2 text-3xl font-semibold tracking-[-0.06em] text-slate-900 md:text-5xl dark:text-white">
                 Sell smarter, faster, and with more confidence.
               </h1>
@@ -85,7 +85,7 @@ export default function SellerPortal() {
         <section className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {cards.map((card) => (
             <div key={card.label} className="rounded-[28px] border border-white/45 bg-white/40 p-5 shadow-[0_18px_35px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-              <p className="text-[10px] uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400 font-bold">{card.label}</p>
+              <p className="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400 font-bold">{card.label}</p>
               <p className="mt-4 text-3xl font-semibold text-slate-900 dark:text-white">{card.value}</p>
             </div>
           ))}
@@ -95,7 +95,7 @@ export default function SellerPortal() {
           <div className="rounded-[32px] border border-white/45 bg-white/40 p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-6 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
             <div className="mb-5 flex items-center justify-between">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400 font-bold">Portfolio</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400 font-bold">Portfolio</p>
                 <h2 className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white">Your listings</h2>
               </div>
               <Link href="/seller/listings/new" className="rounded-full border border-slate-300 bg-white/60 px-4 py-2 text-sm text-slate-700 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-200 dark:hover:bg-[#0c1a1c] dark:hover:text-white font-semibold transition-all">Manage</Link>
@@ -108,7 +108,7 @@ export default function SellerPortal() {
                     <p className="font-semibold text-slate-900 dark:text-white">{item.title}</p>
                     <p className="mt-1 text-sm text-slate-600 dark:text-slate-300 font-medium">{item.price}{item.views ? ` • ${item.views} views` : ""}</p>
                   </div>
-                  <span className="rounded-full border border-emerald-400/30 bg-emerald-500/10 px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/40 font-bold">
+                  <span className="rounded-full border border-emerald-400/30 bg-emerald-500/10 px-2.5 py-1 text-xs uppercase tracking-[0.14em] text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/40 font-bold">
                     {item.status}
                   </span>
                 </div>
@@ -119,7 +119,7 @@ export default function SellerPortal() {
           <div className="rounded-[32px] border border-white/45 bg-white/40 p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-6 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
             <div className="mb-5 flex items-center justify-between">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400 font-bold">Checklist</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400 font-bold">Checklist</p>
                 <h2 className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white">Next steps</h2>
               </div>
             </div>
