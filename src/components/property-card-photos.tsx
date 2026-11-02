@@ -167,7 +167,14 @@ export default function PropertyCardPhotos({ images, title, frameClassName = "" 
                   e.stopPropagation();
                   go(i);
                 }}
-                className="group/dot pointer-events-auto flex cursor-pointer items-center justify-center px-1.5 py-2.5"
+                /* Sized by hand rather than given `tap-44`. That helper grows a
+                   centred 44x44 ::after, and these dots sit about 18px apart, so
+                   every target would overlap both neighbours — the last one in
+                   the DOM would then swallow taps meant for the others, which is
+                   worse than a small target. Full 44px of height instead, where
+                   there is room, and a little more width. Swiping remains the
+                   primary gesture on touch; the dots are the fallback. */
+                className="group/dot pointer-events-auto flex min-h-[44px] cursor-pointer items-center justify-center px-2.5"
               >
                 <span
                   className={`block h-1.5 rounded-full transition-all ${

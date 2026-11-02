@@ -69,16 +69,13 @@ export default async function Home() {
             {/* Interactive Search Component */}
             <HomeHeroSearch />
 
-            <div className="relative z-10 mx-auto mt-6 sm:mt-8 grid grid-cols-2 max-w-4xl gap-2.5 sm:gap-3">
-              <Link href="/search?intent=rent" className="block rounded-[18px] sm:rounded-[22px] border border-white/70 bg-white/60 dark:border-white/10 dark:bg-[#060d0e]/60 p-3 sm:p-4 backdrop-blur-md hover:bg-white dark:hover:bg-[#0c1a1c] transition-all text-center sm:text-left">
-                <p className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">20 Active</p>
-                <p className="mt-1 text-xs uppercase tracking-[0.12em] sm:tracking-[0.14em] text-slate-500 dark:text-slate-400">Verified rentals & homes →</p>
-              </Link>
-              <Link href="/search?q=solar&intent=rent" className="block rounded-[18px] sm:rounded-[22px] border border-white/70 bg-white/60 dark:border-white/10 dark:bg-[#060d0e]/60 p-3 sm:p-4 backdrop-blur-md hover:bg-white dark:hover:bg-[#0c1a1c] transition-all text-center sm:text-left">
-                <p className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">100% Solar</p>
-                <p className="mt-1 text-xs uppercase tracking-[0.12em] sm:tracking-[0.14em] text-slate-500 dark:text-slate-400">Energy resilience →</p>
-              </Link>
-            </div>
+            {/*
+              Two hero tiles stood here: "20 Active" and "100% Solar". Both were
+              hardcoded — the first a fabricated count that would have read as
+              thin at launch and odd at scale, the second a claim the catalogue
+              does not substantiate. Counts belong on the results page, where
+              they describe a real query. Removed per the Improvement Notes.
+            */}
           </div>
         </section>
 
@@ -165,7 +162,9 @@ export default async function Home() {
         </section>
 
         {/* Global Obsidian Glass Footer */}
-        <footer className="mx-auto mt-12 max-w-[1440px] rounded-[32px] border border-white/70 bg-white/40 dark:border-white/10 dark:bg-[#091517]/75 p-8 shadow-sm backdrop-blur-xl">
+        {/* p-8 is 64px of horizontal padding on a phone, inside main's own
+            gutter. Halved below `md`; the footer's own height is Phase 4. */}
+        <footer className="mx-auto mt-12 max-w-[1440px] rounded-[32px] border border-white/70 bg-white/40 dark:border-white/10 dark:bg-[#091517]/75 p-8 max-md:p-5 shadow-sm backdrop-blur-xl">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 text-xs">
             <div>
               <div className="flex items-center gap-2 mb-3">

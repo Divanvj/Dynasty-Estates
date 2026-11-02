@@ -55,8 +55,21 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
     return p.type === activeFilter;
   });
 
+  /*
+    Full-bleed below `md`. This panel is a bordered, padded, blurred box whose
+    only contents are bordered, padded, blurred cards — a frame around frames.
+    On a 375px screen it cost 34px, and with `main`'s own gutter that left the
+    cards 317px of 375: about 15% of the display spent on nested chrome.
+
+    The panel still earns its keep on desktop, where it groups the feed against
+    a wide background. On a phone the viewport edge already does that job.
+
+    Note: this has to sit outside the `return (`. A braced JSX comment is an
+    expression container, valid only inside JSX — placed before the root element
+    it parses as an object literal, and the element after it then fails.
+  */
   return (
-    <section id="listings" className="mx-auto mt-8 max-w-[1440px] rounded-[32px] border border-white/45 bg-white/35 dark:border-white/10 dark:bg-[#0c1a1c]/65 p-4 shadow-[0_20px_45px_rgba(15,23,42,0.06)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl md:p-6">
+    <section id="listings" className="mx-auto mt-8 max-w-[1440px] rounded-[32px] border border-white/45 bg-white/35 dark:border-white/10 dark:bg-[#0c1a1c]/65 p-4 shadow-[0_20px_45px_rgba(15,23,42,0.06)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl md:p-6 max-md:rounded-none max-md:border-0 max-md:bg-transparent max-md:p-0 max-md:shadow-none max-md:backdrop-blur-none dark:max-md:bg-transparent">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between border-b border-slate-200/60 dark:border-white/10 pb-4">
         <div>
           <div className="flex items-center gap-3">

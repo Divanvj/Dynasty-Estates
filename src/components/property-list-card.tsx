@@ -44,8 +44,16 @@ export default function PropertyListCard({
           : "border-white/80 dark:border-white/10 hover:border-slate-300 dark:hover:border-emerald-500/30"
       }`}
     >
-      {/* Photo Column */}
-      <div className="relative h-60 md:h-auto md:w-5/12 lg:w-4/12 shrink-0 overflow-hidden bg-slate-200 dark:bg-[#060d0e]">
+      {/*
+        Photo Column.
+
+        Mobile sizing throughout this card is tuned so two cards fit a phone
+        screen. It measured 813px against an 812px viewport, so a visitor saw
+        exactly one property at a time and could not compare anything without
+        scrolling. Nothing is deleted — the detail page carries everything the
+        feed card drops below `md`.
+      */}
+      <div className="relative h-52 md:h-auto md:w-5/12 lg:w-4/12 shrink-0 overflow-hidden bg-slate-200 dark:bg-[#060d0e]">
         <PropertyCardPhotos
           images={property.gallery?.length ? property.gallery : [property.image]}
           title={property.title}
@@ -101,7 +109,7 @@ export default function PropertyListCard({
       </div>
 
       {/* Details & Specs Column */}
-      <div className="flex flex-1 flex-col justify-between p-5 sm:p-6">
+      <div className="flex flex-1 flex-col justify-between p-4 md:p-6">
         <div>
           {/* Header Row: Suburb & Category Badge */}
           <div className="flex flex-wrap items-center justify-between gap-2">
@@ -144,7 +152,10 @@ export default function PropertyListCard({
           </div>
 
           {/* Key Metrics Bar */}
-          <div className="mt-3.5 flex flex-wrap items-center gap-4 sm:gap-6 rounded-2xl border border-slate-200/70 dark:border-white/10 bg-white/50 dark:bg-[#060d0e]/60 px-4 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+          {/* The framing — border, fill, padding — is desktop only. On a phone
+              those four specs wrapped to two rows inside a bordered box, which
+              cost about 80px to say "3 beds, 2 baths". */}
+          <div className="mt-2.5 md:mt-3.5 flex flex-wrap items-center gap-3 md:gap-6 rounded-2xl border border-slate-200/70 dark:border-white/10 bg-white/50 dark:bg-[#060d0e]/60 px-4 py-2 max-md:rounded-none max-md:border-0 max-md:bg-transparent max-md:px-0 max-md:py-0 text-xs font-semibold text-slate-700 dark:text-slate-300">
             <span className="flex items-center gap-1.5">
               <BedIcon className="h-4 w-4 text-slate-400 dark:text-slate-400" />
               <span>{property.beds} {property.beds === 1 ? "Bed" : "Beds"}</span>
@@ -153,7 +164,9 @@ export default function PropertyListCard({
               <BathIcon className="h-4 w-4 text-slate-400 dark:text-slate-400" />
               <span>{property.baths} {property.baths === 1 ? "Bath" : "Baths"}</span>
             </span>
-            <span className="flex items-center gap-1.5">
+            {/* Beds, baths and size are what people scan a feed for; parking is
+                a detail-page fact. Dropping it keeps the specs on one row. */}
+            <span className="hidden md:flex items-center gap-1.5">
               <CarIcon className="h-4 w-4 text-slate-400 dark:text-slate-400" />
               <span>{property.parking} {property.parking === 1 ? "Garage" : "Garages"}</span>
             </span>
@@ -169,12 +182,17 @@ export default function PropertyListCard({
           </div>
 
           {/* Description Preview */}
-          <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-600 dark:text-slate-300 line-clamp-2">
+          {/* Desktop only. Two clamped lines of prose is roughly 40px that no
+              portal shows in a phone feed — the photograph, price and specs are
+              what a listing is scanned on. It is in full on the detail page. */}
+          <p className="mt-3 hidden md:block text-sm leading-relaxed text-slate-600 dark:text-slate-300 line-clamp-2">
             {property.description}
           </p>
 
           {/* Feature Chips */}
-          <div className="mt-3.5 flex flex-wrap items-center gap-1.5">
+          {/* Desktop only — an unbounded wrapping list, so a well-appointed
+              listing could add several rows of chips to every card in the feed. */}
+          <div className="mt-3.5 hidden md:flex flex-wrap items-center gap-1.5">
             {property.features?.map((f) => (
               <span
                 key={f}
@@ -186,8 +204,16 @@ export default function PropertyListCard({
           </div>
         </div>
 
-        {/* Footer Action Bar */}
-        <div className="mt-5 pt-3.5 border-t border-slate-200/70 dark:border-white/10 flex flex-wrap items-center justify-between gap-3">
+        {/*
+          Footer Action Bar — desktop only.
+
+          Its "View Property Experience" button is already `aria-hidden` and not
+          a link, because the whole card opens the listing. On a phone that made
+          it roughly 80px of card restating what tapping anywhere already does.
+          Compare moves to the detail page on mobile rather than riding in the
+          feed; flagged, because it is the one action that leaves the phone.
+        */}
+        <div className="mt-5 pt-3.5 hidden md:flex border-t border-slate-200/70 dark:border-white/10 flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             {/* z-30 for the same reason as Save: comparing is not opening. */}
             <Link
