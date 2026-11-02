@@ -2,22 +2,58 @@
 
 import Link from "next/link";
 import BrandLogo from "@/components/brand-logo";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import PropertySplitMapView from "@/components/property-split-map-view";
 import AccountActions from "@/components/account-actions";
 import { SparklesIcon } from "@/components/icons";
-import { fallbackProperties } from "@/lib/property-data";
+import { getPropertyList, type PropertyRecord } from "@/lib/property-data";
 
 export default function MapSearchPage() {
   const [activeType, setActiveType] = useState<string>("All");
+
+  /**
+   * The real catalogue. This page used to import `fallbackProperties` and map
+   * the demo listings instead — so every other surface showed Firestore data
+   * while the map showed twenty invented homes.
+   *
+   * It has to be fetched rather than awaited: this is a client component, so it
+   * cannot await at the top the way the home page's server component does.
+   */
+  const [properties, setProperties] = useState<PropertyRecord[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [loadFailed, setLoadFailed] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+      try {
+        const list = await getPropertyList();
+        if (!cancelled) setProperties(list);
+      } catch (error) {
+        // Deliberately not falling back to demo listings here. Quietly swapping
+        // in invented homes is how a broken catalogue goes unnoticed — the map
+        // looks fine and every pin is a lie. Say so instead.
+        console.error("Map search could not load the catalogue:", error);
+        if (!cancelled) setLoadFailed(true);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    void load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // Memoised because this array is handed to the map, which keys its own
   // `shown` memo off it. Rebuilt inline on every render, it invalidated that
   // memo each time and kept the map's area-filter effect re-running.
   const filteredProperties = useMemo(
-    () => fallbackProperties.filter((p) => activeType === "All" || p.type === activeType),
-    [activeType]
+    () => properties.filter((p) => activeType === "All" || p.type === activeType),
+    [properties, activeType]
   );
 
   return (
@@ -73,13 +109,33 @@ export default function MapSearchPage() {
           </div>
 
           <span className="rounded-full bg-emerald-100/90 dark:bg-emerald-500/20 px-3 py-1 text-xs font-bold text-emerald-800 dark:text-emerald-400 border border-transparent dark:border-emerald-500/30">
-            {filteredProperties.length} Properties Mapped
+            {loading ? "Loading…" : `${filteredProperties.length} Properties Mapped`}
           </span>
         </div>
 
         {/* Real Interactive Google Maps & Street View Console */}
         <div className="relative z-10">
-          <PropertySplitMapView properties={filteredProperties} />
+          {loading ? (
+            <div className="flex h-[420px] items-center justify-center rounded-[28px] border border-white/80 bg-white/60 backdrop-blur-xl sm:h-[500px] lg:h-[620px] dark:border-white/10 dark:bg-[#0c1a1c]/80">
+              <p className="animate-pulse text-xs font-semibold text-slate-500 dark:text-slate-400">
+                Loading the catalogue…
+              </p>
+            </div>
+          ) : loadFailed ? (
+            /* An empty map is indistinguishable from "no listings match", so a
+               failed catalogue has to say so rather than render a blank map. */
+            <div className="flex h-[420px] flex-col items-center justify-center gap-2 rounded-[28px] border border-white/80 bg-white/60 px-6 text-center backdrop-blur-xl sm:h-[500px] lg:h-[620px] dark:border-white/10 dark:bg-[#0c1a1c]/80">
+              <p className="text-sm font-bold text-slate-900 dark:text-white">
+                Listings could not be loaded
+              </p>
+              <p className="max-w-sm text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                The property catalogue did not respond, so the map has nothing to
+                plot. Try again shortly — this is not a filter you have applied.
+              </p>
+            </div>
+          ) : (
+            <PropertySplitMapView properties={filteredProperties} />
+          )}
         </div>
       </div>
     </main>

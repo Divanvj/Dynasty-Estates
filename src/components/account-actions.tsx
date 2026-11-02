@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   BriefcaseIcon,
   ChevronDownIcon,
@@ -35,6 +35,66 @@ export default function AccountActions() {
   const [supportSent, setSupportSent] = useState(false);
 
   const menuRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  /** Set when the menu is opened from the keyboard, so focus follows it in.
+   *  Opening with the mouse deliberately does not move focus. */
+  const focusFirstOnOpenRef = useRef(false);
+
+  /** Everything focusable in the panel: the links, the theme switch, Support,
+   *  and the sign in / out control at the foot. */
+  function panelItems() {
+    const panel = panelRef.current;
+    return panel
+      ? Array.from(panel.querySelectorAll<HTMLElement>("a[href], button:not([disabled])"))
+      : [];
+  }
+
+  function closeAndRestoreFocus() {
+    const trigger = triggerRef.current;
+    setIsOpen(false);
+    trigger?.focus();
+  }
+
+  function handleTriggerKeyDown(event: React.KeyboardEvent) {
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      focusFirstOnOpenRef.current = true;
+      setIsOpen(true);
+    } else if (event.key === "Escape" && isOpen) {
+      event.preventDefault();
+      closeAndRestoreFocus();
+    }
+  }
+
+  /** Roving focus inside the open panel. Tab still works and still leaves. */
+  function handlePanelKeyDown(event: React.KeyboardEvent) {
+    const items = panelItems();
+    if (items.length === 0) return;
+
+    const index = items.indexOf(document.activeElement as HTMLElement);
+    const focusAt = (next: number) => {
+      event.preventDefault();
+      items[(next + items.length) % items.length]?.focus();
+    };
+
+    if (event.key === "ArrowDown") focusAt(index + 1);
+    else if (event.key === "ArrowUp") focusAt(index - 1);
+    else if (event.key === "Home") focusAt(0);
+    else if (event.key === "End") focusAt(items.length - 1);
+    else if (event.key === "Escape") {
+      event.preventDefault();
+      closeAndRestoreFocus();
+    }
+  }
+
+  // Focus the first item when the panel was opened from the keyboard, before
+  // paint rather than as a visible jump.
+  useLayoutEffect(() => {
+    if (!isOpen || !focusFirstOnOpenRef.current) return;
+    focusFirstOnOpenRef.current = false;
+    panelItems()[0]?.focus();
+  }, [isOpen]);
 
   const user = firebaseUser || demoUser;
   const userDisplayName =
@@ -59,9 +119,20 @@ export default function AccountActions() {
       }
     }
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        setIsOpen(false);
+      if (event.key !== "Escape") return;
+      // The modal sits above the menu, so it gets the first Escape. Closing the
+      // menu instead would leave the dialog stranded over the page.
+      if (showSupportModal) {
         setShowSupportModal(false);
+        return;
+      }
+      if (isOpen) {
+        // Hand focus back to the control that opened the menu; it was being left
+        // wherever it happened to be, which drops a keyboard user at the top of
+        // the document.
+        const trigger = triggerRef.current;
+        setIsOpen(false);
+        trigger?.focus();
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -70,7 +141,7 @@ export default function AccountActions() {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [isOpen, showSupportModal]);
 
   async function handleSignOut() {
     setIsOpen(false);
@@ -101,12 +172,20 @@ export default function AccountActions() {
 
       {/* 1. Unified Profile Icon Button with Reveal Text Hover Animation */}
       <div className="relative" ref={menuRef}>
+        {/*
+          A disclosure, not a `role="menu"` — the same reasoning as the Sell and
+          Tools dropdowns in site-navigation.tsx. A menu role puts screen readers
+          into application mode, where these entries stop being announced as the
+          links they are.
+        */}
         <button
+          ref={triggerRef}
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
+          onKeyDown={handleTriggerKeyDown}
           className="group relative flex items-center gap-1.5 sm:gap-2 rounded-full border border-slate-300/80 bg-white/70 dark:border-white/10 dark:bg-[#060d0e]/80 p-1 sm:p-1.5 pr-2.5 sm:pr-3 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:bg-white dark:hover:bg-[#0c1a1c] hover:border-emerald-500/50 dark:hover:border-emerald-400/50 transition-all cursor-pointer shadow-xs"
           aria-expanded={isOpen}
-          aria-haspopup="true"
+          aria-controls="account-menu-panel"
           title="Account & Profile Menu"
         >
           {/* Avatar Icon */}
@@ -128,7 +207,12 @@ export default function AccountActions() {
 
         {/* 2. Consolidated Profile Dropdown Menu */}
         {isOpen && (
-          <div className="absolute right-0 top-full mt-2 w-76 sm:w-80 rounded-2xl border border-slate-200/90 dark:border-white/10 bg-white/95 dark:bg-[#071315]/95 p-3 shadow-2xl backdrop-blur-xl z-50 animate-in fade-in-0 zoom-in-95 duration-150">
+          <div
+            id="account-menu-panel"
+            ref={panelRef}
+            onKeyDown={handlePanelKeyDown}
+            className="absolute right-0 top-full mt-2 w-76 sm:w-80 rounded-2xl border border-slate-200/90 dark:border-white/10 bg-white/95 dark:bg-[#071315]/95 p-3 shadow-2xl backdrop-blur-xl z-50 animate-in fade-in-0 zoom-in-95 duration-150"
+          >
             {/* User Identity Header */}
             <div className="flex items-center gap-3 pb-3 border-b border-slate-200/80 dark:border-white/10">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 font-bold text-sm">

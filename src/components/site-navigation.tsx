@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   BriefcaseIcon,
   BuildingLibraryIcon,
@@ -16,10 +16,127 @@ import {
   UsersIcon,
 } from "@/components/icons";
 
+type DropdownName = "sell" | "tools";
+
+/** Grace period before a hover-opened dropdown closes, covering the gap between
+ *  a trigger and its panel. Long enough to cross, short enough not to linger. */
+const HOVER_CLOSE_MS = 180;
+
 export default function SiteNavigation() {
   const pathname = usePathname();
-  const [openDropdown, setOpenDropdown] = useState<"sell" | "tools" | null>(null);
+  const [openDropdown, setOpenDropdown] = useState<DropdownName | null>(null);
   const navRef = useRef<HTMLElement>(null);
+
+  const sellButtonRef = useRef<HTMLButtonElement>(null);
+  const toolsButtonRef = useRef<HTMLButtonElement>(null);
+  const sellPanelRef = useRef<HTMLDivElement>(null);
+  const toolsPanelRef = useRef<HTMLDivElement>(null);
+  /** Set when a dropdown is opened from the keyboard, so focus follows it in.
+   *  Opening with the mouse deliberately does not move focus. */
+  const focusFirstOnOpenRef = useRef(false);
+
+  function triggerFor(name: DropdownName) {
+    return name === "sell" ? sellButtonRef.current : toolsButtonRef.current;
+  }
+
+  function linksIn(name: DropdownName) {
+    const panel = name === "sell" ? sellPanelRef.current : toolsPanelRef.current;
+    return panel ? Array.from(panel.querySelectorAll<HTMLAnchorElement>("a[href]")) : [];
+  }
+
+  function closeAndRestoreFocus(name: DropdownName) {
+    const trigger = triggerFor(name);
+    setOpenDropdown(null);
+    trigger?.focus();
+  }
+
+  /** ArrowDown opens and steps in, matching what a disclosure is expected to do. */
+  function handleTriggerKeyDown(event: React.KeyboardEvent, name: DropdownName) {
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      focusFirstOnOpenRef.current = true;
+      setOpenDropdown(name);
+    } else if (event.key === "Escape" && openDropdown === name) {
+      event.preventDefault();
+      closeAndRestoreFocus(name);
+    }
+  }
+
+  /** Roving focus inside an open panel. Tab still works and still leaves. */
+  function handlePanelKeyDown(event: React.KeyboardEvent, name: DropdownName) {
+    const links = linksIn(name);
+    if (links.length === 0) return;
+
+    const index = links.indexOf(document.activeElement as HTMLAnchorElement);
+    const focusAt = (next: number) => {
+      event.preventDefault();
+      links[(next + links.length) % links.length]?.focus();
+    };
+
+    if (event.key === "ArrowDown") focusAt(index + 1);
+    else if (event.key === "ArrowUp") focusAt(index - 1);
+    else if (event.key === "Home") focusAt(0);
+    else if (event.key === "End") focusAt(links.length - 1);
+    else if (event.key === "Escape") {
+      event.preventDefault();
+      closeAndRestoreFocus(name);
+    }
+  }
+
+  /**
+   * Hover to open, with a grace period on the way out.
+   *
+   * The panel sits 8px below its trigger (`mt-2`), so the pointer leaves the
+   * trigger before it reaches the panel. Closing immediately would shut the menu
+   * in that gap and make it feel broken; the delay covers the crossing. Moving
+   * straight to the other dropdown cancels it, because that enter fires first.
+   */
+  const hoverCloseTimerRef = useRef<number | undefined>(undefined);
+  const hoverCapableRef = useRef(false);
+
+  useEffect(() => {
+    // Only where hovering is a real, separate state from pressing. On a
+    // touchscreen a "hover" arrives with the tap and would fight the click.
+    hoverCapableRef.current = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    return () => {
+      if (hoverCloseTimerRef.current !== undefined) {
+        window.clearTimeout(hoverCloseTimerRef.current);
+      }
+    };
+  }, []);
+
+  function cancelHoverClose() {
+    if (hoverCloseTimerRef.current !== undefined) {
+      window.clearTimeout(hoverCloseTimerRef.current);
+      hoverCloseTimerRef.current = undefined;
+    }
+  }
+
+  function handlePointerEnter(name: DropdownName) {
+    if (!hoverCapableRef.current) return;
+    cancelHoverClose();
+    // Deliberately does not move focus: a pointer user has not asked for it.
+    setOpenDropdown(name);
+  }
+
+  function handlePointerLeave() {
+    if (!hoverCapableRef.current) return;
+    cancelHoverClose();
+    hoverCloseTimerRef.current = window.setTimeout(() => {
+      hoverCloseTimerRef.current = undefined;
+      setOpenDropdown(null);
+    }, HOVER_CLOSE_MS);
+  }
+
+  // Focus the first link when the panel was opened from the keyboard. Done in a
+  // layout effect so it lands before paint rather than visibly jumping.
+  useLayoutEffect(() => {
+    if (!openDropdown || !focusFirstOnOpenRef.current) return;
+    focusFirstOnOpenRef.current = false;
+    // linksIn only reads refs, which are stable, so the open panel is the whole
+    // dependency.
+    linksIn(openDropdown)[0]?.focus();
+  }, [openDropdown]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -28,8 +145,13 @@ export default function SiteNavigation() {
       }
     }
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
+      // Escape from anywhere closes, and hands focus back to the control that
+      // opened the panel — previously focus was left wherever it happened to be,
+      // which drops a keyboard user at the top of the document.
+      if (event.key === "Escape" && openDropdown) {
+        const trigger = triggerFor(openDropdown);
         setOpenDropdown(null);
+        trigger?.focus();
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -38,7 +160,7 @@ export default function SiteNavigation() {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [openDropdown]);
 
   // Close dropdown on route change without cascading renders
   const [prevPathname, setPrevPathname] = useState(pathname);
@@ -51,8 +173,17 @@ export default function SiteNavigation() {
     setOpenDropdown((prev) => (prev === name ? null : name));
   };
 
-  const isBuyActive = pathname === "/for-sale" || (pathname === "/search" && typeof window !== "undefined" && window.location.search.includes("intent=buy"));
-  const isRentActive = pathname === "/to-rent" || (pathname === "/search" && typeof window !== "undefined" && window.location.search.includes("intent=rent"));
+  // These used to also check `window.location.search` for `intent=buy|rent` on
+  // /search — a read of browser state during render, so the server emitted false
+  // and the client sometimes true, which is a hydration mismatch.
+  //
+  // The branch was dead regardless: this component is rendered by seven pages —
+  // the home page and the six for-sale / to-rent routes — and /search is not one
+  // of them, so the condition could never be true. Dropping it also avoids
+  // pulling `useSearchParams` into all seven, which would opt them into
+  // client-side rendering for a highlight that pathname already decides.
+  const isBuyActive = pathname === "/for-sale";
+  const isRentActive = pathname === "/to-rent";
   const isHomeActive = pathname === "/";
   const isAiActive = pathname === "/ai-search";
 
@@ -99,17 +230,30 @@ export default function SiteNavigation() {
       </Link>
 
       {/* 4. Sell Dropdown */}
-      <div className="relative">
+      <div
+        className="relative"
+        onPointerEnter={() => handlePointerEnter("sell")}
+        onPointerLeave={handlePointerLeave}
+      >
+        {/*
+          A disclosure, not a `role="menu"`. The ARIA practices steer site
+          navigation away from menu semantics: a menu puts screen readers into
+          application mode, where these entries stop being announced as the links
+          they are. `aria-expanded` plus `aria-controls` is the right contract
+          here, and the links keep behaving like links.
+        */}
         <button
+          ref={sellButtonRef}
           type="button"
           onClick={() => toggleDropdown("sell")}
+          onKeyDown={(event) => handleTriggerKeyDown(event, "sell")}
           className={`flex items-center gap-1 px-2 py-1 rounded-full transition-colors cursor-pointer ${
             openDropdown === "sell" || pathname.startsWith("/seller")
               ? "text-emerald-900 dark:text-emerald-300 font-bold"
               : "hover:text-emerald-900 dark:hover:text-emerald-300"
           }`}
           aria-expanded={openDropdown === "sell"}
-          aria-haspopup="true"
+          aria-controls="nav-sell-panel"
         >
           <span>Sell</span>
           <ChevronDownIcon
@@ -120,7 +264,12 @@ export default function SiteNavigation() {
         </button>
 
         {openDropdown === "sell" && (
-          <div className="absolute left-0 top-full mt-2 w-64 rounded-2xl border border-slate-200/90 dark:border-white/10 bg-white/95 dark:bg-[#071315]/95 p-2 shadow-2xl backdrop-blur-xl z-50 animate-in fade-in-0 zoom-in-95 duration-150">
+          <div
+            id="nav-sell-panel"
+            ref={sellPanelRef}
+            onKeyDown={(event) => handlePanelKeyDown(event, "sell")}
+            className="absolute left-0 top-full mt-2 w-64 rounded-2xl border border-slate-200/90 dark:border-white/10 bg-white/95 dark:bg-[#071315]/95 p-2 shadow-2xl backdrop-blur-xl z-50 animate-in fade-in-0 zoom-in-95 duration-150"
+          >
             <Link
               href="/seller/portal"
               className="flex items-start gap-3 rounded-xl p-2.5 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group"
@@ -159,17 +308,23 @@ export default function SiteNavigation() {
       </div>
 
       {/* 5. Tools Dropdown */}
-      <div className="relative">
+      <div
+        className="relative"
+        onPointerEnter={() => handlePointerEnter("tools")}
+        onPointerLeave={handlePointerLeave}
+      >
         <button
+          ref={toolsButtonRef}
           type="button"
           onClick={() => toggleDropdown("tools")}
+          onKeyDown={(event) => handleTriggerKeyDown(event, "tools")}
           className={`flex items-center gap-1 px-2 py-1 rounded-full transition-colors cursor-pointer ${
             openDropdown === "tools" || pathname === "/calculators" || pathname === "/compare" || pathname === "/map-search"
               ? "text-emerald-900 dark:text-emerald-300 font-bold"
               : "hover:text-emerald-900 dark:hover:text-emerald-300"
           }`}
           aria-expanded={openDropdown === "tools"}
-          aria-haspopup="true"
+          aria-controls="nav-tools-panel"
         >
           <span>Tools</span>
           <ChevronDownIcon
@@ -180,7 +335,12 @@ export default function SiteNavigation() {
         </button>
 
         {openDropdown === "tools" && (
-          <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-72 rounded-2xl border border-slate-200/90 dark:border-white/10 bg-white/95 dark:bg-[#071315]/95 p-2 shadow-2xl backdrop-blur-xl z-50 animate-in fade-in-0 zoom-in-95 duration-150">
+          <div
+            id="nav-tools-panel"
+            ref={toolsPanelRef}
+            onKeyDown={(event) => handlePanelKeyDown(event, "tools")}
+            className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-72 rounded-2xl border border-slate-200/90 dark:border-white/10 bg-white/95 dark:bg-[#071315]/95 p-2 shadow-2xl backdrop-blur-xl z-50 animate-in fade-in-0 zoom-in-95 duration-150"
+          >
             <Link
               href="/compare"
               className="flex items-center gap-3 rounded-xl p-2 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group"
