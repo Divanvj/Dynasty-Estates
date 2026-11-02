@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
+import PropertyGridCard from "@/components/property-grid-card";
 import Link from "next/link";
-import Image from "next/image";
 
 import SiteNavigation from "@/components/site-navigation";
 import BrandLogo from "@/components/brand-logo";
 import AccountActions from "@/components/account-actions";
-import { BedIcon, BathIcon, CarIcon, LocationPinIcon } from "@/components/icons";
 import { getPropertyList } from "@/lib/property-data";
 import { getListingsByLocation, enrichedListingToPropertyRecord } from "@/lib/server/property-service";
 import { absoluteUrl, SITE_URL } from "@/lib/site-url";
@@ -177,76 +176,7 @@ export default async function ForSaleLocationPage({
         {properties.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {properties.map((prop) => (
-              <article
-                key={prop.id}
-                className="group relative flex flex-col overflow-hidden rounded-3xl border border-white/80 bg-white/70 shadow-md backdrop-blur-xl transition-all hover:-translate-y-1 hover:shadow-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]"
-              >
-                {/* Image Showcase */}
-                <div className="relative h-60 w-full overflow-hidden">
-                  <Image
-                    src={prop.image}
-                    alt={prop.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
-                  <div className="absolute top-3 left-3 flex items-center gap-1.5 z-10">
-                    <span className="rounded-full bg-black/60 px-3 py-1 text-xs font-bold text-white backdrop-blur-md">
-                      {prop.type}
-                    </span>
-                    {prop.onShow && (
-                      <span className="rounded-full bg-amber-500/90 text-white text-xs font-extrabold px-2.5 py-1 backdrop-blur-md">
-                        On Show Sunday
-                      </span>
-                    )}
-                  </div>
-                  <div className="absolute bottom-3 left-3 right-3 flex items-baseline justify-between text-white z-10">
-                    <p className="text-xl font-extrabold tracking-tight">{prop.price}</p>
-                    <span className="text-xs font-semibold text-slate-300">{prop.area}</span>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="flex flex-1 flex-col p-5">
-                  <h2 className="text-base font-bold text-slate-900 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-1 dark:text-white">
-                    {/* The card's one real link; `card-link` stretches it over
-                        the whole card. See globals.css. */}
-                    <Link className="card-link" href={`/property/${prop.slug}`}>
-                      {prop.title}
-                    </Link>
-                  </h2>
-                  <p className="mt-1 flex items-center gap-1 text-xs text-slate-500 line-clamp-1 dark:text-slate-400">
-                    <LocationPinIcon className="h-3.5 w-3.5 shrink-0 text-slate-400 dark:text-slate-400" />
-                    <span>{prop.location}</span>
-                  </p>
-
-                  <div className="mt-4 flex items-center justify-between border-t border-slate-100 dark:border-white/10 pt-3 text-xs font-semibold text-slate-600 dark:text-slate-300">
-                    <div className="flex items-center gap-1">
-                      <BedIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-400" />
-                      <span>{prop.beds} Beds</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <BathIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-400" />
-                      <span>{prop.baths} Baths</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <CarIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-400" />
-                      <span>{prop.parking} Garages</span>
-                    </div>
-                  </div>
-
-                  {/* A span, not a link: same destination as the title, so as
-                      a link it duplicated the tab stop. */}
-                  <span
-                    aria-hidden="true"
-                    className="mt-4 flex items-center justify-center gap-1.5 rounded-xl bg-slate-950 px-4 py-2.5 text-xs font-bold text-white shadow-sm group-hover:bg-slate-800 dark:bg-gradient-to-r dark:from-emerald-600 dark:to-emerald-700 dark:text-white dark:border dark:border-emerald-500/30 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] dark:group-hover:from-emerald-500 dark:group-hover:to-emerald-600 transition-all"
-                  >
-                    <span>View Property Details</span>
-                    <span>→</span>
-                  </span>
-                </div>
-              </article>
+              <PropertyGridCard key={prop.id} property={prop} headingLevel="h2" />
             ))}
           </div>
         ) : (
