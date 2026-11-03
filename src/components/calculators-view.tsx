@@ -298,14 +298,25 @@ export default function CalculatorsView({
           </Link>
         </header>
 
-        {/* Tab Switcher */}
-        <div className="mb-6 flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+        {/* Tab Switcher.
+
+            Wraps rather than scrolls, and the labels are shorter.
+
+            The five old labels measured 1,157px against a 1,024px container —
+            they did not fit at ANY width, not even on a wide desktop. With
+            `overflow-x-auto no-scrollbar` the overflow was silent: the last
+            tab, SARS Transfer Duty, was sliced down the middle at every screen
+            size with no scrollbar to say it could be reached. Shortening the
+            labels brings the row to ~700px, so it is a single uncut row from
+            768px up, and wrapping means the narrower screens stack it instead
+            of hiding it. */}
+        <div className="mb-6 flex flex-wrap gap-2">
           {[
-            { id: "true-cost", label: "True Cost™ Monthly", Icon: ChartBarIcon },
+            { id: "true-cost", label: "True Cost™", Icon: ChartBarIcon },
             { id: "affordability", label: "Bond Affordability", Icon: TagIcon },
-            { id: "conveyancing", label: "Conveyancing & Legal Fees", Icon: BuildingLibraryIcon },
-            { id: "amortization", label: "Extra Payment Savings", Icon: SparklesIcon },
-            { id: "transfer-duty", label: "SARS Transfer Duty Guide", Icon: BuildingLibraryIcon },
+            { id: "conveyancing", label: "Conveyancing", Icon: BuildingLibraryIcon },
+            { id: "amortization", label: "Extra Payments", Icon: SparklesIcon },
+            { id: "transfer-duty", label: "Transfer Duty", Icon: BuildingLibraryIcon },
           ].map((tab) => {
             const TabIcon = tab.Icon;
             return (

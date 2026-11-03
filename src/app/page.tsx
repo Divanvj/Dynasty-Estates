@@ -200,7 +200,7 @@ export default async function Home() {
                   </Link>
                 </li>
                 <li><Link href="/calculators" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Bond & True Cost™ Calculator</Link></li>
-                <li><Link href="/compare" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Side-by-Side Comparison</Link></li>
+                <li><Link href="/compare" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Compare</Link></li>
               </ul>
             </div>
 

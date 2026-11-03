@@ -350,7 +350,7 @@ export default function SiteNavigation() {
                 <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
                   Compare
                 </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">Side-by-side property matrix</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">See homes next to each other</p>
               </div>
             </Link>
 

@@ -121,8 +121,9 @@ export default async function ToRentNationalPage() {
                   <p className="font-bold text-sm text-slate-900 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors dark:text-white">
                     {prov.name}
                   </p>
-                  <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-bold text-slate-600 dark:bg-surface-ink/60 dark:text-slate-300">
-                    {prov.count} active
+                  {/* Matches /for-sale: "N active" is seller-portal jargon. */}
+                  <span className="badge border border-slate-200 bg-slate-100 text-slate-600 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300">
+                    {prov.count} {prov.count === 1 ? "listing" : "listings"}
                   </span>
                 </div>
                 <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">

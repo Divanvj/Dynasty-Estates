@@ -384,14 +384,14 @@ export default function CollectionsPage() {
                               }, 2000);
                             }
                           }}
-                          className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-slate-300 bg-white py-2 text-xs font-bold text-slate-700 hover:bg-slate-50 cursor-pointer dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10"
+                          className="pill flex-1 border border-slate-300 bg-white font-bold text-slate-700 hover:bg-slate-50 cursor-pointer dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10"
                         >
                           <CopyIcon className="h-3.5 w-3.5" />
                           <span>Copy Link</span>
                         </button>
                         <button
                           type="submit"
-                          className="flex-1 rounded-xl bg-slate-950 py-2 text-xs font-bold text-white shadow-md hover:bg-slate-800 cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+                          className="pill flex-1 bg-slate-950 font-bold text-white shadow-md hover:bg-slate-800 cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
                         >
                           Send Invite →
                         </button>

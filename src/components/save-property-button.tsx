@@ -114,10 +114,15 @@ export default function SavePropertyButton({ propertyId }: { propertyId: string 
         disabled={loading}
         title={saved ? "Remove from saved" : "Save property"}
         aria-label={saved ? "Saved property" : "Save property"}
-        // `tap-44` grows the touch area to the 44px floor below lg without
-        // changing the rendered size. On a card this is the primary action and
-        // it measured 32px tall, which is well under the floor.
-        className={`tap-44 relative flex items-center gap-1.5 rounded-full p-2 sm:px-3.5 sm:py-1.5 text-xs font-bold transition-all cursor-pointer ${
+        // `.pill` owns the geometry. Hand-rolled, this rendered 32px below sm
+        // and 38px above it, so in the listing header it sat 2px short of the
+        // Book a Viewing button beside it and 4px short of the back link, and
+        // on a card it was a third size again. One class, one height, every
+        // surface it appears on.
+        //
+        // `tap-44` stays: .pill is 40px, still under the 44px touch floor, and
+        // it grows the hit area without changing the rendered size.
+        className={`pill tap-44 relative font-bold transition-all cursor-pointer ${
           saved
             ? "border border-rose-400 bg-rose-50 text-rose-700 shadow-sm"
             : "border border-slate-300/80 bg-white/70 text-slate-700 hover:bg-white hover:border-slate-400"

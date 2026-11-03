@@ -86,7 +86,8 @@ export default function PropertyMediaTabs({
           </button>
         </div>
 
-        <div className="text-xs text-slate-500 font-medium dark:text-slate-400">
+        {/* An instruction about clicking is meaningless on paper. */}
+        <div className="no-print text-xs text-slate-500 font-medium dark:text-slate-400">
           {activeTab === "photos" && "Click any photo to open full-screen lightbox"}
           {activeTab === "floorplan" && `Architectural Under-Roof Layout · ${area} ${erfSize ? `(Erf ${erfSize})` : ""}`}
           {activeTab === "virtual-tour" && "Interactive 3D Walkthrough Experience"}
@@ -234,7 +235,7 @@ export default function PropertyMediaTabs({
                   <button
                     type="button"
                     onClick={() => setMapMode("map")}
-                    className="inline-flex items-center gap-1.5 rounded-full bg-emerald-950/95 text-emerald-200 border border-emerald-500/60 px-4 py-2 text-xs font-bold shadow-2xl backdrop-blur-xl hover:bg-emerald-900 transition-all cursor-pointer"
+                    className="pill gap-1.5 bg-emerald-950/95 text-emerald-200 border border-emerald-500/60 font-bold shadow-2xl backdrop-blur-xl hover:bg-emerald-900 transition-all cursor-pointer"
                   >
                     <span>←</span>
                     <span>Exit Street View & Return to Map</span>

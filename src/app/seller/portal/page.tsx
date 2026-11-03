@@ -7,14 +7,9 @@ import { useEffect, useState } from "react";
 import BrandLogo from "@/components/brand-logo";
 import RoleGuard from "@/components/role-guard";
 import { auth } from "@/lib/firebase";
+import { formatNumber } from "@/lib/formatters";
+import { ACTIVE_CATALOGUE_STATUSES } from "@/lib/types/domain";
 import { getSellerListings, type SellerListing } from "@/lib/seller-listings";
-
-const cards = [
-  { label: "Active listings", value: "12" },
-  { label: "Leads this week", value: "48" },
-  { label: "Avg. enquiry rate", value: "26%" },
-  { label: "Property views", value: "8.4k" },
-];
 
 const demoListings: SellerListing[] = [
   { id: "demo-houghton", title: "Houghton Family Villa", price: "R 9.8M", status: "Published", views: 1240, location: "Houghton, Johannesburg", type: "Villa", beds: 5, baths: 4 },
@@ -46,6 +41,30 @@ export default function SellerPortal() {
       }
     });
   }, []);
+
+  /**
+   * Derived from the seller's own listings, the way the agent dashboard does
+   * it.
+   *
+   * These four cards used to be the constants `12`, `48`, `26%` and `8.4k`,
+   * rendered above the seller's real listings. Someone with two homes on the
+   * platform was told they had twelve, and the number never moved when they
+   * published a third. "Leads this week" and "Avg. enquiry rate" had no source
+   * at all — there is no per-seller enquiry query in this app — so rather than
+   * keep inventing them they are gone, and the two facts the listings really
+   * do carry take their place.
+   */
+  const activeListings = listings.filter((listing) =>
+    (ACTIVE_CATALOGUE_STATUSES as readonly string[]).includes(listing.status),
+  ).length;
+  const draftListings = listings.filter((listing) => listing.status === "Draft").length;
+  const totalViews = listings.reduce((sum, listing) => sum + listing.views, 0);
+
+  const cards = [
+    { label: "Active listings", value: `${activeListings}` },
+    { label: "Drafts", value: `${draftListings}` },
+    { label: "Property views", value: formatNumber(totalViews) },
+  ];
 
   return (
     <RoleGuard
@@ -82,7 +101,7 @@ export default function SellerPortal() {
           </div>
         </section>
 
-        <section className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <section className="mb-6 grid gap-4 md:grid-cols-3">
           {cards.map((card) => (
             <div key={card.label} className="rounded-card border border-white/45 bg-white/40 p-5 shadow-[0_18px_35px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400 font-bold">{card.label}</p>

@@ -47,7 +47,7 @@ export default function AgentsPage() {
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5 gap-y-2 sm:gap-3">
             <Link
               href="/search"
-              className="flex items-center gap-1.5 rounded-full border border-slate-300/80 bg-white/60 px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 hover:bg-white transition-all whitespace-nowrap shrink-0 dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
+              className="pill border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
             >
               <ArrowLeftIcon className="h-3.5 w-3.5 sm:hidden" />
               <span className="hidden sm:inline">← Explore Properties</span>

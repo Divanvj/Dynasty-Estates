@@ -47,12 +47,19 @@ export default function OnShowBanner({ propertyTitle, location, onShow }: OnShow
           )}
         </div>
 
-        <div className="flex items-center gap-2 shrink-0">
+        {/* Links, not buttons, so the print rules do not catch them: a dead
+            "Directions" pill on paper is clutter, while the date, time and
+            showboard route beside it are what a reader actually needs. */}
+        <div className="no-print flex items-center gap-2 shrink-0">
           <a
             href={calendarUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 rounded-full bg-slate-900 px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-slate-800 transition-all cursor-pointer dark:bg-rose-600 dark:hover:bg-rose-500 dark:shadow-[0_0_16px_rgba(225,29,72,0.3)]"
+            // `.pill`, like Directions beside it. Hand-rolled, the primary of
+            // this pair rendered 32px at 12px type against the outlined
+            // control's 40px at 16px — the quiet one was taller and larger
+            // than the loud one.
+            className="pill gap-1.5 bg-slate-900 font-bold text-white shadow-sm hover:bg-slate-800 transition-all cursor-pointer dark:bg-rose-600 dark:hover:bg-rose-500 dark:shadow-[0_0_16px_rgba(225,29,72,0.3)]"
           >
             <CalendarIcon className="h-3.5 w-3.5 text-rose-300 dark:text-white" />
             <span>Add to Calendar</span>
@@ -61,7 +68,7 @@ export default function OnShowBanner({ propertyTitle, location, onShow }: OnShow
             href={mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 rounded-full border border-slate-300 bg-white/90 px-4 py-2 text-xs font-bold text-slate-800 shadow-2xs hover:bg-white transition-all cursor-pointer dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:text-white"
+            className="pill gap-1.5 border border-slate-300 bg-white/90 font-bold text-slate-800 shadow-2xs hover:bg-white transition-all cursor-pointer dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:text-white"
           >
             <span>Directions ↗</span>
           </a>

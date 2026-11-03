@@ -843,6 +843,49 @@ select option {
 }
 
 /* ==========================================================================
+   Badges
+   ========================================================================== */
+
+/* The non-interactive counterpart to .pill: the small chips that label a card
+   rather than do anything — property type, a listing tag, a status.
+
+   Same reasoning as the pills, and the same evidence. The property-type chip
+   alone was written six ways across six card layouts (px-2/px-2.5/px-3,
+   py-0.2/py-0.5/py-1, three text colours and a `py-0.2` that is not a Tailwind
+   step at all and therefore did nothing), so two cards in the same grid did not
+   agree on the size of the same label.
+
+   `justify-content: center` is the point of the fixed height: with vertical
+   padding alone a chip's text sits wherever the line-box leaves it, which is
+   what made these read as off-centre.
+
+   Geometry only, like .pill — colour and border stay at the call site, because
+   a type chip, an "On Show" chip and a "Verified" chip are the same shape in
+   different colours.
+
+   Deliberately NOT uppercase with letter-spacing. Tracking adds its space after
+   the LAST glyph too, so centred text inside the pill is pushed visibly left by
+   half the tracking — the chips that looked mis-centred were the ones that had
+   it. Sentence case also matches the data: the types are already written
+   "Estate Home", not "ESTATE HOME". */
+@layer components {
+  .badge {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    height: 1.5rem;
+    padding-inline: 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+  }
+}
+
+/* ==========================================================================
    Frosted emerald glass headline with cursor-tracked specular sweep
    ========================================================================== */
 
@@ -1333,4 +1376,104 @@ input[type="range"]::-moz-range-progress {
 :where(.dark) ::-webkit-scrollbar-thumb:hover,
 .dark ::-webkit-scrollbar-thumb:hover {
   background: rgba(16, 185, 129, 0.45);
+}
+
+/* ==========================================================================
+   Print
+   ==========================================================================
+
+   `window.print()` used to hand the printer the whole page: navigation bar,
+   Profile menu, Back link, the "+ Add to compare" rail and the Print button
+   itself, all over a dark glass background. None of that can be acted on
+   from paper.
+
+   Two utilities drive this. `.no-print` marks screen-only chrome, and
+   `.print-only` marks the document header that replaces it on paper, since
+   a printed sheet has no site navigation to tell you what it is.
+
+   The rules below are deliberately broad: the app ships a dark theme and
+   heavy backdrop-blur panels, and both print as muddy grey. Print forces one
+   predictable look - black text on white, hairline borders - rather than
+   trying to translate the screen design to paper. */
+
+.print-only {
+  display: none;
+}
+
+@media print {
+  @page {
+    margin: 14mm;
+  }
+
+  .print-only {
+    display: block;
+  }
+
+  .no-print,
+  /* The phone tab bar and the ambient-FX readout are fixed overlays; left in
+     they would stamp themselves onto every printed page. */
+  nav[aria-label="Primary"],
+  /* No button can be operated from paper, so the gallery arrows, the media
+     tabs, the deposit selector and the calculator steppers all come out.
+     `.print-keep` is the opt-out for the few buttons that exist only to frame
+     a photograph - the lightbox tiles draw theirs as a background image, so
+     hiding the button would lose the picture with it. Form inputs are left
+     alone on purpose: they print their current value, which is the figure the
+     calculator was run with. */
+  button:not(.print-keep) {
+    display: none !important;
+  }
+
+  /* Flatten the theme. `background-color` only, never `background-image`:
+     the comparison matrix draws its photographs as background images, and
+     clearing those would print the sheet without any pictures. */
+  *,
+  *::before,
+  *::after {
+    background-color: transparent !important;
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    animation: none !important;
+    transition: none !important;
+    /* Chrome drops background images from print unless asked; the photos in
+       the comparison matrix are exactly that. */
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    /* Undoes the bottom padding that reserves room for the phone tab bar. */
+    padding-bottom: 0 !important;
+  }
+
+  /* A horizontally scrolling container clips to the screen width, so the
+     right-hand comparison columns would simply be missing from the page. */
+  .overflow-x-auto,
+  .overflow-y-auto,
+  .overflow-hidden {
+    overflow: visible !important;
+  }
+
+  /* Keep rows whole and repeat the photograph header across page breaks. */
+  table {
+    page-break-inside: auto;
+  }
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+  thead {
+    display: table-header-group;
+  }
+
+  /* Links print as plain text; a bare URL after every one is noise. */
+  a[href]::after {
+    content: none !important;
+  }
 }

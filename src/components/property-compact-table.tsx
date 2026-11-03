@@ -83,7 +83,10 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
         <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200 font-semibold">
           <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
           <span>Investor & Power-User Comparison Table</span>
-          <span className="text-slate-400 dark:text-slate-500 font-normal">({properties.length} active listings)</span>
+          {/* The "(N active listings)" counter that sat here is gone. Both
+              surfaces that render this table — /search and the home feed —
+              already show the result count above it, so the number appeared
+              twice on one screen, in two different words. */}
         </div>
         <p className="hidden md:block text-xs text-slate-500 dark:text-slate-400">
           💡 Click column headers to sort by price, square meters, bedrooms, or yield/m².
@@ -288,17 +291,12 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
                         >
                           {prop.title}
                         </Link>
-                        <div className="flex items-center gap-1.5 mt-0.5">
-                          <span
-                            className={`rounded-md px-1.5 py-0.2 text-xs font-bold uppercase tracking-wider ${
-                              prop.listingType === "rent"
-                                ? "bg-amber-100 dark:bg-amber-950/50 text-amber-900 dark:text-amber-300 border border-amber-200 dark:border-amber-500/20"
-                                : "bg-emerald-100 dark:bg-emerald-950/50 text-emerald-900 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/20"
-                            }`}
-                          >
-                            {prop.listingType === "rent" ? "To Rent" : "For Sale"}
-                          </span>
-                          <span className="text-xs text-slate-500 dark:text-slate-400 font-normal">
+                        {/* The For Sale / To Rent chip is gone for the same
+                            reason as on the cards: the visitor chose one to
+                            reach this table. The type chip now matches the one
+                            the cards use rather than being bare text. */}
+                        <div className="flex items-center gap-1.5 mt-1">
+                          <span className="badge border border-slate-200 bg-slate-100 text-slate-700 dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-200">
                             {prop.type}
                           </span>
                         </div>

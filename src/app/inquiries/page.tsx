@@ -71,9 +71,21 @@ export default function InquiriesPage() {
     });
   }, []);
 
+  /**
+   * "tour" and "viewing" are the same request.
+   *
+   * `PropertyInquiryButton` branches only on `=== "message"`, so both literals
+   * render the identical dialog — but this filter used strict equality against
+   * a tab whose id is "tour", so every request sent from the listing card's
+   * "Schedule Private Viewing" was stored as "viewing" and never appeared
+   * under Viewing Appointments. New requests all write "viewing" now; this
+   * accepts both so the ones already in Firestore show up too. The agent
+   * dashboard has carried the same pair since it was written.
+   */
   const filteredInquiries = inquiries.filter((inq) => {
-    if (filterKind !== "all" && inq.kind !== filterKind) return false;
-    return true;
+    if (filterKind === "all") return true;
+    if (filterKind === "tour") return inq.kind === "tour" || inq.kind === "viewing";
+    return inq.kind === filterKind;
   });
 
   return (

@@ -184,9 +184,6 @@ export default function TrueCostCalculator({
               <span className="text-xs uppercase tracking-[0.24em] text-amber-800 font-bold dark:text-amber-400">
                 Dynasty True Cost™
               </span>
-              <span className="rounded-full bg-amber-100 text-amber-900 border border-amber-200 text-xs font-bold px-2 py-0.5 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-500/30">
-                Tenant Lease Model
-              </span>
             </div>
             <h2 className="mt-0.5 text-lg sm:text-xl font-bold text-slate-950 dark:text-white">
               Estimated Total Monthly Cost
@@ -387,7 +384,12 @@ export default function TrueCostCalculator({
                 href="/calculators"
                 className="no-print text-xs font-semibold text-amber-800 hover:text-amber-950 flex items-center gap-1 dark:text-amber-400 dark:hover:text-amber-300"
               >
-                <span>Full Financial Hub</span>
+                {/* "Calculators" is what the navigation, the account menu and
+                    the destination page itself call this. It was "Full
+                    Financial Hub" here, "Detailed Affordability Hub" in the
+                    modal below and "Calculators" everywhere else — three names
+                    for one page, two of them inside this file. */}
+                <span>All Calculators</span>
                 <ArrowRightIcon className="h-3 w-3" />
               </Link>
             </div>
@@ -519,7 +521,7 @@ export default function TrueCostCalculator({
                 <button
                   type="button"
                   onClick={() => setShowPreApprovalModal(false)}
-                  className="flex-1 rounded-2xl border border-slate-300 py-3 text-center text-xs font-bold text-slate-700 hover:bg-slate-50 cursor-pointer dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
+                  className="pill-lg flex-1 border border-slate-300 font-bold text-slate-700 hover:bg-slate-50 cursor-pointer dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
                 >
                   Close
                 </button>
@@ -529,7 +531,7 @@ export default function TrueCostCalculator({
                     setShowPreApprovalModal(false);
                     alert("Your tenant application request has been submitted to the listing practitioner.");
                   }}
-                  className="flex-1 rounded-2xl bg-slate-950 py-3 text-center text-xs font-bold text-white hover:bg-slate-800 cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500"
+                  className="pill-lg flex-1 bg-slate-950 font-bold text-white hover:bg-slate-800 cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500"
                 >
                   Apply to Lease
                 </button>
@@ -549,9 +551,6 @@ export default function TrueCostCalculator({
           <div className="flex items-center gap-1.5">
             <span className="text-xs uppercase tracking-[0.24em] text-emerald-800 font-bold dark:text-emerald-400">
               Dynasty True Cost™
-            </span>
-            <span className="rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-0.5 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border dark:border-emerald-500/30">
-              Live Model
             </span>
           </div>
           <h2 className="mt-0.5 text-lg sm:text-xl font-bold text-slate-950 dark:text-white">
@@ -959,7 +958,7 @@ export default function TrueCostCalculator({
               href="/calculators"
               className="no-print text-xs font-semibold text-emerald-700 hover:text-emerald-900 flex items-center gap-1 dark:text-emerald-400 dark:hover:text-emerald-300"
             >
-              <span>Full Financial Hub</span>
+              <span>All Calculators</span>
               <ArrowRightIcon className="h-3 w-3" />
             </Link>
           </div>
@@ -1095,9 +1094,9 @@ export default function TrueCostCalculator({
               <Link
                 href="/calculators"
                 onClick={() => setShowPreApprovalModal(false)}
-                className="flex-1 rounded-2xl border border-slate-300 py-3 text-center text-xs font-bold text-slate-700 hover:bg-slate-50 cursor-pointer dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
+                className="pill-lg flex-1 border border-slate-300 font-bold text-slate-700 hover:bg-slate-50 cursor-pointer dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
               >
-                Detailed Affordability Hub
+                All Calculators
               </Link>
               <button
                 type="button"
@@ -1105,7 +1104,7 @@ export default function TrueCostCalculator({
                   setShowPreApprovalModal(false);
                   alert("Your finance inquiry has been recorded. Our partner bond originator (Ooba / BetterBond) will assist you with multi-bank pre-qualification.");
                 }}
-                className="flex-1 rounded-2xl bg-slate-950 py-3 text-center text-xs font-bold text-white hover:bg-slate-800 cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500"
+                className="pill-lg flex-1 bg-slate-950 font-bold text-white hover:bg-slate-800 cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500"
               >
                 Request Pre-Approval
               </button>

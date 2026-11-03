@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 import { BathIcon, BedIcon, CarIcon, LocationPinIcon } from "@/components/icons";
 import type { PropertyRecord } from "@/lib/property-data";
@@ -9,12 +10,25 @@ type Props = {
   /**
    * The tile's title tag. The listing grids sit at different depths — a city
    * page's own <h1> is the city, so its tiles are <h2>; the national pages put
-   * a section heading above the grid, so theirs are <h3>. Hardcoding either
-   * one would break the outline on half the routes.
+   * a section heading above the grid, so theirs are <h3>; AI Search nests one
+   * level deeper again. Hardcoding any of them would break the outline on the
+   * other routes.
    */
-  headingLevel?: "h2" | "h3";
+  headingLevel?: "h2" | "h3" | "h4";
   /** Set on the first row so the grid's visible photographs are not lazy. */
   priority?: boolean;
+  /**
+   * A chip pinned to the top-right of the photograph. AI Search uses it for the
+   * match score; the plain browse grids pass nothing.
+   */
+  overlayBadge?: ReactNode;
+  /**
+   * Extra content inside the tile, between the specs row and the footer button.
+   * AI Search puts its "why this fits" reasoning here. Keeping it as a slot is
+   * what let that page drop its own hand-written tile, which had diverged from
+   * this one in photo height, badge shape, spec row and button wording.
+   */
+  children?: ReactNode;
 };
 
 /**
@@ -32,7 +46,13 @@ type Props = {
  * horizontal row the home feed and /search use — a different layout for a
  * different job, not another copy of this.
  */
-export default function PropertyGridCard({ property, headingLevel = "h3", priority = false }: Props) {
+export default function PropertyGridCard({
+  property,
+  headingLevel = "h3",
+  priority = false,
+  overlayBadge,
+  children,
+}: Props) {
   // Both derived rather than passed. The six copies set them by hand to match
   // the route they sat on, which meant a rental appearing in a sale grid would
   // have been labelled "View Property Details". The listing itself knows.
@@ -59,24 +79,23 @@ export default function PropertyGridCard({ property, headingLevel = "h3", priori
           className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
+        {/* No To Rent chip. Every route that renders this tile is already one
+            or the other — /to-rent and its province and city pages — so the
+            chip restated the page the visitor had chosen to be on. */}
         <div className="absolute top-3 left-3 flex items-center gap-1.5 z-10">
-          {isRental && (
-            <span className="rounded-full bg-emerald-600/90 px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-white backdrop-blur-md">
-              To Rent
-            </span>
-          )}
-          <span className="rounded-full bg-black/60 px-3 py-1 text-xs font-bold text-white backdrop-blur-md">
+          <span className="badge bg-black/60 text-white backdrop-blur-md">
             {property.type}
           </span>
           {/* Only the for-sale city page showed this before. It is driven by
               the listing's own data and appears only when a show day is set,
               so every grid can carry it. */}
           {property.onShow && (
-            <span className="rounded-full bg-amber-500/90 px-2.5 py-1 text-xs font-extrabold text-white backdrop-blur-md">
+            <span className="badge bg-amber-500/90 text-white backdrop-blur-md">
               On Show Sunday
             </span>
           )}
         </div>
+        {overlayBadge && <div className="absolute top-3 right-3 z-10">{overlayBadge}</div>}
         <div className="absolute bottom-3 left-3 right-3 flex items-baseline justify-between text-white z-10">
           <p className="text-xl font-extrabold tracking-tight">{property.price}</p>
           <span className="text-xs font-semibold text-slate-300">{property.area}</span>
@@ -113,6 +132,8 @@ export default function PropertyGridCard({ property, headingLevel = "h3", priori
             <span>{property.parking} Garages</span>
           </div>
         </div>
+
+        {children}
 
         {/* A span, not a link: it leads to the same listing as the title, so as
             a link it was a second tab stop and a second announcement for one

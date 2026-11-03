@@ -62,19 +62,16 @@ export default function PropertyListCard({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent md:bg-gradient-to-r md:from-black/40 md:via-transparent md:to-transparent" />
 
-        {/* Top Badges */}
+        {/* Top Badges.
+
+            No For Sale / To Rent chip here. Every surface that renders this
+            card — /search, the home feed, the split map — makes the visitor
+            choose buy or rent first, so the chip repeated their own choice on
+            every card in the list. The listing tag, which does say something
+            the card does not ("New Listing", "Price Reduced"), stays. */}
         <div className="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap z-10">
-          <span
-            className={`rounded-full border px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider backdrop-blur-md ${
-              property.listingType === "rent"
-                ? "border-amber-300/60 bg-amber-950/80 text-amber-200"
-                : "border-emerald-300/60 bg-emerald-950/80 text-emerald-200"
-            }`}
-          >
-            {property.listingType === "rent" ? "To Rent" : "For Sale"}
-          </span>
           {getDisplayTag(property) && (
-            <span className="rounded-full border border-white/30 bg-black/40 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-md dark:border-white/10">
+            <span className="badge border border-white/30 bg-black/50 text-white backdrop-blur-md dark:border-white/10">
               {getDisplayTag(property)}
             </span>
           )}
@@ -119,11 +116,11 @@ export default function PropertyListCard({
               <span>{property.location}</span>
             </p>
             <div className="flex items-center gap-1.5">
-              <span className="rounded-full bg-slate-100 dark:bg-surface-ink/80 dark:border dark:border-white/10 px-2.5 py-0.5 text-xs font-bold text-slate-700 dark:text-slate-200">
+              <span className="badge border border-slate-200 bg-slate-100 text-slate-700 dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-200">
                 {property.type}
               </span>
               {property.status === "verified" && (
-                <span className="rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-500/30 px-2 py-0.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                <span className="badge border border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-950/40 dark:text-emerald-300">
                   ✓ Verified
                 </span>
               )}

@@ -349,6 +349,31 @@ function SearchContent() {
     sortBy,
   ]);
 
+  /**
+   * Whether the visitor has actually narrowed the catalogue.
+   *
+   * Buy-vs-rent is deliberately NOT in here. It is always set — the page opens
+   * on one or the other — so counting it would mean the result count is always
+   * "applied", which is the state this flag exists to distinguish.
+   *
+   * The count badge is hidden until this is true. Before it, the number is just
+   * "how many listings exist", which says nothing to the visitor, and during
+   * the first load it rendered "0 Available" against an empty grid — the exact
+   * shape of "we have nothing for you" on a page that was still fetching.
+   */
+  const hasActiveFilters =
+    Boolean(query.trim()) ||
+    Boolean(province) ||
+    Boolean(city) ||
+    (selectedType !== "All" && selectedType !== "All types") ||
+    minBeds !== "Any" ||
+    minBaths !== "Any" ||
+    minParking !== "Any" ||
+    furnished !== "Any" ||
+    minPrice > 0 ||
+    maxPrice > 0 ||
+    urlFeatures.length > 0;
+
   // Extract initial location chips from query if any
   const locationChips = useMemo(() => {
     if (!query.trim()) return [];
@@ -426,11 +451,19 @@ function SearchContent() {
 
           {/* Results Count, View Switcher & Sort Dropdown */}
           <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
-            <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300 bg-emerald-100/90 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-500/30 px-3 py-1.5 rounded-full">
-              {filteredProperties.length} Available
-            </span>
+            {!loading && hasActiveFilters && (
+              <span className="badge border border-emerald-200 bg-emerald-100/90 text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-950/60 dark:text-emerald-300">
+                {filteredProperties.length} {filteredProperties.length === 1 ? "match" : "matches"}
+              </span>
+            )}
 
-            {/* View Mode Switcher Segmented Control */}
+            {/* View Mode Switcher Segmented Control.
+
+                The unselected states carry `border border-transparent` so all
+                four buttons are the same height. Only the selected one had a
+                border, and with `box-sizing: border-box` on a padding-derived
+                box that made it 34px against the others' 32px — so the control
+                shifted by 2px every time you switched view. */}
             <div className="inline-flex items-center rounded-2xl border border-slate-200/90 bg-white/80 dark:border-white/10 dark:bg-surface-ink/60 p-1 shadow-2xs backdrop-blur-md">
               <button
                 type="button"
@@ -438,7 +471,7 @@ function SearchContent() {
                 className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
                   viewMode === "grid"
                     ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
+                    : "border border-transparent text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
                 }`}
                 title="Grid View (3 Columns)"
               >
@@ -451,7 +484,7 @@ function SearchContent() {
                 className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
                   viewMode === "list"
                     ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
+                    : "border border-transparent text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
                 }`}
                 title="List View (Detailed Horizontal Cards)"
               >
@@ -464,7 +497,7 @@ function SearchContent() {
                 className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
                   viewMode === "map"
                     ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
+                    : "border border-transparent text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
                 }`}
                 title="Split Map View (Interactive Map + Listings)"
               >
@@ -477,7 +510,7 @@ function SearchContent() {
                 className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
                   viewMode === "compact"
                     ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
+                    : "border border-transparent text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
                 }`}
                 title="Compact Table View (Investor & Yield Matrix)"
               >
@@ -613,18 +646,19 @@ function SearchContent() {
                         title={property.title}
                         frameClassName="transition-transform duration-500 group-hover:scale-105"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                      {/* z-10, like the list card's. PropertyCardPhotos paints
+                          its frames at z-10, so everything meant to sit ON the
+                          photograph needs it too: without it this gradient, the
+                          tag and the price below were all rendered underneath
+                          the photo, and a grid card showed no price at all. */}
+                      <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
 
-                      <div className="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap">
-                        <span className={`rounded-full border px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider backdrop-blur-md ${
-                          property.listingType === "rent"
-                            ? "border-amber-300/60 bg-amber-950/80 text-amber-200"
-                            : "border-emerald-300/60 bg-emerald-950/80 text-emerald-200"
-                        }`}>
-                          {property.listingType === "rent" ? "To Rent" : "For Sale"}
-                        </span>
+                      {/* No For Sale / To Rent chip. The visitor picked one of
+                          the two to get here, so every card in the grid carried
+                          the same word back at them. */}
+                      <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 flex-wrap">
                         {getDisplayTag(property) && (
-                          <span className="rounded-full border border-white/30 bg-black/40 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-md dark:border-white/10">
+                          <span className="badge border border-white/30 bg-black/50 text-white backdrop-blur-md dark:border-white/10">
                             {getDisplayTag(property)}
                           </span>
                         )}
@@ -636,7 +670,7 @@ function SearchContent() {
                         <SavePropertyButton propertyId={property.id} />
                       </div>
 
-                      <div className="absolute bottom-3 left-3 text-white">
+                      <div className="absolute bottom-3 left-3 z-10 text-white">
                         <p className="text-2xl font-extrabold">{property.price}</p>
                         {property.listingType === "rent" && property.leaseTerm && (
                           <p className="text-xs text-amber-200 font-medium">
@@ -662,7 +696,7 @@ function SearchContent() {
                             <span>{property.location}</span>
                           </p>
                         </div>
-                        <span className="rounded-full bg-slate-100 dark:bg-surface-ink/80 dark:border dark:border-white/10 px-2.5 py-0.5 text-xs font-bold text-slate-700 dark:text-slate-300 shrink-0">
+                        <span className="badge border border-slate-200 bg-slate-100 text-slate-700 dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-200">
                           {property.type}
                         </span>
                       </div>

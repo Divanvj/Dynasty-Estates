@@ -32,11 +32,14 @@ export default function PropertyGalleryLightbox({
       {/* Thumbnail Gallery Grid */}
       <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
         {images.map((image, index) => (
+          // print-keep: this button is the photograph. Print hides buttons by
+          // default, and the picture is a background image on the div below,
+          // so without the opt-out the printed sheet loses the gallery grid.
           <button
             key={index}
             type="button"
             onClick={() => setActiveIndex(index)}
-            className="group relative h-44 overflow-hidden rounded-control border border-white/80 bg-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer dark:border-white/10"
+            className="print-keep group relative h-44 overflow-hidden rounded-control border border-white/80 bg-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer dark:border-white/10"
           >
             <div
               className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"

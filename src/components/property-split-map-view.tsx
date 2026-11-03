@@ -192,15 +192,9 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-                  {/* Badges */}
-                  <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5 z-10">
-                    <span
-                      className="rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider backdrop-blur-md bg-emerald-950/90 text-emerald-200 border border-emerald-500/50 dark:bg-emerald-600/90 dark:text-white dark:border-emerald-400/50 dark:shadow-[0_0_10px_rgba(16,185,129,0.3)]"
-                    >
-                      {property.listingType === "rent" ? "To Rent" : "For Sale"}
-                    </span>
-                  </div>
-
+                  {/* The For Sale / To Rent chip that sat here is gone: this
+                      feed is only reached from /search and /map-search, which
+                      both make the visitor choose buy or rent first. */}
                   <div className="absolute top-2.5 right-2.5 z-10" onClick={(e) => e.stopPropagation()}>
                     <SavePropertyButton propertyId={property.id} />
                   </div>
@@ -223,7 +217,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                         <LocationPinIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
                         <span>{property.suburb || property.location.split(",")[0]}</span>
                       </span>
-                      <span className="rounded-full bg-slate-100 dark:bg-surface-ink/80 dark:border dark:border-white/10 px-2.5 py-0.5 text-xs font-bold text-slate-700 dark:text-slate-300">
+                      <span className="badge border border-slate-200 bg-slate-100 text-slate-700 dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-200">
                         {property.type}
                       </span>
                     </div>

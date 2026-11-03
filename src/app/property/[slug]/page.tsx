@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import AddToCollectionButton from "@/components/add-to-collection-button";
 import OnShowBanner from "@/components/on-show-banner";
 import ExpandableText from "@/components/expandable-text";
 import PropertyHeroGallery from "@/components/property-hero-gallery";
 import PropertyInquiryButton from "@/components/property-inquiry-button";
 import PropertyMediaTabs from "@/components/property-media-tabs";
+import PrintButton from "@/components/print-button";
 import PropertyShareButton from "@/components/property-share-button";
 import RecordPropertyView from "@/components/record-property-view";
 import SavePropertyButton from "@/components/save-property-button";
@@ -132,52 +134,81 @@ export default async function PropertyPage({
       <RecordPropertyView propertyId={property.id} />
       <div className="mx-auto max-w-[1400px]">
         {/* Navigation Header */}
-        <header className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/40 px-3.5 py-2.5 backdrop-blur-xl shadow-[0_12px_30px_rgba(36,48,50,0.06)] md:px-6 md:py-3 dark:bg-[#0b1719]/70 dark:border-white/10 dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
+        <header className="no-print relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/40 px-3.5 py-2.5 backdrop-blur-xl shadow-[0_12px_30px_rgba(36,48,50,0.06)] md:px-6 md:py-3 dark:bg-[#0b1719]/70 dark:border-white/10 dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
           <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink-0">
             <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-2xl bg-slate-950 text-sm font-semibold text-white shadow-md">
               D
             </div>
-            <div>
+            {/* Mark only on phones, which is what every other interior page
+                does via `BrandLogo markOnly`. The wordmark is 88px of the 336
+                available at 390px, and with it there the five action pills
+                beside it wrapped to a second row; without it they sit on one. */}
+            <div className="hidden sm:block">
               <p className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Dynasty</p>
               <p className="text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-300">Estates</p>
             </div>
           </Link>
 
-          <div className="flex items-center gap-1.5 sm:gap-2.5">
-            {/* Desktop Back button */}
-            <Link
-              href="/search"
-              className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-slate-300/80 bg-white/60 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-white transition-all dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
-            >
-              <ArrowLeftIcon className="h-3.5 w-3.5" />
-              <span>Search Catalogue</span>
-            </Link>
+          {/*
+            One tier, one job: everything here is something the visitor does
+            with this listing for themselves — go back, print it, share it,
+            keep it. All five are `.pill`, so the row holds a single height and
+            a single type size, and none of them is filled.
 
-            {/* Mobile Back button */}
+            It used to run 34 / 30 / 30 / 30 / 32px across two type sizes, and
+            the tallest, widest control in it was the back link while the only
+            solid fill — Book a Viewing — was shorter than the link beside it.
+
+            `flex-wrap` with `gap-y-2`: the row was `nowrap`, so at the widths
+            where five labelled pills do not fit it had nowhere to go. Wrapping
+            is what the /ai-search and /map-search headers already do.
+          */}
+          <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5 gap-y-2 sm:gap-2.5">
+            {/* One back link, not two. There were separate desktop and mobile
+                copies differing only in whether the label showed — which is
+                what `hidden sm:inline` on the label does, with one control. */}
             <Link
               href="/search"
-              className="sm:hidden flex items-center justify-center h-8 w-8 rounded-full border border-slate-300/80 bg-white/60 text-slate-700 hover:bg-white transition-all dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
               aria-label="Back to search catalogue"
+              className="pill border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
             >
               <ArrowLeftIcon className="h-4 w-4" />
+              <span className="hidden sm:inline">Search Catalogue</span>
             </Link>
 
+            <PrintButton label="Print" title="Print this listing or save it as a PDF" />
             <PropertyShareButton title={property.title} />
             <SavePropertyButton propertyId={property.id} />
+            {/* Moved up from the practitioner card, where it was the only
+                control that did not contact the practitioner. It belongs with
+                Save and Share — the other "keep this for me" actions. */}
+            <AddToCollectionButton propertyId={property.id} propertyTitle={property.title} />
 
-            {/* Desktop Booking CTA */}
-            <div className="hidden md:block">
-              <PropertyInquiryButton
-                propertyId={property.id}
-                propertyTitle={property.title}
-                kind="tour"
-                className="rounded-full bg-slate-950 px-4 py-2 text-xs font-semibold text-white shadow-md hover:bg-slate-800 cursor-pointer transition-all dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
-              >
-                Book a Viewing
-              </PropertyInquiryButton>
-            </div>
+            {/* No Book a Viewing here. It opened the identical dialog to
+                Schedule Private Viewing in the card below, which renders at
+                every width, so on desktop the page offered one action twice
+                under two names — and stored them under two different `kind`
+                values, which is why /inquiries could not show half of them. */}
           </div>
         </header>
+
+        {/* Stands in for the navigation bar on paper, which `.no-print` has
+            removed by then. Rendered on the server, so unlike the comparison
+            sheet there is no hydration mismatch to design around. */}
+        <div className="print-only mb-5 border-b border-slate-300 pb-3">
+          <p className="text-xs uppercase tracking-[0.2em] text-slate-500">
+            Dynasty Estates · {property.listingType === "rent" ? "To Rent" : "For Sale"}
+          </p>
+          <h2 className="text-lg font-bold">{property.title}</h2>
+          <p className="text-xs text-slate-500">
+            {property.location} · {property.price} · Printed{" "}
+            {new Date().toLocaleDateString("en-ZA", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })}
+          </p>
+        </div>
 
         {/* Photographs lead. The on-show and off-plan banners used to sit above
             the hero and pushed it below the fold; they are supporting context
@@ -260,14 +291,14 @@ export default async function PropertyPage({
                 {property.province && property.city && (
                   <Link
                     href={`/${property.listingType === "rent" ? "to-rent" : "for-sale"}/${property.province.toLowerCase().replace(/\s+/g, "-")}/${property.city.toLowerCase().replace(/\s+/g, "-")}`}
-                    className="rounded-xl bg-slate-950 px-4 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 transition-colors"
+                    className="pill bg-slate-950 font-bold text-white shadow-xs hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 transition-colors"
                   >
                     View Active {property.city} Listings →
                   </Link>
                 )}
                 <Link
                   href="/search"
-                  className="rounded-xl border border-slate-300/80 bg-white/80 px-4 py-2.5 text-xs font-bold text-slate-800 shadow-xs hover:bg-white dark:bg-surface-panel dark:border-white/10 dark:text-slate-200 transition-colors"
+                  className="pill border border-slate-300/80 bg-white/80 font-bold text-slate-800 shadow-xs hover:bg-white dark:bg-surface-panel dark:border-white/10 dark:text-slate-200 transition-colors"
                 >
                   Catalogue Search →
                 </Link>
@@ -505,19 +536,19 @@ export default async function PropertyPage({
                   buttons is what the sticky bar's own note warned about when
                   the duplicate tenant-application button was taken out of it. */}
               {contact && (
-                <div className="mt-3 hidden md:grid grid-cols-2 gap-2.5">
+                <div className="no-print mt-3 hidden md:grid grid-cols-2 gap-2.5">
                   <a
                     href={contact.whatsappHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-[#25D366] px-4 text-xs font-bold text-white shadow-sm transition-all hover:brightness-95"
+                    className="pill-lg w-full bg-[#25D366] font-bold text-white shadow-sm transition-all hover:brightness-95"
                   >
                     <WhatsAppIcon className="h-4 w-4" />
                     WhatsApp
                   </a>
                   <a
                     href={contact.telHref}
-                    className="flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-slate-300 bg-white/80 px-4 text-xs font-bold text-slate-800 transition-all hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
+                    className="pill-lg w-full border border-slate-300 bg-white/80 font-bold text-slate-800 transition-all hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
                   >
                     <PhoneIcon className="h-4 w-4" />
                     Call
@@ -525,7 +556,26 @@ export default async function PropertyPage({
                 </div>
               )}
 
-              <div className="mt-4 md:mt-6 flex flex-col gap-3">
+              {/*
+                Every control in this card now contacts the practitioner, and
+                every one of them is `pill-lg` — 44px, which is also the touch
+                floor. Stacked full-width, the old 44 / 40 / 42px drift showed
+                as mismatched edges down the card; the 40 and the 42 differed
+                only because the outlined one's border was added to a
+                padding-derived box, which is the trap globals.css documents.
+
+                Exactly one filled control: Schedule Private Viewing. On a
+                rental there were two — emerald Apply for Tenancy and dark
+                Schedule — competing for the same glance, so Apply is now
+                outlined and the viewing CTA carries the fill on every listing.
+
+                Compare Homes and Add to Collection have gone from here. They
+                were the only two controls in a practitioner card that did not
+                reach the practitioner. Add to Collection is in the header with
+                Save and Share, and now actually adds; Compare is reached from
+                a collection or from Saved, where there is something to compare.
+              */}
+              <div className="no-print mt-4 md:mt-6 flex flex-col gap-3">
                 {property.listingType === "rent" ? (
                   <TenantApplicationButton
                     propertyId={property.id}
@@ -539,7 +589,7 @@ export default async function PropertyPage({
                   propertyId={property.id}
                   propertyTitle={property.title}
                   kind="viewing"
-                  className="rounded-full bg-slate-950 px-4 py-3 text-xs font-bold text-white shadow-md hover:bg-slate-800 transition-all cursor-pointer text-center dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
+                  className="pill-lg w-full bg-slate-950 font-bold text-white shadow-md hover:bg-slate-800 transition-all cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
                 >
                   Schedule Private Viewing
                 </PropertyInquiryButton>
@@ -547,19 +597,10 @@ export default async function PropertyPage({
                   propertyId={property.id}
                   propertyTitle={property.title}
                   kind="message"
-                  className="rounded-full border border-slate-300 bg-white/80 px-4 py-3 text-xs font-bold text-slate-800 hover:bg-white transition-all cursor-pointer text-center dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
+                  className="pill-lg w-full border border-slate-300 bg-white/80 font-bold text-slate-800 hover:bg-white transition-all cursor-pointer dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
                 >
                   Message Practitioner
                 </PropertyInquiryButton>
-              </div>
-
-              <div className="mt-4 md:mt-6 border-t border-slate-200/60 dark:border-white/10 pt-4 flex justify-between text-xs font-semibold text-slate-600 dark:text-slate-300">
-                <Link href="/compare" className="hover:text-slate-950 underline dark:text-white dark:hover:text-emerald-400">
-                  Compare with other homes →
-                </Link>
-                <Link href="/collections" className="hover:text-slate-950 underline dark:text-white dark:hover:text-emerald-400">
-                  Add to Collection →
-                </Link>
               </div>
             </div>
           </aside>
@@ -572,7 +613,7 @@ export default async function PropertyPage({
           CTA — the primary conversion action on this page — were hidden on every
           phone. The offset comes from --dyn-mobile-nav-h so the two stay in
           step. Unchanged at md and above, where this bar is hidden anyway. */}
-      <div className="fixed bottom-[calc(var(--dyn-mobile-nav-h)+env(safe-area-inset-bottom))] inset-x-0 z-40 p-3 bg-white/95 border-t border-slate-200/80 backdrop-blur-xl md:hidden flex items-center justify-between shadow-[0_-8px_24px_rgba(15,23,42,0.12)] dark:bg-[#081012]/95 dark:border-white/10">
+      <div className="no-print fixed bottom-[calc(var(--dyn-mobile-nav-h)+env(safe-area-inset-bottom))] inset-x-0 z-40 p-3 bg-white/95 border-t border-slate-200/80 backdrop-blur-xl md:hidden flex items-center justify-between shadow-[0_-8px_24px_rgba(15,23,42,0.12)] dark:bg-[#081012]/95 dark:border-white/10">
         <div>
           <span className="text-xs uppercase tracking-wider text-slate-500 font-bold block dark:text-slate-400">
             {property.listingType === "rent" ? "Monthly Rental" : "Asking Price"}
@@ -605,11 +646,16 @@ export default async function PropertyPage({
               </a>
             </>
           )}
+          {/* `kind="viewing"`, matching the card's button. This was "tour",
+              which is the same dialog under a different stored value — and
+              /inquiries filters its "Viewing Appointments" tab on one literal,
+              so half the viewing requests landed where nothing looked for
+              them. One action, one value. */}
           <PropertyInquiryButton
             propertyId={property.id}
             propertyTitle={property.title}
-            kind="tour"
-            className="flex min-h-[44px] items-center gap-1.5 rounded-full bg-slate-950 px-4 py-2.5 text-xs font-bold text-white shadow-lg cursor-pointer hover:bg-slate-800 transition-all dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+            kind="viewing"
+            className="pill-lg bg-slate-950 font-bold text-white shadow-lg cursor-pointer hover:bg-slate-800 transition-all dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
           >
             <CalendarIcon className="h-4 w-4 text-emerald-400" />
             <span>Viewing</span>

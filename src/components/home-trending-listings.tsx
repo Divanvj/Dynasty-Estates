@@ -17,7 +17,7 @@ import {
   MapSplitIcon,
   TableIcon,
 } from "@/components/icons";
-import { type PropertyRecord } from "@/lib/property-data";
+import { getDisplayTag, type PropertyRecord } from "@/lib/property-data";
 
 export type ViewMode = "grid" | "list" | "map" | "compact";
 
@@ -206,12 +206,19 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
                     <div className="absolute right-3 top-3">
                       <SavePropertyButton propertyId={card.id} />
                     </div>
+                    {/* The chip used to read "To Rent" or "For Sale", which is
+                        the toggle directly above this grid read back to the
+                        visitor. getDisplayTag keeps whatever the listing
+                        actually has to say ("New Listing", "Price Reduced") and
+                        drops the tag when it is only the transaction again. */}
                     <div className="absolute left-3 top-3 flex items-center gap-1.5">
-                      <span className="rounded-full px-2.5 py-1 text-xs font-bold backdrop-blur-sm border border-emerald-500/40 bg-emerald-950/80 text-emerald-200">
-                        {card.listingType === "rent" ? "To Rent" : card.tag || "For Sale"}
-                      </span>
+                      {getDisplayTag(card) && (
+                        <span className="badge border border-white/30 bg-black/50 text-white backdrop-blur-sm dark:border-white/10">
+                          {getDisplayTag(card)}
+                        </span>
+                      )}
                       {card.furnishedStatus && (
-                        <span className="rounded-full border border-white/30 bg-black/30 px-2 py-0.5 text-xs font-medium text-white/90 backdrop-blur-sm dark:border-white/10">
+                        <span className="badge border border-white/30 bg-black/50 font-medium text-white/90 backdrop-blur-sm dark:border-white/10">
                           {card.furnishedStatus}
                         </span>
                       )}
@@ -235,7 +242,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
                           <span>{card.location}</span>
                         </p>
                       </div>
-                      <span className="rounded-full bg-slate-100 dark:bg-surface-ink/80 dark:border dark:border-white/10 px-2 py-0.5 text-xs font-bold text-slate-600 dark:text-slate-300">
+                      <span className="badge border border-slate-200 bg-slate-100 text-slate-700 dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-200">
                         {card.type}
                       </span>
                     </div>

@@ -37,7 +37,9 @@ export default function PropertyShareButton({ title }: { title: string }) {
         onClick={() => void handleShare()}
         title="Share property"
         aria-label="Share property"
-        className="flex items-center gap-1.5 rounded-full border border-slate-300/80 dark:border-white/10 bg-white/60 dark:bg-surface-ink/60 p-2 sm:px-3.5 sm:py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-surface-panel hover:border-slate-400 dark:hover:border-emerald-500/40 dark:hover:text-emerald-300 transition-all cursor-pointer"
+        // `.pill` for the same reason as PrintButton beside it: geometry comes
+        // from the class so the header row holds one height and one type size.
+        className="pill border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white hover:border-slate-400 transition-all cursor-pointer dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-emerald-300"
       >
         <ShareIcon className="h-4 w-4 text-slate-700 dark:text-slate-300" />
         <span className="hidden sm:inline">Share</span>

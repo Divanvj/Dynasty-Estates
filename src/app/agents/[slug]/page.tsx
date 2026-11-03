@@ -4,7 +4,8 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import BrandLogo from "@/components/brand-logo";
-import { BedIcon, BathIcon, CarIcon, LocationPinIcon, ShieldCheckIcon, PhoneIcon, WhatsAppIcon } from "@/components/icons";
+import PropertyGridCard from "@/components/property-grid-card";
+import { ShieldCheckIcon, PhoneIcon, WhatsAppIcon } from "@/components/icons";
 import { getAgentByIdOrSlug, verifiedPractitioners } from "@/lib/agents-data";
 import { getPropertyList } from "@/lib/property-data";
 import { absoluteUrl } from "@/lib/site-url";
@@ -230,71 +231,14 @@ export default async function AgentProfilePage({
           </div>
 
           {agentProperties.length > 0 ? (
+            /* The shared browse tile. This page carried a seventh hand-written
+               copy of it — the same markup at a different photo height, with a
+               button that said "View Mandate Details" where every other grid in
+               the product says "View Property Details", and without the On Show
+               chip the listing data already supports. */
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {agentProperties.map((prop) => (
-                <article
-                  key={prop.id}
-                  className="group relative flex flex-col overflow-hidden rounded-3xl border border-white/80 bg-white/70 shadow-md backdrop-blur-xl transition-all hover:-translate-y-1 hover:shadow-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]"
-                >
-                  <div className="relative h-56 w-full overflow-hidden">
-                    <Image
-                      src={prop.image}
-                      alt={prop.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
-                    <div className="absolute top-3 left-3 flex items-center gap-1.5 z-10">
-                      <span className="rounded-full bg-black/60 px-3 py-1 text-xs font-bold text-white backdrop-blur-md">
-                        {prop.type}
-                      </span>
-                    </div>
-                    <div className="absolute bottom-3 left-3 right-3 flex items-baseline justify-between text-white z-10">
-                      <p className="text-xl font-extrabold tracking-tight">{prop.price}</p>
-                      <span className="text-xs font-semibold text-slate-300">{prop.area}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-1 flex-col p-5">
-                    {/* The card's one real link; `card-link` stretches it over
-                        the whole card. See globals.css. */}
-                    <h3 className="text-base font-bold text-slate-900 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-1 dark:text-white">
-                      <Link className="card-link" href={`/property/${prop.slug}`}>
-                        {prop.title}
-                      </Link>
-                    </h3>
-                    <p className="mt-1 flex items-center gap-1 text-xs text-slate-500 line-clamp-1 dark:text-slate-400">
-                      <LocationPinIcon className="h-3.5 w-3.5 shrink-0 text-slate-400" />
-                      <span>{prop.location}</span>
-                    </p>
-
-                    <div className="mt-4 flex items-center justify-between border-t border-slate-100 dark:border-white/10 pt-3 text-xs font-semibold text-slate-600 dark:text-slate-300">
-                      <div className="flex items-center gap-1">
-                        <BedIcon className="h-3.5 w-3.5 text-slate-400" />
-                        <span>{prop.beds} Beds</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <BathIcon className="h-3.5 w-3.5 text-slate-400" />
-                        <span>{prop.baths} Baths</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <CarIcon className="h-3.5 w-3.5 text-slate-400" />
-                        <span>{prop.parking} Garages</span>
-                      </div>
-                    </div>
-
-                    {/* A span, not a link: same destination as the title, so
-                        as a link it duplicated the tab stop. */}
-                    <span
-                      aria-hidden="true"
-                      className="mt-4 flex items-center justify-center gap-1.5 rounded-xl bg-slate-950 px-4 py-2.5 text-xs font-bold text-white shadow-xs group-hover:bg-slate-800 dark:bg-emerald-600 dark:group-hover:bg-emerald-500 transition-colors"
-                    >
-                      <span>View Mandate Details</span>
-                      <span>→</span>
-                    </span>
-                  </div>
-                </article>
+                <PropertyGridCard key={prop.id} property={prop} headingLevel="h3" />
               ))}
             </div>
           ) : (

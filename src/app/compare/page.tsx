@@ -37,13 +37,13 @@ export default function ComparePage() {
             context, so without an explicit z-index it sits at `auto` and the
             blurred comparison table below — also `auto`, but later in the DOM —
             painted over the Profile dropdown. See src/app/page.tsx. */}
-        <header className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl sm:px-5 dark:bg-surface-panel/70 dark:border-white/10 dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
+        <header className="no-print relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl sm:px-5 dark:bg-surface-panel/70 dark:border-white/10 dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
           <div className="flex items-center gap-2.5 sm:gap-3">
             <BrandLogo markOnly />
             <div>
               <p className="hidden text-xs uppercase tracking-[0.2em] text-slate-500 sm:block sm:text-xs dark:text-slate-400">Buyer Decision Support</p>
               <h1 className="text-xs font-semibold tracking-wide text-slate-900 sm:text-sm dark:text-white">
-                <span className="hidden sm:inline">Side-by-Side </span>Comparison
+                Compare
               </h1>
             </div>
           </div>
@@ -69,9 +69,29 @@ export default function ComparePage() {
           </div>
         </header>
 
+        {/* Replaces the navigation bar on paper, where there is nothing to say
+            what the sheet is or when it was run. Screen-hidden by .print-only. */}
+        <div className="print-only mb-5 border-b border-slate-300 pb-3">
+          <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Dynasty Estates</p>
+          <h2 className="text-lg font-bold">Side-by-Side Property Comparison</h2>
+          {/* suppressHydrationWarning because the server and the browser format
+              "today" at two different moments. Setting it from an effect would
+              trip the project's react-hooks/set-state-in-effect rule, and this
+              is the idiomatic answer for a rendered timestamp. */}
+          <p className="text-xs text-slate-500" suppressHydrationWarning>
+            {comparedProperties.length}{" "}
+            {comparedProperties.length === 1 ? "property" : "properties"} · Prepared{" "}
+            {new Date().toLocaleDateString("en-ZA", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })}
+          </p>
+        </div>
+
         {/* Add Candidates Drawer / Selector */}
         {unselectedProperties.length > 0 && comparedProperties.length < 4 && (
-          <div className="mb-6 flex items-center gap-2 overflow-x-auto rounded-card border border-white/70 bg-white/40 p-3 backdrop-blur-md dark:bg-surface-panel/60 dark:border-white/10">
+          <div className="no-print mb-6 flex items-center gap-2 overflow-x-auto rounded-card border border-white/70 bg-white/40 p-3 backdrop-blur-md dark:bg-surface-panel/60 dark:border-white/10">
             <span className="text-xs font-semibold text-slate-600 whitespace-nowrap px-2 dark:text-slate-300">+ Add to compare:</span>
             {unselectedProperties.map((prop) => (
               <button
@@ -104,7 +124,7 @@ export default function ComparePage() {
                           opening the property, so it stays above the overlay. */}
                       <button
                         onClick={() => removeProperty(prop.id)}
-                        className="absolute -top-2 -right-2 z-30 flex h-6 w-6 items-center justify-center rounded-full bg-slate-900 text-white shadow-md hover:bg-rose-600 transition-colors cursor-pointer"
+                        className="no-print absolute -top-2 -right-2 z-30 flex h-6 w-6 items-center justify-center rounded-full bg-slate-900 text-white shadow-md hover:bg-rose-600 transition-colors cursor-pointer"
                         title="Remove from comparison"
                       >
                         <XMarkIcon className="h-3 w-3" />
@@ -173,7 +193,8 @@ export default function ComparePage() {
                   </td>
                 ))}
               </tr>
-              <tr>
+              {/* A row of buttons is the one thing paper cannot use. */}
+              <tr className="no-print">
                 <td className="py-3.5 font-semibold text-slate-600 dark:text-slate-300">Action</td>
                 {comparedProperties.map((p) => (
                   <td key={p.id} className="py-3.5 px-3 text-center">

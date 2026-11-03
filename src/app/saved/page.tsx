@@ -125,16 +125,23 @@ export default function SavedPropertiesPage() {
         <header className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_12px_28px_rgba(0,0,0,0.3)]">
           <BrandLogo />
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5 gap-y-2 sm:gap-2.5">
+            {/* The stray `hidden` on these two is gone.
+                `.pill` is declared inside `@layer components` and Tailwind's
+                utilities sit in a later layer, so a bare `hidden` beat the
+                class's `display: inline-flex` outright — both of these, the
+                page's only primary among them, rendered at NO width. The inner
+                label spans show what was meant: the buttons always show, the
+                wording shortens below sm. */}
             <Link
               href="/compare"
-              className="pill hidden border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-emerald-300"
+              className="pill border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-emerald-300"
             >
               <span className="hidden sm:inline">Compare Shortlist</span>
               <span className="sm:hidden">Compare</span> →
             </Link>
             <Link
               href="/search"
-              className="pill hidden bg-slate-950 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] font-bold text-white shadow-md hover:bg-slate-800 transition-all"
+              className="pill bg-slate-950 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] font-bold text-white shadow-md hover:bg-slate-800 transition-all"
             >
               <span className="hidden sm:inline">Browse Catalogue</span>
               <span className="sm:hidden">Catalogue</span>
@@ -216,7 +223,7 @@ export default function SavedPropertiesPage() {
                 </div>
 
                 <div className="p-5">
-                  <span className="rounded-full bg-slate-100 dark:bg-surface-ink/80 dark:border dark:border-white/10 px-2.5 py-0.5 text-xs font-bold text-slate-600 dark:text-slate-300">
+                  <span className="badge border border-slate-200 bg-slate-100 text-slate-700 dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-200">
                     {property.type}
                   </span>
                   {/* The card's one real link; `card-link` stretches it over

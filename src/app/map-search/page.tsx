@@ -71,15 +71,17 @@ export default function MapSearchPage() {
             </div>
           </div>
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5 gap-y-2 sm:gap-2.5">
+            {/* Same stray `hidden` as on /saved: a bare `hidden` outranks
+                `.pill`'s own display, so this link rendered at no width. */}
             <Link
               href="/search"
-              className="pill hidden border border-slate-300/80 bg-white/60 dark:border-white/10 dark:bg-surface-ink/60 font-semibold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-surface-panel dark:hover:text-white transition-all"
+              className="pill border border-slate-300/80 bg-white/60 dark:border-white/10 dark:bg-surface-ink/60 font-semibold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-surface-panel dark:hover:text-white transition-all"
             >
               List View
             </Link>
             <Link
               href="/ai-search"
-              className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 text-white border border-emerald-400/40 px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs font-semibold shadow-xs dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] hover:scale-102 transition-all whitespace-nowrap shrink-0"
+              className="pill hidden sm:inline-flex bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 text-white border border-emerald-400/40 font-semibold shadow-xs dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] hover:scale-102 transition-all"
             >
               <SparklesIcon className="h-3 w-3 text-emerald-300 dark:text-emerald-100" />
               <span>AI Search</span>
@@ -104,9 +106,15 @@ export default function MapSearchPage() {
             ))}
           </div>
 
-          <span className="rounded-full bg-emerald-100/90 dark:bg-emerald-500/20 px-3 py-1 text-xs font-bold text-emerald-800 dark:text-emerald-400 border border-transparent dark:border-emerald-500/30">
-            {loading ? "Loading…" : `${filteredProperties.length} Properties Mapped`}
-          </span>
+          {/* Same rule as /search: the count appears once the visitor has
+              narrowed something, and uses the same word for it. With "All"
+              selected the number is just the size of the catalogue, which is
+              not an answer to anything the visitor asked. */}
+          {!loading && activeType !== "All" && (
+            <span className="badge border border-transparent bg-emerald-100/90 text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-500/20 dark:text-emerald-400">
+              {filteredProperties.length} {filteredProperties.length === 1 ? "match" : "matches"}
+            </span>
+          )}
         </div>
 
         {/* Real Interactive Google Maps & Street View Console */}

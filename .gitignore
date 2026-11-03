@@ -40,6 +40,10 @@ service-account*.json
 .firebase/
 firebase-debug.log*
 
+# Shared test logins. These are real accounts on the live Firebase project and
+# this repository is public, so the credentials stay out of it.
+TEST_ACCOUNTS.md
+
 # vercel
 .vercel
 

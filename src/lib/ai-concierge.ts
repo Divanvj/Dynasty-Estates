@@ -115,20 +115,35 @@ export function parseNaturalLanguageQuery(query: string): ParsedSearchIntent {
     }
   }
 
+  // 3b. Rent vs buy, inferred from the ceiling when the words did not say.
+  //
+  // The two cheaper branches above already did this; the million branch did
+  // not, so "house in Pretoria under R7M" came back with no transaction at all
+  // and the recommendations happily led with a R22,000/month rental. A ceiling
+  // in the millions is a purchase in this market, and R150k is the same line
+  // the branches above draw.
+  if (!intent.intent && intent.maxPriceZAR) {
+    intent.intent = intent.maxPriceZAR <= 150_000 ? "rent" : "buy";
+  }
+
   // 4. Bedrooms
-  const bedMatch = lower.match(/(\d+)\s*(?:bed|bedroom|br)/i);
+  // `[\s-]*` rather than `\s*`: "4-bed" and "3-bedroom" are how people write
+  // this, and with the space-only version the hyphen made the count invisible
+  // to the parser — the query ran, and the bedroom requirement was silently
+  // dropped from it. Same for baths and garages below.
+  const bedMatch = lower.match(/(\d+)[\s-]*(?:bed|bedroom|br)/i);
   if (bedMatch) {
     intent.minBedrooms = parseInt(bedMatch[1], 10);
   }
 
   // 5. Bathrooms
-  const bathMatch = lower.match(/(\d+)\s*(?:bath|bathroom|ba)/i);
+  const bathMatch = lower.match(/(\d+)[\s-]*(?:bath|bathroom|ba)/i);
   if (bathMatch) {
     intent.minBathrooms = parseInt(bathMatch[1], 10);
   }
 
   // 6. Garages / Parking
-  const garageMatch = lower.match(/(\d+)\s*(?:garage|parking|car)/i);
+  const garageMatch = lower.match(/(\d+)[\s-]*(?:garage|parking|car)/i);
   if (garageMatch) {
     intent.minParking = parseInt(garageMatch[1], 10);
   } else if (lower.includes("double garage")) {
@@ -189,28 +204,98 @@ export function parseNaturalLanguageQuery(query: string): ParsedSearchIntent {
   return intent;
 }
 
-export function generateGroundedRecommendations(intent: ParsedSearchIntent): GroundedRecommendation[] {
-  return fallbackProperties
+/** Reader-facing names for the amenity ids the parser produces. */
+const amenityLabels: Record<string, string> = {
+  solar_system: "Solar system",
+  inverter_battery: "Inverter & battery backup",
+  borehole_water: "Borehole water",
+  swimming_pool: "Swimming pool",
+  garden: "Garden",
+  security_estate: "Security estate",
+  pet_friendly: "Pet friendly",
+  fibre_ready: "Fibre ready",
+  braai_area: "Braai area",
+};
+
+function amenityLabel(id: string): string {
+  return amenityLabels[id] ?? id.replace(/_/g, " ");
+}
+
+/**
+ * Rank the catalogue against a parsed query.
+ *
+ * Two things were wrong with the previous version, and both were visible to the
+ * visitor as a claim on a card:
+ *
+ *   1. It pushed "Equipped with solar / backup power" onto EVERY listing the
+ *      moment the query mentioned solar, without ever looking at the listing's
+ *      own features. A home with no solar was told, on its own card, that it
+ *      had solar. The same card carried the Dynasty verification mark.
+ *   2. Nothing was ever filtered out, so every listing in the catalogue came
+ *      back as a result — including rentals against a purchase budget. The
+ *      heading counted them as matches.
+ *
+ * Price, transaction and location are now hard constraints: a result that
+ * breaks one is not a near miss, it is the wrong listing, and nobody who asks
+ * for Sandton wants Bloemfontein ranked third. Bedrooms, type and amenities
+ * stay soft and scored, because showing a strong home that misses one wish and
+ * SAYING SO is the point of the unmet-criteria list.
+ */
+export function generateGroundedRecommendations(
+  intent: ParsedSearchIntent,
+  catalogue: PropertyRecord[] = fallbackProperties
+): GroundedRecommendation[] {
+  return catalogue
+    .filter((prop) => {
+      if (intent.intent === "rent" && prop.listingType !== "rent") return false;
+      if (intent.intent === "buy" && prop.listingType === "rent") return false;
+      if (intent.maxPriceZAR && prop.numericPrice > intent.maxPriceZAR) return false;
+      if (intent.minPriceZAR && prop.numericPrice < intent.minPriceZAR) return false;
+      if (
+        intent.targetLocation &&
+        !prop.location.toLowerCase().includes(intent.targetLocation.toLowerCase())
+      ) {
+        return false;
+      }
+      return true;
+    })
     .map((prop) => {
       let score = 70;
       const matchReasons: string[] = [];
       const unmetCriteria: string[] = [];
 
-      if (intent.targetLocation && prop.location.toLowerCase().includes(intent.targetLocation.toLowerCase())) {
+      if (intent.targetLocation) {
+        // Always true by the filter above; stated on the card because it is the
+        // constraint people most want to see confirmed.
         score += 15;
-        matchReasons.push(`Located in desired area (${intent.targetLocation})`);
+        matchReasons.push(`In ${intent.targetLocation}`);
       }
 
-      if (intent.minBedrooms && prop.beds >= intent.minBedrooms) {
-        score += 10;
-        matchReasons.push(`Meets bedroom requirement (${prop.beds} beds)`);
-      } else if (intent.minBedrooms) {
-        unmetCriteria.push(`Fewer than ${intent.minBedrooms} bedrooms`);
+      if (intent.minBedrooms) {
+        if (prop.beds >= intent.minBedrooms) {
+          score += 10;
+          matchReasons.push(`${prop.beds} bedrooms`);
+        } else {
+          unmetCriteria.push(`Only ${prop.beds} bedrooms`);
+        }
       }
 
-      if (intent.requiredAmenities.includes("solar_system")) {
-        score += 5;
-        matchReasons.push("Equipped with solar / backup power");
+      if (intent.propertyType) {
+        if (prop.type === intent.propertyType) {
+          score += 5;
+          matchReasons.push(intent.propertyType);
+        } else {
+          unmetCriteria.push(`${prop.type}, not ${intent.propertyType}`);
+        }
+      }
+
+      for (const amenity of intent.requiredAmenities) {
+        if (prop.features?.includes(amenity)) {
+          score += 5;
+          matchReasons.push(amenityLabel(amenity));
+        } else {
+          unmetCriteria.push(`No ${amenityLabel(amenity).toLowerCase()}`);
+        }
       }
 
       return {

@@ -121,8 +121,11 @@ export default async function ForSaleNationalPage() {
                   <p className="font-bold text-sm text-slate-900 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors dark:text-white">
                     {prov.name}
                   </p>
-                  <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-bold text-slate-600 dark:bg-surface-ink/60 dark:text-slate-300">
-                    {prov.count} active
+                  {/* "N active" was listing-lifecycle jargon on a page meant
+                      for buyers: "active" is a status in the seller portal, not
+                      a word anyone browsing provinces uses. */}
+                  <span className="badge border border-slate-200 bg-slate-100 text-slate-600 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300">
+                    {prov.count} {prov.count === 1 ? "listing" : "listings"}
                   </span>
                 </div>
                 <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
