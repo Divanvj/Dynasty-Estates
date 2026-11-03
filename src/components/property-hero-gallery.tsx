@@ -90,12 +90,34 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
   }, [playing, many, index, go]);
 
   // Keep the active thumbnail in view as the slideshow moves.
+  //
+  // This scrolls the rail itself instead of calling scrollIntoView on the
+  // thumbnail. scrollIntoView walks up and scrolls *every* scrollable
+  // ancestor, the document included — so once the viewer had scrolled past
+  // the gallery, each autoplay advance hauled the page back up to put the
+  // strip on screen again, every six seconds, with no way to read the rest of
+  // the listing. `block: "nearest"` does not help: the thumbnail is genuinely
+  // off screen by then, so the minimum scroll is still a scroll. Moving the
+  // rail's own scrollLeft cannot touch the page.
   useEffect(() => {
     const rail = railRef.current;
     if (!rail) return;
     const active = rail.querySelector<HTMLElement>(`[data-frame="${index}"]`);
-    active?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-  }, [index]);
+    if (!active) return;
+
+    const railBox = rail.getBoundingClientRect();
+    const activeBox = active.getBoundingClientRect();
+    // How far the thumbnail's centre sits from the rail's centre, right now.
+    const offset =
+      activeBox.left + activeBox.width / 2 - (railBox.left + railBox.width / 2);
+    if (Math.abs(offset) < 1) return;
+
+    // scrollTo clamps to the rail's own scrollable range for us.
+    rail.scrollTo({
+      left: rail.scrollLeft + offset,
+      behavior: reducedMotion ? "auto" : "smooth",
+    });
+  }, [index, reducedMotion]);
 
   function onKeyDown(event: React.KeyboardEvent) {
     if (!many) return;
