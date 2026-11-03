@@ -379,7 +379,7 @@ export default function AmbientCursorHue({ heroScoped = true }: AmbientCursorHue
     return (
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-[32px]"
+        className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-panel"
       >
         <HeroAurora />
       </div>
@@ -391,7 +391,7 @@ export default function AmbientCursorHue({ heroScoped = true }: AmbientCursorHue
       <div
         ref={containerRef}
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-[32px]"
+        className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-panel"
       >
         {/* 1. Aurora Silk — always-alive ambient light field with cursor parallax */}
         {mode === "aurora" && <HeroAurora />}
@@ -401,7 +401,7 @@ export default function AmbientCursorHue({ heroScoped = true }: AmbientCursorHue
           <div
             ref={backlightRef}
             aria-hidden="true"
-            className={`pointer-events-none absolute inset-0 overflow-hidden rounded-[32px] transition-opacity duration-700 ease-out ${
+            className={`pointer-events-none absolute inset-0 overflow-hidden rounded-panel transition-opacity duration-700 ease-out ${
               isVisible ? "opacity-100" : "opacity-0"
             }`}
             style={{ mixBlendMode: "multiply" }}
@@ -413,7 +413,7 @@ export default function AmbientCursorHue({ heroScoped = true }: AmbientCursorHue
           <canvas
             ref={canvasRef}
             aria-hidden="true"
-            className={`pointer-events-none absolute inset-0 overflow-hidden rounded-[32px] transition-opacity duration-500 ${
+            className={`pointer-events-none absolute inset-0 overflow-hidden rounded-panel transition-opacity duration-500 ${
               isVisible ? "opacity-100" : "opacity-0"
             }`}
           />
@@ -423,7 +423,7 @@ export default function AmbientCursorHue({ heroScoped = true }: AmbientCursorHue
         {mode === "halo" && (
           <div
             aria-hidden="true"
-            className={`pointer-events-none absolute inset-0 overflow-hidden rounded-[32px] transition-opacity duration-300 ${
+            className={`pointer-events-none absolute inset-0 overflow-hidden rounded-panel transition-opacity duration-300 ${
               isVisible ? "opacity-100" : "opacity-0"
             }`}
           >
@@ -457,7 +457,7 @@ export default function AmbientCursorHue({ heroScoped = true }: AmbientCursorHue
       {/* 4. Discrete Ambient Effect Switcher Pill (Fixed in Corner, Desktop Only) */}
       <div className="hidden md:flex fixed bottom-4 right-4 z-50 flex-col items-end gap-1.5 font-sans">
         {showPicker && (
-          <div className="rounded-2xl border border-white/80 bg-white/90 p-2 shadow-[0_12px_30px_rgba(15,23,42,0.14)] backdrop-blur-xl animate-in fade-in slide-in-from-bottom-2 duration-150 dark:bg-[#0c1a1c] dark:border-white/10 dark:shadow-[0_12px_30px_rgba(0,0,0,0.6)]">
+          <div className="rounded-2xl border border-white/80 bg-white/90 p-2 shadow-[0_12px_30px_rgba(15,23,42,0.14)] backdrop-blur-xl animate-in fade-in slide-in-from-bottom-2 duration-150 dark:bg-surface-panel dark:border-white/10 dark:shadow-[0_12px_30px_rgba(0,0,0,0.6)]">
             <p className="px-2 py-1 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Interactive FX (Hero)
             </p>
@@ -471,7 +471,7 @@ export default function AmbientCursorHue({ heroScoped = true }: AmbientCursorHue
                 className={`flex items-center gap-2 rounded-xl px-3 py-1.5 text-left transition-colors cursor-pointer ${
                   mode === "aurora"
                     ? "bg-emerald-100 dark:bg-emerald-600 font-bold text-emerald-950 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "text-slate-700 dark:text-slate-300 hover:bg-slate-100/80 dark:hover:bg-[#060d0e]"
+                    : "text-slate-700 dark:text-slate-300 hover:bg-slate-100/80 dark:hover:bg-surface-ink"
                 }`}
               >
                 <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.9)]" />
@@ -488,7 +488,7 @@ export default function AmbientCursorHue({ heroScoped = true }: AmbientCursorHue
                 className={`flex items-center gap-2 rounded-xl px-3 py-1.5 text-left transition-colors cursor-pointer ${
                   mode === "halo"
                     ? "bg-emerald-100 dark:bg-emerald-600 font-bold text-emerald-950 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "text-slate-700 dark:text-slate-300 hover:bg-slate-100/80 dark:hover:bg-[#060d0e]"
+                    : "text-slate-700 dark:text-slate-300 hover:bg-slate-100/80 dark:hover:bg-surface-ink"
                 }`}
               >
                 <span className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.9)]" />
@@ -505,7 +505,7 @@ export default function AmbientCursorHue({ heroScoped = true }: AmbientCursorHue
                 className={`flex items-center gap-2 rounded-xl px-3 py-1.5 text-left transition-colors cursor-pointer ${
                   mode === "antigravity"
                     ? "bg-emerald-100 dark:bg-emerald-600 font-bold text-emerald-950 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "text-slate-700 dark:text-slate-300 hover:bg-slate-100/80 dark:hover:bg-[#060d0e]"
+                    : "text-slate-700 dark:text-slate-300 hover:bg-slate-100/80 dark:hover:bg-surface-ink"
                 }`}
               >
                 <span className="h-2 w-2 rounded-full bg-teal-400 shadow-[0_0_6px_rgba(20,184,166,0.9)]" />
@@ -521,8 +521,8 @@ export default function AmbientCursorHue({ heroScoped = true }: AmbientCursorHue
                 }}
                 className={`flex items-center gap-2 rounded-xl px-3 py-1.5 text-left transition-colors cursor-pointer ${
                   mode === "off"
-                    ? "bg-slate-200 dark:bg-[#060d0e] font-bold text-slate-900 dark:text-white dark:border dark:border-white/10"
-                    : "text-slate-500 dark:text-slate-400 hover:bg-slate-100/80 dark:hover:bg-[#060d0e]"
+                    ? "bg-slate-200 dark:bg-surface-ink font-bold text-slate-900 dark:text-white dark:border dark:border-white/10"
+                    : "text-slate-500 dark:text-slate-400 hover:bg-slate-100/80 dark:hover:bg-surface-ink"
                 }`}
               >
                 <span className="h-2 w-2 rounded-full bg-slate-300 dark:bg-slate-600" />
@@ -536,7 +536,7 @@ export default function AmbientCursorHue({ heroScoped = true }: AmbientCursorHue
         <button
           type="button"
           onClick={() => setShowPicker(!showPicker)}
-          className="flex items-center gap-1.5 rounded-full border border-white/80 bg-white/70 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-[0_8px_20px_rgba(15,23,42,0.08)] backdrop-blur-md hover:bg-white transition-all cursor-pointer hover:border-emerald-300 hover:text-emerald-950 dark:bg-[#060d0e]/80 dark:border-white/10 dark:text-slate-200 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
+          className="flex items-center gap-1.5 rounded-full border border-white/80 bg-white/70 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-[0_8px_20px_rgba(15,23,42,0.08)] backdrop-blur-md hover:bg-white transition-all cursor-pointer hover:border-emerald-300 hover:text-emerald-950 dark:bg-surface-ink/80 dark:border-white/10 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
           title="Change interactive cursor effect"
         >
           <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_6px_rgba(16,185,129,0.8)]" />

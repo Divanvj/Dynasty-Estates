@@ -183,7 +183,7 @@ export default function AccountActions() {
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
           onKeyDown={handleTriggerKeyDown}
-          className="group relative flex items-center gap-1.5 sm:gap-2 rounded-full border border-slate-300/80 bg-white/70 dark:border-white/10 dark:bg-[#060d0e]/80 p-1 sm:p-1.5 pr-2.5 sm:pr-3 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:bg-white dark:hover:bg-[#0c1a1c] hover:border-emerald-500/50 dark:hover:border-emerald-400/50 transition-all cursor-pointer shadow-xs"
+          className="group relative flex items-center gap-1.5 sm:gap-2 rounded-full border border-slate-300/80 bg-white/70 dark:border-white/10 dark:bg-surface-ink/80 p-1 sm:p-1.5 pr-2.5 sm:pr-3 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:bg-white dark:hover:bg-surface-panel hover:border-emerald-500/50 dark:hover:border-emerald-400/50 transition-all cursor-pointer shadow-xs"
           aria-expanded={isOpen}
           aria-controls="account-menu-panel"
           title="Account & Profile Menu"

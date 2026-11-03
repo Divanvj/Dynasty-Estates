@@ -41,7 +41,7 @@ export default async function Home() {
           body as ExpandableSearchPanel does rather than raising its z-index —
           that is what keeps its overlay clear of this stacking context.
         */}
-        <header className="relative z-50 mx-auto flex max-w-[1440px] items-center justify-between rounded-[28px] border border-white/70 bg-white/40 dark:border-white/10 dark:bg-[#0b1719]/70 px-3.5 sm:px-6 py-3 backdrop-blur-xl shadow-[0_12px_30px_rgba(36,48,50,0.06)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
+        <header className="relative z-50 mx-auto flex max-w-[1440px] items-center justify-between rounded-card border border-white/70 bg-white/40 dark:border-white/10 dark:bg-[#0b1719]/70 px-3.5 sm:px-6 py-3 backdrop-blur-xl shadow-[0_12px_30px_rgba(36,48,50,0.06)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
           <BrandLogo />
 
           <SiteNavigation />
@@ -51,7 +51,7 @@ export default async function Home() {
 
         {/* Full-Width Hero Section */}
         <section id="discover" className="relative z-40 mx-auto mt-4 sm:mt-6 max-w-[1440px]">
-          <div className="relative rounded-[28px] sm:rounded-[32px] border border-white/70 bg-white/45 dark:border-white/10 dark:bg-[#0c1a1c]/65 p-3.5 sm:p-6 shadow-[0_20px_45px_rgba(36,48,50,0.08)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)] backdrop-blur-xl md:p-8 lg:p-10">
+          <div className="relative rounded-card sm:rounded-panel border border-white/70 bg-white/45 dark:border-white/10 dark:bg-surface-panel/65 p-3.5 sm:p-6 shadow-[0_20px_45px_rgba(36,48,50,0.08)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)] backdrop-blur-xl md:p-8 lg:p-10">
             <AmbientCursorHue heroScoped />
 
             {/*
@@ -87,8 +87,14 @@ export default async function Home() {
         <HomeTrendingListings properties={properties} />
 
         {/* Market Pulse Section */}
-        <section id="insights" className="mx-auto mt-8 grid max-w-[1440px] gap-4 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="rounded-[30px] border border-white/70 bg-white/45 dark:border-white/10 dark:bg-[#0c1a1c]/65 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl">
+        {/* `grid-cols-1` is load-bearing below lg. Without a base column
+            definition the grid falls back to one implicit `auto` track, which
+            sizes to its content's max-content width: at 320px the track
+            measured 326px inside a 296px container and pushed the document
+            18px sideways. Tailwind's `grid-cols-1` is `minmax(0, 1fr)`, and
+            that zero minimum is what lets the panels shrink. */}
+        <section id="insights" className="mx-auto mt-8 grid grid-cols-1 max-w-[1440px] gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="rounded-panel border border-white/70 bg-white/45 dark:border-white/10 dark:bg-surface-panel/65 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl">
             <div className="flex items-center justify-between">
               <p className="text-xs uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400 font-bold">Market intelligence</p>
               <Link href="/insights" className="text-xs font-bold text-emerald-800 dark:text-emerald-400 hover:underline">
@@ -107,7 +113,7 @@ export default async function Home() {
                 <Link
                   key={item.area}
                   href={`/search?q=${encodeURIComponent(item.query)}`}
-                  className="flex items-center justify-between rounded-2xl border border-white/70 bg-white/60 dark:border-white/10 dark:bg-[#060d0e]/60 px-4 py-3 text-xs transition-all hover:bg-white dark:hover:bg-[#0c1a1c] hover:border-emerald-400 text-slate-800 dark:text-slate-200"
+                  className="flex items-center justify-between rounded-2xl border border-white/70 bg-white/60 dark:border-white/10 dark:bg-surface-ink/60 px-4 py-3 text-xs transition-all hover:bg-white dark:hover:bg-surface-panel hover:border-emerald-400 text-slate-800 dark:text-slate-200"
                 >
                   <span className="font-semibold">{item.area}</span>
                   <span className="font-medium text-emerald-800 dark:text-emerald-400">{item.value} →</span>
@@ -116,7 +122,7 @@ export default async function Home() {
             </div>
           </div>
 
-          <div className="rounded-[30px] border border-emerald-500/25 bg-gradient-to-br from-[#082224] to-[#041416] p-6 text-white shadow-[0_20px_45px_rgba(4,20,22,0.35)] backdrop-blur-xl">
+          <div className="rounded-panel border border-emerald-500/25 bg-gradient-to-br from-[#082224] to-[#041416] p-6 text-white shadow-[0_20px_45px_rgba(4,20,22,0.35)] backdrop-blur-xl">
             <div className="flex items-center justify-between gap-3">
               <div>
                 <p className="text-xs uppercase tracking-[0.2em] text-emerald-400 font-semibold">Collaboration & Shortlisting</p>
@@ -142,7 +148,7 @@ export default async function Home() {
                 <Link
                   key={idx}
                   href="/collections"
-                  className="rounded-[22px] border border-emerald-500/20 bg-emerald-950/40 p-4 backdrop-blur-md hover:bg-emerald-950/60 transition-all block"
+                  className="rounded-control border border-emerald-500/20 bg-emerald-950/40 p-4 backdrop-blur-md hover:bg-emerald-950/60 transition-all block"
                 >
                   <p className="text-sm font-semibold text-white">{col.title}</p>
                   <div className="mt-2 flex items-center justify-between text-xs text-emerald-300/70">
@@ -164,7 +170,7 @@ export default async function Home() {
         {/* Global Obsidian Glass Footer */}
         {/* p-8 is 64px of horizontal padding on a phone, inside main's own
             gutter. Halved below `md`; the footer's own height is Phase 4. */}
-        <footer className="mx-auto mt-12 max-w-[1440px] rounded-[32px] border border-white/70 bg-white/40 dark:border-white/10 dark:bg-[#091517]/75 p-8 max-md:p-5 shadow-sm backdrop-blur-xl">
+        <footer className="mx-auto mt-12 max-w-[1440px] rounded-panel border border-white/70 bg-white/40 dark:border-white/10 dark:bg-[#091517]/75 p-8 max-md:p-5 shadow-sm backdrop-blur-xl">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 text-xs">
             <div>
               <div className="flex items-center gap-2 mb-3">
@@ -180,37 +186,49 @@ export default async function Home() {
 
             <div>
               <p className="font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-2.5">Discovery & Tools</p>
-              <ul className="space-y-2 text-slate-600 dark:text-slate-400">
-                <li><Link href="/search" className="hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Property Catalogue</Link></li>
-                <li><Link href="/map-search" className="hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Interactive Map Search</Link></li>
+              {/* space-y-1, not -2: the links below gained `py-1` so each tap
+                  target clears the 24px WCAG 2.2 AA floor (they were 18px).
+                  Tightening the gap by the same amount the padding adds keeps
+                  the footer close to the height it was. */}
+              <ul className="space-y-1 text-slate-600 dark:text-slate-400">
+                <li><Link href="/search" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Property Catalogue</Link></li>
+                <li><Link href="/map-search" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Interactive Map Search</Link></li>
                 <li>
-                  <Link href="/ai-search" className="inline-flex items-center gap-1.5 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">
+                  <Link href="/ai-search" className="inline-flex items-center gap-1.5 py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">
                     <SparklesIcon className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
                     <span>AI Search</span>
                   </Link>
                 </li>
-                <li><Link href="/calculators" className="hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Bond & True Cost™ Calculator</Link></li>
-                <li><Link href="/compare" className="hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Side-by-Side Comparison</Link></li>
+                <li><Link href="/calculators" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Bond & True Cost™ Calculator</Link></li>
+                <li><Link href="/compare" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Side-by-Side Comparison</Link></li>
               </ul>
             </div>
 
             <div>
               <p className="font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-2.5">Portals & Practitioners</p>
-              <ul className="space-y-2 text-slate-600 dark:text-slate-400">
-                <li><Link href="/collections" className="hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Collaborative Shortlists</Link></li>
-                <li><Link href="/agents" className="hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">PPRA Verified Agents</Link></li>
-                <li><Link href="/seller/portal" className="hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Private Seller Portal</Link></li>
-                <li><Link href="/seller/listings/new" className="hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Publish New Listing</Link></li>
-                <li><Link href="/agent/dashboard" className="hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Agent Command Console</Link></li>
+              {/* space-y-1, not -2: the links below gained `py-1` so each tap
+                  target clears the 24px WCAG 2.2 AA floor (they were 18px).
+                  Tightening the gap by the same amount the padding adds keeps
+                  the footer close to the height it was. */}
+              <ul className="space-y-1 text-slate-600 dark:text-slate-400">
+                <li><Link href="/collections" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Collaborative Shortlists</Link></li>
+                <li><Link href="/agents" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">PPRA Verified Agents</Link></li>
+                <li><Link href="/seller/portal" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Private Seller Portal</Link></li>
+                <li><Link href="/seller/listings/new" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Publish New Listing</Link></li>
+                <li><Link href="/agent/dashboard" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Agent Command Console</Link></li>
               </ul>
             </div>
 
             <div>
               <p className="font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-2.5">Governance & Legal</p>
-              <ul className="space-y-2 text-slate-600 dark:text-slate-400">
-                <li><Link href="/insights" className="hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Market Intelligence Pulse</Link></li>
-                <li><Link href="/admin" className="hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Platform Command & Moderation</Link></li>
-                <li><Link href="/legal/privacy" className="hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">POPIA Privacy & Data Rights</Link></li>
+              {/* space-y-1, not -2: the links below gained `py-1` so each tap
+                  target clears the 24px WCAG 2.2 AA floor (they were 18px).
+                  Tightening the gap by the same amount the padding adds keeps
+                  the footer close to the height it was. */}
+              <ul className="space-y-1 text-slate-600 dark:text-slate-400">
+                <li><Link href="/insights" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Market Intelligence Pulse</Link></li>
+                <li><Link href="/admin" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Platform Command & Moderation</Link></li>
+                <li><Link href="/legal/privacy" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">POPIA Privacy & Data Rights</Link></li>
               </ul>
             </div>
           </div>

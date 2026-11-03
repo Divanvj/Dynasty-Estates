@@ -21,7 +21,7 @@ export default function PrivacyPolicyPage() {
     <main className="min-h-screen bg-[var(--background)] px-3 py-4 text-slate-900 md:px-8 dark:text-white">
       <div className="mx-auto max-w-4xl">
         {/* Header */}
-        <header className="mb-6 flex items-center justify-between rounded-[26px] border border-white/75 bg-white/45 px-5 py-3.5 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <header className="mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-5 py-3.5 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <div className="flex items-center gap-3">
             <BrandLogo markOnly />
             <div>
@@ -31,14 +31,14 @@ export default function PrivacyPolicyPage() {
           </div>
           <Link
             href="/"
-            className="rounded-full border border-slate-300/80 bg-white/60 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-white transition-all dark:bg-[#060d0e]/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
+            className="rounded-full border border-slate-300/80 bg-white/60 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-white transition-all dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
           >
             ← Back to Home
           </Link>
         </header>
 
         {/* Legal Document Container */}
-        <article className="rounded-[32px] border border-white/80 bg-white/65 p-6 shadow-sm backdrop-blur-xl md:p-10 space-y-6 text-xs leading-relaxed text-slate-700 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] dark:text-slate-300">
+        <article className="rounded-panel border border-white/80 bg-white/65 p-6 shadow-sm backdrop-blur-xl md:p-10 space-y-6 text-xs leading-relaxed text-slate-700 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] dark:text-slate-300">
           <div>
             <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800 uppercase tracking-widest dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.2)]">
               Statutory Compliance

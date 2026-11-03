@@ -23,7 +23,7 @@ export default function OnShowBanner({ propertyTitle, location, onShow }: OnShow
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
 
   return (
-    <div className="overflow-hidden rounded-[26px] border border-rose-200/90 bg-gradient-to-r from-rose-50 via-rose-50/70 to-amber-50/40 p-4 sm:p-5 shadow-sm backdrop-blur-xl dark:border-rose-500/20 dark:from-rose-950/40 dark:via-rose-950/20 dark:to-amber-950/20 dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
+    <div className="overflow-hidden rounded-card border border-rose-200/90 bg-gradient-to-r from-rose-50 via-rose-50/70 to-amber-50/40 p-4 sm:p-5 shadow-sm backdrop-blur-xl dark:border-rose-500/20 dark:from-rose-950/40 dark:via-rose-950/20 dark:to-amber-950/20 dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2 flex-wrap">
@@ -61,7 +61,7 @@ export default function OnShowBanner({ propertyTitle, location, onShow }: OnShow
             href={mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 rounded-full border border-slate-300 bg-white/90 px-4 py-2 text-xs font-bold text-slate-800 shadow-2xs hover:bg-white transition-all cursor-pointer dark:border-white/10 dark:bg-[#060d0e]/80 dark:text-slate-200 dark:hover:bg-[#0c1a1c] dark:hover:text-white"
+            className="flex items-center gap-1.5 rounded-full border border-slate-300 bg-white/90 px-4 py-2 text-xs font-bold text-slate-800 shadow-2xs hover:bg-white transition-all cursor-pointer dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:text-white"
           >
             <span>Directions ↗</span>
           </a>

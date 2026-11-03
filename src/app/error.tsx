@@ -30,7 +30,7 @@ export default function Error({
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-[var(--background)] px-4 py-16 text-slate-900 dark:text-white">
-      <div className="w-full max-w-lg rounded-[32px] border border-white/75 bg-white/55 p-8 text-center shadow-[0_14px_34px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:border-white/10 dark:bg-[#0c1a1c]/80 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+      <div className="w-full max-w-lg rounded-panel border border-white/75 bg-white/55 p-8 text-center shadow-[0_14px_34px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:border-white/10 dark:bg-surface-panel/80 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
         <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400">
           Dynasty Estates
         </p>
@@ -59,7 +59,7 @@ export default function Error({
           </button>
           <Link
             href="/"
-            className="pill-lg border border-slate-300/80 bg-white/60 font-semibold text-slate-700 transition-all hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-white"
+            className="pill-lg border border-slate-300/80 bg-white/60 font-semibold text-slate-700 transition-all hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-white"
           >
             Back to home
           </Link>

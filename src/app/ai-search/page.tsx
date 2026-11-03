@@ -58,7 +58,7 @@ export default function AISearchPage() {
     <main className="min-h-screen bg-[var(--background)] px-3 py-4 text-slate-900 md:px-8 dark:text-white">
       <div className="mx-auto max-w-6xl">
         {/* Navigation Header */}
-        <header className="relative z-50 mb-6 flex items-center justify-between rounded-[26px] border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <header className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <div className="flex items-center gap-2.5 sm:gap-3">
             <BrandLogo markOnly />
             <div>
@@ -76,7 +76,7 @@ export default function AISearchPage() {
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5 gap-y-2 sm:gap-2.5">
             <Link
               href="/search"
-              className="pill border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all dark:bg-[#060d0e]/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
+              className="pill border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
             >
               <span className="hidden sm:inline">Standard Search</span>
               <span className="sm:hidden">Catalogue</span>
@@ -86,7 +86,7 @@ export default function AISearchPage() {
         </header>
 
         {/* AI Query Console */}
-        <section className="rounded-[32px] border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.1)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <section className="rounded-panel border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.1)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <p className="text-xs uppercase tracking-[0.24em] text-slate-500 font-bold dark:text-slate-400">
             Conversational Discovery
           </p>
@@ -106,7 +106,7 @@ export default function AISearchPage() {
                   value={queryText}
                   onChange={(e) => setQueryText(e.target.value)}
                   placeholder="Describe your ideal home, budget, suburb, and must-have amenities..."
-                  className="w-full rounded-2xl border border-slate-300/80 bg-white/90 py-3.5 pl-11 pr-4 text-xs font-semibold text-slate-900 shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:border-white/10 dark:bg-[#060d0e]/70 dark:text-white dark:placeholder:text-slate-500 dark:focus:ring-emerald-400"
+                  className="w-full rounded-2xl border border-slate-300/80 bg-white/90 py-3.5 pl-11 pr-4 text-xs font-semibold text-slate-900 shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:border-white/10 dark:bg-surface-ink/70 dark:text-white dark:placeholder:text-slate-500 dark:focus:ring-emerald-400"
                 />
               </div>
               <button
@@ -126,7 +126,7 @@ export default function AISearchPage() {
                 key={suggestion}
                 type="button"
                 onClick={() => handleSearchWith(suggestion)}
-                className="pill-sm border border-slate-200 bg-white/70 font-medium text-slate-700 hover:bg-white hover:border-emerald-400 transition-all cursor-pointer dark:bg-[#060d0e]/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-emerald-400"
+                className="pill-sm border border-slate-200 bg-white/70 font-medium text-slate-700 hover:bg-white hover:border-emerald-400 transition-all cursor-pointer dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-emerald-400"
               >
                 &ldquo;{suggestion}&rdquo;
               </button>
@@ -139,20 +139,20 @@ export default function AISearchPage() {
               Extracted Intent Constraints:
             </p>
             <div className="mt-2 flex flex-wrap gap-2 text-xs">
-              <span className="inline-flex items-center gap-1.5 rounded-lg bg-white px-2.5 py-1 font-semibold text-emerald-900 shadow-sm dark:bg-[#060d0e]/80 dark:text-emerald-300 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.15)]">
+              <span className="inline-flex items-center gap-1.5 rounded-lg bg-white px-2.5 py-1 font-semibold text-emerald-900 shadow-sm dark:bg-surface-ink/80 dark:text-emerald-300 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.15)]">
                 <LocationPinIcon className="h-3.5 w-3.5 text-emerald-600 shrink-0 dark:text-emerald-400" />
                 <span>Location: {activeIntent.targetLocation ?? "Any South African Metro"}</span>
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-lg bg-white px-2.5 py-1 font-semibold text-emerald-900 shadow-sm dark:bg-[#060d0e]/80 dark:text-emerald-300 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.15)]">
+              <span className="inline-flex items-center gap-1.5 rounded-lg bg-white px-2.5 py-1 font-semibold text-emerald-900 shadow-sm dark:bg-surface-ink/80 dark:text-emerald-300 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.15)]">
                 <TagIcon className="h-3.5 w-3.5 text-emerald-600 shrink-0 dark:text-emerald-400" />
                 <span>Max Price: {activeIntent.maxPriceZAR ? `R ${formatNumber(activeIntent.maxPriceZAR)}` : "No ceiling"}</span>
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-lg bg-white px-2.5 py-1 font-semibold text-emerald-900 shadow-sm dark:bg-[#060d0e]/80 dark:text-emerald-300 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.15)]">
+              <span className="inline-flex items-center gap-1.5 rounded-lg bg-white px-2.5 py-1 font-semibold text-emerald-900 shadow-sm dark:bg-surface-ink/80 dark:text-emerald-300 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.15)]">
                 <BedIcon className="h-3.5 w-3.5 text-emerald-600 shrink-0 dark:text-emerald-400" />
                 <span>Beds: {activeIntent.minBedrooms ? `${activeIntent.minBedrooms}+` : "Any"}</span>
               </span>
               {activeIntent.propertyType && (
-                <span className="inline-flex items-center gap-1.5 rounded-lg bg-white px-2.5 py-1 font-semibold text-emerald-900 shadow-sm dark:bg-[#060d0e]/80 dark:text-emerald-300 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.15)]">
+                <span className="inline-flex items-center gap-1.5 rounded-lg bg-white px-2.5 py-1 font-semibold text-emerald-900 shadow-sm dark:bg-surface-ink/80 dark:text-emerald-300 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.15)]">
                   <HomeIcon className="h-3.5 w-3.5 text-emerald-600 shrink-0 dark:text-emerald-400" />
                   <span>Type: {activeIntent.propertyType}</span>
                 </span>
@@ -181,7 +181,7 @@ export default function AISearchPage() {
               <article
                 key={property.id}
                 // `relative` anchors the .card-link overlay on the title below.
-                className="group relative overflow-hidden rounded-[30px] border border-white/80 bg-white/60 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl transition-all hover:-translate-y-1 hover:shadow-2xl dark:bg-[#0c1a1c]/75 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]"
+                className="group relative overflow-hidden rounded-panel border border-white/80 bg-white/60 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl transition-all hover:-translate-y-1 hover:shadow-2xl dark:bg-surface-panel/75 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]"
               >
                 {/* Photo & MatchScore Pill */}
                 <div className="relative h-56 overflow-hidden bg-slate-200">
@@ -215,7 +215,7 @@ export default function AISearchPage() {
                   </p>
 
                   {/* AI Explanation / Reasoning */}
-                  <div className="mt-3 rounded-xl border border-slate-200/80 bg-slate-50 p-2.5 text-xs text-slate-700 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300">
+                  <div className="mt-3 rounded-xl border border-slate-200/80 bg-slate-50 p-2.5 text-xs text-slate-700 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300">
                     <p className="font-bold text-xs uppercase tracking-wider text-slate-400 mb-1 dark:text-slate-400">
                       Why this fits:
                     </p>

@@ -143,6 +143,36 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
+  /* Dark surfaces — the two colours this interface is actually built from.
+
+     They were written as raw hex 547 times across the markup: `#060d0e` 291
+     times and `#0c1a1c` 256. That is a design token spelled out by hand at
+     every call site, so changing a surface meant a 547-place replacement and
+     a near-certainty of missing some.
+
+     Declared as `--color-*` rather than plain properties on `:root` because
+     that is what makes them ordinary utilities — `bg-surface-ink/60`,
+     `dark:border-surface-panel` — with the opacity modifier still working.
+     A `bg-[var(--x)]/60` would not survive the slash the same way. */
+  --color-surface-ink: #060d0e;
+  --color-surface-panel: #0c1a1c;
+
+  /* Corner radius scale.
+
+     Ten arbitrary radii were in use across 149 places — 10, 18, 20, 22, 24,
+     26, 28, 30, 32 and 36px — so a card sat at 28, 30 or 32 depending only on
+     which file drew it. Four steps now, rounded to the nearest: nothing moves
+     by more than 4px and most by 2.
+
+     Deliberately NOT named xs/sm/md/lg. Those override Tailwind's own radius
+     scale, and `rounded-xl`, `rounded-2xl` and `rounded-3xl` are already used
+     throughout the markup — redefining the built-ins would silently resize
+     every one of them. These names cannot collide. */
+  --radius-chip: 10px; /* was 10 */
+  --radius-control: 20px; /* was 18, 20, 22 */
+  --radius-card: 26px; /* was 24, 26, 28 */
+  --radius-panel: 32px; /* was 30, 32, 36 */
+
   /* Type floor — nothing below 14px, body copy at 16px.
 
      Tailwind generates `text-xs` and `text-sm` from these tokens rather than

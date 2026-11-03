@@ -799,7 +799,7 @@ export default function ExpandableSearchPanel({
         >
           {/* Magnifying Glass & Location Summary / Input Field */}
           <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3 pl-1.5 sm:pl-3">
-            <div className="flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-slate-100 dark:bg-[#060d0e]/80 text-slate-700 dark:text-slate-300 dark:border dark:border-white/10 transition-colors group-hover:bg-slate-200 dark:group-hover:bg-[#0c1a1c] group-hover:text-emerald-900 dark:group-hover:text-emerald-300">
+            <div className="flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-slate-100 dark:bg-surface-ink/80 text-slate-700 dark:text-slate-300 dark:border dark:border-white/10 transition-colors group-hover:bg-slate-200 dark:group-hover:bg-surface-panel group-hover:text-emerald-900 dark:group-hover:text-emerald-300">
               <SearchIcon className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
 
@@ -892,7 +892,7 @@ export default function ExpandableSearchPanel({
               className={`flex h-10 w-10 sm:h-12 sm:w-auto items-center justify-center sm:gap-1.5 rounded-full border px-0 sm:px-4.5 text-xs sm:text-sm font-bold transition-all cursor-pointer shrink-0 ${
                 activeFilterCount > 0
                   ? "border-emerald-600 dark:border-emerald-500/50 bg-[#0b4d4e] dark:bg-emerald-600 text-white shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                  : "border-slate-200 dark:border-white/10 bg-white dark:bg-[#060d0e]/60 text-slate-700 dark:text-slate-300 shadow-2xs hover:bg-slate-50 dark:hover:bg-[#0c1a1c] hover:text-emerald-900 dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
+                  : "border-slate-200 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 shadow-2xs hover:bg-slate-50 dark:hover:bg-surface-panel hover:text-emerald-900 dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
               }`}
               title="Open search filters"
             >
@@ -960,7 +960,7 @@ export default function ExpandableSearchPanel({
               {/* UNIFIED CONTINUOUS BOX HEADER: SEARCH CONSOLE */}
               <div className="border-b border-slate-100 dark:border-white/10 bg-white dark:bg-[#0a1517] p-3 sm:p-4 flex items-center justify-between gap-2.5 sm:gap-3 shrink-0">
                 <div className="flex min-w-0 flex-1 items-center gap-2.5 sm:gap-3 pl-1 sm:pl-2">
-                  <div className="flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-slate-100 dark:bg-[#060d0e]/80 text-slate-700 dark:text-slate-300 dark:border dark:border-white/10">
+                  <div className="flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-slate-100 dark:bg-surface-ink/80 text-slate-700 dark:text-slate-300 dark:border dark:border-white/10">
                     <SearchIcon className="h-5 w-5" />
                   </div>
 
@@ -1044,7 +1044,7 @@ export default function ExpandableSearchPanel({
                   <button
                     type="button"
                     onClick={() => setIsOpen(false)}
-                    className="flex h-9 w-9 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 dark:hover:bg-[#0c1a1c] hover:text-slate-700 dark:hover:text-white transition-colors cursor-pointer dark:bg-[#060d0e]/60 dark:text-slate-300 dark:border dark:border-white/10"
+                    className="flex h-9 w-9 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 dark:hover:bg-surface-panel hover:text-slate-700 dark:hover:text-white transition-colors cursor-pointer dark:bg-surface-ink/60 dark:text-slate-300 dark:border dark:border-white/10"
                     title="Close search modal"
                   >
                     <XMarkIcon className="h-5 w-5" />
@@ -1058,7 +1058,7 @@ export default function ExpandableSearchPanel({
               <button
                 type="button"
                 onClick={() => handleExecuteSearch()}
-                className="flex w-full items-center justify-between rounded-xl bg-white dark:bg-[#0c181a] px-3.5 py-2.5 text-left border border-slate-200 dark:border-white/10 shadow-2xs hover:border-emerald-400 dark:hover:border-emerald-500/40 hover:bg-emerald-50/30 dark:hover:bg-[#060d0e] transition-colors cursor-pointer"
+                className="flex w-full items-center justify-between rounded-xl bg-white dark:bg-[#0c181a] px-3.5 py-2.5 text-left border border-slate-200 dark:border-white/10 shadow-2xs hover:border-emerald-400 dark:hover:border-emerald-500/40 hover:bg-emerald-50/30 dark:hover:bg-surface-ink transition-colors cursor-pointer"
               >
                 <div className="flex items-center gap-2">
                   <SearchIcon className="h-4 w-4 text-emerald-700 dark:text-emerald-400" />
@@ -1260,7 +1260,7 @@ export default function ExpandableSearchPanel({
                       className={`flex flex-col items-center justify-center p-3 rounded-2xl border transition-all cursor-pointer text-center ${
                         isSelected
                           ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border-emerald-500/70 dark:border-emerald-400/60 shadow-md ring-1 ring-emerald-400/50 dark:shadow-[0_0_20px_rgba(16,185,129,0.4)]"
-                          : "bg-white/90 dark:bg-[#060d0e]/60 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:bg-white dark:hover:bg-[#0c1a1c] hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_16px_rgba(16,185,129,0.3)] dark:hover:shadow-[0_0_20px_rgba(52,211,153,0.35)] shadow-2xs"
+                          : "bg-white/90 dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:bg-white dark:hover:bg-surface-panel hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_16px_rgba(16,185,129,0.3)] dark:hover:shadow-[0_0_20px_rgba(52,211,153,0.35)] shadow-2xs"
                       }`}
                     >
                       <Icon className={`h-4 w-4 mb-1 ${isSelected ? "text-emerald-300" : "text-slate-500 dark:text-slate-400"}`} />
@@ -1288,7 +1288,7 @@ export default function ExpandableSearchPanel({
                       className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
                         isChecked
                           ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white shadow-sm border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                          : "border border-slate-200 dark:border-white/10 bg-white dark:bg-[#060d0e]/60 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#0c1a1c] hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_14px_rgba(16,185,129,0.3)] dark:hover:shadow-[0_0_18px_rgba(52,211,153,0.35)]"
+                          : "border border-slate-200 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-surface-panel hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_14px_rgba(16,185,129,0.3)] dark:hover:shadow-[0_0_18px_rgba(52,211,153,0.35)]"
                       }`}
                     >
                       {isChecked && <CheckIcon className="h-3 w-3 text-emerald-300" />}
@@ -1434,7 +1434,7 @@ export default function ExpandableSearchPanel({
                   className={`rounded-full px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer shrink-0 self-start sm:self-auto ${
                     onShowOnly
                       ? "bg-amber-600 dark:bg-amber-500 text-white shadow-sm dark:shadow-[0_0_15px_rgba(245,158,11,0.35)]"
-                      : "border border-slate-300 dark:border-white/10 bg-white dark:bg-[#060d0e]/60 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#0c1a1c]"
+                      : "border border-slate-300 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-surface-panel"
                   }`}
                 >
                   {onShowOnly ? "✓ Active" : "Filter On Show"}
@@ -1458,7 +1458,7 @@ export default function ExpandableSearchPanel({
                       className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all cursor-pointer ${
                         isChecked
                           ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white shadow-xs border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                          : "border border-slate-200 dark:border-white/10 bg-white dark:bg-[#060d0e]/60 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#0c1a1c] hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_14px_rgba(16,185,129,0.3)] dark:hover:shadow-[0_0_18px_rgba(52,211,153,0.35)]"
+                          : "border border-slate-200 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-surface-panel hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_14px_rgba(16,185,129,0.3)] dark:hover:shadow-[0_0_18px_rgba(52,211,153,0.35)]"
                       }`}
                     >
                       {isChecked ? <CheckIcon className="h-3 w-3 text-emerald-300" /> : <span>+</span>}
@@ -1482,7 +1482,7 @@ export default function ExpandableSearchPanel({
 
             <div className="flex items-center gap-3">
               <span className="text-xs text-slate-400 dark:text-slate-500 hidden sm:inline">
-                Press <kbd className="font-mono text-xs bg-slate-200 dark:bg-[#060d0e] dark:border dark:border-white/10 text-slate-700 dark:text-slate-300 px-1.5 py-0.5 rounded">Esc</kbd> to close
+                Press <kbd className="font-mono text-xs bg-slate-200 dark:bg-surface-ink dark:border dark:border-white/10 text-slate-700 dark:text-slate-300 px-1.5 py-0.5 rounded">Esc</kbd> to close
               </span>
               <button
                 type="button"

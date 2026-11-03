@@ -80,12 +80,12 @@ export default function InquiriesPage() {
     <main className="min-h-screen bg-[var(--background)] px-4 py-5 text-slate-900 md:px-6 lg:px-8 dark:text-white">
       <div className="mx-auto max-w-4xl">
         {/* Header */}
-        <header className="relative z-50 mb-6 flex items-center justify-between rounded-[28px] border border-white/75 bg-white/45 px-5 py-3.5 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <header className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-5 py-3.5 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <BrandLogo />
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-2.5 gap-y-2">
             <Link
               href="/saved"
-              className="pill border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all dark:bg-[#060d0e]/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
+              className="pill border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
             >
               Saved Homes
             </Link>
@@ -100,7 +100,7 @@ export default function InquiriesPage() {
         </header>
 
         {/* Hero Section */}
-        <section className="rounded-[32px] border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.08)] backdrop-blur-xl mb-6 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <section className="rounded-panel border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.08)] backdrop-blur-xl mb-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs uppercase font-bold tracking-widest text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.2)]">
@@ -132,7 +132,7 @@ export default function InquiriesPage() {
             <button
               key={tab.id}
               onClick={() => setFilterKind(tab.id)}
-              className={`pill-sm font-semibold transition-all cursor-pointer ${ filterKind === tab.id ? "bg-slate-950 text-white shadow-sm dark:bg-emerald-600 dark:text-white dark:border dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/60 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-white/10" }`}
+              className={`pill-sm font-semibold transition-all cursor-pointer ${ filterKind === tab.id ? "bg-slate-950 text-white shadow-sm dark:bg-emerald-600 dark:text-white dark:border dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/60 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10" }`}
             >
               {tab.label}
             </button>
@@ -143,11 +143,11 @@ export default function InquiriesPage() {
         {loading ? (
           <div className="space-y-3">
             {[1, 2].map((n) => (
-              <div key={n} className="h-24 rounded-[26px] border border-white/60 bg-white/40 animate-pulse dark:bg-[#0c1a1c]/60 dark:border-white/10" />
+              <div key={n} className="h-24 rounded-card border border-white/60 bg-white/40 animate-pulse dark:bg-surface-panel/60 dark:border-white/10" />
             ))}
           </div>
         ) : filteredInquiries.length === 0 ? (
-          <div className="rounded-[28px] border border-dashed border-slate-300 bg-white/40 p-8 text-center dark:bg-[#0c1a1c]/60 dark:border-white/15 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+          <div className="rounded-card border border-dashed border-slate-300 bg-white/40 p-8 text-center dark:bg-surface-panel/60 dark:border-white/15 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
             <p className="text-sm font-semibold text-slate-800 dark:text-slate-300">No requests under this category</p>
             <Link
               href="/search"
@@ -164,10 +164,10 @@ export default function InquiriesPage() {
                 // `group relative` so the whole row opens the property the
                 // enquiry is about, and the button reacts to a hover anywhere
                 // on it. Only applies when there is a property to open.
-                className="group relative flex flex-col gap-4 rounded-[26px] border border-white/80 bg-white/60 p-5 shadow-sm backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between transition-all hover:bg-white dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/30"
+                className="group relative flex flex-col gap-4 rounded-card border border-white/80 bg-white/60 p-5 shadow-sm backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between transition-all hover:bg-white dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] dark:hover:bg-surface-panel dark:hover:border-emerald-500/30"
               >
                 <div>
-                  <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-bold text-slate-600 dark:bg-[#060d0e]/80 dark:text-slate-300 dark:border dark:border-white/10">
+                  <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-bold text-slate-600 dark:bg-surface-ink/80 dark:text-slate-300 dark:border dark:border-white/10">
                     {labels[inquiry.kind] ?? inquiry.kind}
                   </span>
                   {/* Conditional, because the row's link is: an enquiry whose

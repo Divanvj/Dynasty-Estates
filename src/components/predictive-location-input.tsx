@@ -244,7 +244,7 @@ export default function PredictiveLocationInput({
   }, [suggestions, value]);
 
   const defaultInputClass =
-    "w-full h-[48px] rounded-[18px] border border-white/70 bg-white/60 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 backdrop-blur-md transition-all";
+    "w-full h-[48px] rounded-control border border-white/70 bg-white/60 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 backdrop-blur-md transition-all";
 
   return (
     <div ref={containerRef} className={`relative ${className}`}>
@@ -338,9 +338,9 @@ export default function PredictiveLocationInput({
       {/* PREDICTIVE RECOMMENDATIONS DROPDOWN (Strict Search Bar Rules & Styling)     */}
       {/* ========================================================================= */}
       {isOpen && !disabled && (
-        <div className="absolute left-0 right-0 top-[calc(100%+6px)] z-50 flex max-h-72 flex-col overflow-hidden rounded-2xl border border-slate-200/90 dark:border-white/10 bg-white/98 dark:bg-[#0c1a1c] shadow-[0_20px_50px_rgba(15,23,42,0.18)] dark:shadow-[0_25px_60px_rgba(0,0,0,0.8)] backdrop-blur-2xl ring-1 ring-slate-950/5 animate-in fade-in zoom-in-95 duration-150">
+        <div className="absolute left-0 right-0 top-[calc(100%+6px)] z-50 flex max-h-72 flex-col overflow-hidden rounded-2xl border border-slate-200/90 dark:border-white/10 bg-white/98 dark:bg-surface-panel shadow-[0_20px_50px_rgba(15,23,42,0.18)] dark:shadow-[0_25px_60px_rgba(0,0,0,0.8)] backdrop-blur-2xl ring-1 ring-slate-950/5 animate-in fade-in zoom-in-95 duration-150">
           {/* Header Bar */}
-          <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/10 bg-slate-50/85 dark:bg-[#060d0e]/90 px-3.5 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300">
+          <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/10 bg-slate-50/85 dark:bg-surface-ink/90 px-3.5 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300">
             <span className="flex items-center gap-1.5">
               <LocationPinIcon className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
               <span>
@@ -381,10 +381,10 @@ export default function PredictiveLocationInput({
                       onMouseEnter={() => setHighlightedIndex(idx)}
                       className={`flex w-full items-center justify-between px-3.5 py-2.5 text-left text-xs transition-colors cursor-pointer ${
                         isHighlighted
-                          ? "bg-emerald-50 dark:bg-[#0c1a1c] text-emerald-950 dark:text-emerald-300"
+                          ? "bg-emerald-50 dark:bg-surface-panel text-emerald-950 dark:text-emerald-300"
                           : isSelected
-                          ? "bg-slate-50 dark:bg-[#060d0e]/80 text-slate-950 dark:text-white font-semibold"
-                          : "text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#060d0e]/60"
+                          ? "bg-slate-50 dark:bg-surface-ink/80 text-slate-950 dark:text-white font-semibold"
+                          : "text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-surface-ink/60"
                       }`}
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
@@ -394,7 +394,7 @@ export default function PredictiveLocationInput({
                               ? "bg-emerald-700 text-white"
                               : isHighlighted
                               ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-600/30 dark:text-emerald-300 dark:border dark:border-emerald-500/40"
-                              : "bg-slate-100 text-slate-500 dark:bg-[#060d0e]/80 dark:text-slate-400"
+                              : "bg-slate-100 text-slate-500 dark:bg-surface-ink/80 dark:text-slate-400"
                           }`}
                         >
                           <LocationPinIcon className="h-3.5 w-3.5" />
@@ -410,7 +410,7 @@ export default function PredictiveLocationInput({
                       </div>
 
                       <div className="flex items-center gap-1.5 shrink-0 pl-2">
-                        <span className="rounded-md bg-slate-100 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 px-2 py-0.5 text-xs font-medium text-slate-600 dark:text-slate-300">
+                        <span className="rounded-md bg-slate-100 dark:bg-surface-ink/80 dark:border dark:border-white/10 px-2 py-0.5 text-xs font-medium text-slate-600 dark:text-slate-300">
                           {city.province}
                         </span>
                         {isSelected && (
@@ -433,10 +433,10 @@ export default function PredictiveLocationInput({
                     onMouseEnter={() => setHighlightedIndex(idx)}
                     className={`flex w-full items-center justify-between px-3.5 py-2.5 text-left text-xs transition-colors cursor-pointer ${
                       isHighlighted
-                        ? "bg-emerald-50 dark:bg-[#0c1a1c] text-emerald-950 dark:text-emerald-300"
+                        ? "bg-emerald-50 dark:bg-surface-panel text-emerald-950 dark:text-emerald-300"
                         : isSelected
-                        ? "bg-slate-50 dark:bg-[#060d0e]/80 text-slate-950 dark:text-white font-semibold"
-                        : "text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#060d0e]/60"
+                        ? "bg-slate-50 dark:bg-surface-ink/80 text-slate-950 dark:text-white font-semibold"
+                        : "text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-surface-ink/60"
                     }`}
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
@@ -446,7 +446,7 @@ export default function PredictiveLocationInput({
                             ? "bg-emerald-700 text-white"
                             : isHighlighted
                             ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-600/30 dark:text-emerald-300 dark:border dark:border-emerald-500/40"
-                            : "bg-slate-100 text-slate-500 dark:bg-[#060d0e]/80 dark:text-slate-400"
+                            : "bg-slate-100 text-slate-500 dark:bg-surface-ink/80 dark:text-slate-400"
                         }`}
                       >
                         <LocationPinIcon className="h-3.5 w-3.5" />
@@ -464,7 +464,7 @@ export default function PredictiveLocationInput({
                     </div>
 
                     <div className="flex items-center gap-1.5 shrink-0 pl-2">
-                      <span className="rounded-md bg-slate-100 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 px-2 py-0.5 text-xs font-medium text-slate-600 dark:text-slate-300">
+                      <span className="rounded-md bg-slate-100 dark:bg-surface-ink/80 dark:border dark:border-white/10 px-2 py-0.5 text-xs font-medium text-slate-600 dark:text-slate-300">
                         {suburb.city}
                       </span>
                       {isSelected && (

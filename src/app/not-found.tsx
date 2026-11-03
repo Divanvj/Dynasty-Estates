@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-[var(--background)] px-4 py-8 text-slate-100">
-      <div className="relative mx-auto max-w-lg rounded-[32px] border border-white/10 bg-[#0c1a1c]/80 p-8 text-center shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-2xl">
+      <div className="relative mx-auto max-w-lg rounded-panel border border-white/10 bg-surface-panel/80 p-8 text-center shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-2xl">
         <span className="inline-block rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-emerald-400">
           404 · Property Not Located
         </span>

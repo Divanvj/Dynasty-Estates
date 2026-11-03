@@ -60,7 +60,7 @@ export default function MapSearchPage() {
     <main className="min-h-screen bg-transparent px-3 py-4 text-slate-900 dark:text-slate-100 md:px-8">
       <div className="mx-auto max-w-[1500px]">
         {/* Navigation Header */}
-        <header className="relative z-50 mb-6 flex items-center justify-between rounded-[26px] border border-white/75 bg-white/45 dark:border-white/10 dark:bg-[#0b1719]/70 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] dark:shadow-[0_12px_28px_rgba(0,0,0,0.4)] backdrop-blur-xl">
+        <header className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 dark:border-white/10 dark:bg-[#0b1719]/70 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] dark:shadow-[0_12px_28px_rgba(0,0,0,0.4)] backdrop-blur-xl">
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
             <BrandLogo markOnly />
             <div>
@@ -73,7 +73,7 @@ export default function MapSearchPage() {
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5 gap-y-2 sm:gap-2.5">
             <Link
               href="/search"
-              className="hidden sm:inline-block rounded-full border border-slate-300/80 bg-white/60 dark:border-white/10 dark:bg-[#060d0e]/60 px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-[#0c1a1c] dark:hover:text-white transition-all whitespace-nowrap shrink-0"
+              className="hidden sm:inline-block rounded-full border border-slate-300/80 bg-white/60 dark:border-white/10 dark:bg-surface-ink/60 px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-surface-panel dark:hover:text-white transition-all whitespace-nowrap shrink-0"
             >
               List View
             </Link>
@@ -89,7 +89,7 @@ export default function MapSearchPage() {
         </header>
 
         {/* Filter Toolbar */}
-        <div className="relative z-30 mb-6 flex flex-wrap items-center justify-between gap-3 rounded-[24px] border border-white/80 bg-white/50 dark:border-white/10 dark:bg-[#0c1a1c]/80 p-3 backdrop-blur-xl shadow-sm dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <div className="relative z-30 mb-6 flex flex-wrap items-center justify-between gap-3 rounded-card border border-white/80 bg-white/50 dark:border-white/10 dark:bg-surface-panel/80 p-3 backdrop-blur-xl shadow-sm dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           {/* Swipeable on phones — wrapping these cost three rows above the map. */}
           <div className="flex w-full lg:w-auto min-w-0 items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:flex-wrap lg:overflow-visible">
             <span className="shrink-0 text-xs font-bold text-slate-500 dark:text-slate-400 mr-1">Type:</span>
@@ -97,10 +97,10 @@ export default function MapSearchPage() {
               <button
                 key={t}
                 onClick={() => setActiveType(t)}
-                className={`shrink-0 rounded-full px-3 py-1.5 lg:py-1 text-xs font-semibold transition-all cursor-pointer ${
+                className={`tap-44 relative shrink-0 rounded-full px-3 py-1.5 lg:py-1 text-xs font-semibold transition-all cursor-pointer ${
                   activeType === t
                     ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 shadow-xs dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
-                    : "border border-slate-200 dark:border-white/10 bg-white/70 dark:bg-[#060d0e]/60 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-[#0c1a1c] dark:hover:text-white"
+                    : "border border-slate-200 dark:border-white/10 bg-white/70 dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-surface-panel dark:hover:text-white"
                 }`}
               >
                 {t}
@@ -116,7 +116,7 @@ export default function MapSearchPage() {
         {/* Real Interactive Google Maps & Street View Console */}
         <div className="relative z-10">
           {loading ? (
-            <div className="flex h-[420px] items-center justify-center rounded-[28px] border border-white/80 bg-white/60 backdrop-blur-xl sm:h-[500px] lg:h-[620px] dark:border-white/10 dark:bg-[#0c1a1c]/80">
+            <div className="flex h-[420px] items-center justify-center rounded-card border border-white/80 bg-white/60 backdrop-blur-xl sm:h-[500px] lg:h-[620px] dark:border-white/10 dark:bg-surface-panel/80">
               <p className="animate-pulse text-xs font-semibold text-slate-500 dark:text-slate-400">
                 Loading the catalogue…
               </p>
@@ -124,7 +124,7 @@ export default function MapSearchPage() {
           ) : loadFailed ? (
             /* An empty map is indistinguishable from "no listings match", so a
                failed catalogue has to say so rather than render a blank map. */
-            <div className="flex h-[420px] flex-col items-center justify-center gap-2 rounded-[28px] border border-white/80 bg-white/60 px-6 text-center backdrop-blur-xl sm:h-[500px] lg:h-[620px] dark:border-white/10 dark:bg-[#0c1a1c]/80">
+            <div className="flex h-[420px] flex-col items-center justify-center gap-2 rounded-card border border-white/80 bg-white/60 px-6 text-center backdrop-blur-xl sm:h-[500px] lg:h-[620px] dark:border-white/10 dark:bg-surface-panel/80">
               <p className="text-sm font-bold text-slate-900 dark:text-white">
                 Listings could not be loaded
               </p>

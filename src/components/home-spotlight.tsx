@@ -106,8 +106,8 @@ export default function HomeSpotlight({ properties }: { properties: PropertyReco
 
   return (
     <section className="relative z-10 mx-auto mt-6 max-w-[1440px]">
-      <div className="rounded-[32px] border border-white/70 bg-white/45 p-4 shadow-[0_20px_45px_rgba(36,48,50,0.08)] backdrop-blur-xl md:p-5 dark:border-white/10 dark:bg-[#0c1a1c]/65 dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)]">
-        <div className="group relative overflow-hidden rounded-[26px] border border-white/60 bg-[#dbe8f0] shadow-sm dark:border-white/10 dark:bg-[#071113]">
+      <div className="rounded-panel border border-white/70 bg-white/45 p-4 shadow-[0_20px_45px_rgba(36,48,50,0.08)] backdrop-blur-xl md:p-5 dark:border-white/10 dark:bg-surface-panel/65 dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)]">
+        <div className="group relative overflow-hidden rounded-card border border-white/60 bg-[#dbe8f0] shadow-sm dark:border-white/10 dark:bg-[#071113]">
           <div className="relative h-[400px] sm:h-[460px] md:h-[500px]">
             {slides.map((slide, i) => (
               <div
@@ -154,7 +154,7 @@ export default function HomeSpotlight({ properties }: { properties: PropertyReco
                   // z-30: browsing the carousel is a different action from
                   // opening the listing, so the arrows stay above the card
                   // overlay that now covers the whole showcase.
-                  className="absolute left-3 top-[32%] z-30 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white opacity-85 shadow-lg backdrop-blur-md transition-all hover:bg-black/65 hover:opacity-100 sm:left-5 sm:top-1/2"
+                  className="tap-44 absolute left-3 top-[32%] z-30 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white opacity-85 shadow-lg backdrop-blur-md transition-all hover:bg-black/65 hover:opacity-100 sm:left-5 sm:top-1/2"
                 >
                   <ArrowLeftIcon className="h-4 w-4" />
                 </button>
@@ -162,7 +162,7 @@ export default function HomeSpotlight({ properties }: { properties: PropertyReco
                   type="button"
                   onClick={() => go(safeIndex + 1, true)}
                   aria-label="Next property"
-                  className="absolute right-3 top-[32%] z-30 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white opacity-85 shadow-lg backdrop-blur-md transition-all hover:bg-black/65 hover:opacity-100 sm:right-5 sm:top-1/2"
+                  className="tap-44 absolute right-3 top-[32%] z-30 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white opacity-85 shadow-lg backdrop-blur-md transition-all hover:bg-black/65 hover:opacity-100 sm:right-5 sm:top-1/2"
                 >
                   <ArrowRightIcon className="h-4 w-4" />
                 </button>
@@ -200,7 +200,7 @@ export default function HomeSpotlight({ properties }: { properties: PropertyReco
             </Link>
 
             {/* Frosted showcase bar */}
-            <div className="absolute inset-x-4 bottom-4 rounded-[24px] border border-white/20 bg-black/50 p-5 text-white backdrop-blur-xl sm:inset-x-6 sm:bottom-6 sm:p-6 dark:border-white/10">
+            <div className="absolute inset-x-4 bottom-4 rounded-card border border-white/20 bg-black/50 p-5 text-white backdrop-blur-xl sm:inset-x-6 sm:bottom-6 sm:p-6 dark:border-white/10">
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div className="min-w-0">
                   <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.2em] text-slate-300 sm:text-xs">

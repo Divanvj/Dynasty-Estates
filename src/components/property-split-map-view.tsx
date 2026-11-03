@@ -27,6 +27,30 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
   const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   /**
+   * Which of the two panes a phone is looking at. Ignored from `lg` up, where
+   * both columns are on screen at once.
+   *
+   * Stacked, this page measured 13.3 screens on a 375px phone: a 420px map and
+   * then twelve screens of listings under it, which is not a map search — it is
+   * a list with a picture on top. Property24 and Private Property both answer
+   * this the same way, with a Map/List switch, and so does this.
+   */
+  const [mobilePane, setMobilePane] = useState<"map" | "list">("map");
+
+  // Leaflet sizes itself from its container at creation and then only on a
+  // window resize. Revealing a pane that was `display: none` changes the
+  // container without firing one, so the map would paint into the old box —
+  // grey tiles and pins in the wrong place. The map keeps Leaflet's default
+  // `trackResize`, so telling the window it resized is enough, and it is far
+  // cheaper than unmounting the map and losing the viewer's zoom and pan.
+  const showMobilePane = useCallback((pane: "map" | "list") => {
+    setMobilePane(pane);
+    if (pane === "map" && typeof window !== "undefined") {
+      requestAnimationFrame(() => window.dispatchEvent(new Event("resize")));
+    }
+  }, []);
+
+  /**
    * The listings inside the area drawn on the map, or null when none is drawn.
    *
    * The map has always worked this out — it filters its own pins and shows an
@@ -84,13 +108,50 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
     )}`;
   }, [activeProperty]);
 
+  // `grid-cols-1` is load-bearing below lg. With no base column the grid uses
+  // one implicit `auto` track sized to max-content, so the pane switch's
+  // `w-full` resolved against a track wider than the screen and scrolled the
+  // page sideways at 320px.
+  //
+  // This comment sits outside the `return (` on purpose: a braced JSX comment
+  // placed before the root element parses as an object literal and breaks the
+  // element after it.
   return (
-    <div className="grid gap-6 lg:grid-cols-12 items-start">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 items-start">
+      {/* Phone-only pane switch. Hidden from `lg`, where both columns fit. */}
+      <div className="order-1 lg:hidden">
+        <div
+          role="group"
+          aria-label="Choose map or list"
+          className="inline-flex w-full items-center rounded-2xl border border-slate-200/90 bg-white/80 p-1 shadow-2xs backdrop-blur-md dark:border-white/10 dark:bg-surface-ink/60"
+        >
+          {(["map", "list"] as const).map((pane) => (
+            <button
+              key={pane}
+              type="button"
+              onClick={() => showMobilePane(pane)}
+              aria-pressed={mobilePane === pane}
+              className={`flex min-h-[44px] flex-1 items-center justify-center gap-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                mobilePane === pane
+                  ? "bg-[#0b4d4e] text-white border border-emerald-400/50 shadow-xs dark:bg-emerald-600 dark:border-emerald-400/60 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                  : "text-slate-600 hover:bg-slate-100/80 hover:text-emerald-950 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-white"
+              }`}
+            >
+              {pane === "map" ? "🗺️ Map" : `☰ List (${visibleProperties.length})`}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Left Column: Scrollable Property Listings Feed */}
       {/* Below `lg` this single-column grid put the feed first, burying the map
           under every listing — on a page called "Map & Street View". The map is
           ordered first on phones and returns to the right-hand column at `lg`. */}
-      <div className="order-2 lg:order-none lg:col-span-7 space-y-4">
+      <div
+        className={`order-3 lg:order-none lg:col-span-7 space-y-4 ${
+          mobilePane === "list" ? "" : "max-lg:hidden"
+        }`}
+      >
         <div className="flex flex-wrap items-center justify-between gap-2 px-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
           <span>
             {areaIds
@@ -114,9 +175,9 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
               onClick={() => handleSelectProperty(property.id, true)}
               onMouseEnter={() => setHoveredPropertyId(property.id)}
               onMouseLeave={() => setHoveredPropertyId(undefined)}
-              className={`group overflow-hidden rounded-[28px] border bg-white/75 dark:bg-[#0c1a1c]/80 shadow-[0_10px_28px_rgba(36,48,50,0.06)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl transition-all duration-300 cursor-pointer ${
+              className={`group overflow-hidden rounded-card border bg-white/75 dark:bg-surface-panel/80 shadow-[0_10px_28px_rgba(36,48,50,0.06)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl transition-all duration-300 cursor-pointer ${
                 isSelected
-                  ? "border-emerald-500 ring-2 ring-emerald-500/40 bg-white dark:bg-[#0c1a1c] dark:shadow-[0_0_30px_rgba(16,185,129,0.25)] shadow-xl"
+                  ? "border-emerald-500 ring-2 ring-emerald-500/40 bg-white dark:bg-surface-panel dark:shadow-[0_0_30px_rgba(16,185,129,0.25)] shadow-xl"
                   : hoveredPropertyId === property.id
                     ? "border-emerald-400 dark:border-emerald-400/60 shadow-lg dark:shadow-[0_0_20px_rgba(16,185,129,0.2)]"
                     : "border-white/80 dark:border-white/10 hover:border-emerald-400 dark:hover:border-emerald-400/50 hover:shadow-lg"
@@ -124,7 +185,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
             >
               <div className="flex flex-col sm:flex-row">
                 {/* Image */}
-                <div className="relative h-52 sm:h-auto sm:w-5/12 shrink-0 bg-slate-200 dark:bg-[#060d0e] overflow-hidden">
+                <div className="relative h-52 sm:h-auto sm:w-5/12 shrink-0 bg-slate-200 dark:bg-surface-ink overflow-hidden">
                   <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
                     style={{ backgroundImage: `url(${property.image})` }}
@@ -162,7 +223,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                         <LocationPinIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
                         <span>{property.suburb || property.location.split(",")[0]}</span>
                       </span>
-                      <span className="rounded-full bg-slate-100 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 px-2.5 py-0.5 text-xs font-bold text-slate-700 dark:text-slate-300">
+                      <span className="rounded-full bg-slate-100 dark:bg-surface-ink/80 dark:border dark:border-white/10 px-2.5 py-0.5 text-xs font-bold text-slate-700 dark:text-slate-300">
                         {property.type}
                       </span>
                     </div>
@@ -195,13 +256,22 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                     </div>
                   </div>
 
-                  {/* Action Row */}
-                  <div className="mt-4 pt-3 border-t border-slate-100 dark:border-white/10 flex flex-wrap items-center justify-between gap-2" onClick={(e) => e.stopPropagation()}>
+                  {/* Action Row.
+
+                      `gap-y-3.5` rather than `gap-2`, and the reason is the
+                      `tap-44` on the three pills below. This row wraps on a
+                      phone, so "Details" drops under "Street View"; at an 8px
+                      row gap two 32px pills sit 40px centre to centre, and
+                      expanding both hit areas to 44 made them overlap by 4px
+                      — the lower one would have taken taps aimed at the upper.
+                      14px puts the centres 46px apart, so the areas clear each
+                      other. Measured, not guessed. */}
+                  <div className="mt-4 pt-3 border-t border-slate-100 dark:border-white/10 flex flex-wrap items-center justify-between gap-x-2 gap-y-3.5" onClick={(e) => e.stopPropagation()}>
                     <div className="flex items-center gap-2">
                       <button
                         type="button"
                         onClick={() => handleSelectProperty(property.id, true)}
-                        className="pill-sm bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 border border-emerald-500/50 font-bold text-white shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] hover:from-[#093e3f] hover:to-[#052c2d] dark:hover:from-emerald-500 dark:hover:to-emerald-600 transition-all cursor-pointer gap-1"
+                        className="tap-44 relative pill-sm bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 border border-emerald-500/50 font-bold text-white shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] hover:from-[#093e3f] hover:to-[#052c2d] dark:hover:from-emerald-500 dark:hover:to-emerald-600 transition-all cursor-pointer gap-1"
                         title="View Street View for this property"
                       >
                         <span>👁️ Street View</span>
@@ -212,7 +282,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                           handleSelectProperty(property.id, false);
                           setDisplayMode("map");
                         }}
-                        className="pill-sm border border-slate-200 dark:border-white/10 bg-white dark:bg-[#060d0e]/60 font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#0c1a1c] dark:hover:text-white transition-all cursor-pointer"
+                        className="tap-44 relative pill-sm border border-slate-200 dark:border-white/10 bg-white dark:bg-surface-ink/60 font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-surface-panel dark:hover:text-white transition-all cursor-pointer"
                       >
                         🗺️ Locate
                       </button>
@@ -220,7 +290,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
 
                     <Link
                       href={`/property/${property.slug || property.id}`}
-                      className="pill-sm bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 hover:from-[#093e3f] hover:to-[#052c2d] dark:hover:from-emerald-500 dark:hover:to-emerald-600 font-bold text-white shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] border border-emerald-500/30 transition-all"
+                      className="tap-44 relative pill-sm bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 hover:from-[#093e3f] hover:to-[#052c2d] dark:hover:from-emerald-500 dark:hover:to-emerald-600 font-bold text-white shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] border border-emerald-500/30 transition-all"
                     >
                       Details →
                     </Link>
@@ -234,7 +304,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
         {/* An area can legitimately contain nothing. Without this the feed just
             emptied, which reads as a broken page rather than a narrow search. */}
         {areaIds && visibleProperties.length === 0 && (
-          <div className="rounded-[28px] border border-white/80 bg-white/75 p-8 text-center shadow-[0_10px_28px_rgba(36,48,50,0.06)] backdrop-blur-xl dark:border-white/10 dark:bg-[#0c1a1c]/80 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+          <div className="rounded-card border border-white/80 bg-white/75 p-8 text-center shadow-[0_10px_28px_rgba(36,48,50,0.06)] backdrop-blur-xl dark:border-white/10 dark:bg-surface-panel/80 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
             <p className="text-sm font-bold text-slate-900 dark:text-white">
               No listings in this area
             </p>
@@ -246,8 +316,12 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
       </div>
 
       {/* Right Column: Sticky Google Maps & Street View Console */}
-      <div className="order-1 lg:order-none lg:col-span-5 lg:sticky lg:top-6">
-        <div className="overflow-hidden rounded-[30px] border border-white/80 dark:border-white/10 bg-white/80 dark:bg-[#0c1a1c]/90 shadow-[0_16px_36px_rgba(36,48,50,0.08)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+      <div
+        className={`order-2 lg:order-none lg:col-span-5 lg:sticky lg:top-6 ${
+          mobilePane === "map" ? "" : "max-lg:hidden"
+        }`}
+      >
+        <div className="overflow-hidden rounded-panel border border-white/80 dark:border-white/10 bg-white/80 dark:bg-surface-panel/90 shadow-[0_16px_36px_rgba(36,48,50,0.08)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)] backdrop-blur-xl">
           {/* Map Header & View Switcher */}
           <div className="border-b border-slate-200/80 dark:border-white/10 bg-slate-50/90 dark:bg-[#081315]/90 p-3">
             <div className="flex items-center justify-between gap-2 mb-2.5">
@@ -348,10 +422,10 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
               <div className="absolute bottom-3 left-3 right-3 z-10 animate-in fade-in slide-in-from-bottom-2 duration-200">
                 {/* Stacks on phones: side by side, the action buttons squeezed
                     the title and price down to a few characters. */}
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 rounded-2xl border border-white/90 dark:border-white/10 bg-white/95 dark:bg-[#0c1a1c]/95 p-3 shadow-xl dark:shadow-[0_20px_45px_rgba(0,0,0,0.6)] backdrop-blur-xl">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 rounded-2xl border border-white/90 dark:border-white/10 bg-white/95 dark:bg-surface-panel/95 p-3 shadow-xl dark:shadow-[0_20px_45px_rgba(0,0,0,0.6)] backdrop-blur-xl">
                   <div className="flex items-center gap-3 min-w-0">
                     <div
-                      className="h-12 w-14 shrink-0 rounded-xl bg-slate-200 bg-cover bg-center border border-slate-200 dark:border-white/10 dark:bg-[#060d0e]"
+                      className="h-12 w-14 shrink-0 rounded-xl bg-slate-200 bg-cover bg-center border border-slate-200 dark:border-white/10 dark:bg-surface-ink"
                       style={{ backgroundImage: `url(${activeProperty.image})` }}
                     />
                     <div className="min-w-0">
@@ -380,7 +454,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                       href={externalGoogleMapsUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="pill border border-slate-200 dark:border-white/10 bg-white dark:bg-[#060d0e]/60 font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#0c1a1c] dark:hover:text-white transition-all"
+                      className="pill border border-slate-200 dark:border-white/10 bg-white dark:bg-surface-ink/60 font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-surface-panel dark:hover:text-white transition-all"
                       title="Open in Google Maps tab"
                     >
                       ↗

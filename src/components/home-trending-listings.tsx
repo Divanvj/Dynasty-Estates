@@ -73,7 +73,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
     it parses as an object literal, and the element after it then fails.
   */
   return (
-    <section id="listings" className="mx-auto mt-8 max-w-[1440px] rounded-[32px] border border-white/45 bg-white/35 dark:border-white/10 dark:bg-[#0c1a1c]/65 p-4 shadow-[0_20px_45px_rgba(15,23,42,0.06)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl md:p-6 max-md:rounded-none max-md:border-0 max-md:bg-transparent max-md:p-0 max-md:shadow-none max-md:backdrop-blur-none dark:max-md:bg-transparent">
+    <section id="listings" className="mx-auto mt-8 max-w-[1440px] rounded-panel border border-white/45 bg-white/35 dark:border-white/10 dark:bg-surface-panel/65 p-4 shadow-[0_20px_45px_rgba(15,23,42,0.06)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl md:p-6 max-md:rounded-none max-md:border-0 max-md:bg-transparent max-md:p-0 max-md:shadow-none max-md:backdrop-blur-none dark:max-md:bg-transparent">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between border-b border-slate-200/60 dark:border-white/10 pb-4">
         <div>
           <div className="flex items-center gap-3">
@@ -82,7 +82,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
             </p>
             <span className="text-slate-300 dark:text-slate-600">•</span>
             {/* Direct Rent vs Buy Switcher */}
-            <div className="inline-flex rounded-full border border-slate-200/90 bg-white/80 dark:border-white/10 dark:bg-[#060d0e]/60 p-0.5 shadow-sm">
+            <div className="inline-flex rounded-full border border-slate-200/90 bg-white/80 dark:border-white/10 dark:bg-surface-ink/60 p-0.5 shadow-sm">
               <button
                 type="button"
                 onClick={() => handleIntentChange("buy")}
@@ -115,14 +115,14 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
         {/* View Switcher & Type Filter Toolbar */}
         <div className="flex flex-wrap items-center gap-3">
           {/* View Mode Switcher Segmented Control */}
-          <div className="inline-flex items-center rounded-2xl border border-slate-200/90 bg-white/80 dark:border-white/10 dark:bg-[#060d0e]/60 p-1 shadow-2xs backdrop-blur-md">
+          <div className="inline-flex items-center rounded-2xl border border-slate-200/90 bg-white/80 dark:border-white/10 dark:bg-surface-ink/60 p-1 shadow-2xs backdrop-blur-md">
             <button
               type="button"
               onClick={() => setViewMode("grid")}
-              className={`flex items-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer ${
+              className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
                 viewMode === "grid"
                   ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                  : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-[#0c1a1c]"
+                  : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
               }`}
               title="Grid View (Photo Cards)"
             >
@@ -132,10 +132,10 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
             <button
               type="button"
               onClick={() => setViewMode("list")}
-              className={`flex items-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer ${
+              className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
                 viewMode === "list"
                   ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                  : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-[#0c1a1c]"
+                  : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
               }`}
               title="List View (Detailed Cards)"
             >
@@ -145,10 +145,10 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
             <button
               type="button"
               onClick={() => setViewMode("map")}
-              className={`flex items-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer ${
+              className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
                 viewMode === "map"
                   ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                  : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-[#0c1a1c]"
+                  : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
               }`}
               title="Split Map View (Interactive Map + Listings)"
             >
@@ -158,10 +158,10 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
             <button
               type="button"
               onClick={() => setViewMode("compact")}
-              className={`flex items-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer ${
+              className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
                 viewMode === "compact"
                   ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                  : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-[#0c1a1c]"
+                  : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
               }`}
               title="Compact Table View (Investor Spreadsheet)"
             >
@@ -176,10 +176,15 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
               <button
                 key={filter}
                 onClick={() => setActiveFilter(filter)}
-                className={`rounded-full px-3 py-1 text-xs font-semibold transition-all cursor-pointer ${
+                /* Sized rather than given `tap-44`: these pills wrap into rows
+                   1.5 apart, so centred 44px overlays would cover each other
+                   and the last in the DOM would take its neighbours' taps.
+                   Real height instead, back to compact from `lg` where there
+                   is a pointer. */
+                className={`inline-flex min-h-[44px] items-center justify-center rounded-full px-3 py-1 text-xs font-semibold transition-all cursor-pointer lg:min-h-0 ${
                   activeFilter === filter
                     ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 text-white shadow-md border border-emerald-400/30 dark:border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "border border-slate-200/80 bg-white/60 dark:border-white/10 dark:bg-[#060d0e]/60 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-[#0c1a1c] hover:border-emerald-400/50"
+                    : "border border-slate-200/80 bg-white/60 dark:border-white/10 dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-surface-panel hover:border-emerald-400/50"
                 }`}
               >
                 {filter}
@@ -198,9 +203,9 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
               {filtered.map((card) => (
                 <article
                   key={card.id}
-                  className="group overflow-hidden rounded-[28px] border border-white/70 bg-white/55 dark:border-white/10 dark:bg-[#0c1a1c]/75 shadow-[0_16px_35px_rgba(15,23,42,0.06)] dark:shadow-[0_16px_35px_rgba(0,0,0,0.4)] backdrop-blur-md transition-all hover:-translate-y-1 hover:shadow-xl"
+                  className="group overflow-hidden rounded-card border border-white/70 bg-white/55 dark:border-white/10 dark:bg-surface-panel/75 shadow-[0_16px_35px_rgba(15,23,42,0.06)] dark:shadow-[0_16px_35px_rgba(0,0,0,0.4)] backdrop-blur-md transition-all hover:-translate-y-1 hover:shadow-xl"
                 >
-                  <div className="relative h-60 overflow-hidden bg-slate-200 dark:bg-[#060d0e]">
+                  <div className="relative h-60 overflow-hidden bg-slate-200 dark:bg-surface-ink">
                     <div
                       className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
                       style={{ backgroundImage: `url(${card.image})` }}
@@ -238,7 +243,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
                           <span>{card.location}</span>
                         </p>
                       </div>
-                      <span className="rounded-full bg-slate-100 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 px-2 py-0.5 text-xs font-bold text-slate-600 dark:text-slate-300">
+                      <span className="rounded-full bg-slate-100 dark:bg-surface-ink/80 dark:border dark:border-white/10 px-2 py-0.5 text-xs font-bold text-slate-600 dark:text-slate-300">
                         {card.type}
                       </span>
                     </div>

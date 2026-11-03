@@ -122,12 +122,12 @@ export default function SavedPropertiesPage() {
     <main className="min-h-screen bg-[var(--background)] px-3 py-4 text-slate-900 md:px-8 dark:text-white">
       <div className="mx-auto max-w-6xl">
         {/* Navigation Header */}
-        <header className="relative z-50 mb-6 flex items-center justify-between rounded-[26px] border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_12px_28px_rgba(0,0,0,0.3)]">
+        <header className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_12px_28px_rgba(0,0,0,0.3)]">
           <BrandLogo />
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5 gap-y-2 sm:gap-2.5">
             <Link
               href="/compare"
-              className="hidden sm:inline-block rounded-full border border-slate-300/80 bg-white/60 px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 hover:bg-white transition-all whitespace-nowrap shrink-0 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-200 dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40 dark:hover:text-emerald-300"
+              className="hidden sm:inline-block rounded-full border border-slate-300/80 bg-white/60 px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 hover:bg-white transition-all whitespace-nowrap shrink-0 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-emerald-300"
             >
               <span className="hidden sm:inline">Compare Shortlist</span>
               <span className="sm:hidden">Compare</span> →
@@ -144,7 +144,7 @@ export default function SavedPropertiesPage() {
         </header>
 
         {/* Hero Title */}
-        <section className="rounded-[32px] border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.08)] backdrop-blur-xl mb-6 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <section className="rounded-panel border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.08)] backdrop-blur-xl mb-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <span className="rounded-full bg-emerald-100 dark:bg-emerald-950/60 border border-emerald-200/60 dark:border-emerald-500/30 px-3 py-1 text-xs uppercase font-bold tracking-widest text-emerald-800 dark:text-emerald-300">
             Buyer Shortlist
           </span>
@@ -163,12 +163,12 @@ export default function SavedPropertiesPage() {
         {loading ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[1, 2, 3].map((n) => (
-              <div key={n} className="h-80 rounded-[30px] border border-white/60 bg-white/40 animate-pulse dark:bg-[#0c1a1c]/60 dark:border-white/10" />
+              <div key={n} className="h-80 rounded-panel border border-white/60 bg-white/40 animate-pulse dark:bg-surface-panel/60 dark:border-white/10" />
             ))}
           </div>
         ) : properties.length === 0 ? (
-          <div className="rounded-[32px] border border-white/80 bg-white/50 p-12 text-center shadow-sm backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white/80 dark:bg-[#060d0e]/80 shadow-md mb-3 text-slate-400 dark:text-slate-400 border border-slate-200/50 dark:border-white/10">
+          <div className="rounded-panel border border-white/80 bg-white/50 p-12 text-center shadow-sm backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white/80 dark:bg-surface-ink/80 shadow-md mb-3 text-slate-400 dark:text-slate-400 border border-slate-200/50 dark:border-white/10">
               <HeartIcon className="h-8 w-8 text-slate-400 dark:text-emerald-400" />
             </div>
             <h3 className="mt-3 text-xl font-bold text-slate-900 dark:text-white">Your shortlist is empty</h3>
@@ -190,9 +190,9 @@ export default function SavedPropertiesPage() {
                 // `relative` anchors the .card-link overlay on the title below;
                 // `group` lets the button at the foot react to a hover anywhere
                 // on the card, since the whole card is now the target.
-                className="group relative overflow-hidden rounded-[30px] border border-white/80 bg-white/60 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl transition-all hover:shadow-xl dark:bg-[#0c1a1c]/75 dark:border-white/10 dark:shadow-[0_16px_36px_rgba(0,0,0,0.4)]"
+                className="group relative overflow-hidden rounded-panel border border-white/80 bg-white/60 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl transition-all hover:shadow-xl dark:bg-surface-panel/75 dark:border-white/10 dark:shadow-[0_16px_36px_rgba(0,0,0,0.4)]"
               >
-                <div className="relative h-56 bg-slate-200 dark:bg-[#060d0e]">
+                <div className="relative h-56 bg-slate-200 dark:bg-surface-ink">
                   <PropertyCardPhotos
                     images={property.gallery?.length ? property.gallery : [property.image]}
                     title={property.title}
@@ -216,7 +216,7 @@ export default function SavedPropertiesPage() {
                 </div>
 
                 <div className="p-5">
-                  <span className="rounded-full bg-slate-100 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 px-2.5 py-0.5 text-xs font-bold text-slate-600 dark:text-slate-300">
+                  <span className="rounded-full bg-slate-100 dark:bg-surface-ink/80 dark:border dark:border-white/10 px-2.5 py-0.5 text-xs font-bold text-slate-600 dark:text-slate-300">
                     {property.type}
                   </span>
                   {/* The card's one real link; `card-link` stretches it over

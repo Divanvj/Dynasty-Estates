@@ -108,7 +108,7 @@ export default function PropertyInquiryButton({
           onClick={() => setIsOpen(false)}
         >
           <div
-            className="w-full max-w-lg rounded-3xl border border-white/80 bg-white/95 p-6 shadow-2xl backdrop-blur-2xl text-slate-900 dark:bg-[#0c1a1c] dark:border-white/10 dark:shadow-[0_25px_60px_rgba(0,0,0,0.8)] dark:text-white"
+            className="w-full max-w-lg rounded-3xl border border-white/80 bg-white/95 p-6 shadow-2xl backdrop-blur-2xl text-slate-900 dark:bg-surface-panel dark:border-white/10 dark:shadow-[0_25px_60px_rgba(0,0,0,0.8)] dark:text-white"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
@@ -122,7 +122,7 @@ export default function PropertyInquiryButton({
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-500 hover:bg-slate-200 cursor-pointer dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-white"
+                className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-500 hover:bg-slate-200 cursor-pointer dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-white"
               >
                 <XMarkIcon className="h-4 w-4" />
               </button>
@@ -160,7 +160,7 @@ export default function PropertyInquiryButton({
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       placeholder="e.g. Johan van der Merwe"
-                      className="w-full h-[40px] rounded-xl border border-slate-300/80 bg-white px-3 font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-emerald-500"
+                      className="w-full h-[40px] rounded-xl border border-slate-300/80 bg-white px-3 font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-emerald-500"
                     />
                   </div>
                   <div>
@@ -174,7 +174,7 @@ export default function PropertyInquiryButton({
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="e.g. 082 123 4567"
-                      className="w-full h-[40px] rounded-xl border border-slate-300/80 bg-white px-3 font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-emerald-500"
+                      className="w-full h-[40px] rounded-xl border border-slate-300/80 bg-white px-3 font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-emerald-500"
                     />
                   </div>
                 </div>
@@ -190,7 +190,7 @@ export default function PropertyInquiryButton({
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="e.g. johan@example.co.za"
-                    className="w-full h-[40px] rounded-xl border border-slate-300/80 bg-white px-3 font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-emerald-500"
+                    className="w-full h-[40px] rounded-xl border border-slate-300/80 bg-white px-3 font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-emerald-500"
                   />
                 </div>
 
@@ -207,7 +207,7 @@ export default function PropertyInquiryButton({
                         required
                         value={date}
                         onChange={(e) => setDate(e.target.value)}
-                        className="w-full h-[40px] rounded-xl border border-slate-300/80 bg-white px-3 font-medium text-slate-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 cursor-pointer dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:focus:border-emerald-500"
+                        className="w-full h-[40px] rounded-xl border border-slate-300/80 bg-white px-3 font-medium text-slate-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 cursor-pointer dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:focus:border-emerald-500"
                       />
                     </div>
                     <div>
@@ -225,7 +225,7 @@ export default function PropertyInquiryButton({
                           "Weekend Slot",
                         ]}
                         className="h-[40px]"
-                        buttonClassName="w-full h-full rounded-xl border border-slate-300/80 bg-white px-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 flex items-center justify-between dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white"
+                        buttonClassName="w-full h-full rounded-xl border border-slate-300/80 bg-white px-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 flex items-center justify-between dark:border-white/10 dark:bg-surface-ink/60 dark:text-white"
                       />
                     </div>
                   </div>
@@ -247,7 +247,7 @@ export default function PropertyInquiryButton({
                       "Need bond pre-qualification assistance",
                     ]}
                     className="h-[40px]"
-                    buttonClassName="w-full h-full rounded-xl border border-slate-300/80 bg-white px-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 flex items-center justify-between dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white"
+                    buttonClassName="w-full h-full rounded-xl border border-slate-300/80 bg-white px-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 flex items-center justify-between dark:border-white/10 dark:bg-surface-ink/60 dark:text-white"
                   />
                 </div>
 
@@ -262,7 +262,7 @@ export default function PropertyInquiryButton({
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder="e.g. Please confirm inverter battery capacity and body corporate rules for pets."
-                    className="w-full rounded-xl border border-slate-300/80 bg-white px-3 py-2 font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-emerald-500"
+                    className="w-full rounded-xl border border-slate-300/80 bg-white px-3 py-2 font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-emerald-500"
                   />
                 </div>
 

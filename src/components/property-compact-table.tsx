@@ -77,9 +77,9 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
   }, [enrichedProperties, sortCol, sortDir]);
 
   return (
-    <div className="overflow-hidden rounded-[28px] border border-white/80 dark:border-white/10 bg-white/75 dark:bg-[#0c1a1c]/80 shadow-[0_16px_36px_rgba(36,48,50,0.08)] dark:shadow-[0_16px_36px_rgba(0,0,0,0.3)] backdrop-blur-xl">
+    <div className="overflow-hidden rounded-card border border-white/80 dark:border-white/10 bg-white/75 dark:bg-surface-panel/80 shadow-[0_16px_36px_rgba(36,48,50,0.08)] dark:shadow-[0_16px_36px_rgba(0,0,0,0.3)] backdrop-blur-xl">
       {/* Table Subheader Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 dark:border-white/10 bg-slate-50/70 dark:bg-[#060d0e]/60 px-5 py-3 text-xs">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 dark:border-white/10 bg-slate-50/70 dark:bg-surface-ink/60 px-5 py-3 text-xs">
         <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200 font-semibold">
           <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
           <span>Investor & Power-User Comparison Table</span>
@@ -108,7 +108,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
             key={col}
             type="button"
             onClick={() => handleHeaderClick(col)}
-            className={`pill-sm font-semibold transition-all ${ sortCol === col ? "bg-slate-950 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-[#060d0e]/60 text-slate-700 dark:text-slate-300" }`}
+            className={`pill-sm font-semibold transition-all ${ sortCol === col ? "bg-slate-950 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300" }`}
           >
             {label}
             {sortCol === col && <span className="ml-1">{sortDir === "asc" ? "▲" : "▼"}</span>}
@@ -129,7 +129,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
               <div className="flex gap-3">
                 <Link
                   href={`/property/${prop.slug || prop.id}`}
-                  className="h-20 w-20 shrink-0 rounded-2xl bg-slate-200 dark:bg-[#060d0e] bg-cover bg-center border border-slate-200 dark:border-white/10"
+                  className="h-20 w-20 shrink-0 rounded-2xl bg-slate-200 dark:bg-surface-ink bg-cover bg-center border border-slate-200 dark:border-white/10"
                   style={{ backgroundImage: `url(${prop.image})` }}
                   aria-label={prop.title}
                 />
@@ -217,7 +217,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
       <div className="hidden md:block overflow-x-auto">
         <table className="w-full text-left border-collapse text-xs">
           <thead>
-            <tr className="border-b border-slate-200 dark:border-white/10 bg-slate-100/50 dark:bg-[#060d0e]/80 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 select-none">
+            <tr className="border-b border-slate-200 dark:border-white/10 bg-slate-100/50 dark:bg-surface-ink/80 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 select-none">
               <th className="py-3.5 pl-5 pr-3">Property</th>
               <th className="py-3.5 px-3">Location</th>
               <th
@@ -272,13 +272,13 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
               return (
                 <tr
                   key={prop.id}
-                  className="hover:bg-slate-50/80 dark:hover:bg-[#0c1a1c]/60 transition-colors group"
+                  className="hover:bg-slate-50/80 dark:hover:bg-surface-panel/60 transition-colors group"
                 >
                   {/* Property Info + Thumbnail */}
                   <td className="py-3.5 pl-5 pr-3">
                     <div className="flex items-center gap-3">
                       <div
-                        className="h-12 w-16 shrink-0 rounded-xl bg-slate-200 dark:bg-[#060d0e] bg-cover bg-center border border-slate-200 dark:border-white/10 shadow-2xs group-hover:scale-105 transition-transform"
+                        className="h-12 w-16 shrink-0 rounded-xl bg-slate-200 dark:bg-surface-ink bg-cover bg-center border border-slate-200 dark:border-white/10 shadow-2xs group-hover:scale-105 transition-transform"
                         style={{ backgroundImage: `url(${prop.image})` }}
                       />
                       <div className="min-w-0">
@@ -353,7 +353,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
                   {/* Rate per m² */}
                   <td className="py-3.5 px-3 whitespace-nowrap">
                     {prop.pricePerM2 > 0 ? (
-                      <span className="rounded-md bg-slate-100 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 px-2 py-1 text-slate-700 dark:text-slate-300 font-semibold font-mono text-xs">
+                      <span className="rounded-md bg-slate-100 dark:bg-surface-ink/80 dark:border dark:border-white/10 px-2 py-1 text-slate-700 dark:text-slate-300 font-semibold font-mono text-xs">
                         R {formatNumber(prop.pricePerM2)}/m²
                       </span>
                     ) : (

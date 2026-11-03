@@ -55,7 +55,7 @@ export default function SellerPortal() {
     >
       <main className="min-h-screen bg-[var(--background)] px-4 py-5 text-slate-900 md:px-6 lg:px-8 dark:text-white">
       <div className="mx-auto max-w-[1500px]">
-        <header className="mb-6 flex items-center justify-between rounded-[28px] border border-white/45 bg-white/35 px-4 py-3 backdrop-blur-xl shadow-[0_12px_30px_rgba(15,23,42,0.06)] md:px-6 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <header className="mb-6 flex items-center justify-between rounded-card border border-white/45 bg-white/35 px-4 py-3 backdrop-blur-xl shadow-[0_12px_30px_rgba(15,23,42,0.06)] md:px-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <BrandLogo />
 
           <div className="hidden items-center gap-6 text-sm text-slate-700 md:flex dark:text-slate-300">
@@ -67,7 +67,7 @@ export default function SellerPortal() {
 
         {user ? <p className="mb-4 text-sm text-slate-600 dark:text-slate-300">Showing listings owned by {user.email}.</p> : null}
 
-        <section className="mb-6 rounded-[32px] border border-white/45 bg-[linear-gradient(135deg,rgba(255,255,255,0.6),rgba(220,238,244,0.72))] dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-7">
+        <section className="mb-6 rounded-panel border border-white/45 bg-[linear-gradient(135deg,rgba(255,255,255,0.6),rgba(220,238,244,0.72))] dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-7">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400 font-bold">Seller portal</p>
@@ -84,7 +84,7 @@ export default function SellerPortal() {
 
         <section className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {cards.map((card) => (
-            <div key={card.label} className="rounded-[28px] border border-white/45 bg-white/40 p-5 shadow-[0_18px_35px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+            <div key={card.label} className="rounded-card border border-white/45 bg-white/40 p-5 shadow-[0_18px_35px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400 font-bold">{card.label}</p>
               <p className="mt-4 text-3xl font-semibold text-slate-900 dark:text-white">{card.value}</p>
             </div>
@@ -92,18 +92,18 @@ export default function SellerPortal() {
         </section>
 
         <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="rounded-[32px] border border-white/45 bg-white/40 p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-6 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+          <div className="rounded-panel border border-white/45 bg-white/40 p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
             <div className="mb-5 flex items-center justify-between">
               <div>
                 <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400 font-bold">Portfolio</p>
                 <h2 className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white">Your listings</h2>
               </div>
-              <Link href="/seller/listings/new" className="rounded-full border border-slate-300 bg-white/60 px-4 py-2 text-sm text-slate-700 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-200 dark:hover:bg-[#0c1a1c] dark:hover:text-white font-semibold transition-all">Manage</Link>
+              <Link href="/seller/listings/new" className="rounded-full border border-slate-300 bg-white/60 px-4 py-2 text-sm text-slate-700 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:text-white font-semibold transition-all">Manage</Link>
             </div>
 
             <div className="space-y-3">
               {listings.map((item) => (
-                <div key={item.id} className="flex items-center justify-between rounded-[22px] border border-slate-200 bg-[#f4f7f7] dark:bg-[#060d0e]/70 dark:border-white/10 p-3.5 transition-all">
+                <div key={item.id} className="flex items-center justify-between rounded-control border border-slate-200 bg-[#f4f7f7] dark:bg-surface-ink/70 dark:border-white/10 p-3.5 transition-all">
                   <div>
                     <p className="font-semibold text-slate-900 dark:text-white">{item.title}</p>
                     <p className="mt-1 text-sm text-slate-600 dark:text-slate-300 font-medium">{item.price}{item.views ? ` • ${item.views} views` : ""}</p>
@@ -116,7 +116,7 @@ export default function SellerPortal() {
             </div>
           </div>
 
-          <div className="rounded-[32px] border border-white/45 bg-white/40 p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-6 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+          <div className="rounded-panel border border-white/45 bg-white/40 p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
             <div className="mb-5 flex items-center justify-between">
               <div>
                 <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400 font-bold">Checklist</p>
@@ -126,7 +126,7 @@ export default function SellerPortal() {
 
             <div className="space-y-3">
               {steps.map((step, index) => (
-                <div key={step} className="flex items-center gap-3 rounded-[22px] border border-slate-200 bg-[#f4f7f7] dark:bg-[#060d0e]/70 dark:border-white/10 p-3.5 transition-all">
+                <div key={step} className="flex items-center gap-3 rounded-control border border-slate-200 bg-[#f4f7f7] dark:bg-surface-ink/70 dark:border-white/10 p-3.5 transition-all">
                   <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0f172a] dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_10px_rgba(16,185,129,0.3)] text-xs font-bold text-white shrink-0">
                     {index + 1}
                   </div>

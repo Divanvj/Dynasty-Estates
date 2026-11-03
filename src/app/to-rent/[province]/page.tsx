@@ -91,7 +91,7 @@ export default async function ToRentProvincePage({
           at `auto` the page content that follows painted over the Sell / Tools
           dropdowns. See src/app/page.tsx for the full note. */}
       <header className="relative z-50 mx-auto max-w-[1400px] px-4 pt-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between rounded-[24px] border border-white/70 bg-white/40 px-4 py-3 backdrop-blur-xl shadow-xs dark:border-white/10 dark:bg-[#0b1719]/70">
+        <div className="flex items-center justify-between rounded-card border border-white/70 bg-white/40 px-4 py-3 backdrop-blur-xl shadow-xs dark:border-white/10 dark:bg-[#0b1719]/70">
           <BrandLogo />
           <SiteNavigation />
           {/* See the note in src/app/for-sale/page.tsx — these browse routes had
@@ -115,7 +115,7 @@ export default async function ToRentProvincePage({
         </nav>
 
         {/* Location Hub Header */}
-        <div className="rounded-3xl border border-white/80 bg-white/60 p-6 sm:p-8 backdrop-blur-xl shadow-[0_20px_45px_rgba(36,48,50,0.06)] mb-8 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <div className="rounded-3xl border border-white/80 bg-white/60 p-6 sm:p-8 backdrop-blur-xl shadow-[0_20px_45px_rgba(36,48,50,0.06)] mb-8 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <span className="rounded-full bg-emerald-100 text-emerald-800 text-xs font-extrabold uppercase tracking-widest px-3 py-1 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border dark:border-emerald-500/30">
             Provincial Rental Hub
           </span>
@@ -130,13 +130,13 @@ export default async function ToRentProvincePage({
             <span className="text-slate-500 dark:text-slate-400">Related Nodes:</span>
             <Link
               href={`/for-sale/${provSlug}`}
-              className="rounded-full bg-slate-100 hover:bg-slate-200 px-3 py-1 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40 dark:hover:text-white"
+              className="rounded-full bg-slate-100 hover:bg-slate-200 px-3 py-1 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
             >
               Properties For Sale in {provName} →
             </Link>
             <Link
               href="/calculators/bond-repayment"
-              className="rounded-full bg-slate-100 hover:bg-slate-200 px-3 py-1 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40 dark:hover:text-white"
+              className="rounded-full bg-slate-100 hover:bg-slate-200 px-3 py-1 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
             >
               Bond Repayments →
             </Link>
@@ -144,7 +144,7 @@ export default async function ToRentProvincePage({
         </div>
 
         {/* Cities Directory in this Province */}
-        <section className="mb-10 rounded-3xl border border-white/80 bg-white/50 p-6 backdrop-blur-xl dark:bg-[#0c1a1c]/70 dark:border-white/10">
+        <section className="mb-10 rounded-3xl border border-white/80 bg-white/50 p-6 backdrop-blur-xl dark:bg-surface-panel/70 dark:border-white/10">
           <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4">
             Browse {provName} Rentals by City & Metro
           </h2>
@@ -155,7 +155,7 @@ export default async function ToRentProvincePage({
                 <Link
                   key={city}
                   href={`/to-rent/${provSlug}/${citySlug}`}
-                  className="rounded-xl border border-white/80 bg-white/80 px-4 py-2 text-xs font-semibold text-slate-800 shadow-xs hover:border-emerald-400 hover:bg-white transition-all dark:bg-[#060d0e]/60 dark:border-white/10 dark:text-slate-200 dark:hover:border-emerald-500/40 dark:hover:bg-[#0c1a1c]"
+                  className="rounded-xl border border-white/80 bg-white/80 px-4 py-2 text-xs font-semibold text-slate-800 shadow-xs hover:border-emerald-400 hover:bg-white transition-all dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-200 dark:hover:border-emerald-500/40 dark:hover:bg-surface-panel"
                 >
                   {city} Rentals →
                 </Link>
@@ -177,7 +177,7 @@ export default async function ToRentProvincePage({
             </div>
           </div>
         ) : (
-          <div className="rounded-3xl border border-white/80 bg-white/60 p-12 text-center backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+          <div className="rounded-3xl border border-white/80 bg-white/60 p-12 text-center backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
             <h3 className="text-lg font-bold text-slate-900 dark:text-white">No active rental listings in {provName} today</h3>
             <p className="mt-1 text-xs text-slate-500 max-w-md mx-auto dark:text-slate-400">
               Explore our wider national catalogue or register for rental alerts in {provName}.

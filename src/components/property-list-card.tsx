@@ -39,7 +39,7 @@ export default function PropertyListCard({
       onMouseLeave={() => onHover?.(null)}
       // `relative` anchors the .card-link overlay on the title below, which is
       // what makes the whole card open the listing. See globals.css.
-      className={`group relative flex flex-col md:flex-row overflow-hidden rounded-[28px] border bg-white/70 dark:bg-[#0c1a1c]/75 shadow-[0_12px_32px_rgba(36,48,50,0.07)] dark:shadow-[0_12px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl ${
+      className={`group relative flex flex-col md:flex-row overflow-hidden rounded-card border bg-white/70 dark:bg-surface-panel/75 shadow-[0_12px_32px_rgba(36,48,50,0.07)] dark:shadow-[0_12px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl ${
         isHighlighted
           ? "border-emerald-500 ring-2 ring-emerald-500/30 bg-white dark:bg-[#0f2225]"
           : "border-white/80 dark:border-white/10 hover:border-slate-300 dark:hover:border-emerald-500/30"
@@ -54,7 +54,7 @@ export default function PropertyListCard({
         scrolling. Nothing is deleted — the detail page carries everything the
         feed card drops below `md`.
       */}
-      <div className="relative h-52 md:h-auto md:w-5/12 lg:w-4/12 shrink-0 overflow-hidden bg-slate-200 dark:bg-[#060d0e]">
+      <div className="relative h-52 md:h-auto md:w-5/12 lg:w-4/12 shrink-0 overflow-hidden bg-slate-200 dark:bg-surface-ink">
         <PropertyCardPhotos
           images={property.gallery?.length ? property.gallery : [property.image]}
           title={property.title}
@@ -119,7 +119,7 @@ export default function PropertyListCard({
               <span>{property.location}</span>
             </p>
             <div className="flex items-center gap-1.5">
-              <span className="rounded-full bg-slate-100 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 px-2.5 py-0.5 text-xs font-bold text-slate-700 dark:text-slate-200">
+              <span className="rounded-full bg-slate-100 dark:bg-surface-ink/80 dark:border dark:border-white/10 px-2.5 py-0.5 text-xs font-bold text-slate-700 dark:text-slate-200">
                 {property.type}
               </span>
               {property.status === "verified" && (
@@ -156,7 +156,7 @@ export default function PropertyListCard({
           {/* The framing — border, fill, padding — is desktop only. On a phone
               those four specs wrapped to two rows inside a bordered box, which
               cost about 80px to say "3 beds, 2 baths". */}
-          <div className="mt-2.5 md:mt-3.5 flex flex-wrap items-center gap-3 md:gap-6 rounded-2xl border border-slate-200/70 dark:border-white/10 bg-white/50 dark:bg-[#060d0e]/60 px-4 py-2 max-md:rounded-none max-md:border-0 max-md:bg-transparent max-md:px-0 max-md:py-0 text-xs font-semibold text-slate-700 dark:text-slate-300">
+          <div className="mt-2.5 md:mt-3.5 flex flex-wrap items-center gap-3 md:gap-6 rounded-2xl border border-slate-200/70 dark:border-white/10 bg-white/50 dark:bg-surface-ink/60 px-4 py-2 max-md:rounded-none max-md:border-0 max-md:bg-transparent max-md:px-0 max-md:py-0 text-xs font-semibold text-slate-700 dark:text-slate-300">
             <span className="flex items-center gap-1.5">
               <BedIcon className="h-4 w-4 text-slate-400 dark:text-slate-400" />
               <span>{property.beds} {property.beds === 1 ? "Bed" : "Beds"}</span>

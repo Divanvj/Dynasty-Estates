@@ -40,7 +40,7 @@ export default function PhotoRejectionDialog({
       ref={dialogRef}
       onClose={onClose}
       aria-labelledby="photo-rejection-title"
-      className="m-auto w-[min(640px,calc(100vw-32px))] max-h-[min(720px,calc(100dvh-32px))] overflow-hidden rounded-[28px] border border-white/70 bg-white p-0 text-slate-900 shadow-[0_30px_80px_rgba(15,23,42,0.35)] backdrop:bg-slate-950/55 backdrop:backdrop-blur-sm dark:border-white/10 dark:bg-[#0d1b1d] dark:text-white"
+      className="m-auto w-[min(640px,calc(100vw-32px))] max-h-[min(720px,calc(100dvh-32px))] overflow-hidden rounded-card border border-white/70 bg-white p-0 text-slate-900 shadow-[0_30px_80px_rgba(15,23,42,0.35)] backdrop:bg-slate-950/55 backdrop:backdrop-blur-sm dark:border-white/10 dark:bg-[#0d1b1d] dark:text-white"
     >
       {open && (
         <div className="flex max-h-[inherit] flex-col">
@@ -60,7 +60,7 @@ export default function PhotoRejectionDialog({
               type="button"
               onClick={() => dialogRef.current?.close()}
               aria-label="Close"
-              className="rounded-full p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-[#060d0e] dark:hover:text-white"
+              className="rounded-full p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-surface-ink dark:hover:text-white"
             >
               <XMarkIcon className="h-5 w-5" />
             </button>
@@ -80,7 +80,7 @@ export default function PhotoRejectionDialog({
                     className="h-20 w-20 shrink-0 rounded-xl object-cover sm:h-24 sm:w-24"
                   />
                 ) : (
-                  <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-slate-200 text-xs font-semibold uppercase tracking-wider text-slate-500 sm:h-24 sm:w-24 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-slate-400">
+                  <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-slate-200 text-xs font-semibold uppercase tracking-wider text-slate-500 sm:h-24 sm:w-24 dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:text-slate-400">
                     No preview
                   </div>
                 )}

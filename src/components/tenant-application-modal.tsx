@@ -129,7 +129,7 @@ export default function TenantApplicationModal({
     <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-sm animate-fade-in">
       <div className="fixed inset-0 bg-transparent cursor-pointer" onClick={onClose} />
       <div
-        className="relative z-10 my-auto w-full max-w-xl overflow-hidden rounded-[28px] border border-white/80 dark:border-white/10 bg-white/95 dark:bg-[#0c1a1c] p-6 shadow-2xl backdrop-blur-xl sm:p-8 max-h-[90vh] overflow-y-auto"
+        className="relative z-10 my-auto w-full max-w-xl overflow-hidden rounded-card border border-white/80 dark:border-white/10 bg-white/95 dark:bg-surface-panel p-6 shadow-2xl backdrop-blur-xl sm:p-8 max-h-[90vh] overflow-y-auto"
         role="dialog"
         aria-modal="true"
         aria-labelledby="tenant-modal-title"
@@ -137,7 +137,7 @@ export default function TenantApplicationModal({
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-[#0c1a1c] dark:hover:text-white transition-colors cursor-pointer"
+          className="absolute top-5 right-5 flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 dark:bg-surface-ink/80 dark:border dark:border-white/10 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-surface-panel dark:hover:text-white transition-colors cursor-pointer"
           aria-label="Close application modal"
         >
           <XMarkIcon className="h-4 w-4" />
@@ -158,7 +158,7 @@ export default function TenantApplicationModal({
             </div>
 
             {/* Move-in Cost Schedule Preview */}
-            <div className="mb-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/80 dark:bg-[#060d0e]/60 p-4 text-xs">
+            <div className="mb-6 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/80 dark:bg-surface-ink/60 p-4 text-xs">
               <p className="text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
                 Mandatory Move-In Cost Schedule
               </p>
@@ -310,7 +310,7 @@ export default function TenantApplicationModal({
               </div>
 
               {/* TPN Credit Consent Checkbox */}
-              <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#060d0e]/60 p-3">
+              <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-surface-ink/60 p-3">
                 <label className="flex items-start gap-2.5 cursor-pointer">
                   <input
                     type="checkbox"
@@ -356,7 +356,7 @@ export default function TenantApplicationModal({
               Thank you, <span className="font-bold text-slate-900 dark:text-white">{fullName}</span>. Your application for{" "}
               <span className="font-semibold text-slate-900 dark:text-emerald-300">{propertyTitle}</span> has been logged under reference:
             </p>
-            <div className="my-4 inline-block rounded-xl bg-slate-100 dark:bg-[#060d0e]/80 px-4 py-2 text-xs font-mono font-bold text-slate-800 dark:text-emerald-300 border border-slate-200 dark:border-emerald-500/30 dark:shadow-[0_0_12px_rgba(16,185,129,0.2)]">
+            <div className="my-4 inline-block rounded-xl bg-slate-100 dark:bg-surface-ink/80 px-4 py-2 text-xs font-mono font-bold text-slate-800 dark:text-emerald-300 border border-slate-200 dark:border-emerald-500/30 dark:shadow-[0_0_12px_rgba(16,185,129,0.2)]">
               {refNumber || "DY-TEN-849201"}
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto">

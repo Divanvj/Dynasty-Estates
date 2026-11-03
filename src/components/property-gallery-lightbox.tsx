@@ -36,7 +36,7 @@ export default function PropertyGalleryLightbox({
             key={index}
             type="button"
             onClick={() => setActiveIndex(index)}
-            className="group relative h-44 overflow-hidden rounded-[22px] border border-white/80 bg-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer dark:border-white/10"
+            className="group relative h-44 overflow-hidden rounded-control border border-white/80 bg-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer dark:border-white/10"
           >
             <div
               className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
@@ -61,7 +61,7 @@ export default function PropertyGalleryLightbox({
           onClick={() => setActiveIndex(null)}
         >
           <div
-            className="relative max-h-[90vh] max-w-5xl overflow-hidden rounded-3xl border border-white/20 bg-slate-950 p-2 shadow-2xl dark:border-white/10 dark:bg-[#0c1a1c]"
+            className="relative max-h-[90vh] max-w-5xl overflow-hidden rounded-3xl border border-white/20 bg-slate-950 p-2 shadow-2xl dark:border-white/10 dark:bg-surface-panel"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Top Toolbar */}
@@ -75,7 +75,7 @@ export default function PropertyGalleryLightbox({
               <button
                 type="button"
                 onClick={() => setActiveIndex(null)}
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-sm font-bold text-white hover:bg-white/30 cursor-pointer dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:hover:bg-[#102427] dark:hover:text-emerald-300"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-sm font-bold text-white hover:bg-white/30 cursor-pointer dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:hover:bg-[#102427] dark:hover:text-emerald-300"
               >
                 <XMarkIcon className="h-4 w-4" />
               </button>
@@ -96,7 +96,7 @@ export default function PropertyGalleryLightbox({
               type="button"
               aria-label="Previous photo"
               onClick={() => setActiveIndex((prev) => (prev !== null ? (prev - 1 + images.length) % images.length : null))}
-              className="absolute left-6 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-black/70 text-white shadow-lg hover:bg-black cursor-pointer dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:hover:bg-emerald-600 dark:hover:shadow-[0_0_12px_rgba(16,185,129,0.35)] transition-all"
+              className="absolute left-6 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-black/70 text-white shadow-lg hover:bg-black cursor-pointer dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:hover:bg-emerald-600 dark:hover:shadow-[0_0_12px_rgba(16,185,129,0.35)] transition-all"
             >
               <ArrowLeftIcon className="h-5 w-5" />
             </button>
@@ -104,7 +104,7 @@ export default function PropertyGalleryLightbox({
               type="button"
               aria-label="Next photo"
               onClick={() => setActiveIndex((prev) => (prev !== null ? (prev + 1) % images.length : null))}
-              className="absolute right-6 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-black/70 text-white shadow-lg hover:bg-black cursor-pointer dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:hover:bg-emerald-600 dark:hover:shadow-[0_0_12px_rgba(16,185,129,0.35)] transition-all"
+              className="absolute right-6 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-black/70 text-white shadow-lg hover:bg-black cursor-pointer dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:hover:bg-emerald-600 dark:hover:shadow-[0_0_12px_rgba(16,185,129,0.35)] transition-all"
             >
               <ArrowRightIcon className="h-5 w-5" />
             </button>

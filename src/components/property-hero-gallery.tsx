@@ -131,7 +131,7 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
   }
 
   return (
-    <section className="overflow-hidden rounded-[32px] border border-white/80 bg-white/40 shadow-[0_20px_45px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:border-white/10 dark:bg-[#0c1a1c]/70 dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)]">
+    <section className="overflow-hidden rounded-panel border border-white/80 bg-white/40 shadow-[0_20px_45px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:border-white/10 dark:bg-surface-panel/70 dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)]">
       <div
         className="group relative h-[380px] sm:h-[440px] md:h-[540px]"
         role="region"
@@ -192,7 +192,7 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
               type="button"
               onClick={() => go(index - 1, true)}
               aria-label="Previous photograph"
-              className="absolute left-3 top-[34%] flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white opacity-85 shadow-lg backdrop-blur-md transition-all hover:bg-black/65 hover:opacity-100 sm:left-5 sm:top-1/2 sm:h-11 sm:w-11"
+              className="tap-44 absolute left-3 top-[34%] flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white opacity-85 shadow-lg backdrop-blur-md transition-all hover:bg-black/65 hover:opacity-100 sm:left-5 sm:top-1/2 sm:h-11 sm:w-11"
             >
               <ArrowLeftIcon className="h-4 w-4" />
             </button>
@@ -200,7 +200,7 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
               type="button"
               onClick={() => go(index + 1, true)}
               aria-label="Next photograph"
-              className="absolute right-3 top-[34%] flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white opacity-85 shadow-lg backdrop-blur-md transition-all hover:bg-black/65 hover:opacity-100 sm:right-5 sm:top-1/2 sm:h-11 sm:w-11"
+              className="tap-44 absolute right-3 top-[34%] flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white opacity-85 shadow-lg backdrop-blur-md transition-all hover:bg-black/65 hover:opacity-100 sm:right-5 sm:top-1/2 sm:h-11 sm:w-11"
             >
               <ArrowRightIcon className="h-4 w-4" />
             </button>

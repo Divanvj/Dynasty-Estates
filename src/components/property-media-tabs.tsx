@@ -35,10 +35,10 @@ export default function PropertyMediaTabs({
   const streetViewQuery = encodeURIComponent(`${location || title}, South Africa`);
 
   return (
-    <div className="rounded-[30px] border border-white/80 dark:border-white/10 bg-white/55 dark:bg-[#0c1a1c]/80 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl md:p-8">
+    <div className="rounded-panel border border-white/80 dark:border-white/10 bg-white/55 dark:bg-surface-panel/80 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl md:p-8">
       {/* Media Tab Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/70 dark:border-white/10 pb-4 mb-6">
-        <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 dark:bg-[#060d0e]/80 border border-slate-200/80 dark:border-white/10 w-fit">
+        <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 dark:bg-surface-ink/80 border border-slate-200/80 dark:border-white/10 w-fit">
           <button
             type="button"
             onClick={() => setActiveTab("photos")}
@@ -102,7 +102,7 @@ export default function PropertyMediaTabs({
       {/* Tab 2: Floor Plan */}
       {activeTab === "floorplan" && (
         <div className="space-y-4 animate-fade-in">
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-950/5 p-2 sm:p-4 text-center dark:border-white/10 dark:bg-[#060d0e]/60">
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-950/5 p-2 sm:p-4 text-center dark:border-white/10 dark:bg-surface-ink/60">
             <div
               className="relative mx-auto h-[360px] sm:h-[460px] w-full max-w-2xl rounded-xl bg-contain bg-center bg-no-repeat shadow-inner"
               style={{ backgroundImage: `url(${defaultFloorPlan})` }}
@@ -112,7 +112,7 @@ export default function PropertyMediaTabs({
               </div>
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600 rounded-xl bg-slate-50 p-3 border border-slate-200 dark:bg-[#060d0e]/60 dark:border-white/10 dark:text-slate-300">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600 rounded-xl bg-slate-50 p-3 border border-slate-200 dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300">
             <span>Dimensions and layouts are indicative architectural representations verified by practitioner.</span>
             <a
               href={defaultFloorPlan}
@@ -136,7 +136,7 @@ export default function PropertyMediaTabs({
             erfSize={erfSize}
             virtualTourUrl={virtualTourUrl}
           />
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600 rounded-2xl bg-slate-50 p-4 border border-slate-200/80 dark:bg-[#060d0e]/60 dark:border-white/10 dark:text-slate-300">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600 rounded-2xl bg-slate-50 p-4 border border-slate-200/80 dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300">
             <div className="flex items-center gap-2">
               <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
               <span>
@@ -146,7 +146,7 @@ export default function PropertyMediaTabs({
             <button
               type="button"
               onClick={() => setActiveTab("photos")}
-              className="rounded-xl border border-slate-200 bg-white px-3.5 py-1.5 font-bold text-slate-700 hover:text-slate-950 transition-colors shadow-2xs shrink-0 cursor-pointer dark:bg-[#060d0e]/80 dark:border-white/10 dark:text-slate-200 dark:hover:bg-[#0c1a1c] dark:hover:text-white"
+              className="rounded-xl border border-slate-200 bg-white px-3.5 py-1.5 font-bold text-slate-700 hover:text-slate-950 transition-colors shadow-2xs shrink-0 cursor-pointer dark:bg-surface-ink/80 dark:border-white/10 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:text-white"
             >
               ← Back to Gallery ({gallery.length})
             </button>
@@ -158,9 +158,9 @@ export default function PropertyMediaTabs({
       {activeTab === "street-view" && (
         <div className="space-y-4 animate-fade-in">
           {/* Sub-toolbar: Switch between Street View and Satellite/Map, with clear Back buttons */}
-          <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-slate-50 p-3 border border-slate-200/80 dark:bg-[#060d0e]/60 dark:border-white/10">
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-slate-50 p-3 border border-slate-200/80 dark:bg-surface-ink/60 dark:border-white/10">
             <div className="flex flex-wrap items-center gap-2">
-              <div className="inline-flex rounded-xl border border-slate-200 bg-white p-1 shadow-2xs dark:border-white/10 dark:bg-[#060d0e]/80">
+              <div className="inline-flex rounded-xl border border-slate-200 bg-white p-1 shadow-2xs dark:border-white/10 dark:bg-surface-ink/80">
                 <button
                   type="button"
                   onClick={() => setMapMode("street")}
@@ -200,7 +200,7 @@ export default function PropertyMediaTabs({
               <button
                 type="button"
                 onClick={() => setActiveTab("photos")}
-                className="rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#060d0e]/80 px-3 py-1.5 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:bg-[#0c1a1c] dark:hover:text-white transition-colors shadow-2xs cursor-pointer"
+                className="rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-surface-ink/80 px-3 py-1.5 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:bg-surface-panel dark:hover:text-white transition-colors shadow-2xs cursor-pointer"
               >
                 ← Back to Photos
               </button>

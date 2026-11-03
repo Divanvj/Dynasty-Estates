@@ -93,7 +93,7 @@ export default function AdminPage() {
       <main className="min-h-screen bg-[var(--background)] px-3 py-4 text-slate-900 md:px-8 dark:text-white">
         <div className="mx-auto max-w-6xl">
         {/* Admin Command Header */}
-        <header className="mb-6 flex items-center justify-between rounded-[26px] border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <header className="mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
             <BrandLogo markOnly />
             <div>
@@ -109,7 +109,7 @@ export default function AdminPage() {
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5 gap-y-2 sm:gap-2.5">
             <Link
               href="/agent/dashboard"
-              className="rounded-full border border-slate-300/80 bg-white/60 px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 hover:bg-white transition-all whitespace-nowrap shrink-0 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-white"
+              className="rounded-full border border-slate-300/80 bg-white/60 px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 hover:bg-white transition-all whitespace-nowrap shrink-0 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-white"
             >
               Agent View
             </Link>
@@ -148,7 +148,7 @@ export default function AdminPage() {
                 className={`flex items-center gap-2 rounded-2xl px-3.5 sm:px-4 py-2.5 text-xs font-semibold transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                   activeTab === tab.key
                     ? "border border-slate-950 bg-slate-950 text-white shadow-md dark:border-emerald-500/50 dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
-                    : "border border-white/70 bg-white/45 text-slate-700 hover:bg-white/75 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-white"
+                    : "border border-white/70 bg-white/45 text-slate-700 hover:bg-white/75 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-white"
                 }`}
               >
                 <TabIcon className="h-4 w-4 shrink-0" />
@@ -161,7 +161,7 @@ export default function AdminPage() {
         {/* TAB 1: Moderation Queue */}
         {activeTab === "moderation" && (
           <section className="space-y-4">
-            <div className="rounded-[28px] border border-white/80 bg-white/50 p-5 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+            <div className="rounded-card border border-white/80 bg-white/50 p-5 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <h2 className="text-xl font-bold text-slate-950 dark:text-white">Submitted Listings for Review</h2>
               <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
                 Inspect seller submissions for accurate details, South African POPIA compliance, and quality scoring.
@@ -172,12 +172,12 @@ export default function AdminPage() {
               {queue.map((item) => (
                 <div
                   key={item.id}
-                  className="rounded-[28px] border border-white/80 bg-white/50 p-5 shadow-[0_12px_28px_rgba(36,48,50,0.06)] backdrop-blur-xl dark:bg-[#060d0e]/70 dark:border-white/10"
+                  className="rounded-card border border-white/80 bg-white/50 p-5 shadow-[0_12px_28px_rgba(36,48,50,0.06)] backdrop-blur-xl dark:bg-surface-ink/70 dark:border-white/10"
                 >
                   <div className="flex flex-col justify-between gap-3 md:flex-row md:items-start">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="rounded-full bg-slate-900/10 px-2.5 py-0.5 text-xs font-bold text-slate-800 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-slate-300">
+                        <span className="rounded-full bg-slate-900/10 px-2.5 py-0.5 text-xs font-bold text-slate-800 dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:text-slate-300">
                           {item.status}
                         </span>
                         <span className="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border dark:border-emerald-500/30">
@@ -200,7 +200,7 @@ export default function AdminPage() {
                         placeholder="Feedback or reason (optional)..."
                         value={feedbackMap[item.id] ?? ""}
                         onChange={(e) => setFeedbackMap((prev) => ({ ...prev, [item.id]: e.target.value }))}
-                        className="rounded-xl border border-slate-300/80 bg-white px-3 py-1.5 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 dark:border-white/10 dark:bg-[#060d0e]/80 dark:text-slate-200 dark:placeholder:text-slate-500"
+                        className="rounded-xl border border-slate-300/80 bg-white px-3 py-1.5 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-200 dark:placeholder:text-slate-500"
                       />
                       <div className="flex gap-2">
                         <button
@@ -234,7 +234,7 @@ export default function AdminPage() {
         {/* TAB 2: Fraud Signals */}
         {activeTab === "fraud" && (
           <section className="space-y-4">
-            <div className="rounded-[28px] border border-white/80 bg-white/50 p-5 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+            <div className="rounded-card border border-white/80 bg-white/50 p-5 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <h2 className="text-xl font-bold text-slate-950 dark:text-white">Automated Fraud & Duplicate Alerts</h2>
               <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
                 Signals generated by perceptual hashing and PPRA practitioner licence verification.
@@ -243,7 +243,7 @@ export default function AdminPage() {
 
             <div className="grid gap-3">
               {fraudFlagged.map((item) => (
-                <div key={item.id} className="rounded-[24px] border border-rose-200 bg-rose-50/70 dark:bg-rose-950/30 dark:border-rose-500/30 p-4">
+                <div key={item.id} className="rounded-card border border-rose-200 bg-rose-50/70 dark:bg-rose-950/30 dark:border-rose-500/30 p-4">
                   <h3 className="text-sm font-bold text-rose-950 dark:text-rose-200">{item.title} ({item.price})</h3>
                   <p className="text-xs text-rose-800 dark:text-rose-300 mt-1">Reported by system on submission from {item.sellerEmail}</p>
                   <ul className="mt-2 space-y-1 text-xs text-rose-900 dark:text-rose-200 font-medium">
@@ -263,7 +263,7 @@ export default function AdminPage() {
         {/* TAB 3: Commercial Packages */}
         {activeTab === "billing" && (
           <section className="space-y-4">
-            <div className="rounded-[28px] border border-white/80 bg-white/50 p-5 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+            <div className="rounded-card border border-white/80 bg-white/50 p-5 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <h2 className="text-xl font-bold text-slate-950 dark:text-white">Commercial Listing Packages</h2>
               <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
                 Transparent revenue model separated strictly from quality scoring.
@@ -274,10 +274,10 @@ export default function AdminPage() {
               {listingPackages.map((pkg) => (
                 <div
                   key={pkg.id}
-                  className={`rounded-[28px] border p-5 backdrop-blur-xl ${
+                  className={`rounded-card border p-5 backdrop-blur-xl ${
                     pkg.isPopular
-                      ? "border-emerald-400 bg-white/70 shadow-lg ring-2 ring-emerald-500/30 dark:border-emerald-500/50 dark:bg-[#0c1a1c] dark:shadow-[0_0_20px_rgba(16,185,129,0.25)]"
-                      : "border-white/80 bg-white/50 shadow-sm dark:bg-[#060d0e]/70 dark:border-white/10"
+                      ? "border-emerald-400 bg-white/70 shadow-lg ring-2 ring-emerald-500/30 dark:border-emerald-500/50 dark:bg-surface-panel dark:shadow-[0_0_20px_rgba(16,185,129,0.25)]"
+                      : "border-white/80 bg-white/50 shadow-sm dark:bg-surface-ink/70 dark:border-white/10"
                   }`}
                 >
                   <div className="flex items-center justify-between">
@@ -308,16 +308,16 @@ export default function AdminPage() {
         {/* TAB 4: Audit Trail */}
         {activeTab === "audit" && (
           <section className="space-y-4">
-            <div className="rounded-[28px] border border-white/80 bg-white/50 p-5 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+            <div className="rounded-card border border-white/80 bg-white/50 p-5 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <h2 className="text-xl font-bold text-slate-950 dark:text-white">Immutable Security Audit Trail</h2>
               <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
                 Chronological record of sensitive actions, privilege escalations, and moderation decisions.
               </p>
             </div>
 
-            <div className="overflow-hidden rounded-[26px] border border-white/80 bg-white/55 shadow-sm backdrop-blur-xl dark:bg-[#060d0e]/60 dark:border-white/10">
+            <div className="overflow-hidden rounded-card border border-white/80 bg-white/55 shadow-sm backdrop-blur-xl dark:bg-surface-ink/60 dark:border-white/10">
               <table className="w-full text-left text-xs">
-                <thead className="border-b border-slate-200/80 bg-white/40 text-xs uppercase tracking-wider text-slate-500 dark:border-white/10 dark:bg-[#0c1a1c] dark:text-slate-400">
+                <thead className="border-b border-slate-200/80 bg-white/40 text-xs uppercase tracking-wider text-slate-500 dark:border-white/10 dark:bg-surface-panel dark:text-slate-400">
                   <tr>
                     <th className="py-3 px-4">Timestamp</th>
                     <th className="py-3 px-4">Actor</th>
@@ -328,7 +328,7 @@ export default function AdminPage() {
                 </thead>
                 <tbody className="divide-y divide-slate-200/60 dark:divide-white/5 text-slate-700 dark:text-slate-300">
                   {auditLogs.map((log) => (
-                    <tr key={log.id} className="hover:bg-white/40 dark:hover:bg-[#0c1a1c]/60 transition-colors">
+                    <tr key={log.id} className="hover:bg-white/40 dark:hover:bg-surface-panel/60 transition-colors">
                       <td className="py-3 px-4 whitespace-nowrap text-slate-500 dark:text-slate-400">
                         {formatDateTime(log.timestamp)}
                       </td>
@@ -336,7 +336,7 @@ export default function AdminPage() {
                         {log.actorEmail ?? log.actorId}
                       </td>
                       <td className="py-3 px-4">
-                        <span className="rounded-full bg-slate-900/10 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-emerald-300 px-2.5 py-0.5 font-mono text-xs font-bold">
+                        <span className="rounded-full bg-slate-900/10 dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:text-emerald-300 px-2.5 py-0.5 font-mono text-xs font-bold">
                           {log.action}
                         </span>
                       </td>

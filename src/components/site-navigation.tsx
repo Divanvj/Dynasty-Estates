@@ -393,18 +393,27 @@ export default function SiteNavigation() {
               </div>
             </Link>
 
-            <Link
-              href="/saved"
-              className="flex items-center gap-3 rounded-xl p-2 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group"
+            {/* Not a link. This pointed at /saved, which is the Saved
+                Properties shortlist - it has no alerts, no notifications and
+                no saved searches. Saved searches need the `saved_searches`
+                collection, which is waiting on the Firestore rules deploy, so
+                until then the entry says so rather than sending people to a
+                page that does not do what the label promises. */}
+            <div
+              aria-disabled="true"
+              className="flex items-center gap-3 rounded-xl p-2 opacity-60"
             >
-              <TagIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              <TagIcon className="h-4 w-4 text-slate-400 dark:text-slate-500 shrink-0" />
               <div className="min-w-0">
-                <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
-                  Alerts & Notifications
+                <p className="flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400">
+                  Alerts &amp; Notifications
+                  <span className="rounded-full border border-slate-300 dark:border-white/20 px-1.5 py-px text-[10px] font-semibold uppercase tracking-wide">
+                    Soon
+                  </span>
                 </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">Saved searches & price drop alerts</p>
+                <p className="text-xs text-slate-400 dark:text-slate-500 truncate">Saved searches &amp; price drop alerts</p>
               </div>
-            </Link>
+            </div>
 
             <Link
               href="/agents"
@@ -415,7 +424,11 @@ export default function SiteNavigation() {
                 <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
                   Find an Agent
                 </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">PPRA verified + Register Agency</p>
+                {/* "+ Register Agency" was removed: there is no agency
+                    registration route. /agency/register, /register-agency and
+                    /agency all 404, and the flow needs the agency_applications
+                    collection, which is blocked on the Firestore rules deploy. */}
+                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">PPRA verified practitioner directory</p>
               </div>
             </Link>
 

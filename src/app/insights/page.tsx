@@ -75,7 +75,7 @@ export default function InsightsPage() {
     <main className="min-h-screen bg-[var(--background)] px-3 py-4 text-slate-900 md:px-8 dark:text-white">
       <div className="mx-auto max-w-5xl">
         {/* Header */}
-        <header className="relative z-50 mb-6 flex items-center justify-between rounded-[26px] border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <header className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
             <BrandLogo markOnly />
             <div>
@@ -88,7 +88,7 @@ export default function InsightsPage() {
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5 gap-y-2 sm:gap-3">
             <Link
               href="/search"
-              className="pill gap-1.5 border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
+              className="pill gap-1.5 border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
             >
               <ArrowLeftIcon className="h-3.5 w-3.5 sm:hidden" />
               <span className="hidden sm:inline">← View Catalogue</span>
@@ -99,7 +99,7 @@ export default function InsightsPage() {
         </header>
 
         {/* Hero Banner */}
-        <section className="rounded-[32px] border border-white/80 bg-white/55 p-6 shadow-sm backdrop-blur-xl mb-6 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <section className="rounded-panel border border-white/80 bg-white/55 p-6 shadow-sm backdrop-blur-xl mb-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs uppercase font-bold tracking-widest text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-400 dark:border dark:border-emerald-500/30">
             Q3 2026 Property Intelligence
           </span>
@@ -112,11 +112,11 @@ export default function InsightsPage() {
         </section>
 
         {/* Regional Market Matrix Table */}
-        <section className="rounded-[32px] border border-white/80 bg-white/55 p-6 shadow-sm backdrop-blur-xl mb-6 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <section className="rounded-panel border border-white/80 bg-white/55 p-6 shadow-sm backdrop-blur-xl mb-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <h3 className="text-lg font-bold text-slate-950 mb-4 dark:text-white">Metro Growth & Velocity Benchmarks</h3>
-          <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-sm dark:bg-[#060d0e]/60 dark:border-white/10">
+          <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-sm dark:bg-surface-ink/60 dark:border-white/10">
             <table className="w-full text-left text-xs">
-              <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase font-bold text-slate-500 dark:border-white/10 dark:bg-[#060d0e]/90 dark:text-slate-300">
+              <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase font-bold text-slate-500 dark:border-white/10 dark:bg-surface-ink/90 dark:text-slate-300">
                 <tr>
                   <th className="py-3 px-4">Market Node</th>
                   <th className="py-3 px-4">12-Mo Growth</th>
@@ -127,7 +127,7 @@ export default function InsightsPage() {
               </thead>
               <tbody className="divide-y divide-slate-200 text-slate-700 dark:divide-white/5 dark:text-slate-300">
                 {marketMetrics.map((row) => (
-                  <tr key={row.region} className="hover:bg-white/40 dark:hover:bg-[#060d0e]/60 transition-colors">
+                  <tr key={row.region} className="hover:bg-white/40 dark:hover:bg-surface-ink/60 transition-colors">
                     <td className="py-3.5 px-4 font-bold text-slate-900 dark:text-white">{row.region}</td>
                     <td className="py-3.5 px-4 font-extrabold text-emerald-800 dark:text-emerald-400 dark:drop-shadow-[0_0_10px_rgba(16,185,129,0.3)]">{row.growth}</td>
                     <td className="py-3.5 px-4 font-semibold text-slate-900 dark:text-white">{row.avgPrice}</td>
@@ -141,7 +141,7 @@ export default function InsightsPage() {
         </section>
 
         {/* Deeds Office Suburb Intelligence & Historical Sales */}
-        <section className="rounded-[32px] border border-white/80 bg-white/55 p-6 shadow-sm backdrop-blur-xl mb-6 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <section className="rounded-panel border border-white/80 bg-white/55 p-6 shadow-sm backdrop-blur-xl mb-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
             <div>
               <span className="rounded-full bg-slate-900 px-3 py-0.5 text-xs font-extrabold uppercase tracking-widest text-white dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-500/30">
@@ -163,7 +163,7 @@ export default function InsightsPage() {
                 key={node}
                 type="button"
                 onClick={() => setSelectedNode(node)}
-                className={`pill-sm font-bold transition-all cursor-pointer ${ selectedNode === node ? "bg-slate-900 text-white shadow-sm dark:bg-emerald-600 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
+                className={`pill-sm font-bold transition-all cursor-pointer ${ selectedNode === node ? "bg-slate-900 text-white shadow-sm dark:bg-emerald-600 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
               >
                 {node}
               </button>
@@ -172,7 +172,7 @@ export default function InsightsPage() {
 
           {/* Suburb Metric Highlights */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
-            <div className="rounded-2xl border border-white/80 bg-white/80 p-4 shadow-2xs dark:bg-[#060d0e]/70 dark:border-white/10 dark:shadow-inner">
+            <div className="rounded-2xl border border-white/80 bg-white/80 p-4 shadow-2xs dark:bg-surface-ink/70 dark:border-white/10 dark:shadow-inner">
               <span className="text-xs uppercase tracking-wider text-slate-400 font-bold dark:text-slate-400">
                 5-Year Capital Appreciation
               </span>
@@ -181,7 +181,7 @@ export default function InsightsPage() {
               </p>
               <p className="text-xs text-slate-500 mt-0.5 dark:text-slate-400">Compound value trajectory</p>
             </div>
-            <div className="rounded-2xl border border-white/80 bg-white/80 p-4 shadow-2xs dark:bg-[#060d0e]/70 dark:border-white/10 dark:shadow-inner">
+            <div className="rounded-2xl border border-white/80 bg-white/80 p-4 shadow-2xs dark:bg-surface-ink/70 dark:border-white/10 dark:shadow-inner">
               <span className="text-xs uppercase tracking-wider text-slate-400 font-bold dark:text-slate-400">
                 Median Period of Ownership
               </span>
@@ -190,18 +190,18 @@ export default function InsightsPage() {
               </p>
               <p className="text-xs text-slate-500 mt-0.5 dark:text-slate-400">High retention & low turnover</p>
             </div>
-            <div className="rounded-2xl border border-white/80 bg-white/80 p-4 shadow-2xs dark:bg-[#060d0e]/70 dark:border-white/10 dark:shadow-inner">
+            <div className="rounded-2xl border border-white/80 bg-white/80 p-4 shadow-2xs dark:bg-surface-ink/70 dark:border-white/10 dark:shadow-inner">
               <span className="text-xs uppercase tracking-wider text-slate-400 font-bold dark:text-slate-400">
                 Buyer Age Demographic
               </span>
               <div className="mt-2 flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-300">
-                <span className="rounded-md bg-slate-100 px-2 py-0.5 text-xs dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-slate-300">
+                <span className="rounded-md bg-slate-100 px-2 py-0.5 text-xs dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:text-slate-300">
                   &lt;35: {activeNodeData.buyerDemographics.under35}
                 </span>
                 <span className="rounded-md bg-emerald-100 text-emerald-900 px-2 py-0.5 text-xs dark:bg-emerald-500/25 dark:text-emerald-300 dark:border dark:border-emerald-500/40 dark:shadow-[0_0_10px_rgba(16,185,129,0.25)]">
                   36-49: {activeNodeData.buyerDemographics.age36to49}
                 </span>
-                <span className="rounded-md bg-slate-100 px-2 py-0.5 text-xs dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-slate-300">
+                <span className="rounded-md bg-slate-100 px-2 py-0.5 text-xs dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:text-slate-300">
                   50+: {activeNodeData.buyerDemographics.age50plus}
                 </span>
               </div>
@@ -209,8 +209,8 @@ export default function InsightsPage() {
           </div>
 
           {/* Recent Deeds Office Street Sales Table */}
-          <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-sm dark:bg-[#060d0e]/60 dark:border-white/10">
-            <div className="bg-slate-50/90 px-4 py-2.5 border-b border-slate-200 flex items-center justify-between dark:bg-[#060d0e]/90 dark:border-white/10">
+          <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-sm dark:bg-surface-ink/60 dark:border-white/10">
+            <div className="bg-slate-50/90 px-4 py-2.5 border-b border-slate-200 flex items-center justify-between dark:bg-surface-ink/90 dark:border-white/10">
               <span className="text-xs font-bold text-slate-900 dark:text-white">
                 Recent Verified Deeds Registrations in {selectedNode}
               </span>
@@ -219,7 +219,7 @@ export default function InsightsPage() {
               </span>
             </div>
             <table className="w-full text-left text-xs">
-              <thead className="border-b border-slate-200 bg-white text-xs uppercase font-bold text-slate-500 dark:border-white/10 dark:bg-[#060d0e]/90 dark:text-slate-300">
+              <thead className="border-b border-slate-200 bg-white text-xs uppercase font-bold text-slate-500 dark:border-white/10 dark:bg-surface-ink/90 dark:text-slate-300">
                 <tr>
                   <th className="py-2.5 px-4">Street & Complex</th>
                   <th className="py-2.5 px-4">Property Type</th>
@@ -230,7 +230,7 @@ export default function InsightsPage() {
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700 dark:divide-white/5 dark:text-slate-300">
                 {activeNodeData.recentSales.map((sale) => (
-                  <tr key={sale.street} className="hover:bg-slate-50/50 dark:hover:bg-[#060d0e]/60 transition-colors">
+                  <tr key={sale.street} className="hover:bg-slate-50/50 dark:hover:bg-surface-ink/60 transition-colors">
                     <td className="py-3 px-4 font-semibold text-slate-900 dark:text-white">{sale.street}</td>
                     <td className="py-3 px-4 text-slate-600 dark:text-slate-300">{sale.type}</td>
                     <td className="py-3 px-4 font-extrabold text-slate-900 dark:text-white">{sale.price}</td>
@@ -245,7 +245,7 @@ export default function InsightsPage() {
 
         {/* Insights Feature Cards */}
         <div className="grid gap-4 md:grid-cols-2">
-          <div className="rounded-[28px] border border-white/80 bg-white/55 p-5 backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+          <div className="rounded-card border border-white/80 bg-white/55 p-5 backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/15 text-amber-700 mb-3 dark:bg-amber-500/20 dark:text-amber-400 dark:border dark:border-amber-500/30">
               <SunIcon className="h-5 w-5" />
             </div>
@@ -261,7 +261,7 @@ export default function InsightsPage() {
             </Link>
           </div>
 
-          <div className="rounded-[28px] border border-white/80 bg-white/55 p-5 backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+          <div className="rounded-card border border-white/80 bg-white/55 p-5 backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-800 mb-3 dark:bg-emerald-500/20 dark:text-emerald-400 dark:border dark:border-emerald-500/30">
               <ShieldIcon className="h-5 w-5" />
             </div>

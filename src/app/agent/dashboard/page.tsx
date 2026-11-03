@@ -75,7 +75,7 @@ export default function AgentDashboard() {
     <RoleGuard allowedRoles={["Agent", "Admin"]} featureName="Agent Console">
       <main className="min-h-screen bg-[var(--background)] px-4 py-5 text-slate-900 md:px-6 lg:px-8 dark:text-white">
       <div className="mx-auto max-w-[1500px]">
-        <header className="mb-6 flex items-center justify-between rounded-[28px] border border-white/75 bg-white/45 px-4 py-3 shadow-[0_12px_30px_rgba(15,23,42,0.06)] backdrop-blur-xl md:px-6 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <header className="mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-4 py-3 shadow-[0_12px_30px_rgba(15,23,42,0.06)] backdrop-blur-xl md:px-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <BrandLogo />
 
           <div className="hidden items-center gap-6 text-sm text-slate-700 md:flex dark:text-slate-300">
@@ -90,7 +90,7 @@ export default function AgentDashboard() {
 
         <section className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {metrics.map((metric) => (
-            <div key={metric.label} className="rounded-[28px] border border-white/45 bg-white/40 p-5 shadow-[0_18px_35px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+            <div key={metric.label} className="rounded-card border border-white/45 bg-white/40 p-5 shadow-[0_18px_35px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-bold">{metric.label}</p>
               <div className="mt-4 flex items-end justify-between">
                 <p className="text-3xl font-semibold text-slate-900 dark:text-white">{metric.value}</p>
@@ -103,7 +103,7 @@ export default function AgentDashboard() {
         </section>
 
         <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="rounded-[32px] border border-white/45 bg-white/40 p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-6 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+          <div className="rounded-panel border border-white/45 bg-white/40 p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
             <div className="mb-5 flex items-center justify-between">
               <div>
                 <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400 font-bold">Portfolio</p>
@@ -118,15 +118,15 @@ export default function AgentDashboard() {
             </div>
 
             <div className="space-y-3">
-              {listings.length === 0 ? <p className="rounded-[22px] border border-dashed border-slate-300 dark:border-white/15 p-4 text-sm text-slate-500 dark:text-slate-400">No listings have been created for this account yet.</p> : null}
+              {listings.length === 0 ? <p className="rounded-control border border-dashed border-slate-300 dark:border-white/15 p-4 text-sm text-slate-500 dark:text-slate-400">No listings have been created for this account yet.</p> : null}
               {listings.map((item) => (
-                <div key={item.id} className="flex items-center justify-between rounded-[22px] border border-slate-200 bg-[#f4f7f7] dark:bg-[#060d0e]/70 dark:border-white/10 p-3.5 transition-all">
+                <div key={item.id} className="flex items-center justify-between rounded-control border border-slate-200 bg-[#f4f7f7] dark:bg-surface-ink/70 dark:border-white/10 p-3.5 transition-all">
                   <div>
                     <p className="font-semibold text-slate-900 dark:text-white">{item.title}</p>
                     <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 font-medium">{formatNumber(item.views)} views</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="rounded-full border border-slate-200 bg-white/70 px-2.5 py-1 text-xs uppercase tracking-[0.14em] text-slate-600 dark:border-white/10 dark:bg-[#060d0e]/80 dark:text-slate-300 font-bold">
+                    <span className="rounded-full border border-slate-200 bg-white/70 px-2.5 py-1 text-xs uppercase tracking-[0.14em] text-slate-600 dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-300 font-bold">
                       {item.status}
                     </span>
                     <span className="text-sm font-bold text-slate-900 dark:text-emerald-400">{item.price}</span>
@@ -136,7 +136,7 @@ export default function AgentDashboard() {
             </div>
           </div>
 
-          <div className="rounded-[32px] border border-white/45 bg-white/40 p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-6 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+          <div className="rounded-panel border border-white/45 bg-white/40 p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
             <div className="mb-5 flex items-center justify-between">
               <div>
                 <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400 font-bold">Pipeline</p>
@@ -144,16 +144,16 @@ export default function AgentDashboard() {
               </div>
               <Link
                 href="/inquiries"
-                className="rounded-full border border-slate-300 bg-white/60 px-4 py-2 text-xs font-semibold text-slate-700 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-200 dark:hover:bg-[#0c1a1c] dark:hover:text-white transition-all"
+                className="rounded-full border border-slate-300 bg-white/60 px-4 py-2 text-xs font-semibold text-slate-700 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:text-white transition-all"
               >
                 View all leads →
               </Link>
             </div>
 
             <div className="space-y-3">
-              {leads.length === 0 ? <p className="rounded-[22px] border border-dashed border-slate-300 dark:border-white/15 p-4 text-sm text-slate-500 dark:text-slate-400">No enquiries have been received yet.</p> : null}
+              {leads.length === 0 ? <p className="rounded-control border border-dashed border-slate-300 dark:border-white/15 p-4 text-sm text-slate-500 dark:text-slate-400">No enquiries have been received yet.</p> : null}
               {leads.map((lead) => (
-                <div key={lead.id} className="flex items-center justify-between rounded-[22px] border border-slate-200 bg-[#f4f7f7] dark:bg-[#060d0e]/70 dark:border-white/10 p-3.5 transition-all">
+                <div key={lead.id} className="flex items-center justify-between rounded-control border border-slate-200 bg-[#f4f7f7] dark:bg-surface-ink/70 dark:border-white/10 p-3.5 transition-all">
                   <div>
                     <p className="font-semibold text-slate-900 dark:text-white">{lead.userEmail}</p>
                     <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 font-medium">{lead.propertyTitle} • {lead.kind}</p>

@@ -161,10 +161,10 @@ export default function ListingPhotoUploader({
           setDragging(false);
           void handleFiles(event.dataTransfer.files);
         }}
-        className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-[24px] border-2 border-dashed px-6 py-8 text-center transition-colors ${
+        className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-card border-2 border-dashed px-6 py-8 text-center transition-colors ${
           dragging
             ? "border-emerald-500 bg-emerald-50/80 dark:bg-emerald-500/10"
-            : "border-slate-300/80 bg-white/40 hover:border-emerald-400 hover:bg-white/60 dark:border-white/15 dark:bg-[#060d0e]/60 dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40"
+            : "border-slate-300/80 bg-white/40 hover:border-emerald-400 hover:bg-white/60 dark:border-white/15 dark:bg-surface-ink/60 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
         } ${busy ? "pointer-events-none opacity-60" : ""}`}
       >
         <CameraIcon className="h-7 w-7 text-emerald-700 dark:text-emerald-400" />
@@ -196,7 +196,7 @@ export default function ListingPhotoUploader({
       {(photos.length > 0 || pending.length > 0) && (
         <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
           {photos.map((photo, index) => (
-            <li key={photo.id} className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/70 bg-slate-100 shadow-sm dark:border-white/10 dark:bg-[#060d0e]/60">
+            <li key={photo.id} className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/70 bg-slate-100 shadow-sm dark:border-white/10 dark:bg-surface-ink/60">
               {/* eslint-disable-next-line @next/next/no-img-element -- Storage download URL, sized by the grid */}
               <img src={photo.url} alt={`Listing photo ${index + 1}`} className="h-full w-full object-cover" />
               {index === 0 ? (
@@ -223,11 +223,11 @@ export default function ListingPhotoUploader({
             </li>
           ))}
           {pending.map((item) => (
-            <li key={item.key} className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/70 bg-slate-100 dark:border-white/10 dark:bg-[#060d0e]/60">
+            <li key={item.key} className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/70 bg-slate-100 dark:border-white/10 dark:bg-surface-ink/60">
               {/* eslint-disable-next-line @next/next/no-img-element -- local object URL preview */}
               <img src={item.previewUrl} alt="" className="h-full w-full object-cover opacity-40" />
               <span className="absolute inset-0 flex items-center justify-center">
-                <span className="rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold text-slate-800 shadow dark:bg-[#0c1a1c]/90 dark:border dark:border-white/10 dark:text-white">
+                <span className="rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold text-slate-800 shadow dark:bg-surface-panel/90 dark:border dark:border-white/10 dark:text-white">
                   {item.stage === "checking" ? "Checking…" : "Uploading…"}
                 </span>
               </span>

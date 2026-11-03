@@ -278,7 +278,7 @@ export default function CalculatorsView({
     <main className="min-h-screen bg-transparent px-3 py-4 text-slate-900 dark:text-slate-100 md:px-8 transition-colors duration-300">
       <div className="mx-auto max-w-5xl">
         {/* Navigation Header */}
-        <header className="mb-6 flex items-center justify-between rounded-[26px] border border-white/75 dark:border-white/10 bg-white/45 dark:bg-[#0c1a1c]/80 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] dark:shadow-[0_12px_28px_rgba(0,0,0,0.3)] backdrop-blur-xl">
+        <header className="mb-6 flex items-center justify-between rounded-card border border-white/75 dark:border-white/10 bg-white/45 dark:bg-surface-panel/80 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] dark:shadow-[0_12px_28px_rgba(0,0,0,0.3)] backdrop-blur-xl">
           <div className="flex items-center gap-2.5 sm:gap-3">
             <BrandLogo markOnly />
             <div>
@@ -290,7 +290,7 @@ export default function CalculatorsView({
           </div>
           <Link
             href="/search"
-            className="pill gap-1.5 border border-slate-300/80 dark:border-white/10 bg-white/60 dark:bg-[#060d0e]/60 font-semibold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40 dark:hover:text-emerald-300 transition-all"
+            className="pill gap-1.5 border border-slate-300/80 dark:border-white/10 bg-white/60 dark:bg-surface-ink/60 font-semibold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-emerald-300 transition-all"
           >
             <ArrowLeftIcon className="h-3.5 w-3.5" />
             <span className="hidden sm:inline">Browse Properties</span>
@@ -315,7 +315,7 @@ export default function CalculatorsView({
                 className={`flex items-center gap-2 rounded-2xl px-3.5 sm:px-4 py-2.5 text-xs font-semibold transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                   activeTab === tab.id
                     ? "bg-slate-950 dark:bg-emerald-600 text-white shadow-md border border-emerald-400/40 dark:border-emerald-500/50 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
-                    : "border border-white/70 dark:border-white/10 bg-white/45 dark:bg-[#0c1a1c]/80 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-white/10"
+                    : "border border-white/70 dark:border-white/10 bg-white/45 dark:bg-surface-panel/80 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-white/10"
                 }`}
               >
                 <TabIcon className={`h-4 w-4 shrink-0 ${activeTab === tab.id ? "text-emerald-400 dark:text-white" : "text-slate-500 dark:text-slate-400"}`} />
@@ -328,7 +328,7 @@ export default function CalculatorsView({
         {/* TAB 1: True Cost Monthly Ownership */}
         {activeTab === "true-cost" && (
           <section className="grid gap-6 md:grid-cols-[1.1fr_0.9fr]">
-            <div className="rounded-[30px] border border-white/80 bg-white/55 p-5 sm:p-6 shadow-sm backdrop-blur-xl space-y-4 text-xs dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+            <div className="rounded-panel border border-white/80 bg-white/55 p-5 sm:p-6 shadow-sm backdrop-blur-xl space-y-4 text-xs dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <h2 className="text-base sm:text-lg font-bold text-slate-950 dark:text-white">Purchase Assumptions</h2>
 
               {/* Property Asking Price */}
@@ -341,7 +341,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setPurchasePrice((prev) => Math.max(500000, prev - 100000))}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     -
                   </button>
@@ -361,7 +361,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setPurchasePrice((prev) => prev + 100000)}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     +
                   </button>
@@ -373,7 +373,7 @@ export default function CalculatorsView({
                       key={val}
                       type="button"
                       onClick={() => setPurchasePrice(val)}
-                      className={`pill-sm font-semibold transition-all cursor-pointer ${ purchasePrice === val ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
+                      className={`pill-sm font-semibold transition-all cursor-pointer ${ purchasePrice === val ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                     >
                       R {(val / 1000000).toFixed(val % 1000000 === 0 ? 0 : 2)}M
                     </button>
@@ -391,7 +391,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setDepositPct((prev) => Math.max(0, prev - 1))}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     -
                   </button>
@@ -411,7 +411,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setDepositPct((prev) => Math.min(50, prev + 1))}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     +
                   </button>
@@ -423,7 +423,7 @@ export default function CalculatorsView({
                       key={pct}
                       type="button"
                       onClick={() => setDepositPct(pct)}
-                      className={`pill-sm font-semibold transition-all cursor-pointer ${ depositPct === pct ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
+                      className={`pill-sm font-semibold transition-all cursor-pointer ${ depositPct === pct ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                     >
                       {pct === 0 ? "0% (100% Bond)" : `${pct}%`}
                     </button>
@@ -441,7 +441,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setInterestRate((prev) => Math.max(6, Math.round((prev - 0.25) * 100) / 100))}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     -
                   </button>
@@ -461,7 +461,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setInterestRate((prev) => Math.min(18, Math.round((prev + 0.25) * 100) / 100))}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     +
                   </button>
@@ -477,7 +477,7 @@ export default function CalculatorsView({
                       key={chip.label}
                       type="button"
                       onClick={() => setInterestRate(chip.val)}
-                      className={`pill-sm font-semibold transition-all cursor-pointer ${ Math.abs(interestRate - chip.val) < 0.01 ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
+                      className={`pill-sm font-semibold transition-all cursor-pointer ${ Math.abs(interestRate - chip.val) < 0.01 ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                     >
                       {chip.label}
                     </button>
@@ -523,7 +523,7 @@ export default function CalculatorsView({
                       className={`rounded-xl py-2 text-xs font-bold transition-all cursor-pointer ${
                         loanYears === yr
                           ? "bg-slate-950 text-white shadow-sm dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_14px_rgba(16,185,129,0.35)]"
-                          : "border border-slate-300 bg-white/60 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
+                          : "border border-slate-300 bg-white/60 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
                       }`}
                     >
                       {yr} Yrs
@@ -534,7 +534,7 @@ export default function CalculatorsView({
             </div>
 
             {/* Results Output */}
-            <div className="rounded-[30px] border border-white/80 bg-white/70 p-5 sm:p-6 shadow-md backdrop-blur-xl flex flex-col justify-between dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+            <div className="rounded-panel border border-white/80 bg-white/70 p-5 sm:p-6 shadow-md backdrop-blur-xl flex flex-col justify-between dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <div>
                 <span className="text-xs uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
                   Total Monthly Outlay
@@ -581,7 +581,7 @@ export default function CalculatorsView({
         {/* TAB 2: Affordability Calculator */}
         {activeTab === "affordability" && (
           <section className="grid gap-6 md:grid-cols-[1.1fr_0.9fr]">
-            <div className="rounded-[30px] border border-white/80 bg-white/55 p-5 sm:p-6 shadow-sm backdrop-blur-xl space-y-4 text-xs dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+            <div className="rounded-panel border border-white/80 bg-white/55 p-5 sm:p-6 shadow-sm backdrop-blur-xl space-y-4 text-xs dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <h2 className="text-base sm:text-lg font-bold text-slate-950 dark:text-white">Income & Debt Profile</h2>
 
               {/* Combined Gross Monthly Income */}
@@ -594,7 +594,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setGrossIncome((prev) => Math.max(10000, prev - 5000))}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     -
                   </button>
@@ -614,7 +614,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setGrossIncome((prev) => prev + 5000)}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     +
                   </button>
@@ -626,7 +626,7 @@ export default function CalculatorsView({
                       key={val}
                       type="button"
                       onClick={() => setGrossIncome(val)}
-                      className={`pill-sm font-semibold transition-all cursor-pointer ${ grossIncome === val ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
+                      className={`pill-sm font-semibold transition-all cursor-pointer ${ grossIncome === val ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                     >
                       R {(val / 1000).toFixed(0)}k
                     </button>
@@ -644,7 +644,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setMonthlyExpenses((prev) => Math.max(2500, prev - 2500))}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     -
                   </button>
@@ -664,7 +664,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setMonthlyExpenses((prev) => prev + 2500)}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     +
                   </button>
@@ -676,7 +676,7 @@ export default function CalculatorsView({
                       key={val}
                       type="button"
                       onClick={() => setMonthlyExpenses(val)}
-                      className={`pill-sm font-semibold transition-all cursor-pointer ${ monthlyExpenses === val ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
+                      className={`pill-sm font-semibold transition-all cursor-pointer ${ monthlyExpenses === val ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                     >
                       R {(val / 1000).toFixed(0)}k
                     </button>
@@ -684,13 +684,13 @@ export default function CalculatorsView({
                 </div>
               </div>
 
-              <div className="flex items-start gap-2 rounded-2xl border border-slate-200 bg-white/70 p-4 text-xs text-slate-600 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300">
+              <div className="flex items-start gap-2 rounded-2xl border border-slate-200 bg-white/70 p-4 text-xs text-slate-600 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300">
                 <InfoCircleIcon className="h-4 w-4 shrink-0 text-slate-500 mt-0.5 dark:text-slate-400" />
                 <span>Major South African commercial banks (Standard Bank, FNB, Nedbank, ABSA) evaluate bond applications against the 30% gross income installment ratio and National Credit Act (NCA) debt affordability limits.</span>
               </div>
             </div>
 
-            <div className="rounded-[30px] border border-white/80 bg-white/70 p-5 sm:p-6 shadow-md backdrop-blur-xl flex flex-col justify-between dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+            <div className="rounded-panel border border-white/80 bg-white/70 p-5 sm:p-6 shadow-md backdrop-blur-xl flex flex-col justify-between dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <div>
                 <span className="text-xs uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
                   Estimated Qualified Purchase Price
@@ -732,7 +732,7 @@ export default function CalculatorsView({
         {activeTab === "transfer-duty" && (
           <section className="space-y-6">
             {/* Interactive Duty Simulator */}
-            <div className="rounded-[30px] border border-white/80 bg-white/70 p-5 sm:p-6 shadow-md backdrop-blur-xl space-y-4 text-xs dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+            <div className="rounded-panel border border-white/80 bg-white/70 p-5 sm:p-6 shadow-md backdrop-blur-xl space-y-4 text-xs dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200 dark:border-white/10 pb-3 gap-2">
                 <div>
                   <span className="text-xs uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
@@ -763,7 +763,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setCustomTransferPrice((prev) => Math.max(500000, prev - 100000))}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     -
                   </button>
@@ -783,7 +783,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setCustomTransferPrice((prev) => prev + 100000)}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     +
                   </button>
@@ -795,7 +795,7 @@ export default function CalculatorsView({
                       key={p}
                       type="button"
                       onClick={() => setCustomTransferPrice(p)}
-                      className={`pill-sm font-semibold transition-all cursor-pointer ${ customTransferPrice === p ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
+                      className={`pill-sm font-semibold transition-all cursor-pointer ${ customTransferPrice === p ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                     >
                       R {(p / 1000000).toFixed(p % 1000000 === 0 ? 0 : 1)}M
                     </button>
@@ -810,15 +810,15 @@ export default function CalculatorsView({
             </div>
 
             {/* Official Reference Table */}
-            <div className="rounded-[30px] border border-white/80 bg-white/55 p-5 sm:p-6 shadow-sm backdrop-blur-xl text-xs space-y-4 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+            <div className="rounded-panel border border-white/80 bg-white/55 p-5 sm:p-6 shadow-sm backdrop-blur-xl text-xs space-y-4 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <h3 className="text-base font-bold text-slate-950 dark:text-white">Official SARS Statutory Transfer Duty Rates</h3>
               <p className="text-slate-600 dark:text-slate-300">
                 Transfer duty is a statutory tax levied on the acquisition of any property in South Africa, payable directly to SARS prior to deed registration.
               </p>
 
-              <div className="overflow-hidden rounded-2xl border border-white/80 bg-white/80 shadow-sm dark:bg-[#060d0e]/60 dark:border-white/10">
+              <div className="overflow-hidden rounded-2xl border border-white/80 bg-white/80 shadow-sm dark:bg-surface-ink/60 dark:border-white/10">
                 <table className="w-full text-left">
-                  <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase font-bold text-slate-500 dark:border-white/10 dark:bg-[#060d0e]/90 dark:text-slate-300">
+                  <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase font-bold text-slate-500 dark:border-white/10 dark:bg-surface-ink/90 dark:text-slate-300">
                     <tr>
                       <th className="py-3 px-4">Property Value Range</th>
                       <th className="py-3 px-4">Rate of Tax</th>
@@ -857,7 +857,7 @@ export default function CalculatorsView({
           <section className="space-y-6">
             <div className="grid gap-6 md:grid-cols-[1.1fr_0.9fr]">
               {/* Inputs */}
-              <div className="rounded-[30px] border border-white/80 bg-white/70 p-5 sm:p-6 shadow-md backdrop-blur-xl space-y-5 text-xs dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+              <div className="rounded-panel border border-white/80 bg-white/70 p-5 sm:p-6 shadow-md backdrop-blur-xl space-y-5 text-xs dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
                 <div>
                   <span className="text-xs uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
                     Legal Practice Council (LSSA) Fee Guidelines
@@ -880,7 +880,7 @@ export default function CalculatorsView({
                     <button
                       type="button"
                       onClick={() => setConveyPrice((prev) => Math.max(500000, prev - 250000))}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40"
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                     >
                       -
                     </button>
@@ -903,7 +903,7 @@ export default function CalculatorsView({
                     <button
                       type="button"
                       onClick={() => setConveyPrice((prev) => prev + 250000)}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40"
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                     >
                       +
                     </button>
@@ -918,7 +918,7 @@ export default function CalculatorsView({
                           setConveyPrice(val);
                           setConveyBond(Math.round(val * 0.9));
                         }}
-                        className={`pill-sm font-semibold transition-all cursor-pointer ${ conveyPrice === val ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
+                        className={`pill-sm font-semibold transition-all cursor-pointer ${ conveyPrice === val ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                       >
                         R {(val / 1000000).toFixed(val % 1000000 === 0 ? 0 : 1)}M
                       </button>
@@ -938,7 +938,7 @@ export default function CalculatorsView({
                     <button
                       type="button"
                       onClick={() => setConveyBond((prev) => Math.max(0, prev - 250000))}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40"
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                     >
                       -
                     </button>
@@ -957,7 +957,7 @@ export default function CalculatorsView({
                     <button
                       type="button"
                       onClick={() => setConveyBond((prev) => Math.min(conveyPrice, prev + 250000))}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40"
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                     >
                       +
                     </button>
@@ -976,7 +976,7 @@ export default function CalculatorsView({
                           key={b.label}
                           type="button"
                           onClick={() => setConveyBond(targetVal)}
-                          className={`pill-sm font-semibold transition-all cursor-pointer ${ conveyBond === targetVal ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
+                          className={`pill-sm font-semibold transition-all cursor-pointer ${ conveyBond === targetVal ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                         >
                           {b.label}
                         </button>
@@ -985,7 +985,7 @@ export default function CalculatorsView({
                   </div>
                 </div>
 
-                <div className="flex items-start gap-2 rounded-2xl border border-slate-200 bg-slate-50/80 p-3 text-xs text-slate-600 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300">
+                <div className="flex items-start gap-2 rounded-2xl border border-slate-200 bg-slate-50/80 p-3 text-xs text-slate-600 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300">
                   <InfoCircleIcon className="h-4 w-4 shrink-0 text-slate-500 mt-0.5 dark:text-slate-400" />
                   <span>
                     In South Africa, you pay two independent sets of attorneys: the <strong>Transfer Attorney</strong> (appointed by seller, paid by buyer) and the <strong>Bond Attorney</strong> (appointed by bank, paid by buyer).
@@ -994,7 +994,7 @@ export default function CalculatorsView({
               </div>
 
               {/* Total Upfront Cash Summary */}
-              <div className="rounded-[30px] border border-white/80 bg-white/70 p-5 sm:p-6 shadow-md backdrop-blur-xl flex flex-col justify-between dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+              <div className="rounded-panel border border-white/80 bg-white/70 p-5 sm:p-6 shadow-md backdrop-blur-xl flex flex-col justify-between dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
                 <div>
                   <span className="text-xs uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
                     Total Upfront Cash Required
@@ -1082,7 +1082,7 @@ export default function CalculatorsView({
           <section className="space-y-6">
             <div className="grid gap-6 md:grid-cols-[1.1fr_0.9fr]">
               {/* Controls */}
-              <div className="rounded-[30px] border border-white/80 dark:border-white/10 bg-white/70 dark:bg-[#0c1a1c]/80 p-5 sm:p-6 shadow-md dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl space-y-5 text-xs">
+              <div className="rounded-panel border border-white/80 dark:border-white/10 bg-white/70 dark:bg-surface-panel/80 p-5 sm:p-6 shadow-md dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl space-y-5 text-xs">
                 <div>
                   <span className="text-xs uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
                     Wealth Accelerator Simulator
@@ -1105,7 +1105,7 @@ export default function CalculatorsView({
                     <button
                       type="button"
                       onClick={() => setAmortLoan((prev) => Math.max(500000, prev - 250000))}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 dark:border-white/10 bg-white dark:bg-[#060d0e]/60 text-sm font-bold text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40 cursor-pointer active:scale-95"
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-sm font-bold text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 cursor-pointer active:scale-95"
                     >
                       -
                     </button>
@@ -1124,7 +1124,7 @@ export default function CalculatorsView({
                     <button
                       type="button"
                       onClick={() => setAmortLoan((prev) => prev + 250000)}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 dark:border-white/10 bg-white dark:bg-[#060d0e]/60 text-sm font-bold text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40 cursor-pointer active:scale-95"
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-sm font-bold text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 cursor-pointer active:scale-95"
                     >
                       +
                     </button>
@@ -1173,7 +1173,7 @@ export default function CalculatorsView({
                     <button
                       type="button"
                       onClick={() => setAmortExtraMonthly((prev) => Math.max(0, prev - 250))}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-emerald-300 dark:border-emerald-500/30 bg-white dark:bg-[#060d0e]/60 text-sm font-bold text-emerald-900 dark:text-white hover:bg-emerald-100 dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40 cursor-pointer active:scale-95"
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-emerald-300 dark:border-emerald-500/30 bg-white dark:bg-surface-ink/60 text-sm font-bold text-emerald-900 dark:text-white hover:bg-emerald-100 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 cursor-pointer active:scale-95"
                     >
                       -
                     </button>
@@ -1192,7 +1192,7 @@ export default function CalculatorsView({
                     <button
                       type="button"
                       onClick={() => setAmortExtraMonthly((prev) => prev + 250)}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 dark:border-white/10 bg-white dark:bg-[#060d0e]/60 text-sm font-bold text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-[#0c1a1c] dark:hover:border-emerald-500/40 cursor-pointer active:scale-95"
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-sm font-bold text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 cursor-pointer active:scale-95"
                     >
                       +
                     </button>
@@ -1204,7 +1204,7 @@ export default function CalculatorsView({
                         key={val}
                         type="button"
                         onClick={() => setAmortExtraMonthly(val)}
-                        className={`pill-sm font-semibold transition-all cursor-pointer ${ amortExtraMonthly === val ? "bg-emerald-800 dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] text-white" : "border border-emerald-300 dark:border-white/10 bg-white dark:bg-[#060d0e]/60 text-emerald-900 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
+                        className={`pill-sm font-semibold transition-all cursor-pointer ${ amortExtraMonthly === val ? "bg-emerald-800 dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] text-white" : "border border-emerald-300 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-emerald-900 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                       >
                         +R {formatNumber(val)}
                       </button>
@@ -1214,7 +1214,7 @@ export default function CalculatorsView({
               </div>
 
               {/* Savings Results Showcase */}
-              <div className="rounded-[30px] border border-white/80 dark:border-white/10 bg-white/70 dark:bg-[#0c1a1c]/80 p-5 sm:p-6 shadow-md dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl flex flex-col justify-between">
+              <div className="rounded-panel border border-white/80 dark:border-white/10 bg-white/70 dark:bg-surface-panel/80 p-5 sm:p-6 shadow-md dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl flex flex-col justify-between">
                 <div>
                   <span className="text-xs uppercase tracking-widest text-emerald-800 dark:text-emerald-400 font-bold">
                     Compound Interest Saved
@@ -1261,7 +1261,7 @@ export default function CalculatorsView({
                   </div>
                 </div>
 
-                <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300">
+                <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300">
                   <span>
                     💡 <strong>Pro-Tip:</strong> In South Africa, paying extra into an access bond also functions as a tax-free emergency fund yielding your bond rate (e.g. {amortRate}% return).
                   </span>

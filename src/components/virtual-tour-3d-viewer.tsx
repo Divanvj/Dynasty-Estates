@@ -285,7 +285,7 @@ export default function VirtualTour3DViewer({
             <span className="h-2 w-2 rounded-full bg-white animate-pulse" />
             <span>{title ? `${title} · 3D Tour` : "3D Interactive Live Tour"}</span>
           </span>
-          <span className="rounded-full bg-black/60 border border-white/20 px-3 py-1 text-xs font-semibold text-white backdrop-blur-md dark:border-white/10 dark:bg-[#0c1a1c]/80">
+          <span className="rounded-full bg-black/60 border border-white/20 px-3 py-1 text-xs font-semibold text-white backdrop-blur-md dark:border-white/10 dark:bg-surface-panel/80">
             {currentRoom.name}
           </span>
         </div>
@@ -293,7 +293,7 @@ export default function VirtualTour3DViewer({
         {/* Right: View Mode Toggle & Fullscreen */}
         <div className="flex items-center gap-2 pointer-events-auto">
           {/* Mode Switcher */}
-          <div className="flex items-center rounded-full bg-black/60 border border-white/20 p-0.5 backdrop-blur-md text-xs font-semibold dark:border-white/10 dark:bg-[#060d0e]/80">
+          <div className="flex items-center rounded-full bg-black/60 border border-white/20 p-0.5 backdrop-blur-md text-xs font-semibold dark:border-white/10 dark:bg-surface-ink/80">
             <button
               type="button"
               onClick={() => setViewMode("walkthrough")}
@@ -337,7 +337,7 @@ export default function VirtualTour3DViewer({
           <button
             type="button"
             onClick={toggleFullscreen}
-            className="flex h-8 w-8 items-center justify-center rounded-full bg-black/60 border border-white/20 text-white hover:bg-white hover:text-slate-950 transition-all cursor-pointer backdrop-blur-md dark:bg-[#060d0e]/80 dark:border-white/10 dark:text-white dark:hover:bg-emerald-600"
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-black/60 border border-white/20 text-white hover:bg-white hover:text-slate-950 transition-all cursor-pointer backdrop-blur-md dark:bg-surface-ink/80 dark:border-white/10 dark:text-white dark:hover:bg-emerald-600"
             title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
           >
             {isFullscreen ? "⤓" : "⤢"}
@@ -386,7 +386,7 @@ export default function VirtualTour3DViewer({
                     switchRoom(spot.targetRoomId);
                   }}
                   style={{ left: `${screenX}%`, top: `${spot.y}%` }}
-                  className="group absolute -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 rounded-full bg-white/90 px-3.5 py-1.5 text-xs font-bold text-slate-950 shadow-[0_8px_24px_rgba(0,0,0,0.5)] border border-white/80 hover:bg-rose-600 hover:text-white transition-all transform hover:scale-110 cursor-pointer backdrop-blur-md animate-bounce dark:bg-[#0c1a1c]/90 dark:border-white/20 dark:text-white dark:hover:bg-emerald-600 dark:hover:border-emerald-400"
+                  className="group absolute -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 rounded-full bg-white/90 px-3.5 py-1.5 text-xs font-bold text-slate-950 shadow-[0_8px_24px_rgba(0,0,0,0.5)] border border-white/80 hover:bg-rose-600 hover:text-white transition-all transform hover:scale-110 cursor-pointer backdrop-blur-md animate-bounce dark:bg-surface-panel/90 dark:border-white/20 dark:text-white dark:hover:bg-emerald-600 dark:hover:border-emerald-400"
                 >
                   <span className="h-2.5 w-2.5 rounded-full bg-rose-500 group-hover:bg-white animate-ping" />
                   <span>{spot.label}</span>
@@ -593,11 +593,11 @@ export default function VirtualTour3DViewer({
           </button>
 
           {/* Zoom Controls */}
-          <div className="flex items-center rounded-xl bg-black/60 border border-white/20 p-0.5 backdrop-blur-md dark:border-white/10 dark:bg-[#060d0e]/80">
+          <div className="flex items-center rounded-xl bg-black/60 border border-white/20 p-0.5 backdrop-blur-md dark:border-white/10 dark:bg-surface-ink/80">
             <button
               type="button"
               onClick={() => setZoom((z) => Math.max(1, z - 0.2))}
-              className="flex h-7 w-7 items-center justify-center rounded-lg text-white hover:bg-white/20 transition-colors dark:bg-[#060d0e]/60 dark:hover:bg-[#0c1a1c]"
+              className="flex h-7 w-7 items-center justify-center rounded-lg text-white hover:bg-white/20 transition-colors dark:bg-surface-ink/60 dark:hover:bg-surface-panel"
               title="Zoom Out"
             >
               -
@@ -606,7 +606,7 @@ export default function VirtualTour3DViewer({
             <button
               type="button"
               onClick={() => setZoom((z) => Math.min(1.6, z + 0.2))}
-              className="flex h-7 w-7 items-center justify-center rounded-lg text-white hover:bg-white/20 transition-colors dark:bg-[#060d0e]/60 dark:hover:bg-[#0c1a1c]"
+              className="flex h-7 w-7 items-center justify-center rounded-lg text-white hover:bg-white/20 transition-colors dark:bg-surface-ink/60 dark:hover:bg-surface-panel"
               title="Zoom In"
             >
               +
@@ -619,7 +619,7 @@ export default function VirtualTour3DViewer({
               href={virtualTourUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-xl bg-white/20 border border-white/30 px-3 py-1.5 text-xs font-bold text-white hover:bg-white hover:text-slate-950 transition-all backdrop-blur-md whitespace-nowrap dark:bg-[#060d0e]/80 dark:border-white/15 dark:text-white dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300"
+              className="rounded-xl bg-white/20 border border-white/30 px-3 py-1.5 text-xs font-bold text-white hover:bg-white hover:text-slate-950 transition-all backdrop-blur-md whitespace-nowrap dark:bg-surface-ink/80 dark:border-white/15 dark:text-white dark:hover:bg-surface-panel dark:hover:text-emerald-300"
             >
               Matterport Cloud ↗
             </a>

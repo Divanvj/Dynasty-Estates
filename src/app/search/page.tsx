@@ -361,7 +361,7 @@ function SearchContent() {
   return (
     <div className="mx-auto max-w-[1440px]">
       {/* Header */}
-      <header className="relative z-50 mb-6 flex items-center justify-between rounded-[28px] border border-white/75 bg-white/45 dark:border-white/10 dark:bg-[#0b1719]/70 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] dark:shadow-[0_12px_28px_rgba(0,0,0,0.4)] backdrop-blur-xl">
+      <header className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 dark:border-white/10 dark:bg-[#0b1719]/70 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] dark:shadow-[0_12px_28px_rgba(0,0,0,0.4)] backdrop-blur-xl">
         <BrandLogo />
 
         <div className="flex items-center gap-2 sm:gap-4">
@@ -376,7 +376,7 @@ function SearchContent() {
       </header>
 
       {/* Comprehensive Search & Filter Console */}
-      <section className="relative z-30 rounded-[32px] border border-white/80 bg-white/60 dark:border-white/10 dark:bg-[#0c1a1c]/65 p-4 sm:p-6 shadow-[0_20px_45px_rgba(36,48,50,0.1)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+      <section className="relative z-30 rounded-panel border border-white/80 bg-white/60 dark:border-white/10 dark:bg-surface-panel/65 p-4 sm:p-6 shadow-[0_20px_45px_rgba(36,48,50,0.1)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)] backdrop-blur-xl">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 dark:border-white/10 pb-4">
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-1.5">
@@ -431,14 +431,14 @@ function SearchContent() {
             </span>
 
             {/* View Mode Switcher Segmented Control */}
-            <div className="inline-flex items-center rounded-2xl border border-slate-200/90 bg-white/80 dark:border-white/10 dark:bg-[#060d0e]/60 p-1 shadow-2xs backdrop-blur-md">
+            <div className="inline-flex items-center rounded-2xl border border-slate-200/90 bg-white/80 dark:border-white/10 dark:bg-surface-ink/60 p-1 shadow-2xs backdrop-blur-md">
               <button
                 type="button"
                 onClick={() => handleViewChange("grid")}
-                className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer sm:min-h-0 sm:min-w-0 ${
+                className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
                   viewMode === "grid"
                     ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-[#0c1a1c]"
+                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
                 }`}
                 title="Grid View (3 Columns)"
               >
@@ -448,10 +448,10 @@ function SearchContent() {
               <button
                 type="button"
                 onClick={() => handleViewChange("list")}
-                className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer sm:min-h-0 sm:min-w-0 ${
+                className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
                   viewMode === "list"
                     ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-[#0c1a1c]"
+                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
                 }`}
                 title="List View (Detailed Horizontal Cards)"
               >
@@ -461,10 +461,10 @@ function SearchContent() {
               <button
                 type="button"
                 onClick={() => handleViewChange("map")}
-                className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer sm:min-h-0 sm:min-w-0 ${
+                className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
                   viewMode === "map"
                     ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-[#0c1a1c]"
+                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
                 }`}
                 title="Split Map View (Interactive Map + Listings)"
               >
@@ -474,10 +474,10 @@ function SearchContent() {
               <button
                 type="button"
                 onClick={() => handleViewChange("compact")}
-                className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer sm:min-h-0 sm:min-w-0 ${
+                className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
                   viewMode === "compact"
                     ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-[#0c1a1c]"
+                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
                 }`}
                 title="Compact Table View (Investor & Yield Matrix)"
               >
@@ -557,7 +557,7 @@ function SearchContent() {
                 className={`flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 sm:py-1 text-xs font-semibold transition-all cursor-pointer ${
                   isChecked
                     ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] border border-emerald-500/40 dark:border-emerald-400/50"
-                    : "border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-[#060d0e]/60 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-[#0c1a1c] dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
+                    : "border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
                 }`}
               >
                 {isChecked ? <CheckIcon className="h-3 w-3 text-emerald-300" /> : <span>+</span>}
@@ -573,13 +573,13 @@ function SearchContent() {
         {loading ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[1, 2, 3].map((n) => (
-              <div key={n} className="h-96 rounded-[30px] border border-white/60 dark:border-white/10 bg-white/40 dark:bg-[#0c1a1c]/60 animate-pulse" />
+              <div key={n} className="h-96 rounded-panel border border-white/60 dark:border-white/10 bg-white/40 dark:bg-surface-panel/60 animate-pulse" />
             ))}
           </div>
         ) : loadError ? (
           <div
             role="alert"
-            className="rounded-[32px] border border-rose-300/80 dark:border-rose-500/30 bg-rose-50/80 dark:bg-rose-500/10 p-12 text-center shadow-lg backdrop-blur-xl"
+            className="rounded-panel border border-rose-300/80 dark:border-rose-500/30 bg-rose-50/80 dark:bg-rose-500/10 p-12 text-center shadow-lg backdrop-blur-xl"
           >
             <h3 className="text-xl font-bold text-rose-900 dark:text-rose-200">
               We couldn&rsquo;t load the listings
@@ -604,10 +604,10 @@ function SearchContent() {
                     key={property.id}
                     // `relative` anchors the .card-link overlay on the title
                     // below, which makes the whole card open the listing.
-                    className="group relative overflow-hidden rounded-[30px] border border-white/80 dark:border-white/10 bg-white/60 dark:bg-[#0c1a1c]/75 shadow-[0_16px_36px_rgba(36,48,50,0.08)] dark:shadow-[0_16px_36px_rgba(0,0,0,0.3)] backdrop-blur-xl transition-all hover:-translate-y-1 hover:shadow-2xl"
+                    className="group relative overflow-hidden rounded-panel border border-white/80 dark:border-white/10 bg-white/60 dark:bg-surface-panel/75 shadow-[0_16px_36px_rgba(36,48,50,0.08)] dark:shadow-[0_16px_36px_rgba(0,0,0,0.3)] backdrop-blur-xl transition-all hover:-translate-y-1 hover:shadow-2xl"
                   >
                     {/* Photo & Save Button */}
-                    <div className="relative h-60 overflow-hidden bg-slate-200 dark:bg-[#060d0e]">
+                    <div className="relative h-60 overflow-hidden bg-slate-200 dark:bg-surface-ink">
                       <PropertyCardPhotos
                         images={property.gallery?.length ? property.gallery : [property.image]}
                         title={property.title}
@@ -662,7 +662,7 @@ function SearchContent() {
                             <span>{property.location}</span>
                           </p>
                         </div>
-                        <span className="rounded-full bg-slate-100 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 px-2.5 py-0.5 text-xs font-bold text-slate-700 dark:text-slate-300 shrink-0">
+                        <span className="rounded-full bg-slate-100 dark:bg-surface-ink/80 dark:border dark:border-white/10 px-2.5 py-0.5 text-xs font-bold text-slate-700 dark:text-slate-300 shrink-0">
                           {property.type}
                         </span>
                       </div>
@@ -750,8 +750,8 @@ function SearchContent() {
           </>
         ) : (
           /* Empty State */
-          <div className="rounded-[32px] border border-white/75 dark:border-white/10 bg-white/50 dark:bg-[#0c1a1c]/80 p-12 text-center shadow-lg dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)] backdrop-blur-xl">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white/80 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 shadow-md mb-3 text-slate-400 dark:text-slate-300">
+          <div className="rounded-panel border border-white/75 dark:border-white/10 bg-white/50 dark:bg-surface-panel/80 p-12 text-center shadow-lg dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white/80 dark:bg-surface-ink/80 dark:border dark:border-white/10 shadow-md mb-3 text-slate-400 dark:text-slate-300">
               <HomeIcon className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
             </div>
             <h3 className="mt-3 text-xl font-bold text-slate-900 dark:text-white">No properties matched your criteria</h3>

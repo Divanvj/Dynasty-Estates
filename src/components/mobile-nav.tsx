@@ -76,7 +76,7 @@ export default function MobileNav() {
   return (
     <nav
       aria-label="Primary"
-      className="fixed inset-x-0 bottom-0 z-[80] lg:hidden border-t border-white/70 dark:border-white/10 bg-white/85 dark:bg-[#0c1a1c]/90 backdrop-blur-xl shadow-[0_-8px_30px_rgba(15,23,42,0.10)] pb-[env(safe-area-inset-bottom)]"
+      className="fixed inset-x-0 bottom-0 z-[80] lg:hidden border-t border-white/70 dark:border-white/10 bg-white/85 dark:bg-surface-panel/90 backdrop-blur-xl shadow-[0_-8px_30px_rgba(15,23,42,0.10)] pb-[env(safe-area-inset-bottom)]"
     >
       {/* `w-full` and `min-w-0` are load-bearing. Without them the list sized
           itself from its content and rendered 383px against a 375px viewport in

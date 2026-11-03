@@ -176,7 +176,7 @@ export default function TrueCostCalculator({
 
   if (listingType === "rent") {
     return (
-      <div className="rounded-[30px] border border-white/80 bg-white/55 p-5 sm:p-6 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-[#0c1a1c]/75 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+      <div className="rounded-panel border border-white/80 bg-white/55 p-5 sm:p-6 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/75 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
         {/* Header & Total Monthly Cost */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200/80 pb-4 gap-3 dark:border-white/10">
           <div>
@@ -204,7 +204,7 @@ export default function TrueCostCalculator({
 
         {/* Breakdown Cards */}
         <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
-          <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-[#060d0e]/60 dark:border-white/10 dark:shadow-none">
+          <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-surface-ink/60 dark:border-white/10 dark:shadow-none">
             <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
               Monthly Rent
             </p>
@@ -212,7 +212,7 @@ export default function TrueCostCalculator({
               R {formatNumber(monthlyRent)}
             </p>
           </div>
-          <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-[#060d0e]/60 dark:border-white/10 dark:shadow-none">
+          <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-surface-ink/60 dark:border-white/10 dark:shadow-none">
             <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
               Est. Utilities
             </p>
@@ -220,7 +220,7 @@ export default function TrueCostCalculator({
               R {formatNumber(utilities)}
             </p>
           </div>
-          <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-[#060d0e]/60 dark:border-white/10 dark:shadow-none">
+          <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-surface-ink/60 dark:border-white/10 dark:shadow-none">
             <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
               Insurance
             </p>
@@ -239,7 +239,7 @@ export default function TrueCostCalculator({
           onClick={() => setControlsOpen((wasOpen) => !wasOpen)}
           aria-expanded={controlsOpen}
           aria-controls={controlsId}
-          className="tap-44 relative mt-4 flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-full border border-slate-300 bg-white/80 px-4 py-2.5 font-bold text-slate-800 transition-all hover:bg-white md:hidden dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-200 dark:hover:bg-white/10"
+          className="tap-44 relative mt-4 flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-full border border-slate-300 bg-white/80 px-4 py-2.5 font-bold text-slate-800 transition-all hover:bg-white md:hidden dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
         >
           {controlsOpen ? "Hide the calculator" : "Adjust the figures"}
           <ChevronDownIcon className={`h-4 w-4 transition-transform ${controlsOpen ? "rotate-180" : ""}`} />
@@ -258,7 +258,7 @@ export default function TrueCostCalculator({
               simply wrong. The variables below it — deposit term, lease length,
               utilities, insurance — are the ones that genuinely differ, so those
               stay adjustable. */}
-          <div className="flex items-center justify-between rounded-xl border border-slate-200/70 bg-white/60 px-3 py-2.5 dark:border-white/10 dark:bg-[#060d0e]/60">
+          <div className="flex items-center justify-between rounded-xl border border-slate-200/70 bg-white/60 px-3 py-2.5 dark:border-white/10 dark:bg-surface-ink/60">
             <div>
               <span className="font-semibold">Advertised monthly rent</span>
               <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
@@ -291,7 +291,7 @@ export default function TrueCostCalculator({
                   className={`rounded-xl py-2 text-xs font-bold transition-all cursor-pointer ${
                     depositMultiple === item.value
                       ? "bg-slate-950 text-white shadow-sm dark:bg-amber-600 dark:text-white dark:shadow-[0_0_12px_rgba(217,119,6,0.3)]"
-                      : "border border-slate-200 bg-white/70 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
+                      : "border border-slate-200 bg-white/70 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
                   }`}
                 >
                   {item.label}
@@ -301,7 +301,7 @@ export default function TrueCostCalculator({
           </div>
 
           {/* Utilities & Tenant Insurance Controls */}
-          <div className="space-y-3 rounded-2xl border border-slate-200/80 bg-white/60 p-3.5 shadow-sm dark:border-white/10 dark:bg-[#060d0e]/60">
+          <div className="space-y-3 rounded-2xl border border-slate-200/80 bg-white/60 p-3.5 shadow-sm dark:border-white/10 dark:bg-surface-ink/60">
             <div className="flex items-center justify-between">
               <label htmlFor={utilitiesInputId} className="font-semibold text-slate-800 text-xs dark:text-slate-300">
                 Estimated Water & Electricity:
@@ -310,7 +310,7 @@ export default function TrueCostCalculator({
                 <button
                   type="button"
                   onClick={() => adjustUtilities(-250)}
-                  className="h-6 w-6 rounded border border-slate-300 bg-white text-xs font-bold text-slate-700 hover:bg-slate-100 cursor-pointer dark:border-white/10 dark:bg-[#060d0e]/80 dark:text-slate-300 dark:hover:bg-white/10"
+                  className="h-6 w-6 rounded border border-slate-300 bg-white text-xs font-bold text-slate-700 hover:bg-slate-100 cursor-pointer dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-300 dark:hover:bg-white/10"
                 >
                   -
                 </button>
@@ -320,7 +320,7 @@ export default function TrueCostCalculator({
                 <button
                   type="button"
                   onClick={() => adjustUtilities(250)}
-                  className="h-6 w-6 rounded border border-slate-300 bg-white text-xs font-bold text-slate-700 hover:bg-slate-100 cursor-pointer dark:border-white/10 dark:bg-[#060d0e]/80 dark:text-slate-300 dark:hover:bg-white/10"
+                  className="h-6 w-6 rounded border border-slate-300 bg-white text-xs font-bold text-slate-700 hover:bg-slate-100 cursor-pointer dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-300 dark:hover:bg-white/10"
                 >
                   +
                 </button>
@@ -397,7 +397,7 @@ export default function TrueCostCalculator({
         {/* Upfront Cash Breakdown Modal for Rent */}
         {showUpfrontModal && (
           <div className="fixed inset-0 z-[120] flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-md">
-            <div className="w-full max-w-md rounded-3xl border border-white/80 bg-white p-6 shadow-2xl space-y-4 dark:bg-[#0c1a1c] dark:border-white/10 dark:shadow-[0_25px_60px_rgba(0,0,0,0.8)]">
+            <div className="w-full max-w-md rounded-3xl border border-white/80 bg-white p-6 shadow-2xl space-y-4 dark:bg-surface-panel dark:border-white/10 dark:shadow-[0_25px_60px_rgba(0,0,0,0.8)]">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-white/10">
                 <div>
                   <span className="text-xs uppercase font-bold tracking-widest text-amber-700 dark:text-amber-400">
@@ -410,7 +410,7 @@ export default function TrueCostCalculator({
                 <button
                   type="button"
                   onClick={() => setShowUpfrontModal(false)}
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:hover:bg-[#0c1a1c] dark:text-slate-300 dark:hover:text-white"
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:hover:bg-surface-panel dark:text-slate-300 dark:hover:text-white"
                 >
                   <XMarkIcon className="h-4 w-4" />
                 </button>
@@ -438,7 +438,7 @@ export default function TrueCostCalculator({
                 </div>
               </div>
 
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300">
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300">
                 Under South African Rental Housing Act regulations, the tenant security deposit must be invested in an interest-bearing account and refunded with interest upon successful exit inspection.
               </div>
 
@@ -456,7 +456,7 @@ export default function TrueCostCalculator({
         {/* Tenant Affordability Modal */}
         {showPreApprovalModal && (
           <div className="fixed inset-0 z-[120] flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-md">
-            <div className="w-full max-w-md rounded-3xl border border-white/80 bg-white p-6 shadow-2xl space-y-4 dark:bg-[#0c1a1c] dark:border-white/10 dark:shadow-[0_25px_60px_rgba(0,0,0,0.8)]">
+            <div className="w-full max-w-md rounded-3xl border border-white/80 bg-white p-6 shadow-2xl space-y-4 dark:bg-surface-panel dark:border-white/10 dark:shadow-[0_25px_60px_rgba(0,0,0,0.8)]">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-white/10">
                 <div className="flex items-center gap-2">
                   <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-400 dark:border dark:border-amber-500/30">
@@ -474,7 +474,7 @@ export default function TrueCostCalculator({
                 <button
                   type="button"
                   onClick={() => setShowPreApprovalModal(false)}
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:hover:bg-[#0c1a1c] dark:text-slate-300 dark:hover:text-white"
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:hover:bg-surface-panel dark:text-slate-300 dark:hover:text-white"
                 >
                   <XMarkIcon className="h-4 w-4" />
                 </button>
@@ -542,7 +542,7 @@ export default function TrueCostCalculator({
   }
 
   return (
-    <div className="rounded-[30px] border border-white/80 bg-white/55 p-5 sm:p-6 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-[#0c1a1c]/75 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+    <div className="rounded-panel border border-white/80 bg-white/55 p-5 sm:p-6 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/75 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
       {/* Header & Total Cost */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200/80 pb-4 gap-3 dark:border-white/10">
         <div>
@@ -570,7 +570,7 @@ export default function TrueCostCalculator({
 
       {/* Breakdown Cards */}
       <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
-        <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-[#060d0e]/60 dark:border-white/10 dark:shadow-none">
+        <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-surface-ink/60 dark:border-white/10 dark:shadow-none">
           <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
             Bond
           </p>
@@ -578,7 +578,7 @@ export default function TrueCostCalculator({
             R {formatNumber(monthlyBond)}
           </p>
         </div>
-        <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-[#060d0e]/60 dark:border-white/10 dark:shadow-none">
+        <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-surface-ink/60 dark:border-white/10 dark:shadow-none">
           <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
             Levies
           </p>
@@ -586,7 +586,7 @@ export default function TrueCostCalculator({
             R {formatNumber(levy)}
           </p>
         </div>
-        <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-[#060d0e]/60 dark:border-white/10 dark:shadow-none">
+        <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-surface-ink/60 dark:border-white/10 dark:shadow-none">
           <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
             Rates & Taxes
           </p>
@@ -602,7 +602,7 @@ export default function TrueCostCalculator({
         onClick={() => setControlsOpen((wasOpen) => !wasOpen)}
         aria-expanded={controlsOpen}
         aria-controls={controlsId}
-        className="tap-44 relative mt-4 flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-full border border-slate-300 bg-white/80 px-4 py-2.5 font-bold text-slate-800 transition-all hover:bg-white md:hidden dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-200 dark:hover:bg-white/10"
+        className="tap-44 relative mt-4 flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-full border border-slate-300 bg-white/80 px-4 py-2.5 font-bold text-slate-800 transition-all hover:bg-white md:hidden dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
       >
         {controlsOpen ? "Hide the calculator" : "Adjust the figures"}
         <ChevronDownIcon className={`h-4 w-4 transition-transform ${controlsOpen ? "rotate-180" : ""}`} />
@@ -634,7 +634,7 @@ export default function TrueCostCalculator({
               type="button"
               onClick={() => adjustPrice(-50000)}
               aria-label="Decrease price by 50,000"
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/80 dark:text-slate-200 dark:hover:bg-white/10"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-200 dark:hover:bg-white/10"
             >
               -
             </button>
@@ -655,7 +655,7 @@ export default function TrueCostCalculator({
               type="button"
               onClick={() => adjustPrice(50000)}
               aria-label="Increase price by 50,000"
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/80 dark:text-slate-200 dark:hover:bg-white/10"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-200 dark:hover:bg-white/10"
             >
               +
             </button>
@@ -669,7 +669,7 @@ export default function TrueCostCalculator({
               className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
                 purchasePrice === Math.round(askingPriceZAR * 0.95)
                   ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-                  : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
+                  : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
               }`}
             >
               -5% Offer
@@ -680,7 +680,7 @@ export default function TrueCostCalculator({
               className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
                 purchasePrice === askingPriceZAR
                   ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-                  : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
+                  : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
               }`}
             >
               Asking Price (R {(askingPriceZAR / 1000000).toFixed(2)}M)
@@ -691,7 +691,7 @@ export default function TrueCostCalculator({
               className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
                 purchasePrice === Math.round(askingPriceZAR * 1.05)
                   ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-                  : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
+                  : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
               }`}
             >
               +5% Compete
@@ -715,7 +715,7 @@ export default function TrueCostCalculator({
               type="button"
               onClick={() => adjustDeposit(-1)}
               aria-label="Decrease deposit by 1 percent"
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/80 dark:text-slate-200 dark:hover:bg-white/10"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-200 dark:hover:bg-white/10"
             >
               -
             </button>
@@ -736,7 +736,7 @@ export default function TrueCostCalculator({
               type="button"
               onClick={() => adjustDeposit(1)}
               aria-label="Increase deposit by 1 percent"
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/80 dark:text-slate-200 dark:hover:bg-white/10"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-200 dark:hover:bg-white/10"
             >
               +
             </button>
@@ -752,7 +752,7 @@ export default function TrueCostCalculator({
                 className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
                   depositPercent === pct
                     ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-                    : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
+                    : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
                 }`}
               >
                 {pct === 0 ? "0% (100% Bond)" : `${pct}%`}
@@ -777,7 +777,7 @@ export default function TrueCostCalculator({
               type="button"
               onClick={() => adjustRate(-0.25)}
               aria-label="Decrease interest rate by 0.25 percent"
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/80 dark:text-slate-200 dark:hover:bg-white/10"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-200 dark:hover:bg-white/10"
             >
               -
             </button>
@@ -798,7 +798,7 @@ export default function TrueCostCalculator({
               type="button"
               onClick={() => adjustRate(0.25)}
               aria-label="Increase interest rate by 0.25 percent"
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-[#060d0e]/80 dark:text-slate-200 dark:hover:bg-white/10"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-200 dark:hover:bg-white/10"
             >
               +
             </button>
@@ -818,7 +818,7 @@ export default function TrueCostCalculator({
                 className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
                   Math.abs(interestRate - chip.value) < 0.01
                     ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-                    : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
+                    : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
                 }`}
               >
                 {chip.label}
@@ -841,7 +841,7 @@ export default function TrueCostCalculator({
                 className={`rounded-xl py-2 text-xs font-bold transition-all cursor-pointer ${
                   tenureYears === years
                     ? "bg-slate-950 text-white shadow-sm dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-                    : "border border-slate-200 bg-white/60 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
+                    : "border border-slate-200 bg-white/60 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
                 }`}
               >
                 {years} Yrs
@@ -851,7 +851,7 @@ export default function TrueCostCalculator({
         </div>
 
         {/* Insurance Toggle */}
-        <div className="flex items-center justify-between rounded-xl border border-slate-200/80 bg-white/60 p-3 dark:border-white/10 dark:bg-[#060d0e]/60">
+        <div className="flex items-center justify-between rounded-xl border border-slate-200/80 bg-white/60 p-3 dark:border-white/10 dark:bg-surface-ink/60">
           <div>
             <p className="font-bold text-slate-900 text-xs dark:text-white">Include HOC & Life Assurance</p>
             <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -891,7 +891,7 @@ export default function TrueCostCalculator({
           </button>
 
           {showCustomSettings && (
-            <div className="mt-2 grid grid-cols-2 gap-2.5 rounded-xl border border-slate-200 bg-white/70 p-3 dark:border-white/10 dark:bg-[#060d0e]/60">
+            <div className="mt-2 grid grid-cols-2 gap-2.5 rounded-xl border border-slate-200 bg-white/70 p-3 dark:border-white/10 dark:bg-surface-ink/60">
               <div>
                 <label className="block text-xs uppercase tracking-wider font-bold text-slate-500 mb-1 dark:text-slate-400">
                   Monthly Levy (HOA)
@@ -906,7 +906,7 @@ export default function TrueCostCalculator({
                     step="100"
                     value={levy}
                     onChange={(e) => setLevy(Math.max(0, Number(e.target.value)))}
-                    className="w-full rounded-lg border border-slate-300 bg-white py-1.5 pl-7 pr-2 text-xs font-bold text-slate-900 dark:border-white/10 dark:bg-[#060d0e]/80 dark:text-white"
+                    className="w-full rounded-lg border border-slate-300 bg-white py-1.5 pl-7 pr-2 text-xs font-bold text-slate-900 dark:border-white/10 dark:bg-surface-ink/80 dark:text-white"
                   />
                 </div>
               </div>
@@ -924,7 +924,7 @@ export default function TrueCostCalculator({
                     step="100"
                     value={rates}
                     onChange={(e) => setRates(Math.max(0, Number(e.target.value)))}
-                    className="w-full rounded-lg border border-slate-300 bg-white py-1.5 pl-7 pr-2 text-xs font-bold text-slate-900 dark:border-white/10 dark:bg-[#060d0e]/80 dark:text-white"
+                    className="w-full rounded-lg border border-slate-300 bg-white py-1.5 pl-7 pr-2 text-xs font-bold text-slate-900 dark:border-white/10 dark:bg-surface-ink/80 dark:text-white"
                   />
                 </div>
               </div>
@@ -989,7 +989,7 @@ export default function TrueCostCalculator({
       {/* Upfront Cash Breakdown Modal */}
       {showUpfrontModal && (
         <div className="fixed inset-0 z-[120] flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-md">
-          <div className="w-full max-w-md rounded-3xl border border-white/80 bg-white p-6 shadow-2xl space-y-4 dark:bg-[#0c1a1c] dark:border-white/10 dark:shadow-[0_25px_60px_rgba(0,0,0,0.8)]">
+          <div className="w-full max-w-md rounded-3xl border border-white/80 bg-white p-6 shadow-2xl space-y-4 dark:bg-surface-panel dark:border-white/10 dark:shadow-[0_25px_60px_rgba(0,0,0,0.8)]">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-white/10">
               <div>
                 <span className="text-xs uppercase font-bold tracking-widest text-emerald-700 dark:text-emerald-400">
@@ -1002,7 +1002,7 @@ export default function TrueCostCalculator({
               <button
                 type="button"
                 onClick={() => setShowUpfrontModal(false)}
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:hover:bg-[#0c1a1c] dark:text-slate-300 dark:hover:text-white"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:hover:bg-surface-panel dark:text-slate-300 dark:hover:text-white"
               >
                 <XMarkIcon className="h-4 w-4" />
               </button>
@@ -1040,7 +1040,7 @@ export default function TrueCostCalculator({
               </div>
             </div>
 
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300">
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300">
               Official South African statutory tariffs apply. Exact conveyancing disbursements and Deeds Office levies will be billed by the transfer attorney.
             </div>
 
@@ -1058,7 +1058,7 @@ export default function TrueCostCalculator({
       {/* Pre-Approval Modal */}
       {showPreApprovalModal && (
         <div className="fixed inset-0 z-[120] flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-md">
-          <div className="w-full max-w-md rounded-3xl border border-white/80 bg-white p-6 shadow-2xl space-y-4 dark:bg-[#0c1a1c] dark:border-white/10 dark:shadow-[0_25px_60px_rgba(0,0,0,0.8)]">
+          <div className="w-full max-w-md rounded-3xl border border-white/80 bg-white p-6 shadow-2xl space-y-4 dark:bg-surface-panel dark:border-white/10 dark:shadow-[0_25px_60px_rgba(0,0,0,0.8)]">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-white/10">
               <div className="flex items-center gap-2">
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_12px_rgba(16,185,129,0.25)]">
@@ -1076,7 +1076,7 @@ export default function TrueCostCalculator({
               <button
                 type="button"
                 onClick={() => setShowPreApprovalModal(false)}
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:hover:bg-[#0c1a1c] dark:text-slate-300 dark:hover:text-white"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:hover:bg-surface-panel dark:text-slate-300 dark:hover:text-white"
               >
                 <XMarkIcon className="h-4 w-4" />
               </button>

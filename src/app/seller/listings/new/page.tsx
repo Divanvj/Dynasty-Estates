@@ -26,10 +26,10 @@ import {
 import type { ListingPhoto } from "@/lib/photo-intake";
 
 const inputClass =
-  "w-full h-[48px] rounded-[18px] border border-white/70 bg-white/60 dark:border-white/10 dark:bg-[#060d0e]/60 px-4 py-3 text-sm text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20 backdrop-blur-md transition-all";
+  "w-full h-[48px] rounded-control border border-white/70 bg-white/60 dark:border-white/10 dark:bg-surface-ink/60 px-4 py-3 text-sm text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20 backdrop-blur-md transition-all";
 
 const selectTriggerClass =
-  "w-full h-full flex items-center justify-between rounded-[18px] border border-white/70 bg-white/60 dark:border-white/10 dark:bg-[#060d0e]/60 px-4 text-sm text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20 backdrop-blur-md transition-all";
+  "w-full h-full flex items-center justify-between rounded-control border border-white/70 bg-white/60 dark:border-white/10 dark:bg-surface-ink/60 px-4 text-sm text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20 backdrop-blur-md transition-all";
 
 const availableFeatures = [
   { id: "solar_system", label: "Solar Power System" },
@@ -271,7 +271,7 @@ export default function NewListingWizardPage() {
       <main className="min-h-screen bg-[var(--background)] px-3 py-4 text-slate-900 md:px-8 dark:text-white">
       <div className="mx-auto max-w-4xl">
         {/* Navigation Bar */}
-        <header className="mb-6 flex items-center justify-between rounded-[26px] border border-white/70 bg-white/40 px-3.5 sm:px-5 py-3 shadow-[0_10px_25px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <header className="mb-6 flex items-center justify-between rounded-card border border-white/70 bg-white/40 px-3.5 sm:px-5 py-3 shadow-[0_10px_25px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <Link href="/seller/portal" className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-slate-700 hover:text-slate-950 transition-colors dark:text-white">
             <ArrowLeftIcon className="h-4 w-4" />
             <span className="hidden sm:inline">Back to seller portal</span>
@@ -302,7 +302,7 @@ export default function NewListingWizardPage() {
               <button
                 type="button"
                 onClick={handleDiscardDraft}
-                className="rounded-xl border border-amber-300/60 bg-white px-3 py-1.5 font-semibold text-amber-900 hover:bg-amber-100 transition-colors cursor-pointer dark:bg-[#060d0e]/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-[#0c1a1c]"
+                className="rounded-xl border border-amber-300/60 bg-white px-3 py-1.5 font-semibold text-amber-900 hover:bg-amber-100 transition-colors cursor-pointer dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-surface-panel"
               >
                 Discard
               </button>
@@ -321,7 +321,7 @@ export default function NewListingWizardPage() {
                   ? "border border-slate-900 bg-slate-900 text-white shadow-md dark:border-emerald-500/50 dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
                   : currentStep > step.num
                   ? "border border-emerald-300 bg-emerald-100/70 text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-500/20 dark:text-emerald-300"
-                  : "border border-white/60 bg-white/30 text-slate-500 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-[#0c1a1c]"
+                  : "border border-white/60 bg-white/30 text-slate-500 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-surface-panel"
               }`}
             >
               <span className="block font-semibold">{step.num}. {step.label}</span>
@@ -330,7 +330,7 @@ export default function NewListingWizardPage() {
         </div>
 
         {/* Wizard Body */}
-        <div className="rounded-[32px] border border-white/75 bg-white/45 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.1)] backdrop-blur-xl md:p-8 dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <div className="rounded-panel border border-white/75 bg-white/45 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.1)] backdrop-blur-xl md:p-8 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           {/* STEP 1: Location */}
           {currentStep === 1 && (
             <section className="space-y-5">
@@ -352,7 +352,7 @@ export default function NewListingWizardPage() {
                       className={`flex flex-col items-center justify-center gap-1 rounded-2xl border p-3.5 text-center transition-all cursor-pointer ${
                         formData.listingType === "rent"
                           ? "border-emerald-600 bg-emerald-50/90 text-emerald-950 font-bold shadow-sm ring-2 ring-emerald-500/20 dark:border-emerald-500/50 dark:bg-emerald-500/20 dark:text-emerald-300 dark:shadow-[0_0_12px_rgba(16,185,129,0.25)]"
-                          : "border-white/70 bg-white/40 text-slate-600 hover:bg-white/60 font-medium dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c]"
+                          : "border-white/70 bg-white/40 text-slate-600 hover:bg-white/60 font-medium dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel"
                       }`}
                     >
                       <span className="text-sm font-bold">To Rent</span>
@@ -364,7 +364,7 @@ export default function NewListingWizardPage() {
                       className={`flex flex-col items-center justify-center gap-1 rounded-2xl border p-3.5 text-center transition-all cursor-pointer ${
                         formData.listingType !== "rent"
                           ? "border-emerald-600 bg-emerald-50/90 text-emerald-950 font-bold shadow-sm ring-2 ring-emerald-500/20 dark:border-emerald-500/50 dark:bg-emerald-500/20 dark:text-emerald-300 dark:shadow-[0_0_12px_rgba(16,185,129,0.25)]"
-                          : "border-white/70 bg-white/40 text-slate-600 hover:bg-white/60 font-medium dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c]"
+                          : "border-white/70 bg-white/40 text-slate-600 hover:bg-white/60 font-medium dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel"
                       }`}
                     >
                       <span className="text-sm font-bold">For Sale</span>
@@ -559,13 +559,13 @@ export default function NewListingWizardPage() {
                       key={feat.id}
                       type="button"
                       onClick={() => toggleFeature(feat.id)}
-                      className={`flex items-center gap-3 rounded-[20px] border p-3.5 text-left text-xs transition-all cursor-pointer ${
+                      className={`flex items-center gap-3 rounded-control border p-3.5 text-left text-xs transition-all cursor-pointer ${
                         isChecked
                           ? "border-emerald-500 bg-emerald-50 text-emerald-950 shadow-sm dark:border-emerald-500/50 dark:bg-emerald-500/20 dark:text-emerald-300 dark:shadow-[0_0_12px_rgba(16,185,129,0.25)] font-bold"
-                          : "border-white/60 bg-white/40 text-slate-700 hover:bg-white/60 font-medium dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c]"
+                          : "border-white/60 bg-white/40 text-slate-700 hover:bg-white/60 font-medium dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel"
                       }`}
                     >
-                      <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md border ${isChecked ? "border-emerald-600 bg-emerald-600 text-white dark:border-emerald-500 dark:bg-emerald-600" : "border-slate-300 bg-white dark:border-white/20 dark:bg-[#060d0e]/80"}`}>
+                      <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md border ${isChecked ? "border-emerald-600 bg-emerald-600 text-white dark:border-emerald-500 dark:bg-emerald-600" : "border-slate-300 bg-white dark:border-white/20 dark:bg-surface-ink/80"}`}>
                         {isChecked ? <CheckIcon className="h-3.5 w-3.5 text-white" /> : null}
                       </span>
                       <span>{feat.label}</span>
@@ -744,7 +744,7 @@ export default function NewListingWizardPage() {
               </div>
 
               {/* Quality Score Breakdown */}
-              <div className="rounded-[24px] border border-slate-700/40 bg-slate-900/90 dark:bg-[#0c1a1c] dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)] p-5 text-white shadow-xl">
+              <div className="rounded-card border border-slate-700/40 bg-slate-900/90 dark:bg-surface-panel dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)] p-5 text-white shadow-xl">
                 <div className="flex items-center justify-between">
                   <div>
                     <span className="text-xs uppercase tracking-[0.2em] text-emerald-400">Listing Quality Score</span>
@@ -767,16 +767,16 @@ export default function NewListingWizardPage() {
               </div>
 
               {/* Live Preview Card */}
-              <div className="rounded-[28px] border border-white/80 bg-white/50 p-4 shadow-lg backdrop-blur-xl dark:bg-[#060d0e]/60 dark:border-white/10">
+              <div className="rounded-card border border-white/80 bg-white/50 p-4 shadow-lg backdrop-blur-xl dark:bg-surface-ink/60 dark:border-white/10">
                 <p className="mb-3 text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">Live Card Preview</p>
-                <div className="overflow-hidden rounded-[22px] border border-white/70 bg-white/70 shadow-sm md:flex dark:bg-[#0c1a1c]/90 dark:border-white/10">
+                <div className="overflow-hidden rounded-control border border-white/70 bg-white/70 shadow-sm md:flex dark:bg-surface-panel/90 dark:border-white/10">
                   {coverUrl ? (
                     <div
                       className="h-48 w-full bg-cover bg-center md:h-auto md:w-56"
                       style={{ backgroundImage: `url(${coverUrl})` }}
                     />
                   ) : (
-                    <div className="flex h-48 w-full items-center justify-center bg-slate-200/70 text-xs font-semibold text-slate-500 md:h-auto md:w-56 dark:bg-[#060d0e] dark:text-slate-400">
+                    <div className="flex h-48 w-full items-center justify-center bg-slate-200/70 text-xs font-semibold text-slate-500 md:h-auto md:w-56 dark:bg-surface-ink dark:text-slate-400">
                       No photo yet
                     </div>
                   )}
@@ -790,11 +790,11 @@ export default function NewListingWizardPage() {
                         }`}>
                           {formData.listingType === "rent" ? "To Rent" : "For Sale"}
                         </span>
-                        <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-700 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-slate-300">
+                        <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-700 dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:text-slate-300">
                           {formData.type}
                         </span>
                         {formData.listingType === "rent" && formData.furnishedStatus && (
-                          <span className="rounded-full bg-slate-200/80 px-2 py-0.5 text-xs font-medium text-slate-700 dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-slate-300">
+                          <span className="rounded-full bg-slate-200/80 px-2 py-0.5 text-xs font-medium text-slate-700 dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:text-slate-300">
                             {formData.furnishedStatus}
                           </span>
                         )}
@@ -847,7 +847,7 @@ export default function NewListingWizardPage() {
               <button
                 type="button"
                 onClick={() => setCurrentStep((s) => s - 1)}
-                className="rounded-full border border-slate-300 bg-white/60 px-5 py-2.5 text-xs font-semibold text-slate-700 hover:bg-white dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-white transition-all cursor-pointer"
+                className="rounded-full border border-slate-300 bg-white/60 px-5 py-2.5 text-xs font-semibold text-slate-700 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-white transition-all cursor-pointer"
               >
                 Previous Step
               </button>
@@ -868,7 +868,7 @@ export default function NewListingWizardPage() {
                     type="button"
                     disabled={loading}
                     onClick={() => void handleComplete("Draft")}
-                    className="rounded-full border border-slate-300 bg-white/70 px-5 py-2.5 text-xs font-semibold text-slate-800 hover:bg-white disabled:opacity-50 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-white transition-all cursor-pointer"
+                    className="rounded-full border border-slate-300 bg-white/70 px-5 py-2.5 text-xs font-semibold text-slate-800 hover:bg-white disabled:opacity-50 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-white transition-all cursor-pointer"
                   >
                     Save as Draft
                   </button>

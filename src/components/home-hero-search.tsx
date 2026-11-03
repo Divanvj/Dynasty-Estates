@@ -56,7 +56,7 @@ export default function HomeHeroSearch() {
               window.dispatchEvent(new CustomEvent("dynasty:open-ai-search"));
             }
           }}
-          className="inline-flex items-center gap-1 sm:gap-1.5 rounded-xl bg-gradient-to-r from-[#0b4d4e] to-[#07393a] text-emerald-100 border border-emerald-400/40 px-2.5 py-1.5 sm:px-3.5 sm:py-1.5 text-xs font-bold shadow-xs hover:from-[#0d595b] hover:to-[#094344] transition-all cursor-pointer whitespace-nowrap shrink-0"
+          className="tap-44 relative inline-flex items-center gap-1 sm:gap-1.5 rounded-xl bg-gradient-to-r from-[#0b4d4e] to-[#07393a] text-emerald-100 border border-emerald-400/40 px-2.5 py-1.5 sm:px-3.5 sm:py-1.5 text-xs font-bold shadow-xs hover:from-[#0d595b] hover:to-[#094344] transition-all cursor-pointer whitespace-nowrap shrink-0"
         >
           <SparklesIcon className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-emerald-300" />
           <span className="hidden min-[360px]:inline">Try AI</span>
@@ -87,7 +87,7 @@ export default function HomeHeroSearch() {
             key={item.tag}
             type="button"
             onClick={() => handleQuickTag(item.tag)}
-            className="shrink-0 rounded-full border border-white/80 bg-white/75 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-slate-200 px-2.5 sm:px-3 py-1 text-xs font-medium text-slate-700 hover:bg-white dark:hover:bg-[#0c1a1c] hover:border-emerald-400 dark:hover:border-emerald-500/40 hover:text-emerald-950 dark:hover:text-emerald-300 transition-all cursor-pointer shadow-2xs whitespace-nowrap"
+            className="tap-44 relative shrink-0 rounded-full border border-white/80 bg-white/75 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 px-2.5 sm:px-3 py-1 text-xs font-medium text-slate-700 hover:bg-white dark:hover:bg-surface-panel hover:border-emerald-400 dark:hover:border-emerald-500/40 hover:text-emerald-950 dark:hover:text-emerald-300 transition-all cursor-pointer shadow-2xs whitespace-nowrap"
           >
             {item.label}
           </button>
@@ -95,7 +95,7 @@ export default function HomeHeroSearch() {
 
         <Link
           href="/map-search"
-          className="shrink-0 text-xs font-bold text-emerald-800 dark:text-emerald-400 hover:text-emerald-950 dark:hover:text-emerald-300 hover:underline flex items-center gap-1 ml-1 whitespace-nowrap"
+          className="tap-44 relative shrink-0 text-xs font-bold text-emerald-800 dark:text-emerald-400 hover:text-emerald-950 dark:hover:text-emerald-300 hover:underline flex items-center gap-1 ml-1 whitespace-nowrap"
         >
           <span>Explore on Map</span>
           <span>→</span>

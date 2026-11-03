@@ -34,7 +34,7 @@ export default function AgentsPage() {
     <main className="min-h-screen bg-[var(--background)] px-3 py-4 text-slate-900 md:px-8 dark:text-white">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
-        <header className="relative z-50 mb-6 flex items-center justify-between rounded-[26px] border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <header className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
             <BrandLogo markOnly />
             <div>
@@ -47,7 +47,7 @@ export default function AgentsPage() {
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5 gap-y-2 sm:gap-3">
             <Link
               href="/search"
-              className="flex items-center gap-1.5 rounded-full border border-slate-300/80 bg-white/60 px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 hover:bg-white transition-all whitespace-nowrap shrink-0 dark:bg-[#060d0e]/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
+              className="flex items-center gap-1.5 rounded-full border border-slate-300/80 bg-white/60 px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 hover:bg-white transition-all whitespace-nowrap shrink-0 dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
             >
               <ArrowLeftIcon className="h-3.5 w-3.5 sm:hidden" />
               <span className="hidden sm:inline">← Explore Properties</span>
@@ -62,7 +62,7 @@ export default function AgentsPage() {
           {agentsList.map((agent) => (
             <article
               key={agent.id}
-              className="overflow-hidden rounded-[30px] border border-white/80 bg-white/60 p-5 shadow-sm backdrop-blur-xl flex flex-col justify-between dark:bg-[#0c1a1c]/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]"
+              className="overflow-hidden rounded-panel border border-white/80 bg-white/60 p-5 shadow-sm backdrop-blur-xl flex flex-col justify-between dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]"
             >
               <div>
                 <div className="flex items-center gap-3">
@@ -118,13 +118,13 @@ export default function AgentsPage() {
                   <button
                     type="button"
                     onClick={() => setSelectedAgent(agent)}
-                    className="rounded-xl border border-slate-300/80 bg-white/60 py-2 text-center text-xs font-semibold text-slate-700 hover:bg-white dark:bg-[#060d0e]/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10 cursor-pointer"
+                    className="rounded-xl border border-slate-300/80 bg-white/60 py-2 text-center text-xs font-semibold text-slate-700 hover:bg-white dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10 cursor-pointer"
                   >
                     Quick Enquiry
                   </button>
                   <Link
                     href={`/search?q=${encodeURIComponent(agent.location.split("&")[0].trim())}`}
-                    className="rounded-xl border border-slate-300/80 bg-white/60 py-2 text-center text-xs font-semibold text-slate-700 hover:bg-white dark:bg-[#060d0e]/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
+                    className="rounded-xl border border-slate-300/80 bg-white/60 py-2 text-center text-xs font-semibold text-slate-700 hover:bg-white dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
                   >
                     All Mandates
                   </Link>
@@ -143,7 +143,7 @@ export default function AgentsPage() {
             onClick={() => setSelectedAgent(null)}
           >
             <div
-              className="w-full max-w-md rounded-3xl border border-white/80 bg-white/95 p-6 shadow-2xl backdrop-blur-2xl text-slate-900 dark:bg-[#0c1a1c] dark:border-white/10 dark:shadow-[0_25px_60px_rgba(0,0,0,0.6)] dark:text-white"
+              className="w-full max-w-md rounded-3xl border border-white/80 bg-white/95 p-6 shadow-2xl backdrop-blur-2xl text-slate-900 dark:bg-surface-panel dark:border-white/10 dark:shadow-[0_25px_60px_rgba(0,0,0,0.6)] dark:text-white"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-start justify-between border-b border-slate-200 pb-3 dark:border-white/10">
@@ -155,7 +155,7 @@ export default function AgentsPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedAgent(null)}
-                  className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-500 hover:bg-slate-200 cursor-pointer dark:bg-[#060d0e]/80 dark:border dark:border-white/10 dark:text-slate-300 dark:hover:bg-[#0c1a1c] dark:hover:text-white"
+                  className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-500 hover:bg-slate-200 cursor-pointer dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-white"
                 >
                   <XMarkIcon className="h-4 w-4" />
                 </button>
@@ -181,7 +181,7 @@ export default function AgentsPage() {
                       value={contactMessage}
                       onChange={(e) => setContactMessage(e.target.value)}
                       placeholder={`Hello ${selectedAgent.name}, I am interested in property in ${selectedAgent.location}...`}
-                      className="w-full rounded-xl border border-slate-300 bg-white p-3 font-medium text-slate-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 dark:border-white/10 dark:bg-[#060d0e]/60 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-emerald-500"
+                      className="w-full rounded-xl border border-slate-300 bg-white p-3 font-medium text-slate-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-emerald-500"
                     />
                   </div>
                   <button
