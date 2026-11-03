@@ -150,7 +150,7 @@ export default async function AgentProfilePage({
           </div>
           <Link
             href="/agents"
-            className="rounded-full border border-slate-300/80 bg-white/60 px-3.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-white transition-all dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300"
+            className="pill border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300"
           >
             ← All Agents
           </Link>
@@ -304,7 +304,7 @@ export default async function AgentProfilePage({
               </p>
               <Link
                 href="/search"
-                className="mt-3 inline-block rounded-full bg-slate-950 px-5 py-2 text-xs font-bold text-white dark:bg-emerald-600"
+                className="pill mt-3 bg-slate-950 font-bold text-white dark:bg-emerald-600"
               >
                 Browse All Properties →
               </Link>

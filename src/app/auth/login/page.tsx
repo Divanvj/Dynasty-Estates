@@ -194,7 +194,7 @@ export default function LoginPage() {
                 type="button"
                 onClick={handleGoogleSignIn}
                 disabled={loading}
-                className="flex w-full items-center justify-center gap-2 rounded-full border border-slate-300 bg-white/80 px-4 py-2.5 text-xs sm:text-sm font-medium text-slate-700 disabled:cursor-not-allowed disabled:opacity-70 hover:bg-white transition-all cursor-pointer dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/10 dark:hover:border-white/20"
+                className="pill-lg w-full gap-2 border border-slate-300 bg-white/80 sm:text-sm font-medium text-slate-700 disabled:cursor-not-allowed disabled:opacity-70 hover:bg-white transition-all cursor-pointer dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/10 dark:hover:border-white/20"
               >
                 <span>G</span>
                 Continue with Google
@@ -202,7 +202,7 @@ export default function LoginPage() {
 
               <button
                 type="button"
-                className="flex w-full items-center justify-center gap-2 rounded-full border border-slate-300 bg-white/80 px-4 py-2.5 text-xs sm:text-sm font-medium text-slate-700 hover:bg-white transition-all dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/10 dark:hover:border-white/20"
+                className="pill-lg w-full gap-2 border border-slate-300 bg-white/80 sm:text-sm font-medium text-slate-700 hover:bg-white transition-all dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/10 dark:hover:border-white/20"
               >
                 <span></span>
                 Continue with Apple
@@ -225,11 +225,7 @@ export default function LoginPage() {
                     setError("");
                     setNotice("");
                   }}
-                  className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
-                    mode === m
-                      ? "bg-white text-slate-900 shadow-sm dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                      : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-                  }`}
+                  className={`pill font-semibold transition-all cursor-pointer ${ mode === m ? "bg-white text-slate-900 shadow-sm dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white" }`}
                 >
                   {m === "email" ? "Email" : "Phone"}
                 </button>
@@ -269,7 +265,7 @@ export default function LoginPage() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full rounded-full bg-[#0f172a] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/15 hover:bg-slate-800 transition-all disabled:cursor-not-allowed disabled:opacity-70 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
+                    className="pill-lg w-full bg-[#0f172a] text-sm font-semibold text-white shadow-lg shadow-slate-900/15 hover:bg-slate-800 transition-all disabled:cursor-not-allowed disabled:opacity-70 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
                   >
                     {loading ? "Verifying..." : "Verify & sign in"}
                   </button>
@@ -315,7 +311,7 @@ export default function LoginPage() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full rounded-full bg-[#0f172a] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/15 hover:bg-slate-800 transition-all disabled:cursor-not-allowed disabled:opacity-70 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
+                    className="pill-lg w-full bg-[#0f172a] text-sm font-semibold text-white shadow-lg shadow-slate-900/15 hover:bg-slate-800 transition-all disabled:cursor-not-allowed disabled:opacity-70 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
                   >
                     {loading ? "Sending code..." : "Send verification code"}
                   </button>
@@ -381,7 +377,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-full bg-[#0f172a] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/15 hover:bg-slate-800 transition-all disabled:cursor-not-allowed disabled:opacity-70 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
+                className="pill-lg w-full bg-[#0f172a] text-sm font-semibold text-white shadow-lg shadow-slate-900/15 hover:bg-slate-800 transition-all disabled:cursor-not-allowed disabled:opacity-70 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
               >
                 {loading ? "Signing in..." : "Sign in"}
               </button>

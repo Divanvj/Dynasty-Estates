@@ -183,7 +183,13 @@ export default function AccountActions() {
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
           onKeyDown={handleTriggerKeyDown}
-          className="group relative flex items-center gap-1.5 sm:gap-2 rounded-full border border-slate-300/80 bg-white/70 dark:border-white/10 dark:bg-surface-ink/80 p-1 sm:p-1.5 pr-2.5 sm:pr-3 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:bg-white dark:hover:bg-surface-panel hover:border-emerald-500/50 dark:hover:border-emerald-400/50 transition-all cursor-pointer shadow-xs"
+          /* h-11 (44px) is deliberate: one step above the 40px `pill` tier, so
+             Profile reads as slightly more prominent than the actions beside it
+             rather than the accidental 46px its avatar used to produce. The
+             32px avatar plus p-1.5 comes to 44 exactly, and box-sizing absorbs
+             the border. Not the `pill-lg` class, because that carries 24px of
+             inline padding, which is wrong for a control fronted by an avatar. */
+          className="group relative flex h-11 items-center gap-1.5 sm:gap-2 rounded-full border border-slate-300/80 bg-white/70 dark:border-white/10 dark:bg-surface-ink/80 p-1 sm:p-1.5 pr-2.5 sm:pr-3 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:bg-white dark:hover:bg-surface-panel hover:border-emerald-500/50 dark:hover:border-emerald-400/50 transition-all cursor-pointer shadow-xs"
           aria-expanded={isOpen}
           aria-controls="account-menu-panel"
           title="Account & Profile Menu"

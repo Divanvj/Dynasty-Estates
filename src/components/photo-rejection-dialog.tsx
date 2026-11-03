@@ -108,7 +108,7 @@ export default function PhotoRejectionDialog({
               type="button"
               autoFocus
               onClick={() => dialogRef.current?.close()}
-              className="rounded-full bg-slate-900 px-6 py-2.5 text-xs font-semibold text-white shadow-md hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+              className="pill-lg bg-slate-900 font-semibold text-white shadow-md hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
             >
               Got it
             </button>

@@ -87,7 +87,7 @@ export default function HomeHeroSearch() {
             key={item.tag}
             type="button"
             onClick={() => handleQuickTag(item.tag)}
-            className="tap-44 relative shrink-0 rounded-full border border-white/80 bg-white/75 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 px-2.5 sm:px-3 py-1 text-xs font-medium text-slate-700 hover:bg-white dark:hover:bg-surface-panel hover:border-emerald-400 dark:hover:border-emerald-500/40 hover:text-emerald-950 dark:hover:text-emerald-300 transition-all cursor-pointer shadow-2xs whitespace-nowrap"
+            className="pill-sm tap-44 relative border border-white/80 bg-white/75 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 font-medium text-slate-700 hover:bg-white dark:hover:bg-surface-panel hover:border-emerald-400 dark:hover:border-emerald-500/40 hover:text-emerald-950 dark:hover:text-emerald-300 transition-all cursor-pointer shadow-2xs"
           >
             {item.label}
           </button>

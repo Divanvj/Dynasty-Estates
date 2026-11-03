@@ -455,7 +455,7 @@ export default function AmbientCursorHue({ heroScoped = true }: AmbientCursorHue
       </div>
 
       {/* 4. Discrete Ambient Effect Switcher Pill (Fixed in Corner, Desktop Only) */}
-      <div className="hidden md:flex fixed bottom-4 right-4 z-50 flex-col items-end gap-1.5 font-sans">
+      <div className="no-print hidden md:flex fixed bottom-4 right-4 z-50 flex-col items-end gap-1.5 font-sans">
         {showPicker && (
           <div className="rounded-2xl border border-white/80 bg-white/90 p-2 shadow-[0_12px_30px_rgba(15,23,42,0.14)] backdrop-blur-xl animate-in fade-in slide-in-from-bottom-2 duration-150 dark:bg-surface-panel dark:border-white/10 dark:shadow-[0_12px_30px_rgba(0,0,0,0.6)]">
             <p className="px-2 py-1 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
@@ -536,7 +536,7 @@ export default function AmbientCursorHue({ heroScoped = true }: AmbientCursorHue
         <button
           type="button"
           onClick={() => setShowPicker(!showPicker)}
-          className="flex items-center gap-1.5 rounded-full border border-white/80 bg-white/70 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-[0_8px_20px_rgba(15,23,42,0.08)] backdrop-blur-md hover:bg-white transition-all cursor-pointer hover:border-emerald-300 hover:text-emerald-950 dark:bg-surface-ink/80 dark:border-white/10 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
+          className="pill gap-1.5 border border-white/80 bg-white/70 font-semibold text-slate-700 shadow-[0_8px_20px_rgba(15,23,42,0.08)] backdrop-blur-md hover:bg-white transition-all cursor-pointer hover:border-emerald-300 hover:text-emerald-950 dark:bg-surface-ink/80 dark:border-white/10 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
           title="Change interactive cursor effect"
         >
           <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_6px_rgba(16,185,129,0.8)]" />

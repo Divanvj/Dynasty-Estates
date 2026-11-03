@@ -127,14 +127,14 @@ export default function SavedPropertiesPage() {
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5 gap-y-2 sm:gap-2.5">
             <Link
               href="/compare"
-              className="hidden sm:inline-block rounded-full border border-slate-300/80 bg-white/60 px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 hover:bg-white transition-all whitespace-nowrap shrink-0 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-emerald-300"
+              className="pill hidden border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-emerald-300"
             >
               <span className="hidden sm:inline">Compare Shortlist</span>
               <span className="sm:hidden">Compare</span> →
             </Link>
             <Link
               href="/search"
-              className="hidden sm:inline-block rounded-full bg-slate-950 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs font-bold text-white shadow-md hover:bg-slate-800 transition-all whitespace-nowrap shrink-0"
+              className="pill hidden bg-slate-950 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] font-bold text-white shadow-md hover:bg-slate-800 transition-all"
             >
               <span className="hidden sm:inline">Browse Catalogue</span>
               <span className="sm:hidden">Catalogue</span>
@@ -177,7 +177,7 @@ export default function SavedPropertiesPage() {
             </p>
             <Link
               href="/search"
-              className="mt-5 inline-block rounded-full bg-slate-950 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] px-6 py-2.5 text-xs font-bold text-white shadow-md hover:bg-slate-800"
+              className="pill-lg mt-5 bg-slate-950 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] font-bold text-white shadow-md hover:bg-slate-800"
             >
               Explore Properties →
             </Link>

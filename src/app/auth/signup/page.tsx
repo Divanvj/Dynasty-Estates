@@ -95,7 +95,7 @@ export default function SignupPage() {
                 type="button"
                 onClick={handleGoogleSignIn}
                 disabled={loading}
-                className="flex w-full items-center justify-center gap-2 rounded-full border border-slate-300 bg-white/80 px-4 py-2.5 text-xs sm:text-sm font-medium text-slate-700 disabled:cursor-not-allowed disabled:opacity-70 hover:bg-white transition-all cursor-pointer dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/10 dark:hover:border-white/20"
+                className="pill-lg w-full gap-2 border border-slate-300 bg-white/80 sm:text-sm font-medium text-slate-700 disabled:cursor-not-allowed disabled:opacity-70 hover:bg-white transition-all cursor-pointer dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/10 dark:hover:border-white/20"
               >
                 <span>G</span>
                 Continue with Google
@@ -168,7 +168,7 @@ export default function SignupPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-full bg-[#0f172a] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/15 hover:bg-slate-800 transition-all disabled:cursor-not-allowed disabled:opacity-70 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
+                className="pill-lg w-full bg-[#0f172a] text-sm font-semibold text-white shadow-lg shadow-slate-900/15 hover:bg-slate-800 transition-all disabled:cursor-not-allowed disabled:opacity-70 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
               >
                 {loading ? "Creating account..." : "Create account"}
               </button>

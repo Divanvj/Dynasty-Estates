@@ -364,7 +364,7 @@ export default function TenantApplicationModal({
             </p>
             <button
               onClick={handleReset}
-              className="mt-6 rounded-full bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 px-6 py-2.5 text-xs font-bold text-white shadow-md dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] border border-emerald-500/40 transition-all cursor-pointer"
+              className="pill-lg mt-6 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 font-bold text-white shadow-md dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] border border-emerald-500/40 transition-all cursor-pointer"
             >
               Done & Return to Listing
             </button>

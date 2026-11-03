@@ -385,7 +385,7 @@ export default function TrueCostCalculator({
               </button>
               <Link
                 href="/calculators"
-                className="text-xs font-semibold text-amber-800 hover:text-amber-950 flex items-center gap-1 dark:text-amber-400 dark:hover:text-amber-300"
+                className="no-print text-xs font-semibold text-amber-800 hover:text-amber-950 flex items-center gap-1 dark:text-amber-400 dark:hover:text-amber-300"
               >
                 <span>Full Financial Hub</span>
                 <ArrowRightIcon className="h-3 w-3" />
@@ -666,33 +666,21 @@ export default function TrueCostCalculator({
             <button
               type="button"
               onClick={() => setPurchasePrice(Math.round(askingPriceZAR * 0.95))}
-              className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
-                purchasePrice === Math.round(askingPriceZAR * 0.95)
-                  ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-                  : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
-              }`}
+              className={`pill-sm font-semibold transition-all cursor-pointer ${ purchasePrice === Math.round(askingPriceZAR * 0.95) ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white" }`}
             >
               -5% Offer
             </button>
             <button
               type="button"
               onClick={() => setPurchasePrice(askingPriceZAR)}
-              className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
-                purchasePrice === askingPriceZAR
-                  ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-                  : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
-              }`}
+              className={`pill-sm font-semibold transition-all cursor-pointer ${ purchasePrice === askingPriceZAR ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white" }`}
             >
               Asking Price (R {(askingPriceZAR / 1000000).toFixed(2)}M)
             </button>
             <button
               type="button"
               onClick={() => setPurchasePrice(Math.round(askingPriceZAR * 1.05))}
-              className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
-                purchasePrice === Math.round(askingPriceZAR * 1.05)
-                  ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-                  : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
-              }`}
+              className={`pill-sm font-semibold transition-all cursor-pointer ${ purchasePrice === Math.round(askingPriceZAR * 1.05) ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white" }`}
             >
               +5% Compete
             </button>
@@ -749,11 +737,7 @@ export default function TrueCostCalculator({
                 key={pct}
                 type="button"
                 onClick={() => setDepositPercent(pct)}
-                className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
-                  depositPercent === pct
-                    ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-                    : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
-                }`}
+                className={`pill-sm font-semibold transition-all cursor-pointer ${ depositPercent === pct ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white" }`}
               >
                 {pct === 0 ? "0% (100% Bond)" : `${pct}%`}
               </button>
@@ -815,11 +799,7 @@ export default function TrueCostCalculator({
                 key={chip.label}
                 type="button"
                 onClick={() => setInterestRate(chip.value)}
-                className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-all cursor-pointer ${
-                  Math.abs(interestRate - chip.value) < 0.01
-                    ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-                    : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
-                }`}
+                className={`pill-sm font-semibold transition-all cursor-pointer ${ Math.abs(interestRate - chip.value) < 0.01 ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white" }`}
               >
                 {chip.label}
               </button>
@@ -977,7 +957,7 @@ export default function TrueCostCalculator({
             </button>
             <Link
               href="/calculators"
-              className="text-xs font-semibold text-emerald-700 hover:text-emerald-900 flex items-center gap-1 dark:text-emerald-400 dark:hover:text-emerald-300"
+              className="no-print text-xs font-semibold text-emerald-700 hover:text-emerald-900 flex items-center gap-1 dark:text-emerald-400 dark:hover:text-emerald-300"
             >
               <span>Full Financial Hub</span>
               <ArrowRightIcon className="h-3 w-3" />

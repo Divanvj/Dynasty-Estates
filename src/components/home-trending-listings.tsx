@@ -86,22 +86,14 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
               <button
                 type="button"
                 onClick={() => handleIntentChange("buy")}
-                className={`rounded-full px-3.5 py-1 text-xs font-bold transition-all cursor-pointer ${
-                  intent === "buy"
-                    ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white"
-                }`}
+                className={`pill-sm font-bold transition-all cursor-pointer ${ intent === "buy" ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white" }`}
               >
                 For Sale
               </button>
               <button
                 type="button"
                 onClick={() => handleIntentChange("rent")}
-                className={`rounded-full px-3.5 py-1 text-xs font-bold transition-all cursor-pointer ${
-                  intent === "rent"
-                    ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white"
-                }`}
+                className={`pill-sm font-bold transition-all cursor-pointer ${ intent === "rent" ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white" }`}
               >
                 To Rent
               </button>
@@ -273,7 +265,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
                       </div>
                       <Link
                         href={`/property/${card.slug || card.id}`}
-                        className="rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] hover:from-[#0d595b] hover:to-[#094344] dark:from-emerald-600 dark:to-emerald-700 dark:hover:from-emerald-500 dark:hover:to-emerald-600 px-4 py-1.5 text-xs font-bold text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] border border-emerald-400/30 dark:border-emerald-400/50 transition-all"
+                        className="pill bg-gradient-to-r from-[#0b4d4e] to-[#07393a] hover:from-[#0d595b] hover:to-[#094344] dark:from-emerald-600 dark:to-emerald-700 dark:hover:from-emerald-500 dark:hover:to-emerald-600 font-bold text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] border border-emerald-400/30 dark:border-emerald-400/50 transition-all"
                       >
                         {card.listingType === "rent" ? "View Rental →" : "View Home →"}
                       </Link>

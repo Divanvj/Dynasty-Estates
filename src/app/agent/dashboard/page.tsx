@@ -111,7 +111,7 @@ export default function AgentDashboard() {
               </div>
               <Link
                 href="/seller/listings/new"
-                className="rounded-full bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] px-4 py-2 text-xs font-semibold shadow-md hover:opacity-95 transition-all"
+                className="pill bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] font-semibold shadow-md hover:opacity-95 transition-all"
               >
                 + New listing
               </Link>
@@ -144,7 +144,7 @@ export default function AgentDashboard() {
               </div>
               <Link
                 href="/inquiries"
-                className="rounded-full border border-slate-300 bg-white/60 px-4 py-2 text-xs font-semibold text-slate-700 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:text-white transition-all"
+                className="pill border border-slate-300 bg-white/60 font-semibold text-slate-700 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:text-white transition-all"
               >
                 View all leads →
               </Link>

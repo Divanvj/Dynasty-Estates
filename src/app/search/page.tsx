@@ -589,7 +589,7 @@ function SearchContent() {
             </p>
             <button
               onClick={() => window.location.reload()}
-              className="mt-5 cursor-pointer rounded-full border border-rose-500/30 bg-gradient-to-r from-rose-700 to-rose-800 px-6 py-2.5 text-xs font-bold text-white shadow-md hover:from-rose-800 hover:to-rose-900"
+              className="pill-lg mt-5 cursor-pointer border border-rose-500/30 bg-gradient-to-r from-rose-700 to-rose-800 font-bold text-white shadow-md hover:from-rose-800 hover:to-rose-900"
             >
               Try again
             </button>
@@ -760,7 +760,7 @@ function SearchContent() {
             </p>
             <button
               onClick={handleResetFilters}
-              className="mt-5 rounded-full bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 px-6 py-2.5 text-xs font-bold text-white shadow-md dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-500/40 cursor-pointer transition-all duration-200"
+              className="pill-lg mt-5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 font-bold text-white shadow-md dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-500/40 cursor-pointer transition-all duration-200"
             >
               Reset All Filters
             </button>

@@ -1118,7 +1118,7 @@ export default function ExpandableSearchPanel({
                       key={city.name}
                       type="button"
                       onClick={() => addLocationTag(city.name)}
-                      className="rounded-full border border-slate-200/90 dark:border-white/10 bg-white dark:bg-[#0c181a] px-3 py-1 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-white/10 hover:text-emerald-950 dark:hover:text-emerald-300 hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_12px_rgba(16,185,129,0.3)] dark:hover:shadow-[0_0_16px_rgba(52,211,153,0.35)] transition-all cursor-pointer shrink-0 shadow-2xs"
+                      className="pill-sm border border-slate-200/90 dark:border-white/10 bg-white dark:bg-[#0c181a] font-medium text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-white/10 hover:text-emerald-950 dark:hover:text-emerald-300 hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_12px_rgba(16,185,129,0.3)] dark:hover:shadow-[0_0_16px_rgba(52,211,153,0.35)] transition-all cursor-pointer shadow-2xs"
                     >
                       + {city.name}
                     </button>
@@ -1431,11 +1431,7 @@ export default function ExpandableSearchPanel({
                 <button
                   type="button"
                   onClick={() => setOnShowOnly(!onShowOnly)}
-                  className={`rounded-full px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer shrink-0 self-start sm:self-auto ${
-                    onShowOnly
-                      ? "bg-amber-600 dark:bg-amber-500 text-white shadow-sm dark:shadow-[0_0_15px_rgba(245,158,11,0.35)]"
-                      : "border border-slate-300 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-surface-panel"
-                  }`}
+                  className={`pill font-bold transition-all cursor-pointer self-start sm:self-auto ${ onShowOnly ? "bg-amber-600 dark:bg-amber-500 text-white shadow-sm dark:shadow-[0_0_15px_rgba(245,158,11,0.35)]" : "border border-slate-300 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-surface-panel" }`}
                 >
                   {onShowOnly ? "✓ Active" : "Filter On Show"}
                 </button>

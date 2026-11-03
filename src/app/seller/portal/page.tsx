@@ -76,7 +76,7 @@ export default function SellerPortal() {
               </h1>
             </div>
 
-            <Link href="/seller/listings/new" className="rounded-full bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] hover:opacity-95 px-5 py-3 text-sm font-semibold shadow-lg transition-all">
+            <Link href="/seller/listings/new" className="pill-lg bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] hover:opacity-95 text-sm font-semibold shadow-lg transition-all">
               Publish listing
             </Link>
           </div>
@@ -98,7 +98,7 @@ export default function SellerPortal() {
                 <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400 font-bold">Portfolio</p>
                 <h2 className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white">Your listings</h2>
               </div>
-              <Link href="/seller/listings/new" className="rounded-full border border-slate-300 bg-white/60 px-4 py-2 text-sm text-slate-700 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:text-white font-semibold transition-all">Manage</Link>
+              <Link href="/seller/listings/new" className="pill border border-slate-300 bg-white/60 text-sm text-slate-700 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:text-white font-semibold transition-all">Manage</Link>
             </div>
 
             <div className="space-y-3">

@@ -297,22 +297,14 @@ export default function VirtualTour3DViewer({
             <button
               type="button"
               onClick={() => setViewMode("walkthrough")}
-              className={`rounded-full px-3 py-1 transition-all cursor-pointer ${
-                viewMode === "walkthrough"
-                  ? "bg-white text-slate-950 shadow-sm dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                  : "text-slate-300 hover:text-white dark:text-slate-400 dark:hover:text-white"
-              }`}
+              className={`pill-sm transition-all cursor-pointer ${ viewMode === "walkthrough" ? "bg-white text-slate-950 shadow-sm dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "text-slate-300 hover:text-white dark:text-slate-400 dark:hover:text-white" }`}
             >
               360° Walk
             </button>
             <button
               type="button"
               onClick={() => setViewMode("dollhouse")}
-              className={`rounded-full px-3 py-1 transition-all cursor-pointer ${
-                viewMode === "dollhouse"
-                  ? "bg-white text-slate-950 shadow-sm dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                  : "text-slate-300 hover:text-white dark:text-slate-400 dark:hover:text-white"
-              }`}
+              className={`pill-sm transition-all cursor-pointer ${ viewMode === "dollhouse" ? "bg-white text-slate-950 shadow-sm dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "text-slate-300 hover:text-white dark:text-slate-400 dark:hover:text-white" }`}
             >
               Dollhouse
             </button>
@@ -323,11 +315,7 @@ export default function VirtualTour3DViewer({
                 setMeasurePoints([]);
                 setMeasureDistance(null);
               }}
-              className={`rounded-full px-3 py-1 transition-all cursor-pointer ${
-                viewMode === "measure"
-                  ? "bg-white text-slate-950 shadow-sm dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                  : "text-slate-300 hover:text-white dark:text-slate-400 dark:hover:text-white"
-              }`}
+              className={`pill-sm transition-all cursor-pointer ${ viewMode === "measure" ? "bg-white text-slate-950 shadow-sm dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "text-slate-300 hover:text-white dark:text-slate-400 dark:hover:text-white" }`}
             >
               Laser Tape
             </button>

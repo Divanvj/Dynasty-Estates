@@ -207,7 +207,7 @@ export default function ListingPhotoUploader({
                 <button
                   type="button"
                   onClick={() => makeCover(photo.id)}
-                  className="absolute left-2 top-2 rounded-full bg-black/55 px-2 py-0.5 text-xs font-semibold text-white opacity-100 backdrop-blur-sm transition-opacity hover:bg-black/75 sm:opacity-0 sm:group-hover:opacity-100 sm:focus:opacity-100"
+                  className="pill-sm absolute left-2 top-2 bg-black/55 font-semibold text-white opacity-100 backdrop-blur-sm transition-opacity hover:bg-black/75 sm:opacity-0 sm:group-hover:opacity-100 sm:focus:opacity-100"
                 >
                   Make cover
                 </button>

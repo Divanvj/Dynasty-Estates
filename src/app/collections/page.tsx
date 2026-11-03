@@ -194,7 +194,7 @@ export default function CollectionsPage() {
             </Link>
             <button
               onClick={() => setShowCreateModal(true)}
-              className="pill bg-slate-950 font-semibold text-white shadow-md hover:bg-slate-800 transition-all cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+              className="pill border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all cursor-pointer dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
             >
               <span className="hidden sm:inline">+ New Collection</span>
               <span className="sm:hidden">+ New</span>

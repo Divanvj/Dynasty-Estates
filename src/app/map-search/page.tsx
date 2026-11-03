@@ -73,7 +73,7 @@ export default function MapSearchPage() {
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5 gap-y-2 sm:gap-2.5">
             <Link
               href="/search"
-              className="hidden sm:inline-block rounded-full border border-slate-300/80 bg-white/60 dark:border-white/10 dark:bg-surface-ink/60 px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-surface-panel dark:hover:text-white transition-all whitespace-nowrap shrink-0"
+              className="pill hidden border border-slate-300/80 bg-white/60 dark:border-white/10 dark:bg-surface-ink/60 font-semibold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-surface-panel dark:hover:text-white transition-all"
             >
               List View
             </Link>
@@ -97,11 +97,7 @@ export default function MapSearchPage() {
               <button
                 key={t}
                 onClick={() => setActiveType(t)}
-                className={`tap-44 relative shrink-0 rounded-full px-3 py-1.5 lg:py-1 text-xs font-semibold transition-all cursor-pointer ${
-                  activeType === t
-                    ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 shadow-xs dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
-                    : "border border-slate-200 dark:border-white/10 bg-white/70 dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-surface-panel dark:hover:text-white"
-                }`}
+                className={`pill tap-44 relative font-semibold transition-all cursor-pointer ${ activeType === t ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 shadow-xs dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]" : "border border-slate-200 dark:border-white/10 bg-white/70 dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-surface-panel dark:hover:text-white" }`}
               >
                 {t}
               </button>

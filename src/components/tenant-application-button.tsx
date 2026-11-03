@@ -25,7 +25,7 @@ export default function TenantApplicationButton({
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className={className || "rounded-full bg-emerald-800 px-4 py-3 text-xs font-bold text-white shadow-md hover:bg-emerald-700 transition-all cursor-pointer text-center"}
+        className={className || "pill-lg bg-emerald-800 font-bold text-white shadow-md hover:bg-emerald-700 transition-all cursor-pointer text-center"}
       >
         Apply for Tenancy (Online) →
       </button>

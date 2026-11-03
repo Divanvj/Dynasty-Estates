@@ -130,7 +130,7 @@ export default async function Home() {
               </div>
               <Link
                 href="/collections"
-                className="rounded-full border border-emerald-400/40 bg-emerald-500/20 px-4 py-2 text-xs font-semibold text-emerald-200 hover:bg-emerald-500/30 transition-all"
+                className="pill border border-emerald-400/40 bg-emerald-500/20 font-semibold text-emerald-200 hover:bg-emerald-500/30 transition-all"
               >
                 Open Collections →
               </Link>

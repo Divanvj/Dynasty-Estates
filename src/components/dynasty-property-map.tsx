@@ -551,7 +551,7 @@ export default function DynastyPropertyMap({
             key={v.label}
             type="button"
             onClick={() => jumpTo(v)}
-            className="shrink-0 rounded-full px-2 sm:px-2.5 py-0.5 sm:py-1 text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-900 hover:text-white dark:hover:bg-emerald-600 dark:hover:text-white transition-colors"
+            className="pill-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-900 hover:text-white dark:hover:bg-emerald-600 dark:hover:text-white transition-colors"
           >
             {v.label}
           </button>
@@ -564,11 +564,7 @@ export default function DynastyPropertyMap({
           type="button"
           onClick={() => setTool(tool === "radius" ? "none" : "radius")}
           title="Drag on the map to search within a radius"
-          className={`rounded-full px-2 sm:px-2.5 py-1 text-xs font-bold transition-all ${
-            tool === "radius"
-              ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-              : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10"
-          }`}
+          className={`pill-sm font-bold transition-all ${ tool === "radius" ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10" }`}
         >
           ◎ Radius
         </button>
@@ -576,11 +572,7 @@ export default function DynastyPropertyMap({
           type="button"
           onClick={() => setTool(tool === "draw" ? "none" : "draw")}
           title="Draw your own search area"
-          className={`rounded-full px-2 sm:px-2.5 py-1 text-xs font-bold transition-all ${
-            tool === "draw"
-              ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-              : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10"
-          }`}
+          className={`pill-sm font-bold transition-all ${ tool === "draw" ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10" }`}
         >
           ✎ Draw
         </button>
@@ -588,7 +580,7 @@ export default function DynastyPropertyMap({
           <button
             type="button"
             onClick={clearArea}
-            className="rounded-full px-2 py-1 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all"
+            className="pill-sm font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all"
           >
             ✕ Clear
           </button>
@@ -647,11 +639,7 @@ export default function DynastyPropertyMap({
             type="button"
             onClick={() => setPinMode(pinMode === "price" ? "value" : "price")}
             title="Colour pins by price, or by how each home prices against its own suburb median"
-            className={`rounded-full px-2 sm:px-2.5 py-1 text-xs font-bold transition-all cursor-pointer ${
-              pinMode === "value"
-                ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                : "border border-slate-200 dark:border-white/10 bg-white/70 dark:bg-surface-ink/60 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-surface-panel dark:hover:text-white"
-            }`}
+            className={`pill-sm font-bold transition-all cursor-pointer ${ pinMode === "value" ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 dark:border-white/10 bg-white/70 dark:bg-surface-ink/60 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-surface-panel dark:hover:text-white" }`}
           >
             {pinMode === "value" ? "vs Median" : "Price"}
           </button>
