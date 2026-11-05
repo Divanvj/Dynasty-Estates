@@ -6,6 +6,7 @@ import AddToCollectionButton from "@/components/add-to-collection-button";
 import OnShowBanner from "@/components/on-show-banner";
 import ExpandableText from "@/components/expandable-text";
 import PropertyHeroGallery from "@/components/property-hero-gallery";
+import { featureLabel } from "@/lib/feature-labels";
 import PropertyInquiryButton from "@/components/property-inquiry-button";
 import PropertyMediaTabs from "@/components/property-media-tabs";
 import PrintButton from "@/components/print-button";
@@ -425,7 +426,7 @@ export default async function PropertyPage({
                   {property.features.map((feat) => (
                     <div key={feat} className="flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50/80 px-3 py-2 text-xs font-medium text-emerald-950 dark:border-emerald-500/30 dark:bg-emerald-500/20 dark:text-emerald-300">
                       <CheckIcon className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                      <span>{feat.replace("_", " ")}</span>
+                      <span>{featureLabel(feat)}</span>
                     </div>
                   ))}
                 </div>

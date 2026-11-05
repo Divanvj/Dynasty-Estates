@@ -1,3 +1,4 @@
+import { featureLabel } from "./feature-labels";
 import { fallbackProperties, type PropertyRecord } from "./property-data";
 
 export type ParsedSearchIntent = {
@@ -155,8 +156,16 @@ export function parseNaturalLanguageQuery(query: string): ParsedSearchIntent {
   if (lower.includes("inverter") || lower.includes("battery") || lower.includes("load shedding")) {
     intent.requiredAmenities.push("inverter_battery");
   }
-  if (lower.includes("borehole") || lower.includes("water tank")) {
-    intent.requiredAmenities.push("borehole_water");
+  // These are two separate ids in the catalogue, and this used to push a third
+  // that does not exist in it at all — "borehole_water". Nothing carries that
+  // id, so the `features.includes` test below could never pass: every listing
+  // was reported as "No borehole water", including the six that have a
+  // borehole. Ask for either and you now get the one you asked for.
+  if (lower.includes("borehole")) {
+    intent.requiredAmenities.push("borehole");
+  }
+  if (lower.includes("water tank")) {
+    intent.requiredAmenities.push("water_tanks");
   }
   if (lower.includes("pool") || lower.includes("swimming")) {
     intent.requiredAmenities.push("swimming_pool");
@@ -204,22 +213,15 @@ export function parseNaturalLanguageQuery(query: string): ParsedSearchIntent {
   return intent;
 }
 
-/** Reader-facing names for the amenity ids the parser produces. */
-const amenityLabels: Record<string, string> = {
-  solar_system: "Solar system",
-  inverter_battery: "Inverter & battery backup",
-  borehole_water: "Borehole water",
-  swimming_pool: "Swimming pool",
-  garden: "Garden",
-  security_estate: "Security estate",
-  pet_friendly: "Pet friendly",
-  fibre_ready: "Fibre ready",
-  braai_area: "Braai area",
-};
-
-function amenityLabel(id: string): string {
-  return amenityLabels[id] ?? id.replace(/_/g, " ");
-}
+/**
+ * Reader-facing names for the amenity ids the parser produces.
+ *
+ * This was a private map here, nine ids long against the catalogue's twelve,
+ * and it keyed a borehole as `borehole_water`. It is now the shared one in
+ * `feature-labels`, so the name the concierge says is the name the detail page
+ * and both card surfaces say.
+ */
+const amenityLabel = featureLabel;
 
 /**
  * Rank the catalogue against a parsed query.
