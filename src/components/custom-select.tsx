@@ -141,6 +141,63 @@ export default function CustomSelect({
       ref={containerRef}
       className={`relative ${isOpen ? "z-[60]" : "z-10"} ${className}`}
     >
+      {/*
+        Below `sm`, a native <select>.
+
+        The custom menu is unusable on a phone, for three separate reasons that
+        all bite at once. It is `min-w-[200px]` anchored `left-0`, so the ones
+        on the right of a two-column row open past the right edge of the screen
+        — `max-w-[calc(100vw-32px)]` never engages because 200px is under that
+        bound. It is `absolute` inside the filter panel's `overflow-y-auto`
+        body, and `overflow-y: auto` forces `overflow-x` to compute to `auto`,
+        so a long menu is clipped on BOTH axes rather than overflowing the
+        card. And its `z-[80]` ties MobileNav's `z-[80]`, which is rendered
+        later in the document, so any select near the foot of a page opens
+        underneath the tab bar.
+
+        Property24 reaches for the same answer on their mobile site. The OS
+        picker is also a bigger, better touch target than anything drawn here,
+        it scrolls natively, and it cannot be clipped by an ancestor.
+
+        `text-xs` is inert on a <select> — the unlayered `font: inherit` reset
+        in globals.css wins — so this renders at 16px, which is also what stops
+        iOS Safari zooming the viewport on focus.
+      */}
+      <div className="sm:hidden">
+        {label && (
+          <label
+            htmlFor={`${selectId}-native`}
+            className="mb-1 block text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500"
+          >
+            {label}
+          </label>
+        )}
+        <select
+          id={`${selectId}-native`}
+          value={strValue}
+          disabled={disabled}
+          aria-label={ariaLabel || label || placeholder}
+          onChange={(e) => onChange(e.target.value)}
+          className={`h-11 w-full rounded-xl border border-slate-300 bg-white px-3 font-semibold text-slate-800 shadow-2xs focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 dark:border-white/10 dark:bg-[#0c181a] dark:text-slate-200 ${
+            disabled ? "cursor-not-allowed opacity-50" : ""
+          }`}
+        >
+          {!selectedOption && placeholder && (
+            <option value="" disabled>
+              {placeholder}
+            </option>
+          )}
+          {normalizedOptions.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* From `sm` up, the drawn control. Static wrapper, so the menu below
+          still anchors to this component's `relative` root. */}
+      <div className="hidden h-full sm:block">
       {/* Trigger Button */}
       <button
         id={selectId}
@@ -268,6 +325,7 @@ export default function CustomSelect({
           </div>
         </>
       )}
+      </div>
     </div>
   );
 }

@@ -652,7 +652,13 @@ export default function ExpandableSearchPanel({
       onSearch(filters);
     }
 
-    if (autoNavigate) {
+    // `!onSearch`: when a host handles the result it owns the navigation too.
+    // /search passes BOTH `onSearch` and `autoNavigate`, so every search ran
+    // the host's `router.replace` and then this `router.push` — two
+    // navigations for one tap, and the second rebuilt the query from scratch
+    // without `sort`, silently throwing away the visitor's sort order each
+    // time they refined a search.
+    if (autoNavigate && !onSearch) {
       const params = new URLSearchParams();
       params.set("intent", intent);
       if (finalLocations.length > 0) {
@@ -817,8 +823,13 @@ export default function ExpandableSearchPanel({
                       e.stopPropagation();
                       removeLocationTag(tag);
                     }}
-                    className="text-emerald-600 dark:text-emerald-400 hover:text-emerald-950 dark:hover:text-white leading-none cursor-pointer font-bold"
+                    // tap-44: this glyph is about 10x10px, well under the touch
+                    // floor, and removing a suburb you did not mean to remove
+                    // is an annoying miss. Adjacent chips sit ~90px apart so
+                    // the expanded areas cannot overlap.
+                    className="tap-44 relative text-emerald-600 dark:text-emerald-400 hover:text-emerald-950 dark:hover:text-white leading-none cursor-pointer font-bold"
                     title={`Remove ${tag}`}
+                    aria-label={`Remove ${tag}`}
                   >
                     ✕
                   </button>
@@ -889,7 +900,7 @@ export default function ExpandableSearchPanel({
                 e.stopPropagation();
                 setIsOpen(true);
               }}
-              className={`flex h-10 w-10 sm:h-12 sm:w-auto items-center justify-center sm:gap-1.5 rounded-full border px-0 sm:px-4.5 text-xs sm:text-sm font-bold transition-all cursor-pointer shrink-0 ${
+              className={`relative flex h-10 w-10 sm:h-12 sm:w-auto items-center justify-center sm:gap-1.5 rounded-full border px-0 sm:px-4.5 text-xs sm:text-sm font-bold transition-all cursor-pointer shrink-0 ${
                 activeFilterCount > 0
                   ? "border-emerald-600 dark:border-emerald-500/50 bg-[#0b4d4e] dark:bg-emerald-600 text-white shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                   : "border-slate-200 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 shadow-2xs hover:bg-slate-50 dark:hover:bg-surface-panel hover:text-emerald-900 dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
@@ -897,9 +908,21 @@ export default function ExpandableSearchPanel({
               title="Open search filters"
             >
               <FilterSlidersIcon className={`h-4 w-4 ${activeFilterCount > 0 ? "text-white" : "text-slate-700 dark:text-slate-300"}`} />
-              <span className="hidden min-[480px]:inline">Filters</span>
+              {/* `sm:inline`, matching the button's own `sm:w-auto`. It was
+                  `min-[480px]:inline`, so between 480px and 639px the label and
+                  the count badge were turned on inside a button still fixed at
+                  `w-10` with `px-0` — the content spilled out of the pill in
+                  both directions on every large phone. */}
+              <span className="hidden sm:inline">Filters</span>
               {activeFilterCount > 0 && (
-                <span className="flex h-4 w-4 items-center justify-center rounded-full bg-emerald-600 text-xs font-bold text-white">
+                <span className="hidden h-4 w-4 items-center justify-center rounded-full bg-emerald-600 text-xs font-bold text-white sm:flex">
+                  {activeFilterCount}
+                </span>
+              )}
+              {/* Below sm the count rides as a dot on the icon-only button,
+                  which is the only way to show it without widening the pill. */}
+              {activeFilterCount > 0 && (
+                <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full border border-white bg-emerald-600 px-1 text-xs font-bold text-white sm:hidden dark:border-[#0a1517]">
                   {activeFilterCount}
                 </span>
               )}
@@ -944,23 +967,41 @@ export default function ExpandableSearchPanel({
                 setIsOpen(false);
               }
             }}
-            className="fixed inset-0 z-[10000] flex items-center justify-center p-3 sm:p-5 md:p-6 overflow-y-auto"
+            className="fixed inset-0 z-[10000] flex items-center justify-center overflow-y-auto p-0 sm:p-5 md:p-6"
             role="dialog"
             aria-modal="true"
+            aria-label="Search and filters"
           >
+            {/*
+              Full-screen below `sm`, the centred card from `sm` up.
+
+              As a centred card on a phone this header needed ~356px of
+              min-content against 342px available at 390px and 272px at 320px,
+              and since everything to the right of the input is `shrink-0` the
+              card's own `overflow-hidden` simply cut the close button off. A
+              filter interface wants the whole screen on a phone anyway — it is
+              the one surface where the visitor is doing nothing else — and
+              going full-bleed buys back the 24px of wrapper padding and the
+              rounded corners at the same time.
+
+              `100dvh`, not `100vh`: `vh` resolves to the LARGE viewport, so on
+              a phone the footer would sit behind the browser's address bar.
+            */}
             <div
               ref={modalCardRef}
               // --dyn-enter-scale overrides what `zoom-in-95` sets, to pair with
               // the origin pinned to the search bar in the layout effect above.
               style={{ "--dyn-enter-scale": ENTER_SCALE } as React.CSSProperties}
-              className={`relative w-full max-w-4xl max-h-[85vh] sm:max-h-[88vh] flex flex-col rounded-3xl border border-slate-200/90 dark:border-white/10 bg-white dark:bg-[#0a1517] shadow-[0_25px_90px_rgba(15,23,42,0.4)] dark:shadow-[0_25px_90px_rgba(0,0,0,0.8)] overflow-hidden duration-200 ${
+              className={`relative flex h-[100dvh] max-h-none w-full max-w-4xl flex-col overflow-hidden border-slate-200/90 bg-white shadow-[0_25px_90px_rgba(15,23,42,0.4)] duration-200 sm:h-auto sm:max-h-[88vh] sm:rounded-3xl sm:border dark:border-white/10 dark:bg-[#0a1517] dark:shadow-[0_25px_90px_rgba(0,0,0,0.8)] ${
                 closing ? "animate-out fade-out zoom-out-95" : "animate-in fade-in zoom-in-95"
               }`}
             >
               {/* UNIFIED CONTINUOUS BOX HEADER: SEARCH CONSOLE */}
               <div className="border-b border-slate-100 dark:border-white/10 bg-white dark:bg-[#0a1517] p-3 sm:p-4 flex items-center justify-between gap-2.5 sm:gap-3 shrink-0">
                 <div className="flex min-w-0 flex-1 items-center gap-2.5 sm:gap-3 pl-1 sm:pl-2">
-                  <div className="flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-slate-100 dark:bg-surface-ink/80 text-slate-700 dark:text-slate-300 dark:border dark:border-white/10">
+                  {/* Decoration, and the first 50px to go on a phone — the
+                      input beside it already says what this is. */}
+                  <div className="hidden h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-full bg-slate-100 dark:bg-surface-ink/80 text-slate-700 dark:text-slate-300 sm:flex dark:border dark:border-white/10">
                     <SearchIcon className="h-5 w-5" />
                   </div>
 
@@ -975,8 +1016,9 @@ export default function ExpandableSearchPanel({
                         <button
                           type="button"
                           onClick={() => removeLocationTag(tag)}
-                          className="text-emerald-600 dark:text-emerald-400 hover:text-emerald-950 dark:hover:text-white leading-none cursor-pointer font-bold"
+                          className="tap-44 relative text-emerald-600 dark:text-emerald-400 hover:text-emerald-950 dark:hover:text-white leading-none cursor-pointer font-bold"
                           title={`Remove ${tag}`}
+                          aria-label={`Remove ${tag}`}
                         >
                           ✕
                         </button>
@@ -1003,7 +1045,10 @@ export default function ExpandableSearchPanel({
                           ? (placeholder || "Search city, suburb, or province...")
                           : "Add another suburb..."
                       }
-                      className="min-w-[140px] flex-1 bg-transparent text-sm sm:text-base font-medium text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none"
+                      // `min-w-0`, not `min-w-[140px]`: the floor is what made
+                      // the header's min-content exceed a 320px screen and
+                      // pushed the close button off the edge.
+                      className="min-w-0 flex-1 bg-transparent text-sm sm:text-base font-medium text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none"
                       autoComplete="off"
                       spellCheck="false"
                     />
@@ -1032,10 +1077,15 @@ export default function ExpandableSearchPanel({
                     </span>
                   )}
 
+                  {/* Desktop only. On a phone the primary action is the
+                      full-width button in the sticky footer, where a thumb
+                      actually reaches — two Search buttons in one sheet, one
+                      of them at the top of the screen, is the arrangement that
+                      made this header overflow in the first place. */}
                   <button
                     type="button"
                     onClick={() => handleExecuteSearch()}
-                    className="flex h-10 sm:h-11 items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 hover:from-[#0d595b] hover:to-[#094344] dark:hover:from-emerald-500 dark:hover:to-emerald-600 px-5 sm:px-6 text-xs sm:text-sm font-bold text-white shadow-md shadow-emerald-950/20 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-400/30 dark:border-emerald-400/50 hover:border-emerald-400 transition-all hover:scale-102 cursor-pointer"
+                    className="hidden h-10 sm:h-11 sm:flex items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 hover:from-[#0d595b] hover:to-[#094344] dark:hover:from-emerald-500 dark:hover:to-emerald-600 px-5 sm:px-6 text-xs sm:text-sm font-bold text-white shadow-md shadow-emerald-950/20 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-400/30 dark:border-emerald-400/50 hover:border-emerald-400 transition-all hover:scale-102 cursor-pointer"
                   >
                     <span>Search</span>
                     <span className="text-emerald-300">→</span>
@@ -1044,8 +1094,9 @@ export default function ExpandableSearchPanel({
                   <button
                     type="button"
                     onClick={() => setIsOpen(false)}
-                    className="flex h-9 w-9 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 dark:hover:bg-surface-panel hover:text-slate-700 dark:hover:text-white transition-colors cursor-pointer dark:bg-surface-ink/60 dark:text-slate-300 dark:border dark:border-white/10"
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 dark:hover:bg-surface-panel hover:text-slate-700 dark:hover:text-white transition-colors cursor-pointer sm:h-9 sm:w-9 dark:bg-surface-ink/60 dark:text-slate-300 dark:border dark:border-white/10"
                     title="Close search modal"
+                    aria-label="Close search"
                   >
                     <XMarkIcon className="h-5 w-5" />
                   </button>
@@ -1072,15 +1123,20 @@ export default function ExpandableSearchPanel({
                 </span>
               </button>
 
+              {/* One scrolling row on a phone, wrapping from `sm`. This can
+                  return twelve cities and four provinces, which wrapped to six
+                  or eight rows and pushed every actual filter below the fold
+                  the moment you typed. Scrolling keeps all sixteen reachable
+                  instead of capping the list. */}
               {(categorizedSuggestions.cities.length > 0 || categorizedSuggestions.provinces.length > 0) && (
-                <div className="mt-2.5 flex flex-wrap gap-1.5">
-                  <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 self-center mr-1">Matching SA areas:</span>
+                <div className="mt-2.5 flex gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
+                  <span className="shrink-0 text-xs font-semibold text-slate-400 dark:text-slate-500 self-center mr-1">Matching SA areas:</span>
                   {categorizedSuggestions.cities.map((city) => (
                     <button
                       key={city}
                       type="button"
                       onClick={() => addLocationTag(city)}
-                      className="inline-flex items-center gap-1 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0c181a] px-2.5 py-1 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-white/10 hover:text-emerald-950 dark:hover:text-emerald-300 hover:border-emerald-300 dark:hover:border-emerald-500/40 transition-colors cursor-pointer"
+                      className="inline-flex min-h-[36px] shrink-0 items-center gap-1 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0c181a] px-2.5 py-1 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-white/10 hover:text-emerald-950 dark:hover:text-emerald-300 hover:border-emerald-300 dark:hover:border-emerald-500/40 transition-colors cursor-pointer"
                     >
                       <LocationPinIcon className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
                       <span>{city}</span>
@@ -1092,7 +1148,7 @@ export default function ExpandableSearchPanel({
                       key={prov}
                       type="button"
                       onClick={() => addLocationTag(prov)}
-                      className="inline-flex items-center gap-1 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0c181a] px-2.5 py-1 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-white/10 hover:text-emerald-950 dark:hover:text-emerald-300 hover:border-emerald-300 dark:hover:border-emerald-500/40 transition-colors cursor-pointer"
+                      className="inline-flex min-h-[36px] shrink-0 items-center gap-1 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0c181a] px-2.5 py-1 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-white/10 hover:text-emerald-950 dark:hover:text-emerald-300 hover:border-emerald-300 dark:hover:border-emerald-500/40 transition-colors cursor-pointer"
                     >
                       <HomeIcon className="h-3 w-3 text-slate-400 dark:text-slate-500" />
                       <span>{prov}</span>
@@ -1128,7 +1184,10 @@ export default function ExpandableSearchPanel({
           )}
 
           {/* Scrollable Filter Body */}
-          <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4 scrollbar-thin bg-white dark:bg-[#0a1517]">
+          {/* `px-4` on a phone, not `px-5`: 40px of horizontal padding left
+              only 256px of content at 320px, and the price row is two controls
+              side by side inside it. */}
+          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 scrollbar-thin bg-white sm:px-5 dark:bg-[#0a1517]">
             {/* Category Intent Pill Slider */}
             <div className="flex items-center justify-between pb-1">
               <div className="relative grid grid-cols-2 w-56 sm:w-64 p-1 rounded-full bg-slate-100 dark:bg-[#061214] border border-slate-200 dark:border-white/10 shadow-inner transition-all duration-300 hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_18px_rgba(16,185,129,0.38)] dark:hover:shadow-[0_0_22px_rgba(52,211,153,0.38)]">
@@ -1304,7 +1363,15 @@ export default function ExpandableSearchPanel({
               <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1.5">
                 Price Range ({intent === "rent" ? "ZAR / Month" : "ZAR Total"})
               </label>
-              <div className="grid grid-cols-[1fr,auto,1fr] items-center gap-2 sm:gap-3">
+              {/* `grid-cols-[1fr,auto,1fr]` used commas. Tailwind v4 wants
+                  underscores in an arbitrary value — every other arbitrary grid
+                  in this repo has them — so that class never generated and this
+                  row has been a single column at EVERY width since it was
+                  written, not just on a phone. Restored from `sm` up, where
+                  three columns fit; stacked below it, because at 320px three
+                  columns give each select about 130px and labels like
+                  "R 150,000+ / mo" truncate. */}
+              <div className="grid grid-cols-1 items-center gap-2 sm:grid-cols-[1fr_auto_1fr] sm:gap-3">
                 <CustomSelect
                   value={minPrice}
                   onChange={(val) => setMinPrice(Number(val))}
@@ -1313,7 +1380,7 @@ export default function ExpandableSearchPanel({
                   ariaLabel="Minimum price"
                 />
 
-                <span className="text-slate-400 font-bold self-center dark:text-slate-400">–</span>
+                <span className="hidden text-slate-400 font-bold self-center sm:block dark:text-slate-400">–</span>
 
                 <CustomSelect
                   value={maxPrice}
@@ -1466,26 +1533,37 @@ export default function ExpandableSearchPanel({
             </div>
           </div>
 
-          {/* Sticky Modal Footer (Inside the Continuous Box) */}
-          <div className="flex items-center justify-between border-t border-slate-100 dark:border-white/10 bg-slate-50/95 dark:bg-[#071113] px-5 py-3.5 shrink-0 backdrop-blur-md">
+          {/* Sticky Modal Footer.
+
+              On a phone this is where the primary action lives: at the bottom,
+              in reach of a thumb, full width, carrying the filter count so the
+              effect of everything above it is visible without scrolling back.
+              `env(safe-area-inset-bottom)` keeps it clear of the home indicator
+              now that the sheet runs to the bottom edge of the screen. */}
+          <div className="flex shrink-0 items-center justify-between gap-3 border-t border-slate-100 bg-slate-50/95 px-4 py-3.5 pb-[calc(0.875rem+env(safe-area-inset-bottom))] backdrop-blur-md sm:px-5 sm:pb-3.5 dark:border-white/10 dark:bg-[#071113]">
             <button
               type="button"
               onClick={handleClearAll}
-              className="text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-300 underline transition-colors cursor-pointer"
+              className="flex min-h-[44px] shrink-0 items-center text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-300 underline transition-colors cursor-pointer sm:min-h-0"
             >
               Clear all
             </button>
 
-            <div className="flex items-center gap-3">
+            <div className="flex min-w-0 flex-1 items-center justify-end gap-3">
               <span className="text-xs text-slate-400 dark:text-slate-500 hidden sm:inline">
                 Press <kbd className="font-mono text-xs bg-slate-200 dark:bg-surface-ink dark:border dark:border-white/10 text-slate-700 dark:text-slate-300 px-1.5 py-0.5 rounded">Esc</kbd> to close
               </span>
               <button
                 type="button"
                 onClick={() => handleExecuteSearch()}
-                className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 hover:from-[#0d595b] hover:to-[#094344] dark:hover:from-emerald-500 dark:hover:to-emerald-600 border border-emerald-400/30 dark:border-emerald-400/50 px-6 py-2.5 text-xs sm:text-sm font-bold text-white shadow-md shadow-emerald-950/20 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] hover:border-emerald-400 transition-all cursor-pointer hover:scale-102"
+                className="flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 hover:from-[#0d595b] hover:to-[#094344] dark:hover:from-emerald-500 dark:hover:to-emerald-600 border border-emerald-400/30 dark:border-emerald-400/50 px-6 py-2.5 text-xs sm:text-sm font-bold text-white shadow-md shadow-emerald-950/20 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] hover:border-emerald-400 transition-all cursor-pointer hover:scale-102 sm:min-h-0 sm:flex-initial"
               >
                 <span>Search Properties</span>
+                {activeFilterCount > 0 && (
+                  <span className="rounded-full bg-white/20 px-1.5 py-0.5 text-xs font-extrabold sm:hidden">
+                    {activeFilterCount}
+                  </span>
+                )}
                 <span className="text-emerald-300">→</span>
               </button>
             </div>
