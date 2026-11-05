@@ -7,12 +7,58 @@ interface OnShowBannerProps {
   location: string;
   onShow: {
     date: string;
+    /**
+     * Machine-readable date, `YYYY-MM-DD`. `date` above is display text with
+     * no year ("Sunday, 14 Sep"), which cannot be compared to today — which is
+     * how every listing came to advertise a show seven weeks in the past under
+     * a "This Weekend" badge. Without this field the banner does not render.
+     */
+    isoDate?: string;
     time: string;
     directionsNote?: string;
   };
 }
 
+/**
+ * Whether a show is still worth advertising, and whether "this weekend" is
+ * honest.
+ *
+ * The past cut-off is yesterday rather than today on purpose. This is a client
+ * component that also renders on the server: Vercel runs UTC and the reader is
+ * on SAST (+2), so a same-day comparison can disagree across the two and
+ * change whether the banner exists, which React reports as a hydration
+ * mismatch. A full day of slack makes that practically impossible while still
+ * catching the case this fixes, where the date is weeks stale.
+ */
+function describeShow(isoDate: string | undefined, now: Date) {
+  if (!isoDate) return null;
+  const when = new Date(`${isoDate}T12:00:00`);
+  if (Number.isNaN(when.getTime())) return null;
+
+  const dayMs = 24 * 60 * 60 * 1000;
+  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const daysAway = Math.round((when.getTime() - startOfToday.getTime()) / dayMs);
+
+  if (daysAway < -1) return null;
+
+  const weekday = when.getDay(); // 0 Sun, 6 Sat
+  const isWeekend = weekday === 0 || weekday === 6;
+  const label =
+    daysAway >= 0 && daysAway <= 7 && isWeekend
+      ? "On show this weekend"
+      : daysAway === 0
+        ? "On show today"
+        : "On show";
+
+  return { label };
+}
+
 export default function OnShowBanner({ propertyTitle, location, onShow }: OnShowBannerProps) {
+  const show = describeShow(onShow.isoDate, new Date());
+  // Nothing to advertise: a past or undated viewing is worse than none, because
+  // a reader can act on it.
+  if (!show) return null;
+
   // Generate Google Calendar Link
   const calendarEventTitle = encodeURIComponent(`Dynasty Estates On Show: ${propertyTitle}`);
   const calendarLocation = encodeURIComponent(location);
@@ -29,7 +75,7 @@ export default function OnShowBanner({ propertyTitle, location, onShow }: OnShow
           <div className="flex items-center gap-2 flex-wrap">
             <span className="rounded-full bg-rose-600 px-3 py-0.5 text-xs font-extrabold uppercase tracking-widest text-white shadow-xs flex items-center gap-1.5 dark:shadow-[0_0_12px_rgba(225,29,72,0.4)]">
               <span className="h-2 w-2 rounded-full bg-white animate-pulse" />
-              <span>On Show This Weekend</span>
+              <span>{show.label}</span>
             </span>
             <span className="text-xs font-bold text-slate-900 dark:text-white">
               {onShow.date} · {onShow.time}
