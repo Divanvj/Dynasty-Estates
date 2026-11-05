@@ -17,6 +17,7 @@ import {
   MapSplitIcon,
   TableIcon,
 } from "@/components/icons";
+import { featureLabel } from "@/lib/feature-labels";
 import { getDisplayTag, type PropertyRecord } from "@/lib/property-data";
 import { LG_QUERY, useMediaQuery } from "@/lib/use-media-query";
 
@@ -285,7 +286,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
                       <div className="flex flex-wrap gap-1">
                         {card.features?.slice(0, 2).map((f) => (
                           <span key={f} className="rounded-md bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 text-xs font-medium text-emerald-800 dark:text-emerald-300">
-                            {f.replace("_", " ")}
+                            {featureLabel(f)}
                           </span>
                         ))}
                       </div>

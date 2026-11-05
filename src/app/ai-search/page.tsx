@@ -15,6 +15,7 @@ import {
   TagIcon,
   ZapIcon,
 } from "@/components/icons";
+import { featureLabel } from "@/lib/feature-labels";
 import { formatNumber } from "@/lib/formatters";
 import { getPropertyList, type PropertyRecord } from "@/lib/property-data";
 
@@ -113,7 +114,7 @@ export default function AISearchPage() {
           ...activeIntent.requiredAmenities.map((amenity) => ({
             key: `amenity-${amenity}`,
             Icon: ZapIcon,
-            label: amenity.replace(/_/g, " "),
+            label: featureLabel(amenity),
             strong: true,
           })),
         ].filter((c): c is { key: string; Icon: typeof LocationPinIcon; label: string; strong?: boolean } =>

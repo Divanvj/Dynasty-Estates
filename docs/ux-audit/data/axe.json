@@ -1,0 +1,207 @@
+[
+  {
+    "page": "home",
+    "viewport": "390x844",
+    "error": null,
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 13,
+        "sample": "<span>Keurboom Road, Claremont Upper, Cape Town, Western Cape</span>",
+        "target": "article:nth-child(1) > .md\\:p-6.p-4.flex-1 > div:nth-child(1) > .gap-2.justify-between.flex-wrap > .gap-1.text-slate-500 > span"
+      }
+    ]
+  },
+  {
+    "page": "home",
+    "viewport": "1440x900",
+    "error": null,
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 14,
+        "sample": "<span class=\"hidden lg:inline text-slate-400 font-normal dark:text-slate-400\">(approx. R <!-- -->20,345<!-- -->/m²)</span>",
+        "target": "article:nth-child(1) > .md\\:p-6.p-4.flex-1 > div:nth-child(1) > .mt-2\\.5.md\\:mt-3\\.5.md\\:gap-6 > .lg\\:inline.font-normal.text-slate-400"
+      }
+    ]
+  },
+  {
+    "page": "for-sale",
+    "viewport": "390x844",
+    "error": null,
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 22,
+        "sample": "<span class=\"rounded-full bg-rose-100 text-[#E11D48] text-xs font-extrabold uppercase tracking-widest px-3 py-1 dark:bg-rose-500/20 dark:text-rose-300",
+        "target": ".bg-rose-100"
+      }
+    ]
+  },
+  {
+    "page": "for-sale",
+    "viewport": "1440x900",
+    "error": null,
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 23,
+        "sample": "<span class=\"block text-xs font-bold uppercase leading-tight tracking-[0.24em] text-slate-500 dark:text-emerald-400/80\">Dynasty</span>",
+        "target": ".tracking-\\[0\\.24em\\]"
+      }
+    ]
+  },
+  {
+    "page": "search",
+    "viewport": "390x844",
+    "error": null,
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 11,
+        "sample": "<span class=\"text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400 font-bold\">Catalogue</span>",
+        "target": ".mb-1\\.5 > .tracking-\\[0\\.24em\\].uppercase.text-slate-500"
+      }
+    ]
+  },
+  {
+    "page": "search",
+    "viewport": "1440x900",
+    "error": null,
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 33,
+        "sample": "<span class=\"block text-xs font-bold uppercase leading-tight tracking-[0.24em] text-slate-500 dark:text-emerald-400/80\">Dynasty</span>",
+        "target": ".dark\\:text-emerald-400\\/80"
+      }
+    ]
+  },
+  {
+    "page": "property",
+    "viewport": "390x844",
+    "error": null,
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 15,
+        "sample": "<p class=\"text-xs uppercase tracking-wider text-slate-400 font-bold dark:text-slate-400\">Bedrooms</p>",
+        "target": ".p-2\\.5.hover\\:bg-white\\/90.md\\:flex-col:nth-child(1) > .min-w-0 > .text-slate-400.tracking-wider.uppercase"
+      },
+      {
+        "id": "landmark-complementary-is-top-level",
+        "impact": "moderate",
+        "help": "Aside should not be contained in another landmark",
+        "nodes": 1,
+        "sample": "<aside class=\"space-y-6\">",
+        "target": "aside"
+      }
+    ]
+  },
+  {
+    "page": "property",
+    "viewport": "1440x900",
+    "error": null,
+    "violations": [
+      {
+        "id": "button-name",
+        "impact": "critical",
+        "help": "Buttons must have discernible text",
+        "nodes": 1,
+        "sample": "<button type=\"button\" role=\"switch\" aria-checked=\"false\" class=\"relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-tra",
+        "target": ".h-6"
+      },
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 19,
+        "sample": "<p class=\"text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400\">Dynasty</p>",
+        "target": ".tracking-\\[0\\.24em\\].text-slate-500.uppercase"
+      },
+      {
+        "id": "landmark-complementary-is-top-level",
+        "impact": "moderate",
+        "help": "Aside should not be contained in another landmark",
+        "nodes": 1,
+        "sample": "<aside class=\"space-y-6\">",
+        "target": "aside"
+      }
+    ]
+  },
+  {
+    "page": "insights",
+    "viewport": "1440x900",
+    "error": null,
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 5,
+        "sample": "<p class=\"text-xs uppercase tracking-[0.2em] text-slate-500 font-bold hidden sm:block dark:text-emerald-400\">Market Intelligence</p>",
+        "target": ".tracking-\\[0\\.2em\\]"
+      }
+    ]
+  },
+  {
+    "page": "agents",
+    "viewport": "1440x900",
+    "error": null,
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 4,
+        "sample": "<p class=\"text-xs uppercase tracking-[0.2em] text-slate-500 font-bold hidden sm:block dark:text-slate-400\">Practitioners Directory</p>",
+        "target": ".uppercase"
+      },
+      {
+        "id": "heading-order",
+        "impact": "moderate",
+        "help": "Heading levels should only increase by one",
+        "nodes": 1,
+        "sample": "<h3 class=\"text-base font-bold text-slate-950 dark:text-white\"><a class=\"hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors\" href=\"/",
+        "target": "article:nth-child(1) > div:nth-child(1) > .gap-3 > div:nth-child(2) > h3"
+      }
+    ]
+  },
+  {
+    "page": "calculators",
+    "viewport": "1440x900",
+    "error": null,
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 3,
+        "sample": "<p class=\"text-xs uppercase tracking-[0.2em] text-slate-500 font-bold dark:text-slate-400\">Property Finance</p>",
+        "target": ".tracking-\\[0\\.2em\\]"
+      },
+      {
+        "id": "label",
+        "impact": "critical",
+        "help": "Form elements must have labels",
+        "nodes": 2,
+        "sample": "<input type=\"number\" min=\"0\" step=\"100\" class=\"w-full rounded-xl border border-slate-300 bg-white px-3 py-1.5 font-bold text-slate-900 dark:border-whi",
+        "target": "input[value=\"2400\"]"
+      }
+    ]
+  }
+]

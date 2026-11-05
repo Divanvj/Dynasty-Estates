@@ -246,12 +246,18 @@ export default async function PropertyPage({
                         <span>On Show {property.onShow.date.split(",")[0]}</span>
                       </span>
                     )}
+                    {/* Both of these are said again within a screen of here —
+                        the transfer-duty exemption by the off-plan banner
+                        directly below the hero, the category by the "Category"
+                        row in the specs. At 375px they were what tipped this
+                        row to three lines and 87px of the photograph. They
+                        come back at `sm`, where the row fits on one line. */}
                     {property.developmentInfo?.noTransferDuty && (
-                      <span className="rounded-full border border-sky-300/80 bg-sky-950/85 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-sky-200 backdrop-blur-md">
+                      <span className="hidden rounded-full border border-sky-300/80 bg-sky-950/85 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-sky-200 backdrop-blur-md sm:inline">
                         0% Transfer Duty
                       </span>
                     )}
-                    <span className="rounded-full bg-black/40 border border-white/30 px-3 py-1 text-xs uppercase tracking-[0.2em] font-bold text-white backdrop-blur-md dark:border-white/10">
+                    <span className="hidden rounded-full bg-black/40 border border-white/30 px-3 py-1 text-xs uppercase tracking-[0.2em] font-bold text-white backdrop-blur-md sm:inline dark:border-white/10">
                       {property.category}
                     </span>
                   </div>
@@ -264,7 +270,18 @@ export default async function PropertyPage({
                   </div>
                 </div>
 
-                <div className="text-left md:text-right">
+                {/*
+                  Hidden below `lg`, because below `lg` the sticky bar at the
+                  foot of this page carries the same label and the same price
+                  and never leaves the screen. Two copies of the asking price
+                  within one viewport is the duplication this page has been
+                  taken apart for twice already, and this copy was the
+                  expensive one: it cost the lower third of the photograph.
+
+                  `lg`, not `md`, so it hands over exactly where the sticky bar
+                  takes over — see the bar's own note.
+                */}
+                <div className="hidden text-left lg:block lg:text-right">
                   <span className="text-xs uppercase tracking-widest text-slate-300 block">
                     {property.listingType === "rent" ? "Monthly Rental" : "Asking Price"}
                   </span>
@@ -357,7 +374,7 @@ export default async function PropertyPage({
                 className="leading-7 text-sm text-slate-700 dark:text-slate-300"
               />
 
-              <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <div className="mt-6 grid grid-cols-2 gap-x-5 gap-y-3 sm:grid-cols-4 sm:gap-3">
                 {[
                   { label: "Bedrooms", value: `${property.beds} Beds`, icon: BedIcon },
                   { label: "Bathrooms", value: `${property.baths} Baths`, icon: BathIcon },
@@ -392,25 +409,35 @@ export default async function PropertyPage({
                   const Icon = item.icon;
                   return (
                     /*
-                      A row on a phone, the original stacked tile from `md` up.
+                      A bare two-column row on a phone, the stacked tile from
+                      `sm` up where four of them fit across.
 
-                      Stacked, each fact was its own ~138px block and these
-                      eight filled 552px — Property24 states the same eight in
-                      about 400. Turning the tile on its side puts the icon
-                      beside the label and value instead of above them, which
-                      is the whole saving: no text is smaller (the 14px type
-                      floor is deliberate) and no fact is dropped.
+                      Measured at 375px, these eight facts filled 460px against
+                      the 310px Property24 spends on the same card. The tile
+                      chrome was most of it: a 32px icon plate and 10px of
+                      padding left about 120px for the text, so "Erf / Land
+                      Size", "Security Deposit" and "Rates & Taxes" each wrapped
+                      their label, and every one of those rows paid for the
+                      wrap twice over. On a phone the plate becomes a bare 16px
+                      glyph and the label drops its uppercase tracking, which is
+                      what buys the single line. Nothing is set below the
+                      deliberate 14px floor and no fact is dropped.
+
+                      The tile switch moved from `md` to `sm` so it lands with
+                      `sm:grid-cols-4`. The old pairing gave 640–767px four
+                      ~150px columns still in row layout — the one width where
+                      the plate and the text genuinely could not share a line.
                     */
                     <div
                       key={item.label}
-                      className="group flex items-center gap-2.5 rounded-control border border-white/80 bg-white/70 p-2.5 text-left transition-all hover:bg-white/90 md:flex-col md:items-center md:justify-center md:p-3.5 md:text-center dark:bg-surface-ink/60 dark:border-white/10 dark:hover:bg-surface-panel dark:hover:border-emerald-500/30"
+                      className="group flex items-start gap-2 text-left sm:flex-col sm:items-center sm:justify-center sm:gap-0 sm:rounded-control sm:border sm:border-white/80 sm:bg-white/70 sm:p-3.5 sm:text-center sm:transition-all sm:hover:bg-white/90 sm:dark:border-white/10 sm:dark:bg-surface-ink/60 sm:dark:hover:border-emerald-500/30 sm:dark:hover:bg-surface-panel"
                     >
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition-colors group-hover:bg-emerald-50 group-hover:text-emerald-700 md:mb-2 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border dark:border-emerald-500/20 dark:group-hover:bg-emerald-500/20">
+                      <div className="flex h-5 w-5 shrink-0 items-center justify-center text-slate-400 sm:mb-2 sm:h-8 sm:w-8 sm:rounded-xl sm:bg-slate-100 sm:text-slate-600 sm:transition-colors sm:group-hover:bg-emerald-50 sm:group-hover:text-emerald-700 dark:text-emerald-400 sm:dark:border sm:dark:border-emerald-500/20 sm:dark:bg-emerald-500/10 sm:dark:group-hover:bg-emerald-500/20">
                         <Icon className="h-4 w-4 shrink-0" />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-xs uppercase tracking-wider text-slate-400 font-bold dark:text-slate-400">{item.label}</p>
-                        <p className="text-base font-extrabold text-slate-900 md:mt-1 dark:text-white">{item.value}</p>
+                        <p className="text-xs font-bold text-slate-500 sm:uppercase sm:tracking-wider sm:text-slate-400 dark:text-slate-400">{item.label}</p>
+                        <p className="text-xs font-extrabold text-slate-900 sm:mt-1 sm:text-base dark:text-white">{item.value}</p>
                       </div>
                     </div>
                   );
@@ -418,15 +445,30 @@ export default async function PropertyPage({
               </div>
 
               {/* Verified Amenities Checklist */}
-              <div className="mt-8 border-t border-slate-200/80 dark:border-white/10 pt-6">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3 dark:text-slate-400">
+              <div className="mt-6 border-t border-slate-200/80 pt-5 sm:mt-8 sm:pt-6 dark:border-white/10">
+                <h3 className="mb-3 text-xs font-bold uppercase text-slate-500 sm:tracking-wider dark:text-slate-400">
                   Verified South African Features & Resilience
                 </h3>
-                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                {/*
+                  Ticked lines on a phone, the emerald chip from `sm` up — the
+                  same switch the specs above make, so the two blocks read as
+                  one list rather than as two different treatments of the same
+                  kind of fact. That is the merge: one column rhythm, one type
+                  size, specs then features.
+
+                  Ten chips measured 339px at 375px. Two columns of ~150px
+                  against labels like "Inverter & battery" meant most of them
+                  wrapped, and each wrap was then boxed in a border and 16px of
+                  vertical padding. A tick and a line of text is one row.
+                */}
+                <div className="grid grid-cols-2 gap-x-5 gap-y-2 sm:grid-cols-3 sm:gap-2">
                   {property.features.map((feat) => (
-                    <div key={feat} className="flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50/80 px-3 py-2 text-xs font-medium text-emerald-950 dark:border-emerald-500/30 dark:bg-emerald-500/20 dark:text-emerald-300">
-                      <CheckIcon className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                      <span>{featureLabel(feat)}</span>
+                    <div
+                      key={feat}
+                      className="flex items-center gap-1.5 text-xs font-medium text-slate-700 sm:gap-2 sm:rounded-xl sm:border sm:border-emerald-200 sm:bg-emerald-50/80 sm:px-3 sm:py-2 sm:text-emerald-950 dark:text-slate-300 sm:dark:border-emerald-500/30 sm:dark:bg-emerald-500/20 sm:dark:text-emerald-300"
+                    >
+                      <CheckIcon className="h-3.5 w-3.5 shrink-0 text-emerald-600 dark:text-emerald-400" />
+                      <span className="min-w-0">{featureLabel(feat)}</span>
                     </div>
                   ))}
                 </div>
@@ -535,9 +577,12 @@ export default async function PropertyPage({
                   condition, and it is on screen the whole way down rather than
                   only where the card happens to sit. Two sets of the same two
                   buttons is what the sticky bar's own note warned about when
-                  the duplicate tenant-application button was taken out of it. */}
+                  the duplicate tenant-application button was taken out of it.
+
+                  `lg`, moved from `md`, to stay the exact complement of that
+                  bar now that it runs to `lg` as well. */}
               {contact && (
-                <div className="no-print mt-3 hidden md:grid grid-cols-2 gap-2.5">
+                <div className="no-print mt-3 hidden lg:grid grid-cols-2 gap-2.5">
                   <a
                     href={contact.whatsappHref}
                     target="_blank"
@@ -614,19 +659,33 @@ export default async function PropertyPage({
           CTA — the primary conversion action on this page — were hidden on every
           phone. The offset comes from --dyn-mobile-nav-h so the two stay in
           step. Unchanged at md and above, where this bar is hidden anyway. */}
-      <div className="no-print fixed bottom-[calc(var(--dyn-mobile-nav-h)+env(safe-area-inset-bottom))] inset-x-0 z-40 p-3 bg-white/95 border-t border-slate-200/80 backdrop-blur-xl md:hidden flex items-center justify-between shadow-[0_-8px_24px_rgba(15,23,42,0.12)] dark:bg-[#081012]/95 dark:border-white/10">
-        <div>
+      <div className="no-print fixed bottom-[calc(var(--dyn-mobile-nav-h)+env(safe-area-inset-bottom))] inset-x-0 z-40 px-3 py-1.5 bg-white/95 border-t border-slate-200/80 backdrop-blur-xl lg:hidden flex items-center justify-between gap-3 shadow-[0_-8px_24px_rgba(15,23,42,0.12)] dark:bg-[#081012]/95 dark:border-white/10">
+        {/*
+          `lg:hidden`, not `md:hidden`. The tab bar this sits on is `lg:hidden`,
+          so between 768 and 1023px the page reserved room for the tab bar and
+          then showed no price bar above it — the one band of widths with the
+          chrome and none of the content. The practitioner card's WhatsApp and
+          Call pair moved to `lg` in the same change so the two never both
+          appear.
+
+          `py-1.5` rather than `p-3`: the 44px touch target on the right is the
+          real floor, and 12px of padding around it made the bar 69px. Stacked
+          on the 59px tab bar that was 128px of permanent chrome against
+          Property24's 60px. Six pixels puts the bar at 56px and the buttons
+          still set its height.
+        */}
+        <div className="min-w-0">
           <span className="text-xs uppercase tracking-wider text-slate-500 font-bold block dark:text-slate-400">
             {property.listingType === "rent" ? "Monthly Rental" : "Asking Price"}
           </span>
-          <span className="text-base font-extrabold text-slate-950 dark:text-white">{property.price}</span>
+          <span className="block truncate text-base font-extrabold text-slate-950 dark:text-white">{property.price}</span>
         </div>
         {/* Contact first. A buyer on a phone wants to reach the agent, and in
             this market that means WhatsApp or a call rather than a form. The
             tenant-application button that used to sit here is a duplicate of the
             one in the practitioner card below, so the space goes to the two
             channels that did not exist at all. */}
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           {contact && (
             <>
               <a

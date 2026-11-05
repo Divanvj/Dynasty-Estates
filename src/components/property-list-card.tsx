@@ -11,6 +11,7 @@ import {
   LocationPinIcon,
   SparklesIcon,
 } from "@/components/icons";
+import { featureLabel } from "@/lib/feature-labels";
 import { formatNumber } from "@/lib/formatters";
 import { getDisplayTag, type PropertyRecord } from "@/lib/property-data";
 
@@ -196,7 +197,7 @@ export default function PropertyListCard({
                 key={f}
                 className="rounded-md bg-emerald-50/80 dark:bg-emerald-950/40 px-2.5 py-0.5 text-xs font-medium text-emerald-800 dark:text-emerald-300 border border-emerald-200/50 dark:border-emerald-500/30"
               >
-                {f.replace(/_/g, " ")}
+                {featureLabel(f)}
               </span>
             ))}
           </div>

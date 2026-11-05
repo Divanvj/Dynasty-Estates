@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 
-import { ArrowLeftIcon, ArrowRightIcon } from "@/components/icons";
+import { ArrowLeftIcon, ArrowRightIcon, SearchIcon } from "@/components/icons";
+import PropertyGalleryLightbox from "@/components/property-gallery-lightbox";
 
 const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
 
@@ -56,6 +57,8 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
 
   const [index, setIndex] = useState(0);
   const [takenOver, setTakenOver] = useState(false);
+  /** Which photograph the full-screen viewer is on; `null` while it is shut. */
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const touchStartX = useRef<number | null>(null);
   const railRef = useRef<HTMLDivElement>(null);
 
@@ -177,14 +180,39 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
         {/* Legibility scrim for the headline and price. */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-        {many && (
-          <>
-            {/* Frame counter, set in the editorial style the rest of the page uses. */}
-            <div className="pointer-events-none absolute right-4 top-4 rounded-full border border-white/25 bg-black/35 px-3 py-1 text-xs font-bold tracking-[0.2em] text-white backdrop-blur-md sm:right-6 sm:top-6">
+        {/*
+          The way into the full-screen viewer. The detail page's "Photos" media
+          tab used to be the only one in the app, and it repeated this hero —
+          rail, counter, arrows, swipe and all — for galleries that run to two
+          or three photographs, so it is gone.
+
+          This was already here as a `pointer-events-none` frame counter, so
+          making the label the control costs the photograph no extra chrome. It
+          sits outside the `many` guard because a single photograph is still
+          worth seeing full-screen on a phone; the count appears only when
+          there is more than one.
+        */}
+        <button
+          type="button"
+          onClick={() => setLightboxIndex(index)}
+          aria-label={
+            many
+              ? `View all ${frames.length} photographs full screen`
+              : "View this photograph full screen"
+          }
+          className="tap-44 absolute right-3 top-3 z-20 flex cursor-pointer items-center gap-1.5 rounded-full border border-white/25 bg-black/40 px-3 py-1.5 text-xs font-bold tracking-[0.2em] text-white backdrop-blur-md transition-all hover:bg-black/65 sm:right-6 sm:top-6"
+        >
+          <SearchIcon className="h-3.5 w-3.5 shrink-0" />
+          {many && (
+            <span>
               {String(index + 1).padStart(2, "0")}
               <span className="opacity-50"> / {String(frames.length).padStart(2, "0")}</span>
-            </div>
+            </span>
+          )}
+        </button>
 
+        {many && (
+          <>
             {/* Arrows stay visible rather than appearing on hover. Hover-only
                 controls look tidy in a mock-up and cost real discoverability —
                 and they are invisible on touch, where most of this traffic is. */}
@@ -254,6 +282,21 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
           ))}
         </div>
       )}
+
+      {/* Controlled by this component's own frame index, so the viewer opens on
+          the photograph already on show and the hero is left on whichever one
+          you stopped at. Navigating inside it counts as taking over, which is
+          what stops the slideshow moving under you. */}
+      <PropertyGalleryLightbox
+        images={frames}
+        title={title}
+        index={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+        onIndexChange={(next) => {
+          setLightboxIndex(next);
+          go(next, true);
+        }}
+      />
     </section>
   );
 }

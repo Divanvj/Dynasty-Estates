@@ -1,0 +1,1515 @@
+[
+  {
+    "page": "/",
+    "stops": 40,
+    "withoutFocusRing": 1,
+    "focusedOffscreen": 0,
+    "possibleTrap": false,
+    "firstStops": [
+      "A:DynastyEstates",
+      "A:Buy",
+      "A:Rent",
+      "BUTTON:Sell your home",
+      "BUTTON:Tools",
+      "A:AI Search✦",
+      "BUTTON:Profile",
+      "A:Try AISearch→"
+    ],
+    "detail": [
+      {
+        "tag": "A",
+        "label": "DynastyEstates",
+        "href": "/",
+        "visible": true,
+        "rect": "29,57",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Buy",
+        "href": "/for-sale",
+        "visible": true,
+        "rect": "39,474",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Rent",
+        "href": "/to-rent",
+        "visible": true,
+        "rect": "39,539",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Sell your home",
+        "href": null,
+        "visible": true,
+        "rect": "39,611",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Tools",
+        "href": null,
+        "visible": true,
+        "rect": "39,766",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "AI Search✦",
+        "href": "/ai-search",
+        "visible": true,
+        "rect": "36,858",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Profile",
+        "href": null,
+        "visible": true,
+        "rect": "31,1256",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Try AISearch→",
+        "href": "/ai-search",
+        "visible": true,
+        "rect": "381,923",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "For Sale",
+        "href": null,
+        "visible": true,
+        "rect": "450,613",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "To Rent",
+        "href": null,
+        "visible": true,
+        "rect": "450,720",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "INPUT",
+        "label": "Search city or suburb...",
+        "href": null,
+        "visible": true,
+        "rect": "83,354",
+        "focusRing": false,
+        "outline": "none 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Search→",
+        "href": null,
+        "visible": true,
+        "rect": "71,979",
+        "focusRing": true,
+        "outline": "auto 3px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Close search",
+        "href": null,
+        "visible": true,
+        "rect": "75,1111",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Alberton",
+        "href": null,
+        "visible": true,
+        "rect": "168,289",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Amanzimtoti",
+        "href": null,
+        "visible": true,
+        "rect": "168,387",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Ballito",
+        "href": null,
+        "visible": true,
+        "rect": "168,511",
+        "focusRing": true,
+        "outline": "auto 3px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Barberton",
+        "href": null,
+        "visible": true,
+        "rect": "168,595",
+        "focusRing": true,
+        "outline": "auto 2px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Bathurst",
+        "href": null,
+        "visible": true,
+        "rect": "168,702",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Bedfordview",
+        "href": null,
+        "visible": true,
+        "rect": "168,800",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Bela-Bela",
+        "href": null,
+        "visible": true,
+        "rect": "168,923",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Benoni",
+        "href": null,
+        "visible": true,
+        "rect": "168,1030",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Bethlehem",
+        "href": null,
+        "visible": true,
+        "rect": "168,1118",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Bhisho",
+        "href": null,
+        "visible": true,
+        "rect": "168,680",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Bloemfontein",
+        "href": null,
+        "visible": true,
+        "rect": "168,767",
+        "focusRing": true,
+        "outline": "auto 2px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Boksburg",
+        "href": null,
+        "visible": true,
+        "rect": "168,896",
+        "focusRing": true,
+        "outline": "auto 2px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Brakpan",
+        "href": null,
+        "visible": true,
+        "rect": "168,1000",
+        "focusRing": true,
+        "outline": "auto 2px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Brits",
+        "href": null,
+        "visible": true,
+        "rect": "168,1097",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Bryanston",
+        "href": null,
+        "visible": true,
+        "rect": "168,669",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Calvinia",
+        "href": null,
+        "visible": true,
+        "rect": "168,778",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Camps Bay",
+        "href": null,
+        "visible": true,
+        "rect": "168,872",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Cape Town",
+        "href": null,
+        "visible": true,
+        "rect": "168,988",
+        "focusRing": true,
+        "outline": "auto 3px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Centurion",
+        "href": null,
+        "visible": true,
+        "rect": "168,1102",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Ceres",
+        "href": null,
+        "visible": true,
+        "rect": "168,1077",
+        "focusRing": true,
+        "outline": "auto 2px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "For Sale",
+        "href": null,
+        "visible": true,
+        "rect": "236,298",
+        "focusRing": true,
+        "outline": "auto 2px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "To Rent",
+        "href": null,
+        "visible": true,
+        "rect": "236,421",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "ResidentialHomes & Villas",
+        "href": null,
+        "visible": true,
+        "rect": "325,293",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "CommercialOffices & Retail",
+        "href": null,
+        "visible": true,
+        "rect": "325,509",
+        "focusRing": true,
+        "outline": "auto 2px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Farms & WineAgricultural Land",
+        "href": null,
+        "visible": true,
+        "rect": "325,724",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "DevelopmentsOff-Plan & New",
+        "href": null,
+        "visible": true,
+        "rect": "325,940",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "All Types",
+        "href": null,
+        "visible": true,
+        "rect": "455,293",
+        "focusRing": true,
+        "outline": "auto 2px"
+      }
+    ]
+  },
+  {
+    "page": "/for-sale",
+    "stops": 40,
+    "withoutFocusRing": 0,
+    "focusedOffscreen": 3,
+    "possibleTrap": false,
+    "firstStops": [
+      "A:DynastyEstates",
+      "A:Buy",
+      "A:Rent",
+      "BUTTON:Sell your home",
+      "BUTTON:Tools",
+      "A:AI Search✦",
+      "BUTTON:Profile",
+      "A:Home"
+    ],
+    "detail": [
+      {
+        "tag": "A",
+        "label": "DynastyEstates",
+        "href": "/",
+        "visible": true,
+        "rect": "29,69",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Buy",
+        "href": "/for-sale",
+        "visible": true,
+        "rect": "39,473",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Rent",
+        "href": "/to-rent",
+        "visible": true,
+        "rect": "39,540",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Sell your home",
+        "href": null,
+        "visible": true,
+        "rect": "39,611",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Tools",
+        "href": null,
+        "visible": true,
+        "rect": "39,767",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "AI Search✦",
+        "href": "/ai-search",
+        "visible": true,
+        "rect": "36,858",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Profile",
+        "href": null,
+        "visible": true,
+        "rect": "31,1244",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Home",
+        "href": "/",
+        "visible": true,
+        "rect": "122,52",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Browse National Rentals →",
+        "href": "/to-rent",
+        "visible": true,
+        "rect": "356,187",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "SARS Transfer Duty Calculator →",
+        "href": "/calculators/transfer-duty",
+        "visible": true,
+        "rect": "356,426",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Gauteng5 listingsExplore Gauteng homes",
+        "href": "/for-sale/gauteng",
+        "visible": true,
+        "rect": "493,52",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Western Cape2 listingsExplore Western ",
+        "href": "/for-sale/western-cape",
+        "visible": true,
+        "rect": "493,390",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "KwaZulu-Natal1 listingExplore KwaZulu-",
+        "href": "/for-sale/kwazulu-natal",
+        "visible": true,
+        "rect": "493,728",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Eastern Cape1 listingExplore Eastern C",
+        "href": "/for-sale/eastern-cape",
+        "visible": true,
+        "rect": "493,1066",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Free State1 listingExplore Free State ",
+        "href": "/for-sale/free-state",
+        "visible": true,
+        "rect": "591,52",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Limpopo0 listingsExplore Limpopo homes",
+        "href": "/for-sale/limpopo",
+        "visible": true,
+        "rect": "591,390",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Mpumalanga0 listingsExplore Mpumalanga",
+        "href": "/for-sale/mpumalanga",
+        "visible": true,
+        "rect": "591,728",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "North West0 listingsExplore North West",
+        "href": "/for-sale/north-west",
+        "visible": true,
+        "rect": "591,1066",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Northern Cape0 listingsExplore Norther",
+        "href": "/for-sale/northern-cape",
+        "visible": true,
+        "rect": "689,52",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Claremont Upper Courtyard Townhouse",
+        "href": "/property/oak-terrace",
+        "visible": true,
+        "rect": "1097,73",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Summerstrand Oceanfront Family Residen",
+        "href": "/property/summerstrand-beachfront",
+        "visible": true,
+        "rect": "586,526",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Woodland Hills Wildlife Estate Villa",
+        "href": "/property/bloemfontein-woodland-hills",
+        "visible": true,
+        "rect": "478,980",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Mount Street Enclosure Family Homestea",
+        "href": "/property/juniper-ridge",
+        "visible": true,
+        "rect": "923,73",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Silver Lakes Golf & Wildlife Fairway H",
+        "href": "/property/silver-lakes",
+        "visible": true,
+        "rect": "555,526",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Waterkloof Ridge Diplomatic Architectu",
+        "href": "/property/waterkloof-crest",
+        "visible": true,
+        "rect": "471,980",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Simbithi Eco-Estate Ocean-Breeze Pavil",
+        "href": "/property/simbithi-eco-estate",
+        "visible": true,
+        "rect": "922,73",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Morningside Sandhurst Border Grand Man",
+        "href": "/property/crescent-villa",
+        "visible": true,
+        "rect": "790,526",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Dainfern Golf Estate Riverfront Reside",
+        "href": "/property/dainfern-golf-estate",
+        "visible": true,
+        "rect": "879,980",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Steenberg Private Winelands & Golf Est",
+        "href": "/property/steenberg-golf-estate",
+        "visible": true,
+        "rect": "1297,73",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BODY",
+        "label": "(document)",
+        "visible": true,
+        "focusRing": true
+      },
+      {
+        "tag": "A",
+        "label": "DynastyEstates",
+        "href": "/",
+        "visible": false,
+        "rect": "-1762,69",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Buy",
+        "href": "/for-sale",
+        "visible": false,
+        "rect": "-1706,473",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Rent",
+        "href": "/to-rent",
+        "visible": false,
+        "rect": "-593,540",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Sell your home",
+        "href": null,
+        "visible": true,
+        "rect": "4,611",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Tools",
+        "href": null,
+        "visible": true,
+        "rect": "39,767",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "AI Search✦",
+        "href": "/ai-search",
+        "visible": true,
+        "rect": "36,858",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Profile",
+        "href": null,
+        "visible": true,
+        "rect": "31,1244",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Home",
+        "href": "/",
+        "visible": true,
+        "rect": "122,52",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Browse National Rentals →",
+        "href": "/to-rent",
+        "visible": true,
+        "rect": "356,187",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "SARS Transfer Duty Calculator →",
+        "href": "/calculators/transfer-duty",
+        "visible": true,
+        "rect": "356,426",
+        "focusRing": true,
+        "outline": "auto 1px"
+      }
+    ]
+  },
+  {
+    "page": "/property/oak-terrace",
+    "stops": 40,
+    "withoutFocusRing": 3,
+    "focusedOffscreen": 1,
+    "possibleTrap": false,
+    "firstStops": [
+      "A:DDynastyEstates",
+      "A:Search Catalogue",
+      "BUTTON:Print",
+      "BUTTON:Share",
+      "BUTTON:Save",
+      "BUTTON:Collection",
+      "DIV:02 / 02For SaleOn Show",
+      "BUTTON:Previous photograph"
+    ],
+    "detail": [
+      {
+        "tag": "A",
+        "label": "DDynastyEstates",
+        "href": "/",
+        "visible": true,
+        "rect": "29,57",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Search Catalogue",
+        "href": "/search",
+        "visible": true,
+        "rect": "31,739",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Print",
+        "href": null,
+        "visible": true,
+        "rect": "31,942",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Share",
+        "href": null,
+        "visible": true,
+        "rect": "31,1043",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Save",
+        "href": null,
+        "visible": true,
+        "rect": "31,1151",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Collection",
+        "href": null,
+        "visible": true,
+        "rect": "31,1253",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "DIV",
+        "label": "02 / 02For SaleOn Show SundaySouthern ",
+        "href": null,
+        "visible": true,
+        "rect": "111,33",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Previous photograph",
+        "href": null,
+        "visible": true,
+        "rect": "359,53",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Next photograph",
+        "href": null,
+        "visible": true,
+        "rect": "359,1343",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Show photograph 1 of 2",
+        "href": null,
+        "visible": true,
+        "rect": "667,53",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Show photograph 2 of 2",
+        "href": null,
+        "visible": true,
+        "rect": "667,159",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Photos (2)",
+        "href": null,
+        "visible": true,
+        "rect": "1543,70",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Floor Plan",
+        "href": null,
+        "visible": true,
+        "rect": "1148,182",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "3D Tour",
+        "href": null,
+        "visible": true,
+        "rect": "637,294",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "🗺️ Street View & Map",
+        "href": null,
+        "visible": true,
+        "rect": "564,70",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Expand",
+        "href": null,
+        "visible": true,
+        "rect": "585,65",
+        "focusRing": true,
+        "outline": "none 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Expand",
+        "href": null,
+        "visible": true,
+        "rect": "562,316",
+        "focusRing": true,
+        "outline": "none 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "-",
+        "href": null,
+        "visible": false,
+        "rect": "-59,895",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "INPUT",
+        "label": "",
+        "href": null,
+        "visible": true,
+        "rect": "279,935",
+        "focusRing": false,
+        "outline": "none 3px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+",
+        "href": null,
+        "visible": true,
+        "rect": "401,1351",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "-5% Offer",
+        "href": null,
+        "visible": true,
+        "rect": "474,895",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Asking Price (R 2.95M)",
+        "href": null,
+        "visible": true,
+        "rect": "474,989",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+5% Compete",
+        "href": null,
+        "visible": true,
+        "rect": "474,1163",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "-",
+        "href": null,
+        "visible": true,
+        "rect": "556,895",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "INPUT",
+        "label": "",
+        "href": null,
+        "visible": true,
+        "rect": "554,935",
+        "focusRing": false,
+        "outline": "none 3px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+",
+        "href": null,
+        "visible": true,
+        "rect": "556,1351",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "0% (100% Bond)",
+        "href": null,
+        "visible": true,
+        "rect": "596,895",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "10%",
+        "href": null,
+        "visible": true,
+        "rect": "596,1031",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "15%",
+        "href": null,
+        "visible": true,
+        "rect": "596,1087",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "20%",
+        "href": null,
+        "visible": true,
+        "rect": "596,1145",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "30%",
+        "href": null,
+        "visible": true,
+        "rect": "596,1206",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "-",
+        "href": null,
+        "visible": true,
+        "rect": "674,895",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "INPUT",
+        "label": "",
+        "href": null,
+        "visible": true,
+        "rect": "672,935",
+        "focusRing": false,
+        "outline": "none 3px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+",
+        "href": null,
+        "visible": true,
+        "rect": "674,1351",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Prime - 1% (10.75%)",
+        "href": null,
+        "visible": true,
+        "rect": "714,895",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Prime (11.75%)",
+        "href": null,
+        "visible": true,
+        "rect": "714,1049",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Prime + 1% (12.75%)",
+        "href": null,
+        "visible": true,
+        "rect": "714,1167",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "15 Yrs",
+        "href": null,
+        "visible": true,
+        "rect": "790,895",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "20 Yrs",
+        "href": null,
+        "visible": true,
+        "rect": "790,1019",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "25 Yrs",
+        "href": null,
+        "visible": true,
+        "rect": "790,1142",
+        "focusRing": true,
+        "outline": "auto 1px"
+      }
+    ]
+  },
+  {
+    "page": "/search",
+    "stops": 40,
+    "withoutFocusRing": 1,
+    "focusedOffscreen": 0,
+    "possibleTrap": false,
+    "firstStops": [
+      "A:DynastyEstates",
+      "A:Home",
+      "A:Collections",
+      "A:Compare",
+      "A:Saved Homes",
+      "BUTTON:Profile",
+      "BUTTON:For Sale",
+      "BUTTON:To Rent"
+    ],
+    "detail": [
+      {
+        "tag": "A",
+        "label": "DynastyEstates",
+        "href": "/",
+        "visible": true,
+        "rect": "33,53",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Home",
+        "href": "/",
+        "visible": true,
+        "rect": "47,929",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Collections",
+        "href": "/collections",
+        "visible": true,
+        "rect": "47,984",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Compare",
+        "href": "/compare",
+        "visible": true,
+        "rect": "47,1076",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "A",
+        "label": "Saved Homes",
+        "href": "/saved",
+        "visible": true,
+        "rect": "47,1153",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Profile",
+        "href": null,
+        "visible": true,
+        "rect": "35,1260",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "For Sale",
+        "href": null,
+        "visible": true,
+        "rect": "146,195",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "To Rent",
+        "href": null,
+        "visible": true,
+        "rect": "146,280",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Grid",
+        "href": null,
+        "visible": true,
+        "rect": "164,820",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "List",
+        "href": null,
+        "visible": true,
+        "rect": "164,892",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Map",
+        "href": null,
+        "visible": true,
+        "rect": "164,960",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Table",
+        "href": null,
+        "visible": true,
+        "rect": "164,1035",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Sort: Newest First",
+        "href": null,
+        "visible": true,
+        "rect": "161,1133",
+        "focusRing": true,
+        "outline": "none 2px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Reset All",
+        "href": null,
+        "visible": true,
+        "rect": "169,1318",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "For Sale",
+        "href": null,
+        "visible": true,
+        "rect": "257,613",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "To Rent",
+        "href": null,
+        "visible": true,
+        "rect": "257,720",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "INPUT",
+        "label": "Search by suburb, city, province or pr",
+        "href": null,
+        "visible": true,
+        "rect": "82,354",
+        "focusRing": false,
+        "outline": "none 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Search→",
+        "href": null,
+        "visible": true,
+        "rect": "71,979",
+        "focusRing": true,
+        "outline": "auto 2px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "Close search",
+        "href": null,
+        "visible": true,
+        "rect": "75,1111",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Alberton",
+        "href": null,
+        "visible": true,
+        "rect": "168,289",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Amanzimtoti",
+        "href": null,
+        "visible": true,
+        "rect": "168,387",
+        "focusRing": true,
+        "outline": "auto 2px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Ballito",
+        "href": null,
+        "visible": true,
+        "rect": "168,511",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Barberton",
+        "href": null,
+        "visible": true,
+        "rect": "168,595",
+        "focusRing": true,
+        "outline": "auto 2px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Bathurst",
+        "href": null,
+        "visible": true,
+        "rect": "168,702",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Bedfordview",
+        "href": null,
+        "visible": true,
+        "rect": "168,800",
+        "focusRing": true,
+        "outline": "auto 2px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Bela-Bela",
+        "href": null,
+        "visible": true,
+        "rect": "168,923",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Benoni",
+        "href": null,
+        "visible": true,
+        "rect": "168,1030",
+        "focusRing": true,
+        "outline": "auto 2px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Bethlehem",
+        "href": null,
+        "visible": true,
+        "rect": "168,1118",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Bhisho",
+        "href": null,
+        "visible": true,
+        "rect": "168,680",
+        "focusRing": true,
+        "outline": "auto 2px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Bloemfontein",
+        "href": null,
+        "visible": true,
+        "rect": "168,767",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Boksburg",
+        "href": null,
+        "visible": true,
+        "rect": "168,896",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Brakpan",
+        "href": null,
+        "visible": true,
+        "rect": "168,1000",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Brits",
+        "href": null,
+        "visible": true,
+        "rect": "168,1097",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Bryanston",
+        "href": null,
+        "visible": true,
+        "rect": "168,669",
+        "focusRing": true,
+        "outline": "auto 2px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Calvinia",
+        "href": null,
+        "visible": true,
+        "rect": "168,778",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Camps Bay",
+        "href": null,
+        "visible": true,
+        "rect": "168,872",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Cape Town",
+        "href": null,
+        "visible": true,
+        "rect": "168,988",
+        "focusRing": true,
+        "outline": "auto 2px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Centurion",
+        "href": null,
+        "visible": true,
+        "rect": "168,1102",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "+ Ceres",
+        "href": null,
+        "visible": true,
+        "rect": "168,1077",
+        "focusRing": true,
+        "outline": "auto 1px"
+      },
+      {
+        "tag": "BUTTON",
+        "label": "For Sale",
+        "href": null,
+        "visible": true,
+        "rect": "236,298",
+        "focusRing": true,
+        "outline": "auto 1px"
+      }
+    ]
+  }
+]

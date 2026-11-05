@@ -1,0 +1,178 @@
+[
+  {
+    "role": "seller",
+    "page": "seller-portal",
+    "viewport": "390x844",
+    "url": "/seller/portal",
+    "overflow": 0,
+    "docHeight": 1678,
+    "controls": 9,
+    "tapUnder44": 2,
+    "headings": [
+      "H1: Sell smarter, faster, and with more confidence",
+      "H2: Your listings",
+      "H2: Next steps"
+    ],
+    "guarded": false,
+    "text": "Sarah Jenkins (Seller Demo) Showing listings owned by demo.seller@dynastyestates-demo.com. SELLER PORTAL Sell smarter, faster, and with more confidence. Publish listing ACTIVE LISTINGS 0 DRAFTS 0 PROPERTY VIEWS 0 PORTFOLIO Your listings Manage Automation Test Listing - Rosebank R 24,500 / month SUBM"
+  },
+  {
+    "role": "seller",
+    "page": "seller-portal",
+    "viewport": "1440x900",
+    "url": "/seller/portal",
+    "overflow": 0,
+    "docHeight": 900,
+    "controls": 6,
+    "tapUnder44": 4,
+    "headings": [
+      "H1: Sell smarter, faster, and with more confidence",
+      "H2: Your listings",
+      "H2: Next steps"
+    ],
+    "guarded": false,
+    "text": "DYNASTY Estates Home Search Seller portal Showing listings owned by demo.seller@dynastyestates-demo.com. SELLER PORTAL Sell smarter, faster, and with more confidence. Publish listing ACTIVE LISTINGS 0 DRAFTS 0 PROPERTY VIEWS 0 PORTFOLIO Your listings Manage Automation Test Listing - Rosebank R 24,50"
+  },
+  {
+    "role": "seller",
+    "page": "new-listing",
+    "viewport": "390x844",
+    "url": "/seller/listings/new",
+    "overflow": 6,
+    "docHeight": 1179,
+    "controls": 23,
+    "tapUnder44": 4,
+    "headings": [
+      "H1: Property Headline & Location"
+    ],
+    "guarded": false,
+    "text": "Sarah Jenkins (Seller Demo) Portal STEP 1 OF 6 Quality 20% 1. Location 2. Specs 3. Features 4. Financials 5. Media & Copy 6. Preview & Submit STEP 1 OF 6 Property Headline & Location Establish the primary geographic identity for your property. LISTING TYPE / PURPOSE * To Rent Lease to verified tenan"
+  },
+  {
+    "role": "seller",
+    "page": "new-listing",
+    "viewport": "1440x900",
+    "url": "/seller/listings/new",
+    "overflow": 0,
+    "docHeight": 900,
+    "controls": 16,
+    "tapUnder44": 3,
+    "headings": [
+      "H1: Property Headline & Location"
+    ],
+    "guarded": false,
+    "text": "Back to seller portal STEP 1 OF 6 Quality 20% 1. Location 2. Specs 3. Features 4. Financials 5. Media & Copy 6. Preview & Submit STEP 1 OF 6 Property Headline & Location Establish the primary geographic identity for your property. LISTING TYPE / PURPOSE * To Rent Lease to verified tenants For Sale S"
+  },
+  {
+    "role": "seller",
+    "page": "agent-dashboard",
+    "viewport": "390x844",
+    "url": "/agent/dashboard",
+    "overflow": 0,
+    "docHeight": 968,
+    "controls": 9,
+    "tapUnder44": 3,
+    "headings": [
+      "H1: Agent Console Access"
+    ],
+    "guarded": true,
+    "text": "Sarah Jenkins (Seller Demo) ROLE RESTRICTED VIEW Agent Console Access You are currently viewing Dynasty Estates in Seller Mode. This feature is reserved for Agent or Admin accounts. Sign in with an account that holds that role to continue. Sign in as another account → ← Browse Catalogue Portal List "
+  },
+  {
+    "role": "seller",
+    "page": "agent-dashboard",
+    "viewport": "1440x900",
+    "url": "/agent/dashboard",
+    "overflow": 0,
+    "docHeight": 900,
+    "controls": 2,
+    "tapUnder44": 2,
+    "headings": [
+      "H1: Agent Console Access"
+    ],
+    "guarded": true,
+    "text": "ROLE RESTRICTED VIEW Agent Console Access You are currently viewing Dynasty Estates in Seller Mode. This feature is reserved for Agent or Admin accounts. Sign in with an account that holds that role to continue. Sign in as another account → ← Browse Catalogue"
+  },
+  {
+    "role": "seller",
+    "page": "saved",
+    "viewport": "390x844",
+    "url": "/saved",
+    "overflow": 0,
+    "docHeight": 1368,
+    "controls": 23,
+    "tapUnder44": 17,
+    "headings": [
+      "H1: Your Saved Residences",
+      "H3: The Vantage Executive Loft",
+      "H3: Brandwacht Winelands Garden Cottage"
+    ],
+    "guarded": false,
+    "text": "Sarah Jenkins (Seller Demo) Compare → Catalogue BUYER SHORTLIST Your Saved Residences Compare specs, review energy resilience, or add directly to your collaborative shortlists. R 13,500 / month Apartment The Vantage Executive Loft Bath Avenue, Rosebank, Johannesburg, Gauteng 1 Beds 1 Baths 55 m² Com"
+  },
+  {
+    "role": "seller",
+    "page": "saved",
+    "viewport": "1440x900",
+    "url": "/saved",
+    "overflow": 0,
+    "docHeight": 900,
+    "controls": 18,
+    "tapUnder44": 16,
+    "headings": [
+      "H1: Your Saved Residences",
+      "H3: The Vantage Executive Loft",
+      "H3: Brandwacht Winelands Garden Cottage"
+    ],
+    "guarded": false,
+    "text": "DYNASTY Estates Compare Shortlist → Browse Catalogue Sarah Jenkins (Seller Demo) BUYER SHORTLIST Your Saved Residences Compare specs, review energy resilience, or add directly to your collaborative shortlists. R 13,500 / month Apartment The Vantage Executive Loft Bath Avenue, Rosebank, Johannesburg,"
+  },
+  {
+    "role": "seller",
+    "page": "home",
+    "viewport": "390x844",
+    "url": "/",
+    "overflow": 0,
+    "docHeight": 7575,
+    "controls": 113,
+    "tapUnder44": 83,
+    "headings": [
+      "H1: Open the Door to Your Next ChapterOOOpppeeennn",
+      "H2: R 75,000 / month",
+      "H2: Curated Luxury Homes & Estates",
+      "H2: Claremont Upper Courtyard Townhouse",
+      "H2: Summerstrand Oceanfront Family Residence",
+      "H2: Woodland Hills Wildlife Estate Villa",
+      "H2: Mount Street Enclosure Family Homestead",
+      "H2: Silver Lakes Golf & Wildlife Fairway Haven",
+      "H2: Waterkloof Ridge Diplomatic Architectural Vill",
+      "H2: Simbithi Eco-Estate Ocean-Breeze Pavilion"
+    ],
+    "guarded": false,
+    "text": "Sarah Jenkins (Seller Demo) Open the Door to Your Next Chapter O O O p p p e e e n n n t t t h h h e e e D D D o o o o o o r r r t t t o o o Y Y Y o o o u u u r r r N N N e e e x x x t t t C C C h h h a a a p p p t t t e e e r r r AI Search: Search dream homes with AI Search Try AI → For Sale To Ren"
+  },
+  {
+    "role": "seller",
+    "page": "home",
+    "viewport": "1440x900",
+    "url": "/",
+    "overflow": 0,
+    "docHeight": 6666,
+    "controls": 127,
+    "tapUnder44": 117,
+    "headings": [
+      "H1: Where Legacies Are Founded and Futures Flouris",
+      "H2: R 6,950,000",
+      "H2: Curated Luxury Homes & Estates",
+      "H2: Claremont Upper Courtyard Townhouse",
+      "H2: Summerstrand Oceanfront Family Residence",
+      "H2: Woodland Hills Wildlife Estate Villa",
+      "H2: Mount Street Enclosure Family Homestead",
+      "H2: Silver Lakes Golf & Wildlife Fairway Haven",
+      "H2: Waterkloof Ridge Diplomatic Architectural Vill",
+      "H2: Simbithi Eco-Estate Ocean-Breeze Pavilion"
+    ],
+    "guarded": false,
+    "text": "DYNASTY Estates Home Buy Rent Sell Tools AI Search ✦ Sarah Jenkins (Seller Demo) FX: Aurora Silk Where Legacies Are Founded and Futures Flourish W W W h h h e e e r r r e e e L L L e e e g g g a a a c c c i i i e e e s s s A A A r r r e e e F F F o o o u u u n n n d d d e e e d d d a a a n n n d d d"
+  }
+]

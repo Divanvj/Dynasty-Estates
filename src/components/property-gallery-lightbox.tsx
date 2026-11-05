@@ -1,120 +1,134 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ArrowLeftIcon, ArrowRightIcon, SearchIcon, XMarkIcon } from "@/components/icons";
+import { useEffect } from "react";
+import { ArrowLeftIcon, ArrowRightIcon, XMarkIcon } from "@/components/icons";
 
+type Props = {
+  images: string[];
+  title: string;
+  /** The photograph on show. `null` closes the lightbox. */
+  index: number | null;
+  onClose: () => void;
+  onIndexChange: (next: number) => void;
+};
+
+/**
+ * The full-screen photograph viewer.
+ *
+ * This used to own a thumbnail grid as well, and that grid was the only way
+ * into the viewer in the whole app — it lived in the detail page's "Photos"
+ * media tab, which repeated a hero that already has a rail, a counter, arrows
+ * and swipe, for galleries that run to two or three pictures. The tab is gone
+ * and the viewer opens from the hero instead, so what is left here is the
+ * viewer itself.
+ *
+ * Controlled rather than self-contained: the hero passes its own frame index
+ * in, so opening the viewer shows the photograph you were already looking at
+ * and closing it leaves the hero on the one you stopped at.
+ */
 export default function PropertyGalleryLightbox({
   images,
   title,
-}: {
-  images: string[];
-  title: string;
-}) {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  index,
+  onClose,
+  onIndexChange,
+}: Props) {
+  const open = index !== null && images.length > 0;
+
+  // Scroll lock, restoring whatever was there rather than blanking it — the
+  // pattern expandable-search-panel.tsx and ui/sheet.tsx both use.
+  //
+  // Deliberately its own effect, keyed only on `open`. Folded in with the key
+  // handler below it would re-run on every render of the caller, because the
+  // callbacks a parent passes are usually fresh each time, and it would then
+  // capture its own "previous" value and restore the lock instead of the page.
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
 
   useEffect(() => {
+    if (!open || index === null) return;
+
     function handleKeyDown(e: KeyboardEvent) {
-      if (activeIndex === null) return;
-      if (e.key === "Escape") setActiveIndex(null);
-      if (e.key === "ArrowRight") {
-        setActiveIndex((prev) => (prev !== null ? (prev + 1) % images.length : null));
-      }
-      if (e.key === "ArrowLeft") {
-        setActiveIndex((prev) => (prev !== null ? (prev - 1 + images.length) % images.length : null));
-      }
+      if (index === null) return;
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight") onIndexChange((index + 1) % images.length);
+      if (e.key === "ArrowLeft") onIndexChange((index - 1 + images.length) % images.length);
     }
+
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [activeIndex, images.length]);
+  }, [open, index, images.length, onClose, onIndexChange]);
+
+  if (!open || index === null) return null;
 
   return (
-    <div>
-      {/* Thumbnail Gallery Grid */}
-      <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
-        {images.map((image, index) => (
-          // print-keep: this button is the photograph. Print hides buttons by
-          // default, and the picture is a background image on the div below,
-          // so without the opt-out the printed sheet loses the gallery grid.
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${title} — full-screen photographs`}
+      className="fixed inset-0 z-[9995] flex items-center justify-center bg-black/90 p-3 backdrop-blur-md sm:p-4"
+      onClick={onClose}
+    >
+      <div
+        className="relative max-h-[94dvh] w-full max-w-5xl overflow-hidden rounded-2xl border border-white/20 bg-slate-950 p-2 shadow-2xl sm:rounded-3xl dark:border-white/10 dark:bg-surface-panel"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Top Toolbar */}
+        <div className="flex items-center justify-between gap-3 px-2 py-2 text-white sm:px-4 sm:py-3">
+          <div className="min-w-0">
+            <p className="truncate text-xs font-bold text-slate-200">{title}</p>
+            <p className="text-xs text-slate-400 dark:text-slate-400">
+              Photo {index + 1} of {images.length}
+            </p>
+          </div>
           <button
-            key={index}
             type="button"
-            onClick={() => setActiveIndex(index)}
-            className="print-keep group relative h-44 overflow-hidden rounded-control border border-white/80 bg-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer dark:border-white/10"
+            onClick={onClose}
+            aria-label="Close photographs"
+            className="tap-44 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 text-sm font-bold text-white hover:bg-white/30 cursor-pointer dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:hover:bg-[#102427] dark:hover:text-emerald-300"
           >
-            <div
-              className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-              style={{ backgroundImage: `url(${image})` }}
-            />
-            <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/25" />
-            <span className="absolute bottom-2.5 right-2.5 inline-flex items-center gap-1 rounded-full bg-black/60 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity">
-              <SearchIcon className="h-3 w-3" />
-              <span>Expand</span>
-            </span>
+            <XMarkIcon className="h-4 w-4" />
           </button>
-        ))}
-      </div>
+        </div>
 
-      {/* Full-Screen Lightbox Modal */}
-      {activeIndex !== null && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label="Full-screen image gallery"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-md"
-          onClick={() => setActiveIndex(null)}
-        >
-          <div
-            className="relative max-h-[90vh] max-w-5xl overflow-hidden rounded-3xl border border-white/20 bg-slate-950 p-2 shadow-2xl dark:border-white/10 dark:bg-surface-panel"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Top Toolbar */}
-            <div className="flex items-center justify-between px-4 py-3 text-white">
-              <div>
-                <p className="text-xs font-bold text-slate-200">{title}</p>
-                <p className="text-xs text-slate-400 dark:text-slate-400">
-                  Photo {activeIndex + 1} of {images.length}
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setActiveIndex(null)}
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-sm font-bold text-white hover:bg-white/30 cursor-pointer dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:hover:bg-[#102427] dark:hover:text-emerald-300"
-              >
-                <XMarkIcon className="h-4 w-4" />
-              </button>
-            </div>
+        {/* Display Image */}
+        <div className="relative flex h-[62dvh] w-full items-center justify-center overflow-hidden rounded-xl bg-black sm:rounded-2xl">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={images[index]}
+            alt={`${title} - Photo ${index + 1}`}
+            className="max-h-full max-w-full object-contain"
+          />
+        </div>
 
-            {/* Display Image */}
-            <div className="relative flex h-[65vh] w-[80vw] max-w-4xl items-center justify-center overflow-hidden rounded-2xl bg-black">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={images[activeIndex]}
-                alt={`${title} - Photo ${activeIndex + 1}`}
-                className="max-h-full max-w-full object-contain"
-              />
-            </div>
-
-            {/* Navigation Buttons */}
+        {/* Navigation. Only worth drawing when there is somewhere to go. */}
+        {images.length > 1 && (
+          <>
             <button
               type="button"
               aria-label="Previous photo"
-              onClick={() => setActiveIndex((prev) => (prev !== null ? (prev - 1 + images.length) % images.length : null))}
-              className="absolute left-6 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-black/70 text-white shadow-lg hover:bg-black cursor-pointer dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:hover:bg-emerald-600 dark:hover:shadow-[0_0_12px_rgba(16,185,129,0.35)] transition-all"
+              onClick={() => onIndexChange((index - 1 + images.length) % images.length)}
+              className="tap-44 absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/70 text-white shadow-lg hover:bg-black cursor-pointer sm:left-6 dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:hover:bg-emerald-600 dark:hover:shadow-[0_0_12px_rgba(16,185,129,0.35)] transition-all"
             >
               <ArrowLeftIcon className="h-5 w-5" />
             </button>
             <button
               type="button"
               aria-label="Next photo"
-              onClick={() => setActiveIndex((prev) => (prev !== null ? (prev + 1) % images.length : null))}
-              className="absolute right-6 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-black/70 text-white shadow-lg hover:bg-black cursor-pointer dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:hover:bg-emerald-600 dark:hover:shadow-[0_0_12px_rgba(16,185,129,0.35)] transition-all"
+              onClick={() => onIndexChange((index + 1) % images.length)}
+              className="tap-44 absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/70 text-white shadow-lg hover:bg-black cursor-pointer sm:right-6 dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:hover:bg-emerald-600 dark:hover:shadow-[0_0_12px_rgba(16,185,129,0.35)] transition-all"
             >
               <ArrowRightIcon className="h-5 w-5" />
             </button>
-          </div>
-        </div>
-      )}
+          </>
+        )}
+      </div>
     </div>
   );
 }
-

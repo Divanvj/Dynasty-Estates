@@ -13,6 +13,7 @@ import PropertyListCard from "@/components/property-list-card";
 import PropertyCompactTable from "@/components/property-compact-table";
 import PropertySplitMapView from "@/components/property-split-map-view";
 import CustomSelect from "@/components/custom-select";
+import { featureLabel } from "@/lib/feature-labels";
 import { LG_QUERY, useMediaQuery } from "@/lib/use-media-query";
 import {
   AreaIcon,
@@ -757,7 +758,7 @@ function SearchContent() {
                       <div className="mt-3.5 flex flex-wrap gap-1.5">
                         {property.features?.slice(0, 3).map((f) => (
                           <span key={f} className="rounded-md bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 text-xs font-semibold text-emerald-800 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-500/20">
-                            {f.replace("_", " ")}
+                            {featureLabel(f)}
                           </span>
                         ))}
                         {(property.features?.length ?? 0) > 3 && (

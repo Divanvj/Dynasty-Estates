@@ -1,0 +1,112 @@
+[
+  {
+    "page": "home",
+    "viewport": "390x844",
+    "error": null,
+    "violations": []
+  },
+  {
+    "page": "home",
+    "viewport": "1440x900",
+    "error": null,
+    "violations": []
+  },
+  {
+    "page": "for-sale",
+    "viewport": "390x844",
+    "error": null,
+    "violations": []
+  },
+  {
+    "page": "for-sale",
+    "viewport": "1440x900",
+    "error": null,
+    "violations": []
+  },
+  {
+    "page": "search",
+    "viewport": "390x844",
+    "error": null,
+    "violations": []
+  },
+  {
+    "page": "search",
+    "viewport": "1440x900",
+    "error": null,
+    "violations": []
+  },
+  {
+    "page": "property",
+    "viewport": "390x844",
+    "error": null,
+    "violations": [
+      {
+        "id": "landmark-complementary-is-top-level",
+        "impact": "moderate",
+        "help": "Aside should not be contained in another landmark",
+        "nodes": 1,
+        "sample": "<aside class=\"space-y-6\">",
+        "target": "aside"
+      }
+    ]
+  },
+  {
+    "page": "property",
+    "viewport": "1440x900",
+    "error": null,
+    "violations": [
+      {
+        "id": "button-name",
+        "impact": "critical",
+        "help": "Buttons must have discernible text",
+        "nodes": 1,
+        "sample": "<button type=\"button\" role=\"switch\" aria-checked=\"false\" class=\"relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-tra",
+        "target": ".h-6"
+      },
+      {
+        "id": "landmark-complementary-is-top-level",
+        "impact": "moderate",
+        "help": "Aside should not be contained in another landmark",
+        "nodes": 1,
+        "sample": "<aside class=\"space-y-6\">",
+        "target": "aside"
+      }
+    ]
+  },
+  {
+    "page": "insights",
+    "viewport": "1440x900",
+    "error": null,
+    "violations": []
+  },
+  {
+    "page": "agents",
+    "viewport": "1440x900",
+    "error": null,
+    "violations": [
+      {
+        "id": "heading-order",
+        "impact": "moderate",
+        "help": "Heading levels should only increase by one",
+        "nodes": 1,
+        "sample": "<h3 class=\"text-base font-bold text-slate-950 dark:text-white\"><a class=\"hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors\" href=\"/",
+        "target": "article:nth-child(1) > div:nth-child(1) > .gap-3.items-center.flex > div:nth-child(2) > h3"
+      }
+    ]
+  },
+  {
+    "page": "calculators",
+    "viewport": "1440x900",
+    "error": null,
+    "violations": [
+      {
+        "id": "label",
+        "impact": "critical",
+        "help": "Form elements must have labels",
+        "nodes": 2,
+        "sample": "<input type=\"number\" min=\"0\" step=\"100\" class=\"w-full rounded-xl border border-slate-300 bg-white px-3 py-1.5 font-bold text-slate-900 dark:border-whi",
+        "target": "input[value=\"2400\"]"
+      }
+    ]
+  }
+]

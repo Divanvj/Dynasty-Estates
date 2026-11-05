@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import PropertyGalleryLightbox from "@/components/property-gallery-lightbox";
 import VirtualTour3DViewer from "@/components/virtual-tour-3d-viewer";
 import { SparklesIcon } from "@/components/icons";
 
@@ -24,7 +23,18 @@ export default function PropertyMediaTabs({
   erfSize,
   location,
 }: PropertyMediaTabsProps) {
-  const [activeTab, setActiveTab] = useState<"photos" | "floorplan" | "virtual-tour" | "street-view">("photos");
+  /*
+    No "photos" tab any more. It showed a grid of the same pictures as the hero
+    at the top of this page, which has a rail, a counter, arrows and swipe, for
+    galleries that run to two or three photographs — so it was a second gallery
+    below the first, and it pushed the floor plan and the tour out of sight.
+
+    The full-screen viewer it used to own has moved onto the hero, where the
+    frame counter now opens it. Printing changes with this: the floor plan is
+    the default panel now, so that is what a printed listing carries under the
+    hero rather than the thumbnail grid.
+  */
+  const [activeTab, setActiveTab] = useState<"floorplan" | "virtual-tour" | "street-view">("floorplan");
   const [mapMode, setMapMode] = useState<"map" | "street">("street");
 
   const defaultFloorPlan =
@@ -39,17 +49,6 @@ export default function PropertyMediaTabs({
       {/* Media Tab Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/70 dark:border-white/10 pb-4 mb-6">
         <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 dark:bg-surface-ink/80 border border-slate-200/80 dark:border-white/10 w-fit">
-          <button
-            type="button"
-            onClick={() => setActiveTab("photos")}
-            className={`rounded-xl px-4 py-2 text-xs font-bold transition-all cursor-pointer ${
-              activeTab === "photos"
-                ? "bg-white dark:bg-emerald-600 text-slate-900 dark:text-white shadow-sm dark:border dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-            }`}
-          >
-            Photos ({gallery.length})
-          </button>
           <button
             type="button"
             onClick={() => setActiveTab("floorplan")}
@@ -87,20 +86,14 @@ export default function PropertyMediaTabs({
         </div>
 
         {/* An instruction about clicking is meaningless on paper. */}
-        <div className="no-print text-xs text-slate-500 font-medium dark:text-slate-400">
-          {activeTab === "photos" && "Click any photo to open full-screen lightbox"}
+        <div className="no-print hidden text-xs text-slate-500 font-medium sm:block dark:text-slate-400">
           {activeTab === "floorplan" && `Architectural Under-Roof Layout · ${area} ${erfSize ? `(Erf ${erfSize})` : ""}`}
           {activeTab === "virtual-tour" && "Interactive 3D Walkthrough Experience"}
           {activeTab === "street-view" && "Google Maps & 360° Street View Inspection"}
         </div>
       </div>
 
-      {/* Tab 1: Photos */}
-      {activeTab === "photos" && (
-        <PropertyGalleryLightbox images={gallery} title={title} />
-      )}
-
-      {/* Tab 2: Floor Plan */}
+      {/* Tab 1: Floor Plan */}
       {activeTab === "floorplan" && (
         <div className="space-y-4 animate-fade-in">
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-950/5 p-2 sm:p-4 text-center dark:border-white/10 dark:bg-surface-ink/60">
@@ -127,7 +120,7 @@ export default function PropertyMediaTabs({
         </div>
       )}
 
-      {/* Tab 3: 3D Virtual Tour */}
+      {/* Tab 2: 3D Virtual Tour */}
       {activeTab === "virtual-tour" && (
         <div className="space-y-4 animate-fade-in">
           <VirtualTour3DViewer
@@ -144,18 +137,14 @@ export default function PropertyMediaTabs({
                 <strong>Spatial Navigation Active:</strong> Click and drag to pan 360°, switch room zones, or click <strong>Dollhouse</strong> for isometric cutaway.
               </span>
             </div>
-            <button
-              type="button"
-              onClick={() => setActiveTab("photos")}
-              className="rounded-xl border border-slate-200 bg-white px-3.5 py-1.5 font-bold text-slate-700 hover:text-slate-950 transition-colors shadow-2xs shrink-0 cursor-pointer dark:bg-surface-ink/80 dark:border-white/10 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:text-white"
-            >
-              ← Back to Gallery ({gallery.length})
-            </button>
+            {/* No "Back to Gallery" button. It returned to the Photos tab,
+                which no longer exists, and the tab row is three lines above
+                it either way. */}
           </div>
         </div>
       )}
 
-      {/* Tab 4: Google Street View & Map */}
+      {/* Tab 3: Google Street View & Map */}
       {activeTab === "street-view" && (
         <div className="space-y-4 animate-fade-in">
           {/* Sub-toolbar: Switch between Street View and Satellite/Map, with clear Back buttons */}
@@ -198,13 +187,7 @@ export default function PropertyMediaTabs({
             </div>
 
             <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setActiveTab("photos")}
-                className="rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-surface-ink/80 px-3 py-1.5 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:bg-surface-panel dark:hover:text-white transition-colors shadow-2xs cursor-pointer"
-              >
-                ← Back to Photos
-              </button>
+              {/* "Back to Photos" went with the Photos tab. */}
               <a
                 href={`https://www.google.com/maps/search/?api=1&query=${streetViewQuery}`}
                 target="_blank"

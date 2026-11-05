@@ -1,0 +1,116 @@
+{
+  "H8": {
+    "cardsSampled": 4,
+    "cards": [
+      {
+        "words": 20,
+        "priceMentions": 1,
+        "prices": [
+          "R 2,950,000145 "
+        ],
+        "ctaCount": 1,
+        "ctaLabels": [
+          "Claremont Upper Courtyard "
+        ],
+        "chipCount": 2,
+        "chipLabels": [
+          "Townhouse",
+          "On Show Sunday"
+        ]
+      },
+      {
+        "words": 16,
+        "priceMentions": 1,
+        "prices": [
+          "R 3,650,000380 "
+        ],
+        "ctaCount": 1,
+        "ctaLabels": [
+          "Summerstrand Oceanfront Fa"
+        ],
+        "chipCount": 1,
+        "chipLabels": [
+          "House"
+        ]
+      },
+      {
+        "words": 21,
+        "priceMentions": 1,
+        "prices": [
+          "R 4,150,000440 "
+        ],
+        "ctaCount": 1,
+        "ctaLabels": [
+          "Woodland Hills Wildlife Es"
+        ],
+        "chipCount": 1,
+        "chipLabels": [
+          "Estate Home"
+        ]
+      },
+      {
+        "words": 20,
+        "priceMentions": 1,
+        "prices": [
+          "R 4,950,000460 "
+        ],
+        "ctaCount": 1,
+        "ctaLabels": [
+          "Mount Street Enclosure Fam"
+        ],
+        "chipCount": 2,
+        "chipLabels": [
+          "House",
+          "On Show Sunday"
+        ]
+      }
+    ]
+  },
+  "H4": {
+    "hasSpotlightLabel": false,
+    "perMonthPricesOnForSalePage": [],
+    "monthTokens": [],
+    "heading": "Properties & Luxury Homes For Sale in South Africa"
+  },
+  "H4_home": {
+    "spotlightContext": "SPOTLIGHT WATERKLOOF 02 / 05 View this residence RIGEL AVENUE, WATERKLOOF RIDGE, PRETORIA, GAUTENG R 6,950,000 Waterkloof Ridge Diplomatic Architectural Villa 5 Bedrooms • 4.5 Bathrooms • 4 Garages • 580 m² View this residence → PROPERTIES ",
+    "perMonthMentions": []
+  },
+  "H10_H11": {
+    "tabs": [
+      "Photos (2)",
+      "Floor Plan",
+      "3D Tour",
+      "🗺️ Street View & Map"
+    ],
+    "contactCtaCount": 4,
+    "contactCtas": [
+      "WhatsApp",
+      "Call",
+      "Schedule Private Viewing",
+      "Message Practitioner"
+    ],
+    "trueCostControlCount": 29,
+    "trueCostControls": [
+      "-",
+      "range",
+      "+",
+      "-5% Offer",
+      "Asking Price (R 2.95",
+      "+5% Compete",
+      "-",
+      "range",
+      "+",
+      "0% (100% Bond)",
+      "10%",
+      "15%",
+      "20%",
+      "30%",
+      "-",
+      "range"
+    ],
+    "h1": "Claremont Upper Courtyard Townhouse",
+    "h1TextRepeats": 1,
+    "priceMentions": 13
+  }
+}

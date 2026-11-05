@@ -1,0 +1,8255 @@
+[
+  {
+    "site": "property24",
+    "page": "home",
+    "url": "https://www.property24.com/",
+    "viewport": {
+      "w": 390,
+      "h": 2684
+    },
+    "requests": 69,
+    "totalBytes": 2609891,
+    "imageBytes": 490930,
+    "consoleErrors": [],
+    "navErr": null,
+    "measureErr": null,
+    "title": "Property for Sale: Houses for sale: Property24",
+    "metaDescription": "The first place to start your property search with over 200 000 houses, private property, flats, farms, repossessed property for sale & to rent by estate agents. Property24.com",
+    "ogImage": "https://www.property24.com/Content/images/Optimized/Logos/property24_logo_social_media_share.png?z=e2db65075e854545643",
+    "docHeight": 5024,
+    "horizontalOverflow": 850,
+    "colours": {
+      "background": [
+        [
+          "#ffffff",
+          8
+        ],
+        [
+          "#0f0c36 @0.9",
+          6
+        ],
+        [
+          "#1a72db",
+          4
+        ],
+        [
+          "#0d63c9",
+          3
+        ],
+        [
+          "#f6f7f9",
+          2
+        ],
+        [
+          "#0f0c36",
+          2
+        ],
+        [
+          "#f04432",
+          1
+        ],
+        [
+          "#5692d9",
+          1
+        ]
+      ],
+      "text": [
+        [
+          "#ffffff",
+          262
+        ],
+        [
+          "#0f0c36",
+          166
+        ],
+        [
+          "#0d63c9",
+          43
+        ],
+        [
+          "#9ea5b1",
+          11
+        ],
+        [
+          "#515b6d",
+          10
+        ],
+        [
+          "#808080",
+          1
+        ]
+      ],
+      "border": [
+        [
+          "#0d63c9",
+          6
+        ],
+        [
+          "#ffffff @0.3",
+          4
+        ],
+        [
+          "#d8dce3",
+          3
+        ],
+        [
+          "#f04432",
+          3
+        ],
+        [
+          "#ffffff",
+          2
+        ]
+      ]
+    },
+    "shadows": [
+      [
+        "rgba(0, 0, 0, 0.2) 0px 5px 10px 0px",
+        1
+      ],
+      [
+        "rgba(0, 0, 0, 0.1) 0px 14px 24px 0px",
+        1
+      ],
+      [
+        "rgba(0, 0, 0, 0.25) 0px 0px 25px 0px",
+        1
+      ]
+    ],
+    "radii": [
+      [
+        "8px",
+        25
+      ],
+      [
+        "6px",
+        7
+      ],
+      [
+        "20px",
+        6
+      ],
+      [
+        "10px",
+        6
+      ],
+      [
+        "2px 2px 0px 0px",
+        3
+      ],
+      [
+        "12px",
+        2
+      ],
+      [
+        "2px 0px 0px 2px",
+        1
+      ]
+    ],
+    "typography": {
+      "h1": {
+        "family": "P24-SourceSans",
+        "size": "54px",
+        "weight": "400",
+        "lineHeight": "62px",
+        "letterSpacing": "normal",
+        "color": "#ffffff",
+        "sample": "Find Property for Sale"
+      },
+      "h2": {
+        "family": "P24-SourceSans",
+        "size": "30px",
+        "weight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "#ffffff",
+        "sample": "Property for Sale in Limpopo"
+      },
+      "h3": {
+        "family": "P24-SourceSans",
+        "size": "30px",
+        "weight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "#0f0c36",
+        "sample": "Discover all things property"
+      },
+      "body": null,
+      "button": {
+        "family": "P24-SourceSans",
+        "size": "15px",
+        "weight": "400",
+        "lineHeight": "22px",
+        "letterSpacing": "normal",
+        "color": "#ffffff",
+        "sample": "Search"
+      },
+      "link": null
+    },
+    "layout": {
+      "mainMaxWidth": "none",
+      "mainWidth": 390,
+      "mainPadding": "0px",
+      "headerHeight": 33,
+      "bottomNavHeight": null,
+      "grids": [
+        {
+          "cols": "none",
+          "gap": "normal"
+        }
+      ]
+    },
+    "motion": [
+      [
+        "0.2s / ease",
+        56
+      ],
+      [
+        "0.5s / ease",
+        8
+      ],
+      [
+        "0.05s / linear",
+        6
+      ],
+      [
+        "0.8s / ease",
+        6
+      ],
+      [
+        "1s / ease",
+        1
+      ],
+      [
+        "0.2s / linear",
+        1
+      ],
+      [
+        "anim fa-spin 2s",
+        1
+      ]
+    ],
+    "tapTargetsUnder44": 107,
+    "tapTargetSamples": [
+      {
+        "w": 180,
+        "h": 33,
+        "tag": "a",
+        "label": ""
+      },
+      {
+        "w": 121,
+        "h": 40,
+        "tag": "a",
+        "label": "List Privately"
+      },
+      {
+        "w": 79,
+        "h": 38,
+        "tag": "a",
+        "label": "Sign in"
+      },
+      {
+        "w": 400,
+        "h": 29,
+        "tag": "input",
+        "label": ""
+      },
+      {
+        "w": 75,
+        "h": 42,
+        "tag": "a",
+        "label": "Buying"
+      },
+      {
+        "w": 81,
+        "h": 41,
+        "tag": "a",
+        "label": "Renting"
+      },
+      {
+        "w": 75,
+        "h": 41,
+        "tag": "a",
+        "label": "Selling"
+      },
+      {
+        "w": 116,
+        "h": 39,
+        "tag": "a",
+        "label": "Sign Up Now"
+      },
+      {
+        "w": 139,
+        "h": 39,
+        "tag": "a",
+        "label": "View Sold Prices"
+      },
+      {
+        "w": 172,
+        "h": 39,
+        "tag": "a",
+        "label": "View Property Guides"
+      },
+      {
+        "w": 67,
+        "h": 21,
+        "tag": "a",
+        "label": "Polokwane"
+      },
+      {
+        "w": 57,
+        "h": 21,
+        "tag": "a",
+        "label": "Bela Bela"
+      }
+    ],
+    "controlsTotal": 140,
+    "headings": [
+      {
+        "level": 1,
+        "text": "Find Property for Sale"
+      },
+      {
+        "level": 3,
+        "text": "Discover all things property"
+      },
+      {
+        "level": 4,
+        "text": "Property Alerts"
+      },
+      {
+        "level": 4,
+        "text": "Sold Prices"
+      },
+      {
+        "level": 4,
+        "text": "Looking to buy?"
+      },
+      {
+        "level": 2,
+        "text": "Property for Sale in Limpopo"
+      },
+      {
+        "level": 4,
+        "text": "News"
+      },
+      {
+        "level": 4,
+        "text": "Advice"
+      },
+      {
+        "level": 2,
+        "text": "Property24 on Mobile and Tablet"
+      },
+      {
+        "level": 3,
+        "text": "We're SA's number one property website"
+      },
+      {
+        "level": 3,
+        "text": "Find a trusted Estate Agent in your area"
+      },
+      {
+        "level": 4,
+        "text": "Cookie Notice"
+      }
+    ],
+    "headingOrderJumps": 2,
+    "images": [
+      {
+        "natural": "167x30",
+        "shown": "180x32",
+        "src": "w.property24.com/Content/images/Optimized/Logos/property24_logo.svg?z=2cd369fe7776a4beed13",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "1920x350",
+        "shown": "1240x350",
+        "src": ".com/Content/images/Optimized/Home/Converted/HeroImage-Option3.webp?z=be398bc97f3da06e1fe0",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "24x24",
+        "shown": "24x24",
+        "src": ".property24.com/Content/images/Optimized/Icons/icon_search_find.svg?z=ac791261c8934b51edb4",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "21x20",
+        "shown": "21x20",
+        "src": "www.property24.com/Content/images/Optimized/Icons/icon_show_map.svg?z=a2de222b69734f9b24d0",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "12x6",
+        "shown": "12x6",
+        "src": "w.property24.com/Content/images/Optimized/Icons/icon_down_arrow.svg?z=b5f169ef58fd67f8a52d",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "12x6",
+        "shown": "12x6",
+        "src": "w.property24.com/Content/images/Optimized/Icons/icon_down_arrow.svg?z=b5f169ef58fd67f8a52d",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "12x6",
+        "shown": "12x6",
+        "src": "w.property24.com/Content/images/Optimized/Icons/icon_down_arrow.svg?z=b5f169ef58fd67f8a52d",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "12x6",
+        "shown": "12x6",
+        "src": "w.property24.com/Content/images/Optimized/Icons/icon_down_arrow.svg?z=b5f169ef58fd67f8a52d",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "24x24",
+        "shown": "24x24",
+        "src": "//www.property24.com/Content/images/Optimized/Icons/icon_filter.svg?z=94e7b766597504d40ff1",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "160x160",
+        "shown": "160x160",
+        "src": "w.property24.com/Content/images/Optimized/Marketing/icon_buying.svg?z=64ad5a590fa8dd776f71",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "160x160",
+        "shown": "160x160",
+        "src": "perty24.com/Content/images/Optimized/Marketing/icon_sold_prices.svg?z=9db217a6e06017487ff4",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "160x160",
+        "shown": "160x160",
+        "src": "erty24.com/Content/images/Optimized/Marketing/icon_buyers_guide.svg?z=05aa8d4d3e6bdf6387ca",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "20x20",
+        "shown": "20x20",
+        "src": "//www.property24.com/Content/images/Optimized/Icons/icon_trends.svg?z=df8ca9dcac51e5a2223a",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "507x284",
+        "shown": "507x284",
+        "src": "https://images.prop24.com/376833450/Crop507x284",
+        "loading": "auto",
+        "alt": "MISSING"
+      }
+    ],
+    "imagesMissingAlt": 7,
+    "perf": {
+      "lcp": 4272,
+      "cls": 0,
+      "shifts": 0,
+      "longTasks": 20
+    },
+    "bodyTextSample": "Buy Rent Sell Commercial Calculators Advice List Privately Sign in Find Property for Sale Buy Rent Developments Agents Sold Prices Map Search Property Type Min Price Max Price Bedrooms Filters Discover all things property Buying Renting Selling Property Alerts Sign up for an account and receive property alerts when new properties match your search criteria. Sign Up Now Sold Prices Find the value o"
+  },
+  {
+    "site": "property24",
+    "page": "home",
+    "url": "https://www.property24.com/",
+    "viewport": {
+      "w": 1440,
+      "h": 900
+    },
+    "requests": 132,
+    "totalBytes": 4395093,
+    "imageBytes": 412646,
+    "consoleErrors": [
+      "Not signed in with the identity provider."
+    ],
+    "navErr": null,
+    "measureErr": null,
+    "title": "Property for Sale: Houses for sale: Property24",
+    "metaDescription": "The first place to start your property search with over 200 000 houses, private property, flats, farms, repossessed property for sale & to rent by estate agents. Property24.com",
+    "ogImage": "https://www.property24.com/Content/images/Optimized/Logos/property24_logo_social_media_share.png?z=e2db65075e854545643",
+    "docHeight": 5101,
+    "horizontalOverflow": 0,
+    "colours": {
+      "background": [
+        [
+          "#ffffff",
+          8
+        ],
+        [
+          "#0f0c36 @0.9",
+          6
+        ],
+        [
+          "#1a72db",
+          4
+        ],
+        [
+          "#0d63c9",
+          3
+        ],
+        [
+          "#f6f7f9",
+          2
+        ],
+        [
+          "#0f0c36",
+          2
+        ],
+        [
+          "#f04432",
+          1
+        ],
+        [
+          "#5692d9",
+          1
+        ]
+      ],
+      "text": [
+        [
+          "#ffffff",
+          262
+        ],
+        [
+          "#0f0c36",
+          226
+        ],
+        [
+          "#0d63c9",
+          43
+        ],
+        [
+          "#9ea5b1",
+          11
+        ],
+        [
+          "#515b6d",
+          10
+        ],
+        [
+          "#808080",
+          1
+        ]
+      ],
+      "border": [
+        [
+          "#0d63c9",
+          6
+        ],
+        [
+          "#ffffff @0.3",
+          4
+        ],
+        [
+          "#d8dce3",
+          3
+        ],
+        [
+          "#f04432",
+          3
+        ],
+        [
+          "#ffffff",
+          2
+        ]
+      ]
+    },
+    "shadows": [
+      [
+        "rgba(0, 0, 0, 0.2) 0px 5px 10px 0px",
+        1
+      ],
+      [
+        "rgba(0, 0, 0, 0.1) 0px 14px 24px 0px",
+        1
+      ],
+      [
+        "rgba(0, 0, 0, 0.25) 0px 0px 25px 0px",
+        1
+      ]
+    ],
+    "radii": [
+      [
+        "8px",
+        25
+      ],
+      [
+        "6px",
+        7
+      ],
+      [
+        "20px",
+        6
+      ],
+      [
+        "10px",
+        6
+      ],
+      [
+        "2px 2px 0px 0px",
+        3
+      ],
+      [
+        "12px",
+        2
+      ],
+      [
+        "2px 0px 0px 2px",
+        1
+      ]
+    ],
+    "typography": {
+      "h1": {
+        "family": "P24-SourceSans",
+        "size": "54px",
+        "weight": "400",
+        "lineHeight": "62px",
+        "letterSpacing": "normal",
+        "color": "#ffffff",
+        "sample": "Find Property for Sale"
+      },
+      "h2": {
+        "family": "P24-SourceSans",
+        "size": "30px",
+        "weight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "#ffffff",
+        "sample": "Property for Sale in Gauteng"
+      },
+      "h3": {
+        "family": "P24-SourceSans",
+        "size": "30px",
+        "weight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "#0f0c36",
+        "sample": "Discover all things property"
+      },
+      "body": null,
+      "button": {
+        "family": "P24-SourceSans",
+        "size": "15px",
+        "weight": "400",
+        "lineHeight": "22px",
+        "letterSpacing": "normal",
+        "color": "#ffffff",
+        "sample": "Search"
+      },
+      "link": null
+    },
+    "layout": {
+      "mainMaxWidth": "none",
+      "mainWidth": 1440,
+      "mainPadding": "0px",
+      "headerHeight": 33,
+      "bottomNavHeight": null,
+      "grids": [
+        {
+          "cols": "none",
+          "gap": "normal"
+        }
+      ]
+    },
+    "motion": [
+      [
+        "0.2s / ease",
+        56
+      ],
+      [
+        "0.5s / ease",
+        8
+      ],
+      [
+        "0.05s / linear",
+        6
+      ],
+      [
+        "0.8s / ease",
+        6
+      ],
+      [
+        "1s / ease",
+        1
+      ],
+      [
+        "0.2s / linear",
+        1
+      ]
+    ],
+    "tapTargetsUnder44": 108,
+    "tapTargetSamples": [
+      {
+        "w": 180,
+        "h": 33,
+        "tag": "a",
+        "label": ""
+      },
+      {
+        "w": 121,
+        "h": 40,
+        "tag": "a",
+        "label": "List Privately"
+      },
+      {
+        "w": 79,
+        "h": 38,
+        "tag": "a",
+        "label": "Sign in"
+      },
+      {
+        "w": 400,
+        "h": 29,
+        "tag": "input",
+        "label": ""
+      },
+      {
+        "w": 75,
+        "h": 42,
+        "tag": "a",
+        "label": "Buying"
+      },
+      {
+        "w": 81,
+        "h": 41,
+        "tag": "a",
+        "label": "Renting"
+      },
+      {
+        "w": 75,
+        "h": 41,
+        "tag": "a",
+        "label": "Selling"
+      },
+      {
+        "w": 116,
+        "h": 39,
+        "tag": "a",
+        "label": "Sign Up Now"
+      },
+      {
+        "w": 139,
+        "h": 39,
+        "tag": "a",
+        "label": "View Sold Prices"
+      },
+      {
+        "w": 172,
+        "h": 39,
+        "tag": "a",
+        "label": "View Property Guides"
+      },
+      {
+        "w": 48,
+        "h": 21,
+        "tag": "a",
+        "label": "Pretoria"
+      },
+      {
+        "w": 60,
+        "h": 21,
+        "tag": "a",
+        "label": "Randburg"
+      }
+    ],
+    "controlsTotal": 140,
+    "headings": [
+      {
+        "level": 1,
+        "text": "Find Property for Sale"
+      },
+      {
+        "level": 3,
+        "text": "Discover all things property"
+      },
+      {
+        "level": 4,
+        "text": "Property Alerts"
+      },
+      {
+        "level": 4,
+        "text": "Sold Prices"
+      },
+      {
+        "level": 4,
+        "text": "Looking to buy?"
+      },
+      {
+        "level": 2,
+        "text": "Property for Sale in Gauteng"
+      },
+      {
+        "level": 4,
+        "text": "News"
+      },
+      {
+        "level": 4,
+        "text": "Advice"
+      },
+      {
+        "level": 2,
+        "text": "Property24 on Mobile and Tablet"
+      },
+      {
+        "level": 3,
+        "text": "We're SA's number one property website"
+      },
+      {
+        "level": 3,
+        "text": "Find a trusted Estate Agent in your area"
+      },
+      {
+        "level": 4,
+        "text": "Cookie Notice"
+      }
+    ],
+    "headingOrderJumps": 2,
+    "images": [
+      {
+        "natural": "167x30",
+        "shown": "180x32",
+        "src": "w.property24.com/Content/images/Optimized/Logos/property24_logo.svg?z=2cd369fe7776a4beed13",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "1920x350",
+        "shown": "1440x350",
+        "src": ".com/Content/images/Optimized/Home/Converted/HeroImage-Option3.webp?z=be398bc97f3da06e1fe0",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "24x24",
+        "shown": "24x24",
+        "src": ".property24.com/Content/images/Optimized/Icons/icon_search_find.svg?z=ac791261c8934b51edb4",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "21x20",
+        "shown": "21x20",
+        "src": "www.property24.com/Content/images/Optimized/Icons/icon_show_map.svg?z=a2de222b69734f9b24d0",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "12x6",
+        "shown": "12x6",
+        "src": "w.property24.com/Content/images/Optimized/Icons/icon_down_arrow.svg?z=b5f169ef58fd67f8a52d",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "12x6",
+        "shown": "12x6",
+        "src": "w.property24.com/Content/images/Optimized/Icons/icon_down_arrow.svg?z=b5f169ef58fd67f8a52d",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "12x6",
+        "shown": "12x6",
+        "src": "w.property24.com/Content/images/Optimized/Icons/icon_down_arrow.svg?z=b5f169ef58fd67f8a52d",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "12x6",
+        "shown": "12x6",
+        "src": "w.property24.com/Content/images/Optimized/Icons/icon_down_arrow.svg?z=b5f169ef58fd67f8a52d",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "24x24",
+        "shown": "24x24",
+        "src": "//www.property24.com/Content/images/Optimized/Icons/icon_filter.svg?z=94e7b766597504d40ff1",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "160x160",
+        "shown": "160x160",
+        "src": "w.property24.com/Content/images/Optimized/Marketing/icon_buying.svg?z=64ad5a590fa8dd776f71",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "160x160",
+        "shown": "160x160",
+        "src": "perty24.com/Content/images/Optimized/Marketing/icon_sold_prices.svg?z=9db217a6e06017487ff4",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "160x160",
+        "shown": "160x160",
+        "src": "erty24.com/Content/images/Optimized/Marketing/icon_buyers_guide.svg?z=05aa8d4d3e6bdf6387ca",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "20x20",
+        "shown": "20x20",
+        "src": "//www.property24.com/Content/images/Optimized/Icons/icon_trends.svg?z=df8ca9dcac51e5a2223a",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "507x284",
+        "shown": "507x284",
+        "src": "https://images.prop24.com/376833450/Crop507x284",
+        "loading": "auto",
+        "alt": "MISSING"
+      }
+    ],
+    "imagesMissingAlt": 7,
+    "perf": {
+      "lcp": 2296,
+      "cls": 0.00614329561042524,
+      "shifts": 6,
+      "longTasks": 6
+    },
+    "bodyTextSample": "Buy Rent Sell Commercial Calculators Advice List Privately Sign in Find Property for Sale Buy Rent Developments Agents Sold Prices Map Search Property Type Min Price Max Price Bedrooms Filters Discover all things property Buying Renting Selling Property Alerts Sign up for an account and receive property alerts when new properties match your search criteria. Sign Up Now Sold Prices Find the value o"
+  },
+  {
+    "site": "property24",
+    "page": "search",
+    "url": "https://www.property24.com/for-sale/cape-town/western-cape/432",
+    "viewport": {
+      "w": 390,
+      "h": 2684
+    },
+    "requests": 185,
+    "totalBytes": 4892873,
+    "imageBytes": 610265,
+    "consoleErrors": [
+      "Not signed in with the identity provider."
+    ],
+    "navErr": null,
+    "measureErr": null,
+    "title": "Property and houses for sale in Cape Town : Cape Town Property : Property24.com",
+    "metaDescription": "Property for sale in Cape Town. The largest selection of apartments, flats, farms, repossessed property, private property and houses For Sale in Cape Town by estate agents. Property24.com",
+    "ogImage": "https://images.prop24.com/383153582",
+    "docHeight": 10723,
+    "horizontalOverflow": 850,
+    "colours": {
+      "background": [
+        [
+          "#ffffff",
+          59
+        ],
+        [
+          "#0b63c9",
+          7
+        ],
+        [
+          "#0d63c9",
+          4
+        ],
+        [
+          "#1a72db",
+          4
+        ],
+        [
+          "#000000",
+          3
+        ],
+        [
+          "#484446",
+          2
+        ],
+        [
+          "#2ea658",
+          2
+        ],
+        [
+          "#041c4c",
+          2
+        ],
+        [
+          "#4bc3f9",
+          1
+        ],
+        [
+          "#f04432",
+          1
+        ],
+        [
+          "#040404",
+          1
+        ],
+        [
+          "#04315a",
+          1
+        ],
+        [
+          "#ff971d",
+          1
+        ],
+        [
+          "#000000 @0.45",
+          1
+        ],
+        [
+          "#ff5d00",
+          1
+        ],
+        [
+          "#eceff4",
+          1
+        ],
+        [
+          "#000000 @0.7",
+          1
+        ],
+        [
+          "#f6f6f6 @0.7",
+          1
+        ],
+        [
+          "#0f0c36",
+          1
+        ],
+        [
+          "#5692d9",
+          1
+        ]
+      ],
+      "text": [
+        [
+          "#0f0c36",
+          703
+        ],
+        [
+          "#515b6d",
+          415
+        ],
+        [
+          "#0d63c9",
+          171
+        ],
+        [
+          "#ffffff",
+          106
+        ],
+        [
+          "#9ea5b1",
+          10
+        ],
+        [
+          "#333333",
+          2
+        ],
+        [
+          "#808080",
+          2
+        ],
+        [
+          "#000000",
+          1
+        ]
+      ],
+      "border": [
+        [
+          "#d8dce3",
+          26
+        ],
+        [
+          "#e4e7eb",
+          10
+        ],
+        [
+          "#ffffff",
+          4
+        ],
+        [
+          "#ffffff @0.3",
+          4
+        ],
+        [
+          "#dfdfdf",
+          4
+        ],
+        [
+          "#9ea5b1 @0.2",
+          4
+        ],
+        [
+          "#f04432",
+          3
+        ],
+        [
+          "#0d63c9",
+          1
+        ]
+      ]
+    },
+    "shadows": [
+      [
+        "rgba(0, 0, 0, 0.22) 0px 2px 4px 0px",
+        13
+      ],
+      [
+        "rgba(15, 12, 54, 0.05) 0px 2px 4px 0px",
+        9
+      ],
+      [
+        "rgba(15, 12, 54, 0.05) 0px 0px 10px 0px",
+        8
+      ],
+      [
+        "rgba(0, 0, 0, 0.05) 0px 1px 1px 0px",
+        3
+      ],
+      [
+        "rgba(0, 0, 0, 0.2) 10px 5px 10px -3px",
+        1
+      ],
+      [
+        "rgba(0, 0, 0, 0.075) 0px 1px 1px 0px inset",
+        1
+      ],
+      [
+        "rgba(0, 0, 0, 0.25) 0px 0px 25px 0px",
+        1
+      ]
+    ],
+    "radii": [
+      [
+        "8px",
+        42
+      ],
+      [
+        "10px",
+        37
+      ],
+      [
+        "13px",
+        8
+      ],
+      [
+        "5px",
+        8
+      ],
+      [
+        "0px 12px 12px 0px",
+        6
+      ],
+      [
+        "100%",
+        4
+      ],
+      [
+        "0px 0px 12px",
+        4
+      ],
+      [
+        "20px",
+        3
+      ],
+      [
+        "6px",
+        2
+      ],
+      [
+        "2px",
+        2
+      ],
+      [
+        "12px",
+        1
+      ],
+      [
+        "12px 0px 0px 12px",
+        1
+      ],
+      [
+        "2px 0px 0px 2px",
+        1
+      ],
+      [
+        "8px 8px 0px 0px",
+        1
+      ],
+      [
+        "9.2px 9.2px 0px 0px",
+        1
+      ]
+    ],
+    "typography": {
+      "h1": {
+        "family": "P24-SourceSans",
+        "size": "50px",
+        "weight": "300",
+        "lineHeight": "62px",
+        "letterSpacing": "normal",
+        "color": "#0f0c36",
+        "sample": "Property for Sale in Cape Town"
+      },
+      "h2": null,
+      "h3": null,
+      "body": null,
+      "button": {
+        "family": "P24-SourceSans",
+        "size": "15px",
+        "weight": "600",
+        "lineHeight": "22px",
+        "letterSpacing": "normal",
+        "color": "#333333",
+        "sample": "For Sale"
+      },
+      "link": null
+    },
+    "layout": {
+      "mainMaxWidth": "none",
+      "mainWidth": 750,
+      "mainPadding": "0px",
+      "headerHeight": 33,
+      "bottomNavHeight": null,
+      "grids": [
+        {
+          "cols": "none",
+          "gap": "normal"
+        }
+      ]
+    },
+    "motion": [
+      [
+        "anim fa-spin 2s",
+        80
+      ],
+      [
+        "0.2s / ease",
+        26
+      ],
+      [
+        "0.05s / linear",
+        6
+      ],
+      [
+        "0.1s / ease",
+        2
+      ],
+      [
+        "0.2s / linear",
+        1
+      ],
+      [
+        "0.15s, 0.15s / ease-in-out, ease-in-out",
+        1
+      ]
+    ],
+    "tapTargetsUnder44": 84,
+    "tapTargetSamples": [
+      {
+        "w": 180,
+        "h": 33,
+        "tag": "a",
+        "label": ""
+      },
+      {
+        "w": 121,
+        "h": 40,
+        "tag": "a",
+        "label": "List Privately"
+      },
+      {
+        "w": 79,
+        "h": 38,
+        "tag": "a",
+        "label": "Sign in"
+      },
+      {
+        "w": 178,
+        "h": 40,
+        "tag": "button",
+        "label": "For Sale"
+      },
+      {
+        "w": 11,
+        "h": 29,
+        "tag": "input",
+        "label": ""
+      },
+      {
+        "w": 91,
+        "h": 17,
+        "tag": "a",
+        "label": "Property for Sale"
+      },
+      {
+        "w": 74,
+        "h": 17,
+        "tag": "a",
+        "label": "Western Cape"
+      },
+      {
+        "w": 196,
+        "h": 22,
+        "tag": "a",
+        "label": "Cape Town City Centre"
+      },
+      {
+        "w": 196,
+        "h": 22,
+        "tag": "a",
+        "label": "Observatory"
+      },
+      {
+        "w": 196,
+        "h": 22,
+        "tag": "a",
+        "label": "De Waterkant"
+      },
+      {
+        "w": 196,
+        "h": 22,
+        "tag": "a",
+        "label": "Woodstock"
+      },
+      {
+        "w": 196,
+        "h": 22,
+        "tag": "a",
+        "label": "Constantia"
+      }
+    ],
+    "controlsTotal": 190,
+    "headings": [
+      {
+        "level": 1,
+        "text": "Property for Sale in Cape Town"
+      },
+      {
+        "level": 4,
+        "text": "Property Alerts"
+      },
+      {
+        "level": 5,
+        "text": "Be the first to see new properties for sale in Cape To"
+      },
+      {
+        "level": 5,
+        "text": "Articles Relating To Cape Town"
+      },
+      {
+        "level": 5,
+        "text": "Cape Town Property for Sale"
+      },
+      {
+        "level": 5,
+        "text": "About Cape Town"
+      },
+      {
+        "level": 4,
+        "text": "Cookie Notice"
+      }
+    ],
+    "headingOrderJumps": 1,
+    "images": [
+      {
+        "natural": "167x30",
+        "shown": "180x32",
+        "src": "w.property24.com/Content/images/Optimized/Logos/property24_logo.svg?z=2cd369fe7776a4beed13",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "24x24",
+        "shown": "24x24",
+        "src": "perty24.com/Content/images/Optimized/Icons/icon_arrow_down_blue.svg?z=8814ea028c669e440189",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "20x20",
+        "shown": "20x20",
+        "src": "property24.com/Content/images/Optimized/Icons/icon_close_square.svg?z=3774e3658aca4d0c40f0",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "21x20",
+        "shown": "21x20",
+        "src": "www.property24.com/Content/images/Optimized/Icons/icon_show_map.svg?z=a2de222b69734f9b24d0",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "12x6",
+        "shown": "12x6",
+        "src": "w.property24.com/Content/images/Optimized/Icons/icon_down_arrow.svg?z=b5f169ef58fd67f8a52d",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "12x6",
+        "shown": "12x6",
+        "src": "w.property24.com/Content/images/Optimized/Icons/icon_down_arrow.svg?z=b5f169ef58fd67f8a52d",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "12x6",
+        "shown": "12x6",
+        "src": "w.property24.com/Content/images/Optimized/Icons/icon_down_arrow.svg?z=b5f169ef58fd67f8a52d",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "12x6",
+        "shown": "12x6",
+        "src": "w.property24.com/Content/images/Optimized/Icons/icon_down_arrow.svg?z=b5f169ef58fd67f8a52d",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "24x24",
+        "shown": "24x24",
+        "src": "//www.property24.com/Content/images/Optimized/Icons/icon_filter.svg?z=94e7b766597504d40ff1",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "525x350",
+        "shown": "564x376",
+        "src": "https://images.prop24.com/383153582/Crop525x350",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "450x261",
+        "shown": "150x87",
+        "src": "https://images.prop24.com/341773208/Ensure450x261",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "25x25",
+        "shown": "24x24",
+        "src": "/www.property24.com/Content/images/Optimized/Icons/icon_erf_new.svg?z=39eb1f3e5c6b14ca6543",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "50x10",
+        "shown": "50x10",
+        "src": "erty24.com/Content/images/Optimized/Icons/icon_tag_grey_updated.svg?z=0560ee201c09e25f7819",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "100x100",
+        "shown": "16x16",
+        "src": "property24.com/Content/images/Optimized/Icons/icon_tooltip_dark.svg?z=ea40366151b0694a5bf7",
+        "loading": "auto",
+        "alt": "yes"
+      }
+    ],
+    "imagesMissingAlt": 58,
+    "perf": {
+      "lcp": 532,
+      "cls": 0.0070556591271534784,
+      "shifts": 6,
+      "longTasks": 27
+    },
+    "bodyTextSample": "Buy Rent Sell Commercial Calculators Advice List Privately Sign in For Sale Cape Town Map Search Property Type Min Price Max Price Bedrooms Filters Property for Sale in Cape Town Property for Sale > Western Cape > Cape Town Cape Town City Centre Observatory De Waterkant Woodstock Constantia Camps Bay Sea Point Zonnebloem Belhar Green Point Gardens Rondebosch Foreshore Philippi Kenilworth All areas"
+  },
+  {
+    "site": "property24",
+    "page": "search",
+    "url": "https://www.property24.com/for-sale/cape-town/western-cape/432",
+    "viewport": {
+      "w": 1440,
+      "h": 900
+    },
+    "requests": 185,
+    "totalBytes": 4848920,
+    "imageBytes": 669713,
+    "consoleErrors": [
+      "Not signed in with the identity provider."
+    ],
+    "navErr": null,
+    "measureErr": null,
+    "title": "Property and houses for sale in Cape Town : Cape Town Property : Property24.com",
+    "metaDescription": "Property for sale in Cape Town. The largest selection of apartments, flats, farms, repossessed property, private property and houses For Sale in Cape Town by estate agents. Property24.com",
+    "ogImage": "https://images.prop24.com/388028172",
+    "docHeight": 10723,
+    "horizontalOverflow": 0,
+    "colours": {
+      "background": [
+        [
+          "#ffffff",
+          60
+        ],
+        [
+          "#0b63c9",
+          6
+        ],
+        [
+          "#0d63c9",
+          4
+        ],
+        [
+          "#1a72db",
+          4
+        ],
+        [
+          "#000000",
+          3
+        ],
+        [
+          "#041c4c",
+          3
+        ],
+        [
+          "#000000 @0.45",
+          2
+        ],
+        [
+          "#ff5d00",
+          2
+        ],
+        [
+          "#484446",
+          2
+        ],
+        [
+          "#2ea658",
+          2
+        ],
+        [
+          "#4bc3f9",
+          1
+        ],
+        [
+          "#f04432",
+          1
+        ],
+        [
+          "#040404",
+          1
+        ],
+        [
+          "#04315a",
+          1
+        ],
+        [
+          "#ff971d",
+          1
+        ],
+        [
+          "#eceff4",
+          1
+        ],
+        [
+          "#000000 @0.7",
+          1
+        ],
+        [
+          "#f6f6f6 @0.7",
+          1
+        ],
+        [
+          "#0f0c36",
+          1
+        ],
+        [
+          "#5692d9",
+          1
+        ]
+      ],
+      "text": [
+        [
+          "#0f0c36",
+          696
+        ],
+        [
+          "#515b6d",
+          414
+        ],
+        [
+          "#0d63c9",
+          192
+        ],
+        [
+          "#ffffff",
+          110
+        ],
+        [
+          "#9ea5b1",
+          10
+        ],
+        [
+          "#333333",
+          2
+        ],
+        [
+          "#808080",
+          2
+        ],
+        [
+          "#000000",
+          1
+        ]
+      ],
+      "border": [
+        [
+          "#d8dce3",
+          26
+        ],
+        [
+          "#e4e7eb",
+          11
+        ],
+        [
+          "#ffffff",
+          4
+        ],
+        [
+          "#ffffff @0.3",
+          4
+        ],
+        [
+          "#dfdfdf",
+          4
+        ],
+        [
+          "#9ea5b1 @0.2",
+          4
+        ],
+        [
+          "#f04432",
+          3
+        ],
+        [
+          "#0d63c9",
+          1
+        ]
+      ]
+    },
+    "shadows": [
+      [
+        "rgba(0, 0, 0, 0.22) 0px 2px 4px 0px",
+        12
+      ],
+      [
+        "rgba(15, 12, 54, 0.05) 0px 2px 4px 0px",
+        10
+      ],
+      [
+        "rgba(15, 12, 54, 0.05) 0px 0px 10px 0px",
+        8
+      ],
+      [
+        "rgba(0, 0, 0, 0.05) 0px 1px 1px 0px",
+        3
+      ],
+      [
+        "rgba(0, 0, 0, 0.2) 10px 5px 10px -3px",
+        1
+      ],
+      [
+        "rgba(0, 0, 0, 0.075) 0px 1px 1px 0px inset",
+        1
+      ],
+      [
+        "rgba(0, 0, 0, 0.25) 0px 0px 25px 0px",
+        1
+      ]
+    ],
+    "radii": [
+      [
+        "8px",
+        42
+      ],
+      [
+        "10px",
+        37
+      ],
+      [
+        "13px",
+        8
+      ],
+      [
+        "5px",
+        8
+      ],
+      [
+        "0px 12px 12px 0px",
+        6
+      ],
+      [
+        "100%",
+        5
+      ],
+      [
+        "0px 0px 12px",
+        5
+      ],
+      [
+        "20px",
+        4
+      ],
+      [
+        "6px",
+        2
+      ],
+      [
+        "3px",
+        2
+      ],
+      [
+        "2px",
+        2
+      ],
+      [
+        "12px",
+        1
+      ],
+      [
+        "12px 0px 0px 12px",
+        1
+      ],
+      [
+        "2px 0px 0px 2px",
+        1
+      ],
+      [
+        "8px 8px 0px 0px",
+        1
+      ],
+      [
+        "9.2px 9.2px 0px 0px",
+        1
+      ]
+    ],
+    "typography": {
+      "h1": {
+        "family": "P24-SourceSans",
+        "size": "50px",
+        "weight": "300",
+        "lineHeight": "62px",
+        "letterSpacing": "normal",
+        "color": "#0f0c36",
+        "sample": "Property for Sale in Cape Town"
+      },
+      "h2": null,
+      "h3": null,
+      "body": null,
+      "button": {
+        "family": "P24-SourceSans",
+        "size": "15px",
+        "weight": "600",
+        "lineHeight": "22px",
+        "letterSpacing": "normal",
+        "color": "#333333",
+        "sample": "For Sale"
+      },
+      "link": null
+    },
+    "layout": {
+      "mainMaxWidth": "none",
+      "mainWidth": 750,
+      "mainPadding": "0px",
+      "headerHeight": 33,
+      "bottomNavHeight": null,
+      "grids": [
+        {
+          "cols": "none",
+          "gap": "normal"
+        }
+      ]
+    },
+    "motion": [
+      [
+        "anim fa-spin 2s",
+        76
+      ],
+      [
+        "0.2s / ease",
+        26
+      ],
+      [
+        "0.05s / linear",
+        6
+      ],
+      [
+        "0.1s / ease",
+        2
+      ],
+      [
+        "0.2s / linear",
+        1
+      ],
+      [
+        "0.15s, 0.15s / ease-in-out, ease-in-out",
+        1
+      ]
+    ],
+    "tapTargetsUnder44": 84,
+    "tapTargetSamples": [
+      {
+        "w": 180,
+        "h": 33,
+        "tag": "a",
+        "label": ""
+      },
+      {
+        "w": 121,
+        "h": 40,
+        "tag": "a",
+        "label": "List Privately"
+      },
+      {
+        "w": 79,
+        "h": 38,
+        "tag": "a",
+        "label": "Sign in"
+      },
+      {
+        "w": 178,
+        "h": 40,
+        "tag": "button",
+        "label": "For Sale"
+      },
+      {
+        "w": 11,
+        "h": 29,
+        "tag": "input",
+        "label": ""
+      },
+      {
+        "w": 91,
+        "h": 17,
+        "tag": "a",
+        "label": "Property for Sale"
+      },
+      {
+        "w": 74,
+        "h": 17,
+        "tag": "a",
+        "label": "Western Cape"
+      },
+      {
+        "w": 196,
+        "h": 22,
+        "tag": "a",
+        "label": "Cape Town City Centre"
+      },
+      {
+        "w": 196,
+        "h": 22,
+        "tag": "a",
+        "label": "Observatory"
+      },
+      {
+        "w": 196,
+        "h": 22,
+        "tag": "a",
+        "label": "De Waterkant"
+      },
+      {
+        "w": 196,
+        "h": 22,
+        "tag": "a",
+        "label": "Woodstock"
+      },
+      {
+        "w": 196,
+        "h": 22,
+        "tag": "a",
+        "label": "Constantia"
+      }
+    ],
+    "controlsTotal": 191,
+    "headings": [
+      {
+        "level": 1,
+        "text": "Property for Sale in Cape Town"
+      },
+      {
+        "level": 4,
+        "text": "Property Alerts"
+      },
+      {
+        "level": 5,
+        "text": "Be the first to see new properties for sale in Cape To"
+      },
+      {
+        "level": 5,
+        "text": "Articles Relating To Cape Town"
+      },
+      {
+        "level": 5,
+        "text": "Cape Town Property for Sale"
+      },
+      {
+        "level": 5,
+        "text": "About Cape Town"
+      },
+      {
+        "level": 4,
+        "text": "Cookie Notice"
+      }
+    ],
+    "headingOrderJumps": 1,
+    "images": [
+      {
+        "natural": "167x30",
+        "shown": "180x32",
+        "src": "w.property24.com/Content/images/Optimized/Logos/property24_logo.svg?z=2cd369fe7776a4beed13",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "24x24",
+        "shown": "24x24",
+        "src": "perty24.com/Content/images/Optimized/Icons/icon_arrow_down_blue.svg?z=8814ea028c669e440189",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "20x20",
+        "shown": "20x20",
+        "src": "property24.com/Content/images/Optimized/Icons/icon_close_square.svg?z=3774e3658aca4d0c40f0",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "21x20",
+        "shown": "21x20",
+        "src": "www.property24.com/Content/images/Optimized/Icons/icon_show_map.svg?z=a2de222b69734f9b24d0",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "12x6",
+        "shown": "12x6",
+        "src": "w.property24.com/Content/images/Optimized/Icons/icon_down_arrow.svg?z=b5f169ef58fd67f8a52d",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "12x6",
+        "shown": "12x6",
+        "src": "w.property24.com/Content/images/Optimized/Icons/icon_down_arrow.svg?z=b5f169ef58fd67f8a52d",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "12x6",
+        "shown": "12x6",
+        "src": "w.property24.com/Content/images/Optimized/Icons/icon_down_arrow.svg?z=b5f169ef58fd67f8a52d",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "12x6",
+        "shown": "12x6",
+        "src": "w.property24.com/Content/images/Optimized/Icons/icon_down_arrow.svg?z=b5f169ef58fd67f8a52d",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "24x24",
+        "shown": "24x24",
+        "src": "//www.property24.com/Content/images/Optimized/Icons/icon_filter.svg?z=94e7b766597504d40ff1",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "525x350",
+        "shown": "564x376",
+        "src": "https://images.prop24.com/388028172/Crop525x350",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "450x261",
+        "shown": "150x87",
+        "src": "https://images.prop24.com/341773208/Ensure450x261",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "25x25",
+        "shown": "24x24",
+        "src": "/www.property24.com/Content/images/Optimized/Icons/icon_erf_new.svg?z=39eb1f3e5c6b14ca6543",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "50x10",
+        "shown": "50x10",
+        "src": "erty24.com/Content/images/Optimized/Icons/icon_tag_grey_updated.svg?z=0560ee201c09e25f7819",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "100x100",
+        "shown": "16x16",
+        "src": "property24.com/Content/images/Optimized/Icons/icon_tooltip_dark.svg?z=ea40366151b0694a5bf7",
+        "loading": "auto",
+        "alt": "yes"
+      }
+    ],
+    "imagesMissingAlt": 57,
+    "perf": {
+      "lcp": 700,
+      "cls": 0.024372762077760627,
+      "shifts": 16,
+      "longTasks": 40
+    },
+    "bodyTextSample": "Buy Rent Sell Commercial Calculators Advice List Privately Sign in For Sale Cape Town Map Search Property Type Min Price Max Price Bedrooms Filters Property for Sale in Cape Town Property for Sale > Western Cape > Cape Town Cape Town City Centre Observatory De Waterkant Woodstock Constantia Camps Bay Sea Point Zonnebloem Belhar Green Point Gardens Rondebosch Foreshore Philippi Kenilworth All areas"
+  },
+  {
+    "site": "property24",
+    "page": "sell",
+    "url": "https://www.property24.com/private-listing/sell-my-property",
+    "viewport": {
+      "w": 390,
+      "h": 2716
+    },
+    "requests": 104,
+    "totalBytes": 2340888,
+    "imageBytes": 86311,
+    "consoleErrors": [
+      "Access to script at 'https://embed.tawk.to/59a7b2177ab2de3aea9d7824/default' from origin 'https://www.property24.com' has been blocked by CORS policy: No 'Acces",
+      "Failed to load resource: net::ERR_FAILED",
+      "Not signed in with the identity provider."
+    ],
+    "navErr": null,
+    "measureErr": null,
+    "title": "Private Ad : Sell Your Property : Property24.com",
+    "metaDescription": "Advertise your property on SA's number one property website! Find out more about how to sell your property on Property24.com.",
+    "ogImage": "https://www.property24.com/Content/images/Optimized/Logos/property24_logo_social_media_share.png?z=e2db65075e854545643",
+    "docHeight": 5288,
+    "horizontalOverflow": 865,
+    "colours": {
+      "background": [
+        [
+          "#ffffff",
+          42
+        ],
+        [
+          "#4bc3f9",
+          3
+        ],
+        [
+          "#3cc89e",
+          3
+        ],
+        [
+          "#0d63c9",
+          2
+        ],
+        [
+          "#f6f6f6",
+          1
+        ],
+        [
+          "#0f0c36",
+          1
+        ],
+        [
+          "#5692d9",
+          1
+        ]
+      ],
+      "text": [
+        [
+          "#0f0c36",
+          256
+        ],
+        [
+          "#ffffff",
+          131
+        ],
+        [
+          "#515b6d",
+          58
+        ],
+        [
+          "#3cc89e",
+          49
+        ],
+        [
+          "#0d63c9",
+          42
+        ],
+        [
+          "#9ea5b1",
+          23
+        ],
+        [
+          "#263248",
+          22
+        ],
+        [
+          "#808080",
+          10
+        ],
+        [
+          "#a7adb8",
+          1
+        ]
+      ],
+      "border": [
+        [
+          "#f6f6f6",
+          12
+        ],
+        [
+          "#d8dce3",
+          6
+        ],
+        [
+          "#32bbf8",
+          3
+        ],
+        [
+          "#f04432",
+          1
+        ],
+        [
+          "#3cc89e",
+          1
+        ],
+        [
+          "#34b790",
+          1
+        ]
+      ]
+    },
+    "shadows": [
+      [
+        "rgba(81, 91, 109, 0.1) 0px 20px 30px 0px",
+        5
+      ],
+      [
+        "rgba(0, 0, 0, 0.25) 0px 0px 25px 0px",
+        1
+      ]
+    ],
+    "radii": [
+      [
+        "1px 1px 0px 0px",
+        26
+      ],
+      [
+        "2px",
+        22
+      ],
+      [
+        "8px",
+        18
+      ],
+      [
+        "5px",
+        9
+      ],
+      [
+        "10px",
+        5
+      ]
+    ],
+    "typography": {
+      "h1": {
+        "family": "P24-SourceSans",
+        "size": "40px",
+        "weight": "700",
+        "lineHeight": "50px",
+        "letterSpacing": "normal",
+        "color": "#ffffff",
+        "sample": "Sell Your Property"
+      },
+      "h2": {
+        "family": "P24-SourceSans",
+        "size": "40px",
+        "weight": "300",
+        "lineHeight": "50px",
+        "letterSpacing": "normal",
+        "color": "#0f0c36",
+        "sample": "Listing Packages"
+      },
+      "h3": null,
+      "body": null,
+      "button": {
+        "family": "P24-SourceSans",
+        "size": "17px",
+        "weight": "400",
+        "lineHeight": "22.6666px",
+        "letterSpacing": "normal",
+        "color": "#ffffff",
+        "sample": "List Your Property"
+      },
+      "link": null
+    },
+    "layout": {
+      "mainMaxWidth": "none",
+      "mainWidth": 390,
+      "mainPadding": "0px",
+      "headerHeight": 33,
+      "bottomNavHeight": null,
+      "grids": []
+    },
+    "motion": [
+      [
+        "0.3s / ease",
+        9
+      ],
+      [
+        "0.05s / linear",
+        6
+      ],
+      [
+        "0.2s / ease",
+        4
+      ],
+      [
+        "0.15s, 0.15s / ease-in-out, ease-in-out",
+        3
+      ]
+    ],
+    "tapTargetsUnder44": 57,
+    "tapTargetSamples": [
+      {
+        "w": 180,
+        "h": 33,
+        "tag": "a",
+        "label": ""
+      },
+      {
+        "w": 121,
+        "h": 40,
+        "tag": "a",
+        "label": "List Privately"
+      },
+      {
+        "w": 79,
+        "h": 38,
+        "tag": "a",
+        "label": "Sign in"
+      },
+      {
+        "w": 125,
+        "h": 19,
+        "tag": "a",
+        "label": "Renting your home?"
+      },
+      {
+        "w": 152,
+        "h": 19,
+        "tag": "a",
+        "label": "Alberton"
+      },
+      {
+        "w": 152,
+        "h": 19,
+        "tag": "a",
+        "label": "Benoni"
+      },
+      {
+        "w": 152,
+        "h": 19,
+        "tag": "a",
+        "label": "Boksburg"
+      },
+      {
+        "w": 152,
+        "h": 19,
+        "tag": "a",
+        "label": "Centurion"
+      },
+      {
+        "w": 152,
+        "h": 19,
+        "tag": "a",
+        "label": "Edenvale"
+      },
+      {
+        "w": 152,
+        "h": 19,
+        "tag": "a",
+        "label": "Johannesburg"
+      },
+      {
+        "w": 152,
+        "h": 19,
+        "tag": "a",
+        "label": "Kempton Park"
+      },
+      {
+        "w": 152,
+        "h": 19,
+        "tag": "a",
+        "label": "Midrand"
+      }
+    ],
+    "controlsTotal": 97,
+    "headings": [
+      {
+        "level": 1,
+        "text": "Sell Your Property"
+      },
+      {
+        "level": 2,
+        "text": "Listing Packages"
+      },
+      {
+        "level": 2,
+        "text": "Why List with Property24"
+      },
+      {
+        "level": 4,
+        "text": "More of the market visit Property24 than any other SA "
+      },
+      {
+        "level": 5,
+        "text": "Property24 receives 3.4x more visits than our closest "
+      },
+      {
+        "level": 5,
+        "text": "4.6x more people search for us on Google than our clos"
+      },
+      {
+        "level": 2,
+        "text": "Frequently Asked Questions"
+      },
+      {
+        "level": 4,
+        "text": "Request a Call Back"
+      },
+      {
+        "level": 4,
+        "text": "Speak to a Consultant"
+      },
+      {
+        "level": 2,
+        "text": "0861 111 724"
+      },
+      {
+        "level": 4,
+        "text": "Cookie Notice"
+      }
+    ],
+    "headingOrderJumps": 3,
+    "images": [
+      {
+        "natural": "167x30",
+        "shown": "180x32",
+        "src": "w.property24.com/Content/images/Optimized/Logos/property24_logo.svg?z=2cd369fe7776a4beed13",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "18x18",
+        "shown": "18x18",
+        "src": "/www.property24.com/Content/images/Optimized/Icons/icon_tooltip.png?z=d1e9a89a2b70aeac1112",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "18x18",
+        "shown": "18x18",
+        "src": "/www.property24.com/Content/images/Optimized/Icons/icon_tooltip.png?z=d1e9a89a2b70aeac1112",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "18x18",
+        "shown": "18x18",
+        "src": "/www.property24.com/Content/images/Optimized/Icons/icon_tooltip.png?z=d1e9a89a2b70aeac1112",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "18x18",
+        "shown": "18x18",
+        "src": "/www.property24.com/Content/images/Optimized/Icons/icon_tooltip.png?z=d1e9a89a2b70aeac1112",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "18x18",
+        "shown": "18x18",
+        "src": "/www.property24.com/Content/images/Optimized/Icons/icon_tooltip.png?z=d1e9a89a2b70aeac1112",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "18x18",
+        "shown": "18x18",
+        "src": "/www.property24.com/Content/images/Optimized/Icons/icon_tooltip.png?z=d1e9a89a2b70aeac1112",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "18x18",
+        "shown": "18x18",
+        "src": "/www.property24.com/Content/images/Optimized/Icons/icon_tooltip.png?z=d1e9a89a2b70aeac1112",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "18x18",
+        "shown": "18x18",
+        "src": "/www.property24.com/Content/images/Optimized/Icons/icon_tooltip.png?z=d1e9a89a2b70aeac1112",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "18x18",
+        "shown": "18x18",
+        "src": "/www.property24.com/Content/images/Optimized/Icons/icon_tooltip.png?z=d1e9a89a2b70aeac1112",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "426x236",
+        "shown": "370x205",
+        "src": "operty24.com/Content/images/Optimized/Marketing/marketing_graph.png?z=6355bfc749b7c466d553",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "100x100",
+        "shown": "100x100",
+        "src": "ontent/images/Optimized/Marketing/SPUI/marketing_support_mobile.png?z=76723b72dec19104f626",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "197x36",
+        "shown": "197x36",
+        "src": "ty24.com/Content/images/Optimized/Logos/footer_logo_white_large.svg?z=8108a8253dc9f8d0d0d1",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "23x23",
+        "shown": "23x23",
+        "src": "rty24.com/Content/images/Optimized/Icons/icon_instagram_rounded.svg?z=befcb56eeefeca2b7157",
+        "loading": "auto",
+        "alt": "yes"
+      }
+    ],
+    "imagesMissingAlt": 10,
+    "perf": {
+      "lcp": 600,
+      "cls": 0,
+      "shifts": 0,
+      "longTasks": 25
+    },
+    "bodyTextSample": "Buy Rent Sell Commercial Calculators Advice List Privately Sign in Sell Your Property Over 6 million visit Property24 each month. List your property on SA's No.1 property website! Listing Packages Renting your home? Self Service Lite R 499 Create your listing using our tools. For properties priced up to R 500 000. Residential properties, up to R 500 000 Reach SA’s largest audience of buyers List f"
+  },
+  {
+    "site": "property24",
+    "page": "sell",
+    "url": "https://www.property24.com/private-listing/sell-my-property",
+    "viewport": {
+      "w": 1440,
+      "h": 900
+    },
+    "requests": 100,
+    "totalBytes": 2627950,
+    "imageBytes": 115588,
+    "consoleErrors": [
+      "Access to script at 'https://embed.tawk.to/59a7b2177ab2de3aea9d7824/default' from origin 'https://www.property24.com' has been blocked by CORS policy: No 'Acces",
+      "Failed to load resource: net::ERR_FAILED",
+      "Not signed in with the identity provider."
+    ],
+    "navErr": null,
+    "measureErr": null,
+    "title": "Private Ad : Sell Your Property : Property24.com",
+    "metaDescription": "Advertise your property on SA's number one property website! Find out more about how to sell your property on Property24.com.",
+    "ogImage": "https://www.property24.com/Content/images/Optimized/Logos/property24_logo_social_media_share.png?z=e2db65075e854545643",
+    "docHeight": 5178,
+    "horizontalOverflow": 15,
+    "colours": {
+      "background": [
+        [
+          "#ffffff",
+          42
+        ],
+        [
+          "#4bc3f9",
+          3
+        ],
+        [
+          "#3cc89e",
+          3
+        ],
+        [
+          "#0d63c9",
+          2
+        ],
+        [
+          "#f6f6f6",
+          1
+        ],
+        [
+          "#0f0c36",
+          1
+        ],
+        [
+          "#5692d9",
+          1
+        ]
+      ],
+      "text": [
+        [
+          "#0f0c36",
+          256
+        ],
+        [
+          "#ffffff",
+          131
+        ],
+        [
+          "#515b6d",
+          58
+        ],
+        [
+          "#3cc89e",
+          49
+        ],
+        [
+          "#0d63c9",
+          42
+        ],
+        [
+          "#9ea5b1",
+          23
+        ],
+        [
+          "#263248",
+          22
+        ],
+        [
+          "#808080",
+          10
+        ],
+        [
+          "#a7adb8",
+          1
+        ]
+      ],
+      "border": [
+        [
+          "#f6f6f6",
+          12
+        ],
+        [
+          "#d8dce3",
+          6
+        ],
+        [
+          "#32bbf8",
+          3
+        ],
+        [
+          "#f04432",
+          1
+        ],
+        [
+          "#3cc89e",
+          1
+        ],
+        [
+          "#34b790",
+          1
+        ]
+      ]
+    },
+    "shadows": [
+      [
+        "rgba(81, 91, 109, 0.1) 0px 20px 30px 0px",
+        5
+      ],
+      [
+        "rgba(0, 0, 0, 0.25) 0px 0px 25px 0px",
+        1
+      ]
+    ],
+    "radii": [
+      [
+        "1px 1px 0px 0px",
+        26
+      ],
+      [
+        "2px",
+        22
+      ],
+      [
+        "8px",
+        18
+      ],
+      [
+        "5px",
+        9
+      ],
+      [
+        "10px",
+        5
+      ]
+    ],
+    "typography": {
+      "h1": {
+        "family": "P24-SourceSans",
+        "size": "40px",
+        "weight": "700",
+        "lineHeight": "50px",
+        "letterSpacing": "normal",
+        "color": "#ffffff",
+        "sample": "Sell Your Property"
+      },
+      "h2": {
+        "family": "P24-SourceSans",
+        "size": "40px",
+        "weight": "300",
+        "lineHeight": "50px",
+        "letterSpacing": "normal",
+        "color": "#0f0c36",
+        "sample": "Listing Packages"
+      },
+      "h3": null,
+      "body": null,
+      "button": {
+        "family": "P24-SourceSans",
+        "size": "17px",
+        "weight": "400",
+        "lineHeight": "22.6666px",
+        "letterSpacing": "normal",
+        "color": "#ffffff",
+        "sample": "List Your Property"
+      },
+      "link": null
+    },
+    "layout": {
+      "mainMaxWidth": "none",
+      "mainWidth": 1440,
+      "mainPadding": "0px",
+      "headerHeight": 33,
+      "bottomNavHeight": null,
+      "grids": []
+    },
+    "motion": [
+      [
+        "0.3s / ease",
+        9
+      ],
+      [
+        "0.05s / linear",
+        6
+      ],
+      [
+        "0.2s / ease",
+        4
+      ],
+      [
+        "0.15s, 0.15s / ease-in-out, ease-in-out",
+        3
+      ]
+    ],
+    "tapTargetsUnder44": 57,
+    "tapTargetSamples": [
+      {
+        "w": 180,
+        "h": 33,
+        "tag": "a",
+        "label": ""
+      },
+      {
+        "w": 121,
+        "h": 40,
+        "tag": "a",
+        "label": "List Privately"
+      },
+      {
+        "w": 79,
+        "h": 38,
+        "tag": "a",
+        "label": "Sign in"
+      },
+      {
+        "w": 125,
+        "h": 19,
+        "tag": "a",
+        "label": "Renting your home?"
+      },
+      {
+        "w": 208,
+        "h": 19,
+        "tag": "a",
+        "label": "Alberton"
+      },
+      {
+        "w": 208,
+        "h": 19,
+        "tag": "a",
+        "label": "Benoni"
+      },
+      {
+        "w": 208,
+        "h": 19,
+        "tag": "a",
+        "label": "Boksburg"
+      },
+      {
+        "w": 208,
+        "h": 19,
+        "tag": "a",
+        "label": "Centurion"
+      },
+      {
+        "w": 208,
+        "h": 19,
+        "tag": "a",
+        "label": "Edenvale"
+      },
+      {
+        "w": 208,
+        "h": 19,
+        "tag": "a",
+        "label": "Johannesburg"
+      },
+      {
+        "w": 208,
+        "h": 19,
+        "tag": "a",
+        "label": "Kempton Park"
+      },
+      {
+        "w": 208,
+        "h": 19,
+        "tag": "a",
+        "label": "Midrand"
+      }
+    ],
+    "controlsTotal": 97,
+    "headings": [
+      {
+        "level": 1,
+        "text": "Sell Your Property"
+      },
+      {
+        "level": 2,
+        "text": "Listing Packages"
+      },
+      {
+        "level": 2,
+        "text": "Why List with Property24"
+      },
+      {
+        "level": 4,
+        "text": "More of the market visit Property24 than any other SA "
+      },
+      {
+        "level": 5,
+        "text": "Property24 receives 3.4x more visits than our closest "
+      },
+      {
+        "level": 5,
+        "text": "4.6x more people search for us on Google than our clos"
+      },
+      {
+        "level": 2,
+        "text": "Frequently Asked Questions"
+      },
+      {
+        "level": 4,
+        "text": "Request a Call Back"
+      },
+      {
+        "level": 4,
+        "text": "Speak to a Consultant"
+      },
+      {
+        "level": 2,
+        "text": "0861 111 724"
+      },
+      {
+        "level": 4,
+        "text": "Cookie Notice"
+      }
+    ],
+    "headingOrderJumps": 3,
+    "images": [
+      {
+        "natural": "167x30",
+        "shown": "180x32",
+        "src": "w.property24.com/Content/images/Optimized/Logos/property24_logo.svg?z=2cd369fe7776a4beed13",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "18x18",
+        "shown": "18x18",
+        "src": "/www.property24.com/Content/images/Optimized/Icons/icon_tooltip.png?z=d1e9a89a2b70aeac1112",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "18x18",
+        "shown": "18x18",
+        "src": "/www.property24.com/Content/images/Optimized/Icons/icon_tooltip.png?z=d1e9a89a2b70aeac1112",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "18x18",
+        "shown": "18x18",
+        "src": "/www.property24.com/Content/images/Optimized/Icons/icon_tooltip.png?z=d1e9a89a2b70aeac1112",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "18x18",
+        "shown": "18x18",
+        "src": "/www.property24.com/Content/images/Optimized/Icons/icon_tooltip.png?z=d1e9a89a2b70aeac1112",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "18x18",
+        "shown": "18x18",
+        "src": "/www.property24.com/Content/images/Optimized/Icons/icon_tooltip.png?z=d1e9a89a2b70aeac1112",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "18x18",
+        "shown": "18x18",
+        "src": "/www.property24.com/Content/images/Optimized/Icons/icon_tooltip.png?z=d1e9a89a2b70aeac1112",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "18x18",
+        "shown": "18x18",
+        "src": "/www.property24.com/Content/images/Optimized/Icons/icon_tooltip.png?z=d1e9a89a2b70aeac1112",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "18x18",
+        "shown": "18x18",
+        "src": "/www.property24.com/Content/images/Optimized/Icons/icon_tooltip.png?z=d1e9a89a2b70aeac1112",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "18x18",
+        "shown": "18x18",
+        "src": "/www.property24.com/Content/images/Optimized/Icons/icon_tooltip.png?z=d1e9a89a2b70aeac1112",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "426x236",
+        "shown": "370x205",
+        "src": "operty24.com/Content/images/Optimized/Marketing/marketing_graph.png?z=6355bfc749b7c466d553",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "100x100",
+        "shown": "100x100",
+        "src": "ontent/images/Optimized/Marketing/SPUI/marketing_support_mobile.png?z=76723b72dec19104f626",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "197x36",
+        "shown": "197x36",
+        "src": "ty24.com/Content/images/Optimized/Logos/footer_logo_white_large.svg?z=8108a8253dc9f8d0d0d1",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "23x23",
+        "shown": "23x23",
+        "src": "rty24.com/Content/images/Optimized/Icons/icon_instagram_rounded.svg?z=befcb56eeefeca2b7157",
+        "loading": "auto",
+        "alt": "yes"
+      }
+    ],
+    "imagesMissingAlt": 10,
+    "perf": {
+      "lcp": 1000,
+      "cls": 0.03593953882539223,
+      "shifts": 12,
+      "longTasks": 24
+    },
+    "bodyTextSample": "Buy Rent Sell Commercial Calculators Advice List Privately Sign in Sell Your Property Over 6 million visit Property24 each month. List your property on SA's No.1 property website! Listing Packages Renting your home? Self Service Lite R 499 Create your listing using our tools. For properties priced up to R 500 000. Residential properties, up to R 500 000 Reach SA’s largest audience of buyers List f"
+  },
+  {
+    "site": "property24",
+    "page": "valuation",
+    "url": "https://www.property24.com/selling-your-property",
+    "viewport": {
+      "w": 1440,
+      "h": 900
+    },
+    "requests": 92,
+    "totalBytes": 2743320,
+    "imageBytes": 159529,
+    "consoleErrors": [
+      "Access to script at 'https://embed.tawk.to/6a578312096ab21d402a624b/1jtitg0ig' from origin 'https://www.property24.com' has been blocked by CORS policy: No 'Acc",
+      "Failed to load resource: net::ERR_FAILED",
+      "Not signed in with the identity provider."
+    ],
+    "navErr": null,
+    "measureErr": null,
+    "title": "Looking to sell your property? Get a Free Automated Property Valuation",
+    "metaDescription": "Looking to sell your property and want to know what it's worth? Our automated valuation can provide you with an estimation of your property's value",
+    "ogImage": "https://www.property24.com/Content/images/Optimized/Logos/property24_logo_social_media_share.png?z=e2db65075e854545643",
+    "docHeight": 3678,
+    "horizontalOverflow": 0,
+    "colours": {
+      "background": [
+        [
+          "#ffffff",
+          13
+        ],
+        [
+          "#0d63c9",
+          2
+        ],
+        [
+          "#3cc89e",
+          2
+        ],
+        [
+          "#0f0c36",
+          1
+        ],
+        [
+          "#5692d9",
+          1
+        ]
+      ],
+      "text": [
+        [
+          "#0f0c36",
+          126
+        ],
+        [
+          "#ffffff",
+          109
+        ],
+        [
+          "#0d63c9",
+          28
+        ],
+        [
+          "#515b6d",
+          12
+        ],
+        [
+          "#263248",
+          5
+        ],
+        [
+          "#808080",
+          1
+        ],
+        [
+          "#9ea5b1",
+          1
+        ]
+      ],
+      "border": [
+        [
+          "#d8dce3",
+          5
+        ],
+        [
+          "#34b790",
+          2
+        ],
+        [
+          "#f04432",
+          1
+        ]
+      ]
+    },
+    "shadows": [
+      [
+        "rgba(81, 91, 109, 0.1) 0px 20px 30px 0px",
+        1
+      ],
+      [
+        "rgba(0, 0, 0, 0.25) 0px 0px 25px 0px",
+        1
+      ]
+    ],
+    "radii": [
+      [
+        "8px",
+        12
+      ],
+      [
+        "2px",
+        5
+      ],
+      [
+        "1px 1px 0px 0px",
+        5
+      ],
+      [
+        "30px",
+        3
+      ],
+      [
+        "10px",
+        1
+      ]
+    ],
+    "typography": {
+      "h1": {
+        "family": "P24-SourceSans",
+        "size": "50px",
+        "weight": "700",
+        "lineHeight": "62.5px",
+        "letterSpacing": "normal",
+        "color": "#ffffff",
+        "sample": "Get a free valuation"
+      },
+      "h2": {
+        "family": "P24-SourceSans",
+        "size": "40px",
+        "weight": "300",
+        "lineHeight": "50px",
+        "letterSpacing": "normal",
+        "color": "#0f0c36",
+        "sample": "How It Works"
+      },
+      "h3": null,
+      "body": null,
+      "button": {
+        "family": "P24-SourceSans",
+        "size": "17px",
+        "weight": "600",
+        "lineHeight": "26px",
+        "letterSpacing": "normal",
+        "color": "#ffffff",
+        "sample": "Get Started"
+      },
+      "link": null
+    },
+    "layout": {
+      "mainMaxWidth": "none",
+      "mainWidth": 1440,
+      "mainPadding": "0px",
+      "headerHeight": 33,
+      "bottomNavHeight": null,
+      "grids": []
+    },
+    "motion": [
+      [
+        "0.05s / linear",
+        6
+      ],
+      [
+        "0.2s / ease",
+        4
+      ]
+    ],
+    "tapTargetsUnder44": 58,
+    "tapTargetSamples": [
+      {
+        "w": 180,
+        "h": 33,
+        "tag": "a",
+        "label": ""
+      },
+      {
+        "w": 121,
+        "h": 40,
+        "tag": "a",
+        "label": "List Privately"
+      },
+      {
+        "w": 79,
+        "h": 38,
+        "tag": "a",
+        "label": "Sign in"
+      },
+      {
+        "w": 129,
+        "h": 40,
+        "tag": "button",
+        "label": "Get Started"
+      },
+      {
+        "w": 177,
+        "h": 40,
+        "tag": "button",
+        "label": "Get Started"
+      },
+      {
+        "w": 208,
+        "h": 19,
+        "tag": "a",
+        "label": "Alberton"
+      },
+      {
+        "w": 208,
+        "h": 19,
+        "tag": "a",
+        "label": "Benoni"
+      },
+      {
+        "w": 208,
+        "h": 19,
+        "tag": "a",
+        "label": "Boksburg"
+      },
+      {
+        "w": 208,
+        "h": 19,
+        "tag": "a",
+        "label": "Centurion"
+      },
+      {
+        "w": 208,
+        "h": 19,
+        "tag": "a",
+        "label": "Edenvale"
+      },
+      {
+        "w": 208,
+        "h": 19,
+        "tag": "a",
+        "label": "Johannesburg"
+      },
+      {
+        "w": 208,
+        "h": 19,
+        "tag": "a",
+        "label": "Kempton Park"
+      }
+    ],
+    "controlsTotal": 73,
+    "headings": [
+      {
+        "level": 1,
+        "text": "Get a free valuation"
+      },
+      {
+        "level": 2,
+        "text": "How It Works"
+      },
+      {
+        "level": 2,
+        "text": "Ready for the first step?"
+      },
+      {
+        "level": 2,
+        "text": "Frequently Asked Questions"
+      },
+      {
+        "level": 4,
+        "text": "Cookie Notice"
+      }
+    ],
+    "headingOrderJumps": 1,
+    "images": [
+      {
+        "natural": "167x30",
+        "shown": "180x32",
+        "src": "w.property24.com/Content/images/Optimized/Logos/property24_logo.svg?z=2cd369fe7776a4beed13",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "1440x543",
+        "shown": "1440x543",
+        "src": "/Optimized/Marketing/SellerLeads/SPUI-seller-leads-hero-desktop.png?z=b132de38e53d953890d2",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "810x666",
+        "shown": "424x349",
+        "src": "24.com/Content/images/Optimized/Marketing/PrivateListing/step_1.png?z=84c1b9dc84dd9915d94d",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "810x666",
+        "shown": "408x335",
+        "src": "ntent/images/Optimized/Marketing/SellerLeads/Seller-leads-step2.png?z=3d2cb5121a739b19dc54",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "810x666",
+        "shown": "424x349",
+        "src": "24.com/Content/images/Optimized/Marketing/PrivateListing/step_3.png?z=289490c6ceace0574193",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "197x36",
+        "shown": "197x36",
+        "src": "ty24.com/Content/images/Optimized/Logos/footer_logo_white_large.svg?z=8108a8253dc9f8d0d0d1",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "23x23",
+        "shown": "23x23",
+        "src": "rty24.com/Content/images/Optimized/Icons/icon_instagram_rounded.svg?z=befcb56eeefeca2b7157",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "22x23",
+        "shown": "22x23",
+        "src": "erty24.com/Content/images/Optimized/Icons/icon_facebook_rounded.svg?z=38bfdb8180de4b2ec66a",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "23x23",
+        "shown": "23x23",
+        "src": "perty24.com/Content/images/Optimized/Icons/icon_twitter_rounded.svg?z=a4e31f27df144d88a0ea",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "23x23",
+        "shown": "23x23",
+        "src": "perty24.com/Content/images/Optimized/Icons/icon_youtube_rounded.svg?z=4e7743d439878c62a49f",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "23x23",
+        "shown": "23x23",
+        "src": "rty24.com/Content/images/Optimized/Icons/icon_pinterest_rounded.svg?z=d70f8a6856fc28aea94c",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "129x43",
+        "shown": "129x43",
+        "src": "roperty24.com/Content/images/Optimized/Icons/footer_apple_store.svg?z=5de7839dd2c149b09824",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "145x43",
+        "shown": "145x43",
+        "src": "operty24.com/Content/images/Optimized/Icons/footer_google_store.svg?z=c8260857661db3a84c9d",
+        "loading": "auto",
+        "alt": "yes"
+      }
+    ],
+    "imagesMissingAlt": 0,
+    "perf": {
+      "lcp": 536,
+      "cls": 0,
+      "shifts": 0,
+      "longTasks": 14
+    },
+    "bodyTextSample": "Buy Rent Sell Commercial Calculators Advice List Privately Sign in Get a free valuation Looking to sell your property and want to know what it’s worth? Answer a few easy questions to receive a free automated estimation of your property’s value. Get Started How It Works You’re just 3 steps away from receiving your report and connecting with leading estate agents in your area. STEP 1 Tell us about y"
+  },
+  {
+    "site": "privateproperty",
+    "page": "home",
+    "url": "https://www.privateproperty.co.za/",
+    "viewport": {
+      "w": 390,
+      "h": 844
+    },
+    "requests": 61,
+    "totalBytes": 1989809,
+    "imageBytes": 37628,
+    "consoleErrors": [],
+    "navErr": null,
+    "measureErr": null,
+    "title": "Property for sale in South Africa | Private Property",
+    "metaDescription": "Private Property is your property portal for all the best listings around South Africa. Find your new home on privateproperty.co.za",
+    "ogImage": "https://helium.privateproperty.co.za/live-za-images/socialmediasharing/private-property-icon.png",
+    "docHeight": 4309,
+    "horizontalOverflow": 0,
+    "colours": {
+      "background": [
+        [
+          "#ffffff",
+          8
+        ],
+        [
+          "#a4d8f3 @0.15",
+          7
+        ],
+        [
+          "#e71442",
+          4
+        ],
+        [
+          "#fdf8e3",
+          1
+        ],
+        [
+          "#f1f9fd",
+          1
+        ],
+        [
+          "#fff2f2",
+          1
+        ],
+        [
+          "#a4d8f3 @0.2",
+          1
+        ],
+        [
+          "#0d1d28",
+          1
+        ]
+      ],
+      "text": [
+        [
+          "#000000",
+          119
+        ],
+        [
+          "#ffffff",
+          74
+        ],
+        [
+          "#0a6d99",
+          68
+        ],
+        [
+          "#e9edf0",
+          63
+        ],
+        [
+          "#202e37",
+          9
+        ],
+        [
+          "#0d1d28",
+          7
+        ],
+        [
+          "#637482",
+          3
+        ],
+        [
+          "#30414d",
+          3
+        ]
+      ],
+      "border": [
+        [
+          "#e9edf0",
+          2
+        ],
+        [
+          "#cfd8de",
+          2
+        ],
+        [
+          "#0a6d99",
+          1
+        ]
+      ]
+    },
+    "shadows": [
+      [
+        "rgba(0, 0, 0, 0.1) 0px 6px 20px 0px",
+        2
+      ],
+      [
+        "rgba(0, 0, 0, 0.04) 0px 2px 8px 0px",
+        1
+      ]
+    ],
+    "radii": [
+      [
+        "6px",
+        13
+      ],
+      [
+        "8px",
+        7
+      ],
+      [
+        "12px",
+        4
+      ],
+      [
+        "20px",
+        1
+      ],
+      [
+        "16px",
+        1
+      ],
+      [
+        "16px 16px 0px 0px",
+        1
+      ],
+      [
+        "12px 12px 12px 0px",
+        1
+      ],
+      [
+        "12px 12px 0px 0px",
+        1
+      ],
+      [
+        "8px 8px 0px 0px",
+        1
+      ]
+    ],
+    "typography": {
+      "h1": {
+        "family": "Inter",
+        "size": "26px",
+        "weight": "700",
+        "lineHeight": "33.8px",
+        "letterSpacing": "normal",
+        "color": "#ffffff",
+        "sample": "We have a space for you"
+      },
+      "h2": {
+        "family": "Inter",
+        "size": "24px",
+        "weight": "700",
+        "lineHeight": "31.2px",
+        "letterSpacing": "normal",
+        "color": "#000000",
+        "sample": "Everything property, all in one place!"
+      },
+      "h3": {
+        "family": "Inter",
+        "size": "18px",
+        "weight": "700",
+        "lineHeight": "23.4px",
+        "letterSpacing": "normal",
+        "color": "#000000",
+        "sample": "Buy a Property"
+      },
+      "body": {
+        "family": "Inter",
+        "size": "14px",
+        "weight": "400",
+        "lineHeight": "20.02px",
+        "letterSpacing": "normal",
+        "color": "#ffffff",
+        "sample": "© Copyright 2026 - Private Property South "
+      },
+      "button": null,
+      "link": {
+        "family": "Inter",
+        "size": "14px",
+        "weight": "400",
+        "lineHeight": "20.02px",
+        "letterSpacing": "normal",
+        "color": "#0a6d99",
+        "sample": ""
+      }
+    },
+    "layout": {
+      "mainMaxWidth": "none",
+      "mainWidth": 390,
+      "mainPadding": "0px 0px 32px",
+      "headerHeight": 64,
+      "bottomNavHeight": null,
+      "grids": [
+        {
+          "cols": "[full-width-start] 16px [breakout-start] 0px [content-start]",
+          "gap": "normal"
+        },
+        {
+          "cols": "[full-width-start] 16px [breakout-start] 0px [content-start]",
+          "gap": "normal"
+        },
+        {
+          "cols": "272px 272px 272px 272px 272px 272px",
+          "gap": "32px"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        }
+      ]
+    },
+    "motion": [
+      [
+        "0.1s / linear",
+        2
+      ],
+      [
+        "0.1s, 0.1s / linear, linear",
+        2
+      ],
+      [
+        "0.15s / ease-out",
+        1
+      ]
+    ],
+    "tapTargetsUnder44": 84,
+    "tapTargetSamples": [
+      {
+        "w": 89,
+        "h": 32,
+        "tag": "button",
+        "label": "Sign up"
+      },
+      {
+        "w": 40,
+        "h": 40,
+        "tag": "button",
+        "label": ""
+      },
+      {
+        "w": 256,
+        "h": 38,
+        "tag": "input",
+        "label": ""
+      },
+      {
+        "w": 40,
+        "h": 40,
+        "tag": "button",
+        "label": "Search"
+      },
+      {
+        "w": 209,
+        "h": 20,
+        "tag": "a",
+        "label": "Search properties"
+      },
+      {
+        "w": 209,
+        "h": 20,
+        "tag": "a",
+        "label": "Search rentals"
+      },
+      {
+        "w": 209,
+        "h": 20,
+        "tag": "a",
+        "label": "Get started"
+      },
+      {
+        "w": 179,
+        "h": 23,
+        "tag": "a",
+        "label": "Gauteng"
+      },
+      {
+        "w": 179,
+        "h": 20,
+        "tag": "a",
+        "label": "Pretoria"
+      },
+      {
+        "w": 179,
+        "h": 20,
+        "tag": "a",
+        "label": "Johannesburg"
+      },
+      {
+        "w": 179,
+        "h": 20,
+        "tag": "a",
+        "label": "Centurion"
+      },
+      {
+        "w": 179,
+        "h": 23,
+        "tag": "a",
+        "label": "KwaZulu Natal"
+      }
+    ],
+    "controlsTotal": 101,
+    "headings": [
+      {
+        "level": 1,
+        "text": "We have a space for you"
+      },
+      {
+        "level": 2,
+        "text": "Everything property, all in one place!"
+      },
+      {
+        "level": 3,
+        "text": "Buy a Property"
+      },
+      {
+        "level": 3,
+        "text": "Rent a Property"
+      },
+      {
+        "level": 3,
+        "text": "Sell a Property"
+      },
+      {
+        "level": 2,
+        "text": "Search all property for sale in South Africa"
+      },
+      {
+        "level": 3,
+        "text": "Get instant property alerts"
+      },
+      {
+        "level": 2,
+        "text": "Property news"
+      },
+      {
+        "level": 4,
+        "text": "News"
+      },
+      {
+        "level": 3,
+        "text": "Property industry reacts to latest interest rate hike"
+      },
+      {
+        "level": 4,
+        "text": "News"
+      },
+      {
+        "level": 3,
+        "text": "Oil price shocks will affect household spending"
+      },
+      {
+        "level": 4,
+        "text": "News"
+      },
+      {
+        "level": 3,
+        "text": "Feedback from SONA 2026"
+      },
+      {
+        "level": 4,
+        "text": "News"
+      },
+      {
+        "level": 3,
+        "text": "Interest rate - February 2026 - remains unchanged"
+      },
+      {
+        "level": 4,
+        "text": "News"
+      },
+      {
+        "level": 3,
+        "text": "Be prepared for climate-induced States of Emergency"
+      },
+      {
+        "level": 4,
+        "text": "News"
+      },
+      {
+        "level": 3,
+        "text": "What’s ahead for real estate 2026: the comeback year"
+      },
+      {
+        "level": 3,
+        "text": "Property For Sale"
+      },
+      {
+        "level": 3,
+        "text": "Property To Rent"
+      },
+      {
+        "level": 3,
+        "text": "Services"
+      },
+      {
+        "level": 3,
+        "text": "Calculators"
+      },
+      {
+        "level": 3,
+        "text": "Company"
+      },
+      {
+        "level": 3,
+        "text": "This site uses cookies"
+      }
+    ],
+    "headingOrderJumps": 1,
+    "images": [
+      {
+        "natural": "800x1016",
+        "shown": "390x456",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/images/hero-search/home-mobile.webp",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "350x154",
+        "shown": "273x120",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/icons/home-page/Assets_home-buy.svg",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "350x154",
+        "shown": "273x120",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/icons/home-page/Assets_home-rent.svg",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "350x154",
+        "shown": "273x120",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/icons/home-page/Assets_home-sell.svg",
+        "loading": "lazy",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "43x42",
+        "shown": "42x42",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/icons/home-page/advice-medium.svg",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "43x42",
+        "shown": "42x42",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/icons/home-page/calculator-medium.svg",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "43x42",
+        "shown": "42x42",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/icons/home-page/agent-medium.svg",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "43x42",
+        "shown": "42x42",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/icons/home-page/guidelines-medium.svg",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "43x42",
+        "shown": "42x42",
+        "src": "s://www.privateproperty.co.za/Content/NewWebsite/icons/home-page/neighbourhoods-medium.svg",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "0x0",
+        "shown": "132x180",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/images/email-alert-phone.webp",
+        "loading": "lazy",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "0x0",
+        "shown": "358x40",
+        "src": "operty.co.za/Content/NewWebsite/images/Assets_Circle%20Crop%20Middle%20Right%20Reverse.svg",
+        "loading": "lazy",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "0x0",
+        "shown": "272x153",
+        "src": ".core.windows.net/live-za-images/article/9689/link/f6244afecf4b4415b5cfd7197a96c134_ll.jpg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "0x0",
+        "shown": "272x153",
+        "src": ".core.windows.net/live-za-images/article/9651/link/e225bb533c934e8d99ccc4321da2697f_ll.jpg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "0x0",
+        "shown": "272x153",
+        "src": ".core.windows.net/live-za-images/article/9633/link/3ec27b1d307a4c0aaa112b3d0fe29fd2_ll.jpg",
+        "loading": "lazy",
+        "alt": "yes"
+      }
+    ],
+    "imagesMissingAlt": 11,
+    "perf": {
+      "lcp": 2928,
+      "cls": 0,
+      "shifts": 0,
+      "longTasks": 96
+    },
+    "bodyTextSample": "Sign up We have a space for you Buy Rent Search Everything property, all in one place! Buy a Property With thousands of properties for sale on our site, we can help you find your space. Search properties Rent a Property Find a rental space that you’ll love or advertise your rental property on our site. Search rentals Sell a Property Advertise with us and have your property seen by millions of peop"
+  },
+  {
+    "site": "privateproperty",
+    "page": "home",
+    "url": "https://www.privateproperty.co.za/",
+    "viewport": {
+      "w": 1440,
+      "h": 900
+    },
+    "requests": 59,
+    "totalBytes": 2332339,
+    "imageBytes": 288849,
+    "consoleErrors": [],
+    "navErr": null,
+    "measureErr": null,
+    "title": "Property for sale in South Africa | Private Property",
+    "metaDescription": "Private Property is your property portal for all the best listings around South Africa. Find your new home on privateproperty.co.za",
+    "ogImage": "https://helium.privateproperty.co.za/live-za-images/socialmediasharing/private-property-icon.png",
+    "docHeight": 3636,
+    "horizontalOverflow": 0,
+    "colours": {
+      "background": [
+        [
+          "#ffffff",
+          9
+        ],
+        [
+          "#e71442",
+          4
+        ],
+        [
+          "#a4d8f3 @0.15",
+          3
+        ],
+        [
+          "#fdf8e3",
+          1
+        ],
+        [
+          "#f1f9fd",
+          1
+        ],
+        [
+          "#fff2f2",
+          1
+        ],
+        [
+          "#a4d8f3 @0.2",
+          1
+        ],
+        [
+          "#0d1d28",
+          1
+        ]
+      ],
+      "text": [
+        [
+          "#000000",
+          127
+        ],
+        [
+          "#ffffff",
+          74
+        ],
+        [
+          "#0a6d99",
+          66
+        ],
+        [
+          "#e9edf0",
+          34
+        ],
+        [
+          "#0d1d28",
+          8
+        ],
+        [
+          "#97a4af",
+          8
+        ],
+        [
+          "#202e37",
+          5
+        ],
+        [
+          "#637482",
+          3
+        ],
+        [
+          "#30414d",
+          3
+        ]
+      ],
+      "border": [
+        [
+          "#e9edf0",
+          7
+        ],
+        [
+          "#30414d",
+          5
+        ],
+        [
+          "#cfd8de",
+          2
+        ],
+        [
+          "#0a6d99",
+          1
+        ]
+      ]
+    },
+    "shadows": [
+      [
+        "rgba(0, 0, 0, 0.04) 0px 2px 8px 0px",
+        6
+      ],
+      [
+        "rgba(0, 0, 0, 0.1) 0px 6px 20px 0px",
+        2
+      ]
+    ],
+    "radii": [
+      [
+        "6px",
+        19
+      ],
+      [
+        "12px",
+        5
+      ],
+      [
+        "16px",
+        4
+      ],
+      [
+        "8px",
+        3
+      ],
+      [
+        "16px 16px 0px 0px",
+        1
+      ],
+      [
+        "12px 12px 12px 0px",
+        1
+      ],
+      [
+        "12px 0px 0px",
+        1
+      ]
+    ],
+    "typography": {
+      "h1": {
+        "family": "Inter",
+        "size": "40px",
+        "weight": "700",
+        "lineHeight": "52px",
+        "letterSpacing": "normal",
+        "color": "#ffffff",
+        "sample": "We have a space for you"
+      },
+      "h2": {
+        "family": "Inter",
+        "size": "32px",
+        "weight": "700",
+        "lineHeight": "41.6px",
+        "letterSpacing": "normal",
+        "color": "#000000",
+        "sample": "Everything property, all in one place!"
+      },
+      "h3": {
+        "family": "Inter",
+        "size": "18px",
+        "weight": "700",
+        "lineHeight": "23.4px",
+        "letterSpacing": "normal",
+        "color": "#000000",
+        "sample": "Buy a Property"
+      },
+      "body": {
+        "family": "Inter",
+        "size": "12px",
+        "weight": "400",
+        "lineHeight": "17.16px",
+        "letterSpacing": "normal",
+        "color": "#97a4af",
+        "sample": "© Copyright 2026 - Private Property South "
+      },
+      "button": null,
+      "link": {
+        "family": "Inter",
+        "size": "14px",
+        "weight": "400",
+        "lineHeight": "20.02px",
+        "letterSpacing": "normal",
+        "color": "#0a6d99",
+        "sample": ""
+      }
+    },
+    "layout": {
+      "mainMaxWidth": "none",
+      "mainWidth": 1440,
+      "mainPadding": "0px 0px 32px",
+      "headerHeight": 72,
+      "bottomNavHeight": null,
+      "grids": [
+        {
+          "cols": "[full-width-start] 76px [breakout-start] 92px [content-start",
+          "gap": "normal"
+        },
+        {
+          "cols": "[full-width-start] 76px [breakout-start] 92px [content-start",
+          "gap": "normal"
+        },
+        {
+          "cols": "352px 352px 352px",
+          "gap": "16px 24px"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        }
+      ]
+    },
+    "motion": [
+      [
+        "0.35s / linear",
+        6
+      ],
+      [
+        "0.15s / ease-out",
+        1
+      ]
+    ],
+    "tapTargetsUnder44": 92,
+    "tapTargetSamples": [
+      {
+        "w": 38,
+        "h": 17,
+        "tag": "button",
+        "label": "Login"
+      },
+      {
+        "w": 85,
+        "h": 40,
+        "tag": "button",
+        "label": "Sign up"
+      },
+      {
+        "w": 567,
+        "h": 18,
+        "tag": "input",
+        "label": ""
+      },
+      {
+        "w": 288,
+        "h": 23,
+        "tag": "a",
+        "label": "Search properties"
+      },
+      {
+        "w": 288,
+        "h": 23,
+        "tag": "a",
+        "label": "Search rentals"
+      },
+      {
+        "w": 288,
+        "h": 23,
+        "tag": "a",
+        "label": "Get started"
+      },
+      {
+        "w": 221,
+        "h": 23,
+        "tag": "a",
+        "label": "Gauteng"
+      },
+      {
+        "w": 221,
+        "h": 20,
+        "tag": "a",
+        "label": "Pretoria"
+      },
+      {
+        "w": 221,
+        "h": 20,
+        "tag": "a",
+        "label": "Johannesburg"
+      },
+      {
+        "w": 221,
+        "h": 20,
+        "tag": "a",
+        "label": "Centurion"
+      },
+      {
+        "w": 221,
+        "h": 23,
+        "tag": "a",
+        "label": "KwaZulu Natal"
+      },
+      {
+        "w": 221,
+        "h": 20,
+        "tag": "a",
+        "label": "Durban"
+      }
+    ],
+    "controlsTotal": 110,
+    "headings": [
+      {
+        "level": 1,
+        "text": "We have a space for you"
+      },
+      {
+        "level": 2,
+        "text": "Everything property, all in one place!"
+      },
+      {
+        "level": 3,
+        "text": "Buy a Property"
+      },
+      {
+        "level": 3,
+        "text": "Rent a Property"
+      },
+      {
+        "level": 3,
+        "text": "Sell a Property"
+      },
+      {
+        "level": 2,
+        "text": "Search all property for sale in South Africa"
+      },
+      {
+        "level": 3,
+        "text": "Get instant property alerts"
+      },
+      {
+        "level": 2,
+        "text": "Property news"
+      },
+      {
+        "level": 4,
+        "text": "News"
+      },
+      {
+        "level": 3,
+        "text": "Property industry reacts to latest interest rate hike"
+      },
+      {
+        "level": 4,
+        "text": "News"
+      },
+      {
+        "level": 3,
+        "text": "Oil price shocks will affect household spending"
+      },
+      {
+        "level": 3,
+        "text": "Feedback from SONA 2026"
+      },
+      {
+        "level": 3,
+        "text": "Interest rate - February 2026 - remains unchanged"
+      },
+      {
+        "level": 3,
+        "text": "Be prepared for climate-induced States of Emergency"
+      },
+      {
+        "level": 3,
+        "text": "What’s ahead for real estate 2026: the comeback year"
+      },
+      {
+        "level": 3,
+        "text": "Property For Sale"
+      },
+      {
+        "level": 3,
+        "text": "Property To Rent"
+      },
+      {
+        "level": 3,
+        "text": "Advice"
+      },
+      {
+        "level": 3,
+        "text": "Tools"
+      },
+      {
+        "level": 3,
+        "text": "Company"
+      },
+      {
+        "level": 3,
+        "text": "This site uses cookies"
+      }
+    ],
+    "headingOrderJumps": 1,
+    "images": [
+      {
+        "natural": "2560x1016",
+        "shown": "1288x508",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/images/hero-search/home-desktop.webp",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "350x154",
+        "shown": "350x154",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/icons/home-page/Assets_home-buy.svg",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "350x154",
+        "shown": "350x154",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/icons/home-page/Assets_home-rent.svg",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "350x154",
+        "shown": "350x154",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/icons/home-page/Assets_home-sell.svg",
+        "loading": "lazy",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "43x42",
+        "shown": "48x48",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/icons/home-page/advice-medium.svg",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "43x42",
+        "shown": "48x48",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/icons/home-page/calculator-medium.svg",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "43x42",
+        "shown": "48x48",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/icons/home-page/agent-medium.svg",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "43x42",
+        "shown": "48x48",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/icons/home-page/guidelines-medium.svg",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "43x42",
+        "shown": "48x48",
+        "src": "s://www.privateproperty.co.za/Content/NewWebsite/icons/home-page/neighbourhoods-medium.svg",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "798x1088",
+        "shown": "238x324",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/images/email-alert-phone.webp",
+        "loading": "lazy",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "40x224",
+        "shown": "40x290",
+        "src": ".privateproperty.co.za/Content/NewWebsite/images/Assets_Circle%20Crop%20Middle%20Right.svg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "0x0",
+        "shown": "352x198",
+        "src": ".core.windows.net/live-za-images/article/9689/link/f6244afecf4b4415b5cfd7197a96c134_ll.jpg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "0x0",
+        "shown": "352x198",
+        "src": ".core.windows.net/live-za-images/article/9651/link/e225bb533c934e8d99ccc4321da2697f_ll.jpg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "0x0",
+        "shown": "80x80",
+        "src": ".core.windows.net/live-za-images/article/9633/link/3ec27b1d307a4c0aaa112b3d0fe29fd2_ll.jpg",
+        "loading": "lazy",
+        "alt": "yes"
+      }
+    ],
+    "imagesMissingAlt": 10,
+    "perf": {
+      "lcp": 880,
+      "cls": 0.005808897569444444,
+      "shifts": 9,
+      "longTasks": 90
+    },
+    "bodyTextSample": "Buy Rent Sell Advice Services Login Sign up We have a space for you Buy Rent Search Everything property, all in one place! Buy a Property With thousands of properties for sale on our site, we can help you find your space. Search properties Rent a Property Find a rental space that you’ll love or advertise your rental property on our site. Search rentals Sell a Property Advertise with us and have yo"
+  },
+  {
+    "site": "privateproperty",
+    "page": "search",
+    "url": "https://www.privateproperty.co.za/for-sale/western-cape/cape-town/82",
+    "viewport": {
+      "w": 390,
+      "h": 844
+    },
+    "requests": 88,
+    "totalBytes": 4032559,
+    "imageBytes": 512270,
+    "consoleErrors": [],
+    "navErr": null,
+    "measureErr": null,
+    "title": "Property for sale in Point Waterfront | Private Property",
+    "metaDescription": "126 properties for sale in Point Waterfront, Durban Central. Browse photos, floor plans and full property details.",
+    "ogImage": "https://helium.privateproperty.co.za/live-za-images/socialmediasharing/private-property-icon.png",
+    "docHeight": 13264,
+    "horizontalOverflow": 0,
+    "colours": {
+      "background": [
+        [
+          "#e9edf0",
+          46
+        ],
+        [
+          "#ffffff",
+          33
+        ],
+        [
+          "#e71442",
+          3
+        ],
+        [
+          "#a4d8f3 @0.2",
+          2
+        ],
+        [
+          "#18254b",
+          1
+        ],
+        [
+          "#12abb7",
+          1
+        ],
+        [
+          "#005c88",
+          1
+        ],
+        [
+          "#f1f4f5",
+          1
+        ],
+        [
+          "#0.0a0a0a44fd601280.6d6d6dc1a47aa0.99999999999998 @0.06",
+          1
+        ],
+        [
+          "#a4d8f3 @0.15",
+          1
+        ],
+        [
+          "#0d1d28",
+          1
+        ]
+      ],
+      "text": [
+        [
+          "#0d1d28",
+          304
+        ],
+        [
+          "#000000",
+          245
+        ],
+        [
+          "#637482",
+          154
+        ],
+        [
+          "#ffffff",
+          77
+        ],
+        [
+          "#e9edf0",
+          63
+        ],
+        [
+          "#0a6d99",
+          39
+        ],
+        [
+          "#808080",
+          24
+        ],
+        [
+          "#97a4af",
+          9
+        ],
+        [
+          "#202e37",
+          9
+        ],
+        [
+          "#30414d",
+          3
+        ]
+      ],
+      "border": [
+        [
+          "#e9edf0",
+          12
+        ],
+        [
+          "#ffffff",
+          7
+        ],
+        [
+          "#0a6d99",
+          2
+        ],
+        [
+          "#f1f4f5",
+          1
+        ],
+        [
+          "#cfd8de",
+          1
+        ],
+        [
+          "#e71442",
+          1
+        ]
+      ]
+    },
+    "shadows": [
+      [
+        "rgba(0, 0, 0, 0.05) 0px 1px 2px 0px",
+        7
+      ],
+      [
+        "rgba(0, 0, 0, 0.04) 0px 2px 8px 0px",
+        3
+      ],
+      [
+        "rgba(0, 0, 0, 0.05) 0px 4px 10px -3px",
+        1
+      ],
+      [
+        "rgba(0, 0, 0, 0.1) 0px 6px 20px 0px",
+        1
+      ]
+    ],
+    "radii": [
+      [
+        "6px",
+        41
+      ],
+      [
+        "50%",
+        7
+      ],
+      [
+        "4px",
+        3
+      ],
+      [
+        "8px 8px 0px 0px",
+        2
+      ],
+      [
+        "20px",
+        1
+      ],
+      [
+        "390px",
+        1
+      ],
+      [
+        "12px 12px 12px 0px",
+        1
+      ],
+      [
+        "12px 12px 0px 0px",
+        1
+      ],
+      [
+        "6px 6px 0px 0px",
+        1
+      ]
+    ],
+    "typography": {
+      "h1": {
+        "family": "Inter",
+        "size": "20px",
+        "weight": "700",
+        "lineHeight": "26px",
+        "letterSpacing": "normal",
+        "color": "#000000",
+        "sample": "Property for sale in Point Waterfront"
+      },
+      "h2": null,
+      "h3": {
+        "family": "Inter",
+        "size": "16px",
+        "weight": "700",
+        "lineHeight": "20.8px",
+        "letterSpacing": "normal",
+        "color": "#000000",
+        "sample": "R 925 000 - R 2 700 000"
+      },
+      "body": {
+        "family": "Inter",
+        "size": "14px",
+        "weight": "400",
+        "lineHeight": "20.02px",
+        "letterSpacing": "normal",
+        "color": "#ffffff",
+        "sample": "© Copyright 2026 - Private Property South "
+      },
+      "button": null,
+      "link": {
+        "family": "Inter",
+        "size": "14px",
+        "weight": "400",
+        "lineHeight": "20.02px",
+        "letterSpacing": "normal",
+        "color": "#0a6d99",
+        "sample": ""
+      }
+    },
+    "layout": {
+      "mainMaxWidth": "none",
+      "mainWidth": 390,
+      "mainPadding": "0px 0px 32px",
+      "headerHeight": 64,
+      "bottomNavHeight": null,
+      "grids": [
+        {
+          "cols": "[full-width-start] 16px [breakout-start] 0px [content-start]",
+          "gap": "normal"
+        },
+        {
+          "cols": "[full-width-start] 16px [breakout-start] 0px [content-start]",
+          "gap": "normal"
+        },
+        {
+          "cols": "268px 90px",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        }
+      ]
+    },
+    "motion": [
+      [
+        "0.1s / linear",
+        2
+      ],
+      [
+        "0.1s, 0.1s / linear, linear",
+        2
+      ]
+    ],
+    "tapTargetsUnder44": 111,
+    "tapTargetSamples": [
+      {
+        "w": 89,
+        "h": 32,
+        "tag": "button",
+        "label": "Sign up"
+      },
+      {
+        "w": 40,
+        "h": 40,
+        "tag": "button",
+        "label": ""
+      },
+      {
+        "w": 77,
+        "h": 36,
+        "tag": "button",
+        "label": "Filters"
+      },
+      {
+        "w": 10,
+        "h": 41,
+        "tag": "a",
+        "label": "…"
+      },
+      {
+        "w": 86,
+        "h": 41,
+        "tag": "a",
+        "label": "Durban Central"
+      },
+      {
+        "w": 93,
+        "h": 41,
+        "tag": "a",
+        "label": "Point Waterfront"
+      },
+      {
+        "w": 75,
+        "h": 18,
+        "tag": "button",
+        "label": "Sort by"
+      },
+      {
+        "w": 24,
+        "h": 24,
+        "tag": "button",
+        "label": ""
+      },
+      {
+        "w": 24,
+        "h": 24,
+        "tag": "button",
+        "label": ""
+      },
+      {
+        "w": 24,
+        "h": 24,
+        "tag": "button",
+        "label": ""
+      },
+      {
+        "w": 24,
+        "h": 24,
+        "tag": "button",
+        "label": ""
+      },
+      {
+        "w": 24,
+        "h": 24,
+        "tag": "button",
+        "label": ""
+      }
+    ],
+    "controlsTotal": 147,
+    "headings": [
+      {
+        "level": 1,
+        "text": "Property for sale in Point Waterfront"
+      },
+      {
+        "level": 3,
+        "text": "R 925 000 - R 2 700 000"
+      },
+      {
+        "level": 3,
+        "text": "Get instant property alerts"
+      },
+      {
+        "level": 3,
+        "text": "Durban Central Property News"
+      },
+      {
+        "level": 4,
+        "text": "Area Review: Point Waterfront"
+      },
+      {
+        "level": 4,
+        "text": "Property guide to the Point Waterfront"
+      },
+      {
+        "level": 4,
+        "text": "Area and property guide for the Point Waterfront"
+      },
+      {
+        "level": 4,
+        "text": "Lion Match's new head office in the historical Point P"
+      },
+      {
+        "level": 3,
+        "text": "Property For Sale"
+      },
+      {
+        "level": 3,
+        "text": "Property To Rent"
+      },
+      {
+        "level": 3,
+        "text": "Services"
+      },
+      {
+        "level": 3,
+        "text": "Calculators"
+      },
+      {
+        "level": 3,
+        "text": "Company"
+      },
+      {
+        "level": 3,
+        "text": "This site uses cookies"
+      }
+    ],
+    "headingOrderJumps": 1,
+    "images": [
+      {
+        "natural": "320x160",
+        "shown": "80x40",
+        "src": "operty.co.za/live-za-images/offices/16144/fl_logo/69b7854995c64eadb30f01f2063961a8_ofl.png",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "909x682",
+        "shown": "358x232",
+        "src": "https://images.pp.co.za/listing/12163121/1B8I9v9gR2FIv6UAEWSbr6/1024/682/contain/jpegorpng",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "600x450",
+        "shown": "179x119",
+        "src": "https://images.pp.co.za/listing/12163121/jecpKvX5uBY30CD4ERqpP3/600/450/contain/jpegorpng",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "600x450",
+        "shown": "179x119",
+        "src": "https://images.pp.co.za/listing/12163121/csaNQ5CRAE9Ntgm9pKD3F1/600/450/contain/jpegorpng",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "600x450",
+        "shown": "358x254",
+        "src": "https://images.pp.co.za/listing/12121369/sgKajYRPTPOJ2ru2mWZgF7/600/450/contain/jpegorpng",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "215x150",
+        "shown": "90x45",
+        "src": "eproperty.co.za/live-za-images/offices/5336/image/3923772ac60d49798b2733cb3a480f72_osm.jpg",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "600x277",
+        "shown": "358x254",
+        "src": "https://images.pp.co.za/listing/11862535/3CMICStzNKmWlVDpVltL66/600/450/contain/jpegorpng",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "600x450",
+        "shown": "358x254",
+        "src": "https://images.pp.co.za/listing/11722553/sK3pKlhFSPFy9aNfRXBXe3/600/450/contain/jpegorpng",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "300x150",
+        "shown": "90x45",
+        "src": "eproperty.co.za/live-za-images/offices/8154/image/5b420290e5244710a64df23c3495fd2c_osm.jpg",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "455x450",
+        "shown": "358x254",
+        "src": "https://images.pp.co.za/listing/11984948/p4MKUMj5HZGXiOYRAkxTf3/600/450/contain/jpegorpng",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "600x450",
+        "shown": "358x254",
+        "src": "https://images.pp.co.za/listing/11149739/tRbYHHiWBU3Oln3BtHJsV3/600/450/contain/jpegorpng",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "120x160",
+        "shown": "64x64",
+        "src": "co.za/live-za-images/accountholders/2331596/image/5d58671e2b1541da8108852d7ef1f36e_ach.jpg",
+        "loading": "eager",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "300x150",
+        "shown": "90x45",
+        "src": "eproperty.co.za/live-za-images/offices/1837/image/499580f59599456cbd938fe95254fe51_osm.jpg",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "600x338",
+        "shown": "358x254",
+        "src": "https://images.pp.co.za/listing/11878128/uq5ebWwOKHbdS51vfnBDg3/600/450/contain/jpegorpng",
+        "loading": "eager",
+        "alt": "yes"
+      }
+    ],
+    "imagesMissingAlt": 13,
+    "perf": {
+      "lcp": 2104,
+      "cls": 0,
+      "shifts": 0,
+      "longTasks": 110
+    },
+    "bodyTextSample": "Sign up Point Waterfront Add Filters Property for sale in Point Waterfront … Durban Central Point Waterfront 1-20 of 126 properties Sort by R 1 945 000 2 Bedroom Apartment in Point Waterfront 2 2.5 2 1 ha Promoted R 1 375 000 1 Bedroom ApartmentPoint Waterfront 1 1 1 95 m² Promoted R 585 000 neg 1 Bedroom FlatPoint Waterfront 102 Steven Park, 41 South Beach Avenue 1 1 50 m² LISTED PRIVATELY R 650 "
+  },
+  {
+    "site": "privateproperty",
+    "page": "search",
+    "url": "https://www.privateproperty.co.za/for-sale/western-cape/cape-town/82",
+    "viewport": {
+      "w": 1440,
+      "h": 900
+    },
+    "requests": 113,
+    "totalBytes": 4909510,
+    "imageBytes": 1042875,
+    "consoleErrors": [],
+    "navErr": null,
+    "measureErr": null,
+    "title": "Property for sale in Point Waterfront | Private Property",
+    "metaDescription": "126 properties for sale in Point Waterfront, Durban Central. Browse photos, floor plans and full property details.",
+    "ogImage": "https://helium.privateproperty.co.za/live-za-images/socialmediasharing/private-property-icon.png",
+    "docHeight": 8992,
+    "horizontalOverflow": 0,
+    "colours": {
+      "background": [
+        [
+          "#ffffff",
+          44
+        ],
+        [
+          "#e9edf0",
+          25
+        ],
+        [
+          "#e71442",
+          4
+        ],
+        [
+          "#a4d8f3 @0.2",
+          3
+        ],
+        [
+          "#a4d8f3 @0.15",
+          2
+        ],
+        [
+          "#18254b",
+          1
+        ],
+        [
+          "#12abb7",
+          1
+        ],
+        [
+          "#005c88",
+          1
+        ],
+        [
+          "#0.0a0a0a44fd601280.6d6d6dc1a47aa0.99999999999998 @0.06",
+          1
+        ],
+        [
+          "#0d1d28",
+          1
+        ]
+      ],
+      "text": [
+        [
+          "#0d1d28",
+          349
+        ],
+        [
+          "#000000",
+          291
+        ],
+        [
+          "#637482",
+          154
+        ],
+        [
+          "#ffffff",
+          81
+        ],
+        [
+          "#0a6d99",
+          38
+        ],
+        [
+          "#e9edf0",
+          34
+        ],
+        [
+          "#202e37",
+          27
+        ],
+        [
+          "#97a4af",
+          22
+        ],
+        [
+          "#30414d",
+          19
+        ],
+        [
+          "#808080",
+          3
+        ]
+      ],
+      "border": [
+        [
+          "#e9edf0",
+          14
+        ],
+        [
+          "#30414d",
+          13
+        ],
+        [
+          "#cfd8de",
+          12
+        ],
+        [
+          "#0a6d99",
+          3
+        ],
+        [
+          "#f1f4f5",
+          1
+        ],
+        [
+          "#e71442",
+          1
+        ]
+      ]
+    },
+    "shadows": [
+      [
+        "rgba(0, 0, 0, 0.04) 0px 2px 8px 0px",
+        25
+      ],
+      [
+        "rgba(0, 0, 0, 0.05) 0px 1px 2px 0px",
+        8
+      ],
+      [
+        "rgba(0, 0, 0, 0.05) 0px 4px 10px -3px",
+        1
+      ],
+      [
+        "rgba(0, 0, 0, 0.05) 0px 2px 8px 0px",
+        1
+      ],
+      [
+        "rgba(0, 0, 0, 0.1) 0px 6px 20px 0px",
+        1
+      ]
+    ],
+    "radii": [
+      [
+        "6px",
+        45
+      ],
+      [
+        "6px 0px 0px 6px",
+        20
+      ],
+      [
+        "4px",
+        11
+      ],
+      [
+        "50%",
+        7
+      ],
+      [
+        "1440px",
+        4
+      ],
+      [
+        "8px",
+        2
+      ],
+      [
+        "8px 8px 0px 0px",
+        1
+      ],
+      [
+        "12px",
+        1
+      ],
+      [
+        "12px 12px 0px 0px",
+        1
+      ],
+      [
+        "12px 12px 12px 0px",
+        1
+      ],
+      [
+        "12px 0px 0px",
+        1
+      ]
+    ],
+    "typography": {
+      "h1": {
+        "family": "Inter",
+        "size": "24px",
+        "weight": "700",
+        "lineHeight": "31.2px",
+        "letterSpacing": "normal",
+        "color": "#000000",
+        "sample": "Property for sale in Point Waterfront"
+      },
+      "h2": {
+        "family": "Inter",
+        "size": "16px",
+        "weight": "700",
+        "lineHeight": "20.8px",
+        "letterSpacing": "normal",
+        "color": "#000000",
+        "sample": "Add nearby areas"
+      },
+      "h3": {
+        "family": "Inter",
+        "size": "16px",
+        "weight": "700",
+        "lineHeight": "20.8px",
+        "letterSpacing": "normal",
+        "color": "#000000",
+        "sample": "R 925 000 - R 2 700 000"
+      },
+      "body": {
+        "family": "Inter",
+        "size": "12px",
+        "weight": "400",
+        "lineHeight": "17.16px",
+        "letterSpacing": "normal",
+        "color": "#97a4af",
+        "sample": "© Copyright 2026 - Private Property South "
+      },
+      "button": null,
+      "link": {
+        "family": "Inter",
+        "size": "14px",
+        "weight": "400",
+        "lineHeight": "20.02px",
+        "letterSpacing": "normal",
+        "color": "#0a6d99",
+        "sample": ""
+      }
+    },
+    "layout": {
+      "mainMaxWidth": "none",
+      "mainWidth": 1440,
+      "mainPadding": "0px 0px 32px",
+      "headerHeight": 72,
+      "bottomNavHeight": null,
+      "grids": [
+        {
+          "cols": "[full-width-start] 76px [breakout-start] 92px [content-start",
+          "gap": "normal"
+        },
+        {
+          "cols": "[full-width-start] 76px [breakout-start] 92px [content-start",
+          "gap": "normal"
+        },
+        {
+          "cols": "89.0156px 285.688px 230.281px 89.0156px",
+          "gap": "16px"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        }
+      ]
+    },
+    "motion": [
+      [
+        "0.35s / linear",
+        6
+      ]
+    ],
+    "tapTargetsUnder44": 143,
+    "tapTargetSamples": [
+      {
+        "w": 38,
+        "h": 17,
+        "tag": "button",
+        "label": "Login"
+      },
+      {
+        "w": 85,
+        "h": 40,
+        "tag": "button",
+        "label": "Sign up"
+      },
+      {
+        "w": 160,
+        "h": 36,
+        "tag": "button",
+        "label": "Property type"
+      },
+      {
+        "w": 101,
+        "h": 36,
+        "tag": "button",
+        "label": "Price"
+      },
+      {
+        "w": 100,
+        "h": 36,
+        "tag": "button",
+        "label": "Beds"
+      },
+      {
+        "w": 109,
+        "h": 36,
+        "tag": "button",
+        "label": "Filters"
+      },
+      {
+        "w": 99,
+        "h": 17,
+        "tag": "a",
+        "label": "Property For Sale"
+      },
+      {
+        "w": 81,
+        "h": 17,
+        "tag": "a",
+        "label": "KwaZulu Natal"
+      },
+      {
+        "w": 42,
+        "h": 17,
+        "tag": "a",
+        "label": "Durban"
+      },
+      {
+        "w": 86,
+        "h": 17,
+        "tag": "a",
+        "label": "Durban Central"
+      },
+      {
+        "w": 93,
+        "h": 17,
+        "tag": "a",
+        "label": "Point Waterfront"
+      },
+      {
+        "w": 180,
+        "h": 40,
+        "tag": "button",
+        "label": "Default"
+      }
+    ],
+    "controlsTotal": 179,
+    "headings": [
+      {
+        "level": 1,
+        "text": "Property for sale in Point Waterfront"
+      },
+      {
+        "level": 3,
+        "text": "R 925 000 - R 2 700 000"
+      },
+      {
+        "level": 3,
+        "text": "Get instant property alerts"
+      },
+      {
+        "level": 2,
+        "text": "Add nearby areas"
+      },
+      {
+        "level": 3,
+        "text": "Get instant property alerts"
+      },
+      {
+        "level": 3,
+        "text": "Durban Central Property News"
+      },
+      {
+        "level": 4,
+        "text": "Area Review: Point Waterfront"
+      },
+      {
+        "level": 4,
+        "text": "Property guide to the Point Waterfront"
+      },
+      {
+        "level": 4,
+        "text": "Area and property guide for the Point Waterfront"
+      },
+      {
+        "level": 4,
+        "text": "Lion Match's new head office in the historical Point P"
+      },
+      {
+        "level": 3,
+        "text": "Property For Sale"
+      },
+      {
+        "level": 3,
+        "text": "Property To Rent"
+      },
+      {
+        "level": 3,
+        "text": "Advice"
+      },
+      {
+        "level": 3,
+        "text": "Tools"
+      },
+      {
+        "level": 3,
+        "text": "Company"
+      },
+      {
+        "level": 3,
+        "text": "This site uses cookies"
+      }
+    ],
+    "headingOrderJumps": 1,
+    "images": [
+      {
+        "natural": "320x160",
+        "shown": "80x40",
+        "src": "operty.co.za/live-za-images/offices/16144/fl_logo/69b7854995c64eadb30f01f2063961a8_ofl.png",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "909x682",
+        "shown": "531x336",
+        "src": "https://images.pp.co.za/listing/12163121/1B8I9v9gR2FIv6UAEWSbr6/1024/682/contain/jpegorpng",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "600x450",
+        "shown": "237x168",
+        "src": "https://images.pp.co.za/listing/12163121/jecpKvX5uBY30CD4ERqpP3/600/450/contain/jpegorpng",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "600x450",
+        "shown": "237x168",
+        "src": "https://images.pp.co.za/listing/12163121/csaNQ5CRAE9Ntgm9pKD3F1/600/450/contain/jpegorpng",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "600x450",
+        "shown": "360x254",
+        "src": "https://images.pp.co.za/listing/12121369/sgKajYRPTPOJ2ru2mWZgF7/600/450/contain/jpegorpng",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "215x150",
+        "shown": "90x45",
+        "src": "eproperty.co.za/live-za-images/offices/5336/image/3923772ac60d49798b2733cb3a480f72_osm.jpg",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "600x277",
+        "shown": "360x254",
+        "src": "https://images.pp.co.za/listing/11862535/3CMICStzNKmWlVDpVltL66/600/450/contain/jpegorpng",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "600x450",
+        "shown": "360x254",
+        "src": "https://images.pp.co.za/listing/11722553/sK3pKlhFSPFy9aNfRXBXe3/600/450/contain/jpegorpng",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "300x150",
+        "shown": "90x45",
+        "src": "eproperty.co.za/live-za-images/offices/8154/image/5b420290e5244710a64df23c3495fd2c_osm.jpg",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "455x450",
+        "shown": "360x254",
+        "src": "https://images.pp.co.za/listing/11984948/p4MKUMj5HZGXiOYRAkxTf3/600/450/contain/jpegorpng",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "600x450",
+        "shown": "360x254",
+        "src": "https://images.pp.co.za/listing/11149739/tRbYHHiWBU3Oln3BtHJsV3/600/450/contain/jpegorpng",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "120x160",
+        "shown": "48x48",
+        "src": "co.za/live-za-images/accountholders/2331596/image/5d58671e2b1541da8108852d7ef1f36e_ach.jpg",
+        "loading": "eager",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "300x150",
+        "shown": "90x45",
+        "src": "eproperty.co.za/live-za-images/offices/1837/image/499580f59599456cbd938fe95254fe51_osm.jpg",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "600x338",
+        "shown": "360x254",
+        "src": "https://images.pp.co.za/listing/11878128/uq5ebWwOKHbdS51vfnBDg3/600/450/contain/jpegorpng",
+        "loading": "eager",
+        "alt": "yes"
+      }
+    ],
+    "imagesMissingAlt": 14,
+    "perf": {
+      "lcp": 988,
+      "cls": 0.015965048916872962,
+      "shifts": 22,
+      "longTasks": 110
+    },
+    "bodyTextSample": "Buy Rent Sell Advice Services Login Sign up Point Waterfront Add more Property type Price Beds Filters Property for sale in Point Waterfront Property For Sale KwaZulu Natal Durban Durban Central Point Waterfront 1-20 of 126 properties Sort by Default Faheem Kajee R 1 945 000 2 Bedroom Apartment in Point Waterfront 2 2.5 2 1 ha Promoted R 1 375 000 1 Bedroom Apartment Point Waterfront 1 1 1 95 m² E"
+  },
+  {
+    "site": "privateproperty",
+    "page": "list-agent",
+    "url": "https://www.privateproperty.co.za/list-your-property/list-as-an-agent.htm",
+    "viewport": {
+      "w": 1440,
+      "h": 900
+    },
+    "requests": 57,
+    "totalBytes": 2028814,
+    "imageBytes": 112987,
+    "consoleErrors": [],
+    "navErr": null,
+    "measureErr": null,
+    "title": "List As An Estate Agent | Market Your Business",
+    "metaDescription": "List as an estate agent on Private Property and benefit from our specialist marketing platform, reaching over 1 million monthly browsers. Enquire today!",
+    "ogImage": null,
+    "docHeight": 2221,
+    "horizontalOverflow": 0,
+    "colours": {
+      "background": [
+        [
+          "#ffffff",
+          3
+        ],
+        [
+          "#e71442",
+          2
+        ],
+        [
+          "#f1f4f5",
+          1
+        ],
+        [
+          "#0d1d28",
+          1
+        ]
+      ],
+      "text": [
+        [
+          "#ffffff",
+          70
+        ],
+        [
+          "#000000",
+          69
+        ],
+        [
+          "#e9edf0",
+          34
+        ],
+        [
+          "#0a6d99",
+          27
+        ],
+        [
+          "#97a4af",
+          8
+        ],
+        [
+          "#30414d",
+          3
+        ],
+        [
+          "#0d1d28",
+          2
+        ]
+      ],
+      "border": [
+        [
+          "#30414d",
+          5
+        ],
+        [
+          "#0a6d99",
+          3
+        ],
+        [
+          "#e9edf0",
+          1
+        ]
+      ]
+    },
+    "shadows": [
+      [
+        "rgba(0, 0, 0, 0.05) 0px 4px 10px -3px",
+        1
+      ],
+      [
+        "rgba(0, 0, 0, 0.1) 0px 6px 20px 0px",
+        1
+      ]
+    ],
+    "radii": [
+      [
+        "6px",
+        7
+      ],
+      [
+        "8px",
+        2
+      ],
+      [
+        "30px",
+        1
+      ]
+    ],
+    "typography": {
+      "h1": {
+        "family": "Inter",
+        "size": "32px",
+        "weight": "700",
+        "lineHeight": "41.6px",
+        "letterSpacing": "normal",
+        "color": "#000000",
+        "sample": "List As An Estate Agent"
+      },
+      "h2": {
+        "family": "Inter",
+        "size": "24px",
+        "weight": "700",
+        "lineHeight": "31.2px",
+        "letterSpacing": "normal",
+        "color": "#000000",
+        "sample": "Do you qualify for one of these packages?"
+      },
+      "h3": {
+        "family": "Inter",
+        "size": "12px",
+        "weight": "700",
+        "lineHeight": "15.96px",
+        "letterSpacing": "0.24px",
+        "color": "#ffffff",
+        "sample": "Property For Sale"
+      },
+      "body": {
+        "family": "Inter",
+        "size": "16px",
+        "weight": "400",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "color": "#000000",
+        "sample": "The property market is a highly competitiv"
+      },
+      "button": null,
+      "link": {
+        "family": "Inter",
+        "size": "14px",
+        "weight": "400",
+        "lineHeight": "20.02px",
+        "letterSpacing": "normal",
+        "color": "#0a6d99",
+        "sample": ""
+      }
+    },
+    "layout": {
+      "mainMaxWidth": "none",
+      "mainWidth": 1440,
+      "mainPadding": "32px 0px",
+      "headerHeight": 72,
+      "bottomNavHeight": null,
+      "grids": [
+        {
+          "cols": "[full-width-start] 76px [breakout-start] 92px [content-start",
+          "gap": "normal"
+        },
+        {
+          "cols": "[full-width-start] 76px [breakout-start] 92px [content-start",
+          "gap": "normal"
+        },
+        {
+          "cols": "520px 520px",
+          "gap": "32px"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        },
+        {
+          "cols": "none",
+          "gap": "normal"
+        }
+      ]
+    },
+    "motion": [
+      [
+        "0.35s / linear",
+        6
+      ]
+    ],
+    "tapTargetsUnder44": 56,
+    "tapTargetSamples": [
+      {
+        "w": 38,
+        "h": 17,
+        "tag": "button",
+        "label": "Login"
+      },
+      {
+        "w": 85,
+        "h": 40,
+        "tag": "button",
+        "label": "Sign up"
+      },
+      {
+        "w": 132,
+        "h": 20,
+        "tag": "a",
+        "label": "selling a property"
+      },
+      {
+        "w": 113,
+        "h": 20,
+        "tag": "a",
+        "label": "rent a property"
+      },
+      {
+        "w": 192,
+        "h": 43,
+        "tag": "a",
+        "label": "Learn More"
+      },
+      {
+        "w": 192,
+        "h": 43,
+        "tag": "a",
+        "label": "Learn More"
+      },
+      {
+        "w": 536,
+        "h": 40,
+        "tag": "a",
+        "label": ""
+      },
+      {
+        "w": 212,
+        "h": 18,
+        "tag": "button",
+        "label": "Property For Sale"
+      },
+      {
+        "w": 204,
+        "h": 20,
+        "tag": "a",
+        "label": "Residential Property for Sale"
+      },
+      {
+        "w": 204,
+        "h": 20,
+        "tag": "a",
+        "label": "Commercial Property For Sale"
+      },
+      {
+        "w": 204,
+        "h": 20,
+        "tag": "a",
+        "label": "Developments For Sale"
+      },
+      {
+        "w": 204,
+        "h": 20,
+        "tag": "a",
+        "label": "Repossessions"
+      }
+    ],
+    "controlsTotal": 58,
+    "headings": [
+      {
+        "level": 1,
+        "text": "List As An Estate Agent"
+      },
+      {
+        "level": 2,
+        "text": "Do you qualify for one of these packages?"
+      },
+      {
+        "level": 2,
+        "text": "Some of the top estate agencies who’ve already partner"
+      },
+      {
+        "level": 3,
+        "text": "Property For Sale"
+      },
+      {
+        "level": 3,
+        "text": "Property To Rent"
+      },
+      {
+        "level": 3,
+        "text": "Advice"
+      },
+      {
+        "level": 3,
+        "text": "Tools"
+      },
+      {
+        "level": 3,
+        "text": "Company"
+      },
+      {
+        "level": 3,
+        "text": "This site uses cookies"
+      }
+    ],
+    "headingOrderJumps": 0,
+    "images": [
+      {
+        "natural": "712x735",
+        "shown": "338x349",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/images/listProperty/agent-listing.jpg",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "150x150",
+        "shown": "20x20",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/icons/site/black-tick.svg",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "150x150",
+        "shown": "20x20",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/icons/site/black-tick.svg",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "150x150",
+        "shown": "20x20",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/icons/site/black-tick.svg",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "150x150",
+        "shown": "20x20",
+        "src": "https://www.privateproperty.co.za/Content/NewWebsite/icons/site/black-tick.svg",
+        "loading": "auto",
+        "alt": "MISSING"
+      },
+      {
+        "natural": "120x60",
+        "shown": "120x60",
+        "src": "b.core.windows.net/live-za-images/agencies/96/logo/f73d3dd957d74966a6baabdb651ebdbf_lo.jpg",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "120x60",
+        "shown": "120x60",
+        "src": "b.core.windows.net/live-za-images/agencies/76/logo/2c7ec803ba2b48318a85a109f832b11b_lo.jpg",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "120x60",
+        "shown": "120x60",
+        "src": ".core.windows.net/live-za-images/agencies/101/logo/80979e9a83e046cfa42e4bb4fbc6de74_lo.jpg",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "120x60",
+        "shown": "120x60",
+        "src": "core.windows.net/live-za-images/agencies/1163/logo/bf26dfdbd5474a32addeb6565f14b996_lo.jpg",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "122x58",
+        "shown": "126x60",
+        "src": ".core.windows.net/live-za-images/agencies/106/logo/17b16f3e14894c1fa52e564c21533cfb_lo.jpg",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "120x60",
+        "shown": "120x60",
+        "src": ".core.windows.net/live-za-images/agencies/102/logo/c484dc690f3c45bdbe4be611d20f7e6b_lo.jpg",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "120x60",
+        "shown": "120x60",
+        "src": "core.windows.net/live-za-images/agencies/1043/logo/35f5f79ac16d473585c71cf605371880_lo.jpg",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "120x60",
+        "shown": "120x60",
+        "src": ".core.windows.net/live-za-images/agencies/103/logo/126130c5ba7d458b9d12b04fba246aed_lo.jpg",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "120x60",
+        "shown": "120x60",
+        "src": ".core.windows.net/live-za-images/agencies/116/logo/9427080b1eb740d9ad5c18854a4d7767_lo.jpg",
+        "loading": "auto",
+        "alt": "yes"
+      }
+    ],
+    "imagesMissingAlt": 5,
+    "perf": {
+      "lcp": 764,
+      "cls": 0.12221988811728392,
+      "shifts": 12,
+      "longTasks": 96
+    },
+    "bodyTextSample": "Buy Rent Sell Advice Services Login Sign up List As An Estate Agent The property market is a highly competitive one which can make selling a property quite difficult, particularly in a buyer’s market. Likewise, finding suitable tenants to rent a property can also be a challenge. Private Property offers a specialised marketing platform to list properties as an estate agent. Private Property is the "
+  },
+  {
+    "site": "zillow",
+    "page": "home",
+    "url": "https://www.zillow.com/",
+    "viewport": "390x844",
+    "requests": 16,
+    "totalBytes": 542591,
+    "imageBytes": 1719,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 403 ()",
+      "Permissions policy violation: unload is not allowed in this document."
+    ],
+    "navErr": null,
+    "measureErr": "TypeError: Cannot read properties of undefined (reading 'width')\n    at vis (<anonymous>:4:91)\n    at Array.filter (<anonymous>)\n    at <anonymous>:6:56\n    at <anonymous>:100:3"
+  },
+  {
+    "site": "zillow",
+    "page": "home",
+    "url": "https://www.zillow.com/",
+    "viewport": "1440x900",
+    "requests": 17,
+    "totalBytes": 538438,
+    "imageBytes": 1718,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 403 ()",
+      "Permissions policy violation: unload is not allowed in this document."
+    ],
+    "navErr": null,
+    "measureErr": "TypeError: Cannot read properties of undefined (reading 'width')\n    at vis (<anonymous>:4:91)\n    at Array.filter (<anonymous>)\n    at <anonymous>:6:56\n    at <anonymous>:100:3"
+  },
+  {
+    "site": "zillow",
+    "page": "search",
+    "url": "https://www.zillow.com/homes/for_sale/",
+    "viewport": "390x844",
+    "requests": 17,
+    "totalBytes": 518227,
+    "imageBytes": 1718,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 403 ()",
+      "Permissions policy violation: unload is not allowed in this document."
+    ],
+    "navErr": null,
+    "measureErr": "TypeError: Cannot read properties of undefined (reading 'width')\n    at vis (<anonymous>:4:91)\n    at Array.filter (<anonymous>)\n    at <anonymous>:6:56\n    at <anonymous>:100:3"
+  },
+  {
+    "site": "zillow",
+    "page": "search",
+    "url": "https://www.zillow.com/homes/for_sale/",
+    "viewport": "1440x900",
+    "requests": 17,
+    "totalBytes": 525690,
+    "imageBytes": 1716,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 403 ()",
+      "Permissions policy violation: unload is not allowed in this document."
+    ],
+    "navErr": null,
+    "measureErr": "TypeError: Cannot read properties of undefined (reading 'width')\n    at vis (<anonymous>:4:91)\n    at Array.filter (<anonymous>)\n    at <anonymous>:6:56\n    at <anonymous>:100:3"
+  },
+  {
+    "site": "zillow",
+    "page": "sell",
+    "url": "https://www.zillow.com/sell/",
+    "viewport": "1440x900",
+    "requests": 18,
+    "totalBytes": 571966,
+    "imageBytes": 1719,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 403 ()",
+      "Permissions policy violation: unload is not allowed in this document."
+    ],
+    "navErr": null,
+    "measureErr": "TypeError: Cannot read properties of undefined (reading 'width')\n    at vis (<anonymous>:4:91)\n    at Array.filter (<anonymous>)\n    at <anonymous>:6:56\n    at <anonymous>:100:3"
+  },
+  {
+    "site": "rightmove",
+    "page": "home",
+    "url": "https://www.rightmove.co.uk/",
+    "viewport": {
+      "w": 390,
+      "h": 844
+    },
+    "requests": 91,
+    "totalBytes": 3581635,
+    "imageBytes": 19454,
+    "consoleErrors": [],
+    "navErr": null,
+    "measureErr": null,
+    "title": "Rightmove - UK's number one property website for properties for sale and to rent",
+    "metaDescription": "UK's number one property website for properties for sale and to rent",
+    "ogImage": null,
+    "docHeight": 3151,
+    "horizontalOverflow": 0,
+    "colours": {
+      "background": [
+        [
+          "#ffffff",
+          12
+        ],
+        [
+          "#000433 @0.04",
+          4
+        ],
+        [
+          "#a9ede1",
+          3
+        ],
+        [
+          "#000433",
+          2
+        ],
+        [
+          "#00deb6",
+          2
+        ],
+        [
+          "#000433 @0.82",
+          1
+        ],
+        [
+          "#f5f6f7",
+          1
+        ],
+        [
+          "#2cdebe",
+          1
+        ],
+        [
+          "#f2f3f4",
+          1
+        ],
+        [
+          "#000433 @0.8",
+          1
+        ]
+      ],
+      "text": [
+        [
+          "#53535f",
+          144
+        ],
+        [
+          "#000433",
+          64
+        ],
+        [
+          "#66636e",
+          46
+        ],
+        [
+          "#11828d",
+          44
+        ],
+        [
+          "#717184",
+          35
+        ],
+        [
+          "#ffffff",
+          11
+        ],
+        [
+          "#4e516b",
+          10
+        ],
+        [
+          "#bdbec5",
+          4
+        ],
+        [
+          "#4f5064",
+          2
+        ],
+        [
+          "#107a84",
+          2
+        ],
+        [
+          "#2cdebe",
+          1
+        ],
+        [
+          "#707070",
+          1
+        ],
+        [
+          "#696969",
+          1
+        ]
+      ],
+      "border": [
+        [
+          "#00deb6",
+          2
+        ],
+        [
+          "#707389",
+          1
+        ],
+        [
+          "#000433",
+          1
+        ],
+        [
+          "#a2a2ad",
+          1
+        ]
+      ]
+    },
+    "shadows": [
+      [
+        "rgba(0, 0, 0, 0.31) 0px 15px 40px 0px",
+        1
+      ]
+    ],
+    "radii": [
+      [
+        "16px",
+        12
+      ],
+      [
+        "8px",
+        10
+      ],
+      [
+        "16px 16px 0px 0px",
+        5
+      ],
+      [
+        "2px",
+        2
+      ],
+      [
+        "4px 4px 0px 0px",
+        1
+      ],
+      [
+        "999px",
+        1
+      ]
+    ],
+    "typography": {
+      "h1": {
+        "family": "Effra",
+        "size": "32px",
+        "weight": "500",
+        "lineHeight": "40px",
+        "letterSpacing": "0.1px",
+        "color": "#ffffff",
+        "sample": "believe in finding it"
+      },
+      "h2": {
+        "family": "Effra",
+        "size": "20px",
+        "weight": "500",
+        "lineHeight": "28px",
+        "letterSpacing": "0.1px",
+        "color": "#ffffff",
+        "sample": "with the UK’s largest choice of homes"
+      },
+      "h3": {
+        "family": "Effra",
+        "size": "20px",
+        "weight": "500",
+        "lineHeight": "28px",
+        "letterSpacing": "0.1px",
+        "color": "#000433",
+        "sample": "Free home valuation"
+      },
+      "body": {
+        "family": "Effra",
+        "size": "16px",
+        "weight": "400",
+        "lineHeight": "24px",
+        "letterSpacing": "0.1px",
+        "color": "#4e516b",
+        "sample": "Save properties, create alerts and keep tr"
+      },
+      "button": {
+        "family": "Effra",
+        "size": "16px",
+        "weight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "#53535f",
+        "sample": "open-rightmove-assistant"
+      },
+      "link": {
+        "family": "Effra",
+        "size": "16px",
+        "weight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "#11828d",
+        "sample": ""
+      }
+    },
+    "layout": {
+      "mainMaxWidth": "none",
+      "mainWidth": 390,
+      "mainPadding": "0px",
+      "headerHeight": 50,
+      "bottomNavHeight": null,
+      "grids": []
+    },
+    "motion": [
+      [
+        "0.3s / ease",
+        4
+      ],
+      [
+        "0.5s / ease-in-out",
+        4
+      ],
+      [
+        "0.16s / ease",
+        2
+      ],
+      [
+        "0.3s, 0.3s / ease, ease",
+        1
+      ],
+      [
+        "0.25s / ease-out",
+        1
+      ],
+      [
+        "0.5s, 0.5s, 0.3s / ease, ease, ease",
+        1
+      ],
+      [
+        "0.1s / ease",
+        1
+      ],
+      [
+        "anim onetrust-fade-in 0.4s",
+        1
+      ]
+    ],
+    "tapTargetsUnder44": 103,
+    "tapTargetSamples": [
+      {
+        "w": 31,
+        "h": 38,
+        "tag": "a",
+        "label": "Sign in"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Property for sale"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "New homes for sale"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Property valuation"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Investors"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Mortgages"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Property to rent"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Student property to rent"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Sold house prices"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Property valuation"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Instant online valuation"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Get started"
+      }
+    ],
+    "controlsTotal": 122,
+    "headings": [
+      {
+        "level": 1,
+        "text": "believe in finding it"
+      },
+      {
+        "level": 2,
+        "text": "with the UK’s largest choice of homes"
+      },
+      {
+        "level": 2,
+        "text": "Search properties to buy"
+      },
+      {
+        "level": 2,
+        "text": "Stay organised. Sign in or create an account"
+      },
+      {
+        "level": 3,
+        "text": "Free home valuation"
+      },
+      {
+        "level": 3,
+        "text": "Quickfire tips for movers"
+      },
+      {
+        "level": 3,
+        "text": "The new Your First Home scheme"
+      },
+      {
+        "level": 3,
+        "text": "Overseas property"
+      },
+      {
+        "level": 3,
+        "text": "Commercial property"
+      },
+      {
+        "level": 3,
+        "text": "Instant online valuation"
+      },
+      {
+        "level": 4,
+        "text": "Download the Rightmove app"
+      },
+      {
+        "level": 4,
+        "text": "Resources"
+      },
+      {
+        "level": 4,
+        "text": "Search"
+      },
+      {
+        "level": 4,
+        "text": "Locations"
+      },
+      {
+        "level": 4,
+        "text": "Rightmove"
+      },
+      {
+        "level": 4,
+        "text": "Professional"
+      },
+      {
+        "level": 2,
+        "text": "Choose your cookies"
+      },
+      {
+        "level": 3,
+        "text": "We and our partners process data to provide:"
+      }
+    ],
+    "headingOrderJumps": 0,
+    "images": [
+      {
+        "natural": "1534x588",
+        "shown": "358x137",
+        "src": "ghtmove.co.uk/assets/7fb0c8adf9bad14b85d82c635308c18c/imgs/homepageHero_mobile_may_26.webp",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "740x493",
+        "shown": "358x201",
+        "src": "https://media.rightmove.co.uk/home_eval.jpg",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "740x400",
+        "shown": "358x201",
+        "src": "https://www.rightmove.co.uk/news/content/uploads/2026/10/AskTheExpertsHP-740x400.jpg",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "740x400",
+        "shown": "358x201",
+        "src": "https://www.rightmove.co.uk/news/content/uploads/2026/10/YFHGuideHeader-740x400.jpg",
+        "loading": "auto",
+        "alt": "yes"
+      }
+    ],
+    "imagesMissingAlt": 0,
+    "perf": {
+      "lcp": 2564,
+      "cls": 0,
+      "shifts": 0,
+      "longTasks": 324
+    },
+    "bodyTextSample": "Sign in Buy Property for sale New homes for sale Property valuation Investors Mortgages Rent Property to rent Student property to rent House Prices Sold house prices Property valuation Instant online valuation Mortgages Get started Get a Mortgage in Principle Check your affordability Remortgage Calculator Mortgage guides Find Agent Find estate agent Commercial Commercial property to rent Commercia"
+  },
+  {
+    "site": "rightmove",
+    "page": "home",
+    "url": "https://www.rightmove.co.uk/",
+    "viewport": {
+      "w": 1440,
+      "h": 900
+    },
+    "requests": 105,
+    "totalBytes": 3765614,
+    "imageBytes": 78962,
+    "consoleErrors": [],
+    "navErr": null,
+    "measureErr": null,
+    "title": "Rightmove - UK's number one property website for properties for sale and to rent",
+    "metaDescription": "UK's number one property website for properties for sale and to rent",
+    "ogImage": null,
+    "docHeight": 2056,
+    "horizontalOverflow": 0,
+    "colours": {
+      "background": [
+        [
+          "#ffffff",
+          10
+        ],
+        [
+          "#000433 @0.04",
+          4
+        ],
+        [
+          "#a9ede1",
+          3
+        ],
+        [
+          "#000433",
+          2
+        ],
+        [
+          "#00deb6",
+          2
+        ],
+        [
+          "#000433 @0.82",
+          1
+        ],
+        [
+          "#f5f6f7",
+          1
+        ],
+        [
+          "#2cdebe",
+          1
+        ],
+        [
+          "#f2f3f4",
+          1
+        ],
+        [
+          "#000433 @0.8",
+          1
+        ]
+      ],
+      "text": [
+        [
+          "#53535f",
+          141
+        ],
+        [
+          "#000433",
+          60
+        ],
+        [
+          "#66636e",
+          46
+        ],
+        [
+          "#11828d",
+          44
+        ],
+        [
+          "#717184",
+          35
+        ],
+        [
+          "#ffffff",
+          11
+        ],
+        [
+          "#4e516b",
+          10
+        ],
+        [
+          "#bdbec5",
+          4
+        ],
+        [
+          "#4f5064",
+          2
+        ],
+        [
+          "#107a84",
+          2
+        ],
+        [
+          "#2cdebe",
+          1
+        ],
+        [
+          "#707070",
+          1
+        ],
+        [
+          "#696969",
+          1
+        ]
+      ],
+      "border": [
+        [
+          "#00deb6",
+          3
+        ],
+        [
+          "#707389",
+          1
+        ],
+        [
+          "#000433",
+          1
+        ],
+        [
+          "#a2a2ad",
+          1
+        ]
+      ]
+    },
+    "shadows": [
+      [
+        "rgba(0, 0, 0, 0.31) 0px 15px 40px 0px",
+        1
+      ]
+    ],
+    "radii": [
+      [
+        "8px",
+        11
+      ],
+      [
+        "16px",
+        11
+      ],
+      [
+        "24px",
+        3
+      ],
+      [
+        "16px 16px 0px 0px",
+        3
+      ],
+      [
+        "2px",
+        2
+      ],
+      [
+        "4px 4px 0px 0px",
+        1
+      ],
+      [
+        "999px",
+        1
+      ]
+    ],
+    "typography": {
+      "h1": {
+        "family": "Effra",
+        "size": "45px",
+        "weight": "500",
+        "lineHeight": "48px",
+        "letterSpacing": "0.1px",
+        "color": "#ffffff",
+        "sample": "believe in finding it"
+      },
+      "h2": {
+        "family": "Effra",
+        "size": "32px",
+        "weight": "500",
+        "lineHeight": "40px",
+        "letterSpacing": "0.1px",
+        "color": "#ffffff",
+        "sample": "with the UK’s largest choice of homes"
+      },
+      "h3": {
+        "family": "Effra",
+        "size": "20px",
+        "weight": "500",
+        "lineHeight": "28px",
+        "letterSpacing": "0.1px",
+        "color": "#000433",
+        "sample": "Free home valuation"
+      },
+      "body": {
+        "family": "Effra",
+        "size": "16px",
+        "weight": "400",
+        "lineHeight": "24px",
+        "letterSpacing": "0.1px",
+        "color": "#4e516b",
+        "sample": "Save properties, create alerts and keep tr"
+      },
+      "button": null,
+      "link": {
+        "family": "Effra",
+        "size": "16px",
+        "weight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "#11828d",
+        "sample": ""
+      }
+    },
+    "layout": {
+      "mainMaxWidth": "none",
+      "mainWidth": 1440,
+      "mainPadding": "0px",
+      "headerHeight": 50,
+      "bottomNavHeight": null,
+      "grids": []
+    },
+    "motion": [
+      [
+        "0.3s / ease",
+        4
+      ],
+      [
+        "0.5s / ease-in-out",
+        4
+      ],
+      [
+        "0.16s / ease",
+        2
+      ],
+      [
+        "0.3s, 0.3s / ease, ease",
+        1
+      ],
+      [
+        "0.5s, 0.5s, 0.3s / ease, ease, ease",
+        1
+      ],
+      [
+        "0.1s / ease",
+        1
+      ],
+      [
+        "anim onetrust-fade-in 0.4s",
+        1
+      ]
+    ],
+    "tapTargetsUnder44": 108,
+    "tapTargetSamples": [
+      {
+        "w": 51,
+        "h": 19,
+        "tag": "a",
+        "label": "Buy"
+      },
+      {
+        "w": 57,
+        "h": 19,
+        "tag": "a",
+        "label": "Rent"
+      },
+      {
+        "w": 115,
+        "h": 19,
+        "tag": "a",
+        "label": "House Prices"
+      },
+      {
+        "w": 100,
+        "h": 19,
+        "tag": "a",
+        "label": "Mortgages"
+      },
+      {
+        "w": 100,
+        "h": 19,
+        "tag": "a",
+        "label": "Find Agent"
+      },
+      {
+        "w": 110,
+        "h": 19,
+        "tag": "a",
+        "label": "Commercial"
+      },
+      {
+        "w": 72,
+        "h": 19,
+        "tag": "a",
+        "label": "Inspire"
+      },
+      {
+        "w": 91,
+        "h": 19,
+        "tag": "a",
+        "label": "Overseas"
+      },
+      {
+        "w": 98,
+        "h": 40,
+        "tag": "button",
+        "label": "Sign in My Rightmove"
+      },
+      {
+        "w": 31,
+        "h": 38,
+        "tag": "a",
+        "label": "Sign in"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Property for sale"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "New homes for sale"
+      }
+    ],
+    "controlsTotal": 128,
+    "headings": [
+      {
+        "level": 1,
+        "text": "believe in finding it"
+      },
+      {
+        "level": 2,
+        "text": "with the UK’s largest choice of homes"
+      },
+      {
+        "level": 2,
+        "text": "Search properties to buy"
+      },
+      {
+        "level": 2,
+        "text": "Stay organised. Sign in or create an account"
+      },
+      {
+        "level": 3,
+        "text": "Free home valuation"
+      },
+      {
+        "level": 3,
+        "text": "Quickfire tips for movers"
+      },
+      {
+        "level": 3,
+        "text": "The new Your First Home scheme"
+      },
+      {
+        "level": 3,
+        "text": "Overseas property"
+      },
+      {
+        "level": 3,
+        "text": "Commercial property"
+      },
+      {
+        "level": 3,
+        "text": "Instant online valuation"
+      },
+      {
+        "level": 4,
+        "text": "Download the Rightmove app"
+      },
+      {
+        "level": 4,
+        "text": "Resources"
+      },
+      {
+        "level": 4,
+        "text": "Search"
+      },
+      {
+        "level": 4,
+        "text": "Locations"
+      },
+      {
+        "level": 4,
+        "text": "Rightmove"
+      },
+      {
+        "level": 4,
+        "text": "Professional"
+      },
+      {
+        "level": 2,
+        "text": "Choose your cookies"
+      },
+      {
+        "level": 3,
+        "text": "We and our partners process data to provide:"
+      }
+    ],
+    "headingOrderJumps": 0,
+    "images": [
+      {
+        "natural": "1534x588",
+        "shown": "1440x450",
+        "src": "ove.co.uk/assets/7fb0c8adf9bad14b85d82c635308c18c/imgs/homepageHero_desktop_may_26_v1.webp",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "740x493",
+        "shown": "416x225",
+        "src": "https://media.rightmove.co.uk/home_eval.jpg",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "740x400",
+        "shown": "416x225",
+        "src": "https://www.rightmove.co.uk/news/content/uploads/2026/10/AskTheExpertsHP-740x400.jpg",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "740x400",
+        "shown": "416x225",
+        "src": "https://www.rightmove.co.uk/news/content/uploads/2026/10/YFHGuideHeader-740x400.jpg",
+        "loading": "auto",
+        "alt": "yes"
+      }
+    ],
+    "imagesMissingAlt": 0,
+    "perf": {
+      "lcp": 772,
+      "cls": 0,
+      "shifts": 0,
+      "longTasks": 228
+    },
+    "bodyTextSample": "Buy Rent House Prices Mortgages Find Agent Commercial Inspire Overseas Sign in Sign in Buy Property for sale New homes for sale Property valuation Investors Mortgages Rent Property to rent Student property to rent House Prices Sold house prices Property valuation Instant online valuation Mortgages Get started Get a Mortgage in Principle Check your affordability Remortgage Calculator Mortgage guide"
+  },
+  {
+    "site": "rightmove",
+    "page": "search",
+    "url": "https://www.rightmove.co.uk/property-for-sale/London.html",
+    "viewport": {
+      "w": 390,
+      "h": 844
+    },
+    "requests": 138,
+    "totalBytes": 12572605,
+    "imageBytes": 509363,
+    "consoleErrors": [],
+    "navErr": null,
+    "measureErr": null,
+    "title": "Properties For Sale in London | Rightmove",
+    "metaDescription": "Flats & Houses For Sale in London - Find properties with Rightmove - the UK's largest selection of properties.",
+    "ogImage": "https://media.rightmove.co.uk/assets/shared-assets/logos/logo-share-fb.png",
+    "docHeight": 16279,
+    "horizontalOverflow": 0,
+    "colours": {
+      "background": [
+        [
+          "#ffffff",
+          91
+        ],
+        [
+          "#000433",
+          31
+        ],
+        [
+          "#dedee2",
+          26
+        ],
+        [
+          "#f2f3f4",
+          20
+        ],
+        [
+          "#007054",
+          9
+        ],
+        [
+          "#0c8852",
+          5
+        ],
+        [
+          "#007054 @0.1",
+          4
+        ],
+        [
+          "#f5f7fb",
+          2
+        ],
+        [
+          "#0f3bea",
+          1
+        ],
+        [
+          "#11828d",
+          1
+        ],
+        [
+          "#000214",
+          1
+        ]
+      ],
+      "text": [
+        [
+          "#4f5064",
+          886
+        ],
+        [
+          "#000433",
+          840
+        ],
+        [
+          "#ffffff",
+          187
+        ],
+        [
+          "#107a84",
+          112
+        ],
+        [
+          "#66636e",
+          46
+        ],
+        [
+          "#717184",
+          35
+        ],
+        [
+          "#007054",
+          24
+        ],
+        [
+          "#808080",
+          6
+        ],
+        [
+          "#07319e",
+          5
+        ]
+      ],
+      "border": [
+        [
+          "#c3c4c9",
+          25
+        ],
+        [
+          "#6c6d7f",
+          24
+        ],
+        [
+          "#dadbdd",
+          8
+        ],
+        [
+          "#ffffff",
+          6
+        ],
+        [
+          "#dedee2",
+          2
+        ],
+        [
+          "#8e8f9a",
+          2
+        ],
+        [
+          "#07319e",
+          1
+        ],
+        [
+          "#626379",
+          1
+        ],
+        [
+          "#a2a2ad",
+          1
+        ]
+      ]
+    },
+    "shadows": [
+      [
+        "rgba(0, 0, 0, 0.3) 0px 3px 3px -3px",
+        25
+      ]
+    ],
+    "radii": [
+      [
+        "8px",
+        91
+      ],
+      [
+        "50px",
+        25
+      ],
+      [
+        "4px",
+        24
+      ],
+      [
+        "16px",
+        13
+      ],
+      [
+        "50%",
+        2
+      ],
+      [
+        "8px 0px 0px 8px",
+        1
+      ],
+      [
+        "0px 8px 8px 0px",
+        1
+      ],
+      [
+        "48px",
+        1
+      ]
+    ],
+    "typography": {
+      "h1": {
+        "family": "Effra",
+        "size": "15px",
+        "weight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "#4f5064",
+        "sample": "Properties For Sale in London"
+      },
+      "h2": null,
+      "h3": null,
+      "body": {
+        "family": "Effra",
+        "size": "16px",
+        "weight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "#000433",
+        "sample": "58,978 results"
+      },
+      "button": {
+        "family": "Effra",
+        "size": "13.3333px",
+        "weight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "#4f5064",
+        "sample": "open-rightmove-assistant"
+      },
+      "link": {
+        "family": "Effra",
+        "size": "16px",
+        "weight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "#107a84",
+        "sample": ""
+      }
+    },
+    "layout": {
+      "mainMaxWidth": "none",
+      "mainWidth": 390,
+      "mainPadding": "0px",
+      "headerHeight": 50,
+      "bottomNavHeight": null,
+      "grids": []
+    },
+    "motion": [
+      [
+        "0.16s / ease",
+        64
+      ],
+      [
+        "0.3s / ease-in",
+        48
+      ],
+      [
+        "0.24s / ease",
+        1
+      ],
+      [
+        "0.2s / ease-in-out",
+        1
+      ],
+      [
+        "0.15s, 0.15s, 0.15s / ease-out, ease-out, ease-out",
+        1
+      ]
+    ],
+    "tapTargetsUnder44": 133,
+    "tapTargetSamples": [
+      {
+        "w": 31,
+        "h": 38,
+        "tag": "a",
+        "label": "Sign in"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Property for sale"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "New homes for sale"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Property valuation"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Investors"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Mortgages"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Property to rent"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Student property to rent"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Sold house prices"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Property valuation"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Instant online valuation"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Get started"
+      }
+    ],
+    "controlsTotal": 362,
+    "headings": [
+      {
+        "level": 1,
+        "text": "Properties For Sale in London"
+      },
+      {
+        "level": 3,
+        "text": "Key features"
+      },
+      {
+        "level": 3,
+        "text": "Key features"
+      },
+      {
+        "level": 3,
+        "text": "Key features"
+      },
+      {
+        "level": 3,
+        "text": "Key features"
+      },
+      {
+        "level": 3,
+        "text": "What Other People Are Looking For"
+      },
+      {
+        "level": 4,
+        "text": "Download the Rightmove app"
+      },
+      {
+        "level": 4,
+        "text": "Resources"
+      },
+      {
+        "level": 4,
+        "text": "Search"
+      },
+      {
+        "level": 4,
+        "text": "Locations"
+      },
+      {
+        "level": 4,
+        "text": "Rightmove"
+      },
+      {
+        "level": 4,
+        "text": "Professional"
+      }
+    ],
+    "headingOrderJumps": 1,
+    "images": [
+      {
+        "natural": "16x16",
+        "shown": "16x16",
+        "src": "uk/assets/7bb483729b5a8e26f73e1831cde5b842/_next/static/media/floorplan-white.97dae32e.svg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "16x16",
+        "shown": "16x16",
+        "src": "/assets/7bb483729b5a8e26f73e1831cde5b842/_next/static/media/virtualtour-white.2089dcc4.svg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "16x16",
+        "shown": "16x16",
+        "src": "co.uk/assets/7bb483729b5a8e26f73e1831cde5b842/_next/static/media/camera-white.579a6efc.svg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "476x317",
+        "shown": "356x223",
+        "src": "9-16:9/property-photo/81387ac00/95024430/81387ac00ee90749c63a21f8becb1b78_max_476x317.jpeg",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "476x317",
+        "shown": "356x223",
+        "src": "9-16:9/property-photo/3167328c9/95024430/3167328c9e712ce673136617bdd374bd_max_476x317.jpeg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "476x317",
+        "shown": "356x223",
+        "src": "9-16:9/property-photo/a21522c31/95024430/a21522c31073b6a00a3f7fe2d2ad4954_max_476x317.jpeg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "1080x1080",
+        "shown": "32x32",
+        "src": "co.uk/assets/7bb483729b5a8e26f73e1831cde5b842/_next/static/media/chevron-line.4e0268c8.svg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "1080x1080",
+        "shown": "32x32",
+        "src": "co.uk/assets/7bb483729b5a8e26f73e1831cde5b842/_next/static/media/chevron-line.4e0268c8.svg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "135x31",
+        "shown": "90x21",
+        "src": "https://media.rightmove.co.uk/partner-logo/31720049-PRODUCTS_LOGO-1766065279.jpeg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "16x16",
+        "shown": "16x16",
+        "src": "co.uk/assets/7bb483729b5a8e26f73e1831cde5b842/_next/static/media/camera-white.579a6efc.svg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "476x317",
+        "shown": "356x223",
+        "src": ":9-16:9/property-photo/a34e8799f/94619721/a34e8799f29feecb8068cb24e52a238f_max_476x317.png",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "135x62",
+        "shown": "87x40",
+        "src": "https://media.rightmove.co.uk/partner-logo/34443567-PRODUCTS_LOGO-1781700490314.jpg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "16x16",
+        "shown": "16x16",
+        "src": "uk/assets/7bb483729b5a8e26f73e1831cde5b842/_next/static/media/floorplan-white.97dae32e.svg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "16x16",
+        "shown": "16x16",
+        "src": "co.uk/assets/7bb483729b5a8e26f73e1831cde5b842/_next/static/media/camera-white.579a6efc.svg",
+        "loading": "lazy",
+        "alt": "yes"
+      }
+    ],
+    "imagesMissingAlt": 1,
+    "perf": {
+      "lcp": 2184,
+      "cls": 0.054229072393955254,
+      "shifts": 20,
+      "longTasks": 520
+    },
+    "bodyTextSample": "Sign in Buy Property for sale New homes for sale Property valuation Investors Mortgages Rent Property to rent Student property to rent House Prices Sold house prices Property valuation Instant online valuation Mortgages Get started Get a Mortgage in Principle Check your affordability Remortgage Calculator Mortgage guides Find Agent Find estate agent Commercial Commercial property to rent Commercia"
+  },
+  {
+    "site": "rightmove",
+    "page": "search",
+    "url": "https://www.rightmove.co.uk/property-for-sale/London.html",
+    "viewport": {
+      "w": 1440,
+      "h": 900
+    },
+    "requests": 304,
+    "totalBytes": 14438229,
+    "imageBytes": 1585980,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Access to fetch at 'https://1x1.a-mo.net/e' from origin 'https://www.rightmove.co.uk' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header i"
+    ],
+    "navErr": null,
+    "measureErr": null,
+    "title": "Properties For Sale in London | Rightmove",
+    "metaDescription": "Flats & Houses For Sale in London - Find properties with Rightmove - the UK's largest selection of properties.",
+    "ogImage": "https://media.rightmove.co.uk/assets/shared-assets/logos/logo-share-fb.png",
+    "docHeight": 10546,
+    "horizontalOverflow": 0,
+    "colours": {
+      "background": [
+        [
+          "#ffffff",
+          125
+        ],
+        [
+          "#000433",
+          37
+        ],
+        [
+          "#dedee2",
+          25
+        ],
+        [
+          "#f2f3f4",
+          21
+        ],
+        [
+          "#007054",
+          10
+        ],
+        [
+          "#0c8852",
+          5
+        ],
+        [
+          "#007054 @0.1",
+          4
+        ],
+        [
+          "#11828d",
+          2
+        ],
+        [
+          "#f5f7fb",
+          2
+        ],
+        [
+          "#dadbdd",
+          1
+        ],
+        [
+          "#000214",
+          1
+        ]
+      ],
+      "text": [
+        [
+          "#4f5064",
+          1130
+        ],
+        [
+          "#000433",
+          777
+        ],
+        [
+          "#ffffff",
+          198
+        ],
+        [
+          "#107a84",
+          182
+        ],
+        [
+          "#66636e",
+          46
+        ],
+        [
+          "#6c6d7f",
+          39
+        ],
+        [
+          "#717184",
+          35
+        ],
+        [
+          "#007054",
+          24
+        ],
+        [
+          "#031847",
+          6
+        ],
+        [
+          "#07319e",
+          5
+        ],
+        [
+          "#333333",
+          2
+        ]
+      ],
+      "border": [
+        [
+          "#c3c4c9",
+          25
+        ],
+        [
+          "#dadbdd",
+          10
+        ],
+        [
+          "#dedee2",
+          3
+        ],
+        [
+          "#8e8f9a",
+          2
+        ],
+        [
+          "#00deb6",
+          1
+        ],
+        [
+          "#ffffff",
+          1
+        ],
+        [
+          "#07319e",
+          1
+        ],
+        [
+          "#626379",
+          1
+        ],
+        [
+          "#888a9a",
+          1
+        ],
+        [
+          "#2cdebe",
+          1
+        ],
+        [
+          "#a2a2ad",
+          1
+        ]
+      ]
+    },
+    "shadows": [
+      [
+        "rgba(0, 0, 0, 0.3) 0px 3px 3px -3px",
+        25
+      ],
+      [
+        "rgba(0, 0, 0, 0.1) 0px 2px 4px 0px",
+        1
+      ]
+    ],
+    "radii": [
+      [
+        "8px",
+        108
+      ],
+      [
+        "4px",
+        26
+      ],
+      [
+        "50px",
+        24
+      ],
+      [
+        "16px",
+        15
+      ],
+      [
+        "8px 0px 0px",
+        13
+      ],
+      [
+        "0px 8px 8px 0px",
+        2
+      ],
+      [
+        "50%",
+        2
+      ],
+      [
+        "8px 0px 0px 8px",
+        1
+      ]
+    ],
+    "typography": {
+      "h1": {
+        "family": "Effra",
+        "size": "15px",
+        "weight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "#4f5064",
+        "sample": "Properties For Sale in London"
+      },
+      "h2": null,
+      "h3": null,
+      "body": {
+        "family": "Effra",
+        "size": "16px",
+        "weight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "#000433",
+        "sample": "58,978 results"
+      },
+      "button": null,
+      "link": {
+        "family": "Effra",
+        "size": "16px",
+        "weight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "color": "#107a84",
+        "sample": ""
+      }
+    },
+    "layout": {
+      "mainMaxWidth": "none",
+      "mainWidth": 1440,
+      "mainPadding": "0px",
+      "headerHeight": 50,
+      "bottomNavHeight": null,
+      "grids": []
+    },
+    "motion": [
+      [
+        "0.5s / ease",
+        70
+      ],
+      [
+        "0.16s / ease",
+        61
+      ],
+      [
+        "0.3s / ease-in",
+        48
+      ],
+      [
+        "0.2s / ease-in-out",
+        2
+      ],
+      [
+        "0.24s / ease",
+        1
+      ],
+      [
+        "0.15s / ease-out",
+        1
+      ],
+      [
+        "0.08s / ease-out",
+        1
+      ]
+    ],
+    "tapTargetsUnder44": 178,
+    "tapTargetSamples": [
+      {
+        "w": 51,
+        "h": 19,
+        "tag": "a",
+        "label": "Buy"
+      },
+      {
+        "w": 57,
+        "h": 19,
+        "tag": "a",
+        "label": "Rent"
+      },
+      {
+        "w": 115,
+        "h": 19,
+        "tag": "a",
+        "label": "House Prices"
+      },
+      {
+        "w": 100,
+        "h": 19,
+        "tag": "a",
+        "label": "Mortgages"
+      },
+      {
+        "w": 100,
+        "h": 19,
+        "tag": "a",
+        "label": "Find Agent"
+      },
+      {
+        "w": 110,
+        "h": 19,
+        "tag": "a",
+        "label": "Commercial"
+      },
+      {
+        "w": 72,
+        "h": 19,
+        "tag": "a",
+        "label": "Inspire"
+      },
+      {
+        "w": 91,
+        "h": 19,
+        "tag": "a",
+        "label": "Overseas"
+      },
+      {
+        "w": 98,
+        "h": 40,
+        "tag": "button",
+        "label": "Sign in My Rightmove"
+      },
+      {
+        "w": 31,
+        "h": 38,
+        "tag": "a",
+        "label": "Sign in"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Property for sale"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "New homes for sale"
+      }
+    ],
+    "controlsTotal": 426,
+    "headings": [
+      {
+        "level": 1,
+        "text": "Properties For Sale in London"
+      },
+      {
+        "level": 3,
+        "text": "Get ready with a Mortgage in Principle"
+      },
+      {
+        "level": 3,
+        "text": "Suggested Links"
+      },
+      {
+        "level": 3,
+        "text": "Nearby London"
+      },
+      {
+        "level": 3,
+        "text": "Within London"
+      },
+      {
+        "level": 3,
+        "text": "Exploring Related Searches"
+      },
+      {
+        "level": 3,
+        "text": "What Other People Are Looking For"
+      },
+      {
+        "level": 4,
+        "text": "Download the Rightmove app"
+      },
+      {
+        "level": 4,
+        "text": "Resources"
+      },
+      {
+        "level": 4,
+        "text": "Search"
+      },
+      {
+        "level": 4,
+        "text": "Locations"
+      },
+      {
+        "level": 4,
+        "text": "Rightmove"
+      },
+      {
+        "level": 4,
+        "text": "Professional"
+      }
+    ],
+    "headingOrderJumps": 1,
+    "images": [
+      {
+        "natural": "16x16",
+        "shown": "16x16",
+        "src": "uk/assets/7bb483729b5a8e26f73e1831cde5b842/_next/static/media/floorplan-white.97dae32e.svg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "16x16",
+        "shown": "16x16",
+        "src": "/assets/7bb483729b5a8e26f73e1831cde5b842/_next/static/media/virtualtour-white.2089dcc4.svg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "16x16",
+        "shown": "16x16",
+        "src": "co.uk/assets/7bb483729b5a8e26f73e1831cde5b842/_next/static/media/camera-white.579a6efc.svg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "476x317",
+        "shown": "395x312",
+        "src": "9-16:9/property-photo/67ceabdbe/87868611/67ceabdbe078597df3d273c10bb2b306_max_476x317.jpeg",
+        "loading": "eager",
+        "alt": "yes"
+      },
+      {
+        "natural": "476x317",
+        "shown": "395x312",
+        "src": "9-16:9/property-photo/6a49701c8/87868611/6a49701c801f2015dc3eb1db0f0df1f8_max_476x317.jpeg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "476x317",
+        "shown": "395x312",
+        "src": "9-16:9/property-photo/634d538bc/87868611/634d538bc3bb3af716e2894b1c1f5a9e_max_476x317.jpeg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "476x317",
+        "shown": "198x155",
+        "src": "9-16:9/property-photo/6a49701c8/87868611/6a49701c801f2015dc3eb1db0f0df1f8_max_476x317.jpeg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "476x317",
+        "shown": "198x155",
+        "src": "9-16:9/property-photo/28da3f27d/87868611/28da3f27d8d2d1ef3d8d5dd8db72dd41_max_476x317.jpeg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "1080x1080",
+        "shown": "32x32",
+        "src": "co.uk/assets/7bb483729b5a8e26f73e1831cde5b842/_next/static/media/chevron-line.4e0268c8.svg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "1080x1080",
+        "shown": "32x32",
+        "src": "co.uk/assets/7bb483729b5a8e26f73e1831cde5b842/_next/static/media/chevron-line.4e0268c8.svg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "135x135",
+        "shown": "40x40",
+        "src": "https://media.rightmove.co.uk/partner-logo/20941287-LOGO-1765967232.jpeg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "16x16",
+        "shown": "16x16",
+        "src": "co.uk/assets/7bb483729b5a8e26f73e1831cde5b842/_next/static/media/camera-white.579a6efc.svg",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "476x317",
+        "shown": "269x201",
+        "src": ":9-16:9/property-photo/a34e8799f/94619721/a34e8799f29feecb8068cb24e52a238f_max_476x317.png",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "476x317",
+        "shown": "269x201",
+        "src": ":9-16:9/property-photo/a34e8799f/94619721/a34e8799f29feecb8068cb24e52a238f_max_476x317.png",
+        "loading": "lazy",
+        "alt": "yes"
+      }
+    ],
+    "imagesMissingAlt": 1,
+    "perf": {
+      "lcp": 2352,
+      "cls": 0.30755628189903267,
+      "shifts": 168,
+      "longTasks": 399
+    },
+    "bodyTextSample": "Buy Rent House Prices Mortgages Find Agent Commercial Inspire Overseas Sign in Sign in Buy Property for sale New homes for sale Property valuation Investors Mortgages Rent Property to rent Student property to rent House Prices Sold house prices Property valuation Instant online valuation Mortgages Get started Get a Mortgage in Principle Check your affordability Remortgage Calculator Mortgage guide"
+  },
+  {
+    "site": "rightmove",
+    "page": "valuation",
+    "url": "https://www.rightmove.co.uk/property-valuation.html",
+    "viewport": {
+      "w": 1440,
+      "h": 900
+    },
+    "requests": 77,
+    "totalBytes": 3155829,
+    "imageBytes": 5057,
+    "consoleErrors": [],
+    "navErr": null,
+    "measureErr": null,
+    "title": "Agent Valuation | Online & In-Home Valuation | Rightmove",
+    "metaDescription": "Get a free online or in-home estate agent valuation today and receive an accurate, up-to-date property value with our agent-led valuation service.",
+    "ogImage": "/agent-valuation/logo-share-fb.png",
+    "docHeight": 2649,
+    "horizontalOverflow": 0,
+    "colours": {
+      "background": [
+        [
+          "#000433",
+          13
+        ],
+        [
+          "#ffffff",
+          5
+        ],
+        [
+          "#00deb6",
+          3
+        ],
+        [
+          "#f2f3f4",
+          1
+        ],
+        [
+          "#000433 @0.8",
+          1
+        ]
+      ],
+      "text": [
+        [
+          "#000000",
+          124
+        ],
+        [
+          "#000433",
+          94
+        ],
+        [
+          "#66636e",
+          46
+        ],
+        [
+          "#107a84",
+          37
+        ],
+        [
+          "#717184",
+          35
+        ],
+        [
+          "#ffffff",
+          4
+        ],
+        [
+          "#4f5064",
+          2
+        ],
+        [
+          "#7de4d3",
+          1
+        ],
+        [
+          "#707070",
+          1
+        ],
+        [
+          "#696969",
+          1
+        ],
+        [
+          "#11828d",
+          1
+        ]
+      ],
+      "border": [
+        [
+          "#000433",
+          10
+        ],
+        [
+          "#00deb6",
+          3
+        ],
+        [
+          "#626379",
+          1
+        ],
+        [
+          "#a2a2ad",
+          1
+        ]
+      ]
+    },
+    "shadows": [
+      [
+        "rgba(0, 0, 0, 0.31) 0px 15px 40px 0px",
+        1
+      ]
+    ],
+    "radii": [
+      [
+        "16px",
+        14
+      ],
+      [
+        "8px",
+        7
+      ],
+      [
+        "2px",
+        2
+      ],
+      [
+        "24px",
+        1
+      ]
+    ],
+    "typography": {
+      "h1": {
+        "family": "Effra",
+        "size": "32px",
+        "weight": "500",
+        "lineHeight": "40px",
+        "letterSpacing": "0.1px",
+        "color": "#ffffff",
+        "sample": "Get a free online or in-home valuation wit"
+      },
+      "h2": {
+        "family": "Effra",
+        "size": "32px",
+        "weight": "500",
+        "lineHeight": "40px",
+        "letterSpacing": "0.1px",
+        "color": "#000433",
+        "sample": "Your questions about agent valuations answ"
+      },
+      "h3": {
+        "family": "Effra",
+        "size": "20px",
+        "weight": "500",
+        "lineHeight": "28px",
+        "letterSpacing": "0.1px",
+        "color": "#000433",
+        "sample": "How does it work?"
+      },
+      "body": {
+        "family": "Effra",
+        "size": "16px",
+        "weight": "500",
+        "lineHeight": "24px",
+        "letterSpacing": "0.1px",
+        "color": "#ffffff",
+        "sample": "Enter a UK postcode"
+      },
+      "button": null,
+      "link": {
+        "family": "Effra",
+        "size": "16px",
+        "weight": "500",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "color": "#107a84",
+        "sample": ""
+      }
+    },
+    "layout": {
+      "mainMaxWidth": "none",
+      "mainWidth": 1440,
+      "mainPadding": "0px",
+      "headerHeight": 50,
+      "bottomNavHeight": null,
+      "grids": []
+    },
+    "motion": [
+      [
+        "0.25s / ease-in-out",
+        10
+      ],
+      [
+        "0.16s / ease",
+        1
+      ],
+      [
+        "0.1s / ease",
+        1
+      ],
+      [
+        "anim onetrust-fade-in 0.4s",
+        1
+      ]
+    ],
+    "tapTargetsUnder44": 104,
+    "tapTargetSamples": [
+      {
+        "w": 51,
+        "h": 19,
+        "tag": "a",
+        "label": "Buy"
+      },
+      {
+        "w": 57,
+        "h": 19,
+        "tag": "a",
+        "label": "Rent"
+      },
+      {
+        "w": 115,
+        "h": 19,
+        "tag": "a",
+        "label": "House Prices"
+      },
+      {
+        "w": 100,
+        "h": 19,
+        "tag": "a",
+        "label": "Mortgages"
+      },
+      {
+        "w": 100,
+        "h": 19,
+        "tag": "a",
+        "label": "Find Agent"
+      },
+      {
+        "w": 110,
+        "h": 19,
+        "tag": "a",
+        "label": "Commercial"
+      },
+      {
+        "w": 72,
+        "h": 19,
+        "tag": "a",
+        "label": "Inspire"
+      },
+      {
+        "w": 91,
+        "h": 19,
+        "tag": "a",
+        "label": "Overseas"
+      },
+      {
+        "w": 98,
+        "h": 40,
+        "tag": "button",
+        "label": "Sign in My Rightmove"
+      },
+      {
+        "w": 31,
+        "h": 48,
+        "tag": "a",
+        "label": "Sign in"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "Property for sale"
+      },
+      {
+        "w": 16,
+        "h": 24,
+        "tag": "a",
+        "label": "New homes for sale"
+      }
+    ],
+    "controlsTotal": 122,
+    "headings": [
+      {
+        "level": 1,
+        "text": "Get a free online or in-home valuation with a local ag"
+      },
+      {
+        "level": 3,
+        "text": "How does it work?"
+      },
+      {
+        "level": 3,
+        "text": "Choose the valuation option that's right for you:"
+      },
+      {
+        "level": 4,
+        "text": "In-home agent valuation"
+      },
+      {
+        "level": 4,
+        "text": "Online agent valuation"
+      },
+      {
+        "level": 2,
+        "text": "Your questions about agent valuations answered"
+      },
+      {
+        "level": 4,
+        "text": "Why do I need a property valuation?"
+      },
+      {
+        "level": 4,
+        "text": "Do agents charge for valuations?"
+      },
+      {
+        "level": 4,
+        "text": "How accurate are online valuations?"
+      },
+      {
+        "level": 4,
+        "text": "How does an estate agent calculate what a property is "
+      },
+      {
+        "level": 4,
+        "text": "What's the difference between in-home and online agent"
+      },
+      {
+        "level": 4,
+        "text": "Not ready to speak to an agent?"
+      },
+      {
+        "level": 4,
+        "text": "Download the Rightmove app"
+      },
+      {
+        "level": 4,
+        "text": "Resources"
+      },
+      {
+        "level": 4,
+        "text": "Search"
+      },
+      {
+        "level": 4,
+        "text": "Locations"
+      },
+      {
+        "level": 4,
+        "text": "Rightmove"
+      },
+      {
+        "level": 4,
+        "text": "Professional"
+      },
+      {
+        "level": 2,
+        "text": "Choose your cookies"
+      },
+      {
+        "level": 3,
+        "text": "We and our partners process data to provide:"
+      }
+    ],
+    "headingOrderJumps": 2,
+    "images": [
+      {
+        "natural": "36x35",
+        "shown": "36x36",
+        "src": "https://www.rightmove.co.uk/agent-valuation/experiments/new-landing-page/map-pin.svg",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "36x35",
+        "shown": "36x36",
+        "src": "https://www.rightmove.co.uk/agent-valuation/experiments/new-landing-page/person-online.svg",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "36x35",
+        "shown": "36x36",
+        "src": "tps://www.rightmove.co.uk/agent-valuation/experiments/new-landing-page/house-valuation.svg",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "444x308",
+        "shown": "428x297",
+        "src": "https://www.rightmove.co.uk/agent-valuation/experiments/new-landing-page/in-person.jpg",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "444x308",
+        "shown": "428x297",
+        "src": "https://www.rightmove.co.uk/agent-valuation/experiments/new-landing-page/online-val.jpg",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "600x416",
+        "shown": "250x173",
+        "src": "https://www.rightmove.co.uk/agent-valuation/experiments/new-landing-page/instant-val.jpg",
+        "loading": "auto",
+        "alt": "yes"
+      }
+    ],
+    "imagesMissingAlt": 0,
+    "perf": {
+      "lcp": 2124,
+      "cls": 0.39315766249919626,
+      "shifts": 22,
+      "longTasks": 396
+    },
+    "bodyTextSample": "Buy Rent House Prices Mortgages Find Agent Commercial Inspire Overseas Sign in Sign in Buy Property for sale New homes for sale Property valuation Investors Mortgages Rent Property to rent Student property to rent House Prices Sold house prices Property valuation Instant online valuation Mortgages Get started Get a Mortgage in Principle Check your affordability Remortgage Calculator Mortgage guide"
+  }
+]

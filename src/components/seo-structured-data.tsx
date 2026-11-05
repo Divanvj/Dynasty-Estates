@@ -1,4 +1,5 @@
 import React from "react";
+import { featureLabel } from "@/lib/feature-labels";
 import { PropertyRecord } from "@/lib/property-data";
 import { SITE_URL } from "@/lib/site-url";
 
@@ -101,7 +102,7 @@ export default function SeoStructuredData({
       },
       amenityFeature: property.features.map((f) => ({
         "@type": "LocationFeatureSpecification",
-        name: f.replace(/_/g, " "),
+        name: featureLabel(f),
         value: true,
       })),
     },
