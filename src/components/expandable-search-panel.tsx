@@ -1179,7 +1179,32 @@ export default function ExpandableSearchPanel({
                   Asset Class
                 </span>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              {/*
+                Still 2x2 on a phone, but each one is a 44px row instead of a
+                76px stacked card: icon beside the label rather than above it,
+                and the sublabel left to the wider layouts. About 96px for the
+                block against roughly 160px before, with all four still on
+                screen and nothing to scroll.
+
+                44px rather than 40 so these clear the touch floor on their own
+                without needing `tap-44` — they sit in a two-column grid where
+                an expanded hit area would overlap its neighbour.
+
+                Four ACROSS is not available here, which is measured rather
+                than assumed: inside the sheet body at 320px there are 288px,
+                so four equal cells would be 67px with 51px left for text after
+                padding, while the shortest of these labels — "Residential" —
+                needs 78px at the 14px type floor and "Developments" needs 100.
+                All four side by side want about 550px. Two columns give 140px
+                a cell, which clears the 138px that "Developments" needs with
+                its icon and `px-2`.
+
+                `rounded-xl`, deliberately not `rounded-full`: these are a
+                segmented choice of one asset class, and a pill reads as a
+                removable chip like the Property Types below. From `sm` the
+                original cards are untouched.
+              */}
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                 {[
                   { id: "Residential", label: "Residential", desc: "Homes & Villas", icon: ResidentialIcon },
                   { id: "Commercial", label: "Commercial", desc: "Offices & Retail", icon: CommercialIcon },
@@ -1192,16 +1217,17 @@ export default function ExpandableSearchPanel({
                     <button
                       key={item.id}
                       type="button"
+                      aria-pressed={isSelected}
                       onClick={() => setCategory(item.id as "Residential" | "Commercial" | "Farms" | "Developments")}
-                      className={`flex flex-col items-center justify-center p-3 rounded-2xl border transition-all cursor-pointer text-center ${
+                      className={`flex min-h-[44px] items-center justify-center gap-1.5 rounded-xl border px-2 transition-all cursor-pointer sm:min-h-0 sm:flex-col sm:gap-0 sm:rounded-2xl sm:p-3 sm:text-center ${
                         isSelected
                           ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border-emerald-500/70 dark:border-emerald-400/60 shadow-md ring-1 ring-emerald-400/50 dark:shadow-[0_0_20px_rgba(16,185,129,0.4)]"
                           : "bg-white/90 dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:bg-white dark:hover:bg-surface-panel hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_16px_rgba(16,185,129,0.3)] dark:hover:shadow-[0_0_20px_rgba(52,211,153,0.35)] shadow-2xs"
                       }`}
                     >
-                      <Icon className={`h-4 w-4 mb-1 ${isSelected ? "text-emerald-300" : "text-slate-500 dark:text-slate-400"}`} />
-                      <span className="text-xs font-bold">{item.label}</span>
-                      <span className={`text-xs mt-0.5 ${isSelected ? "text-emerald-100" : "text-slate-400 dark:text-slate-500"}`}>{item.desc}</span>
+                      <Icon className={`h-4 w-4 shrink-0 sm:mb-1 ${isSelected ? "text-emerald-300" : "text-slate-500 dark:text-slate-400"}`} />
+                      <span className="min-w-0 truncate text-xs font-bold">{item.label}</span>
+                      <span className={`hidden text-xs mt-0.5 sm:block ${isSelected ? "text-emerald-100" : "text-slate-400 dark:text-slate-500"}`}>{item.desc}</span>
                     </button>
                   );
                 })}
