@@ -184,7 +184,6 @@ export default function SiteNavigation() {
   // client-side rendering for a highlight that pathname already decides.
   const isBuyActive = pathname === "/for-sale";
   const isRentActive = pathname === "/to-rent";
-  const isHomeActive = pathname === "/";
   const isAiActive = pathname === "/ai-search";
 
   return (
@@ -193,19 +192,15 @@ export default function SiteNavigation() {
       aria-label="Main Navigation"
       className="hidden items-center gap-1.5 md:gap-2.5 lg:gap-4 xl:gap-6 text-xs font-semibold text-slate-700 dark:text-slate-200 lg:flex"
     >
-      {/* 1. Home */}
-      <Link
-        href="/"
-        className={`px-2 py-1 rounded-full transition-colors ${
-          isHomeActive
-            ? "text-emerald-900 dark:text-emerald-300 font-bold"
-            : "hover:text-emerald-900 dark:hover:text-emerald-300"
-        }`}
-      >
-        Home
-      </Link>
+      {/*
+        "Home" used to sit here. The logo to the left of this bar already links
+        home, as it does on every property portal, so the slot was spending one
+        of seven top-level positions on a destination the reader already has.
+        Those positions are the scarcest thing in the header, and Buyers,
+        Sellers and Agents each need one.
+      */}
 
-      {/* 2. Buy (Filters for Sale) */}
+      {/* 1. Buy (Filters for Sale) */}
       <Link
         href="/for-sale"
         className={`px-2 py-1 rounded-full transition-colors ${
@@ -255,7 +250,10 @@ export default function SiteNavigation() {
           aria-expanded={openDropdown === "sell"}
           aria-controls="nav-sell-panel"
         >
-          <span>Sell</span>
+          {/* "Sell your home", not "Sell". Beside Buy and Rent, a bare "Sell"
+              reads as a third way to filter the catalogue rather than an offer
+              to the person who owns the house. */}
+          <span>Sell your home</span>
           <ChevronDownIcon
             className={`h-3 w-3 transition-transform duration-200 ${
               openDropdown === "sell" ? "rotate-180 text-emerald-600 dark:text-emerald-400" : "text-slate-600"
@@ -450,7 +448,25 @@ export default function SiteNavigation() {
         )}
       </div>
 
-      {/* 6. AI Search (with sparkle badge) */}
+      {/*
+        A "For agents" entry belongs here — agents and agencies have no
+        top-level entry point, and both SA incumbents give them one. It is
+        deliberately NOT added yet: the only plausible destination today is
+        /agents, which is a PPRA directory built for buyers looking for an
+        agent, not a proposition aimed at agents. Pointing a labelled entry at
+        the wrong page is the exact failure this audit catalogued elsewhere in
+        the menu. The entry goes in with the agent landing page, in S13.
+      */}
+
+      {/*
+        AI Search stays for now. The plan folds it into a single search field
+        that accepts natural language, but that field does not accept it yet —
+        removing the entry point before its replacement works would lose a
+        working feature rather than simplify one. It goes when the search field
+        can do the job.
+      */}
+
+      {/* 5. AI Search (with sparkle badge) */}
       <Link
         href="/ai-search"
         className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-bold text-xs transition-all ${

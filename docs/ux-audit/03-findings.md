@@ -45,7 +45,7 @@ Stated up front so no number here is read as more than it is.
 | # | Hypothesis | Verdict | Evidence |
 |---|---|---|---|
 | 1 | Three competing search paths; no location field | **SPLIT** | Three paths **confirmed**: `home-hero-search.tsx:65` "Try AI", `:74` search panel, `:81` "Popular in SA" chips, `:103` "Explore on Map". "No location field" **REFUTED** — `:75` placeholder is `"Search city or suburb..."` |
-| 2 | Hero headline tripled in DOM | **CONFIRMED** P1 | Page text reads `Open the Door to Your Next Chapter O O O p p p e e e n n n t t t h h h e e e ...` Every character repeated 3×. Not an axe violation (the text is "visible"), so it is a screen-reader defect automated tools miss |
+| 2 | Hero headline tripled in DOM | **SPLIT — the accessibility half is REFUTED** | The tripling is real in **rendered** text. It is **not** in the accessibility tree: `hero-headline.tsx` already sets `aria-hidden` on the animated layer and `aria-label` on the `<h1>`, so AT reads `"Destiny Called. The Door Is Open."` once. My original evidence was `innerText`, which ignores `aria-hidden` — the wrong instrument. Remains a P2 text-extraction issue (F31), not a P1 accessibility one. See F5 |
 | 3 | "FX: Aurora Silk" visible to users | **CONFIRMED** P1 | `ambient-cursor-hue.tsx:543`; appears in page text at 1440 |
 | 4 | Spotlight leads with a rental on a For-Sale page | **REFUTED** | `/for-sale` has no spotlight component and **no per-month prices at all**. The home spotlight shows "WATERKLOOF 02 / 05 … **R 6,950,000**" — a sale price, no "/month", no "• 12 Months" |
 | 5 | 5 of 9 provinces show "0 listings" | **CONFIRMED, count corrected** P1 | It is **4 of 9**: Limpopo, Mpumalanga, North West, Northern Cape. Each remains a clickable "Explore … homes →". Screenshot `dynasty/for-sale/1440x900-atf.jpg` |
@@ -147,16 +147,40 @@ The pattern is `text-slate-400` and `text-slate-500` used for captions and
 secondary labels on light surfaces. It is systemic, not local, so it belongs in
 the token work rather than page-by-page patching.
 
-### F5. The hero headline is read character-by-character
-**Who:** screen-reader users · **OVERSIGHT**
+### F5. ~~The hero headline is read character-by-character~~ — **REFUTED**
 
-The accessibility text is `Open the Door to Your Next Chapter O O O p p p e e e
-n n n ...` — the animation renders each character in triplicate and leaves all
-three in the tree. axe does not flag it because the text is technically
-visible, which is exactly why it has survived.
+**Corrected 5 November 2026, while starting S8.**
 
-**Fix:** `aria-hidden` on the animated layer plus one visually-hidden readable
-copy.
+This was wrong, and it was wrong because of the instrument. The evidence was
+`document.body.innerText`, which reflects **rendered** text and ignores
+`aria-hidden` — the wrong tool for a claim about assistive technology.
+
+Chrome's accessibility tree says the opposite:
+
+```
+h1 aria-label : "Destiny Called. The Door Is Open."
+h1 innerText  : "Destiny Called. The Door Is Open. D D D e e e s s s t t t ..."
+single-character nodes exposed to AT: 2   (both the logo's "D", not the headline)
+```
+
+`hero-headline.tsx` already sets `aria-hidden="true"` on the animated layer and
+puts `aria-label` with the clean text on the `<h1>` — precisely the fix this
+finding proposed. It was already implemented, which is also why axe never
+flagged it.
+
+**What remains, at much lower severity:** the triplicated characters are still
+in the rendered text, so they reach anything reading rendered text rather than
+the accessibility tree. Logged as F31 below.
+
+### F31. The hero headline's rendered text is triplicated
+**Who:** search indexing, anyone copying the headline · **P2** ·
+**DELIBERATE-FINAL** — the three layers draw the glass effect
+(`hh-c__rim`, `hh-c__fill`, `hh-c__spec`)
+
+Not an accessibility defect (see F5). It is a text-extraction one: a crawler
+reading the `<h1>`, or a visitor selecting it to paste, gets the headline
+followed by every character three times. Worth weighing against the visual
+treatment, not worth breaking the treatment for.
 
 ### F6. Twelve of thirteen images on `/map-search` have no alt text
 **Who:** screen-reader users, SEO · **OVERSIGHT**
