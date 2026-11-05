@@ -1,0 +1,1960 @@
+[
+  {
+    "site": "dynasty",
+    "page": "home",
+    "url": "https://dynasty-estates.vercel.app/",
+    "viewport": {
+      "w": 390,
+      "h": 844
+    },
+    "requests": 59,
+    "totalBytes": 1479477,
+    "imageBytes": 97503,
+    "consoleErrors": [],
+    "navErr": null,
+    "measureErr": null,
+    "title": "Dynasty Estates | Property Intelligence",
+    "metaDescription": "Luxury property discovery interface inspired by premium modern real-estate experiences.",
+    "ogImage": null,
+    "docHeight": 7567,
+    "horizontalOverflow": 0,
+    "colours": {
+      "background": [
+        [
+          "#0.ffff9b56323bc0.0002fc7fc8004216c0.00015100262a310d @0.7",
+          21
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc7fc8004216c0.00015100262a310d @0.6",
+          20
+        ],
+        [
+          "#000000 @0.45",
+          20
+        ],
+        [
+          "#60.49374bc6a7f0.da393ee5eedcc2.77eda6612839",
+          12
+        ],
+        [
+          "#5b.bc3c9eecbfb0.ffaf102363b2584.c509bf9c62a1c",
+          10
+        ],
+        [
+          "#c5a059",
+          10
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.75",
+          5
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.45",
+          3
+        ],
+        [
+          "#000000 @0.4",
+          3
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.4",
+          2
+        ],
+        [
+          "#000000 @0.5",
+          2
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc7fc8004216c0.00015100262a310d @0.8",
+          2
+        ],
+        [
+          "#0.43124d099e0e740.0cf20b4ab6dd770.01b194372f16431 @0.4",
+          2
+        ],
+        [
+          "#000000",
+          1
+        ],
+        [
+          "#0.43124d099e0e740.0cf20b4ab6dd770.01b194372f16431 @0.15",
+          1
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.9",
+          1
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.95",
+          1
+        ],
+        [
+          "#ffffff",
+          1
+        ],
+        [
+          "#dbe8f0",
+          1
+        ],
+        [
+          "#0.b22ccb3a2595b80.297fd82773e250.0d1a9fbe76c8b4 @0.3",
+          1
+        ],
+        [
+          "#000000 @0.35",
+          1
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.1",
+          1
+        ],
+        [
+          "#44.3075f6fd227.df7121ab4b72c29.fd8adab9f55a @0.9",
+          1
+        ],
+        [
+          "#0b4d4e",
+          1
+        ],
+        [
+          "#0.b22ccb3a2595b80.297fd82773e250.0d1a9fbe76c8b4 @0.2",
+          1
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.85",
+          1
+        ]
+      ],
+      "text": [
+        [
+          "#7.c9672324c83681.d2cd9e83e425bf.0dbf487fcb92",
+          287
+        ],
+        [
+          "#1a.f4f765fd8adb1.785c67dfe32af.b305532617c18",
+          114
+        ],
+        [
+          "#ffffff",
+          113
+        ],
+        [
+          "#41.88ef34d6a162.4062f5989df12e.81d7dbf487fc8",
+          102
+        ],
+        [
+          "#23.8ff2e48e8a721.bff1950331e3af.6e7d566cf41f",
+          65
+        ],
+        [
+          "#30.166cf41f212e2.093404ea4a8c210.94d6a161e4f7",
+          51
+        ],
+        [
+          "#0.d851a8694035780.235b2d4d4024b40.097e0ac7da1ec5 @0.7",
+          26
+        ],
+        [
+          "#1.c50dae3e6c4c61.53d273d5bab229.49de69ad42c4",
+          20
+        ],
+        [
+          "#10.21cac083126f0.516abde3fbbd7ce.aacd9e83e4258",
+          12
+        ],
+        [
+          "#53.eb98c7e282430.b65fd8adabad.e288ce703afb8",
+          9
+        ],
+        [
+          "#23.5e147ae147ae21.1e69ad42c3ca8.0a3ec02f2f988",
+          9
+        ],
+        [
+          "#0f172a",
+          7
+        ],
+        [
+          "#54.c3e425aee631.f2027525460aa7.eef156191149",
+          5
+        ],
+        [
+          "#2c.7cb295e9e1b29.0a2339c0ebeeb.093dd97f62b68",
+          3
+        ],
+        [
+          "#5e.e6809d49518411.13afb7e90ff95.a36b8f9b13164",
+          3
+        ],
+        [
+          "#37.0c504816f00631.ecb295e9e1bf.ee147ae147ae",
+          3
+        ],
+        [
+          "#0d9488 @0.45",
+          2
+        ],
+        [
+          "#5a.3985f06f69441f.09fbe76c8b449.7888f861a60d8",
+          2
+        ],
+        [
+          "#1c.dd1b71758e221a.ecc63f1412065.75b9628cbd124",
+          1
+        ],
+        [
+          "#5b.bc3c9eecbfb0.ffaf102363b2584.c509bf9c62a1c",
+          1
+        ],
+        [
+          "#4b.13bcd35a85883c.bb367a0f909613.6a29c779a6b5",
+          1
+        ],
+        [
+          "#0.f33300de4c5110.0cbc2c6b98d54e80.03e2cf6d90fd12e @0.8",
+          1
+        ]
+      ],
+      "border": [
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.3",
+          24
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc7fc8004216c0.00015100262a310d @0.8",
+          15
+        ],
+        [
+          "#5b.bc3c9eecbfb0.ffaf102363b2584.c509bf9c62a1c",
+          12
+        ],
+        [
+          "#0.de76a7264a16a80.01a8a174596e3060.05609dcf893faf4 @0.8",
+          11
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc7fc8004216c0.00015100262a310d @0.7",
+          10
+        ],
+        [
+          "#0.edd2d01c0ca60.00d5ce7e27ce2540.0337669e9a8a5a6 @0.8",
+          7
+        ],
+        [
+          "#0.edd2d01c0ca60.00d5ce7e27ce2540.0337669e9a8a5a6 @0.9",
+          4
+        ],
+        [
+          "#0.c3d6c72192210.2b61bb05faebc40.0d1517bf396653 @0.3",
+          4
+        ],
+        [
+          "#0.c3d6c72192210.2b61bb05faebc40.0d1517bf396653 @0.4",
+          3
+        ],
+        [
+          "#0.c3d6c72192210.2b61bb05faebc40.0d1517bf396653 @0.5",
+          2
+        ],
+        [
+          "#0.b22ccb3a2595b80.297fd82773e250.0d1a9fbe76c8b4 @0.2",
+          2
+        ],
+        [
+          "#f.34395810624e000.000063fffb13af4ed4",
+          1
+        ],
+        [
+          "#0.b22ccb3a2595b80.297fd82773e250.0d1a9fbe76c8b4 @0.3",
+          1
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc7fc8004216c0.00015100262a310d @0.6",
+          1
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.25",
+          1
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.2",
+          1
+        ],
+        [
+          "#0.b22ccb3a2595b80.297fd82773e250.0d1a9fbe76c8b4 @0.25",
+          1
+        ]
+      ]
+    },
+    "shadows": [
+      [
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+        41
+      ]
+    ],
+    "radii": [
+      [
+        "3.35544e+07px",
+        68
+      ],
+      [
+        "9999px",
+        33
+      ],
+      [
+        "26px",
+        14
+      ],
+      [
+        "16px",
+        13
+      ],
+      [
+        "32px",
+        6
+      ],
+      [
+        "12px",
+        6
+      ],
+      [
+        "20px",
+        2
+      ]
+    ],
+    "typography": {
+      "h1": {
+        "family": "Geist",
+        "size": "30px",
+        "weight": "300",
+        "lineHeight": "37.5px",
+        "letterSpacing": "-1.5px",
+        "color": "#7.c9672324c83681.d2cd9e83e425bf.0dbf487fcb92",
+        "sample": "Open the Door to Your Next ChapterOOOpppee"
+      },
+      "h2": {
+        "family": "Geist",
+        "size": "24px",
+        "weight": "700",
+        "lineHeight": "32px",
+        "letterSpacing": "-0.6px",
+        "color": "#ffffff",
+        "sample": "R 75,000 / month"
+      },
+      "h3": {
+        "family": "Geist",
+        "size": "24px",
+        "weight": "600",
+        "lineHeight": "32px",
+        "letterSpacing": "normal",
+        "color": "#7.c9672324c83681.d2cd9e83e425bf.0dbf487fcb92",
+        "sample": "South African Metros at a Glance"
+      },
+      "body": {
+        "family": "Geist",
+        "size": "14px",
+        "weight": "400",
+        "lineHeight": "20px",
+        "letterSpacing": "normal",
+        "color": "#10.21cac083126f0.516abde3fbbd7ce.aacd9e83e4258",
+        "sample": "AI Search: Describe your dream home in nat"
+      },
+      "button": null,
+      "link": {
+        "family": "Geist",
+        "size": "16px",
+        "weight": "400",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "color": "#7.c9672324c83681.d2cd9e83e425bf.0dbf487fcb92",
+        "sample": "DynastyEstates"
+      }
+    },
+    "layout": {
+      "mainMaxWidth": "none",
+      "mainWidth": 390,
+      "mainPadding": "16px 12px",
+      "headerHeight": 74,
+      "bottomNavHeight": 63,
+      "grids": [
+        {
+          "cols": "99px 99px",
+          "gap": "normal"
+        },
+        {
+          "cols": "366px",
+          "gap": "16px"
+        },
+        {
+          "cols": "316px",
+          "gap": "12px"
+        },
+        {
+          "cols": "324px",
+          "gap": "32px"
+        }
+      ]
+    },
+    "motion": [
+      [
+        "0.15s / cubic-bezier(0.4, 0, 0.2, 1)",
+        130
+      ],
+      [
+        "0.3s / cubic-bezier(0.4, 0, 0.2, 1)",
+        11
+      ],
+      [
+        "0.55s / cubic-bezier(0.4, 0, 0.2, 1)",
+        10
+      ],
+      [
+        "0.2s / cubic-bezier(0.4, 0, 0.2, 1)",
+        2
+      ],
+      [
+        "0.3s / cubic-bezier(0, 0, 0.2, 1)",
+        1
+      ],
+      [
+        "anim aurora-drift-a 23s",
+        1
+      ],
+      [
+        "anim aurora-drift-b 31s",
+        1
+      ],
+      [
+        "anim aurora-drift-c 39s",
+        1
+      ],
+      [
+        "anim aurora-drift-d 27s",
+        1
+      ],
+      [
+        "anim aurora-sheen 26s",
+        1
+      ],
+      [
+        "0.5s, 0.5s / cubic-bezier(0.4, 0, 0.2, 1), cubic-bezier(0.4, 0, 0.2, 1)",
+        1
+      ],
+      [
+        "0.6s / ease",
+        1
+      ]
+    ],
+    "tapTargetsUnder44": 82,
+    "tapTargetSamples": [
+      {
+        "w": 93,
+        "h": 34,
+        "tag": "button",
+        "label": "Try AISearch→"
+      },
+      {
+        "w": 99,
+        "h": 36,
+        "tag": "button",
+        "label": "For Sale"
+      },
+      {
+        "w": 99,
+        "h": 36,
+        "tag": "button",
+        "label": "To Rent"
+      },
+      {
+        "w": 168,
+        "h": 24,
+        "tag": "input",
+        "label": ""
+      },
+      {
+        "w": 40,
+        "h": 40,
+        "tag": "button",
+        "label": "Filters"
+      },
+      {
+        "w": 40,
+        "h": 40,
+        "tag": "button",
+        "label": "Search→"
+      },
+      {
+        "w": 131,
+        "h": 32,
+        "tag": "button",
+        "label": "Johannesburg"
+      },
+      {
+        "w": 107,
+        "h": 32,
+        "tag": "button",
+        "label": "Cape Town"
+      },
+      {
+        "w": 120,
+        "h": 32,
+        "tag": "button",
+        "label": "Pretoria East"
+      },
+      {
+        "w": 139,
+        "h": 32,
+        "tag": "button",
+        "label": "Solar & Inverter"
+      },
+      {
+        "w": 137,
+        "h": 32,
+        "tag": "button",
+        "label": "Security Estate"
+      },
+      {
+        "w": 124,
+        "h": 20,
+        "tag": "a",
+        "label": "Explore on Map→"
+      }
+    ],
+    "controlsTotal": 115,
+    "headings": [
+      {
+        "level": 1,
+        "text": "Open the Door to Your Next ChapterOOOpppeeennn ttthhhe"
+      },
+      {
+        "level": 2,
+        "text": "R 75,000 / month"
+      },
+      {
+        "level": 2,
+        "text": "Curated Luxury Homes & Estates"
+      },
+      {
+        "level": 2,
+        "text": "Claremont Upper Courtyard Townhouse"
+      },
+      {
+        "level": 2,
+        "text": "Summerstrand Oceanfront Family Residence"
+      },
+      {
+        "level": 2,
+        "text": "Woodland Hills Wildlife Estate Villa"
+      },
+      {
+        "level": 2,
+        "text": "Mount Street Enclosure Family Homestead"
+      },
+      {
+        "level": 2,
+        "text": "Silver Lakes Golf & Wildlife Fairway Haven"
+      },
+      {
+        "level": 2,
+        "text": "Waterkloof Ridge Diplomatic Architectural Villa"
+      },
+      {
+        "level": 2,
+        "text": "Simbithi Eco-Estate Ocean-Breeze Pavilion"
+      },
+      {
+        "level": 2,
+        "text": "Morningside Sandhurst Border Grand Manor"
+      },
+      {
+        "level": 2,
+        "text": "Dainfern Golf Estate Riverfront Residence"
+      },
+      {
+        "level": 2,
+        "text": "Steenberg Private Winelands & Golf Estate Villa"
+      },
+      {
+        "level": 3,
+        "text": "South African Metros at a Glance"
+      },
+      {
+        "level": 3,
+        "text": "Find homes with your partner"
+      }
+    ],
+    "headingOrderJumps": 0,
+    "images": [
+      {
+        "natural": "96x96",
+        "shown": "38x38",
+        "src": "https://dynasty-estates.vercel.app/_next/image?url=%2Fdynasty-logo.png&w=96&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x260",
+        "shown": "364x208",
+        "src": "Fphoto-1560448204-e02f11c3d0e2%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x260",
+        "shown": "364x208",
+        "src": "oto-1512917774080-9991f1c4c750%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x259",
+        "shown": "364x208",
+        "src": "oto-1512915922686-57c11dde9b6b%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x260",
+        "shown": "364x208",
+        "src": "oto-1600585154340-be6161a56a0c%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x292",
+        "shown": "364x208",
+        "src": "oto-1598228723793-52759bba239c%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x260",
+        "shown": "364x208",
+        "src": "oto-1600607687920-4e2a09cf159d%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x260",
+        "shown": "364x208",
+        "src": "oto-1512917774080-9991f1c4c750%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x260",
+        "shown": "364x208",
+        "src": "oto-1600585154340-be6161a56a0c%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x260",
+        "shown": "364x208",
+        "src": "oto-1613977257363-707ba9348227%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x258",
+        "shown": "364x208",
+        "src": "oto-1600596542815-ffad4c1539a9%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x258",
+        "shown": "364x208",
+        "src": "oto-1600596542815-ffad4c1539a9%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x260",
+        "shown": "364x208",
+        "src": "oto-1600585154340-be6161a56a0c%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x260",
+        "shown": "364x208",
+        "src": "oto-1600607687920-4e2a09cf159d%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      }
+    ],
+    "imagesMissingAlt": 0,
+    "perf": {
+      "lcp": 2280,
+      "cls": 0,
+      "shifts": 0,
+      "longTasks": 3
+    },
+    "bodyTextSample": "Profile Open the Door to Your Next Chapter O O O p p p e e e n n n t t t h h h e e e D D D o o o o o o r r r t t t o o o Y Y Y o o o u u u r r r N N N e e e x x x t t t C C C h h h a a a p p p t t t e e e r r r AI Search: Search dream homes with AI Search Try AI → For Sale To Rent Popular in SA: Johannesburg Cape Town Pretoria East Solar & Inverter Security Estate Explore on Map → PREMIER SPOTLIGH"
+  },
+  {
+    "site": "dynasty",
+    "page": "home",
+    "url": "https://dynasty-estates.vercel.app/",
+    "viewport": {
+      "w": 1440,
+      "h": 900
+    },
+    "requests": 58,
+    "totalBytes": 1735557,
+    "imageBytes": 185589,
+    "consoleErrors": [],
+    "navErr": null,
+    "measureErr": null,
+    "title": "Dynasty Estates | Property Intelligence",
+    "metaDescription": "Luxury property discovery interface inspired by premium modern real-estate experiences.",
+    "ogImage": null,
+    "docHeight": 6666,
+    "horizontalOverflow": 0,
+    "colours": {
+      "background": [
+        [
+          "#0.fa9f8c21e1d2180.05388a8b08dd1e40.014bc4fa7074066 @0.8",
+          93
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc7fc8004216c0.00015100262a310d @0.7",
+          22
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc7fc8004216c0.00015100262a310d @0.6",
+          20
+        ],
+        [
+          "#60.49374bc6a7f0.da393ee5eedcc2.77eda6612839",
+          12
+        ],
+        [
+          "#5b.bc3c9eecbfb0.ffaf102363b2584.c509bf9c62a1c",
+          10
+        ],
+        [
+          "#c5a059",
+          10
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.5",
+          10
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.75",
+          5
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.45",
+          3
+        ],
+        [
+          "#000000 @0.4",
+          3
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.4",
+          2
+        ],
+        [
+          "#000000 @0.5",
+          2
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc7fc8004216c0.00015100262a310d @0.8",
+          2
+        ],
+        [
+          "#0.43124d099e0e740.0cf20b4ab6dd770.01b194372f16431 @0.4",
+          2
+        ],
+        [
+          "#000000",
+          1
+        ],
+        [
+          "#42.f9c0ebedfa443a.451eb851eb8613.8ab9f559b3d",
+          1
+        ],
+        [
+          "#0.43124d099e0e740.0cf20b4ab6dd770.01b194372f16431 @0.15",
+          1
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.9",
+          1
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.95",
+          1
+        ],
+        [
+          "#ffffff",
+          1
+        ],
+        [
+          "#dbe8f0",
+          1
+        ],
+        [
+          "#0.b22ccb3a2595b80.297fd82773e250.0d1a9fbe76c8b4 @0.3",
+          1
+        ],
+        [
+          "#000000 @0.35",
+          1
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.1",
+          1
+        ],
+        [
+          "#44.3075f6fd227.df7121ab4b72c29.fd8adab9f55a @0.9",
+          1
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.35",
+          1
+        ],
+        [
+          "#0b4d4e",
+          1
+        ],
+        [
+          "#0.b22ccb3a2595b80.297fd82773e250.0d1a9fbe76c8b4 @0.2",
+          1
+        ]
+      ],
+      "text": [
+        [
+          "#7.c9672324c83681.d2cd9e83e425bf.0dbf487fcb92",
+          340
+        ],
+        [
+          "#1a.f4f765fd8adb1.785c67dfe32af.b305532617c18",
+          157
+        ],
+        [
+          "#41.88ef34d6a162.4062f5989df12e.81d7dbf487fc8",
+          157
+        ],
+        [
+          "#23.5e147ae147ae21.1e69ad42c3ca8.0a3ec02f2f988",
+          104
+        ],
+        [
+          "#ffffff",
+          85
+        ],
+        [
+          "#23.8ff2e48e8a721.bff1950331e3af.6e7d566cf41f",
+          78
+        ],
+        [
+          "#30.166cf41f212e2.093404ea4a8c210.94d6a161e4f7",
+          36
+        ],
+        [
+          "#1.c50dae3e6c4c61.53d273d5bab229.49de69ad42c4",
+          30
+        ],
+        [
+          "#0.d851a8694035780.235b2d4d4024b40.097e0ac7da1ec5 @0.7",
+          26
+        ],
+        [
+          "#10.21cac083126f0.516abde3fbbd7ce.aacd9e83e4258",
+          14
+        ],
+        [
+          "#53.eb98c7e282430.b65fd8adabad.e288ce703afb8",
+          7
+        ],
+        [
+          "#37.0c504816f00631.ecb295e9e1bf.ee147ae147ae",
+          6
+        ],
+        [
+          "#54.c3e425aee631.f2027525460aa7.eef156191149",
+          5
+        ],
+        [
+          "#5e.e6809d49518411.13afb7e90ff95.a36b8f9b13164",
+          4
+        ],
+        [
+          "#2c.7cb295e9e1b29.0a2339c0ebeeb.093dd97f62b68",
+          3
+        ],
+        [
+          "#1c.dd1b71758e221a.ecc63f1412065.75b9628cbd124",
+          2
+        ],
+        [
+          "#0d9488 @0.45",
+          2
+        ],
+        [
+          "#5a.3985f06f69441f.09fbe76c8b449.7888f861a60d8",
+          2
+        ],
+        [
+          "#42.f9c0ebedfa443a.451eb851eb8613.8ab9f559b3d",
+          1
+        ],
+        [
+          "#5b.bc3c9eecbfb0.ffaf102363b2584.c509bf9c62a1c",
+          1
+        ],
+        [
+          "#4b.13bcd35a85883c.bb367a0f909613.6a29c779a6b5",
+          1
+        ],
+        [
+          "#0.f33300de4c5110.0cbc2c6b98d54e80.03e2cf6d90fd12e @0.8",
+          1
+        ]
+      ],
+      "border": [
+        [
+          "#0.e7ade225fa6590.16e737b21df4de0.0681d3aa369fcf4 @0.5",
+          93
+        ],
+        [
+          "#0.edd2d01c0ca60.00d5ce7e27ce2540.0337669e9a8a5a6 @0.7",
+          20
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc7fc8004216c0.00015100262a310d @0.8",
+          16
+        ],
+        [
+          "#0.c3d6c72192210.2b61bb05faebc40.0d1517bf396653 @0.3",
+          14
+        ],
+        [
+          "#5b.bc3c9eecbfb0.ffaf102363b2584.c509bf9c62a1c",
+          12
+        ],
+        [
+          "#0.de76a7264a16a80.01a8a174596e3060.05609dcf893faf4 @0.8",
+          11
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc7fc8004216c0.00015100262a310d @0.7",
+          9
+        ],
+        [
+          "#0.edd2d01c0ca60.00d5ce7e27ce2540.0337669e9a8a5a6 @0.8",
+          7
+        ],
+        [
+          "#0.edd2d01c0ca60.00d5ce7e27ce2540.0337669e9a8a5a6 @0.9",
+          4
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.3",
+          4
+        ],
+        [
+          "#0.c3d6c72192210.2b61bb05faebc40.0d1517bf396653 @0.4",
+          3
+        ],
+        [
+          "#0.b22ccb3a2595b80.297fd82773e250.0d1a9fbe76c8b4 @0.3",
+          2
+        ],
+        [
+          "#0.c3d6c72192210.2b61bb05faebc40.0d1517bf396653 @0.5",
+          2
+        ],
+        [
+          "#0.b22ccb3a2595b80.297fd82773e250.0d1a9fbe76c8b4 @0.2",
+          2
+        ],
+        [
+          "#f.34395810624e000.000063fffb13af4ed4",
+          1
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc7fc8004216c0.00015100262a310d @0.6",
+          1
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.25",
+          1
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.2",
+          1
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.45",
+          1
+        ],
+        [
+          "#0.b22ccb3a2595b80.297fd82773e250.0d1a9fbe76c8b4 @0.25",
+          1
+        ]
+      ]
+    },
+    "shadows": [
+      [
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+        52
+      ]
+    ],
+    "radii": [
+      [
+        "6px",
+        93
+      ],
+      [
+        "3.35544e+07px",
+        60
+      ],
+      [
+        "9999px",
+        34
+      ],
+      [
+        "16px",
+        18
+      ],
+      [
+        "26px",
+        13
+      ],
+      [
+        "32px",
+        8
+      ],
+      [
+        "12px",
+        6
+      ],
+      [
+        "20px",
+        2
+      ]
+    ],
+    "typography": {
+      "h1": {
+        "family": "Geist",
+        "size": "60px",
+        "weight": "300",
+        "lineHeight": "75px",
+        "letterSpacing": "-3px",
+        "color": "#7.c9672324c83681.d2cd9e83e425bf.0dbf487fcb92",
+        "sample": "Open the Door to Your Next ChapterOOOpppee"
+      },
+      "h2": {
+        "family": "Geist",
+        "size": "30px",
+        "weight": "700",
+        "lineHeight": "36px",
+        "letterSpacing": "-0.75px",
+        "color": "#ffffff",
+        "sample": "R 75,000 / month"
+      },
+      "h3": {
+        "family": "Geist",
+        "size": "24px",
+        "weight": "600",
+        "lineHeight": "32px",
+        "letterSpacing": "normal",
+        "color": "#7.c9672324c83681.d2cd9e83e425bf.0dbf487fcb92",
+        "sample": "South African Metros at a Glance"
+      },
+      "body": {
+        "family": "Geist",
+        "size": "14px",
+        "weight": "400",
+        "lineHeight": "20px",
+        "letterSpacing": "normal",
+        "color": "#10.21cac083126f0.516abde3fbbd7ce.aacd9e83e4258",
+        "sample": "AI Search: Describe your dream home in nat"
+      },
+      "button": {
+        "family": "Geist",
+        "size": "14px",
+        "weight": "600",
+        "lineHeight": "20px",
+        "letterSpacing": "normal",
+        "color": "#1a.f4f765fd8adb1.785c67dfe32af.b305532617c18",
+        "sample": "Sell"
+      },
+      "link": {
+        "family": "Geist",
+        "size": "16px",
+        "weight": "400",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "color": "#7.c9672324c83681.d2cd9e83e425bf.0dbf487fcb92",
+        "sample": "DynastyEstates"
+      }
+    },
+    "layout": {
+      "mainMaxWidth": "none",
+      "mainWidth": 1440,
+      "mainPadding": "16px 32px",
+      "headerHeight": 74,
+      "bottomNavHeight": null,
+      "grids": [
+        {
+          "cols": "107px 107px",
+          "gap": "normal"
+        },
+        {
+          "cols": "612px 748px",
+          "gap": "16px"
+        },
+        {
+          "cols": "343px 343px",
+          "gap": "12px"
+        },
+        {
+          "cols": "303.5px 303.5px 303.5px 303.5px",
+          "gap": "32px"
+        }
+      ]
+    },
+    "motion": [
+      [
+        "0.15s / cubic-bezier(0.4, 0, 0.2, 1)",
+        127
+      ],
+      [
+        "0.3s / cubic-bezier(0.4, 0, 0.2, 1)",
+        11
+      ],
+      [
+        "0.55s / cubic-bezier(0.4, 0, 0.2, 1)",
+        10
+      ],
+      [
+        "0.2s / cubic-bezier(0.4, 0, 0.2, 1)",
+        4
+      ],
+      [
+        "0.3s / cubic-bezier(0, 0, 0.2, 1)",
+        1
+      ],
+      [
+        "anim aurora-drift-a 23s",
+        1
+      ],
+      [
+        "anim aurora-drift-b 31s",
+        1
+      ],
+      [
+        "anim aurora-drift-c 39s",
+        1
+      ],
+      [
+        "anim aurora-drift-d 27s",
+        1
+      ],
+      [
+        "anim aurora-sheen 26s",
+        1
+      ],
+      [
+        "anim pulse 2s",
+        1
+      ],
+      [
+        "0.5s, 0.5s / cubic-bezier(0.4, 0, 0.2, 1), cubic-bezier(0.4, 0, 0.2, 1)",
+        1
+      ]
+    ],
+    "tapTargetsUnder44": 97,
+    "tapTargetSamples": [
+      {
+        "w": 55,
+        "h": 28,
+        "tag": "a",
+        "label": "Home"
+      },
+      {
+        "w": 42,
+        "h": 28,
+        "tag": "a",
+        "label": "Buy"
+      },
+      {
+        "w": 47,
+        "h": 28,
+        "tag": "a",
+        "label": "Rent"
+      },
+      {
+        "w": 58,
+        "h": 28,
+        "tag": "button",
+        "label": "Sell"
+      },
+      {
+        "w": 68,
+        "h": 28,
+        "tag": "button",
+        "label": "Tools"
+      },
+      {
+        "w": 129,
+        "h": 34,
+        "tag": "a",
+        "label": "AI Search✦"
+      },
+      {
+        "w": 155,
+        "h": 40,
+        "tag": "button",
+        "label": "FX: Aurora Silk"
+      },
+      {
+        "w": 158,
+        "h": 34,
+        "tag": "button",
+        "label": "Try AISearch→"
+      },
+      {
+        "w": 107,
+        "h": 36,
+        "tag": "button",
+        "label": "For Sale"
+      },
+      {
+        "w": 107,
+        "h": 36,
+        "tag": "button",
+        "label": "To Rent"
+      },
+      {
+        "w": 409,
+        "h": 24,
+        "tag": "input",
+        "label": ""
+      },
+      {
+        "w": 131,
+        "h": 32,
+        "tag": "button",
+        "label": "Johannesburg"
+      }
+    ],
+    "controlsTotal": 107,
+    "headings": [
+      {
+        "level": 1,
+        "text": "Open the Door to Your Next ChapterOOOpppeeennn ttthhhe"
+      },
+      {
+        "level": 2,
+        "text": "R 75,000 / month"
+      },
+      {
+        "level": 2,
+        "text": "Curated Luxury Homes & Estates"
+      },
+      {
+        "level": 2,
+        "text": "Claremont Upper Courtyard Townhouse"
+      },
+      {
+        "level": 2,
+        "text": "Summerstrand Oceanfront Family Residence"
+      },
+      {
+        "level": 2,
+        "text": "Woodland Hills Wildlife Estate Villa"
+      },
+      {
+        "level": 2,
+        "text": "Mount Street Enclosure Family Homestead"
+      },
+      {
+        "level": 2,
+        "text": "Silver Lakes Golf & Wildlife Fairway Haven"
+      },
+      {
+        "level": 2,
+        "text": "Waterkloof Ridge Diplomatic Architectural Villa"
+      },
+      {
+        "level": 2,
+        "text": "Simbithi Eco-Estate Ocean-Breeze Pavilion"
+      },
+      {
+        "level": 2,
+        "text": "Morningside Sandhurst Border Grand Manor"
+      },
+      {
+        "level": 2,
+        "text": "Dainfern Golf Estate Riverfront Residence"
+      },
+      {
+        "level": 2,
+        "text": "Steenberg Private Winelands & Golf Estate Villa"
+      },
+      {
+        "level": 3,
+        "text": "South African Metros at a Glance"
+      },
+      {
+        "level": 3,
+        "text": "Find homes with your partner"
+      }
+    ],
+    "headingOrderJumps": 0,
+    "images": [
+      {
+        "natural": "96x96",
+        "shown": "38x38",
+        "src": "https://dynasty-estates.vercel.app/_next/image?url=%2Fdynasty-logo.png&w=96&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "475x317",
+        "shown": "441x393",
+        "src": "Fphoto-1560448204-e02f11c3d0e2%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "475x317",
+        "shown": "441x393",
+        "src": "oto-1512917774080-9991f1c4c750%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "475x316",
+        "shown": "441x425",
+        "src": "oto-1512915922686-57c11dde9b6b%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "475x317",
+        "shown": "441x425",
+        "src": "oto-1600585154340-be6161a56a0c%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "475x356",
+        "shown": "441x393",
+        "src": "oto-1598228723793-52759bba239c%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "475x317",
+        "shown": "441x393",
+        "src": "oto-1600607687920-4e2a09cf159d%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "475x317",
+        "shown": "441x425",
+        "src": "oto-1512917774080-9991f1c4c750%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "475x317",
+        "shown": "441x425",
+        "src": "oto-1600585154340-be6161a56a0c%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "475x317",
+        "shown": "441x425",
+        "src": "oto-1613977257363-707ba9348227%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "475x315",
+        "shown": "441x425",
+        "src": "oto-1600596542815-ffad4c1539a9%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "475x315",
+        "shown": "441x451",
+        "src": "oto-1600596542815-ffad4c1539a9%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "475x317",
+        "shown": "441x451",
+        "src": "oto-1600585154340-be6161a56a0c%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "475x317",
+        "shown": "441x425",
+        "src": "oto-1600607687920-4e2a09cf159d%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      }
+    ],
+    "imagesMissingAlt": 0,
+    "perf": {
+      "lcp": 992,
+      "cls": 0,
+      "shifts": 0,
+      "longTasks": 2
+    },
+    "bodyTextSample": "DYNASTY Estates Home Buy Rent Sell Tools AI Search ✦ Profile FX: Aurora Silk Open the Door to Your Next Chapter O O O p p p e e e n n n t t t h h h e e e D D D o o o o o o r r r t t t o o o Y Y Y o o o u u u r r r N N N e e e x x x t t t C C C h h h a a a p p p t t t e e e r r r AI Search: Describe your dream home in natural language, e.g. “3-bed solar estate in Pretoria East with pool under R6M” "
+  },
+  {
+    "site": "dynasty",
+    "page": "search",
+    "url": "https://dynasty-estates.vercel.app/search",
+    "viewport": {
+      "w": 390,
+      "h": 844
+    },
+    "requests": 60,
+    "totalBytes": 1112272,
+    "imageBytes": 20815,
+    "consoleErrors": [],
+    "navErr": null,
+    "measureErr": null,
+    "title": "Search Luxury Properties & Real Estate",
+    "metaDescription": "Filter and explore premier South African properties for sale and to rent with custom search facets, Deeds Office records, and verified solar specs.",
+    "ogImage": null,
+    "docHeight": 4638,
+    "horizontalOverflow": 0,
+    "colours": {
+      "background": [
+        [
+          "#0.ffff9b56323bc0.0002fc7fc8004216c0.00015100262a310d @0.7",
+          28
+        ],
+        [
+          "#000000 @0.45",
+          16
+        ],
+        [
+          "#60.49374bc6a7f0.da393ee5eedcc2.77eda6612839",
+          12
+        ],
+        [
+          "#5b.bc3c9eecbfb0.ffaf102363b2584.c509bf9c62a1c",
+          10
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc7fc8004216c0.00015100262a310d @0.6",
+          9
+        ],
+        [
+          "#c5a059",
+          8
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc7fc8004216c0.00015100262a310d @0.8",
+          2
+        ],
+        [
+          "#ffffff",
+          2
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.45",
+          1
+        ],
+        [
+          "#000000",
+          1
+        ],
+        [
+          "#0b4d4e",
+          1
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.95",
+          1
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.85",
+          1
+        ],
+        [
+          "#0.f33300de4c5110.0cbc2c6b98d54e80.03e2cf6d90fd12e @0.9",
+          1
+        ]
+      ],
+      "text": [
+        [
+          "#7.c9672324c83681.d2cd9e83e425bf.0dbf487fcb92",
+          189
+        ],
+        [
+          "#1a.f4f765fd8adb1.785c67dfe32af.b305532617c18",
+          123
+        ],
+        [
+          "#41.88ef34d6a162.4062f5989df12e.81d7dbf487fc8",
+          104
+        ],
+        [
+          "#ffffff",
+          72
+        ],
+        [
+          "#30.166cf41f212e2.093404ea4a8c210.94d6a161e4f7",
+          41
+        ],
+        [
+          "#23.8ff2e48e8a721.bff1950331e3af.6e7d566cf41f",
+          34
+        ],
+        [
+          "#1.c50dae3e6c4c61.53d273d5bab229.49de69ad42c4",
+          21
+        ],
+        [
+          "#5b.b86594af4f0c0.81594f26aec0731.e88ce703afb8",
+          10
+        ],
+        [
+          "#0f172a",
+          7
+        ],
+        [
+          "#23.5e147ae147ae21.1e69ad42c3ca8.0a3ec02f2f988",
+          6
+        ],
+        [
+          "#10.21cac083126f0.516abde3fbbd7ce.aacd9e83e4258",
+          5
+        ],
+        [
+          "#53.eb98c7e282430.b65fd8adabad.e288ce703afb8",
+          3
+        ],
+        [
+          "#54.c3e425aee631.f2027525460aa7.eef156191149",
+          1
+        ]
+      ],
+      "border": [
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.3",
+          16
+        ],
+        [
+          "#5b.bc3c9eecbfb0.ffaf102363b2584.c509bf9c62a1c",
+          13
+        ],
+        [
+          "#0.de76a7264a16a80.01a8a174596e3060.05609dcf893faf4 @0.8",
+          11
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc7fc8004216c0.00015100262a310d @0.8",
+          11
+        ],
+        [
+          "#0.edd2d01c0ca60.00d5ce7e27ce2540.0337669e9a8a5a6 @0.8",
+          7
+        ],
+        [
+          "#0.c3d6c72192210.2b61bb05faebc40.0d1517bf396653 @0.5",
+          2
+        ],
+        [
+          "#0.edd2d01c0ca60.00d5ce7e27ce2540.0337669e9a8a5a6 @0.9",
+          2
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc8035f3c17e20.00015100262a310d @0.75",
+          1
+        ],
+        [
+          "#f.34395810624e000.000063fffb13af4ed4",
+          1
+        ],
+        [
+          "#54.c3e425aee631.f2027525460aa7.eef156191149",
+          1
+        ],
+        [
+          "#0.c3d6c72192210.2b61bb05faebc40.0d1517bf396653 @0.3",
+          1
+        ],
+        [
+          "#0.edd2d01c0ca60.00d5ce7e27ce2540.0337669e9a8a5a6 @0.6",
+          1
+        ],
+        [
+          "#0.ffff9b56323bc0.0002fc7fc8004216c0.00015100262a310d @0.7",
+          1
+        ]
+      ]
+    },
+    "shadows": [
+      [
+        "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+        23
+      ]
+    ],
+    "radii": [
+      [
+        "3.35544e+07px",
+        54
+      ],
+      [
+        "9999px",
+        20
+      ],
+      [
+        "26px",
+        11
+      ],
+      [
+        "16px",
+        7
+      ],
+      [
+        "12px",
+        5
+      ],
+      [
+        "32px",
+        1
+      ]
+    ],
+    "typography": {
+      "h1": {
+        "family": "Geist",
+        "size": "18px",
+        "weight": "700",
+        "lineHeight": "28px",
+        "letterSpacing": "-0.45px",
+        "color": "#1.c50dae3e6c4c61.53d273d5bab229.49de69ad42c4",
+        "sample": "South African Rental Residences"
+      },
+      "h2": {
+        "family": "Geist",
+        "size": "18px",
+        "weight": "700",
+        "lineHeight": "28px",
+        "letterSpacing": "normal",
+        "color": "#1.c50dae3e6c4c61.53d273d5bab229.49de69ad42c4",
+        "sample": "The Vantage Executive Loft"
+      },
+      "h3": null,
+      "body": {
+        "family": "Geist",
+        "size": "20px",
+        "weight": "800",
+        "lineHeight": "28px",
+        "letterSpacing": "normal",
+        "color": "#ffffff",
+        "sample": "R 13,500 / month"
+      },
+      "button": {
+        "family": "Geist",
+        "size": "16px",
+        "weight": "400",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "color": "#10.21cac083126f0.516abde3fbbd7ce.aacd9e83e4258",
+        "sample": "Profile"
+      },
+      "link": {
+        "family": "Geist",
+        "size": "16px",
+        "weight": "400",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "color": "#7.c9672324c83681.d2cd9e83e425bf.0dbf487fcb92",
+        "sample": "DynastyEstates"
+      }
+    },
+    "layout": {
+      "mainMaxWidth": "none",
+      "mainWidth": 390,
+      "mainPadding": "20px 16px",
+      "headerHeight": 74,
+      "bottomNavHeight": 63,
+      "grids": [
+        {
+          "cols": "85px 85px",
+          "gap": "normal"
+        }
+      ]
+    },
+    "motion": [
+      [
+        "0.15s / cubic-bezier(0.4, 0, 0.2, 1)",
+        91
+      ],
+      [
+        "0.3s / cubic-bezier(0.4, 0, 0.2, 1)",
+        12
+      ],
+      [
+        "0.55s / cubic-bezier(0.4, 0, 0.2, 1)",
+        10
+      ],
+      [
+        "0.2s / cubic-bezier(0.4, 0, 0.2, 1)",
+        4
+      ],
+      [
+        "0.3s / cubic-bezier(0, 0, 0.2, 1)",
+        1
+      ],
+      [
+        "0.2s / cubic-bezier(0, 0, 0.2, 1)",
+        1
+      ]
+    ],
+    "tapTargetsUnder44": 61,
+    "tapTargetSamples": [
+      {
+        "w": 173,
+        "h": 40,
+        "tag": "button",
+        "label": "Sort: Newest First"
+      },
+      {
+        "w": 65,
+        "h": 24,
+        "tag": "button",
+        "label": "Reset All"
+      },
+      {
+        "w": 156,
+        "h": 24,
+        "tag": "input",
+        "label": ""
+      },
+      {
+        "w": 40,
+        "h": 40,
+        "tag": "button",
+        "label": "Filters"
+      },
+      {
+        "w": 40,
+        "h": 40,
+        "tag": "button",
+        "label": "Search→"
+      },
+      {
+        "w": 128,
+        "h": 38,
+        "tag": "button",
+        "label": "+Pet Friendly"
+      },
+      {
+        "w": 154,
+        "h": 38,
+        "tag": "button",
+        "label": "+Solar & Inverter"
+      },
+      {
+        "w": 152,
+        "h": 38,
+        "tag": "button",
+        "label": "+Security Estate"
+      },
+      {
+        "w": 154,
+        "h": 38,
+        "tag": "button",
+        "label": "+Swimming Pool"
+      },
+      {
+        "w": 94,
+        "h": 38,
+        "tag": "button",
+        "label": "+Garden"
+      },
+      {
+        "w": 144,
+        "h": 38,
+        "tag": "button",
+        "label": "+Water Backup"
+      },
+      {
+        "w": 128,
+        "h": 38,
+        "tag": "button",
+        "label": "+Fibre Ready"
+      }
+    ],
+    "controlsTotal": 77,
+    "headings": [
+      {
+        "level": 1,
+        "text": "South African Rental Residences"
+      },
+      {
+        "level": 2,
+        "text": "The Vantage Executive Loft"
+      },
+      {
+        "level": 2,
+        "text": "Brandwacht Winelands Garden Cottage"
+      },
+      {
+        "level": 2,
+        "text": "Sandton Skye Executive High-Rise"
+      },
+      {
+        "level": 2,
+        "text": "Century City Canal Quays Apartment"
+      },
+      {
+        "level": 2,
+        "text": "The Trilogy at Menlyn Maine"
+      },
+      {
+        "level": 2,
+        "text": "Seaward Estate Contemporary Townhouse"
+      },
+      {
+        "level": 2,
+        "text": "Waterfall Country Village Cluster"
+      },
+      {
+        "level": 2,
+        "text": "The Pearls of Umhlanga Sky Residence"
+      },
+      {
+        "level": 2,
+        "text": "The Glen Luxury Coastal Villa"
+      },
+      {
+        "level": 2,
+        "text": "Constantia Upper Historic Manor"
+      }
+    ],
+    "headingOrderJumps": 0,
+    "images": [
+      {
+        "natural": "96x96",
+        "shown": "38x38",
+        "src": "https://dynasty-estates.vercel.app/_next/image?url=%2Fdynasty-logo.png&w=96&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x519",
+        "shown": "356x208",
+        "src": "Fphoto-1545324418-cc1a3fa10c00%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x260",
+        "shown": "356x208",
+        "src": "oto-1522708323590-d24dbb6b0267%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x260",
+        "shown": "356x208",
+        "src": "Fphoto-1542314831-068cd1dbfeeb%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x260",
+        "shown": "356x208",
+        "src": "oto-1512917774080-9991f1c4c750%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x260",
+        "shown": "356x208",
+        "src": "oto-1522708323590-d24dbb6b0267%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x290",
+        "shown": "356x208",
+        "src": "oto-1502672260266-1c1ef2d93688%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x260",
+        "shown": "356x208",
+        "src": "oto-1515263487990-61b07816b324%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x260",
+        "shown": "356x208",
+        "src": "Fphoto-1560448204-e02f11c3d0e2%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x519",
+        "shown": "356x208",
+        "src": "Fphoto-1545324418-cc1a3fa10c00%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x260",
+        "shown": "356x208",
+        "src": "oto-1512917774080-9991f1c4c750%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x260",
+        "shown": "356x208",
+        "src": "oto-1512917774080-9991f1c4c750%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x260",
+        "shown": "356x208",
+        "src": "oto-1600585154340-be6161a56a0c%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "lazy",
+        "alt": "yes"
+      },
+      {
+        "natural": "390x292",
+        "shown": "356x208",
+        "src": "oto-1580587771525-78b9dba3b914%3Fauto%3Dformat%26fit%3Dcrop%26w%3D1200%26q%3D80&w=640&q=75",
+        "loading": "auto",
+        "alt": "yes"
+      }
+    ],
+    "imagesMissingAlt": 0,
+    "perf": {
+      "lcp": 2356,
+      "cls": 0,
+      "shifts": 0,
+      "longTasks": 3
+    },
+    "bodyTextSample": "Profile CATALOGUE • For Sale To Rent South African Rental Residences Sort: Newest First Reset All + Pet Friendly + Solar & Inverter + Security Estate + Swimming Pool + Garden + Water Backup + Fibre Ready R 13,500 / month 12 Months Lease · Fully Furnished Bath Avenue, Rosebank, Johannesburg, Gauteng Apartment The Vantage Executive Loft 1 Bed 1 Bath 55 m² R 16,500 / month 12 Months Lease · Semi-Furn"
+  }
+]

@@ -53,3 +53,7 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# UX audit screenshots: ~28MB and regenerable from the capture harness.
+# The markdown references them by path; keep them locally, out of the repo.
+docs/ux-audit/screenshots/
