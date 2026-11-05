@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import AccountActions from "@/components/account-actions";
-import AmbientCursorHue from "@/components/ambient-cursor-hue";
 import BrandLogo from "@/components/brand-logo";
 import HeroHeadline from "@/components/hero-headline";
 import HomeHeroSearch from "@/components/home-hero-search";
@@ -55,7 +54,22 @@ export default async function Home() {
         {/* Full-Width Hero Section */}
         <section id="discover" className="relative z-40 mx-auto mt-4 sm:mt-6 max-w-[1440px]">
           <div className="relative rounded-card sm:rounded-panel border border-white/70 bg-white/45 dark:border-white/10 dark:bg-surface-panel/65 p-3.5 sm:p-6 shadow-[0_20px_45px_rgba(36,48,50,0.08)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)] backdrop-blur-xl md:p-8 lg:p-10">
-            <AmbientCursorHue heroScoped />
+            {/*
+              <AmbientCursorHue heroScoped /> was mounted here: an animated
+              aurora field with cursor parallax, running a canvas and a
+              requestAnimationFrame loop behind the headline.
+
+              Removed for two reasons. It is the most recognisable
+              "AI-generated landing page" signature of this era, and neither
+              Property24 nor Private Property animates anything behind their
+              search — both open on a photograph or a flat colour. And the home
+              page measures 9.5s LCP with 650ms of blocking on throttled
+              mobile, where the cost is main-thread work rather than bytes;
+              this was main-thread work for decoration.
+
+              The component still exists and is still used elsewhere. Only the
+              hero stops mounting it.
+            */}
 
             {/*
               max-w-5xl, not 3xl. This wrapper holds only the headline, and the

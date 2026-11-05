@@ -268,3 +268,96 @@ two of the worst offenders (33 and 19 nodes), so excluding them could not meet
 the acceptance criterion, and a second pass later would collide with *more* of
 their work, not less. Every conflict here is a single-token class rename and
 resolves by taking either side plus the rename.
+
+---
+
+## S7 — Header information architecture
+
+**Status:** done · 5 November 2026 · `site-navigation.tsx`
+
+Header now reads **Buy · Rent · Sell your home · Tools · AI Search · Profile**.
+
+- **"Home" removed.** The logo beside it already links home, as on every
+  property portal, so the slot was spending one of seven top-level positions on
+  a destination the reader already had.
+- **"Sell" → "Sell your home".** Beside Buy and Rent, a bare "Sell" reads as a
+  third way to filter the catalogue rather than an offer to the owner.
+
+### Two entries the plan asked for that were not added
+
+- **"For agents"** has no honest destination today. The only candidate is
+  `/agents`, a PPRA directory built for *buyers looking for an agent*, not a
+  proposition aimed at agents. Pointing a labelled entry at the wrong page is
+  the exact failure catalogued in `03b` (T6). It goes in with the agent landing
+  page, S13.
+- **"AI Search"** stays until the main search field accepts natural language.
+  Removing an entry point before its replacement works loses a feature rather
+  than simplifying one.
+
+**Verified:** keyboard walk reports **zero focus traps** on all four sampled
+pages, and `/for-sale`'s offscreen tab stops fell from 5 to 3 as a side effect.
+
+### Finding F5 corrected in the same commit
+
+F5 claimed the hero headline is read character-by-character by assistive tech,
+at P1, and proposed `aria-hidden` on the animated layer plus a clean label.
+**That fix was already implemented.** The accessibility tree reads the `<h1>`
+as `"Destiny Called. The Door Is Open."` once; the only two single-character
+nodes exposed to AT are the logo's "D".
+
+The original evidence was `document.body.innerText`, which reflects *rendered*
+text and ignores `aria-hidden` — the wrong instrument for the claim, and the
+reason axe never flagged it either. Re-logged as **F31 at P2**: a
+text-extraction issue for crawlers and copy-paste, not an accessibility one.
+
+---
+
+## S8 — One search in the hero, and no aurora
+
+**Status:** done · 5 November 2026 · `page.tsx`, `home-hero-search.tsx`
+
+| Change | Why |
+|---|---|
+| Removed the **AI Search teaser banner** — a full bordered emerald panel with its own primary-weight CTA, sitting directly above the search bar | The hero offered three ways to start the same task, each presented as a peer. A visitor who must choose between three entry points before typing has been handed a decision instead of a search. AI Search keeps its place in the top nav |
+| Removed **"Explore on Map →"** from the chip row | The third destination in that row and the fourth way out of the hero. Map Search is already in the Tools menu on every page |
+| Removed **`<AmbientCursorHue heroScoped />`** from the hero | The most recognisable "AI-generated landing page" signature of this era (tell T14). Neither SA incumbent animates anything behind their search. It also ran a canvas and a `requestAnimationFrame` loop for decoration |
+
+The hero now has **one** search affordance. The quick-tag chips remain as
+suggestions that feed that same search rather than competing destinations.
+
+### "LCP improves" — NOT verified, and here is why
+
+The step's third criterion cannot be honestly claimed from what was measured.
+
+Two production builds on identical local infrastructure:
+
+| | perf | LCP | TBT | SI |
+|---|---:|---:|---:|---:|
+| With aurora | 54 | 5.0 s | 1,590 ms | 2.8 s |
+| Without aurora | 55 | **3.7 s** | 3,420 ms | 5.9 s |
+
+LCP looks 26% better — but TBT and Speed Index moved the *wrong* way, which
+should not happen when removing an animation. So the identical "with aurora"
+build was measured a second time:
+
+| | perf | LCP | TBT | SI |
+|---|---:|---:|---:|---:|
+| With aurora, run 1 | 54 | 5.0 s | 1,590 ms | 2.8 s |
+| With aurora, run 2 | 48 | **6.3 s** | 2,390 ms | 3.0 s |
+
+**The same build varies by 1.3 s of LCP and 800 ms of TBT.** The run-to-run
+noise on this machine is larger than the difference being measured, so the
+5.0 → 3.7 s result proves nothing. This machine is also running another agent's
+dev server and intermittent builds.
+
+What *can* be said: removing the aurora removes a canvas and a RAF loop from
+the hero's critical path, which is a structural reduction in main-thread work
+and a sound reason to expect an improvement. It is a reason, not a measurement.
+
+**A trustworthy verdict needs the deployed build on stable infrastructure** —
+Vercel, measured after merge, several runs. Logged as outstanding.
+
+### The third criterion was dropped before starting
+
+S8 originally also required "hero text appears once in the accessibility tree".
+That was already true before this step began — see the F5 correction under S7.
