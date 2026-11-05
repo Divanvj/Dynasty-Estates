@@ -372,7 +372,15 @@ export default function DynastyPropertyMap({
     };
 
     const end = () => {
-      if (!drawing || !origin) return;
+      // Always hand dragging back, even on a stray release with nothing
+      // drawn. This used to return early, before `map.dragging.enable()`,
+      // which is how arming a tool and then tapping once left the map
+      // permanently unpannable with no visible way out.
+      if (!drawing || !origin) {
+        setTool("none");
+        map.dragging.enable();
+        return;
+      }
       drawing = false;
 
       if (toolRef.current === "radius") {
@@ -401,13 +409,69 @@ export default function DynastyPropertyMap({
       map.dragging.enable();
     };
 
-    map.on("mousedown", start);
-    map.on("mousemove", move);
-    map.on("mouseup", end);
+    /*
+      Pointer events on the container, not Leaflet's mouse events.
+
+      `map.on("mousedown" | "mousemove" | "mouseup")` is what this used to
+      bind, and a finger fires none of them — mobile browsers emit no
+      compatibility mouse events during a touch drag. So Radius and Draw were
+      not merely awkward on a phone, they were inert: you could arm a tool and
+      nothing would ever happen. Worse, arming one disables dragging (below),
+      so the map could not be panned either, and the only escape was finding
+      the same chip again.
+
+      Pointer events cover mouse, touch and pen in one path. `PointerEvent`
+      extends `MouseEvent`, so `mouseEventToLatLng` takes them unchanged.
+      Capturing the pointer keeps the stream coming while the finger is
+      outside the container, which is what makes dragging a radius past the
+      edge of the map work.
+    */
+    const container = map.getContainer();
+    const toLatLng = (ev: PointerEvent) => map.mouseEventToLatLng(ev);
+
+    const onPointerDown = (ev: PointerEvent) => {
+      if (toolRef.current === "none") return;
+      ev.preventDefault();
+      container.setPointerCapture?.(ev.pointerId);
+      start({ latlng: toLatLng(ev) });
+    };
+
+    const onPointerMove = (ev: PointerEvent) => {
+      if (!drawing) return;
+      ev.preventDefault();
+      move({ latlng: toLatLng(ev) });
+    };
+
+    const onPointerUp = (ev: PointerEvent) => {
+      if (container.hasPointerCapture?.(ev.pointerId)) {
+        container.releasePointerCapture?.(ev.pointerId);
+      }
+      end();
+    };
+
+    // A cancelled pointer — the OS taking over for a system gesture, say —
+    // never produces a `pointerup`, so without this the map would be left
+    // mid-draw with dragging still disabled.
+    const onPointerCancel = () => {
+      drawing = false;
+      origin = null;
+      clearShape();
+      setTool("none");
+      map.dragging.enable();
+    };
+
+    container.addEventListener("pointerdown", onPointerDown);
+    container.addEventListener("pointermove", onPointerMove);
+    container.addEventListener("pointerup", onPointerUp);
+    container.addEventListener("pointercancel", onPointerCancel);
+
     return () => {
-      map.off("mousedown", start);
-      map.off("mousemove", move);
-      map.off("mouseup", end);
+      container.removeEventListener("pointerdown", onPointerDown);
+      container.removeEventListener("pointermove", onPointerMove);
+      container.removeEventListener("pointerup", onPointerUp);
+      container.removeEventListener("pointercancel", onPointerCancel);
+      // Never tear this down leaving the map frozen.
+      map.dragging.enable();
     };
   }, [ready]);
 
@@ -475,7 +539,14 @@ export default function DynastyPropertyMap({
       });
 
       marker.bindPopup(popupHtml(p, stats), { closeButton: true, className: "dyn-popup", minWidth: 230 });
-      marker.on("click", () => onSelect?.(p.id));
+      // A tap does what a hover does on a desktop. `mouseover`/`mouseout` never
+      // fire on touch, so the two-way highlight between this map and the feed
+      // beside it simply did not exist on a phone — selecting a pin lit nothing
+      // in the list. Click runs both, so one tap selects and highlights.
+      marker.on("click", () => {
+        onSelect?.(p.id);
+        onHover?.(p.id);
+      });
       marker.on("mouseover", () => onHover?.(p.id));
       marker.on("mouseout", () => onHover?.(undefined));
       cluster.addLayer(marker);
@@ -545,7 +616,13 @@ export default function DynastyPropertyMap({
       />
 
       {/* Metro quick-jump */}
-      <div className="pointer-events-auto absolute left-3 top-3 z-[500] flex max-w-[60%] items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden rounded-full border border-white/70 bg-white/90 dark:border-white/10 dark:bg-surface-panel/90 p-1 shadow-lg backdrop-blur-xl">
+      {/* The width budget is what is left after the area tools, not a flat
+          60% of the map. At 375px those tools are about 152px — 218px once a
+          "Clear" appears — while `max-w-[60%]` let this bar run to 220px, so
+          the two overlapped by 30-96px. The tools come later in the DOM and
+          therefore took the taps, which left the metro chips under them dead
+          with nothing on screen to explain why. */}
+      <div className="pointer-events-auto absolute left-3 top-3 z-[500] flex max-w-[calc(100%-15rem)] items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden rounded-full border border-white/70 bg-white/90 dark:border-white/10 dark:bg-surface-panel/90 p-1 shadow-lg backdrop-blur-xl">
         {METRO_VIEWS.map((v) => (
           <button
             key={v.label}

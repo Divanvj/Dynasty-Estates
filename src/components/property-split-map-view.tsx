@@ -35,7 +35,11 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
    * a list with a picture on top. Property24 and Private Property both answer
    * this the same way, with a Map/List switch, and so does this.
    */
-  const [mobilePane, setMobilePane] = useState<"map" | "list">("map");
+  // List first, not map. Nielsen Norman's guidance on mobile maps is to offer
+  // the toggle but default to the list, because a list shows more options at
+  // once and is faster to choose from — and because a map that opens under
+  // your thumb swallows the first scroll you try to make.
+  const [mobilePane, setMobilePane] = useState<"map" | "list">("list");
 
   // Leaflet sizes itself from its container at creation and then only on a
   // window resize. Revealing a pane that was `display: none` changes the
@@ -367,7 +371,16 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
           </div>
 
           {/* Map / Street View Display Container */}
-          <div className="relative h-[420px] sm:h-[500px] lg:h-[620px] w-full bg-slate-100 dark:bg-slate-950">
+          {/* `70dvh` on a phone rather than a fixed 420px. A 420px map inside
+              a scrolling page is the shape the "map trap" is named after:
+              Leaflet sets `touch-action: none` on its container, so every
+              vertical swipe inside it pans the map instead of scrolling the
+              page, and with 420px of map and a page either side there was
+              nowhere safe to put a thumb. At 70dvh the map is most of the
+              screen, so there is very little page left to scroll past, and the
+              pins get room they never had. `dvh`, not `vh`, or the bottom of
+              the map hides behind the browser's address bar. */}
+          <div className="relative h-[70dvh] sm:h-[500px] lg:h-[620px] w-full bg-slate-100 dark:bg-slate-950">
             {displayMode === "map" ? (
               /* Interactive map with a pin per listing. The previous Google
                  iframe could only show a generic search result — an iframe
@@ -411,9 +424,17 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
               </div>
             )}
 
-            {/* Bottom floating property card info badge */}
+            {/* Bottom floating property card info badge.
+
+                z-[1100]: this card is the result of tapping a pin, so it has
+                to sit above everything the map draws over itself. It was
+                `z-10` against the map's own overlay chips at `z-[500]` and
+                Leaflet's control corners at `z-1000`, so on a phone — where
+                the zoom control, the layers panel and the area badge all crowd
+                the bottom of a short map — the card you had just summoned was
+                painted underneath them. */}
             {activeProperty && displayMode === "map" && (
-              <div className="absolute bottom-3 left-3 right-3 z-10 animate-in fade-in slide-in-from-bottom-2 duration-200">
+              <div className="absolute bottom-3 left-3 right-3 z-[1100] animate-in fade-in slide-in-from-bottom-2 duration-200">
                 {/* Stacks on phones: side by side, the action buttons squeezed
                     the title and price down to a few characters. */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 rounded-2xl border border-white/90 dark:border-white/10 bg-white/95 dark:bg-surface-panel/95 p-3 shadow-xl dark:shadow-[0_20px_45px_rgba(0,0,0,0.6)] backdrop-blur-xl">
