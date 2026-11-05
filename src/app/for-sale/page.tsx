@@ -11,7 +11,9 @@ import { absoluteUrl, SITE_URL } from "@/lib/site-url";
 export const metadata: Metadata = {
   title: "Properties & Luxury Homes For Sale in South Africa",
   description:
-    "Explore luxury freehold homes, high-security golf estates, and modern apartments for sale across South Africa. Verified listings with solar power and Deeds Office price history.",
+    // No listing carries Deeds Office price history; that feed is not
+    // connected. Claiming it here promises it in search results.
+    "Browse freehold homes, security estates and apartments for sale across South Africa, with solar and energy-resilience details on every listing.",
   alternates: {
     canonical: absoluteUrl("/for-sale"),
   },

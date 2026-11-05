@@ -4,7 +4,8 @@ import { absoluteUrl } from "@/lib/site-url";
 export const metadata: Metadata = {
   title: "Search Luxury Properties & Real Estate",
   description:
-    "Filter and explore premier South African properties for sale and to rent with custom search facets, Deeds Office records, and verified solar specs.",
+    // "Deeds Office records" removed: the index holds listings, not registry data.
+    "Filter South African homes for sale and to rent by suburb, price, bedrooms and energy resilience.",
   alternates: {
     canonical: absoluteUrl("/search"),
   },

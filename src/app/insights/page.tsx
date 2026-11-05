@@ -98,16 +98,39 @@ export default function InsightsPage() {
           </div>
         </header>
 
+        {/*
+          Every figure on this page is hardcoded in this file: the regional
+          table above and `deedsRecordsByNode` below are both literals. Until a
+          licensed market-data feed exists, the page says so once, at the top,
+          where a reader meets it before any number.
+
+          This notice replaces an "Official Registrar of Deeds Records" badge
+          and a "Source: South African Deeds Office" byline that attributed
+          these invented figures to a real government registry.
+        */}
+        <section className="rounded-card border border-amber-300/70 bg-amber-50 px-4 py-3 mb-6 dark:border-amber-400/30 dark:bg-amber-950/30">
+          <p className="text-xs font-semibold text-amber-900 dark:text-amber-200">
+            Sample data, not a market report
+          </p>
+          <p className="mt-1 text-xs leading-relaxed text-amber-900/90 dark:text-amber-200/80">
+            The figures on this page are illustrative placeholders used while the
+            platform is in beta. They are not drawn from the Deeds Office or any
+            other registry, and should not be used to price a property.
+          </p>
+        </section>
+
         {/* Hero Banner */}
         <section className="rounded-panel border border-white/80 bg-white/55 p-6 shadow-sm backdrop-blur-xl mb-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs uppercase font-bold tracking-widest text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-400 dark:border dark:border-emerald-500/30">
-            Q3 2026 Property Intelligence
+            Illustrative scenario
           </span>
           <h2 className="mt-3 text-3xl font-light tracking-tight text-slate-950 dark:text-white">
             Energy resilience and security estates lead South African price resilience.
           </h2>
           <p className="mt-2 text-xs leading-relaxed text-slate-600 max-w-2xl dark:text-slate-300">
-            Independent data across Gauteng, Western Cape, and KwaZulu-Natal indicates properties with registered solar inverter systems and estate security trade 18% faster than conventional suburban stock.
+            An illustration of how the market view will read once live data is
+            connected: properties with registered solar inverter systems and estate
+            security trading faster than conventional suburban stock.
           </p>
         </section>
 
@@ -140,19 +163,19 @@ export default function InsightsPage() {
           </div>
         </section>
 
-        {/* Deeds Office Suburb Intelligence & Historical Sales */}
+        {/* Suburb sold-price and demographic illustration */}
         <section className="rounded-panel border border-white/80 bg-white/55 p-6 shadow-sm backdrop-blur-xl mb-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
             <div>
               <span className="rounded-full bg-slate-900 px-3 py-0.5 text-xs font-extrabold uppercase tracking-widest text-white dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-500/30">
-                Official Registrar of Deeds Records
+                Sample data
               </span>
               <h3 className="text-lg font-bold text-slate-950 mt-1 dark:text-white">
                 Suburb Historical Sold Prices & Demographic Trends
               </h3>
             </div>
             <span className="text-xs text-slate-500 font-medium dark:text-slate-400">
-              Source: South African Deeds Office & PropTech Analytics
+              Illustrative figures — no registry data is connected yet
             </span>
           </div>
 
@@ -208,14 +231,14 @@ export default function InsightsPage() {
             </div>
           </div>
 
-          {/* Recent Deeds Office Street Sales Table */}
+          {/* Recent street sales — illustrative */}
           <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-sm dark:bg-surface-ink/60 dark:border-white/10">
             <div className="bg-slate-50/90 px-4 py-2.5 border-b border-slate-200 flex items-center justify-between dark:bg-surface-ink/90 dark:border-white/10">
               <span className="text-xs font-bold text-slate-900 dark:text-white">
-                Recent Verified Deeds Registrations in {selectedNode}
+                Example recent sales in {selectedNode}
               </span>
-              <span className="text-xs text-emerald-800 font-semibold dark:text-emerald-400">
-                ✓ Verified Registrar Data
+              <span className="text-xs font-semibold text-amber-800 dark:text-amber-300">
+                Sample data
               </span>
             </div>
             <table className="w-full text-left text-xs">

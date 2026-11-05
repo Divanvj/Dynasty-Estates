@@ -26,7 +26,8 @@ export async function generateMetadata({
   const cityName = capitalize(city);
 
   const title = `Properties For Sale in ${cityName}, ${provName}`;
-  const description = `Browse verified luxury homes, apartments, and off-plan estates for sale in ${cityName}, ${provName}. Features solar resilience, private security, and Deeds Office insights.`;
+  // "Deeds Office insights" removed: no registry data is connected.
+  const description = `Browse homes, apartments and off-plan estates for sale in ${cityName}, ${provName}, with solar resilience and private security details.`;
   const canonicalUrl = absoluteUrl(`/for-sale/${province.toLowerCase()}/${city.toLowerCase()}`);
 
   return {
@@ -168,7 +169,7 @@ export default async function ForSaleLocationPage({
               href="/insights"
               className="pill-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
             >
-              Deeds Office Suburb Trends →
+              Suburb market trends →
             </Link>
           </div>
         </div>

@@ -124,7 +124,9 @@ export default async function ForSaleProvincePage({
             Properties & Luxury Homes For Sale in {provName}
           </h1>
           <p className="mt-2 text-sm text-slate-600 max-w-3xl leading-relaxed dark:text-slate-300">
-            Browse prime residential estates, freehold villas, and off-plan developments across {provName}. All listings feature Deeds Office history, solar energy ratings, and SARS transfer duty estimates.
+            {/* "All listings feature Deeds Office history" was not true of any
+                listing. SARS transfer duty is genuinely calculated, so it stays. */}
+            Browse residential estates, freehold homes and off-plan developments across {provName}, with solar and energy-resilience details and SARS transfer duty estimates.
           </p>
 
           <div className="mt-4 flex flex-wrap items-center gap-2 pt-2 border-t border-slate-200/60 dark:border-white/10 text-xs font-semibold">
