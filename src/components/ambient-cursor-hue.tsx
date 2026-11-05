@@ -81,7 +81,6 @@ interface AmbientCursorHueProps {
 export default function AmbientCursorHue({ heroScoped = true }: AmbientCursorHueProps) {
   const mode = useSyncExternalStore(subscribeEffect, getEffectSnapshot, getServerEffectSnapshot);
   const isTouchDevice = useSyncExternalStore(subscribeTouch, getTouchSnapshot, getServerTouchSnapshot);
-  const [showPicker, setShowPicker] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
@@ -101,15 +100,6 @@ export default function AmbientCursorHue({ heroScoped = true }: AmbientCursorHue
 
   const rafRef = useRef<number | null>(null);
   const particlesRef = useRef<Particle[]>([]);
-
-  function handleModeChange(newMode: CursorEffectMode) {
-    try {
-      localStorage.setItem(EFFECT_STORAGE_KEY, newMode);
-      window.dispatchEvent(new Event("dynasty_cursor_effect_change"));
-    } catch {
-      // ignore
-    }
-  }
 
   // Initialize particles for 'antigravity' mode
   useEffect(() => {
@@ -454,95 +444,18 @@ export default function AmbientCursorHue({ heroScoped = true }: AmbientCursorHue
         )}
       </div>
 
-      {/* 4. Discrete Ambient Effect Switcher Pill (Fixed in Corner, Desktop Only) */}
-      <div className="no-print hidden md:flex fixed bottom-4 right-4 z-50 flex-col items-end gap-1.5 font-sans">
-        {showPicker && (
-          <div className="rounded-2xl border border-white/80 bg-white/90 p-2 shadow-[0_12px_30px_rgba(15,23,42,0.14)] backdrop-blur-xl animate-in fade-in slide-in-from-bottom-2 duration-150 dark:bg-surface-panel dark:border-white/10 dark:shadow-[0_12px_30px_rgba(0,0,0,0.6)]">
-            <p className="px-2 py-1 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Interactive FX (Hero)
-            </p>
-            <div className="flex flex-col gap-1 text-xs">
-              <button
-                type="button"
-                onClick={() => {
-                  handleModeChange("aurora");
-                  setShowPicker(false);
-                }}
-                className={`flex items-center gap-2 rounded-xl px-3 py-1.5 text-left transition-colors cursor-pointer ${
-                  mode === "aurora"
-                    ? "bg-emerald-100 dark:bg-emerald-600 font-bold text-emerald-950 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "text-slate-700 dark:text-slate-300 hover:bg-slate-100/80 dark:hover:bg-surface-ink"
-                }`}
-              >
-                <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.9)]" />
-                <span>Aurora Silk</span>
-                {mode === "aurora" && <span className="ml-auto text-xs text-emerald-700 dark:text-emerald-200">Active</span>}
-              </button>
+      {/*
+        The effect switcher that used to live here — a fixed corner pill reading
+        "FX: Aurora Silk", opening a picker for Magnetic Halo, Antigravity
+        Particles and Off — has been removed. It was a developer control that
+        shipped to visitors, and a readout of the renderer's internal codename
+        is the clearest possible signal that a site is someone's work in
+        progress.
 
-              <button
-                type="button"
-                onClick={() => {
-                  handleModeChange("halo");
-                  setShowPicker(false);
-                }}
-                className={`flex items-center gap-2 rounded-xl px-3 py-1.5 text-left transition-colors cursor-pointer ${
-                  mode === "halo"
-                    ? "bg-emerald-100 dark:bg-emerald-600 font-bold text-emerald-950 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "text-slate-700 dark:text-slate-300 hover:bg-slate-100/80 dark:hover:bg-surface-ink"
-                }`}
-              >
-                <span className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.9)]" />
-                <span>Magnetic Halo</span>
-                {mode === "halo" && <span className="ml-auto text-xs text-emerald-700 dark:text-emerald-200">Active</span>}
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  handleModeChange("antigravity");
-                  setShowPicker(false);
-                }}
-                className={`flex items-center gap-2 rounded-xl px-3 py-1.5 text-left transition-colors cursor-pointer ${
-                  mode === "antigravity"
-                    ? "bg-emerald-100 dark:bg-emerald-600 font-bold text-emerald-950 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "text-slate-700 dark:text-slate-300 hover:bg-slate-100/80 dark:hover:bg-surface-ink"
-                }`}
-              >
-                <span className="h-2 w-2 rounded-full bg-teal-400 shadow-[0_0_6px_rgba(20,184,166,0.9)]" />
-                <span>Antigravity Particles</span>
-                {mode === "antigravity" && <span className="ml-auto text-xs text-emerald-700 dark:text-emerald-200">Active</span>}
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  handleModeChange("off");
-                  setShowPicker(false);
-                }}
-                className={`flex items-center gap-2 rounded-xl px-3 py-1.5 text-left transition-colors cursor-pointer ${
-                  mode === "off"
-                    ? "bg-slate-200 dark:bg-surface-ink font-bold text-slate-900 dark:text-white dark:border dark:border-white/10"
-                    : "text-slate-500 dark:text-slate-400 hover:bg-slate-100/80 dark:hover:bg-surface-ink"
-                }`}
-              >
-                <span className="h-2 w-2 rounded-full bg-slate-300 dark:bg-slate-600" />
-                <span>Off</span>
-                {mode === "off" && <span className="ml-auto text-xs text-slate-600 dark:text-slate-300">Active</span>}
-              </button>
-            </div>
-          </div>
-        )}
-
-        <button
-          type="button"
-          onClick={() => setShowPicker(!showPicker)}
-          className="pill gap-1.5 border border-white/80 bg-white/70 font-semibold text-slate-700 shadow-[0_8px_20px_rgba(15,23,42,0.08)] backdrop-blur-md hover:bg-white transition-all cursor-pointer hover:border-emerald-300 hover:text-emerald-950 dark:bg-surface-ink/80 dark:border-white/10 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
-          title="Change interactive cursor effect"
-        >
-          <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_6px_rgba(16,185,129,0.8)]" />
-          <span>FX: {mode === "aurora" ? "Aurora Silk" : mode === "halo" ? "Magnetic Halo" : mode === "antigravity" ? "Antigravity" : "Off"}</span>
-        </button>
-      </div>
+        The effect itself still runs; `mode` just no longer has a user-facing
+        switch. Whether the ambient hero backdrop survives at all is a separate
+        decision, taken in step S8.
+      */}
     </>
   );
 }

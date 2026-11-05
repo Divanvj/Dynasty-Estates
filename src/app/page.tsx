@@ -224,7 +224,11 @@ export default async function Home() {
                 <li><Link href="/agents" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">PPRA Verified Agents</Link></li>
                 <li><Link href="/seller/portal" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Private Seller Portal</Link></li>
                 <li><Link href="/seller/listings/new" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Publish New Listing</Link></li>
-                <li><Link href="/agent/dashboard" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Agent Command Console</Link></li>
+                {/* "Agent Command Console" (/agent/dashboard) removed. The
+                    route is role-guarded, so this was never a breach — but no
+                    portal advertises its practitioner back-office to logged-out
+                    visitors, and an agent who has signed in reaches it from the
+                    account menu. */}
               </ul>
             </div>
 
@@ -235,8 +239,10 @@ export default async function Home() {
                   Tightening the gap by the same amount the padding adds keeps
                   the footer close to the height it was. */}
               <ul className="space-y-1 text-slate-600 dark:text-slate-400">
-                <li><Link href="/insights" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Market Intelligence Pulse</Link></li>
-                <li><Link href="/admin" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Platform Command & Moderation</Link></li>
+                <li><Link href="/insights" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Market Insights</Link></li>
+                {/* "Platform Command & Moderation" (/admin) removed, for the
+                    same reason as the agent console above: a public footer is
+                    not where a moderation console belongs. */}
                 <li><Link href="/legal/privacy" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">POPIA Privacy & Data Rights</Link></li>
               </ul>
             </div>
@@ -244,7 +250,16 @@ export default async function Home() {
 
           <div className="mt-8 border-t border-slate-200/80 dark:border-white/10 pt-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400">
             <p>© 2026 Dynasty Estates / Tricore Enterprises. All rights reserved.</p>
-            <p>Built with Next.js, TypeScript & Obsidian Glass.</p>
+            {/* The framework line that stood here ("Built with Next.js,
+                TypeScript & Obsidian Glass") is the kind of thing a template
+                leaves behind.
+
+                A regulatory statement would be the natural replacement — it is
+                what a seller checks — but the listings and agent records are
+                still demo data, so claiming PPRA registration of the
+                practitioners on this site would swap one unfounded claim for
+                another. Beta status is the thing that is true today. */}
+            <p>Beta — listings shown are sample data.</p>
           </div>
         </footer>
       </div>
