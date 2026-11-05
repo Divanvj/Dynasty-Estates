@@ -41,7 +41,10 @@ export default async function Home() {
           body as ExpandableSearchPanel does rather than raising its z-index —
           that is what keeps its overlay clear of this stacking context.
         */}
-        <header className="relative z-50 mx-auto flex max-w-[1440px] items-center justify-between rounded-card border border-white/70 bg-white/40 dark:border-white/10 dark:bg-[#0b1719]/70 px-3.5 sm:px-6 py-3 backdrop-blur-xl shadow-[0_12px_30px_rgba(36,48,50,0.06)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
+        {/* `hidden lg:flex`: below lg every child of this bar — brand, nav and
+            account — is now in MobileAppBar, so on a phone it rendered as an
+            empty bordered box under the real one. */}
+        <header className="relative z-50 mx-auto hidden max-w-[1440px] items-center justify-between rounded-card border border-white/70 bg-white/40 dark:border-white/10 dark:bg-[#0b1719]/70 px-3.5 sm:px-6 py-3 backdrop-blur-xl shadow-[0_12px_30px_rgba(36,48,50,0.06)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)] lg:flex">
           <BrandLogo />
 
           <SiteNavigation />
@@ -123,8 +126,14 @@ export default async function Home() {
           </div>
 
           <div className="rounded-panel border border-emerald-500/25 bg-gradient-to-br from-[#082224] to-[#041416] p-6 text-white shadow-[0_20px_45px_rgba(4,20,22,0.35)] backdrop-blur-xl">
-            <div className="flex items-center justify-between gap-3">
-              <div>
+            {/* `flex-wrap` + `min-w-0`: `.pill` is `flex-shrink: 0` and
+                `white-space: nowrap`, so this 186px link could not give way and
+                overflowed its 301px row by 51px at 375px — enough to push the
+                whole document into a 14px horizontal scroll, which on a phone
+                reads as the page being subtly broken. It now drops to its own
+                line when the heading beside it needs the width. */}
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="min-w-0">
                 <p className="text-xs uppercase tracking-[0.2em] text-emerald-400 font-semibold">Collaboration & Shortlisting</p>
                 <h3 className="mt-1 text-2xl font-light text-white">Find homes with your partner</h3>
               </div>

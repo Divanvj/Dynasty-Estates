@@ -103,7 +103,8 @@ export default async function ToRentLocationPage({
       {/* relative z-50: the bar below is a `backdrop-blur` stacking context, so
           at `auto` the page content that follows painted over the Sell / Tools
           dropdowns. See src/app/page.tsx for the full note. */}
-      <header className="relative z-50 mx-auto max-w-[1400px] px-4 pt-4 sm:px-6 lg:px-8">
+      {/* Hidden below lg: brand, nav and account all live in MobileAppBar now. */}
+      <header className="relative z-50 mx-auto hidden max-w-[1400px] px-4 pt-4 sm:px-6 lg:block lg:px-8">
         <div className="flex items-center justify-between rounded-card border border-white/70 bg-white/40 px-4 py-3 backdrop-blur-xl shadow-xs dark:border-white/10 dark:bg-[#0b1719]/70">
           <BrandLogo />
           <SiteNavigation />

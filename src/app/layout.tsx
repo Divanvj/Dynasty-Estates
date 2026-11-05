@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/components/auth-provider";
+import MobileAppBar from "@/components/mobile-app-bar";
 import MobileNav from "@/components/mobile-nav";
 import { ThemeProvider } from "@/components/theme-provider";
 
@@ -89,6 +90,11 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <AuthProvider>
+            {/* Before `{children}`, so the sticky bar pins to the top of the
+                document rather than to whatever the first page section is.
+                Below `lg` only — the desktop keeps SiteNavigation and the
+                per-page headers exactly as they are. */}
+            <MobileAppBar />
             {children}
             <MobileNav />
           </AuthProvider>

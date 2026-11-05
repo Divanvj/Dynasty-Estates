@@ -10,6 +10,18 @@ interface BrandLogoProps {
   /** Hide the wordmark entirely and show only the mark. */
   markOnly?: boolean;
   /**
+   * A 36px mark instead of 48px, for the mobile app bar. The bar is 56px tall
+   * so the full tile would leave it no breathing room at all.
+   */
+  compact?: boolean;
+  /**
+   * Below `lg` the brand lives once, in `MobileAppBar`. Every other call site
+   * sits inside a page header that the app bar now duplicates, so they hide
+   * themselves on a phone rather than stacking a second logo under the first.
+   * The app bar opts back in.
+   */
+  showOnMobile?: boolean;
+  /**
    * Force the light-on-dark wordmark. Needed on surfaces that are dark in both
    * themes (the agent console), where the theme-driven colours would otherwise
    * render near-black text on a near-black panel.
@@ -23,6 +35,8 @@ export default function BrandLogo({
   subtitle = "Estates",
   category = "Dynasty",
   markOnly = false,
+  compact = false,
+  showOnMobile = false,
   onDark = false,
   className = "",
 }: BrandLogoProps) {
@@ -30,7 +44,9 @@ export default function BrandLogo({
     <Link
       href={href}
       aria-label="Dynasty Estates — home"
-      className={`group flex shrink-0 items-center gap-2.5 sm:gap-3 ${className}`}
+      className={`group shrink-0 items-center gap-2.5 sm:gap-3 ${
+        showOnMobile ? "flex" : "hidden lg:flex"
+      } ${className}`}
     >
       {/*
         Three brand PNGs exist. Measured opaque bounding boxes:
@@ -48,7 +64,11 @@ export default function BrandLogo({
         Keep `width`/`height` at 2x the rendered box so the optimiser serves a
         sharp source; at the old 31px it would upscale into the larger tile.
       */}
-      <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl overflow-hidden shadow-md border border-neutral-800 dark:border-neutral-700/80 bg-black p-1 group-hover:scale-105 group-hover:border-emerald-500/50 group-hover:shadow-[0_0_16px_rgba(16,185,129,0.3)] transition-all">
+      <div
+        className={`relative flex shrink-0 items-center justify-center overflow-hidden shadow-md border border-neutral-800 dark:border-neutral-700/80 bg-black group-hover:scale-105 group-hover:border-emerald-500/50 group-hover:shadow-[0_0_16px_rgba(16,185,129,0.3)] transition-all ${
+          compact ? "h-9 w-9 rounded-xl p-0.5" : "h-12 w-12 rounded-2xl p-1"
+        }`}
+      >
         <Image
           src="/dynasty-logo.png"
           alt="Dynasty Estates"

@@ -76,11 +76,15 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
     <section id="listings" className="mx-auto mt-8 max-w-[1440px] rounded-panel border border-white/45 bg-white/35 dark:border-white/10 dark:bg-surface-panel/65 p-4 shadow-[0_20px_45px_rgba(15,23,42,0.06)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl md:p-6 max-md:rounded-none max-md:border-0 max-md:bg-transparent max-md:p-0 max-md:shadow-none max-md:backdrop-blur-none dark:max-md:bg-transparent">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between border-b border-slate-200/60 dark:border-white/10 pb-4">
         <div>
-          <div className="flex items-center gap-3">
+          {/* `flex-wrap`, and the separator dot hides once it wraps. The
+              eyebrow is `tracking-[0.22em]` uppercase, so at 320px it and the
+              169px toggle needed 20px more than the row had and pushed the
+              document into a horizontal scroll. */}
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-emerald-800 dark:text-emerald-400">
               {intent === "rent" ? "Trending Rentals" : "Properties For Sale"}
             </p>
-            <span className="text-slate-300 dark:text-slate-600">•</span>
+            <span className="hidden text-slate-300 min-[400px]:inline dark:text-slate-600">•</span>
             {/* Direct Rent vs Buy Switcher */}
             <div className="inline-flex rounded-full border border-slate-200/90 bg-white/80 dark:border-white/10 dark:bg-surface-ink/60 p-0.5 shadow-sm">
               <button

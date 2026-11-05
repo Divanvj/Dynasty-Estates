@@ -25,7 +25,7 @@ const ROLE_BADGES: Record<UserRole, { label: string; icon: typeof UserIcon; tone
   Admin: { label: "Platform Moderator", icon: ShieldIcon, tone: "text-purple-600" },
 };
 
-export default function AccountActions() {
+export default function AccountActions({ showOnMobile = false }: { showOnMobile?: boolean } = {}) {
   const { user: firebaseUser, demoUser, profile, signOut } = useAuth();
   const { role: activeRole } = useUserRole();
 
@@ -160,7 +160,16 @@ export default function AccountActions() {
   }
 
   return (
-    <div className="relative z-50 flex items-center gap-2 sm:gap-3 shrink-0">
+    // Hidden below `lg` by default, for the same reason as BrandLogo: the
+    // account control lives once on a phone, in MobileAppBar, which opts back
+    // in with `showOnMobile`. Every other call site is a page header the app
+    // bar now sits above, and two Profile triggers stacked on each other was
+    // 140px of chrome before any content.
+    <div
+      className={`relative z-50 items-center gap-2 sm:gap-3 shrink-0 ${
+        showOnMobile ? "flex" : "hidden lg:flex"
+      }`}
+    >
       {/*
         The theme switch used to sit here, outside the menu. At `lg` — the width
         at which the desktop nav first appears — a signed-in header measured only

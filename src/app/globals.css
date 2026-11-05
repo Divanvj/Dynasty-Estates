@@ -1153,6 +1153,26 @@ select option {
   --dyn-exit-y: 0.5rem;
 }
 
+/* Full-travel variants, for panels that start fully off one edge rather than
+   nudging in a few pixels. These are what `Sheet` uses: a drawer comes in from
+   the left, a bottom sheet from below. One line each, exactly as the note above
+   this block promised — no new keyframes. */
+.slide-in-from-left-full {
+  --dyn-enter-x: -100%;
+}
+
+.slide-out-to-left-full {
+  --dyn-exit-x: -100%;
+}
+
+.slide-in-from-bottom-full {
+  --dyn-enter-y: 100%;
+}
+
+.slide-out-to-bottom-full {
+  --dyn-exit-y: 100%;
+}
+
 /* Accessibility: Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   .aurora__orb,
