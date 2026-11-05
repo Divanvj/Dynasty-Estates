@@ -49,20 +49,23 @@ export default function HomeHeroSearch() {
             </span>
           </p>
         </div>
-        <button
-          type="button"
-          onClick={() => {
-            if (typeof window !== "undefined") {
-              window.dispatchEvent(new CustomEvent("dynasty:open-ai-search"));
-            }
-          }}
+        {/* Goes to /ai-search, the actual AI search.
+
+            It used to dispatch `dynasty:open-ai-search`, which opened the
+            filter panel and focused an inline "AI Natural Language Search"
+            field inside it. That field only set the panel's own filter state
+            and never reached /ai-search — so the product had two different
+            features called AI Search, and the most prominent button for it led
+            to the weaker one. The inline bar is gone; this is the link. */}
+        <Link
+          href="/ai-search"
           className="tap-44 relative inline-flex items-center gap-1 sm:gap-1.5 rounded-xl bg-gradient-to-r from-[#0b4d4e] to-[#07393a] text-emerald-100 border border-emerald-400/40 px-2.5 py-1.5 sm:px-3.5 sm:py-1.5 text-xs font-bold shadow-xs hover:from-[#0d595b] hover:to-[#094344] transition-all cursor-pointer whitespace-nowrap shrink-0"
         >
           <SparklesIcon className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-emerald-300" />
           <span className="hidden min-[360px]:inline">Try AI</span>
           <span className="hidden sm:inline">Search</span>
           <span>→</span>
-        </button>
+        </Link>
       </div>
 
       {/* Unified Expandable Single Search Bar & Filter Dropdown */}

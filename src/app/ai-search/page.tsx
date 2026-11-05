@@ -24,21 +24,6 @@ import {
   type ParsedSearchIntent,
 } from "@/lib/ai-concierge";
 
-/**
- * Example queries, shortened.
- *
- * They were full sentences wrapped in typographic quotes, which wrapped to two
- * rows of chips above the fold and read as four paragraphs rather than four
- * buttons. Each still carries a location, a constraint and an amenity, so the
- * parser extracts the same shape of intent from them as before.
- */
-const promptSuggestions = [
-  "4-bed house in Pretoria with solar under R7M",
-  "Ocean view villa in Camps Bay",
-  "Secure estate home in Sandton with a garden",
-  "Penthouse in Umhlanga under R8M",
-];
-
 export default function AISearchPage() {
   // Empty, with the placeholder carrying the instruction. It used to open with
   // a full example query already typed into the field, so the first thing
@@ -141,15 +126,21 @@ export default function AISearchPage() {
       <div className="mx-auto max-w-6xl">
         {/* Navigation Header */}
         <header className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-          <div className="flex items-center gap-2.5 sm:gap-3">
+          {/* `min-w-0` so the title block can shrink rather than shoving the
+              right-hand controls off the row. BrandLogo is hidden below lg now
+              that MobileAppBar carries the brand, so on a phone this is just
+              the page title. */}
+          <div className="flex min-w-0 items-center gap-2.5 sm:gap-3">
             <BrandLogo markOnly />
             <div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs uppercase tracking-[0.2em] text-emerald-800 font-bold dark:text-emerald-400">Grounded AI</span>
-                <span className="badge bg-emerald-500/20 text-emerald-800 dark:border dark:border-emerald-500/30 dark:bg-emerald-950/70 dark:text-emerald-300">
-                  BETA
-                </span>
-              </div>
+              {/* The BETA badge is gone, as asked. It was also the rigid
+                  element in this row: `.badge` is `flex-shrink: 0` with
+                  `white-space: nowrap`, so in a header that had no `flex-wrap`
+                  it never yielded, and the eyebrow beside it broke across two
+                  lines with BETA left floating against the first. */}
+              <span className="text-xs uppercase tracking-[0.2em] text-emerald-800 font-bold dark:text-emerald-400">
+                Grounded AI
+              </span>
               <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">
                 <span className="hidden sm:inline">Dynasty </span>AI Search
               </h1>
@@ -212,20 +203,16 @@ export default function AISearchPage() {
             </div>
           </form>
 
-          {/* Quick Suggestions */}
-          <div className="mt-3.5 flex flex-wrap items-center gap-2">
-            <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Try:</span>
-            {promptSuggestions.map((suggestion) => (
-              <button
-                key={suggestion}
-                type="button"
-                onClick={() => handleSearchWith(suggestion)}
-                className="pill-sm border border-slate-200 bg-white/70 font-medium text-slate-700 hover:bg-white hover:border-emerald-400 transition-all cursor-pointer dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-emerald-400"
-              >
-                {suggestion}
-              </button>
-            ))}
-          </div>
+          {/* The "Try:" example chips are gone.
+
+              They were `.pill-sm` buttons, and `text-xs` is inert on a
+              <button> — the unlayered `font: inherit` reset wins — so they
+              rendered at 16px, not 14px. Two of the four came out 340-370px
+              wide inside a 311px panel, and with `white-space: nowrap` and
+              `flex-shrink: 0` and no `overflow-x-auto` on the row they pushed
+              the whole document into a horizontal scroll on every phone. The
+              placeholder in the field above already shows the shape of a
+              query, which is what the examples were for. */}
 
           {/* What the parser took from the query. Only rendered once something
               has been extracted, so the panel is evidence rather than
@@ -260,7 +247,8 @@ export default function AISearchPage() {
               Your matches will appear here
             </p>
             <p className="mx-auto mt-1 max-w-sm text-xs text-slate-500 dark:text-slate-400">
-              Describe the home above, or start from one of the examples.
+              Describe the home you are after in the box above — suburb, budget,
+              bedrooms, must-haves.
             </p>
           </section>
         ) : (

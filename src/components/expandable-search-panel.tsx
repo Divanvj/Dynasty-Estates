@@ -25,12 +25,9 @@ import {
   LocationPinIcon,
   ResidentialIcon,
   SearchIcon,
-  SparklesIcon,
   XMarkIcon,
 } from "@/components/icons";
 import CustomSelect from "@/components/custom-select";
-import { parseNaturalLanguageQuery } from "@/lib/ai-concierge";
-import { formatNumber } from "@/lib/formatters";
 import { matchProvinceName, southAfricanProvinces } from "@/lib/property-data";
 import { getAllCitiesAlphabetical, searchCities } from "@/lib/location-data";
 
@@ -160,6 +157,22 @@ const lifestyleFeatureOptions = [
 const EXIT_MS = 200;
 
 /**
+ * True only where a precise pointer is driving — a mouse or trackpad.
+ *
+ * Every programmatic `focus()` in this component exists for keyboard and mouse
+ * users, and every one of them summons the on-screen keyboard on a phone. The
+ * keyboard then covers roughly half the screen: opening the panel buried the
+ * filters behind it, and closing the panel — which hands focus back to the
+ * resting bar — popped it up over the page you had just returned to.
+ *
+ * Asking about the pointer rather than the viewport width is the honest test:
+ * a narrow desktop window still gets the focus, a large tablet does not.
+ */
+function hasFinePointer() {
+  return typeof window !== "undefined" && window.matchMedia("(pointer: fine)").matches;
+}
+
+/**
  * Scale the panel enters from. Lower than the `zoom-in-95` the card carries,
  * because here it is paired with a transform origin pinned to the search bar:
  * the extra travel is what makes it read as the bar expanding rather than as a
@@ -194,7 +207,6 @@ export default function ExpandableSearchPanel({
   const searchInputRef = useRef<HTMLInputElement>(null);
   const modalSearchInputRef = useRef<HTMLInputElement>(null);
   const modalCardRef = useRef<HTMLDivElement>(null);
-  const aiInputRef = useRef<HTMLInputElement>(null);
 
   // Dropdown Visibility State.
   //
@@ -286,6 +298,12 @@ export default function ExpandableSearchPanel({
     // Gone, because executing a search navigated away. Leave focus alone.
     if (!bar || !document.contains(bar)) return;
 
+    // Touch devices do not get focus back. Restoring it is right for a
+    // keyboard user — it puts the caret where they left it — but on a phone it
+    // raises the on-screen keyboard over the page the moment you close the
+    // panel, which is not what dismissing something should do.
+    if (!hasFinePointer()) return;
+
     // Focusing this field is itself what opens the panel, so this one
     // programmatic focus has to be exempt or closing would immediately reopen.
     suppressOpenOnFocusRef.current = true;
@@ -346,10 +364,6 @@ export default function ExpandableSearchPanel({
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>(initialFeatures);
   const [onShowOnly, setOnShowOnly] = useState<boolean>(initialOnShowOnly);
 
-  // AI Search Inline States
-  const [aiQuery, setAiQuery] = useState("");
-  const [aiExtractionSummary, setAiExtractionSummary] = useState("");
-
   // Listen to external intent changes
   useEffect(() => {
     function handleExternalIntent(e: Event) {
@@ -362,20 +376,14 @@ export default function ExpandableSearchPanel({
     return () => window.removeEventListener("dynasty:intent-change", handleExternalIntent);
   }, []);
 
-  // Listen to AI search trigger from Hero banner
-  useEffect(() => {
-    function handleOpenAI() {
-      setIsOpen(true);
-      setTimeout(() => {
-        aiInputRef.current?.focus();
-        aiInputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-      }, 150);
-    }
-    window.addEventListener("dynasty:open-ai-search", handleOpenAI);
-    return () => window.removeEventListener("dynasty:open-ai-search", handleOpenAI);
-    // setIsOpen is a useCallback with no dependencies, so it is stable for the
-    // life of the component and listed here only to satisfy the lint rule.
-  }, [setIsOpen]);
+  /*
+   * The `dynasty:open-ai-search` listener is gone along with the inline AI bar
+   * it focused. That bar was a second, weaker AI search living inside the
+   * filter panel — it only set this panel's own filter state and never reached
+   * /ai-search — so the product had two different features called AI Search.
+   * The real one is a page, reachable from the bottom tab bar and the drawer,
+   * and the hero button now goes there instead of dispatching this event.
+   */
 
   // Handle click outside modal card to dismiss
   useEffect(() => {
@@ -410,14 +418,28 @@ export default function ExpandableSearchPanel({
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    const focusTimer = setTimeout(() => {
-      modalSearchInputRef.current?.focus();
-    }, 60);
+    /**
+     * Autofocus the field only where a keyboard is already there.
+     *
+     * On a touch device, focusing this input raises the on-screen keyboard the
+     * instant the panel opens, and that covers roughly half the sheet —
+     * including the filters the visitor came here to set. They have to dismiss
+     * a keyboard they never asked for before they can do anything.
+     *
+     * `(pointer: fine)` is the honest test: it asks whether the device has a
+     * precise pointer, rather than guessing from viewport width, so a small
+     * desktop window still gets the focus and a large tablet does not.
+     */
+    const focusTimer = hasFinePointer()
+      ? setTimeout(() => {
+          modalSearchInputRef.current?.focus();
+        }, 60)
+      : undefined;
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = originalOverflow;
-      clearTimeout(focusTimer);
+      if (focusTimer) clearTimeout(focusTimer);
     };
   }, [isOpen, setIsOpen]);
 
@@ -473,6 +495,10 @@ export default function ExpandableSearchPanel({
       setLocations((prev) => [...prev, trimmed]);
     }
     setLocationInput("");
+    // Keeping the caret in the field is right with a keyboard — you can type
+    // the next suburb straight away. On touch it re-raises the on-screen
+    // keyboard every time you tap a suggestion chip.
+    if (!hasFinePointer()) return;
     if (isOpen) {
       modalSearchInputRef.current?.focus();
     } else {
@@ -482,6 +508,7 @@ export default function ExpandableSearchPanel({
 
   function removeLocationTag(tag: string) {
     setLocations((prev) => prev.filter((t) => t !== tag));
+    if (!hasFinePointer()) return;
     if (isOpen) {
       modalSearchInputRef.current?.focus();
     } else {
@@ -516,8 +543,6 @@ export default function ExpandableSearchPanel({
   function handleClearAll() {
     setLocations([]);
     setLocationInput("");
-    setAiQuery("");
-    setAiExtractionSummary("");
     setCategory("Residential");
     setSelectedTypes(["All types"]);
     setMinPrice(0);
@@ -528,94 +553,6 @@ export default function ExpandableSearchPanel({
     setFurnishedStatus("Any");
     setSelectedFeatures([]);
     setOnShowOnly(false);
-  }
-
-  function executeAISearch(promptText: string) {
-    const trimmed = promptText.trim();
-    if (!trimmed) return;
-    setAiQuery(trimmed);
-    const parsed = parseNaturalLanguageQuery(trimmed);
-    const appliedBadges: string[] = [];
-
-    // 1. Intent (Rent vs Buy)
-    if (parsed.intent) {
-      setIntent(parsed.intent);
-      appliedBadges.push(parsed.intent === "rent" ? "To Rent" : "For Sale");
-    }
-
-    // 2. Location
-    if (parsed.targetLocation) {
-      setLocations((prev) => {
-        if (!prev.includes(parsed.targetLocation!)) {
-          return [...prev, parsed.targetLocation!];
-        }
-        return prev;
-      });
-      appliedBadges.push(parsed.targetLocation);
-    }
-
-    // 3. Bedrooms
-    if (parsed.minBedrooms) {
-      const bedStr = parsed.minBedrooms >= 5 ? "5+" : `${parsed.minBedrooms}+`;
-      setBeds(bedStr);
-      appliedBadges.push(`${bedStr} Beds`);
-    }
-
-    // 4. Bathrooms
-    if (parsed.minBathrooms) {
-      const bathStr = parsed.minBathrooms >= 4 ? "4+" : `${parsed.minBathrooms}+`;
-      setBaths(bathStr);
-      appliedBadges.push(`${bathStr} Baths`);
-    }
-
-    // 5. Parking
-    if (parsed.minParking) {
-      const parkStr = parsed.minParking >= 3 ? "3+" : `${parsed.minParking}+`;
-      setParking(parkStr);
-      appliedBadges.push(`${parkStr} Garages`);
-    }
-
-    // 6. Max Price
-    if (parsed.maxPriceZAR) {
-      setMaxPrice(parsed.maxPriceZAR);
-      appliedBadges.push(
-        parsed.maxPriceZAR >= 1_000_000
-          ? `Max R ${(parsed.maxPriceZAR / 1_000_000).toFixed(1).replace(".0", "")}M`
-          : `Max R ${formatNumber(Math.round(parsed.maxPriceZAR / 1_000))}k`
-      );
-    }
-
-    // 7. Property Type
-    if (parsed.propertyType) {
-      setSelectedTypes([parsed.propertyType]);
-      appliedBadges.push(parsed.propertyType);
-    }
-
-    // 8. Furnished Status
-    if (parsed.furnishedStatus) {
-      setFurnishedStatus(parsed.furnishedStatus);
-      appliedBadges.push(parsed.furnishedStatus);
-    }
-
-    // 9. Amenities & Lifestyle Features
-    if (parsed.requiredAmenities && parsed.requiredAmenities.length > 0) {
-      setSelectedFeatures((prev) => {
-        const merged = new Set([...prev, ...parsed.requiredAmenities]);
-        return Array.from(merged);
-      });
-      appliedBadges.push(
-        parsed.requiredAmenities.map((a) => a.replace("_", " ")).join(", ")
-      );
-    }
-
-    if (appliedBadges.length > 0) {
-      setAiExtractionSummary(appliedBadges.join(" • "));
-    }
-  }
-
-  function handleAISearchSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    executeAISearch(aiQuery);
   }
 
   function handleExecuteSearch(e?: React.FormEvent) {
@@ -847,6 +784,11 @@ export default function ExpandableSearchPanel({
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsOpen(true);
+                  // Hand focus back on a touch device so the keyboard does not
+                  // ride up behind the opening sheet. The panel's own field is
+                  // deliberately not autofocused there either — see the open
+                  // effect above.
+                  if (!hasFinePointer()) searchInputRef.current?.blur();
                 }}
                 onFocus={() => {
                   // Focus restored after a close should not reopen the panel.
@@ -1225,71 +1167,6 @@ export default function ExpandableSearchPanel({
               <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 hidden sm:inline">
                 {intent === "rent" ? "Browsing long-term rentals" : "Browsing properties for sale"}
               </span>
-            </div>
-
-            {/* AI Natural Language Search Bar */}
-            <div className="rounded-2xl border border-emerald-500/35 bg-gradient-to-br from-emerald-950/10 dark:from-emerald-950/30 via-emerald-900/5 to-slate-900/5 p-3 sm:p-3.5 backdrop-blur-sm">
-              <div className="flex items-center justify-between gap-2 mb-1.5">
-                <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-950 dark:text-emerald-300">
-                  <SparklesIcon className="h-4 w-4 text-emerald-700 dark:text-emerald-400 shrink-0" />
-                  <span>AI Natural Language Search</span>
-                </div>
-                <span className="rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 text-xs font-bold px-2 py-0.5 border border-emerald-200 dark:border-emerald-500/30">
-                  Instant Filter
-                </span>
-              </div>
-
-              <form onSubmit={handleAISearchSubmit} className="flex gap-2">
-                <div className="relative flex-1">
-                  <input
-                    ref={aiInputRef}
-                    type="text"
-                    value={aiQuery}
-                    onChange={(e) => setAiQuery(e.target.value)}
-                    placeholder="e.g. 3-bedroom pet-friendly solar house in Pretoria under R6M..."
-                    className="w-full rounded-xl border border-emerald-300/80 dark:border-emerald-500/30 bg-white/95 dark:bg-[#0c181a] px-3 py-2 text-xs font-semibold text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 shadow-2xs"
-                  />
-                  {aiQuery && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setAiQuery("");
-                        setAiExtractionSummary("");
-                      }}
-                      className="absolute right-2.5 top-2 text-slate-400 hover:text-slate-700 dark:hover:text-white text-xs font-bold dark:text-slate-300"
-                      title="Clear AI input"
-                    >
-                      ✕
-                    </button>
-                  )}
-                </div>
-                <button
-                  type="submit"
-                  className="flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 hover:from-[#0d595b] hover:to-[#094344] dark:hover:from-emerald-500 dark:hover:to-emerald-600 px-4 py-2 text-xs font-bold text-white shadow-sm dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] border border-emerald-400/30 dark:border-emerald-400/50 hover:scale-102 transition-all cursor-pointer whitespace-nowrap"
-                >
-                  <SparklesIcon className="h-3.5 w-3.5 text-emerald-300" />
-                  <span>Ask AI</span>
-                </button>
-              </form>
-
-              {aiExtractionSummary && (
-                <div className="mt-2.5 flex items-center justify-between rounded-lg bg-emerald-100/90 dark:bg-emerald-950/60 px-2.5 py-1.5 text-xs text-emerald-900 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-500/30 animate-in fade-in duration-150">
-                  <div className="flex items-center gap-1.5 min-w-0">
-                    <SparklesIcon className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-400 shrink-0" />
-                    <span className="font-semibold text-xs leading-tight truncate">
-                      ✨ AI applied: {aiExtractionSummary}
-                    </span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setAiExtractionSummary("")}
-                    className="text-emerald-700 dark:text-emerald-400 hover:text-emerald-950 dark:hover:text-white font-bold ml-2 text-xs shrink-0 cursor-pointer"
-                    title="Dismiss"
-                  >
-                    ✕
-                  </button>
-                </div>
-              )}
             </div>
 
             {/* Estate Portfolio Asset Classes */}
