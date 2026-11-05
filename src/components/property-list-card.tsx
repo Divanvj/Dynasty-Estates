@@ -111,8 +111,8 @@ export default function PropertyListCard({
         <div>
           {/* Header Row: Suburb & Category Badge */}
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <p className="flex items-center gap-1 text-xs font-semibold text-slate-500 dark:text-slate-400">
-              <LocationPinIcon className="h-3.5 w-3.5 text-slate-400 shrink-0 dark:text-slate-400" />
+            <p className="flex items-center gap-1 text-xs font-semibold text-slate-600 dark:text-slate-400">
+              <LocationPinIcon className="h-3.5 w-3.5 text-slate-600 shrink-0 dark:text-slate-400" />
               <span>{property.location}</span>
             </p>
             <div className="flex items-center gap-1.5">
@@ -155,25 +155,25 @@ export default function PropertyListCard({
               cost about 80px to say "3 beds, 2 baths". */}
           <div className="mt-2.5 md:mt-3.5 flex flex-wrap items-center gap-3 md:gap-6 rounded-2xl border border-slate-200/70 dark:border-white/10 bg-white/50 dark:bg-surface-ink/60 px-4 py-2 max-md:rounded-none max-md:border-0 max-md:bg-transparent max-md:px-0 max-md:py-0 text-xs font-semibold text-slate-700 dark:text-slate-300">
             <span className="flex items-center gap-1.5">
-              <BedIcon className="h-4 w-4 text-slate-400 dark:text-slate-400" />
+              <BedIcon className="h-4 w-4 text-slate-600 dark:text-slate-400" />
               <span>{property.beds} {property.beds === 1 ? "Bed" : "Beds"}</span>
             </span>
             <span className="flex items-center gap-1.5">
-              <BathIcon className="h-4 w-4 text-slate-400 dark:text-slate-400" />
+              <BathIcon className="h-4 w-4 text-slate-600 dark:text-slate-400" />
               <span>{property.baths} {property.baths === 1 ? "Bath" : "Baths"}</span>
             </span>
             {/* Beds, baths and size are what people scan a feed for; parking is
                 a detail-page fact. Dropping it keeps the specs on one row. */}
             <span className="hidden md:flex items-center gap-1.5">
-              <CarIcon className="h-4 w-4 text-slate-400 dark:text-slate-400" />
+              <CarIcon className="h-4 w-4 text-slate-600 dark:text-slate-400" />
               <span>{property.parking} {property.parking === 1 ? "Garage" : "Garages"}</span>
             </span>
             <span className="flex items-center gap-1.5">
-              <AreaIcon className="h-4 w-4 text-slate-400 dark:text-slate-400" />
+              <AreaIcon className="h-4 w-4 text-slate-600 dark:text-slate-400" />
               <span>{property.area}</span>
             </span>
             {pricePerM2 && (
-              <span className="hidden lg:inline text-slate-400 font-normal dark:text-slate-400">
+              <span className="hidden lg:inline text-slate-600 font-normal dark:text-slate-400">
                 (approx. R {formatNumber(pricePerM2)}/m²)
               </span>
             )}
@@ -216,12 +216,12 @@ export default function PropertyListCard({
             {/* z-30 for the same reason as Save: comparing is not opening. */}
             <Link
               href="/compare"
-              className="tap-44 relative z-30 text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors"
+              className="tap-44 relative z-30 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors"
             >
               Add to Compare →
             </Link>
             {property.developmentInfo?.developerName && (
-              <span className="text-xs text-slate-400 border-l border-slate-200 dark:border-white/10 pl-3 dark:text-slate-400">
+              <span className="text-xs text-slate-600 border-l border-slate-200 dark:border-white/10 pl-3 dark:text-slate-400">
                 Developer: <strong className="text-slate-700 dark:text-slate-200">{property.developmentInfo.developerName}</strong>
               </span>
             )}

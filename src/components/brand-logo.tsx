@@ -83,7 +83,7 @@ export default function BrandLogo({
         <span className="hidden min-[400px]:block">
           <span
             className={`block text-xs font-bold uppercase leading-tight tracking-[0.24em] ${
-              onDark ? "text-emerald-400/80" : "text-slate-500 dark:text-emerald-400/80"
+              onDark ? "text-emerald-400/80" : "text-slate-600 dark:text-emerald-400/80"
             }`}
           >
             {category}

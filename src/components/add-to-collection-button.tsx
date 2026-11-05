@@ -140,7 +140,7 @@ export default function AddToCollectionButton({
           {!user ? (
             <div className="p-2 text-xs">
               <p className="font-semibold text-slate-900 dark:text-white">Sign in to save this</p>
-              <p className="mt-1 text-slate-500 dark:text-slate-400">
+              <p className="mt-1 text-slate-600 dark:text-slate-400">
                 Collections are tied to your account.
               </p>
               <Link
@@ -151,7 +151,7 @@ export default function AddToCollectionButton({
               </Link>
             </div>
           ) : loading ? (
-            <p className="p-3 text-xs font-medium text-slate-500 dark:text-slate-400">
+            <p className="p-3 text-xs font-medium text-slate-600 dark:text-slate-400">
               Loading your collections…
             </p>
           ) : error ? (
@@ -174,7 +174,7 @@ export default function AddToCollectionButton({
                       {inAlready ? (
                         <CheckIcon className="h-3.5 w-3.5 shrink-0 text-emerald-600 dark:text-emerald-400" />
                       ) : savingId === item.id ? (
-                        <span className="shrink-0 text-slate-400">…</span>
+                        <span className="shrink-0 text-slate-600">…</span>
                       ) : null}
                     </button>
                   </li>
@@ -184,7 +184,7 @@ export default function AddToCollectionButton({
           ) : (
             <div className="p-2 text-xs">
               <p className="font-semibold text-slate-900 dark:text-white">No collections yet</p>
-              <p className="mt-1 text-slate-500 dark:text-slate-400">
+              <p className="mt-1 text-slate-600 dark:text-slate-400">
                 Create one, then add homes to it.
               </p>
               <Link

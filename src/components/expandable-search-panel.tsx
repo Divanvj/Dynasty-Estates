@@ -824,7 +824,7 @@ export default function ExpandableSearchPanel({
                     setLocationInput("");
                     searchInputRef.current?.focus();
                   }}
-                  className="text-slate-400 hover:text-slate-700 dark:hover:text-white text-xs font-bold px-1 cursor-pointer dark:text-slate-300"
+                  className="text-slate-600 hover:text-slate-700 dark:hover:text-white text-xs font-bold px-1 cursor-pointer dark:text-slate-300"
                   title="Clear input"
                 >
                   ✕
@@ -1002,7 +1002,7 @@ export default function ExpandableSearchPanel({
                           setLocationInput("");
                           modalSearchInputRef.current?.focus();
                         }}
-                        className="text-slate-400 hover:text-slate-700 dark:hover:text-white text-xs font-bold px-1.5 cursor-pointer dark:text-slate-300"
+                        className="text-slate-600 hover:text-slate-700 dark:hover:text-white text-xs font-bold px-1.5 cursor-pointer dark:text-slate-300"
                         title="Clear input"
                       >
                         ✕
@@ -1036,7 +1036,7 @@ export default function ExpandableSearchPanel({
                   <button
                     type="button"
                     onClick={() => setIsOpen(false)}
-                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 dark:hover:bg-surface-panel hover:text-slate-700 dark:hover:text-white transition-colors cursor-pointer sm:h-9 sm:w-9 dark:bg-surface-ink/60 dark:text-slate-300 dark:border dark:border-white/10"
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-slate-600 hover:bg-slate-100 dark:hover:bg-surface-panel hover:text-slate-700 dark:hover:text-white transition-colors cursor-pointer sm:h-9 sm:w-9 dark:bg-surface-ink/60 dark:text-slate-300 dark:border dark:border-white/10"
                     title="Close search modal"
                     aria-label="Close search"
                   >
@@ -1072,7 +1072,7 @@ export default function ExpandableSearchPanel({
                   instead of capping the list. */}
               {(categorizedSuggestions.cities.length > 0 || categorizedSuggestions.provinces.length > 0) && (
                 <div className="mt-2.5 flex gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
-                  <span className="shrink-0 text-xs font-semibold text-slate-400 dark:text-slate-500 self-center mr-1">Matching SA areas:</span>
+                  <span className="shrink-0 text-xs font-semibold text-slate-600 dark:text-slate-500 self-center mr-1">Matching SA areas:</span>
                   {categorizedSuggestions.cities.map((city) => (
                     <button
                       key={city}
@@ -1082,7 +1082,7 @@ export default function ExpandableSearchPanel({
                     >
                       <LocationPinIcon className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
                       <span>{city}</span>
-                      <span className="text-xs text-slate-400 dark:text-slate-400">+</span>
+                      <span className="text-xs text-slate-600 dark:text-slate-400">+</span>
                     </button>
                   ))}
                   {categorizedSuggestions.provinces.map((prov) => (
@@ -1092,9 +1092,9 @@ export default function ExpandableSearchPanel({
                       onClick={() => addLocationTag(prov)}
                       className="inline-flex min-h-[36px] shrink-0 items-center gap-1 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0c181a] px-2.5 py-1 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-white/10 hover:text-emerald-950 dark:hover:text-emerald-300 hover:border-emerald-300 dark:hover:border-emerald-500/40 transition-colors cursor-pointer"
                     >
-                      <HomeIcon className="h-3 w-3 text-slate-400 dark:text-slate-500" />
+                      <HomeIcon className="h-3 w-3 text-slate-600 dark:text-slate-500" />
                       <span>{prov}</span>
-                      <span className="text-xs text-slate-400 dark:text-slate-400">+</span>
+                      <span className="text-xs text-slate-600 dark:text-slate-400">+</span>
                     </button>
                   ))}
                 </div>
@@ -1106,7 +1106,7 @@ export default function ExpandableSearchPanel({
                 <span className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
                   Premier Metros & Locations
                 </span>
-                <span className="text-xs text-slate-400 dark:text-slate-500">Click to add to search</span>
+                <span className="text-xs text-slate-600 dark:text-slate-500">Click to add to search</span>
               </div>
               <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
                 {getAllCitiesAlphabetical()
@@ -1146,7 +1146,7 @@ export default function ExpandableSearchPanel({
                   className={`relative z-10 py-1.5 text-xs sm:text-sm font-bold transition-all cursor-pointer text-center rounded-full select-none ${
                     intent === "buy"
                       ? "text-white"
-                      : "text-slate-500 dark:text-slate-400 hover:text-emerald-900 dark:hover:text-emerald-200 hover:bg-emerald-500/10"
+                      : "text-slate-600 dark:text-slate-400 hover:text-emerald-900 dark:hover:text-emerald-200 hover:bg-emerald-500/10"
                   }`}
                 >
                   For Sale
@@ -1157,14 +1157,14 @@ export default function ExpandableSearchPanel({
                   className={`relative z-10 py-1.5 text-xs sm:text-sm font-bold transition-all cursor-pointer text-center rounded-full select-none ${
                     intent === "rent"
                       ? "text-white"
-                      : "text-slate-500 dark:text-slate-400 hover:text-emerald-900 dark:hover:text-emerald-200 hover:bg-emerald-500/10"
+                      : "text-slate-600 dark:text-slate-400 hover:text-emerald-900 dark:hover:text-emerald-200 hover:bg-emerald-500/10"
                   }`}
                 >
                   To Rent
                 </button>
               </div>
 
-              <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 hidden sm:inline">
+              <span className="text-xs font-semibold text-slate-600 dark:text-slate-500 hidden sm:inline">
                 {intent === "rent" ? "Browsing long-term rentals" : "Browsing properties for sale"}
               </span>
             </div>
@@ -1175,7 +1175,7 @@ export default function ExpandableSearchPanel({
                 <label className="text-xs font-bold text-slate-900 dark:text-white tracking-wide">
                   Estate Portfolio
                 </label>
-                <span className="text-xs uppercase tracking-wider text-slate-400 dark:text-slate-500 font-medium">
+                <span className="text-xs uppercase tracking-wider text-slate-600 dark:text-slate-500 font-medium">
                   Asset Class
                 </span>
               </div>
@@ -1225,9 +1225,9 @@ export default function ExpandableSearchPanel({
                           : "bg-white/90 dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:bg-white dark:hover:bg-surface-panel hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_16px_rgba(16,185,129,0.3)] dark:hover:shadow-[0_0_20px_rgba(52,211,153,0.35)] shadow-2xs"
                       }`}
                     >
-                      <Icon className={`h-4 w-4 shrink-0 sm:mb-1 ${isSelected ? "text-emerald-300" : "text-slate-500 dark:text-slate-400"}`} />
+                      <Icon className={`h-4 w-4 shrink-0 sm:mb-1 ${isSelected ? "text-emerald-300" : "text-slate-600 dark:text-slate-400"}`} />
                       <span className="min-w-0 truncate text-xs font-bold">{item.label}</span>
-                      <span className={`hidden text-xs mt-0.5 sm:block ${isSelected ? "text-emerald-100" : "text-slate-400 dark:text-slate-500"}`}>{item.desc}</span>
+                      <span className={`hidden text-xs mt-0.5 sm:block ${isSelected ? "text-emerald-100" : "text-slate-600 dark:text-slate-500"}`}>{item.desc}</span>
                     </button>
                   );
                 })}
@@ -1283,7 +1283,7 @@ export default function ExpandableSearchPanel({
                   ariaLabel="Minimum price"
                 />
 
-                <span className="hidden text-slate-400 font-bold self-center sm:block dark:text-slate-400">–</span>
+                <span className="hidden text-slate-600 font-bold self-center sm:block dark:text-slate-400">–</span>
 
                 <CustomSelect
                   value={maxPrice}
@@ -1393,7 +1393,7 @@ export default function ExpandableSearchPanel({
                         On Show
                       </span>
                     </p>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">
+                    <p className="text-xs text-slate-600 dark:text-slate-400">
                       Properties open for Sunday viewing (14:00 – 17:00)
                     </p>
                   </div>
@@ -1453,7 +1453,7 @@ export default function ExpandableSearchPanel({
             </button>
 
             <div className="flex min-w-0 flex-1 items-center justify-end gap-3">
-              <span className="text-xs text-slate-400 dark:text-slate-500 hidden sm:inline">
+              <span className="text-xs text-slate-600 dark:text-slate-500 hidden sm:inline">
                 Press <kbd className="font-mono text-xs bg-slate-200 dark:bg-surface-ink dark:border dark:border-white/10 text-slate-700 dark:text-slate-300 px-1.5 py-0.5 rounded">Esc</kbd> to close
               </span>
               <button

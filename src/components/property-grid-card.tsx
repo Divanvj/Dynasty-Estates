@@ -113,22 +113,22 @@ export default function PropertyGridCard({
             {property.title}
           </Link>
         </Heading>
-        <p className="mt-1 flex items-center gap-1 text-xs text-slate-500 line-clamp-1 dark:text-slate-400">
-          <LocationPinIcon className="h-3.5 w-3.5 shrink-0 text-slate-400 dark:text-slate-400" />
+        <p className="mt-1 flex items-center gap-1 text-xs text-slate-600 line-clamp-1 dark:text-slate-400">
+          <LocationPinIcon className="h-3.5 w-3.5 shrink-0 text-slate-600 dark:text-slate-400" />
           <span>{property.location}</span>
         </p>
 
         <div className="mt-4 flex items-center justify-between border-t border-slate-100 dark:border-white/10 pt-3 text-xs font-semibold text-slate-600 dark:text-slate-300">
           <div className="flex items-center gap-1">
-            <BedIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-400" />
+            <BedIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
             <span>{property.beds} Beds</span>
           </div>
           <div className="flex items-center gap-1">
-            <BathIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-400" />
+            <BathIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
             <span>{property.baths} Baths</span>
           </div>
           <div className="flex items-center gap-1">
-            <CarIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-400" />
+            <CarIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
             <span>{property.parking} Garages</span>
           </div>
         </div>

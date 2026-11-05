@@ -167,7 +167,7 @@ export default function CustomSelect({
         {label && (
           <label
             htmlFor={`${selectId}-native`}
-            className="mb-1 block text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500"
+            className="mb-1 block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-500"
           >
             {label}
           </label>
@@ -220,7 +220,7 @@ export default function CustomSelect({
           {icon && <span className="shrink-0 text-emerald-600 dark:text-emerald-400">{icon}</span>}
           <div className="min-w-0 flex-1 flex flex-col justify-center">
             {label && (
-              <span className="block text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 leading-none truncate mb-0.5">
+              <span className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-500 leading-none truncate mb-0.5">
                 {label}
               </span>
             )}
@@ -228,7 +228,7 @@ export default function CustomSelect({
               className={`block truncate text-xs font-semibold leading-tight ${
                 selectedOption?.label
                   ? "text-slate-900 dark:text-slate-100"
-                  : "text-slate-400 dark:text-slate-500"
+                  : "text-slate-600 dark:text-slate-500"
               }`}
             >
               {selectedOption?.label || placeholder}
@@ -237,7 +237,7 @@ export default function CustomSelect({
         </div>
 
         <ChevronDownIcon
-          className={`h-3.5 w-3.5 shrink-0 text-slate-400 dark:text-slate-400 transition-transform duration-200 ${
+          className={`h-3.5 w-3.5 shrink-0 text-slate-600 dark:text-slate-400 transition-transform duration-200 ${
             isOpen ? "rotate-180 text-emerald-600 dark:text-emerald-400" : ""
           }`}
         />
@@ -282,7 +282,7 @@ export default function CustomSelect({
             {/* Options List */}
             <div className="max-h-60 overflow-y-auto py-1 scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-white/10">
               {filteredOptions.length === 0 ? (
-                <div className="px-3 py-3 text-center text-xs text-slate-400 dark:text-slate-500">
+                <div className="px-3 py-3 text-center text-xs text-slate-600 dark:text-slate-500">
                   No matching options
                 </div>
               ) : (
@@ -306,7 +306,7 @@ export default function CustomSelect({
                         {option.sublabel && (
                           <span
                             className={`block truncate text-xs font-normal ${
-                              isSelected ? "text-emerald-100" : "text-slate-400 dark:text-slate-500"
+                              isSelected ? "text-emerald-100" : "text-slate-600 dark:text-slate-500"
                             }`}
                           >
                             {option.sublabel}

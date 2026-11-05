@@ -79,7 +79,7 @@ export default function InsightsPage() {
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
             <BrandLogo markOnly />
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-500 font-bold hidden sm:block dark:text-emerald-400">Market Intelligence</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-600 font-bold hidden sm:block dark:text-emerald-400">Market Intelligence</p>
               <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">
                 <span className="hidden sm:inline">South African PropTech </span>Market Pulse
               </h1>
@@ -139,7 +139,7 @@ export default function InsightsPage() {
           <h3 className="text-lg font-bold text-slate-950 mb-4 dark:text-white">Metro Growth & Velocity Benchmarks</h3>
           <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 shadow-sm dark:bg-surface-ink/60 dark:border-white/10">
             <table className="w-full text-left text-xs">
-              <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase font-bold text-slate-500 dark:border-white/10 dark:bg-surface-ink/90 dark:text-slate-300">
+              <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase font-bold text-slate-600 dark:border-white/10 dark:bg-surface-ink/90 dark:text-slate-300">
                 <tr>
                   <th className="py-3 px-4">Market Node</th>
                   <th className="py-3 px-4">12-Mo Growth</th>
@@ -174,7 +174,7 @@ export default function InsightsPage() {
                 Suburb Historical Sold Prices & Demographic Trends
               </h3>
             </div>
-            <span className="text-xs text-slate-500 font-medium dark:text-slate-400">
+            <span className="text-xs text-slate-600 font-medium dark:text-slate-400">
               Illustrative figures — no registry data is connected yet
             </span>
           </div>
@@ -196,25 +196,25 @@ export default function InsightsPage() {
           {/* Suburb Metric Highlights */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
             <div className="rounded-2xl border border-white/80 bg-white/80 p-4 shadow-2xs dark:bg-surface-ink/70 dark:border-white/10 dark:shadow-inner">
-              <span className="text-xs uppercase tracking-wider text-slate-400 font-bold dark:text-slate-400">
+              <span className="text-xs uppercase tracking-wider text-slate-600 font-bold dark:text-slate-400">
                 5-Year Capital Appreciation
               </span>
               <p className="mt-1 text-2xl font-extrabold text-emerald-800 dark:text-emerald-400 dark:drop-shadow-[0_0_12px_rgba(16,185,129,0.3)]">
                 {activeNodeData.fiveYearAppreciation}
               </p>
-              <p className="text-xs text-slate-500 mt-0.5 dark:text-slate-400">Compound value trajectory</p>
+              <p className="text-xs text-slate-600 mt-0.5 dark:text-slate-400">Compound value trajectory</p>
             </div>
             <div className="rounded-2xl border border-white/80 bg-white/80 p-4 shadow-2xs dark:bg-surface-ink/70 dark:border-white/10 dark:shadow-inner">
-              <span className="text-xs uppercase tracking-wider text-slate-400 font-bold dark:text-slate-400">
+              <span className="text-xs uppercase tracking-wider text-slate-600 font-bold dark:text-slate-400">
                 Median Period of Ownership
               </span>
               <p className="mt-1 text-2xl font-extrabold text-slate-900 dark:text-white">
                 {activeNodeData.avgOwnershipYears}
               </p>
-              <p className="text-xs text-slate-500 mt-0.5 dark:text-slate-400">High retention & low turnover</p>
+              <p className="text-xs text-slate-600 mt-0.5 dark:text-slate-400">High retention & low turnover</p>
             </div>
             <div className="rounded-2xl border border-white/80 bg-white/80 p-4 shadow-2xs dark:bg-surface-ink/70 dark:border-white/10 dark:shadow-inner">
-              <span className="text-xs uppercase tracking-wider text-slate-400 font-bold dark:text-slate-400">
+              <span className="text-xs uppercase tracking-wider text-slate-600 font-bold dark:text-slate-400">
                 Buyer Age Demographic
               </span>
               <div className="mt-2 flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-300">
@@ -242,7 +242,7 @@ export default function InsightsPage() {
               </span>
             </div>
             <table className="w-full text-left text-xs">
-              <thead className="border-b border-slate-200 bg-white text-xs uppercase font-bold text-slate-500 dark:border-white/10 dark:bg-surface-ink/90 dark:text-slate-300">
+              <thead className="border-b border-slate-200 bg-white text-xs uppercase font-bold text-slate-600 dark:border-white/10 dark:bg-surface-ink/90 dark:text-slate-300">
                 <tr>
                   <th className="py-2.5 px-4">Street & Complex</th>
                   <th className="py-2.5 px-4">Property Type</th>
@@ -257,7 +257,7 @@ export default function InsightsPage() {
                     <td className="py-3 px-4 font-semibold text-slate-900 dark:text-white">{sale.street}</td>
                     <td className="py-3 px-4 text-slate-600 dark:text-slate-300">{sale.type}</td>
                     <td className="py-3 px-4 font-extrabold text-slate-900 dark:text-white">{sale.price}</td>
-                    <td className="py-3 px-4 text-slate-500 dark:text-slate-400">{sale.date}</td>
+                    <td className="py-3 px-4 text-slate-600 dark:text-slate-400">{sale.date}</td>
                     <td className="py-3 px-4 text-emerald-800 font-bold dark:text-emerald-400 dark:drop-shadow-[0_0_8px_rgba(16,185,129,0.25)]">{sale.ratePerM2}</td>
                   </tr>
                 ))}

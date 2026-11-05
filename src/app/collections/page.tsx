@@ -181,7 +181,7 @@ export default function CollectionsPage() {
           <div className="flex items-center gap-2.5 sm:gap-3">
             <BrandLogo markOnly />
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-500 hidden sm:block dark:text-slate-400">Collaborative Discovery</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-600 hidden sm:block dark:text-slate-400">Collaborative Discovery</p>
               <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">Collections</h1>
             </div>
           </div>
@@ -217,7 +217,7 @@ export default function CollectionsPage() {
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 p-4 backdrop-blur-sm">
             <div className="w-full max-w-md rounded-panel border border-white/80 bg-white/90 p-6 shadow-2xl backdrop-blur-2xl dark:bg-surface-panel dark:border-white/10 dark:shadow-[0_25px_60px_rgba(0,0,0,0.8)]">
               <h2 className="text-xl font-semibold text-slate-950 dark:text-white">Create Property Collection</h2>
-              <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+              <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
                 Create a shared shortlist for you and your partner, family, or property co-investors.
               </p>
               <form onSubmit={handleCreateCollection} className="mt-4 space-y-4">
@@ -311,7 +311,7 @@ export default function CollectionsPage() {
                       </span>
                     ))}
                   </div>
-                  <span className="text-xs text-slate-500 dark:text-slate-400">{activeCollection.members.length} Collaborators</span>
+                  <span className="text-xs text-slate-600 dark:text-slate-400">{activeCollection.members.length} Collaborators</span>
                   <button
                     type="button"
                     onClick={() => setShowInviteModal(true)}
@@ -345,7 +345,7 @@ export default function CollectionsPage() {
                     <button
                       type="button"
                       onClick={() => setShowInviteModal(false)}
-                      className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-500 hover:bg-slate-200 cursor-pointer dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-white"
+                      className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-600 hover:bg-slate-200 cursor-pointer dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-white"
                     >
                       <XMarkIcon className="h-4 w-4" />
                     </button>
@@ -359,7 +359,7 @@ export default function CollectionsPage() {
                   ) : (
                     <form onSubmit={handleSendInvite} className="mt-4 space-y-3 text-xs">
                       <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1 dark:text-slate-400">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1 dark:text-slate-400">
                           Partner / Collaborator Email
                         </label>
                         <input
@@ -435,26 +435,26 @@ export default function CollectionsPage() {
                     <div className="p-5">
                       <div className="flex items-center justify-between border-b border-slate-200/60 pb-3 text-xs text-slate-600 dark:border-white/10 dark:text-slate-300">
                         <span className="flex items-center gap-1">
-                          <BedIcon className="h-3.5 w-3.5 text-slate-400 dark:text-emerald-400" />
+                          <BedIcon className="h-3.5 w-3.5 text-slate-600 dark:text-emerald-400" />
                           <span>{prop.beds} Beds</span>
                         </span>
                         <span className="flex items-center gap-1">
-                          <BathIcon className="h-3.5 w-3.5 text-slate-400 dark:text-emerald-400" />
+                          <BathIcon className="h-3.5 w-3.5 text-slate-600 dark:text-emerald-400" />
                           <span>{prop.baths} Baths</span>
                         </span>
                         <span className="flex items-center gap-1">
-                          <CarIcon className="h-3.5 w-3.5 text-slate-400 dark:text-emerald-400" />
+                          <CarIcon className="h-3.5 w-3.5 text-slate-600 dark:text-emerald-400" />
                           <span>{prop.parking} Garages</span>
                         </span>
                         <span className="flex items-center gap-1">
-                          <AreaIcon className="h-3.5 w-3.5 text-slate-400 dark:text-emerald-400" />
+                          <AreaIcon className="h-3.5 w-3.5 text-slate-600 dark:text-emerald-400" />
                           <span>{prop.area}</span>
                         </span>
                       </div>
 
                       {/* Collaborative Voting Controls */}
                       <div className="mt-4 rounded-2xl border border-white/60 bg-white/40 p-3 dark:bg-surface-ink/60 dark:border-white/10">
-                        <p className="mb-2 text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Group Decision Votes</p>
+                        <p className="mb-2 text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400">Group Decision Votes</p>
                         <div className="flex items-center justify-between gap-2">
                           <button
                             onClick={() => void handleVote(prop.id, "love")}
@@ -476,7 +476,7 @@ export default function CollectionsPage() {
                             onClick={() => void handleVote(prop.id, "reject")}
                             className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-slate-100/70 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-200 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-white cursor-pointer"
                           >
-                            <XMarkIcon className="h-3.5 w-3.5 text-slate-500 dark:text-slate-400" />
+                            <XMarkIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
                             <span>Reject</span>
                             <span className="rounded-full bg-slate-200/80 px-1.5 text-xs dark:bg-surface-ink/80 dark:text-slate-300">{rejects}</span>
                           </button>
@@ -485,11 +485,11 @@ export default function CollectionsPage() {
 
                       {/* Threaded Discussion Comments */}
                       <div className="mt-4 space-y-2">
-                        <p className="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Shared Notes ({propComments.length})</p>
+                        <p className="text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400">Shared Notes ({propComments.length})</p>
                         <div className="max-h-36 space-y-2 overflow-y-auto pr-1">
                           {propComments.map((comm) => (
                             <div key={comm.id} className="rounded-xl border border-white/70 bg-white/70 p-2.5 text-xs dark:bg-surface-ink/60 dark:border-white/10">
-                              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                              <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
                                 <span className="font-semibold text-slate-800 dark:text-slate-300">{comm.userName}</span>
                                 <span>{formatDate(comm.createdAt)}</span>
                               </div>

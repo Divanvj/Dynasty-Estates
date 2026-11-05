@@ -41,7 +41,7 @@ export default function ComparePage() {
           <div className="flex items-center gap-2.5 sm:gap-3">
             <BrandLogo markOnly />
             <div>
-              <p className="hidden text-xs uppercase tracking-[0.2em] text-slate-500 sm:block sm:text-xs dark:text-slate-400">Buyer Decision Support</p>
+              <p className="hidden text-xs uppercase tracking-[0.2em] text-slate-600 sm:block sm:text-xs dark:text-slate-400">Buyer Decision Support</p>
               <h1 className="text-xs font-semibold tracking-wide text-slate-900 sm:text-sm dark:text-white">
                 Compare
               </h1>
@@ -72,13 +72,13 @@ export default function ComparePage() {
         {/* Replaces the navigation bar on paper, where there is nothing to say
             what the sheet is or when it was run. Screen-hidden by .print-only. */}
         <div className="print-only mb-5 border-b border-slate-300 pb-3">
-          <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Dynasty Estates</p>
+          <p className="text-xs uppercase tracking-[0.2em] text-slate-600">Dynasty Estates</p>
           <h2 className="text-lg font-bold">Side-by-Side Property Comparison</h2>
           {/* suppressHydrationWarning because the server and the browser format
               "today" at two different moments. Setting it from an effect would
               trip the project's react-hooks/set-state-in-effect rule, and this
               is the idiomatic answer for a rendered timestamp. */}
-          <p className="text-xs text-slate-500" suppressHydrationWarning>
+          <p className="text-xs text-slate-600" suppressHydrationWarning>
             {comparedProperties.length}{" "}
             {comparedProperties.length === 1 ? "property" : "properties"} · Prepared{" "}
             {new Date().toLocaleDateString("en-ZA", {
@@ -110,7 +110,7 @@ export default function ComparePage() {
           <table className="w-full border-collapse text-left">
             <thead>
               <tr className="border-b border-slate-200/80 dark:border-white/10">
-                <th className="w-1/5 pb-4 text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-400">
+                <th className="w-1/5 pb-4 text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
                   Feature Matrix
                 </th>
                 {comparedProperties.map((prop) => (
@@ -139,7 +139,7 @@ export default function ComparePage() {
                           {prop.title}
                         </Link>
                       </h3>
-                      <p className="text-xs text-slate-500 dark:text-slate-400">{prop.location}</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">{prop.location}</p>
                       <p className="mt-1 text-sm font-extrabold text-emerald-700 dark:text-emerald-400">{prop.price}</p>
                     </div>
                   </th>

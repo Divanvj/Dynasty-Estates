@@ -96,7 +96,7 @@ export default function MobileNav() {
                 className={`flex min-h-[var(--dyn-mobile-nav-h)] flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 transition-colors ${
                   active
                     ? "text-emerald-800 dark:text-emerald-300"
-                    : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
                 }`}
               >
                 <span

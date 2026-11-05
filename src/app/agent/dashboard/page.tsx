@@ -91,7 +91,7 @@ export default function AgentDashboard() {
         <section className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {metrics.map((metric) => (
             <div key={metric.label} className="rounded-card border border-white/45 bg-white/40 p-5 shadow-[0_18px_35px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-bold">{metric.label}</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-slate-400 font-bold">{metric.label}</p>
               <div className="mt-4 flex items-end justify-between">
                 <p className="text-3xl font-semibold text-slate-900 dark:text-white">{metric.value}</p>
                 <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 dark:bg-emerald-500/20 px-2.5 py-1 text-xs uppercase tracking-[0.14em] text-emerald-800 dark:text-emerald-300 dark:border-emerald-500/40 font-bold">
@@ -106,7 +106,7 @@ export default function AgentDashboard() {
           <div className="rounded-panel border border-white/45 bg-white/40 p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
             <div className="mb-5 flex items-center justify-between">
               <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400 font-bold">Portfolio</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-emerald-400 font-bold">Portfolio</p>
                 <h2 className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white">Listings overview</h2>
               </div>
               <Link
@@ -118,12 +118,12 @@ export default function AgentDashboard() {
             </div>
 
             <div className="space-y-3">
-              {listings.length === 0 ? <p className="rounded-control border border-dashed border-slate-300 dark:border-white/15 p-4 text-sm text-slate-500 dark:text-slate-400">No listings have been created for this account yet.</p> : null}
+              {listings.length === 0 ? <p className="rounded-control border border-dashed border-slate-300 dark:border-white/15 p-4 text-sm text-slate-600 dark:text-slate-400">No listings have been created for this account yet.</p> : null}
               {listings.map((item) => (
                 <div key={item.id} className="flex items-center justify-between rounded-control border border-slate-200 bg-[#f4f7f7] dark:bg-surface-ink/70 dark:border-white/10 p-3.5 transition-all">
                   <div>
                     <p className="font-semibold text-slate-900 dark:text-white">{item.title}</p>
-                    <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 font-medium">{formatNumber(item.views)} views</p>
+                    <p className="mt-1 text-xs text-slate-600 dark:text-slate-400 font-medium">{formatNumber(item.views)} views</p>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="rounded-full border border-slate-200 bg-white/70 px-2.5 py-1 text-xs uppercase tracking-[0.14em] text-slate-600 dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-300 font-bold">
@@ -139,7 +139,7 @@ export default function AgentDashboard() {
           <div className="rounded-panel border border-white/45 bg-white/40 p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
             <div className="mb-5 flex items-center justify-between">
               <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400 font-bold">Pipeline</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-emerald-400 font-bold">Pipeline</p>
                 <h2 className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white">Hot leads</h2>
               </div>
               <Link
@@ -151,16 +151,16 @@ export default function AgentDashboard() {
             </div>
 
             <div className="space-y-3">
-              {leads.length === 0 ? <p className="rounded-control border border-dashed border-slate-300 dark:border-white/15 p-4 text-sm text-slate-500 dark:text-slate-400">No enquiries have been received yet.</p> : null}
+              {leads.length === 0 ? <p className="rounded-control border border-dashed border-slate-300 dark:border-white/15 p-4 text-sm text-slate-600 dark:text-slate-400">No enquiries have been received yet.</p> : null}
               {leads.map((lead) => (
                 <div key={lead.id} className="flex items-center justify-between rounded-control border border-slate-200 bg-[#f4f7f7] dark:bg-surface-ink/70 dark:border-white/10 p-3.5 transition-all">
                   <div>
                     <p className="font-semibold text-slate-900 dark:text-white">{lead.userEmail}</p>
-                    <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 font-medium">{lead.propertyTitle} • {lead.kind}</p>
+                    <p className="mt-1 text-xs text-slate-600 dark:text-slate-400 font-medium">{lead.propertyTitle} • {lead.kind}</p>
                   </div>
 
                   <div className="text-right">
-                    <p className="text-xs uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400 font-bold">Last contact</p>
+                    <p className="text-xs uppercase tracking-[0.14em] text-slate-600 dark:text-slate-400 font-bold">Last contact</p>
                     <p className="mt-1 text-sm font-semibold text-emerald-800 dark:text-emerald-400">{lead.status}</p>
                   </div>
                 </div>

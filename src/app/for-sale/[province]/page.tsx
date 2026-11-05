@@ -117,7 +117,8 @@ export default async function ForSaleProvincePage({
 
         {/* Location Hub Header */}
         <div className="rounded-3xl border border-white/80 bg-white/60 p-6 sm:p-8 backdrop-blur-xl shadow-[0_20px_45px_rgba(36,48,50,0.06)] mb-8 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-          <span className="rounded-full bg-rose-100 text-[#E11D48] text-xs font-extrabold uppercase tracking-widest px-3 py-1 dark:bg-rose-500/20 dark:text-rose-300 dark:border dark:border-rose-500/30">
+          {/* rose-700: see the note on /for-sale — #E11D48 is 3.91:1 here. */}
+          <span className="rounded-full bg-rose-100 text-rose-700 text-xs font-extrabold uppercase tracking-widest px-3 py-1 dark:bg-rose-500/20 dark:text-rose-300 dark:border dark:border-rose-500/30">
             Provincial Property Hub
           </span>
           <h1 className="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-950 dark:text-white">
@@ -130,7 +131,7 @@ export default async function ForSaleProvincePage({
           </p>
 
           <div className="mt-4 flex flex-wrap items-center gap-2 pt-2 border-t border-slate-200/60 dark:border-white/10 text-xs font-semibold">
-            <span className="text-slate-500 dark:text-slate-400">Related Nodes:</span>
+            <span className="text-slate-600 dark:text-slate-400">Related Nodes:</span>
             <Link
               href={`/to-rent/${provSlug}`}
               className="pill-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
@@ -148,7 +149,7 @@ export default async function ForSaleProvincePage({
 
         {/* Cities Directory in this Province */}
         <section className="mb-10 rounded-3xl border border-white/80 bg-white/50 p-6 backdrop-blur-xl dark:bg-surface-panel/70 dark:border-white/10">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-4">
             Browse {provName} by City & Metro
           </h2>
           <div className="flex flex-wrap gap-2">
@@ -182,7 +183,7 @@ export default async function ForSaleProvincePage({
         ) : (
           <div className="rounded-3xl border border-white/80 bg-white/60 p-12 text-center backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
             <h3 className="text-lg font-bold text-slate-900 dark:text-white">No active for-sale listings in {provName} today</h3>
-            <p className="mt-1 text-xs text-slate-500 max-w-md mx-auto dark:text-slate-400">
+            <p className="mt-1 text-xs text-slate-600 max-w-md mx-auto dark:text-slate-400">
               Browse our wider national catalogue or request property alerts for {provName}.
             </p>
             <Link

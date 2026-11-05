@@ -258,7 +258,7 @@ export default function SiteNavigation() {
           <span>Sell</span>
           <ChevronDownIcon
             className={`h-3 w-3 transition-transform duration-200 ${
-              openDropdown === "sell" ? "rotate-180 text-emerald-600 dark:text-emerald-400" : "text-slate-400"
+              openDropdown === "sell" ? "rotate-180 text-emerald-600 dark:text-emerald-400" : "text-slate-600"
             }`}
           />
         </button>
@@ -281,7 +281,7 @@ export default function SiteNavigation() {
                 <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
                   Sell Privately
                 </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 leading-snug">
+                <p className="text-xs text-slate-600 dark:text-slate-400 leading-snug">
                   List directly to buyers with zero agent commissions.
                 </p>
               </div>
@@ -298,7 +298,7 @@ export default function SiteNavigation() {
                 <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
                   Sell as an Agency
                 </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 leading-snug">
+                <p className="text-xs text-slate-600 dark:text-slate-400 leading-snug">
                   Agent console, team mandates & listing distribution.
                 </p>
               </div>
@@ -329,7 +329,7 @@ export default function SiteNavigation() {
           <span>Tools</span>
           <ChevronDownIcon
             className={`h-3 w-3 transition-transform duration-200 ${
-              openDropdown === "tools" ? "rotate-180 text-emerald-600 dark:text-emerald-400" : "text-slate-400"
+              openDropdown === "tools" ? "rotate-180 text-emerald-600 dark:text-emerald-400" : "text-slate-600"
             }`}
           />
         </button>
@@ -350,7 +350,7 @@ export default function SiteNavigation() {
                 <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
                   Compare
                 </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">See homes next to each other</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 truncate">See homes next to each other</p>
               </div>
             </Link>
 
@@ -363,7 +363,7 @@ export default function SiteNavigation() {
                 <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
                   Map Search
                 </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">Geospatial interactive exploration</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 truncate">Geospatial interactive exploration</p>
               </div>
             </Link>
 
@@ -376,7 +376,7 @@ export default function SiteNavigation() {
                 <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
                   Advanced Search
                 </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">Detailed filters, solar, levies & specs</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 truncate">Detailed filters, solar, levies & specs</p>
               </div>
             </Link>
 
@@ -389,7 +389,7 @@ export default function SiteNavigation() {
                 <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
                   Calculators
                 </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">Bond repayments, transfer duty & SARS</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 truncate">Bond repayments, transfer duty & SARS</p>
               </div>
             </Link>
 
@@ -403,15 +403,15 @@ export default function SiteNavigation() {
               aria-disabled="true"
               className="flex items-center gap-3 rounded-xl p-2 opacity-60"
             >
-              <TagIcon className="h-4 w-4 text-slate-400 dark:text-slate-500 shrink-0" />
+              <TagIcon className="h-4 w-4 text-slate-600 dark:text-slate-500 shrink-0" />
               <div className="min-w-0">
-                <p className="flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400">
+                <p className="flex items-center gap-2 text-xs font-bold text-slate-600 dark:text-slate-400">
                   Alerts &amp; Notifications
                   <span className="rounded-full border border-slate-300 dark:border-white/20 px-1.5 py-px text-[10px] font-semibold uppercase tracking-wide">
                     Soon
                   </span>
                 </p>
-                <p className="text-xs text-slate-400 dark:text-slate-500 truncate">Saved searches &amp; price drop alerts</p>
+                <p className="text-xs text-slate-600 dark:text-slate-500 truncate">Saved searches &amp; price drop alerts</p>
               </div>
             </div>
 
@@ -428,7 +428,7 @@ export default function SiteNavigation() {
                     registration route. /agency/register, /register-agency and
                     /agency all 404, and the flow needs the agency_applications
                     collection, which is blocked on the Firestore rules deploy. */}
-                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">PPRA verified practitioner directory</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 truncate">PPRA verified practitioner directory</p>
               </div>
             </Link>
 

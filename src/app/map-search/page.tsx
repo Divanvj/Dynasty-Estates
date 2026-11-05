@@ -64,7 +64,7 @@ export default function MapSearchPage() {
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
             <BrandLogo markOnly />
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400/80 font-bold hidden sm:block">Geospatial Intelligence</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-emerald-400/80 font-bold hidden sm:block">Geospatial Intelligence</p>
               <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">
                 <span className="hidden sm:inline">Dynasty Live </span>Map &amp; Street View
               </h1>
@@ -94,7 +94,7 @@ export default function MapSearchPage() {
         <div className="relative z-30 mb-6 flex flex-wrap items-center justify-between gap-3 rounded-card border border-white/80 bg-white/50 dark:border-white/10 dark:bg-surface-panel/80 p-3 backdrop-blur-xl shadow-sm dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           {/* Swipeable on phones — wrapping these cost three rows above the map. */}
           <div className="flex w-full lg:w-auto min-w-0 items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:flex-wrap lg:overflow-visible">
-            <span className="shrink-0 text-xs font-bold text-slate-500 dark:text-slate-400 mr-1">Type:</span>
+            <span className="shrink-0 text-xs font-bold text-slate-600 dark:text-slate-400 mr-1">Type:</span>
             {["All", "House", "Villa", "Estate Home", "Apartment", "Penthouse"].map((t) => (
               <button
                 key={t}
@@ -121,7 +121,7 @@ export default function MapSearchPage() {
         <div className="relative z-10">
           {loading ? (
             <div className="flex h-[420px] items-center justify-center rounded-card border border-white/80 bg-white/60 backdrop-blur-xl sm:h-[500px] lg:h-[620px] dark:border-white/10 dark:bg-surface-panel/80">
-              <p className="animate-pulse text-xs font-semibold text-slate-500 dark:text-slate-400">
+              <p className="animate-pulse text-xs font-semibold text-slate-600 dark:text-slate-400">
                 Loading the catalogue…
               </p>
             </div>
@@ -132,7 +132,7 @@ export default function MapSearchPage() {
               <p className="text-sm font-bold text-slate-900 dark:text-white">
                 Listings could not be loaded
               </p>
-              <p className="max-w-sm text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+              <p className="max-w-sm text-xs leading-relaxed text-slate-600 dark:text-slate-400">
                 The property catalogue did not respond, so the map has nothing to
                 plot. Try again shortly — this is not a filter you have applied.
               </p>

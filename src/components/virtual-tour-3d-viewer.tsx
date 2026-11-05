@@ -414,7 +414,7 @@ export default function VirtualTour3DViewer({
                 <button
                   type="button"
                   onClick={() => setActiveInfoTag(null)}
-                  className="text-slate-400 hover:text-white dark:text-slate-400"
+                  className="text-slate-600 hover:text-white dark:text-slate-400"
                 >
                   ✕
                 </button>
@@ -442,7 +442,7 @@ export default function VirtualTour3DViewer({
               Under-Roof Layout · {area}
               {erfSize ? ` (Erf: ${erfSize})` : ""}
             </h3>
-            <p className="mt-1 text-xs text-slate-400 dark:text-slate-400">
+            <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
               Click any room zone to drop down directly into the 360° panoramic scan.
             </p>
           </div>
@@ -470,7 +470,7 @@ export default function VirtualTour3DViewer({
                 <p className="text-xs font-bold text-white group-hover:text-rose-400 transition-colors">
                   {room.name}
                 </p>
-                <p className="text-xs text-slate-400 line-clamp-1 mt-0.5 dark:text-slate-400">{room.description}</p>
+                <p className="text-xs text-slate-600 line-clamp-1 mt-0.5 dark:text-slate-400">{room.description}</p>
                 <span className="mt-2 inline-block text-xs font-bold text-rose-400 group-hover:underline">
                   Enter 3D Scan →
                 </span>
@@ -537,7 +537,7 @@ export default function VirtualTour3DViewer({
                 setMeasurePoints([]);
                 setMeasureDistance(null);
               }}
-              className="mt-2 text-xs text-slate-400 underline hover:text-white dark:text-slate-400"
+              className="mt-2 text-xs text-slate-600 underline hover:text-white dark:text-slate-400"
             >
               Reset Points
             </button>
@@ -590,7 +590,7 @@ export default function VirtualTour3DViewer({
             >
               -
             </button>
-            <span className="text-xs text-slate-400 px-1 font-mono dark:text-slate-400">{(zoom * 100).toFixed(0)}%</span>
+            <span className="text-xs text-slate-600 px-1 font-mono dark:text-slate-400">{(zoom * 100).toFixed(0)}%</span>
             <button
               type="button"
               onClick={() => setZoom((z) => Math.min(1.6, z + 0.2))}

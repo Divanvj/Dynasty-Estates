@@ -278,7 +278,7 @@ export default function NewListingWizardPage() {
             <span className="sm:hidden">Portal</span>
           </Link>
           <div className="flex items-center gap-2">
-            <span className="text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">Step {currentStep} of 6</span>
+            <span className="text-xs uppercase tracking-[0.16em] text-slate-600 dark:text-slate-400">Step {currentStep} of 6</span>
             <span className="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border dark:border-emerald-500/30">
               Quality {qualityScore}%
             </span>
@@ -321,7 +321,7 @@ export default function NewListingWizardPage() {
                   ? "border border-slate-900 bg-slate-900 text-white shadow-md dark:border-emerald-500/50 dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
                   : currentStep > step.num
                   ? "border border-emerald-300 bg-emerald-100/70 text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-500/20 dark:text-emerald-300"
-                  : "border border-white/60 bg-white/30 text-slate-500 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-surface-panel"
+                  : "border border-white/60 bg-white/30 text-slate-600 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-surface-panel"
               }`}
             >
               <span className="block font-semibold">{step.num}. {step.label}</span>
@@ -335,7 +335,7 @@ export default function NewListingWizardPage() {
           {currentStep === 1 && (
             <section className="space-y-5">
               <div>
-                <p className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Step 1 of 6</p>
+                <p className="text-xs uppercase tracking-[0.24em] text-slate-600 dark:text-slate-400">Step 1 of 6</p>
                 <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-950 dark:text-white">Property Headline & Location</h1>
                 <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Establish the primary geographic identity for your property.</p>
               </div>
@@ -356,7 +356,7 @@ export default function NewListingWizardPage() {
                       }`}
                     >
                       <span className="text-sm font-bold">To Rent</span>
-                      <span className="text-xs text-slate-500 dark:text-slate-400">Lease to verified tenants</span>
+                      <span className="text-xs text-slate-600 dark:text-slate-400">Lease to verified tenants</span>
                     </button>
                     <button
                       type="button"
@@ -368,7 +368,7 @@ export default function NewListingWizardPage() {
                       }`}
                     >
                       <span className="text-sm font-bold">For Sale</span>
-                      <span className="text-xs text-slate-500 dark:text-slate-400">Sell property to buyers</span>
+                      <span className="text-xs text-slate-600 dark:text-slate-400">Sell property to buyers</span>
                     </button>
                   </div>
                 </div>
@@ -446,7 +446,7 @@ export default function NewListingWizardPage() {
           {currentStep === 2 && (
             <section className="space-y-5">
               <div>
-                <p className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Step 2 of 6</p>
+                <p className="text-xs uppercase tracking-[0.24em] text-slate-600 dark:text-slate-400">Step 2 of 6</p>
                 <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-950 dark:text-white">Physical Specifications</h1>
                 <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Define the immutable architectural footprint of the physical property.</p>
               </div>
@@ -546,7 +546,7 @@ export default function NewListingWizardPage() {
           {currentStep === 3 && (
             <section className="space-y-5">
               <div>
-                <p className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Step 3 of 6</p>
+                <p className="text-xs uppercase tracking-[0.24em] text-slate-600 dark:text-slate-400">Step 3 of 6</p>
                 <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-950 dark:text-white">Features & Amenities</h1>
                 <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Select verified South African lifestyle and energy resilience features.</p>
               </div>
@@ -580,7 +580,7 @@ export default function NewListingWizardPage() {
           {currentStep === 4 && (
             <section className="space-y-5">
               <div>
-                <p className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Step 4 of 6</p>
+                <p className="text-xs uppercase tracking-[0.24em] text-slate-600 dark:text-slate-400">Step 4 of 6</p>
                 <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-950 dark:text-white">
                   {formData.listingType === "rent" ? "Rental Pricing & Lease Terms" : "Pricing & True Cost"}
                 </h1>
@@ -700,7 +700,7 @@ export default function NewListingWizardPage() {
           {currentStep === 5 && (
             <section className="space-y-5">
               <div>
-                <p className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Step 5 of 6</p>
+                <p className="text-xs uppercase tracking-[0.24em] text-slate-600 dark:text-slate-400">Step 5 of 6</p>
                 <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-950 dark:text-white">Photography & Copy</h1>
                 <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">High-resolution imagery powers visual recommendations and buyer interest.</p>
               </div>
@@ -708,7 +708,7 @@ export default function NewListingWizardPage() {
               <div className="space-y-4 pt-2">
                 <div>
                   <p className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300">
-                    Photos * <span className="normal-case tracking-normal font-normal text-slate-500 dark:text-slate-400">(the first is the cover)</span>
+                    Photos * <span className="normal-case tracking-normal font-normal text-slate-600 dark:text-slate-400">(the first is the cover)</span>
                   </p>
                   <ListingPhotoUploader
                     ownerId={user?.uid ?? null}
@@ -738,7 +738,7 @@ export default function NewListingWizardPage() {
           {currentStep === 6 && (
             <section className="space-y-6">
               <div>
-                <p className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Step 6 of 6</p>
+                <p className="text-xs uppercase tracking-[0.24em] text-slate-600 dark:text-slate-400">Step 6 of 6</p>
                 <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-950 dark:text-white">Review & Submission</h1>
                 <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Inspect how your listing will appear to buyers and verify quality score.</p>
               </div>
@@ -756,7 +756,7 @@ export default function NewListingWizardPage() {
                 </div>
                 {recommendations.length > 0 && (
                   <div className="mt-4 border-t border-white/10 pt-3 dark:border-white/10">
-                    <p className="text-xs text-slate-400 dark:text-slate-400">Actionable recommendations to boost score:</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">Actionable recommendations to boost score:</p>
                     <ul className="mt-2 space-y-1 text-xs text-amber-200">
                       {recommendations.map((rec) => (
                         <li key={rec}>• {rec}</li>
@@ -768,7 +768,7 @@ export default function NewListingWizardPage() {
 
               {/* Live Preview Card */}
               <div className="rounded-card border border-white/80 bg-white/50 p-4 shadow-lg backdrop-blur-xl dark:bg-surface-ink/60 dark:border-white/10">
-                <p className="mb-3 text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">Live Card Preview</p>
+                <p className="mb-3 text-xs uppercase tracking-[0.16em] text-slate-600 dark:text-slate-400">Live Card Preview</p>
                 <div className="overflow-hidden rounded-control border border-white/70 bg-white/70 shadow-sm md:flex dark:bg-surface-panel/90 dark:border-white/10">
                   {coverUrl ? (
                     <div
@@ -776,7 +776,7 @@ export default function NewListingWizardPage() {
                       style={{ backgroundImage: `url(${coverUrl})` }}
                     />
                   ) : (
-                    <div className="flex h-48 w-full items-center justify-center bg-slate-200/70 text-xs font-semibold text-slate-500 md:h-auto md:w-56 dark:bg-surface-ink dark:text-slate-400">
+                    <div className="flex h-48 w-full items-center justify-center bg-slate-200/70 text-xs font-semibold text-slate-600 md:h-auto md:w-56 dark:bg-surface-ink dark:text-slate-400">
                       No photo yet
                     </div>
                   )}
@@ -808,23 +808,23 @@ export default function NewListingWizardPage() {
                       </span>
                     </div>
                     <h3 className="mt-2 text-base font-semibold text-slate-900 dark:text-white">{formData.title || "Untitled Property"}</h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">{formData.suburb ? `${formData.suburb}, ` : ""}{formData.city}, {formData.province}</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">{formData.suburb ? `${formData.suburb}, ` : ""}{formData.city}, {formData.province}</p>
                     <div className="mt-3 flex items-center gap-3 text-xs text-slate-600 dark:text-slate-300">
                       <span className="flex items-center gap-1">
-                        <BedIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-400" />
+                        <BedIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
                         <span>{formData.beds} Beds</span>
                       </span>
                       <span className="flex items-center gap-1">
-                        <BathIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-400" />
+                        <BathIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
                         <span>{formData.baths} Baths</span>
                       </span>
                       <span className="flex items-center gap-1">
-                        <CarIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-400" />
+                        <CarIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
                         <span>{formData.parking} Garages</span>
                       </span>
                       {formData.erfSizeSqm ? (
                         <span className="flex items-center gap-1">
-                          <AreaIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-400" />
+                          <AreaIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
                           <span>{formData.erfSizeSqm} m²</span>
                         </span>
                       ) : null}

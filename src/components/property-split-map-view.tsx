@@ -160,7 +160,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
           mobilePane === "list" ? "" : "max-lg:hidden"
         }`}
       >
-        <div className="flex flex-wrap items-center justify-between gap-2 px-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+        <div className="flex flex-wrap items-center justify-between gap-2 px-2 text-xs font-semibold text-slate-600 dark:text-slate-400">
           <span>
             {areaIds
               ? `Showing ${visibleProperties.length} of ${properties.length} in your area`
@@ -220,9 +220,9 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                 {/* Property Details */}
                 <div className="flex flex-1 flex-col justify-between p-4 sm:p-5">
                   <div>
-                    <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                    <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
                       <span className="flex items-center gap-1 font-semibold text-slate-700 dark:text-slate-200">
-                        <LocationPinIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
+                        <LocationPinIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-500" />
                         <span>{property.suburb || property.location.split(",")[0]}</span>
                       </span>
                       <span className="badge border border-slate-200 bg-slate-100 text-slate-700 dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-200">
@@ -240,19 +240,19 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
 
                     <div className="mt-3 flex items-center gap-4 text-xs font-semibold text-slate-700 dark:text-slate-300">
                       <span className="flex items-center gap-1">
-                        <BedIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
+                        <BedIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-500" />
                         <span>{property.beds}</span>
                       </span>
                       <span className="flex items-center gap-1">
-                        <BathIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
+                        <BathIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-500" />
                         <span>{property.baths}</span>
                       </span>
                       <span className="flex items-center gap-1">
-                        <CarIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
+                        <CarIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-500" />
                         <span>{property.parking}</span>
                       </span>
                       <span className="flex items-center gap-1">
-                        <AreaIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
+                        <AreaIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-500" />
                         <span>{property.area}</span>
                       </span>
                     </div>
@@ -310,7 +310,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
             <p className="text-sm font-bold text-slate-900 dark:text-white">
               No listings in this area
             </p>
-            <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+            <p className="mt-1 text-xs leading-relaxed text-slate-600 dark:text-slate-400">
               Draw a wider area, or clear it on the map to see all {properties.length} again.
             </p>
           </div>

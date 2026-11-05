@@ -71,7 +71,7 @@ export default function PropertyGalleryLightbox({
             <div className="flex items-center justify-between px-4 py-3 text-white">
               <div>
                 <p className="text-xs font-bold text-slate-200">{title}</p>
-                <p className="text-xs text-slate-400 dark:text-slate-400">
+                <p className="text-xs text-slate-600 dark:text-slate-400">
                   Photo {activeIndex + 1} of {images.length}
                 </p>
               </div>

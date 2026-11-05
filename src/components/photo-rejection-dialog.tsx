@@ -60,7 +60,7 @@ export default function PhotoRejectionDialog({
               type="button"
               onClick={() => dialogRef.current?.close()}
               aria-label="Close"
-              className="rounded-full p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-surface-ink dark:hover:text-white"
+              className="rounded-full p-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-surface-ink dark:hover:text-white"
             >
               <XMarkIcon className="h-5 w-5" />
             </button>
@@ -80,12 +80,12 @@ export default function PhotoRejectionDialog({
                     className="h-20 w-20 shrink-0 rounded-xl object-cover sm:h-24 sm:w-24"
                   />
                 ) : (
-                  <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-slate-200 text-xs font-semibold uppercase tracking-wider text-slate-500 sm:h-24 sm:w-24 dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:text-slate-400">
+                  <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-slate-200 text-xs font-semibold uppercase tracking-wider text-slate-600 sm:h-24 sm:w-24 dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:text-slate-400">
                     No preview
                   </div>
                 )}
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-xs text-slate-500 dark:text-slate-400" title={photo.fileName}>
+                  <p className="truncate text-xs text-slate-600 dark:text-slate-400" title={photo.fileName}>
                     {photo.fileName}
                   </p>
                   {photo.issues.map((issue) => (

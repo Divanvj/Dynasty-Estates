@@ -25,7 +25,7 @@ export default function PrivacyPolicyPage() {
           <div className="flex items-center gap-3">
             <BrandLogo markOnly />
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-500 font-bold dark:text-slate-400">Compliance & Trust</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-600 font-bold dark:text-slate-400">Compliance & Trust</p>
               <h1 className="text-sm font-semibold tracking-wide text-slate-900 dark:text-white">POPIA & Privacy Policy</h1>
             </div>
           </div>
@@ -46,7 +46,7 @@ export default function PrivacyPolicyPage() {
             <h2 className="mt-3 text-2xl font-bold text-slate-950 dark:text-white">
               Protection of Personal Information Act (POPIA) Notice
             </h2>
-            <p className="mt-1 text-slate-500 dark:text-slate-400">Effective Date: 1 September 2026 · Tricore Enterprises / Dynasty Estates</p>
+            <p className="mt-1 text-slate-600 dark:text-slate-400">Effective Date: 1 September 2026 · Tricore Enterprises / Dynasty Estates</p>
           </div>
 
           <section className="space-y-2">

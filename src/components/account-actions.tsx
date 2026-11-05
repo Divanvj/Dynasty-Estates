@@ -19,8 +19,8 @@ import { useAuth } from "@/components/auth-provider";
 import { accountCan, useUserRole, type UserRole } from "@/lib/use-user-role";
 
 const ROLE_BADGES: Record<UserRole, { label: string; icon: typeof UserIcon; tone: string }> = {
-  Buyer: { label: "Buyer / Renter", icon: UserIcon, tone: "text-slate-500" },
-  Seller: { label: "Private Seller", icon: HomeIcon, tone: "text-slate-500" },
+  Buyer: { label: "Buyer / Renter", icon: UserIcon, tone: "text-slate-600" },
+  Seller: { label: "Private Seller", icon: HomeIcon, tone: "text-slate-600" },
   Agent: { label: "Property Practitioner", icon: BriefcaseIcon, tone: "text-emerald-600" },
   Admin: { label: "Platform Moderator", icon: ShieldIcon, tone: "text-purple-600" },
 };
@@ -214,7 +214,7 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
           </span>
 
           <ChevronDownIcon
-            className={`h-3 w-3 text-slate-400 transition-transform duration-200 ${
+            className={`h-3 w-3 text-slate-600 transition-transform duration-200 ${
               isOpen ? "rotate-180 text-emerald-600 dark:text-emerald-400" : ""
             }`}
           />
@@ -237,7 +237,7 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
                 <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
                   {userDisplayName}
                 </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
+                <p className="text-xs text-slate-600 dark:text-slate-400 truncate">
                   {userEmail}
                 </p>
                 <div className="mt-1 inline-flex items-center gap-1 rounded-full bg-slate-100 dark:bg-white/10 px-2 py-0.5 text-xs font-semibold text-slate-600 dark:text-slate-300">
@@ -263,7 +263,7 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
               read back by resolveUserRole — not a button.
             */}
             <div className="py-2.5 border-b border-slate-200/80 dark:border-white/10">
-              <p className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1.5">
+              <p className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-500 mb-1.5">
                 Account Type
               </p>
               <div className="flex items-center gap-2 rounded-xl border border-slate-200/80 bg-slate-100 px-2.5 py-2 dark:border-white/10 dark:bg-[#040e10]">
@@ -276,7 +276,7 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
 
             {/* Appearance — the theme switch, relocated from the header row. */}
             <div className="flex items-center justify-between gap-3 py-2.5 border-b border-slate-200/80 dark:border-white/10">
-              <p className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+              <p className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-500">
                 Appearance
               </p>
               <ThemeToggle size="sm" />
@@ -293,7 +293,7 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
                   <HeartIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                   <span>Saved Properties</span>
                 </span>
-                <span className="text-xs text-slate-400 dark:text-slate-500 font-bold">View →</span>
+                <span className="text-xs text-slate-600 dark:text-slate-500 font-bold">View →</span>
               </Link>
 
               <Link
@@ -305,7 +305,7 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
                   <FolderIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                   <span>Collections</span>
                 </span>
-                <span className="text-xs text-slate-400 dark:text-slate-500 font-bold">Collab →</span>
+                <span className="text-xs text-slate-600 dark:text-slate-500 font-bold">Collab →</span>
               </Link>
 
               <Link
@@ -317,7 +317,7 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
                   <TagIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                   <span>Enquiries & Requests</span>
                 </span>
-                <span className="text-xs text-slate-400 dark:text-slate-500 font-bold">Inbox →</span>
+                <span className="text-xs text-slate-600 dark:text-slate-500 font-bold">Inbox →</span>
               </Link>
 
               {/* Any signed-in account, matching the `allowAnySignedIn` guard on
@@ -349,7 +349,7 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
                   <BriefcaseIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                   <span>My Agency / Console</span>
                 </span>
-                <span className="text-xs text-slate-400 dark:text-slate-500 font-bold">Manage →</span>
+                <span className="text-xs text-slate-600 dark:text-slate-500 font-bold">Manage →</span>
               </Link>
               )}
 
@@ -365,7 +365,7 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
                   <InfoCircleIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                   <span>Support & Guidance</span>
                 </span>
-                <span className="text-xs text-slate-400 dark:text-slate-500 font-bold">Help →</span>
+                <span className="text-xs text-slate-600 dark:text-slate-500 font-bold">Help →</span>
               </button>
             </div>
 
@@ -404,7 +404,7 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
             <button
               type="button"
               onClick={() => setShowSupportModal(false)}
-              className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-white/10 text-slate-500 cursor-pointer"
+              className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 cursor-pointer"
             >
               <XMarkIcon className="h-5 w-5" />
             </button>
@@ -415,7 +415,7 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
               </div>
               <div>
                 <h2 className="text-base font-bold">Support & Guidance</h2>
-                <p className="text-xs text-slate-500 dark:text-slate-400">Tricore Enterprises Customer Care</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">Tricore Enterprises Customer Care</p>
               </div>
             </div>
 
@@ -429,7 +429,7 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
             ) : (
               <form onSubmit={handleSupportSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">
                     How can we assist you?
                   </label>
                   <textarea

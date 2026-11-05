@@ -141,7 +141,7 @@ export default async function AgentProfilePage({
         <header className="mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-4 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <div className="flex items-center gap-2.5 sm:gap-3">
             <BrandLogo markOnly />
-            <nav className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+            <nav className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400">
               <Link href="/" className="hover:text-slate-900 dark:hover:text-white">Home</Link>
               <span>/</span>
               <Link href="/agents" className="hover:text-slate-900 dark:hover:text-white">Agents</Link>
@@ -188,7 +188,7 @@ export default async function AgentProfilePage({
               <p className="mt-1 text-sm font-semibold text-emerald-700 dark:text-emerald-400">
                 {agent.agency}
               </p>
-              <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+              <p className="mt-0.5 text-xs text-slate-600 dark:text-slate-400">
                 Area Focus: {agent.location} · Specialty: {agent.specialty}
               </p>
 
@@ -243,7 +243,7 @@ export default async function AgentProfilePage({
             </div>
           ) : (
             <div className="rounded-3xl border border-white/80 bg-white/50 p-8 text-center backdrop-blur-xl dark:bg-surface-panel/70 dark:border-white/10">
-              <p className="text-xs text-slate-500 dark:text-slate-400">
+              <p className="text-xs text-slate-600 dark:text-slate-400">
                 New mandates for {agent.name.split(" ")[0]} are currently pending statutory verification.
               </p>
               <Link

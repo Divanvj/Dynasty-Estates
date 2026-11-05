@@ -78,7 +78,7 @@ export default function HomeHeroSearch() {
 
       {/* Popular Quick Lifestyle Tags */}
       <div className="mt-3.5 sm:mt-4 mx-auto max-w-3xl flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-1 px-1 sm:flex-wrap sm:justify-center">
-        <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 mr-0.5 sm:mr-1 shrink-0">Popular in SA:</span>
+        <span className="text-xs font-semibold text-slate-600 dark:text-slate-400 mr-0.5 sm:mr-1 shrink-0">Popular in SA:</span>
         {[
           { label: "Johannesburg", tag: "Johannesburg" },
           { label: "Cape Town", tag: "Cape Town" },

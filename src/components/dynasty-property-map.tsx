@@ -191,7 +191,7 @@ function popupHtml(p: PropertyRecord, stats: PriceStats) {
       <div class="p-2.5">
         <p class="text-xs font-extrabold text-slate-950">${p.price}</p>
         <p class="mt-0.5 text-xs font-bold leading-snug text-slate-800">${p.title}</p>
-        <p class="mt-0.5 text-xs text-slate-500">${p.suburb ?? ""}${p.city ? `, ${p.city}` : ""}</p>
+        <p class="mt-0.5 text-xs text-slate-600">${p.suburb ?? ""}${p.city ? `, ${p.city}` : ""}</p>
         <p class="mt-1.5 text-xs text-slate-600">${p.beds} bed · ${p.baths} bath · ${p.area}</p>
         ${insight}
         ${badges ? `<div class="mt-1.5 flex gap-1">${badges}</div>` : ""}
@@ -723,7 +723,7 @@ export default function DynastyPropertyMap({
         </div>
 
         {pinMode === "value" && (
-          <div className="mt-1.5 flex items-center gap-2 px-1 text-xs font-bold text-slate-500 dark:text-slate-400">
+          <div className="mt-1.5 flex items-center gap-2 px-1 text-xs font-bold text-slate-600 dark:text-slate-400">
             <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-emerald-600" />Under</span>
             <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-slate-600" />Par</span>
             <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-rose-500" />Over</span>

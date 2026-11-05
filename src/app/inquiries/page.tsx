@@ -127,7 +127,7 @@ export default function InquiriesPage() {
             </div>
 
             {user ? (
-              <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
+              <span className="text-xs font-medium text-slate-600 dark:text-slate-400">
                 Signed in as <strong>{user.email}</strong>
               </span>
             ) : null}
@@ -194,7 +194,7 @@ export default function InquiriesPage() {
                       inquiry.propertyTitle
                     )}
                   </h2>
-                  <p className="text-xs text-slate-500 mt-0.5 dark:text-slate-400">
+                  <p className="text-xs text-slate-600 mt-0.5 dark:text-slate-400">
                     Logged: {inquiry.createdAt ? formatDate(inquiry.createdAt) : "Recent"}
                   </p>
                 </div>

@@ -90,7 +90,7 @@ export default async function ToRentNationalPage() {
           </p>
 
           <div className="mt-4 flex flex-wrap items-center gap-2 pt-2 border-t border-slate-200/60 dark:border-white/10 text-xs font-semibold">
-            <span className="text-slate-500 dark:text-slate-400">Related Hubs:</span>
+            <span className="text-slate-600 dark:text-slate-400">Related Hubs:</span>
             <Link
               href="/for-sale"
               className="pill-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
@@ -108,7 +108,7 @@ export default async function ToRentNationalPage() {
 
         {/* Provincial Grid */}
         <section className="mb-10">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-4">
             Browse Rentals by Province
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -127,7 +127,7 @@ export default async function ToRentNationalPage() {
                     {prov.count} {prov.count === 1 ? "listing" : "listings"}
                   </span>
                 </div>
-                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
                   Explore {prov.name} rentals →
                 </p>
               </Link>

@@ -99,7 +99,7 @@ export default async function Home() {
         <section id="insights" className="mx-auto mt-8 grid grid-cols-1 max-w-[1440px] gap-4 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="rounded-panel border border-white/70 bg-white/45 dark:border-white/10 dark:bg-surface-panel/65 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl">
             <div className="flex items-center justify-between">
-              <p className="text-xs uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400 font-bold">Market intelligence</p>
+              <p className="text-xs uppercase tracking-[0.22em] text-slate-600 dark:text-slate-400 font-bold">Market intelligence</p>
               <Link href="/insights" className="text-xs font-bold text-emerald-800 dark:text-emerald-400 hover:underline">
                 Full Report →
               </Link>
@@ -248,7 +248,7 @@ export default async function Home() {
             </div>
           </div>
 
-          <div className="mt-8 border-t border-slate-200/80 dark:border-white/10 pt-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+          <div className="mt-8 border-t border-slate-200/80 dark:border-white/10 pt-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-600 dark:text-slate-400">
             <p>© 2026 Dynasty Estates / Tricore Enterprises. All rights reserved.</p>
             {/* The framework line that stood here ("Built with Next.js,
                 TypeScript & Obsidian Glass") is the kind of thing a template

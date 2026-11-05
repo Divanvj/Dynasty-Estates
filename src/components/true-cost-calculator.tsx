@@ -193,7 +193,7 @@ export default function TrueCostCalculator({
             <span className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-amber-400">
               R {formatNumber(totalMonthlyRentalCost)}
             </span>
-            <span className="block text-xs text-slate-500 uppercase tracking-wider dark:text-slate-400">
+            <span className="block text-xs text-slate-600 uppercase tracking-wider dark:text-slate-400">
               Rent + Utilities / month
             </span>
           </div>
@@ -202,7 +202,7 @@ export default function TrueCostCalculator({
         {/* Breakdown Cards */}
         <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
           <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-surface-ink/60 dark:border-white/10 dark:shadow-none">
-            <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
+            <p className="text-xs uppercase tracking-wider text-slate-600 font-semibold dark:text-slate-400">
               Monthly Rent
             </p>
             <p className="mt-1 text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
@@ -210,7 +210,7 @@ export default function TrueCostCalculator({
             </p>
           </div>
           <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-surface-ink/60 dark:border-white/10 dark:shadow-none">
-            <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
+            <p className="text-xs uppercase tracking-wider text-slate-600 font-semibold dark:text-slate-400">
               Est. Utilities
             </p>
             <p className="mt-1 text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
@@ -218,7 +218,7 @@ export default function TrueCostCalculator({
             </p>
           </div>
           <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-surface-ink/60 dark:border-white/10 dark:shadow-none">
-            <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
+            <p className="text-xs uppercase tracking-wider text-slate-600 font-semibold dark:text-slate-400">
               Insurance
             </p>
             <p className="mt-1 text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
@@ -258,7 +258,7 @@ export default function TrueCostCalculator({
           <div className="flex items-center justify-between rounded-xl border border-slate-200/70 bg-white/60 px-3 py-2.5 dark:border-white/10 dark:bg-surface-ink/60">
             <div>
               <span className="font-semibold">Advertised monthly rent</span>
-              <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+              <p className="mt-0.5 text-xs text-slate-600 dark:text-slate-400">
                 Set by the landlord. Any variation is agreed on application.
               </p>
             </div>
@@ -376,7 +376,7 @@ export default function TrueCostCalculator({
               <button
                 type="button"
                 onClick={handleRentalReset}
-                className="text-xs font-semibold text-slate-500 hover:text-slate-900 underline cursor-pointer dark:text-slate-400 dark:hover:text-white"
+                className="text-xs font-semibold text-slate-600 hover:text-slate-900 underline cursor-pointer dark:text-slate-400 dark:hover:text-white"
               >
                 Reset to Listing Defaults
               </button>
@@ -426,7 +426,7 @@ export default function TrueCostCalculator({
                 <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-white/10">
                   <div>
                     <span>Security Deposit ({depositMultiple}x rent):</span>
-                    <p className="text-xs text-slate-400 dark:text-slate-400">Held in interest-bearing account</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">Held in interest-bearing account</p>
                   </div>
                   <span className="font-bold text-amber-900 dark:text-amber-400">R {formatNumber(depositZAR)}</span>
                 </div>
@@ -497,20 +497,20 @@ export default function TrueCostCalculator({
 
                 <div className="space-y-1.5 border-t border-slate-100 pt-2 text-xs dark:border-white/10">
                   <div className="flex justify-between py-1">
-                    <span className="text-slate-500 dark:text-slate-400">Monthly Rent:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Monthly Rent:</span>
                     <span className="font-bold text-slate-900 dark:text-white">R {formatNumber(monthlyRent)}</span>
                   </div>
                   <div className="flex justify-between py-1">
-                    <span className="text-slate-500 dark:text-slate-400">Utilities Allowance:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Utilities Allowance:</span>
                     <span className="font-bold text-slate-900 dark:text-white">R {formatNumber(utilities)}</span>
                   </div>
                   <div className="flex justify-between py-1">
-                    <span className="text-slate-500 dark:text-slate-400">Lease Term:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Lease Term:</span>
                     <span className="font-bold text-slate-900 dark:text-white">{leaseTerm}</span>
                   </div>
                   {furnishedStatus && (
                     <div className="flex justify-between py-1">
-                      <span className="text-slate-500 dark:text-slate-400">Furnished Status:</span>
+                      <span className="text-slate-600 dark:text-slate-400">Furnished Status:</span>
                       <span className="font-bold text-slate-900 dark:text-white">{furnishedStatus}</span>
                     </div>
                   )}
@@ -561,7 +561,7 @@ export default function TrueCostCalculator({
           <span className="text-2xl sm:text-3xl font-extrabold text-emerald-800 dark:text-emerald-400">
             R {formatNumber(totalMonthlyCost)}
           </span>
-          <span className="block text-xs text-slate-500 uppercase tracking-wider dark:text-slate-400">
+          <span className="block text-xs text-slate-600 uppercase tracking-wider dark:text-slate-400">
             Total All-Inclusive / month
           </span>
         </div>
@@ -570,7 +570,7 @@ export default function TrueCostCalculator({
       {/* Breakdown Cards */}
       <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
         <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-surface-ink/60 dark:border-white/10 dark:shadow-none">
-          <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
+          <p className="text-xs uppercase tracking-wider text-slate-600 font-semibold dark:text-slate-400">
             Bond
           </p>
           <p className="mt-1 text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
@@ -578,7 +578,7 @@ export default function TrueCostCalculator({
           </p>
         </div>
         <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-surface-ink/60 dark:border-white/10 dark:shadow-none">
-          <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
+          <p className="text-xs uppercase tracking-wider text-slate-600 font-semibold dark:text-slate-400">
             Levies
           </p>
           <p className="mt-1 text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
@@ -586,7 +586,7 @@ export default function TrueCostCalculator({
           </p>
         </div>
         <div className="rounded-xl border border-white/80 bg-white/70 p-2 sm:p-2.5 shadow-sm dark:bg-surface-ink/60 dark:border-white/10 dark:shadow-none">
-          <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold dark:text-slate-400">
+          <p className="text-xs uppercase tracking-wider text-slate-600 font-semibold dark:text-slate-400">
             Rates & Taxes
           </p>
           <p className="mt-1 text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
@@ -750,7 +750,7 @@ export default function TrueCostCalculator({
             <label htmlFor={rateId}>
               Interest Rate ({interestRate.toFixed(2)}%)
             </label>
-            <span className="text-slate-500 font-medium text-xs dark:text-slate-400">
+            <span className="text-slate-600 font-medium text-xs dark:text-slate-400">
               Benchmark Prime = 11.75%
             </span>
           </div>
@@ -833,7 +833,7 @@ export default function TrueCostCalculator({
         <div className="flex items-center justify-between rounded-xl border border-slate-200/80 bg-white/60 p-3 dark:border-white/10 dark:bg-surface-ink/60">
           <div>
             <p className="font-bold text-slate-900 text-xs dark:text-white">Include HOC & Life Assurance</p>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-slate-600 dark:text-slate-400">
               Estimated R {formatNumber(Math.round(purchasePrice * 0.00035 + principal * 0.00045))}/mo
             </p>
           </div>
@@ -872,11 +872,11 @@ export default function TrueCostCalculator({
           {showCustomSettings && (
             <div className="mt-2 grid grid-cols-2 gap-2.5 rounded-xl border border-slate-200 bg-white/70 p-3 dark:border-white/10 dark:bg-surface-ink/60">
               <div>
-                <label className="block text-xs uppercase tracking-wider font-bold text-slate-500 mb-1 dark:text-slate-400">
+                <label className="block text-xs uppercase tracking-wider font-bold text-slate-600 mb-1 dark:text-slate-400">
                   Monthly Levy (HOA)
                 </label>
                 <div className="relative">
-                  <span className="absolute left-2.5 top-1/2 -translate-y-1/2 font-semibold text-slate-400 text-xs dark:text-slate-400">
+                  <span className="absolute left-2.5 top-1/2 -translate-y-1/2 font-semibold text-slate-600 text-xs dark:text-slate-400">
                     R
                   </span>
                   <input
@@ -890,11 +890,11 @@ export default function TrueCostCalculator({
                 </div>
               </div>
               <div>
-                <label className="block text-xs uppercase tracking-wider font-bold text-slate-500 mb-1 dark:text-slate-400">
+                <label className="block text-xs uppercase tracking-wider font-bold text-slate-600 mb-1 dark:text-slate-400">
                   Municipal Rates
                 </label>
                 <div className="relative">
-                  <span className="absolute left-2.5 top-1/2 -translate-y-1/2 font-semibold text-slate-400 text-xs dark:text-slate-400">
+                  <span className="absolute left-2.5 top-1/2 -translate-y-1/2 font-semibold text-slate-600 text-xs dark:text-slate-400">
                     R
                   </span>
                   <input
@@ -950,7 +950,7 @@ export default function TrueCostCalculator({
             <button
               type="button"
               onClick={handleReset}
-              className="text-xs font-semibold text-slate-500 hover:text-slate-900 underline cursor-pointer dark:text-slate-400 dark:hover:text-white"
+              className="text-xs font-semibold text-slate-600 hover:text-slate-900 underline cursor-pointer dark:text-slate-400 dark:hover:text-white"
             >
               Reset to Listing Defaults
             </button>
@@ -999,7 +999,7 @@ export default function TrueCostCalculator({
               <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-white/10">
                 <div className="flex items-center gap-1">
                   <span>SARS Transfer Duty:</span>
-                  <InfoCircleIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-400" />
+                  <InfoCircleIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
                 </div>
                 <span className="font-bold text-slate-900 dark:text-white">
                   {transferDuty === 0 ? "EXEMPT (Under R1.1M)" : `R ${formatNumber(transferDuty)}`}
@@ -1076,15 +1076,15 @@ export default function TrueCostCalculator({
 
               <div className="space-y-1.5 border-t border-slate-100 pt-2 text-xs dark:border-white/10">
                 <div className="flex justify-between py-1">
-                  <span className="text-slate-500 dark:text-slate-400">Loan Amount (Principal):</span>
+                  <span className="text-slate-600 dark:text-slate-400">Loan Amount (Principal):</span>
                   <span className="font-bold text-slate-900 dark:text-white">R {formatNumber(principal)}</span>
                 </div>
                 <div className="flex justify-between py-1">
-                  <span className="text-slate-500 dark:text-slate-400">Monthly Installment:</span>
+                  <span className="text-slate-600 dark:text-slate-400">Monthly Installment:</span>
                   <span className="font-bold text-slate-900 dark:text-white">R {formatNumber(monthlyBond)}</span>
                 </div>
                 <div className="flex justify-between py-1">
-                  <span className="text-slate-500 dark:text-slate-400">Benchmark Rate:</span>
+                  <span className="text-slate-600 dark:text-slate-400">Benchmark Rate:</span>
                   <span className="font-bold text-slate-900 dark:text-white">{interestRate.toFixed(2)}% ({tenureYears} yrs)</span>
                 </div>
               </div>

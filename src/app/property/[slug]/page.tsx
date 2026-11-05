@@ -145,7 +145,7 @@ export default async function PropertyPage({
                 available at 390px, and with it there the five action pills
                 beside it wrapped to a second row; without it they sit on one. */}
             <div className="hidden sm:block">
-              <p className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Dynasty</p>
+              <p className="text-xs uppercase tracking-[0.24em] text-slate-600 dark:text-slate-400">Dynasty</p>
               <p className="text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-300">Estates</p>
             </div>
           </Link>
@@ -197,11 +197,11 @@ export default async function PropertyPage({
             removed by then. Rendered on the server, so unlike the comparison
             sheet there is no hydration mismatch to design around. */}
         <div className="print-only mb-5 border-b border-slate-300 pb-3">
-          <p className="text-xs uppercase tracking-[0.2em] text-slate-500">
+          <p className="text-xs uppercase tracking-[0.2em] text-slate-600">
             Dynasty Estates · {property.listingType === "rent" ? "To Rent" : "For Sale"}
           </p>
           <h2 className="text-lg font-bold">{property.title}</h2>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-600">
             {property.location} · {property.price} · Printed{" "}
             {new Date().toLocaleDateString("en-ZA", {
               day: "numeric",
@@ -336,7 +336,7 @@ export default async function PropertyPage({
                 </p>
               </div>
               <div className="rounded-2xl border border-sky-300 bg-white/95 px-4 py-2 text-center shadow-xs shrink-0 self-start sm:self-auto dark:bg-sky-950/60 dark:border-sky-500/30">
-                <span className="text-xs uppercase font-bold text-slate-500 block dark:text-slate-400">SARS Tax Exemption</span>
+                <span className="text-xs uppercase font-bold text-slate-600 block dark:text-slate-400">SARS Tax Exemption</span>
                 <span className="text-xs font-extrabold text-sky-800 dark:text-sky-300">0% Transfer Duty (VAT Inclusive)</span>
               </div>
             </div>
@@ -409,7 +409,7 @@ export default async function PropertyPage({
                         <Icon className="h-4 w-4 shrink-0" />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-xs uppercase tracking-wider text-slate-400 font-bold dark:text-slate-400">{item.label}</p>
+                        <p className="text-xs uppercase tracking-wider text-slate-600 font-bold dark:text-slate-400">{item.label}</p>
                         <p className="text-base font-extrabold text-slate-900 md:mt-1 dark:text-white">{item.value}</p>
                       </div>
                     </div>
@@ -419,7 +419,7 @@ export default async function PropertyPage({
 
               {/* Verified Amenities Checklist */}
               <div className="mt-8 border-t border-slate-200/80 dark:border-white/10 pt-6">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3 dark:text-slate-400">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-600 mb-3 dark:text-slate-400">
                   Verified South African Features & Resilience
                 </h3>
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -500,7 +500,7 @@ export default async function PropertyPage({
 
             {/* Agent / Practitioner Card */}
             <div className="rounded-panel border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-              <p className="text-xs uppercase tracking-[0.22em] text-slate-500 font-bold dark:text-slate-400">Mandate Property Practitioner</p>
+              <p className="text-xs uppercase tracking-[0.22em] text-slate-600 font-bold dark:text-slate-400">Mandate Property Practitioner</p>
               {/* Was hardcoded to one practitioner ("SG / Sherry Gallagher") on
                   every listing in the catalogue. Now resolved per listing. */}
               <div className="mt-4 flex items-center gap-3 rounded-control border border-white/80 bg-white/70 p-3.5 shadow-sm dark:bg-surface-ink/60 dark:border-white/10">
@@ -524,7 +524,7 @@ export default async function PropertyPage({
                       contact?.name ?? "Dynasty Estates"
                     )}
                   </p>
-                  <p className="truncate text-xs text-slate-500 dark:text-slate-400">
+                  <p className="truncate text-xs text-slate-600 dark:text-slate-400">
                     {contact?.agencyName ?? agentProfile?.agency ?? "Property Practitioner"}
                   </p>
                 </div>
@@ -538,11 +538,15 @@ export default async function PropertyPage({
                   the duplicate tenant-application button was taken out of it. */}
               {contact && (
                 <div className="no-print mt-3 hidden md:grid grid-cols-2 gap-2.5">
+                  {/* Dark ink on WhatsApp green rather than white: white on
+                      #25D366 measures 1.98:1, while #0f172a on the same green
+                      is 9.00:1. The brand colour is kept exactly; only the
+                      label flips. */}
                   <a
                     href={contact.whatsappHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="pill-lg w-full bg-[#25D366] font-bold text-white shadow-sm transition-all hover:brightness-95"
+                    className="pill-lg w-full bg-[#25D366] font-bold text-slate-900 shadow-sm transition-all hover:brightness-95"
                   >
                     <WhatsAppIcon className="h-4 w-4" />
                     WhatsApp
@@ -616,7 +620,7 @@ export default async function PropertyPage({
           step. Unchanged at md and above, where this bar is hidden anyway. */}
       <div className="no-print fixed bottom-[calc(var(--dyn-mobile-nav-h)+env(safe-area-inset-bottom))] inset-x-0 z-40 p-3 bg-white/95 border-t border-slate-200/80 backdrop-blur-xl md:hidden flex items-center justify-between shadow-[0_-8px_24px_rgba(15,23,42,0.12)] dark:bg-[#081012]/95 dark:border-white/10">
         <div>
-          <span className="text-xs uppercase tracking-wider text-slate-500 font-bold block dark:text-slate-400">
+          <span className="text-xs uppercase tracking-wider text-slate-600 font-bold block dark:text-slate-400">
             {property.listingType === "rent" ? "Monthly Rental" : "Asking Price"}
           </span>
           <span className="text-base font-extrabold text-slate-950 dark:text-white">{property.price}</span>
@@ -634,7 +638,7 @@ export default async function PropertyPage({
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`WhatsApp ${contact.name} about this property`}
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white shadow-md transition-all hover:brightness-95"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-slate-900 shadow-md transition-all hover:brightness-95"
               >
                 <WhatsAppIcon className="h-5 w-5" />
               </a>

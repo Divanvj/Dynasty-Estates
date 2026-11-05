@@ -169,3 +169,102 @@ designed brand asset would replace this generated one (§7.6).
 S1–S4 are done. None touched a file the other agent is holding. Typecheck passes
 and lint is clean apart from one pre-existing unused-variable warning in
 `property-data.ts` that predates this work.
+
+---
+
+## S5 — Seed the token layer
+
+**Status:** done · 5 November 2026 · `globals.css` only
+
+Added a text ramp, spacing, elevation and motion scale to `:root` and `.dark`.
+**Every token is unreferenced, so this commit cannot change a pixel** — which is
+the acceptance criterion, and why it needed no screenshot diff.
+
+Radii were not duplicated (`--radius-chip/control/card/panel` already exist and
+are good) and the 14px/16px type floor is kept.
+
+**The old brand names are deliberately not aliased.** `--brand-teal-deep`
+resolves to `#0d5f61` in dark while the new `--brand` resolves to mint
+`#4ec3ac`, because the deep teal is unreadable on a dark ground. Pointing one at
+the other would have been a visual change, which this step forbids.
+
+---
+
+## S6 — Migrate the light-mode text ramp
+
+**Status:** done · 5 November 2026
+
+### Diagnosis before the sweep
+
+Counts are not actionable, so axe's 172 failing nodes were re-run with the
+class list attached. The cause was overwhelmingly two utilities:
+
+| Class | Nodes | Worst ratio |
+|---|---:|---:|
+| `text-slate-500` | 65 | 3.68:1 |
+| `text-slate-400` | 50 | 2.37:1 |
+| `text-[#E11D48]` on `bg-rose-100` | 2 | 3.91:1 |
+| `text-white` on `bg-[#25D366]` | 1 | **1.98:1** |
+
+(`text-xs` appeared 93 times but is the size class co-occurring on the same
+elements, not a cause.)
+
+### The codemod
+
+`text-slate-400` and `text-slate-500` → `text-slate-600` (5.86:1 on the page
+ground, 7.58:1 on white). **324 replacements across 51 files.**
+
+Two exclusions, both load-bearing:
+
+- **331 `dark:` variants skipped.** Dark mode was never the failing theme —
+  slate-400 reads 7.49:1 on `#081012` — and darkening there would have made it
+  worse. More dark variants were skipped than light ones were changed.
+- **21 `placeholder:` variants skipped.** A placeholder should read lighter than
+  a filled value, axe does not flag them, and promoting them would make empty
+  fields look populated.
+
+Written with Node and explicit utf8, not PowerShell, which mangles non-ASCII
+across whole files.
+
+### The risk that did not materialise
+
+A blind darkening sweep could have broken `text-slate-400` sitting on a *dark*
+panel in light mode. Rather than audit that by hand, the sweep was applied and
+then re-measured: axe went 172 → 3 with **no new failures**, so no such case
+exists in this codebase.
+
+### The last three, fixed with measured values
+
+- Rose badge: `#E11D48` → `text-rose-700` (`#be123c`, **5.24:1** on
+  `bg-rose-100`), on `/for-sale` and the province and city routes.
+- WhatsApp buttons (×2): `text-white` → `text-slate-900`. White on `#25D366`
+  is 1.98:1; `#0f172a` on the *same* green is **9.00:1**, so WhatsApp's brand
+  colour is kept exactly and only the label flips.
+
+### Verification
+
+| | Before | After |
+|---|---:|---:|
+| axe `color-contrast` nodes, 14 page/viewports | 172 | **0** |
+| home / for-sale / search / insights / agents violations | 1–2 each | **0** |
+| property violations | 2–3 | 1–2 (`landmark-complementary`, `button-name` — pre-existing, due in S11) |
+| calculators violations | 2 | 1 (`label` ×2 — pre-existing, due in S9) |
+
+Typecheck passes, production build passes, lint unchanged at 7 pre-existing
+warnings. Screenshots in `after/S6/` show the design is visually unchanged —
+secondary text is a shade darker and nothing else moved.
+
+### Collision with in-flight work
+
+The sweep deliberately covered the whole of `src/`, including **six files the
+other agent is holding**: `app/ai-search/page.tsx`, `app/search/page.tsx`,
+`app/map-search/page.tsx`, `components/home-trending-listings.tsx`,
+`components/property-gallery-lightbox.tsx`,
+`components/property-list-card.tsx`, plus `app/property/[slug]/page.tsx` for
+the WhatsApp fix.
+
+Scoping around them was considered and rejected: `/search` and `/property` were
+two of the worst offenders (33 and 19 nodes), so excluding them could not meet
+the acceptance criterion, and a second pass later would collide with *more* of
+their work, not less. Every conflict here is a single-token class rename and
+resolves by taking either side plus the rename.

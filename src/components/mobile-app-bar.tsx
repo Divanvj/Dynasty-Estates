@@ -153,7 +153,7 @@ export default function MobileAppBar() {
         >
           {GROUPS.map((group) => (
             <div key={group.heading} className="mb-1">
-              <p className="px-3 pb-1 pt-3 text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+              <p className="px-3 pb-1 pt-3 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-500">
                 {group.heading}
               </p>
               <ul>
@@ -175,12 +175,12 @@ export default function MobileAppBar() {
                           className={`h-4 w-4 shrink-0 ${
                             active
                               ? "text-emerald-600 dark:text-emerald-400"
-                              : "text-slate-400 dark:text-slate-500"
+                              : "text-slate-600 dark:text-slate-500"
                           }`}
                         />
                         <span className="min-w-0">
                           <span className="block text-xs font-bold leading-tight">{link.label}</span>
-                          <span className="block truncate text-xs leading-tight text-slate-500 dark:text-slate-400">
+                          <span className="block truncate text-xs leading-tight text-slate-600 dark:text-slate-400">
                             {link.hint}
                           </span>
                         </span>

@@ -282,7 +282,7 @@ export default function CalculatorsView({
           <div className="flex items-center gap-2.5 sm:gap-3">
             <BrandLogo markOnly />
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-500 font-bold dark:text-slate-400">Property Finance</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-600 font-bold dark:text-slate-400">Property Finance</p>
               <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">
                 <span className="hidden sm:inline">South African Financial </span>Calculators
               </h1>
@@ -329,7 +329,7 @@ export default function CalculatorsView({
                     : "border border-white/70 dark:border-white/10 bg-white/45 dark:bg-surface-panel/80 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-white/10"
                 }`}
               >
-                <TabIcon className={`h-4 w-4 shrink-0 ${activeTab === tab.id ? "text-emerald-400 dark:text-white" : "text-slate-500 dark:text-slate-400"}`} />
+                <TabIcon className={`h-4 w-4 shrink-0 ${activeTab === tab.id ? "text-emerald-400 dark:text-white" : "text-slate-600 dark:text-slate-400"}`} />
                 <span>{tab.label}</span>
               </button>
             );
@@ -446,7 +446,7 @@ export default function CalculatorsView({
               <div>
                 <div className="flex justify-between font-semibold mb-1">
                   <label htmlFor={rateId}>Interest Rate ({interestRate.toFixed(2)}%)</label>
-                  <span className="text-slate-500 font-medium text-xs dark:text-slate-400">Benchmark Prime = 11.75%</span>
+                  <span className="text-slate-600 font-medium text-xs dark:text-slate-400">Benchmark Prime = 11.75%</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <button
@@ -553,7 +553,7 @@ export default function CalculatorsView({
                 <p className="mt-2 text-3xl sm:text-4xl font-extrabold text-emerald-800 dark:text-emerald-400 dark:drop-shadow-[0_0_20px_rgba(16,185,129,0.3)]">
                   R {formatNumber(totalMonthly)}
                 </p>
-                <p className="text-xs text-slate-500 mt-1 dark:text-slate-400">
+                <p className="text-xs text-slate-600 mt-1 dark:text-slate-400">
                   Includes bond installment, municipal taxes, and body corporate levies.
                 </p>
 
@@ -696,7 +696,7 @@ export default function CalculatorsView({
               </div>
 
               <div className="flex items-start gap-2 rounded-2xl border border-slate-200 bg-white/70 p-4 text-xs text-slate-600 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300">
-                <InfoCircleIcon className="h-4 w-4 shrink-0 text-slate-500 mt-0.5 dark:text-slate-400" />
+                <InfoCircleIcon className="h-4 w-4 shrink-0 text-slate-600 mt-0.5 dark:text-slate-400" />
                 <span>Major South African commercial banks (Standard Bank, FNB, Nedbank, ABSA) evaluate bond applications against the 30% gross income installment ratio and National Credit Act (NCA) debt affordability limits.</span>
               </div>
             </div>
@@ -709,7 +709,7 @@ export default function CalculatorsView({
                 <p className="mt-2 text-3xl sm:text-4xl font-extrabold text-emerald-800 dark:text-emerald-400 dark:drop-shadow-[0_0_20px_rgba(16,185,129,0.3)]">
                   R {formatNumber(maxPurchasePrice)}
                 </p>
-                <p className="text-xs text-slate-500 mt-1 dark:text-slate-400">
+                <p className="text-xs text-slate-600 mt-1 dark:text-slate-400">
                   Estimated maximum purchasing capacity based on a 10% deposit.
                 </p>
 
@@ -757,7 +757,7 @@ export default function CalculatorsView({
                   <span className="text-2xl font-extrabold text-emerald-800 dark:text-emerald-400 dark:drop-shadow-[0_0_20px_rgba(16,185,129,0.3)]">
                     {customDutyCalc.duty === 0 ? "R 0 (Exempt)" : `R ${formatNumber(customDutyCalc.duty)}`}
                   </span>
-                  <span className="block text-xs text-slate-500 dark:text-slate-400">
+                  <span className="block text-xs text-slate-600 dark:text-slate-400">
                     Effective Tax Rate: {customDutyCalc.effectiveRate.toFixed(2)}%
                   </span>
                 </div>
@@ -829,7 +829,7 @@ export default function CalculatorsView({
 
               <div className="overflow-hidden rounded-2xl border border-white/80 bg-white/80 shadow-sm dark:bg-surface-ink/60 dark:border-white/10">
                 <table className="w-full text-left">
-                  <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase font-bold text-slate-500 dark:border-white/10 dark:bg-surface-ink/90 dark:text-slate-300">
+                  <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase font-bold text-slate-600 dark:border-white/10 dark:bg-surface-ink/90 dark:text-slate-300">
                     <tr>
                       <th className="py-3 px-4">Property Value Range</th>
                       <th className="py-3 px-4">Rate of Tax</th>
@@ -876,7 +876,7 @@ export default function CalculatorsView({
                   <h2 className="text-lg font-bold text-slate-950 mt-1 dark:text-white">
                     Conveyancing & Bond Legal Cost Estimator
                   </h2>
-                  <p className="text-slate-500 mt-0.5 dark:text-slate-400">
+                  <p className="text-slate-600 mt-0.5 dark:text-slate-400">
                     Calculates statutory conveyancer fees, bond registration fees, deeds office levies, and bank initiation costs.
                   </p>
                 </div>
@@ -997,7 +997,7 @@ export default function CalculatorsView({
                 </div>
 
                 <div className="flex items-start gap-2 rounded-2xl border border-slate-200 bg-slate-50/80 p-3 text-xs text-slate-600 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300">
-                  <InfoCircleIcon className="h-4 w-4 shrink-0 text-slate-500 mt-0.5 dark:text-slate-400" />
+                  <InfoCircleIcon className="h-4 w-4 shrink-0 text-slate-600 mt-0.5 dark:text-slate-400" />
                   <span>
                     In South Africa, you pay two independent sets of attorneys: the <strong>Transfer Attorney</strong> (appointed by seller, paid by buyer) and the <strong>Bond Attorney</strong> (appointed by bank, paid by buyer).
                   </span>
@@ -1013,7 +1013,7 @@ export default function CalculatorsView({
                   <p className="mt-2 text-3xl sm:text-4xl font-extrabold text-emerald-800 dark:text-emerald-400 dark:drop-shadow-[0_0_20px_rgba(16,185,129,0.3)]">
                     R {formatNumber(conveyancingSchedule.totalCashUpfront)}
                   </p>
-                  <p className="text-xs text-slate-500 mt-1 dark:text-slate-400">
+                  <p className="text-xs text-slate-600 mt-1 dark:text-slate-400">
                     Includes buyer deposit plus all legal, registration, and statutory SARS fees.
                   </p>
 
@@ -1101,7 +1101,7 @@ export default function CalculatorsView({
                   <h2 className="text-lg font-bold text-slate-950 dark:text-white mt-1">
                     Extra Monthly Bond Savings Calculator
                   </h2>
-                  <p className="text-slate-500 dark:text-slate-400 mt-0.5">
+                  <p className="text-slate-600 dark:text-slate-400 mt-0.5">
                     See how paying even a small additional amount into your South African home loan slashes compound interest and accelerates debt freedom.
                   </p>
                 </div>
@@ -1233,7 +1233,7 @@ export default function CalculatorsView({
                   <p className="mt-2 text-3xl sm:text-4xl font-extrabold text-emerald-800 dark:text-emerald-400 dark:drop-shadow-[0_0_20px_rgba(16,185,129,0.3)]">
                     R {formatNumber(amortizationSchedule.interestSaved)}
                   </p>
-                  <p className="text-xs text-slate-500 mt-1 dark:text-slate-400">
+                  <p className="text-xs text-slate-600 mt-1 dark:text-slate-400">
                     Cash savings directly staying in your wealth portfolio over the bond duration.
                   </p>
 
@@ -1265,7 +1265,7 @@ export default function CalculatorsView({
                     </div>
                     <div className="flex justify-between py-1 text-slate-600 dark:text-slate-300">
                       <span>Original Total Interest:</span>
-                      <span className="line-through text-slate-400 dark:text-slate-400">
+                      <span className="line-through text-slate-600 dark:text-slate-400">
                         R {formatNumber(amortizationSchedule.originalTotalInterest)}
                       </span>
                     </div>
