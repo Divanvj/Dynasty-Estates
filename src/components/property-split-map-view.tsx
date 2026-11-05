@@ -35,11 +35,15 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
    * a list with a picture on top. Property24 and Private Property both answer
    * this the same way, with a Map/List switch, and so does this.
    */
-  // List first, not map. Nielsen Norman's guidance on mobile maps is to offer
-  // the toggle but default to the list, because a list shows more options at
-  // once and is faster to choose from — and because a map that opens under
-  // your thumb swallows the first scroll you try to make.
-  const [mobilePane, setMobilePane] = useState<"map" | "list">("list");
+  // Map first.
+  //
+  // Every surface that renders this component is one the visitor has already
+  // chosen the map on — /map-search, or `?view=map` on the catalogue — so
+  // opening them on a list is answering a question they did not ask. The
+  // "default to the list" guidance is about a map dropped into a results page
+  // that nobody asked for; that case is the catalogue's own view mode, which
+  // already defaults to list.
+  const [mobilePane, setMobilePane] = useState<"map" | "list">("map");
 
   // Leaflet sizes itself from its container at creation and then only on a
   // window resize. Revealing a pane that was `display: none` changes the
