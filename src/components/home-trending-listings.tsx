@@ -18,6 +18,7 @@ import {
   TableIcon,
 } from "@/components/icons";
 import { getDisplayTag, type PropertyRecord } from "@/lib/property-data";
+import { LG_QUERY, useMediaQuery } from "@/lib/use-media-query";
 
 export type ViewMode = "grid" | "list" | "map" | "compact";
 
@@ -30,7 +31,19 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
   // hero on For Sale and this feed listing rentals underneath it.
   const [intent, setIntent] = useState<"rent" | "buy">("buy");
   const [activeFilter, setActiveFilter] = useState("All");
-  const [viewMode, setViewMode] = useState<ViewMode>("list");
+  const [selectedView, setViewMode] = useState<ViewMode>("list");
+
+  /**
+   * Phones get List and Map; Grid and Table are desktop-only, matching
+   * /search.
+   *
+   * Coerced as well as hidden in the markup. This mode is local state with no
+   * URL or storage behind it, so a phone cannot arrive in Grid — but a desktop
+   * window narrowed past `lg`, or a tablet rotated, carries the choice with it
+   * into a layout whose control is no longer on screen.
+   */
+  const isDesktop = useMediaQuery(LG_QUERY, true);
+  const viewMode: ViewMode = isDesktop || selectedView === "map" ? selectedView : "list";
 
   useEffect(() => {
     function handleExternalIntent(e: Event) {
@@ -115,7 +128,8 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
             <button
               type="button"
               onClick={() => setViewMode("grid")}
-              className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
+              // Desktop-only, matching /search: phones get List and Map.
+              className={`hidden min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:flex lg:min-h-0 lg:min-w-0 ${
                 viewMode === "grid"
                   ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                   : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
@@ -154,7 +168,8 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
             <button
               type="button"
               onClick={() => setViewMode("compact")}
-              className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
+              // Desktop-only, matching /search.
+              className={`hidden min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:flex lg:min-h-0 lg:min-w-0 ${
                 viewMode === "compact"
                   ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                   : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"

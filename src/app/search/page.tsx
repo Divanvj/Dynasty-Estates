@@ -13,6 +13,7 @@ import PropertyListCard from "@/components/property-list-card";
 import PropertyCompactTable from "@/components/property-compact-table";
 import PropertySplitMapView from "@/components/property-split-map-view";
 import CustomSelect from "@/components/custom-select";
+import { LG_QUERY, useMediaQuery } from "@/lib/use-media-query";
 import {
   AreaIcon,
   BathIcon,
@@ -73,10 +74,31 @@ function SearchContent() {
     return "list";
   });
 
-  const viewMode: ViewMode =
+  const requestedView: ViewMode =
     urlView === "list" || urlView === "grid" || urlView === "map" || urlView === "compact"
       ? urlView
       : localView;
+
+  /**
+   * Phones get List and Map; Grid and Table are desktop-only.
+   *
+   * Grid puts one tall card per screen, and the seven-column investor table is
+   * a horizontal scroll inside a vertical one. Neither earns its place on a
+   * phone, and the switcher was four 44px squares in a row that already wrapped
+   * to three lines beside the sort control.
+   *
+   * Coerced here as well as hidden in the markup, because the mode also comes
+   * from `?view=` and from localStorage — someone who last used Grid on a
+   * laptop, or follows a shared `?view=compact` link, would otherwise land in a
+   * layout with no control on screen to leave it.
+   *
+   * `serverValue: true` so the desktop case — far the more common one for a
+   * link carrying `?view=` — renders its real layout on the first pass; a phone
+   * corrects itself the moment it hydrates.
+   */
+  const isDesktop = useMediaQuery(LG_QUERY, true);
+  const viewMode: ViewMode =
+    isDesktop || requestedView === "map" ? requestedView : "list";
 
   function handleViewChange(mode: ViewMode) {
     setLocalView(mode);
@@ -468,7 +490,11 @@ function SearchContent() {
               <button
                 type="button"
                 onClick={() => handleViewChange("grid")}
-                className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
+                // `hidden lg:flex`: Grid is desktop-only. On a phone it is one
+                // tall card per screen, and the mode is coerced to List above
+                // anyway, so leaving the control on screen would just be a
+                // button that appears to do nothing.
+                className={`hidden min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:flex lg:min-h-0 lg:min-w-0 ${
                   viewMode === "grid"
                     ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                     : "border border-transparent text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
@@ -507,7 +533,10 @@ function SearchContent() {
               <button
                 type="button"
                 onClick={() => handleViewChange("compact")}
-                className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
+                // `hidden lg:flex`: the seven-column investor table is a
+                // horizontal scroll inside a vertical one on a phone. Same
+                // reasoning as Grid above.
+                className={`hidden min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:flex lg:min-h-0 lg:min-w-0 ${
                   viewMode === "compact"
                     ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                     : "border border-transparent text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
