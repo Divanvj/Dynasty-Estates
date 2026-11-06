@@ -88,14 +88,14 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
               already show the result count above it, so the number appeared
               twice on one screen, in two different words. */}
         </div>
-        <p className="hidden md:block text-xs text-slate-500 dark:text-slate-400">
+        <p className="hidden md:block text-xs text-slate-600 dark:text-slate-400">
           💡 Click column headers to sort by price, square meters, bedrooms, or yield/m².
         </p>
       </div>
 
       {/* Sorting on phones, where there are no column headers to click. */}
       <div className="md:hidden flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden border-b border-slate-200/80 dark:border-white/10 px-4 py-2.5">
-        <span className="shrink-0 text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+        <span className="shrink-0 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-500">
           Sort
         </span>
         {(
@@ -147,7 +147,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
                     <SavePropertyButton propertyId={prop.id} />
                   </div>
 
-                  <p className="mt-1 flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400">
+                  <p className="mt-1 flex items-center gap-1 text-xs text-slate-600 dark:text-slate-400">
                     <LocationPinIcon className="h-3 w-3 shrink-0" />
                     <span className="truncate">
                       {prop.suburb || prop.location.split(",")[0]}
@@ -169,22 +169,22 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
 
               <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-slate-700 dark:text-slate-300">
                 <span className="flex items-center gap-1">
-                  <BedIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
+                  <BedIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-500" />
                   {prop.beds}
                 </span>
                 <span className="flex items-center gap-1">
-                  <BathIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
+                  <BathIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-500" />
                   {prop.baths}
                 </span>
                 <span className="flex items-center gap-1">
-                  <CarIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
+                  <CarIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-500" />
                   {prop.parking}
                 </span>
-                <span className="text-slate-400 dark:text-slate-500">·</span>
+                <span className="text-slate-600 dark:text-slate-500">·</span>
                 <span className="font-semibold">{prop.area}</span>
                 {prop.pricePerM2 > 0 && (
                   <>
-                    <span className="text-slate-400 dark:text-slate-500">·</span>
+                    <span className="text-slate-600 dark:text-slate-500">·</span>
                     <span className="font-semibold">R {formatNumber(prop.pricePerM2)}/m²</span>
                   </>
                 )}
@@ -307,10 +307,10 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
                   {/* Location */}
                   <td className="py-3.5 px-3 whitespace-nowrap">
                     <p className="font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-1">
-                      <LocationPinIcon className="h-3 w-3 text-slate-400 dark:text-slate-500" />
+                      <LocationPinIcon className="h-3 w-3 text-slate-600 dark:text-slate-500" />
                       <span>{prop.suburb || prop.location.split(",")[0]}</span>
                     </p>
-                    <p className="text-xs text-slate-400 dark:text-slate-500 pl-4">
+                    <p className="text-xs text-slate-600 dark:text-slate-500 pl-4">
                       {prop.city || prop.location.split(",")[1] || prop.province}
                     </p>
                   </td>
@@ -329,15 +329,15 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
                   <td className="py-3.5 px-3 whitespace-nowrap">
                     <div className="flex items-center gap-2.5 text-slate-700 dark:text-slate-300">
                       <span className="flex items-center gap-1" title={`${prop.beds} Bedrooms`}>
-                        <BedIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
+                        <BedIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-500" />
                         <span>{prop.beds}</span>
                       </span>
                       <span className="flex items-center gap-1" title={`${prop.baths} Bathrooms`}>
-                        <BathIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
+                        <BathIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-500" />
                         <span>{prop.baths}</span>
                       </span>
                       <span className="flex items-center gap-1" title={`${prop.parking} Garages`}>
-                        <CarIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
+                        <CarIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-500" />
                         <span>{prop.parking}</span>
                       </span>
                     </div>
@@ -355,7 +355,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
                         R {formatNumber(prop.pricePerM2)}/m²
                       </span>
                     ) : (
-                      <span className="text-slate-400 dark:text-slate-500">—</span>
+                      <span className="text-slate-600 dark:text-slate-500">—</span>
                     )}
                   </td>
 
@@ -379,7 +379,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
                         </span>
                       )}
                       {!hasSolar && !hasBorehole && (
-                        <span className="text-xs text-slate-400 dark:text-slate-500">Standard Grid</span>
+                        <span className="text-xs text-slate-600 dark:text-slate-500">Standard Grid</span>
                       )}
                     </div>
                   </td>

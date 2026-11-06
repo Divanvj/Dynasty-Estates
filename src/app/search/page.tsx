@@ -428,7 +428,7 @@ function SearchContent() {
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 dark:border-white/10 pb-4">
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-1.5">
-              <span className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400 font-bold">Catalogue</span>
+              <span className="text-xs uppercase tracking-[0.24em] text-slate-600 dark:text-slate-400 font-bold">Catalogue</span>
               <span className="text-slate-300 dark:text-slate-600">•</span>
               {/* Category Segmented Control: Strict Separation. Order matches
                   the search panel rendered further down this same page — they
@@ -599,7 +599,7 @@ function SearchContent() {
         {/* One swipeable row on phones — wrapping these chips cost four rows and
             pushed the first listing off the screen. Unchanged from `sm` up. */}
         <div className="mt-4 border-t border-slate-200/60 dark:border-white/10 pt-3 -mx-4 px-4 sm:mx-0 sm:px-0 flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:overflow-visible sm:flex-wrap sm:justify-center">
-          <span className="hidden sm:inline text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1">
+          <span className="hidden sm:inline text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-500 mr-1">
             Quick Filters:
           </span>
           {[
@@ -721,8 +721,8 @@ function SearchContent() {
                               {property.title}
                             </Link>
                           </h2>
-                          <p className="flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                            <LocationPinIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500 shrink-0" />
+                          <p className="flex items-center gap-1 text-xs text-slate-600 dark:text-slate-400 mt-0.5">
+                            <LocationPinIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-500 shrink-0" />
                             <span>{property.location}</span>
                           </p>
                         </div>
@@ -737,19 +737,19 @@ function SearchContent() {
 
                       <div className="mt-4 flex items-center justify-between border-t border-slate-200/70 dark:border-white/10 pt-3 text-xs text-slate-600 dark:text-slate-300 font-medium">
                         <span className="flex items-center gap-1">
-                          <BedIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
+                          <BedIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-500" />
                           <span>{property.beds} Beds</span>
                         </span>
                         <span className="flex items-center gap-1">
-                          <BathIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
+                          <BathIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-500" />
                           <span>{property.baths} Baths</span>
                         </span>
                         <span className="flex items-center gap-1">
-                          <CarIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
+                          <CarIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-500" />
                           <span>{property.parking} Garages</span>
                         </span>
                         <span className="flex items-center gap-1">
-                          <AreaIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
+                          <AreaIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-500" />
                           <span>{property.area}</span>
                         </span>
                       </div>
@@ -762,7 +762,7 @@ function SearchContent() {
                           </span>
                         ))}
                         {(property.features?.length ?? 0) > 3 && (
-                          <span className="text-xs text-slate-400 dark:text-slate-500 self-center">
+                          <span className="text-xs text-slate-600 dark:text-slate-500 self-center">
                             +{(property.features?.length ?? 0) - 3} more
                           </span>
                         )}
@@ -774,7 +774,7 @@ function SearchContent() {
                             opening. */}
                         <Link
                           href={`/compare`}
-                          className="tap-44 relative z-30 text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-emerald-700 dark:hover:text-emerald-300"
+                          className="tap-44 relative z-30 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-emerald-700 dark:hover:text-emerald-300"
                         >
                           Compare →
                         </Link>
@@ -815,7 +815,7 @@ function SearchContent() {
         ) : (
           /* Empty State */
           <div className="rounded-panel border border-white/75 dark:border-white/10 bg-white/50 dark:bg-surface-panel/80 p-12 text-center shadow-lg dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)] backdrop-blur-xl">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white/80 dark:bg-surface-ink/80 dark:border dark:border-white/10 shadow-md mb-3 text-slate-400 dark:text-slate-300">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white/80 dark:bg-surface-ink/80 dark:border dark:border-white/10 shadow-md mb-3 text-slate-600 dark:text-slate-300">
               <HomeIcon className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
             </div>
             <h3 className="mt-3 text-xl font-bold text-slate-900 dark:text-white">No properties matched your criteria</h3>
@@ -838,7 +838,7 @@ function SearchContent() {
 export default function SearchPage() {
   return (
     <main className="min-h-screen bg-transparent px-4 py-5 text-slate-900 dark:text-slate-100 md:px-6 lg:px-8 transition-colors duration-300">
-      <Suspense fallback={<div className="text-center py-20 text-slate-500 dark:text-slate-400">Loading search engine...</div>}>
+      <Suspense fallback={<div className="text-center py-20 text-slate-600 dark:text-slate-400">Loading search engine...</div>}>
         <SearchContent />
       </Suspense>
     </main>

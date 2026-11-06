@@ -145,7 +145,7 @@ export default async function ToRentLocationPage({
           </p>
 
           <div className="mt-4 flex flex-wrap items-center gap-2 pt-2 border-t border-slate-200/60 dark:border-white/10 text-xs font-semibold">
-            <span className="text-slate-500 dark:text-slate-400">Related Nodes:</span>
+            <span className="text-slate-600 dark:text-slate-400">Related Nodes:</span>
             <Link
               href={`/for-sale/${province.toLowerCase()}/${city.toLowerCase()}`}
               className="pill-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
@@ -177,7 +177,7 @@ export default async function ToRentLocationPage({
         ) : (
           <div className="rounded-3xl border border-white/80 bg-white/60 p-12 text-center backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
             <h3 className="text-lg font-bold text-slate-900 dark:text-white">No active rental listings in {cityName} today</h3>
-            <p className="mt-1 text-xs text-slate-500 max-w-md mx-auto dark:text-slate-400">
+            <p className="mt-1 text-xs text-slate-600 max-w-md mx-auto dark:text-slate-400">
               Our leasing practitioners onboard new executive rentals weekly. Explore the national catalogue or contact an agent.
             </p>
             <Link

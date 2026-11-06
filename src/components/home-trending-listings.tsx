@@ -257,8 +257,8 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
                         <h3 className="text-base font-bold text-slate-950 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-400 transition-colors">
                           {card.title}
                         </h3>
-                        <p className="flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                          <LocationPinIcon className="h-3.5 w-3.5 text-slate-400 shrink-0 dark:text-slate-400" />
+                        <p className="flex items-center gap-1 text-xs text-slate-600 dark:text-slate-400 mt-0.5">
+                          <LocationPinIcon className="h-3.5 w-3.5 text-slate-600 shrink-0 dark:text-slate-400" />
                           <span>{card.location}</span>
                         </p>
                       </div>
@@ -269,15 +269,15 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
 
                     <div className="mt-4 flex items-center justify-between border-t border-slate-200/60 dark:border-white/10 pt-3 text-xs text-slate-600 dark:text-slate-300">
                       <span className="flex items-center gap-1">
-                        <BedIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-400" />
+                        <BedIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
                         <span>{card.beds} Beds</span>
                       </span>
                       <span className="flex items-center gap-1">
-                        <BathIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-400" />
+                        <BathIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
                         <span>{card.baths} Baths</span>
                       </span>
                       <span className="flex items-center gap-1">
-                        <AreaIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-400" />
+                        <AreaIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
                         <span>{card.area}</span>
                       </span>
                     </div>
@@ -329,7 +329,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
       )}
 
       {filtered.length === 0 && (
-        <div className="mt-8 rounded-2xl border border-dashed border-slate-300 dark:border-white/10 p-8 text-center text-xs text-slate-500 dark:text-slate-400">
+        <div className="mt-8 rounded-2xl border border-dashed border-slate-300 dark:border-white/10 p-8 text-center text-xs text-slate-600 dark:text-slate-400">
           No {intent === "rent" ? "rental properties" : "properties for sale"} in the catalogue currently match the &ldquo;{activeFilter}&rdquo; filter.
         </div>
       )}

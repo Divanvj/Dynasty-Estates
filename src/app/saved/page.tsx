@@ -175,8 +175,8 @@ export default function SavedPropertiesPage() {
           </div>
         ) : properties.length === 0 ? (
           <div className="rounded-panel border border-white/80 bg-white/50 p-12 text-center shadow-sm backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white/80 dark:bg-surface-ink/80 shadow-md mb-3 text-slate-400 dark:text-slate-400 border border-slate-200/50 dark:border-white/10">
-              <HeartIcon className="h-8 w-8 text-slate-400 dark:text-emerald-400" />
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white/80 dark:bg-surface-ink/80 shadow-md mb-3 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-white/10">
+              <HeartIcon className="h-8 w-8 text-slate-600 dark:text-emerald-400" />
             </div>
             <h3 className="mt-3 text-xl font-bold text-slate-900 dark:text-white">Your shortlist is empty</h3>
             <p className="mt-1 text-xs text-slate-600 max-w-md mx-auto dark:text-slate-300">
@@ -233,22 +233,22 @@ export default function SavedPropertiesPage() {
                       {property.title}
                     </Link>
                   </h3>
-                  <p className="flex items-center gap-1 text-xs text-slate-500 mt-0.5 dark:text-slate-400">
-                    <LocationPinIcon className="h-3.5 w-3.5 text-slate-400 shrink-0 dark:text-slate-400" />
+                  <p className="flex items-center gap-1 text-xs text-slate-600 mt-0.5 dark:text-slate-400">
+                    <LocationPinIcon className="h-3.5 w-3.5 text-slate-600 shrink-0 dark:text-slate-400" />
                     <span>{property.location}</span>
                   </p>
 
                   <div className="mt-4 flex items-center justify-between border-t border-slate-200/70 dark:border-white/10 pt-3 text-xs text-slate-600 font-medium dark:text-slate-300">
                     <span className="flex items-center gap-1">
-                      <BedIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-400" />
+                      <BedIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
                       <span>{property.beds} Beds</span>
                     </span>
                     <span className="flex items-center gap-1">
-                      <BathIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-400" />
+                      <BathIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
                       <span>{property.baths} Baths</span>
                     </span>
                     <span className="flex items-center gap-1">
-                      <AreaIcon className="h-3.5 w-3.5 text-slate-400 dark:text-slate-400" />
+                      <AreaIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
                       <span>{property.area}</span>
                     </span>
                   </div>
@@ -258,7 +258,7 @@ export default function SavedPropertiesPage() {
                         opening. */}
                     <Link
                       href="/compare"
-                      className="relative z-30 text-xs font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-emerald-300 transition-colors"
+                      className="relative z-30 text-xs font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-emerald-300 transition-colors"
                     >
                       Compare →
                     </Link>

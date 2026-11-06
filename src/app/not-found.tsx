@@ -10,7 +10,7 @@ export default function NotFound() {
         <h1 className="mt-4 text-4xl font-light tracking-tight text-white md:text-5xl">
           Off the Market
         </h1>
-        <p className="mt-3 text-sm leading-relaxed text-slate-400">
+        <p className="mt-3 text-sm leading-relaxed text-slate-600">
           The property, collection, or route you are searching for might have been archived, transferred, or never existed in our catalogue.
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">

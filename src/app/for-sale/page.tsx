@@ -11,7 +11,9 @@ import { absoluteUrl, SITE_URL } from "@/lib/site-url";
 export const metadata: Metadata = {
   title: "Properties & Luxury Homes For Sale in South Africa",
   description:
-    "Explore luxury freehold homes, high-security golf estates, and modern apartments for sale across South Africa. Verified listings with solar power and Deeds Office price history.",
+    // No listing carries Deeds Office price history; that feed is not
+    // connected. Claiming it here promises it in search results.
+    "Browse freehold homes, security estates and apartments for sale across South Africa, with solar and energy-resilience details on every listing.",
   alternates: {
     canonical: absoluteUrl("/for-sale"),
   },
@@ -79,7 +81,10 @@ export default async function ForSaleNationalPage() {
 
         {/* Hero Header */}
         <div className="rounded-3xl border border-white/80 bg-white/60 p-6 sm:p-8 backdrop-blur-xl shadow-[0_20px_45px_rgba(36,48,50,0.06)] mb-8 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-          <span className="rounded-full bg-rose-100 text-[#E11D48] text-xs font-extrabold uppercase tracking-widest px-3 py-1 dark:bg-rose-500/20 dark:text-rose-300 dark:border dark:border-rose-500/30">
+          {/* rose-700, not #E11D48: the brand rose measured 3.91:1 on
+              bg-rose-100, under the 4.5:1 body-text floor. rose-700 is 5.24:1
+              and reads the same at a glance. */}
+          <span className="rounded-full bg-rose-100 text-rose-700 text-xs font-extrabold uppercase tracking-widest px-3 py-1 dark:bg-rose-500/20 dark:text-rose-300 dark:border dark:border-rose-500/30">
             National Property Hub
           </span>
           <h1 className="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-950 dark:text-white">
@@ -90,7 +95,7 @@ export default async function ForSaleNationalPage() {
           </p>
 
           <div className="mt-4 flex flex-wrap items-center gap-2 pt-2 border-t border-slate-200/60 dark:border-white/10 text-xs font-semibold">
-            <span className="text-slate-500 dark:text-slate-400">Related Hubs:</span>
+            <span className="text-slate-600 dark:text-slate-400">Related Hubs:</span>
             <Link
               href="/to-rent"
               className="pill-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
@@ -108,7 +113,7 @@ export default async function ForSaleNationalPage() {
 
         {/* Provincial Grid */}
         <section className="mb-10">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-4">
             Browse by Province
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -129,7 +134,7 @@ export default async function ForSaleNationalPage() {
                     {prov.count} {prov.count === 1 ? "listing" : "listings"}
                   </span>
                 </div>
-                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
                   Explore {prov.name} homes →
                 </p>
               </Link>

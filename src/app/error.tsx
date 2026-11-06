@@ -31,7 +31,7 @@ export default function Error({
   return (
     <main className="flex min-h-screen items-center justify-center bg-[var(--background)] px-4 py-16 text-slate-900 dark:text-white">
       <div className="w-full max-w-lg rounded-panel border border-white/75 bg-white/55 p-8 text-center shadow-[0_14px_34px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:border-white/10 dark:bg-surface-panel/80 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400">
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-600 dark:text-emerald-400">
           Dynasty Estates
         </p>
         <h1 className="mt-3 text-2xl font-bold text-slate-900 dark:text-white">
@@ -44,7 +44,7 @@ export default function Error({
         </p>
 
         {error.digest ? (
-          <p className="mt-4 font-mono text-xs text-slate-400 dark:text-slate-500">
+          <p className="mt-4 font-mono text-xs text-slate-600 dark:text-slate-500">
             Reference: {error.digest}
           </p>
         ) : null}

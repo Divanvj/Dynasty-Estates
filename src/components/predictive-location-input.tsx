@@ -304,7 +304,7 @@ export default function PredictiveLocationInput({
             <button
               type="button"
               onClick={handleClear}
-              className="flex h-7 w-7 items-center justify-center rounded-full text-slate-400 hover:bg-slate-200/60 hover:text-slate-700 transition-colors cursor-pointer dark:text-slate-300"
+              className="flex h-7 w-7 items-center justify-center rounded-full text-slate-600 hover:bg-slate-200/60 hover:text-slate-700 transition-colors cursor-pointer dark:text-slate-300"
               title="Clear selection"
             >
               <XMarkIcon className="h-3.5 w-3.5" />
@@ -324,10 +324,10 @@ export default function PredictiveLocationInput({
                 return next;
               });
             }}
-            className="flex h-7 w-7 items-center justify-center rounded-full text-slate-400 hover:text-slate-700 transition-colors cursor-pointer dark:text-slate-300"
+            className="flex h-7 w-7 items-center justify-center rounded-full text-slate-600 hover:text-slate-700 transition-colors cursor-pointer dark:text-slate-300"
             title={isOpen ? "Close suggestions" : "Open suggestions"}
           >
-            <span className="text-xs select-none text-slate-500 font-bold dark:text-slate-400">
+            <span className="text-xs select-none text-slate-600 font-bold dark:text-slate-400">
               {isOpen ? "▲" : "▼"}
             </span>
           </button>
@@ -353,7 +353,7 @@ export default function PredictiveLocationInput({
                   : "Suburbs & Estates (A–Z)"}
               </span>
             </span>
-            <span className="text-xs font-bold text-slate-400 dark:text-slate-400">
+            <span className="text-xs font-bold text-slate-600 dark:text-slate-400">
               {isTyping && typedQuery.trim()
                 ? "Type to filter"
                 : "Scroll & click"}
@@ -394,7 +394,7 @@ export default function PredictiveLocationInput({
                               ? "bg-emerald-700 text-white"
                               : isHighlighted
                               ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-600/30 dark:text-emerald-300 dark:border dark:border-emerald-500/40"
-                              : "bg-slate-100 text-slate-500 dark:bg-surface-ink/80 dark:text-slate-400"
+                              : "bg-slate-100 text-slate-600 dark:bg-surface-ink/80 dark:text-slate-400"
                           }`}
                         >
                           <LocationPinIcon className="h-3.5 w-3.5" />
@@ -403,7 +403,7 @@ export default function PredictiveLocationInput({
                           <span className="font-semibold text-slate-900 block truncate dark:text-white">
                             <HighlightLetters text={city.name} query={activeFilterText} />
                           </span>
-                          <span className="text-xs text-slate-500 block truncate dark:text-slate-400">
+                          <span className="text-xs text-slate-600 block truncate dark:text-slate-400">
                             {city.province}
                           </span>
                         </div>
@@ -446,7 +446,7 @@ export default function PredictiveLocationInput({
                             ? "bg-emerald-700 text-white"
                             : isHighlighted
                             ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-600/30 dark:text-emerald-300 dark:border dark:border-emerald-500/40"
-                            : "bg-slate-100 text-slate-500 dark:bg-surface-ink/80 dark:text-slate-400"
+                            : "bg-slate-100 text-slate-600 dark:bg-surface-ink/80 dark:text-slate-400"
                         }`}
                       >
                         <LocationPinIcon className="h-3.5 w-3.5" />
@@ -455,7 +455,7 @@ export default function PredictiveLocationInput({
                         <span className="font-semibold text-slate-900 block truncate dark:text-white">
                           <HighlightLetters text={suburb.name} query={activeFilterText} />
                         </span>
-                        <span className="text-xs text-slate-500 block truncate dark:text-slate-400">
+                        <span className="text-xs text-slate-600 block truncate dark:text-slate-400">
                           {isCityLevel
                             ? `City / Metro in ${suburb.province}`
                             : `${suburb.city} • ${suburb.province}`}
@@ -475,11 +475,11 @@ export default function PredictiveLocationInput({
                 );
               })
             ) : (
-              <div className="px-4 py-4 text-center text-xs text-slate-500 dark:text-slate-400">
+              <div className="px-4 py-4 text-center text-xs text-slate-600 dark:text-slate-400">
                 <p className="font-semibold text-slate-700 dark:text-slate-300">
                   No matching {type === "city" ? "cities" : "suburbs"} found.
                 </p>
-                <p className="text-xs text-slate-400 mt-0.5 dark:text-slate-400">
+                <p className="text-xs text-slate-600 mt-0.5 dark:text-slate-400">
                   Try checking your spelling or select from the list.
                 </p>
               </div>

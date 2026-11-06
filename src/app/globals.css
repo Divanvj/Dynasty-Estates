@@ -111,6 +111,65 @@
   --brand-teal-hover: #07393a;
   --brand-teal-glow: rgba(11, 77, 78, 0.25);
 
+  /* -------------------------------------------------------------------------
+     Scales added by the UX audit (step S5). Nothing is restyled here: these
+     exist so the steps that follow have one place to take values from, instead
+     of each call site choosing again.
+
+     Radii already live below under @theme (--radius-chip/control/card/panel)
+     and are deliberately not duplicated; the type floor (--text-xs: 14px,
+     --text-sm: 16px) is likewise already set and kept.
+
+     Every colour below is measured, not estimated. Ratios are against the two
+     light surfaces this app actually paints: --background #dce4e3 and white.
+     ------------------------------------------------------------------------- */
+
+  /* Text ramp, light. The ramp the app had failed WCAG AA in light mode:
+     slate-400 #90a1b9 measured 2.04:1 on the page and slate-500 #62748e
+     measured 3.69:1, against 4.5:1 for body text. The same two values are fine
+     in dark mode (7.49:1 on #081012), which is why the failures all cluster in
+     the light theme that is now the default. */
+  --ink: #0f172a;         /* 13.81 on page · 17.85 on white */
+  --ink-muted: #475569;   /*  5.86 on page ·  7.58 on white — replaces slate-500 */
+  --ink-subtle: #475569;  /* deliberately the same: there is no third step that
+                             still clears 4.5:1 on #dce4e3 */
+  --ink-inverse: #ffffff;
+
+  /* Brand, as text and as a fill. White on --brand measures 9.61:1. */
+  --brand: #0b4d4e;       /* 7.43 on page · 9.61 on white */
+  --brand-hover: #07393a;
+  --brand-quiet: #e6f2f0;
+
+  /* Semantic. Separate from the accent on purpose: an accent that also means
+     "success" cannot be used decoratively without implying a state.
+     --accent-emerald #10b981 is 1.96:1 as text and is a FILL ONLY. */
+  --good: #047857;        /* 5.48 on white */
+  --warn: #8a6d2f;        /* champagne darkened from #c5a059, which was 2.46:1 */
+  --danger: #9f1239;
+
+  /* Spacing. 4px base — the one scale the project had no tokens for. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* Elevation: two levels, applied by role. A filter chip, a stat tile and a
+     primary CTA currently carry the same shadow, which is why none of them
+     reads as primary. */
+  --shadow-raised: 0 1px 2px rgb(15 23 42 / 0.06), 0 8px 24px -12px rgb(15 23 42 / 0.18);
+  --shadow-overlay: 0 2px 8px rgb(15 23 42 / 0.10), 0 24px 48px -16px rgb(15 23 42 / 0.28);
+
+  /* Motion. globals.css already has a prefers-reduced-motion block; these give
+     it one set of durations to silence. */
+  --motion-fast: 120ms;
+  --motion-base: 200ms;
+  --motion-slow: 320ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+
   /* Height of the fixed mobile tab bar, excluding the safe-area inset it adds
      below itself. Page-level sticky bars sit on top of this rather than
      underneath it — the property page's action bar was previously covered for 59
@@ -124,6 +183,26 @@
 .dark {
   --background: #081012;
   --foreground: #f1fdf9;
+
+  /* Dark counterparts of the S5 ramp. Measured against --background #081012
+     and the panel surface #0c1a1c. Dark mode was never the failing theme —
+     slate-400 reads 7.49:1 here — so the muted step stays genuinely muted
+     rather than being darkened to match the light fix. */
+  --ink: #f1fdf9;         /* 18.44 on page · 17.08 on panel */
+  --ink-muted: #cbd5e1;   /* 12.94 on page · 11.99 on panel */
+  --ink-subtle: #94a3b8;  /*  7.49 on page ·  6.94 on panel */
+  --ink-inverse: #081012;
+
+  --brand: #4ec3ac;       /* 8.90 on page — the deep teal is unreadable here */
+  --brand-hover: #6fd8c2;
+  --brand-quiet: rgba(78, 195, 172, 0.14);
+
+  --good: #10b981;        /* 7.57 on page — safe as text against dark */
+  --warn: #d4af37;        /* 9.14 on page */
+  --danger: #fb7185;
+
+  --shadow-raised: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.7);
+  --shadow-overlay: 0 2px 8px rgb(0 0 0 / 0.5), 0 24px 48px -16px rgb(0 0 0 / 0.8);
   --obsidian-bg: #050b0c;
   --obsidian-surface: rgba(10, 20, 22, 0.85);
   --obsidian-border: rgba(20, 184, 166, 0.15);

@@ -172,7 +172,7 @@ export default function LoginPage() {
           <div className="p-6 md:p-8 lg:p-10">
             <div className="mb-6 flex items-center justify-between">
               <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Welcome back</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-slate-400">Welcome back</p>
                 <h2 className="mt-2 text-3xl font-semibold tracking-[-0.06em] text-slate-900 dark:text-white">Sign in</h2>
               </div>
               <Link href="/" className="text-sm text-slate-600 hover:text-slate-900 transition-colors dark:text-slate-300 dark:hover:text-emerald-400">Back home</Link>
@@ -209,7 +209,7 @@ export default function LoginPage() {
               </button>
             </div>
 
-            <div className="my-5 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
+            <div className="my-5 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-slate-500">
               <div className="h-px flex-1 bg-slate-300 dark:bg-white/10" />
               {mode === "email" ? "or with email & password" : "or with your phone"}
               <div className="h-px flex-1 bg-slate-300 dark:bg-white/10" />
@@ -239,7 +239,7 @@ export default function LoginPage() {
               confirmation ? (
                 <form onSubmit={handleVerifyCode} className="space-y-4">
                   <div>
-                    <label htmlFor="sms-code" className="mb-2 block text-xs font-medium uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                    <label htmlFor="sms-code" className="mb-2 block text-xs font-medium uppercase tracking-[0.16em] text-slate-600 dark:text-slate-400">
                       Verification code
                     </label>
                     <input
@@ -286,7 +286,7 @@ export default function LoginPage() {
               ) : (
                 <form onSubmit={handleSendCode} className="space-y-4">
                   <div>
-                    <label htmlFor="phone" className="mb-2 block text-xs font-medium uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                    <label htmlFor="phone" className="mb-2 block text-xs font-medium uppercase tracking-[0.16em] text-slate-600 dark:text-slate-400">
                       Phone number
                     </label>
                     <input
@@ -299,7 +299,7 @@ export default function LoginPage() {
                       required
                       className="w-full rounded-control border border-slate-200 bg-[#f6f8f8] px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-emerald-500"
                     />
-                    <p className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">
+                    <p className="mt-1.5 text-xs text-slate-600 dark:text-slate-400">
                       South African numbers may be entered as 082…; others need a country code.
                     </p>
                   </div>
@@ -320,7 +320,7 @@ export default function LoginPage() {
             ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="email" className="mb-2 block text-xs font-medium uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                <label htmlFor="email" className="mb-2 block text-xs font-medium uppercase tracking-[0.16em] text-slate-600 dark:text-slate-400">
                   Email
                 </label>
                 <input
@@ -339,7 +339,7 @@ export default function LoginPage() {
               </div>
 
               <div>
-                <label htmlFor="password" className="mb-2 block text-xs font-medium uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                <label htmlFor="password" className="mb-2 block text-xs font-medium uppercase tracking-[0.16em] text-slate-600 dark:text-slate-400">
                   Password
                 </label>
                 <input

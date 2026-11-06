@@ -220,7 +220,7 @@ export default function AISearchPage() {
               decoration. */}
           {constraints.length > 0 && (
             <div className="mt-5 flex flex-wrap items-center gap-2 border-t border-slate-200/80 pt-4 dark:border-white/10">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">
                 Reading this as
               </span>
               {constraints.map(({ key, Icon, label, strong }) => (
@@ -247,7 +247,7 @@ export default function AISearchPage() {
             <p className="mt-2 text-sm font-bold text-slate-900 dark:text-white">
               Your matches will appear here
             </p>
-            <p className="mx-auto mt-1 max-w-sm text-xs text-slate-500 dark:text-slate-400">
+            <p className="mx-auto mt-1 max-w-sm text-xs text-slate-600 dark:text-slate-400">
               Describe the home you are after in the box above — suburb, budget,
               bedrooms, must-haves.
             </p>
@@ -293,7 +293,7 @@ export default function AISearchPage() {
                 <p className="text-sm font-bold text-slate-900 dark:text-white">
                   Nothing in the catalogue fits that yet
                 </p>
-                <p className="mx-auto mt-1 max-w-sm text-xs text-slate-500 dark:text-slate-400">
+                <p className="mx-auto mt-1 max-w-sm text-xs text-slate-600 dark:text-slate-400">
                   Try widening the budget or dropping one of the must-haves.
                 </p>
               </div>
@@ -317,7 +317,7 @@ export default function AISearchPage() {
                     }
                   >
                     <div className="mt-3 rounded-xl border border-slate-200/80 bg-slate-50 p-2.5 text-xs dark:border-white/10 dark:bg-surface-ink/60">
-                      <p className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                      <p className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-500">
                         Why this fits
                       </p>
                       <ul className="mt-1 space-y-1">

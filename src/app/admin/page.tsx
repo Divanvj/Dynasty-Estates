@@ -98,7 +98,7 @@ export default function AdminPage() {
             <BrandLogo markOnly />
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xs uppercase tracking-[0.2em] text-slate-500 hidden sm:inline dark:text-emerald-400 font-bold">Governance & Trust</span>
+                <span className="text-xs uppercase tracking-[0.2em] text-slate-600 hidden sm:inline dark:text-emerald-400 font-bold">Governance & Trust</span>
                 <span className="rounded-full bg-slate-900 px-2 py-0.5 text-xs font-bold text-white dark:bg-emerald-600">ADMIN</span>
               </div>
               <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">
@@ -190,7 +190,7 @@ export default function AdminPage() {
                         ) : null}
                       </div>
                       <h3 className="mt-2 text-lg font-bold text-slate-950 dark:text-white">{item.title}</h3>
-                      <p className="text-xs text-slate-500 dark:text-slate-400">{item.location} · {item.sellerEmail}</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">{item.location} · {item.sellerEmail}</p>
                       <p className="mt-1 text-sm font-extrabold text-emerald-700 dark:text-emerald-400 dark:drop-shadow-[0_0_8px_rgba(16,185,129,0.25)]">{item.price}</p>
                     </div>
 
@@ -289,7 +289,7 @@ export default function AdminPage() {
                     )}
                   </div>
                   <p className="mt-2 text-2xl font-extrabold text-slate-950 dark:text-emerald-400">R {formatNumber(pkg.priceZAR)}</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">Active for {pkg.durationDays} days</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">Active for {pkg.durationDays} days</p>
 
                   <ul className="mt-4 space-y-2 border-t border-slate-200/60 dark:border-white/10 pt-3 text-xs text-slate-700 dark:text-slate-300">
                     {pkg.features.map((feat, idx) => (
@@ -317,7 +317,7 @@ export default function AdminPage() {
 
             <div className="overflow-hidden rounded-card border border-white/80 bg-white/55 shadow-sm backdrop-blur-xl dark:bg-surface-ink/60 dark:border-white/10">
               <table className="w-full text-left text-xs">
-                <thead className="border-b border-slate-200/80 bg-white/40 text-xs uppercase tracking-wider text-slate-500 dark:border-white/10 dark:bg-surface-panel dark:text-slate-400">
+                <thead className="border-b border-slate-200/80 bg-white/40 text-xs uppercase tracking-wider text-slate-600 dark:border-white/10 dark:bg-surface-panel dark:text-slate-400">
                   <tr>
                     <th className="py-3 px-4">Timestamp</th>
                     <th className="py-3 px-4">Actor</th>
@@ -329,7 +329,7 @@ export default function AdminPage() {
                 <tbody className="divide-y divide-slate-200/60 dark:divide-white/5 text-slate-700 dark:text-slate-300">
                   {auditLogs.map((log) => (
                     <tr key={log.id} className="hover:bg-white/40 dark:hover:bg-surface-panel/60 transition-colors">
-                      <td className="py-3 px-4 whitespace-nowrap text-slate-500 dark:text-slate-400">
+                      <td className="py-3 px-4 whitespace-nowrap text-slate-600 dark:text-slate-400">
                         {formatDateTime(log.timestamp)}
                       </td>
                       <td className="py-3 px-4 font-semibold text-slate-900 dark:text-white">

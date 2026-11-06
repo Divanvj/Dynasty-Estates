@@ -86,7 +86,7 @@ export default function PropertyMediaTabs({
         </div>
 
         {/* An instruction about clicking is meaningless on paper. */}
-        <div className="no-print hidden text-xs text-slate-500 font-medium sm:block dark:text-slate-400">
+        <div className="no-print hidden text-xs text-slate-600 font-medium sm:block dark:text-slate-400">
           {activeTab === "floorplan" && `Architectural Under-Roof Layout · ${area} ${erfSize ? `(Erf ${erfSize})` : ""}`}
           {activeTab === "virtual-tour" && "Interactive 3D Walkthrough Experience"}
           {activeTab === "street-view" && "Google Maps & 360° Street View Inspection"}

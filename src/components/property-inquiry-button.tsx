@@ -122,7 +122,7 @@ export default function PropertyInquiryButton({
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-500 hover:bg-slate-200 cursor-pointer dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-white"
+                className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-600 hover:bg-slate-200 cursor-pointer dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-white"
               >
                 <XMarkIcon className="h-4 w-4" />
               </button>
@@ -150,7 +150,7 @@ export default function PropertyInquiryButton({
                 {/* Contact Fields */}
                 <div className="grid grid-cols-2 gap-2.5">
                   <div>
-                    <label htmlFor="inquiry-name" className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1 dark:text-slate-400">
+                    <label htmlFor="inquiry-name" className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1 dark:text-slate-400">
                       Full Name
                     </label>
                     <input
@@ -164,7 +164,7 @@ export default function PropertyInquiryButton({
                     />
                   </div>
                   <div>
-                    <label htmlFor="inquiry-phone" className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1 dark:text-slate-400">
+                    <label htmlFor="inquiry-phone" className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1 dark:text-slate-400">
                       Phone Number
                     </label>
                     <input
@@ -180,7 +180,7 @@ export default function PropertyInquiryButton({
                 </div>
 
                 <div>
-                  <label htmlFor="inquiry-email" className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1 dark:text-slate-400">
+                  <label htmlFor="inquiry-email" className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1 dark:text-slate-400">
                     Email Address
                   </label>
                   <input
@@ -198,7 +198,7 @@ export default function PropertyInquiryButton({
                 {kind !== "message" && (
                   <div className="grid grid-cols-2 gap-2.5">
                     <div>
-                      <label htmlFor="inquiry-date" className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1 dark:text-slate-400">
+                      <label htmlFor="inquiry-date" className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1 dark:text-slate-400">
                         Preferred Date
                       </label>
                       <input
@@ -211,7 +211,7 @@ export default function PropertyInquiryButton({
                       />
                     </div>
                     <div>
-                      <label htmlFor="inquiry-time" className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1 dark:text-slate-400">
+                      <label htmlFor="inquiry-time" className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1 dark:text-slate-400">
                         Preferred Time Slot
                       </label>
                       <CustomSelect
@@ -233,7 +233,7 @@ export default function PropertyInquiryButton({
 
                 {/* Buyer Qualification Status */}
                 <div>
-                  <label htmlFor="inquiry-status" className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1 dark:text-slate-400">
+                  <label htmlFor="inquiry-status" className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1 dark:text-slate-400">
                     Purchasing Position
                   </label>
                   <CustomSelect
@@ -253,7 +253,7 @@ export default function PropertyInquiryButton({
 
                 {/* Notes */}
                 <div>
-                  <label htmlFor="inquiry-notes" className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1 dark:text-slate-400">
+                  <label htmlFor="inquiry-notes" className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1 dark:text-slate-400">
                     Notes or Questions for Practitioner
                   </label>
                   <textarea

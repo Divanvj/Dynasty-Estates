@@ -50,7 +50,13 @@ export type PropertyRecord = {
   gallery: string[];
   features: string[];
   onShow?: {
+    /** Display text, e.g. "Sunday, 14 Sep". Not comparable to today. */
     date: string;
+    /**
+     * `YYYY-MM-DD`. The banner needs this to decide whether the viewing is
+     * still ahead; without it the banner does not render, which is deliberate.
+     */
+    isoDate?: string;
     time: string;
     directionsNote?: string;
   };

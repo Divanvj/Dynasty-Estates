@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import AccountActions from "@/components/account-actions";
-import AmbientCursorHue from "@/components/ambient-cursor-hue";
 import BrandLogo from "@/components/brand-logo";
 import HeroHeadline from "@/components/hero-headline";
 import HomeHeroSearch from "@/components/home-hero-search";
@@ -55,7 +54,22 @@ export default async function Home() {
         {/* Full-Width Hero Section */}
         <section id="discover" className="relative z-40 mx-auto mt-4 sm:mt-6 max-w-[1440px]">
           <div className="relative rounded-card sm:rounded-panel border border-white/70 bg-white/45 dark:border-white/10 dark:bg-surface-panel/65 p-3.5 sm:p-6 shadow-[0_20px_45px_rgba(36,48,50,0.08)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)] backdrop-blur-xl md:p-8 lg:p-10">
-            <AmbientCursorHue heroScoped />
+            {/*
+              <AmbientCursorHue heroScoped /> was mounted here: an animated
+              aurora field with cursor parallax, running a canvas and a
+              requestAnimationFrame loop behind the headline.
+
+              Removed for two reasons. It is the most recognisable
+              "AI-generated landing page" signature of this era, and neither
+              Property24 nor Private Property animates anything behind their
+              search — both open on a photograph or a flat colour. And the home
+              page measures 9.5s LCP with 650ms of blocking on throttled
+              mobile, where the cost is main-thread work rather than bytes;
+              this was main-thread work for decoration.
+
+              The component still exists and is still used elsewhere. Only the
+              hero stops mounting it.
+            */}
 
             {/*
               max-w-5xl, not 3xl. This wrapper holds only the headline, and the
@@ -99,7 +113,7 @@ export default async function Home() {
         <section id="insights" className="mx-auto mt-8 grid grid-cols-1 max-w-[1440px] gap-4 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="rounded-panel border border-white/70 bg-white/45 dark:border-white/10 dark:bg-surface-panel/65 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl">
             <div className="flex items-center justify-between">
-              <p className="text-xs uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400 font-bold">Market intelligence</p>
+              <p className="text-xs uppercase tracking-[0.22em] text-slate-600 dark:text-slate-400 font-bold">Market intelligence</p>
               <Link href="/insights" className="text-xs font-bold text-emerald-800 dark:text-emerald-400 hover:underline">
                 Full Report →
               </Link>
@@ -224,7 +238,11 @@ export default async function Home() {
                 <li><Link href="/agents" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">PPRA Verified Agents</Link></li>
                 <li><Link href="/seller/portal" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Private Seller Portal</Link></li>
                 <li><Link href="/seller/listings/new" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Publish New Listing</Link></li>
-                <li><Link href="/agent/dashboard" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Agent Command Console</Link></li>
+                {/* "Agent Command Console" (/agent/dashboard) removed. The
+                    route is role-guarded, so this was never a breach — but no
+                    portal advertises its practitioner back-office to logged-out
+                    visitors, and an agent who has signed in reaches it from the
+                    account menu. */}
               </ul>
             </div>
 
@@ -235,16 +253,27 @@ export default async function Home() {
                   Tightening the gap by the same amount the padding adds keeps
                   the footer close to the height it was. */}
               <ul className="space-y-1 text-slate-600 dark:text-slate-400">
-                <li><Link href="/insights" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Market Intelligence Pulse</Link></li>
-                <li><Link href="/admin" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Platform Command & Moderation</Link></li>
+                <li><Link href="/insights" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Market Insights</Link></li>
+                {/* "Platform Command & Moderation" (/admin) removed, for the
+                    same reason as the agent console above: a public footer is
+                    not where a moderation console belongs. */}
                 <li><Link href="/legal/privacy" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">POPIA Privacy & Data Rights</Link></li>
               </ul>
             </div>
           </div>
 
-          <div className="mt-8 border-t border-slate-200/80 dark:border-white/10 pt-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+          <div className="mt-8 border-t border-slate-200/80 dark:border-white/10 pt-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-600 dark:text-slate-400">
             <p>© 2026 Dynasty Estates / Tricore Enterprises. All rights reserved.</p>
-            <p>Built with Next.js, TypeScript & Obsidian Glass.</p>
+            {/* The framework line that stood here ("Built with Next.js,
+                TypeScript & Obsidian Glass") is the kind of thing a template
+                leaves behind.
+
+                A regulatory statement would be the natural replacement — it is
+                what a seller checks — but the listings and agent records are
+                still demo data, so claiming PPRA registration of the
+                practitioners on this site would swap one unfounded claim for
+                another. Beta status is the thing that is true today. */}
+            <p>Beta — listings shown are sample data.</p>
           </div>
         </footer>
       </div>
