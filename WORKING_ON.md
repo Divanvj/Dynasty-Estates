@@ -9,7 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| | | | |
+| alet-elize | `alet-elize/verify-mobile-phase5` | Property detail page on phones: spec/feature blocks, hero overlay, sticky bar, `property-media-tabs.tsx`, `property-hero-gallery.tsx`, `property-gallery-lightbox.tsx` | 2026-11-06 |
 
 ## Recently merged
 
