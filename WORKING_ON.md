@@ -9,7 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| | | | |
+| alet-elize | `alet-elize/mobile-polish` | Mobile polish sweep: `globals.css` viewport height + `--dyn-mobile-nav-h`, the `animate-fade-in` consumers (share/save/collection buttons, media tabs, tenant modal), `virtual-tour-3d-viewer.tsx` | 2026-11-06 |
 
 ## Recently merged
 
