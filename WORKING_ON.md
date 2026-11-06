@@ -9,7 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| alet-elize | `alet-elize/verify-mobile-phase5` | Property detail page on phones: spec/feature blocks, hero overlay, sticky bar, `property-media-tabs.tsx`, `property-hero-gallery.tsx`, `property-gallery-lightbox.tsx` | 2026-11-06 |
+| | | | |
 
 ## Recently merged
 
@@ -18,3 +18,10 @@ before they start, then delete it after a few days.
 
 - 2026-11-06 — `ux/audit-overhaul` (UX audit S1–S8) merged into `main`. Pull
   before editing the property page, media tabs or gallery lightbox.
+- 2026-11-06 — `alet-elize/verify-mobile-phase5` merged. The mobile phase-5
+  work is now verified by measurement, and it exposed a long-standing bug:
+  `property-hero-gallery.tsx` painted the hero's title, badges, scrim and both
+  arrows *behind* the photograph, because the active frame carries `z-10` and
+  they were `z-auto`. Fixed there. **If any other component layers chrome over
+  a photo frame that has a z-index, check it the same way** — the `/search`
+  grid cards had the identical bug earlier.
