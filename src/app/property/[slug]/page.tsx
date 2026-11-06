@@ -432,7 +432,7 @@ export default async function PropertyPage({
                       key={item.label}
                       className="group flex items-start gap-2 text-left sm:flex-col sm:items-center sm:justify-center sm:gap-0 sm:rounded-control sm:border sm:border-white/80 sm:bg-white/70 sm:p-3.5 sm:text-center sm:transition-all sm:hover:bg-white/90 sm:dark:border-white/10 sm:dark:bg-surface-ink/60 sm:dark:hover:border-emerald-500/30 sm:dark:hover:bg-surface-panel"
                     >
-                      <div className="flex h-5 w-5 shrink-0 items-center justify-center text-slate-400 sm:mb-2 sm:h-8 sm:w-8 sm:rounded-xl sm:bg-slate-100 sm:text-slate-600 sm:transition-colors sm:group-hover:bg-emerald-50 sm:group-hover:text-emerald-700 dark:text-emerald-400 sm:dark:border sm:dark:border-emerald-500/20 sm:dark:bg-emerald-500/10 sm:dark:group-hover:bg-emerald-500/20">
+                      <div className="flex h-5 w-5 shrink-0 items-center justify-center text-slate-600 sm:mb-2 sm:h-8 sm:w-8 sm:rounded-xl sm:bg-slate-100 sm:text-slate-600 sm:transition-colors sm:group-hover:bg-emerald-50 sm:group-hover:text-emerald-700 dark:text-emerald-400 sm:dark:border sm:dark:border-emerald-500/20 sm:dark:bg-emerald-500/10 sm:dark:group-hover:bg-emerald-500/20">
                         <Icon className="h-4 w-4 shrink-0" />
                       </div>
                       <div className="min-w-0">
