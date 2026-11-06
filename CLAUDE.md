@@ -1,5 +1,12 @@
 @AGENTS.md
 
+## Two agents, two machines — read before editing
+
+Two Claude agents work on this project on separate machines. Follow
+`COLLABORATION.md`: GitHub is the only shared copy, `git pull` before you
+start, claim your area in `WORKING_ON.md` and push the claim first, work on a
+`<machine>/<task>` branch, and merge back into `main` the same day.
+
 ## Test logins
 
 Four accounts exist, one per role (Buyer, Seller, Agent, Admin), for signing in
