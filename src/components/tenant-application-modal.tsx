@@ -126,7 +126,7 @@ export default function TenantApplicationModal({
   if (!isOpen || !mounted || typeof document === "undefined") return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-sm animate-fade-in">
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-sm animate-in fade-in duration-200">
       <div className="fixed inset-0 bg-transparent cursor-pointer" onClick={onClose} />
       <div
         className="relative z-10 my-auto w-full max-w-xl overflow-hidden rounded-card border border-white/80 dark:border-white/10 bg-white/95 dark:bg-surface-panel p-6 shadow-2xl backdrop-blur-xl sm:p-8 max-h-[90vh] overflow-y-auto"

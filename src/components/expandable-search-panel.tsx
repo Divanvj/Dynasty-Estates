@@ -842,7 +842,8 @@ export default function ExpandableSearchPanel({
                 e.stopPropagation();
                 setIsOpen(true);
               }}
-              className={`relative flex h-10 w-10 sm:h-12 sm:w-auto items-center justify-center sm:gap-1.5 rounded-full border px-0 sm:px-4.5 text-xs sm:text-sm font-bold transition-all cursor-pointer shrink-0 ${
+              aria-label="Open search filters"
+              className={`relative tap-44 flex h-10 w-10 sm:h-12 sm:w-auto items-center justify-center sm:gap-1.5 rounded-full border px-0 sm:px-4.5 text-xs sm:text-sm font-bold transition-all cursor-pointer shrink-0 ${
                 activeFilterCount > 0
                   ? "border-emerald-600 dark:border-emerald-500/50 bg-[#0b4d4e] dark:bg-emerald-600 text-white shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                   : "border-slate-200 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 shadow-2xs hover:bg-slate-50 dark:hover:bg-surface-panel hover:text-emerald-900 dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
@@ -877,7 +878,11 @@ export default function ExpandableSearchPanel({
                 e.stopPropagation();
                 handleExecuteSearch();
               }}
-              className="flex h-10 w-10 sm:h-12 sm:w-auto items-center justify-center sm:gap-1.5 rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 hover:from-[#0d595b] hover:to-[#094344] dark:hover:from-emerald-500 dark:hover:to-emerald-600 px-0 sm:px-7 text-xs sm:text-sm font-bold text-white shadow-md shadow-emerald-950/20 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-400/30 dark:border-emerald-400/50 hover:border-emerald-400 transition-all hover:scale-102 cursor-pointer shrink-0"
+              className="relative tap-44 flex h-10 w-10 sm:h-12 sm:w-auto items-center justify-center sm:gap-1.5 rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 hover:from-[#0d595b] hover:to-[#094344] dark:hover:from-emerald-500 dark:hover:to-emerald-600 px-0 sm:px-7 text-xs sm:text-sm font-bold text-white shadow-md shadow-emerald-950/20 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-400/30 dark:border-emerald-400/50 hover:border-emerald-400 transition-all hover:scale-102 cursor-pointer shrink-0"
+              /* Below `sm` this button is an icon alone. `title` was the only
+                 name it had, and a title is not announced reliably and never
+                 appears on touch at all. */
+              aria-label="Search"
               title="Search"
             >
               <SearchIcon className="h-4 w-4 sm:hidden text-emerald-300" />

@@ -123,13 +123,18 @@ export default async function PropertyPage({
   const contact = getListingContact(property);
   const agentProfile = property.agentId ? getAgentByIdOrSlug(property.agentId) : null;
 
-  // The body already pads 68px + safe-area for the tab bar, so this only has to
-  // clear the action bar stacked above it (69px). 68 + 76 = 144px against the
-  // 128px the two bars occupy, leaving a small gap. The safe-area inset is not
-  // repeated here because the body already applies it. `md:pb-6` keeps the
-  // desktop value exactly as it was.
+  // The body already pads --dyn-mobile-nav-h + safe-area for the tab bar, so
+  // this only has to clear the action bar stacked above it. 63 + 76 = 139px
+  // against the 120px the two bars now occupy, leaving a small gap. The
+  // safe-area inset is not repeated here because the body already applies it.
+  //
+  // `lg:pb-6`, not `md:pb-6`: the action bar moved from `md:hidden` to
+  // `lg:hidden` so it would stop vanishing in the 768–1023px band where the tab
+  // bar still shows, and this clearance has to move with it. It did not, so
+  // that band ended in 24px of padding under 120px of fixed chrome and the foot
+  // of the practitioner card sat behind the action bar.
   return (
-    <main className="min-h-screen bg-[var(--background)] px-3 py-4 text-slate-900 pb-[76px] md:pb-6 md:px-6 lg:px-8 dark:text-white">
+    <main className="min-h-screen bg-[var(--background)] px-3 py-4 text-slate-900 pb-[76px] lg:pb-6 md:px-6 lg:px-8 dark:text-white">
       <SeoStructuredData property={property} />
       {/* Feeds the homepage spotlight. Stored in the viewer's browser only. */}
       <RecordPropertyView propertyId={property.id} />

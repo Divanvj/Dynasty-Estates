@@ -199,7 +199,7 @@ export default function AddToCollectionButton({
       )}
 
       {toast && (
-        <span className="absolute right-0 top-12 z-20 whitespace-nowrap rounded-xl border border-slate-800 bg-slate-950 px-2.5 py-1 text-xs font-bold text-white shadow-xl animate-fade-in dark:border-white/10 dark:bg-surface-panel dark:text-emerald-300 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]">
+        <span className="absolute right-0 top-12 z-20 whitespace-nowrap rounded-xl border border-slate-800 bg-slate-950 px-2.5 py-1 text-xs font-bold text-white shadow-xl animate-in fade-in duration-200 dark:border-white/10 dark:bg-surface-panel dark:text-emerald-300 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]">
           {toast}
         </span>
       )}

@@ -95,7 +95,7 @@ export default function PropertyMediaTabs({
 
       {/* Tab 1: Floor Plan */}
       {activeTab === "floorplan" && (
-        <div className="space-y-4 animate-fade-in">
+        <div className="space-y-4 animate-in fade-in duration-200">
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-950/5 p-2 sm:p-4 text-center dark:border-white/10 dark:bg-surface-ink/60">
             <div
               className="relative mx-auto h-[360px] sm:h-[460px] w-full max-w-2xl rounded-xl bg-contain bg-center bg-no-repeat shadow-inner"
@@ -122,7 +122,7 @@ export default function PropertyMediaTabs({
 
       {/* Tab 2: 3D Virtual Tour */}
       {activeTab === "virtual-tour" && (
-        <div className="space-y-4 animate-fade-in">
+        <div className="space-y-4 animate-in fade-in duration-200">
           <VirtualTour3DViewer
             title={title}
             gallery={gallery}
@@ -146,7 +146,7 @@ export default function PropertyMediaTabs({
 
       {/* Tab 3: Google Street View & Map */}
       {activeTab === "street-view" && (
-        <div className="space-y-4 animate-fade-in">
+        <div className="space-y-4 animate-in fade-in duration-200">
           {/* Sub-toolbar: Switch between Street View and Satellite/Map, with clear Back buttons */}
           <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-slate-50 p-3 border border-slate-200/80 dark:bg-surface-ink/60 dark:border-white/10">
             <div className="flex flex-wrap items-center gap-2">

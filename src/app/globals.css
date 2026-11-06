@@ -176,8 +176,19 @@
      of its 69 pixels, hiding the price and the enquiry CTA on every phone.
      Anything pinned above the tab bar must offset by this plus the inset.
      Declared once so the two cannot drift apart. Has no effect at lg and above,
-     where the tab bar is hidden. */
-  --dyn-mobile-nav-h: 59px;
+     where the tab bar is hidden.
+
+     63px, and the tab bar is now SIZED from this rather than merely described
+     by it. It used to be 59px applied as `min-height` to each tab, which the
+     tab's own content overshot: a 28px icon, a 4px gap, a 14px label and 16px
+     of padding is 62px, and the bar's 1px top border made 63. So the bar
+     measured 63px while the two things that offset against it used 59px (the
+     property sticky bar, which therefore overlapped the tab bar by 4px) and a
+     hardcoded 68px (the body's bottom padding, 5px of dead space under every
+     phone page). Measured on /property/silver-lakes and /search at 375px.
+
+     Changing this number now changes the bar, so the three stay in step. */
+  --dyn-mobile-nav-h: 63px;
 }
 
 .dark {
@@ -304,7 +315,13 @@ html {
 
 body {
   margin: 0;
+  /* `vh` resolves to the LARGE viewport on a phone — the height the page would
+     have if the browser's own chrome were collapsed — so `100vh` reserves more
+     than is on screen and the last strip of the page sits behind the address
+     bar. `dvh` tracks the chrome as it shows and hides. The `vh` line stays
+     first as the fallback for anything that does not know `dvh`. */
   min-height: 100vh;
+  min-height: 100dvh;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;

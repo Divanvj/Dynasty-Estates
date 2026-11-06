@@ -108,7 +108,11 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className="min-h-full bg-[var(--background)] text-[var(--foreground)] transition-colors duration-300 antialiased pb-[calc(68px+env(safe-area-inset-bottom))] lg:pb-0"
+        /* The bottom padding reserves room for the fixed tab bar. It read a
+           hardcoded 68px against a bar that measured 63, so every phone page
+           ended in 5px of dead space; it now derives from the same variable
+           the bar is sized from. */
+        className="min-h-full bg-[var(--background)] text-[var(--foreground)] transition-colors duration-300 antialiased pb-[calc(var(--dyn-mobile-nav-h)+env(safe-area-inset-bottom))] lg:pb-0"
       >
         <ThemeProvider>
           <AuthProvider>

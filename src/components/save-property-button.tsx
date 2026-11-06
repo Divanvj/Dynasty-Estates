@@ -138,7 +138,7 @@ export default function SavePropertyButton({ propertyId }: { propertyId: string 
       </button>
 
       {toast && (
-        <div className="absolute right-0 top-10 z-20 whitespace-nowrap rounded-xl border border-slate-200 bg-slate-950 px-2.5 py-1 text-xs font-bold text-white shadow-xl animate-fade-in">
+        <div className="absolute right-0 top-10 z-20 whitespace-nowrap rounded-xl border border-slate-200 bg-slate-950 px-2.5 py-1 text-xs font-bold text-white shadow-xl animate-in fade-in duration-200">
           {toast}
         </div>
       )}

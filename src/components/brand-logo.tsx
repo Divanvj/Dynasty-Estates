@@ -44,7 +44,7 @@ export default function BrandLogo({
     <Link
       href={href}
       aria-label="Dynasty Estates — home"
-      className={`group shrink-0 items-center gap-2.5 sm:gap-3 ${
+      className={`group relative tap-44 shrink-0 items-center gap-2.5 sm:gap-3 ${
         showOnMobile ? "flex" : "hidden lg:flex"
       } ${className}`}
     >

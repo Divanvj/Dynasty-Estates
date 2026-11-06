@@ -76,7 +76,14 @@ export default function MobileNav() {
   return (
     <nav
       aria-label="Primary"
-      className="fixed inset-x-0 bottom-0 z-[80] lg:hidden border-t border-white/70 dark:border-white/10 bg-white/85 dark:bg-surface-panel/90 backdrop-blur-xl shadow-[0_-8px_30px_rgba(15,23,42,0.10)] pb-[env(safe-area-inset-bottom)]"
+      // The bar is SIZED from --dyn-mobile-nav-h now, not just described by it.
+      // Previously each tab carried it as a `min-height` that its own content
+      // overshot, so the rendered bar was 63px while the body's padding
+      // reserved 68 and the property page's sticky bar offset by 59 — one bar,
+      // three different numbers, and the sticky bar sat 4px under this one.
+      // `box-sizing: border-box` is global, so the top border and the inset
+      // padding are inside this height.
+      className="fixed inset-x-0 bottom-0 z-[80] h-[calc(var(--dyn-mobile-nav-h)+env(safe-area-inset-bottom))] lg:hidden border-t border-white/70 dark:border-white/10 bg-white/85 dark:bg-surface-panel/90 backdrop-blur-xl shadow-[0_-8px_30px_rgba(15,23,42,0.10)] pb-[env(safe-area-inset-bottom)]"
     >
       {/* `w-full` and `min-w-0` are load-bearing. Without them the list sized
           itself from its content and rendered 383px against a 375px viewport in
@@ -84,7 +91,7 @@ export default function MobileNav() {
           8px on every page. A flex child defaults to `min-width: auto`, so it
           refuses to shrink below its content; `w-full` also keeps the padding
           inside the width rather than adding to it. */}
-      <ul className="mx-auto flex w-full max-w-lg items-stretch justify-around px-1">
+      <ul className="mx-auto flex h-full w-full max-w-lg items-stretch justify-around px-1">
         {items.map((item) => {
           const Icon = item.icon;
           const active = isActive(item);
@@ -93,7 +100,7 @@ export default function MobileNav() {
               <Link
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={`flex min-h-[var(--dyn-mobile-nav-h)] flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 transition-colors ${
+                className={`flex h-full flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 transition-colors ${
                   active
                     ? "text-emerald-800 dark:text-emerald-300"
                     : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"

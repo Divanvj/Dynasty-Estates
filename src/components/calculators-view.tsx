@@ -352,7 +352,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setPurchasePrice((prev) => Math.max(500000, prev - 100000))}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
+                    className="relative tap-44 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     -
                   </button>
@@ -372,7 +372,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setPurchasePrice((prev) => prev + 100000)}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
+                    className="relative tap-44 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     +
                   </button>
@@ -402,7 +402,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setDepositPct((prev) => Math.max(0, prev - 1))}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
+                    className="relative tap-44 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     -
                   </button>
@@ -422,7 +422,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setDepositPct((prev) => Math.min(50, prev + 1))}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
+                    className="relative tap-44 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     +
                   </button>
@@ -452,7 +452,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setInterestRate((prev) => Math.max(6, Math.round((prev - 0.25) * 100) / 100))}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
+                    className="relative tap-44 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     -
                   </button>
@@ -472,7 +472,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setInterestRate((prev) => Math.min(18, Math.round((prev + 0.25) * 100) / 100))}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
+                    className="relative tap-44 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     +
                   </button>
@@ -605,7 +605,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setGrossIncome((prev) => Math.max(10000, prev - 5000))}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
+                    className="relative tap-44 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     -
                   </button>
@@ -625,7 +625,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setGrossIncome((prev) => prev + 5000)}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
+                    className="relative tap-44 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     +
                   </button>
@@ -655,7 +655,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setMonthlyExpenses((prev) => Math.max(2500, prev - 2500))}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
+                    className="relative tap-44 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     -
                   </button>
@@ -675,7 +675,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setMonthlyExpenses((prev) => prev + 2500)}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
+                    className="relative tap-44 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     +
                   </button>
@@ -774,7 +774,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setCustomTransferPrice((prev) => Math.max(500000, prev - 100000))}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
+                    className="relative tap-44 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     -
                   </button>
@@ -794,7 +794,7 @@ export default function CalculatorsView({
                   <button
                     type="button"
                     onClick={() => setCustomTransferPrice((prev) => prev + 100000)}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
+                    className="relative tap-44 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                   >
                     +
                   </button>
@@ -891,7 +891,7 @@ export default function CalculatorsView({
                     <button
                       type="button"
                       onClick={() => setConveyPrice((prev) => Math.max(500000, prev - 250000))}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
+                      className="relative tap-44 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                     >
                       -
                     </button>
@@ -914,7 +914,7 @@ export default function CalculatorsView({
                     <button
                       type="button"
                       onClick={() => setConveyPrice((prev) => prev + 250000)}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
+                      className="relative tap-44 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                     >
                       +
                     </button>
@@ -949,7 +949,7 @@ export default function CalculatorsView({
                     <button
                       type="button"
                       onClick={() => setConveyBond((prev) => Math.max(0, prev - 250000))}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
+                      className="relative tap-44 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                     >
                       -
                     </button>
@@ -968,7 +968,7 @@ export default function CalculatorsView({
                     <button
                       type="button"
                       onClick={() => setConveyBond((prev) => Math.min(conveyPrice, prev + 250000))}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
+                      className="relative tap-44 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:bg-slate-100 cursor-pointer active:scale-95 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-surface-panel dark:hover:border-emerald-500/40"
                     >
                       +
                     </button>
@@ -1116,7 +1116,7 @@ export default function CalculatorsView({
                     <button
                       type="button"
                       onClick={() => setAmortLoan((prev) => Math.max(500000, prev - 250000))}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-sm font-bold text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 cursor-pointer active:scale-95"
+                      className="relative tap-44 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-sm font-bold text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 cursor-pointer active:scale-95"
                     >
                       -
                     </button>
@@ -1135,7 +1135,7 @@ export default function CalculatorsView({
                     <button
                       type="button"
                       onClick={() => setAmortLoan((prev) => prev + 250000)}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-sm font-bold text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 cursor-pointer active:scale-95"
+                      className="relative tap-44 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-sm font-bold text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 cursor-pointer active:scale-95"
                     >
                       +
                     </button>
@@ -1184,7 +1184,7 @@ export default function CalculatorsView({
                     <button
                       type="button"
                       onClick={() => setAmortExtraMonthly((prev) => Math.max(0, prev - 250))}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-emerald-300 dark:border-emerald-500/30 bg-white dark:bg-surface-ink/60 text-sm font-bold text-emerald-900 dark:text-white hover:bg-emerald-100 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 cursor-pointer active:scale-95"
+                      className="relative tap-44 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-emerald-300 dark:border-emerald-500/30 bg-white dark:bg-surface-ink/60 text-sm font-bold text-emerald-900 dark:text-white hover:bg-emerald-100 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 cursor-pointer active:scale-95"
                     >
                       -
                     </button>
@@ -1203,7 +1203,7 @@ export default function CalculatorsView({
                     <button
                       type="button"
                       onClick={() => setAmortExtraMonthly((prev) => prev + 250)}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-sm font-bold text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 cursor-pointer active:scale-95"
+                      className="relative tap-44 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-300 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-sm font-bold text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 cursor-pointer active:scale-95"
                     >
                       +
                     </button>

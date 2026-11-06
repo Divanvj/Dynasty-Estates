@@ -271,7 +271,12 @@ export default function VirtualTour3DViewer({
     <div
       ref={containerRef}
       className={`relative w-full overflow-hidden rounded-3xl border border-slate-800 bg-slate-950 text-white shadow-2xl select-none ${
-        isFullscreen ? "h-screen rounded-none" : "h-[480px] sm:h-[540px] md:h-[600px]"
+        /* `h-dvh`, not `h-screen`. `h-screen` is `100vh`, which on a phone is
+           the viewport as it would be with the browser chrome collapsed — so a
+           "fullscreen" tour ran taller than the screen and its bottom controls
+           sat behind the address bar, in the one mode where there is nowhere
+           to scroll to reach them. */
+        isFullscreen ? "h-dvh rounded-none" : "h-[480px] sm:h-[540px] md:h-[600px]"
       }`}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
