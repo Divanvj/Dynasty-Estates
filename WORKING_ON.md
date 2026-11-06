@@ -9,7 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| alet-elize | `alet-elize/mobile-polish` | Mobile polish sweep: `globals.css` viewport height + `--dyn-mobile-nav-h`, the `animate-fade-in` consumers (share/save/collection buttons, media tabs, tenant modal), `virtual-tour-3d-viewer.tsx` | 2026-11-06 |
+| | | | |
 
 ## Recently merged
 
@@ -18,6 +18,13 @@ before they start, then delete it after a few days.
 
 - 2026-11-06 — `ux/audit-overhaul` (UX audit S1–S8) merged into `main`. Pull
   before editing the property page, media tabs or gallery lightbox.
+- 2026-11-06 — `alet-elize/mobile-polish` merged. **`--dyn-mobile-nav-h` is now
+  63px and the tab bar is SIZED from it** (`mobile-nav.tsx`), with the body's
+  bottom padding in `layout.tsx` derived from the same variable — it was 59 /
+  63 / 68 in three places. Anything you pin above the tab bar should offset by
+  that variable, not a literal. Also: `animate-fade-in` was never a real class
+  and is gone (use `animate-in fade-in duration-200`), and `tap-44` now covers
+  the calculator steppers, brand logo and the search panel's two icon buttons.
 - 2026-11-06 — `alet-elize/verify-mobile-phase5` merged. The mobile phase-5
   work is now verified by measurement, and it exposed a long-standing bug:
   `property-hero-gallery.tsx` painted the hero's title, badges, scrim and both
