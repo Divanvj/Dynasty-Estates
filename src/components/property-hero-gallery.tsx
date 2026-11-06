@@ -177,8 +177,27 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
           </div>
         ))}
 
-        {/* Legibility scrim for the headline and price. */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        {/*
+          Legibility scrim for the headline and price.
+
+          `z-20`, and everything below it `z-30`, because the active frame
+          above carries `z-10` to win the crossfade against its neighbours. A
+          positioned element with any z-index paints above every `z-auto`
+          positioned sibling regardless of DOM order, so this scrim, both
+          arrows, the dwell bar and the whole title/badges/price block were
+          painted *behind* the photograph.
+
+          That was not a subtle wash. Measured on /property/silver-lakes at
+          375px, `document.elementFromPoint` over the centre of the <h1>
+          returned `IMG.object-cover`, and the same over each arrow — so the
+          listing's title, location and status badges never appeared at all,
+          and neither arrow could be clicked. Only the thumbnail rail worked,
+          because it sits outside this container.
+
+          Same bug, same cause, as the one that hid the price on the /search
+          grid cards: photo frames at z-10 over un-indexed chrome.
+        */}
+        <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
         {/*
           The way into the full-screen viewer. The detail page's "Photos" media
@@ -200,7 +219,7 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
               ? `View all ${frames.length} photographs full screen`
               : "View this photograph full screen"
           }
-          className="tap-44 absolute right-3 top-3 z-20 flex cursor-pointer items-center gap-1.5 rounded-full border border-white/25 bg-black/40 px-3 py-1.5 text-xs font-bold tracking-[0.2em] text-white backdrop-blur-md transition-all hover:bg-black/65 sm:right-6 sm:top-6"
+          className="tap-44 absolute right-3 top-3 z-30 flex cursor-pointer items-center gap-1.5 rounded-full border border-white/25 bg-black/40 px-3 py-1.5 text-xs font-bold tracking-[0.2em] text-white backdrop-blur-md transition-all hover:bg-black/65 sm:right-6 sm:top-6"
         >
           <SearchIcon className="h-3.5 w-3.5 shrink-0" />
           {many && (
@@ -220,7 +239,7 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
               type="button"
               onClick={() => go(index - 1, true)}
               aria-label="Previous photograph"
-              className="tap-44 absolute left-3 top-[34%] flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white opacity-85 shadow-lg backdrop-blur-md transition-all hover:bg-black/65 hover:opacity-100 sm:left-5 sm:top-1/2 sm:h-11 sm:w-11"
+              className="tap-44 absolute left-3 top-[34%] z-30 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white opacity-85 shadow-lg backdrop-blur-md transition-all hover:bg-black/65 hover:opacity-100 sm:left-5 sm:top-1/2 sm:h-11 sm:w-11"
             >
               <ArrowLeftIcon className="h-4 w-4" />
             </button>
@@ -228,7 +247,7 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
               type="button"
               onClick={() => go(index + 1, true)}
               aria-label="Next photograph"
-              className="tap-44 absolute right-3 top-[34%] flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white opacity-85 shadow-lg backdrop-blur-md transition-all hover:bg-black/65 hover:opacity-100 sm:right-5 sm:top-1/2 sm:h-11 sm:w-11"
+              className="tap-44 absolute right-3 top-[34%] z-30 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white opacity-85 shadow-lg backdrop-blur-md transition-all hover:bg-black/65 hover:opacity-100 sm:right-5 sm:top-1/2 sm:h-11 sm:w-11"
             >
               <ArrowRightIcon className="h-4 w-4" />
             </button>
@@ -236,7 +255,7 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
             {/* Dwell indicator. Champagne, keyed off the frame so it restarts
                 with each advance; hidden once the viewer takes over. */}
             {playing && (
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-white/10">
+              <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-[2px] bg-white/10">
                 <div
                   key={index}
                   className="h-full origin-left bg-champagne-400/90"
@@ -247,7 +266,7 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
           </>
         )}
 
-        <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 md:p-10">{children}</div>
+        <div className="absolute inset-x-0 bottom-0 z-30 p-5 sm:p-6 md:p-10">{children}</div>
       </div>
 
       {/* The rail. Sits directly under the hero so choosing a photograph never
