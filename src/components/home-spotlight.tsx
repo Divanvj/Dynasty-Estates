@@ -53,6 +53,11 @@ function useRecentlyViewedIds() {
  * That is a genuine personalisation with no model behind it and nothing implied
  * about how it was chosen.
  */
+/** City without a trailing alias: "Gqeberha (Port Elizabeth)" -> "Gqeberha". */
+function phoneLocation(property: PropertyRecord): string {
+  return property.city?.replace(/\s*\(.*\)$/, "") || property.location;
+}
+
 export default function HomeSpotlight({ properties }: { properties: PropertyRecord[] }) {
   const recentRaw = useRecentlyViewedIds();
   const reducedMotion = usePrefersReducedMotion();
@@ -84,6 +89,9 @@ export default function HomeSpotlight({ properties }: { properties: PropertyReco
   const playing = many && !takenOver && !reducedMotion;
   const safeIndex = slides.length ? index % slides.length : 0;
   const active = slides[safeIndex];
+  // Derived here, before `go`: React Compiler treats a call that receives
+  // `active` after the useCallback as a possible mutation of `slides`.
+  const activePhoneLocation = active ? phoneLocation(active) : "";
 
   const go = useCallback(
     (next: number, manual = false) => {
@@ -131,9 +139,18 @@ export default function HomeSpotlight({ properties }: { properties: PropertyReco
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/20" />
 
             {/* Top badges. The first says plainly why this home is here. */}
-            <div className="absolute left-4 top-4 flex flex-wrap items-center gap-2 sm:left-6 sm:top-6">
-              <span className="rounded-full border border-white/30 bg-black/40 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-white backdrop-blur-md dark:border-white/10">
-                {personalised ? "Recently viewed by you" : "Premier spotlight"}
+            {/* The right inset keeps the badges clear of the 01 / 02 counter (about
+                108px wide with its letter-spacing): on a phone "Recently viewed
+                by you" ran underneath it. "by you" drops below `sm`. */}
+            <div className="absolute left-4 right-[7.5rem] top-4 flex flex-wrap items-center gap-2 sm:left-6 sm:right-36 sm:top-6">
+              <span className="whitespace-nowrap rounded-full border border-white/30 bg-black/40 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-md sm:tracking-[0.18em] dark:border-white/10">
+                {personalised ? (
+                  <>
+                    Recently viewed<span className="hidden sm:inline"> by you</span>
+                  </>
+                ) : (
+                  "Premier spotlight"
+                )}
               </span>
               <span className="rounded-full border border-emerald-400/40 bg-emerald-500/30 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-200 backdrop-blur-md">
                 {active.suburb || active.city || active.province}
@@ -203,9 +220,15 @@ export default function HomeSpotlight({ properties }: { properties: PropertyReco
             <div className="absolute inset-x-4 bottom-4 rounded-card border border-white/20 bg-black/50 p-5 text-white backdrop-blur-xl sm:inset-x-6 sm:bottom-6 sm:p-6 dark:border-white/10">
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div className="min-w-0">
-                  <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.2em] text-slate-300 sm:text-xs">
+                  <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-300 sm:tracking-[0.2em]">
                     <LocationPinIcon className="h-3.5 w-3.5 shrink-0 text-emerald-300" />
-                    <span className="truncate">{active.location}</span>
+                    {/* The full street address ran out of room on a phone ("KEURBOOM ROAD,
+                        CLA…"). The suburb is already the green chip above,
+                        so the phone line carries the city. */}
+                    <span className="truncate sm:hidden">
+                      {activePhoneLocation}
+                    </span>
+                    <span className="hidden truncate sm:inline">{active.location}</span>
                   </div>
                   <div className="mt-1 flex flex-wrap items-baseline gap-2">
                     <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">

@@ -808,7 +808,7 @@ export default function ExpandableSearchPanel({
                 }}
                 placeholder={
                   locations.length === 0
-                    ? (placeholder || "Search city or suburb...")
+                    ? (placeholder || "Suburb or city")
                     : "Add another suburb..."
                 }
                 className="min-w-0 flex-1 bg-transparent text-sm sm:text-base font-medium text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none truncate"
@@ -989,7 +989,7 @@ export default function ExpandableSearchPanel({
                       }}
                       placeholder={
                         locations.length === 0
-                          ? (placeholder || "Search city, suburb, or province...")
+                          ? (placeholder || "Suburb, city or province")
                           : "Add another suburb..."
                       }
                       // `min-w-0`, not `min-w-[140px]`: the floor is what made

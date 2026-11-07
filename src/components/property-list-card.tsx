@@ -61,7 +61,13 @@ export default function PropertyListCard({
           title={property.title}
           frameClassName="transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent md:bg-gradient-to-r md:from-black/40 md:via-transparent md:to-transparent" />
+        {/* Layers, low to high: photo frames z-10 (PropertyCardPhotos), this
+            scrim z-[11], badges and price z-[12], the card's stretched link
+            z-15 (.card-link::after), photo arrows z-20, Save z-30. The scrim
+            used to be z-auto, so it painted UNDER the z-10 photo and white
+            prices sat on bare photographs — unreadable on a white building.
+            Same cause as the hero fix in 71b8e03. */}
+        <div className="pointer-events-none absolute inset-0 z-[11] bg-gradient-to-t from-black/70 via-black/15 to-transparent md:bg-gradient-to-r md:from-black/40 md:via-transparent md:to-transparent" />
 
         {/* Top Badges.
 
@@ -70,7 +76,7 @@ export default function PropertyListCard({
             choose buy or rent first, so the chip repeated their own choice on
             every card in the list. The listing tag, which does say something
             the card does not ("New Listing", "Price Reduced"), stays. */}
-        <div className="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap z-10">
+        <div className="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap z-[12]">
           {getDisplayTag(property) && (
             <span className="badge border border-white/30 bg-black/50 text-white backdrop-blur-md dark:border-white/10">
               {getDisplayTag(property)}
@@ -87,8 +93,8 @@ export default function PropertyListCard({
         </div>
 
         {/* Mobile Price Overlay */}
-        <div className="absolute bottom-3 left-3 text-white md:hidden z-10">
-          <p className="text-xl font-extrabold">{property.price}</p>
+        <div className="absolute bottom-3 left-3 text-white md:hidden z-[12]">
+          <p className="text-xl font-extrabold tabular-nums [text-shadow:0_1px_8px_rgb(0_0_0/0.45)]">{property.price}</p>
           {property.listingType === "rent" && property.leaseTerm && (
             <p className="text-xs text-amber-200 font-medium">
               {property.leaseTerm} Lease {property.furnishedStatus ? `· ${property.furnishedStatus}` : ""}
@@ -98,7 +104,7 @@ export default function PropertyListCard({
 
         {/* 3D Virtual Tour Badge if present */}
         {property.features?.includes("3d_tour") && (
-          <div className="absolute bottom-3 right-3 z-10">
+          <div className="absolute bottom-3 right-3 z-[12]">
             <span className="inline-flex items-center gap-1 rounded-full bg-slate-900/85 px-2.5 py-0.5 text-xs font-semibold text-emerald-300 backdrop-blur-md border border-emerald-500/30">
               <SparklesIcon className="h-3 w-3 text-emerald-400" />
               <span>3D Tour</span>
