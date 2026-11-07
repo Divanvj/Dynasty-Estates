@@ -2,6 +2,7 @@
 
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 import { CheckIcon, XMarkIcon } from "@/components/icons";
 import CustomSelect from "@/components/custom-select";
@@ -100,11 +101,11 @@ export default function PropertyInquiryButton({
       </button>
 
       {/* Interactive Modal */}
-      {isOpen && (
+      {isOpen && createPortal(
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
           onClick={() => setIsOpen(false)}
         >
           <div
@@ -279,7 +280,8 @@ export default function PropertyInquiryButton({
               </form>
             )}
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
     </>
   );
