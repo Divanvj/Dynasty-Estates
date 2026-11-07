@@ -10,13 +10,15 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | alet-elize | `alet-elize/map-touch-targets` | Map touch targets: `dynasty-property-map.tsx` overlay chips, and the Leaflet control/cluster sizing in `globals.css` | 2026-11-06 |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/ux-phase4-listing-contact-first` | UX Phase 4 listing page: `property/[slug]/page.tsx`, `true-cost-calculator.tsx`, `property-inquiry-button.tsx` | 2026-11-07 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
 
+- 2026-11-07 — `DESKTOP-1R37EBU/ux-phase4-listing-contact-first` merged. Listing
+  sidebar: agent card first, then True Cost (now collapsed behind "Adjust the
+  figures" at every width). "Book a viewing" is the only filled CTA.
 - 2026-11-07 — `DESKTOP-1R37EBU/ux-phase3-one-header` merged. **Pages no longer draw
   their own header.** `SiteHeader` (root layout, lg+) is the site header;
   `MobileAppBar` below lg. A page keeps only a title/action row (a `<div>`) —
