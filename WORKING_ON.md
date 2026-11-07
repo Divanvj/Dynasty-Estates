@@ -10,13 +10,15 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | alet-elize | `alet-elize/map-touch-targets` | Map touch targets: `dynasty-property-map.tsx` overlay chips, and the Leaflet control/cluster sizing in `globals.css` | 2026-11-06 |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/ux-phase2-phone-legibility` | UX Phase 2: `property-list-card.tsx`, `property-grid-card.tsx`, `home-spotlight.tsx`, search placeholders (`home-hero-search.tsx`, `expandable-search-panel.tsx`, `search/page.tsx` one string) | 2026-11-07 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
 
+- 2026-11-07 — `DESKTOP-1R37EBU/ux-phase2-phone-legibility` merged. List-card
+  photo layers are now: frames z-10, scrim z-[11], badges/price z-[12],
+  card link z-15, arrows z-20, Save z-30 (`property-list-card.tsx`).
 - 2026-11-07 — `DESKTOP-1R37EBU/ux-phase1-honesty` merged (UX Phase 1, see
   `docs/ux-audit/07-implementation-plan-2026-11-07.md`). Floor Plan tab only
   shows when a listing has `floorPlanImage`; agents attach one in the wizard
