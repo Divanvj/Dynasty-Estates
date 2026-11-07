@@ -52,7 +52,7 @@ export default function PropertyMediaTabs({
   const streetViewQuery = encodeURIComponent(`${location || title}, South Africa`);
 
   return (
-    <div className="rounded-panel border border-white/80 dark:border-white/10 bg-white/55 dark:bg-surface-panel/80 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl md:p-8">
+    <div className="rounded-panel border border-white/80 dark:border-white/10 bg-white/55 dark:bg-surface-panel/80 p-3 sm:p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl md:p-8">
       {/* Media Tab Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/70 dark:border-white/10 pb-4 mb-6">
         <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 dark:bg-surface-ink/80 border border-slate-200/80 dark:border-white/10 w-fit">

@@ -151,9 +151,14 @@ export default function VirtualTour3DViewer({
   // Measuring tool state
   const [measurePoints, setMeasurePoints] = useState<{ x: number; y: number }[]>([]);
   const [measureDistance, setMeasureDistance] = useState<string | null>(null);
+  /** Phones only: the panel holding modes, rooms, Auto-Pan and zoom. */
+  const [moreOpen, setMoreOpen] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const currentRoom = defaultRooms.find((r) => r.id === currentRoomId) || defaultRooms[0];
+  const roomIndex = Math.max(0, defaultRooms.findIndex((r) => r.id === currentRoom.id));
+  const stepRoom = (delta: number) =>
+    switchRoom(defaultRooms[(roomIndex + delta + defaultRooms.length) % defaultRooms.length].id);
 
   // Auto-rotation effect
   useEffect(() => {
@@ -270,6 +275,8 @@ export default function VirtualTour3DViewer({
   return (
     <div
       ref={containerRef}
+      role="region"
+      aria-label={title ? `3D tour of ${title}` : "3D tour"}
       className={`relative w-full overflow-hidden rounded-3xl border border-slate-800 bg-slate-950 text-white shadow-2xl select-none ${
         /* `h-dvh`, not `h-screen`. `h-screen` is `100vh`, which on a phone is
            the viewport as it would be with the browser chrome collapsed — so a
@@ -285,20 +292,19 @@ export default function VirtualTour3DViewer({
       {/* 1. TOP STATUS & CONTROLS HUD */}
       <div className="absolute top-4 left-4 right-4 z-30 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
         {/* Left: Room Badge & Title */}
-        <div className="flex items-center gap-2 pointer-events-auto">
-          <span className="flex items-center gap-1.5 rounded-full bg-rose-600/90 px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-white backdrop-blur-md shadow-md">
-            <span className="h-2 w-2 rounded-full bg-white animate-pulse" />
-            <span>{title ? `${title} · 3D Tour` : "3D Interactive Live Tour"}</span>
-          </span>
+        {/* No title pill: "<HOUSE NAME> · 3D TOUR" in pink capitals repeated the
+            page heading and, on a phone, covered a quarter of the photo. The
+            room badge is for `sm` up; phones show the room in the bottom row. */}
+        <div className="hidden items-center gap-2 pointer-events-auto sm:flex">
           <span className="rounded-full bg-black/60 border border-white/20 px-3 py-1 text-xs font-semibold text-white backdrop-blur-md dark:border-white/10 dark:bg-surface-panel/80">
             {currentRoom.name}
           </span>
         </div>
 
         {/* Right: View Mode Toggle & Fullscreen */}
-        <div className="flex items-center gap-2 pointer-events-auto">
-          {/* Mode Switcher */}
-          <div className="flex items-center rounded-full bg-black/60 border border-white/20 p-0.5 backdrop-blur-md text-xs font-semibold dark:border-white/10 dark:bg-surface-ink/80">
+        <div className="ml-auto flex items-center gap-2 pointer-events-auto">
+          {/* Mode Switcher (phones: in the More panel) */}
+          <div className="hidden items-center rounded-full sm:flex bg-black/60 border border-white/20 p-0.5 backdrop-blur-md text-xs font-semibold dark:border-white/10 dark:bg-surface-ink/80">
             <button
               type="button"
               onClick={() => setViewMode("walkthrough")}
@@ -330,7 +336,8 @@ export default function VirtualTour3DViewer({
           <button
             type="button"
             onClick={toggleFullscreen}
-            className="flex h-8 w-8 items-center justify-center rounded-full bg-black/60 border border-white/20 text-white hover:bg-white hover:text-slate-950 transition-all cursor-pointer backdrop-blur-md dark:bg-surface-ink/80 dark:border-white/10 dark:text-white dark:hover:bg-emerald-600"
+            aria-label={isFullscreen ? "Exit full screen" : "Full screen"}
+            className="flex h-10 w-10 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-black/60 border border-white/20 text-white hover:bg-white hover:text-slate-950 transition-all cursor-pointer backdrop-blur-md dark:bg-surface-ink/80 dark:border-white/10 dark:text-white dark:hover:bg-emerald-600"
             title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
           >
             {isFullscreen ? "⤓" : "⤢"}
@@ -379,7 +386,7 @@ export default function VirtualTour3DViewer({
                     switchRoom(spot.targetRoomId);
                   }}
                   style={{ left: `${screenX}%`, top: `${spot.y}%` }}
-                  className="group absolute -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 rounded-full bg-white/90 px-3.5 py-1.5 text-xs font-bold text-slate-950 shadow-[0_8px_24px_rgba(0,0,0,0.5)] border border-white/80 hover:bg-rose-600 hover:text-white transition-all transform hover:scale-110 cursor-pointer backdrop-blur-md dark:bg-surface-panel/90 dark:border-white/20 dark:text-white dark:hover:bg-emerald-600 dark:hover:border-emerald-400"
+                  className="group absolute -translate-x-1/2 -translate-y-1/2 hidden sm:flex items-center gap-2 rounded-full bg-white/90 px-3.5 py-1.5 text-xs font-bold text-slate-950 shadow-[0_8px_24px_rgba(0,0,0,0.5)] border border-white/80 hover:bg-rose-600 hover:text-white transition-all transform hover:scale-110 cursor-pointer backdrop-blur-md dark:bg-surface-panel/90 dark:border-white/20 dark:text-white dark:hover:bg-emerald-600 dark:hover:border-emerald-400"
                 >
                   <span className="h-2.5 w-2.5 rounded-full bg-rose-500 group-hover:bg-white animate-ping" />
                   <span>{spot.label}</span>
@@ -393,7 +400,7 @@ export default function VirtualTour3DViewer({
               <div
                 key={tag.title}
                 style={{ left: `${tag.x}%`, top: `${tag.y}%` }}
-                className="absolute -translate-x-1/2 -translate-y-1/2 z-20"
+                className="absolute -translate-x-1/2 -translate-y-1/2 z-20 hidden sm:block"
               >
                 <button
                   type="button"
@@ -414,7 +421,7 @@ export default function VirtualTour3DViewer({
             <div className="absolute top-20 left-1/2 -translate-x-1/2 z-30 max-w-sm rounded-2xl border border-white/30 bg-slate-900/95 p-4 shadow-2xl backdrop-blur-xl text-white animate-in zoom-in-95 duration-150 dark:border-white/10">
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold uppercase tracking-wider">
-                  <span>✓ Verified Specification</span>
+                  <span>Specification</span>
                 </div>
                 <button
                   type="button"
@@ -430,7 +437,7 @@ export default function VirtualTour3DViewer({
           )}
 
           {/* Instructions Overlay Banner (Fades out when interacting) */}
-          <div className="absolute bottom-24 left-1/2 -translate-x-1/2 pointer-events-none rounded-full bg-black/60 border border-white/20 px-4 py-1.5 text-xs font-medium text-slate-300 backdrop-blur-md dark:border-white/10">
+          <div className="absolute bottom-24 left-1/2 hidden -translate-x-1/2 pointer-events-none rounded-full sm:block bg-black/60 border border-white/20 px-4 py-1.5 text-xs font-medium text-slate-300 backdrop-blur-md dark:border-white/10">
             Click & drag to look around 360° • Click room beacons to walk through
           </div>
         </div>
@@ -551,7 +558,158 @@ export default function VirtualTour3DViewer({
       )}
 
       {/* 5. BOTTOM ROOM NAVIGATOR BAR */}
-      <div className="absolute bottom-4 left-4 right-4 z-30 flex flex-col sm:flex-row items-center justify-between gap-3 pointer-events-none">
+      {/* Phones: one row — previous room, room name, next room, More. The
+          full bar below crowded ~17 controls onto a 430px photo. */}
+      <div className="absolute inset-x-3 bottom-3 z-30 flex items-center gap-2 sm:hidden">
+        <button
+          type="button"
+          onClick={() => stepRoom(-1)}
+          aria-label="Previous room"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/20 bg-black/60 text-lg text-white backdrop-blur-md cursor-pointer"
+        >
+          ‹
+        </button>
+        <p aria-live="polite" className="flex min-h-11 min-w-0 flex-1 items-center justify-center rounded-2xl bg-black/60 px-3 py-1 text-center text-xs font-semibold leading-tight text-white backdrop-blur-md">
+          {currentRoom.name}
+        </p>
+        <button
+          type="button"
+          onClick={() => stepRoom(1)}
+          aria-label="Next room"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/20 bg-black/60 text-lg text-white backdrop-blur-md cursor-pointer"
+        >
+          ›
+        </button>
+        <button
+          type="button"
+          onClick={() => setMoreOpen(true)}
+          aria-expanded={moreOpen}
+          aria-controls="tour-more-panel"
+          aria-label="More tour options"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/20 bg-black/60 text-lg font-bold text-white backdrop-blur-md cursor-pointer"
+        >
+          <span aria-hidden="true">⋯</span>
+        </button>
+      </div>
+
+      {/* Phones: everything else, one tap away. Inside the tour frame, so it
+          also works in full-screen mode. */}
+      {moreOpen && (
+        <div className="absolute inset-0 z-40 flex flex-col justify-end sm:hidden">
+          <button
+            type="button"
+            aria-label="Close tour options"
+            onClick={() => setMoreOpen(false)}
+            className="absolute inset-0 bg-black/40 cursor-pointer"
+          />
+          <div
+            id="tour-more-panel"
+            role="dialog"
+            aria-label="Tour options"
+            className="relative max-h-[85%] overflow-y-auto rounded-t-3xl border-t border-white/15 bg-slate-950/95 p-4 text-white animate-in fade-in slide-in-from-bottom-2 duration-200"
+          >
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-bold">Tour options</p>
+              <button
+                type="button"
+                onClick={() => setMoreOpen(false)}
+                className="h-10 rounded-full px-3 text-sm font-semibold text-slate-300 cursor-pointer"
+              >
+                Done
+              </button>
+            </div>
+
+            <p className="mt-3 text-xs font-semibold text-slate-400">View</p>
+            <div className="mt-1.5 grid grid-cols-3 gap-1.5">
+              {([
+                ["walkthrough", "360° walk"],
+                ["dollhouse", "Dollhouse"],
+                ["measure", "Measure"],
+              ] as const).map(([mode, label]) => (
+                <button
+                  key={mode}
+                  type="button"
+                  onClick={() => {
+                    setViewMode(mode);
+                    if (mode === "measure") {
+                      setMeasurePoints([]);
+                      setMeasureDistance(null);
+                    }
+                    setMoreOpen(false);
+                  }}
+                  className={`h-11 rounded-xl text-sm font-semibold cursor-pointer ${
+                    viewMode === mode ? "bg-white text-slate-950" : "bg-white/10 text-white"
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+
+            <p className="mt-4 text-xs font-semibold text-slate-400">Rooms</p>
+            <div className="mt-1.5 grid grid-cols-2 gap-1.5">
+              {defaultRooms.map((room) => (
+                <button
+                  key={room.id}
+                  type="button"
+                  onClick={() => {
+                    switchRoom(room.id);
+                    setMoreOpen(false);
+                  }}
+                  className={`min-h-11 rounded-xl px-3 py-2 text-left text-sm font-semibold cursor-pointer ${
+                    currentRoomId === room.id ? "bg-white text-slate-950" : "bg-white/10 text-white"
+                  }`}
+                >
+                  {room.name}
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setIsAutoRotating((prev) => !prev)}
+                className={`h-11 rounded-xl px-4 text-sm font-semibold cursor-pointer ${
+                  isAutoRotating ? "bg-emerald-600 text-white" : "bg-white/10 text-white"
+                }`}
+              >
+                {isAutoRotating ? "Pause auto-pan" : "Auto-pan"}
+              </button>
+              <div className="flex h-11 items-center rounded-xl bg-white/10">
+                <button
+                  type="button"
+                  onClick={() => setZoom((z) => Math.max(1, z - 0.2))}
+                  aria-label="Zoom out"
+                  className="h-11 w-11 text-lg cursor-pointer"
+                >
+                  −
+                </button>
+                <span className="w-12 text-center text-sm tabular-nums">{(zoom * 100).toFixed(0)}%</span>
+                <button
+                  type="button"
+                  onClick={() => setZoom((z) => Math.min(1.6, z + 0.2))}
+                  aria-label="Zoom in"
+                  className="h-11 w-11 text-lg cursor-pointer"
+                >
+                  +
+                </button>
+              </div>
+              {virtualTourUrl && (
+                <a
+                  href={virtualTourUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-11 items-center rounded-xl bg-white/10 px-4 text-sm font-semibold text-white"
+                >
+                  Matterport ↗
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="absolute bottom-4 left-4 right-4 z-30 hidden sm:flex sm:flex-row items-center justify-between gap-3 pointer-events-none">
         {/* Room Picker Tabs */}
         <div className="flex flex-wrap items-center gap-1.5 rounded-2xl bg-black/70 border border-white/20 p-1 backdrop-blur-xl pointer-events-auto dark:border-white/10">
           {defaultRooms.map((room) => (
