@@ -61,9 +61,9 @@ export default function MapSearchPage() {
         <div className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 dark:border-white/10 dark:bg-[#0b1719]/70 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] dark:shadow-[0_12px_28px_rgba(0,0,0,0.4)] backdrop-blur-xl">
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-emerald-400/80 font-bold hidden sm:block">Geospatial Intelligence</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-emerald-400/80 font-bold hidden sm:block">Map search</p>
               <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">
-                <span className="hidden sm:inline">Dynasty Live </span>Map &amp; Street View
+                Homes on the map
               </h1>
             </div>
           </div>

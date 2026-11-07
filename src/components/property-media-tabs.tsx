@@ -97,8 +97,8 @@ export default function PropertyMediaTabs({
         {/* An instruction about clicking is meaningless on paper. */}
         <div className="no-print hidden text-xs text-slate-600 font-medium sm:block dark:text-slate-400">
           {activeTab === "floorplan" && `Floor plan · ${area} ${erfSize ? `(Erf ${erfSize})` : ""}`}
-          {activeTab === "virtual-tour" && "Interactive 3D Walkthrough Experience"}
-          {activeTab === "street-view" && "Google Maps & 360° Street View Inspection"}
+          {activeTab === "virtual-tour" && "3D walkthrough"}
+          {activeTab === "street-view" && "Street View and map"}
         </div>
       </div>
 
@@ -153,7 +153,7 @@ export default function PropertyMediaTabs({
             <div className="flex items-center gap-2">
               <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
               <span>
-                <strong>Spatial Navigation Active:</strong> Click and drag to pan 360°, switch room zones, or click <strong>Dollhouse</strong> for isometric cutaway.
+                <strong>Tip:</strong> Click and drag to pan 360°, switch room zones, or click <strong>Dollhouse</strong> for isometric cutaway.
               </span>
             </div>
             {/* No "Back to Gallery" button. It returned to the Photos tab,
