@@ -3,15 +3,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { OPEN_ACCOUNT_MENU_EVENT } from "@/components/account-actions";
+
 import {
   BriefcaseIcon,
-  ChartBarIcon,
   HeartIcon,
   HomeIcon,
   MapSplitIcon,
   SearchIcon,
   ShieldIcon,
   SparklesIcon,
+  UserIcon,
   UsersIcon,
 } from "@/components/icons";
 import { useUserRole, type UserRole } from "@/lib/use-user-role";
@@ -22,7 +24,18 @@ type NavItem = {
   icon: typeof HomeIcon;
   /** Extra paths that should also light this tab up. */
   match?: string[];
+  /** A button that opens the account menu instead of a link. */
+  action?: "account";
 };
+
+/*
+  Account, not Insights, closes every role's bar (owner decision, 7 Nov).
+  Insights was a sample-data page in the most valuable slot on the phone;
+  it is still in Tools and in the account menu. There is no account page, so
+  the tab opens the same menu as the Profile button in MobileAppBar: saved
+  homes, collections, enquiries, the role's portal, theme and sign in/out.
+*/
+const ACCOUNT: NavItem = { href: "#account", label: "Account", icon: UserIcon, action: "account" };
 
 /**
  * Below `lg` the desktop nav is hidden, which previously left phones with no
@@ -35,25 +48,25 @@ const NAV: Record<UserRole, NavItem[]> = {
     { href: "/map-search", label: "Map", icon: MapSplitIcon },
     { href: "/ai-search", label: "AI Search", icon: SparklesIcon },
     { href: "/saved", label: "Saved", icon: HeartIcon, match: ["/collections", "/compare"] },
-    { href: "/insights", label: "Insights", icon: ChartBarIcon, match: ["/calculators", "/agents", "/inquiries"] },
+    ACCOUNT,
   ],
   Seller: [
     { href: "/seller/portal", label: "Portal", icon: HomeIcon },
     { href: "/seller/listings/new", label: "List", icon: BriefcaseIcon },
     { href: "/search", label: "Browse", icon: SearchIcon, match: ["/property", "/for-sale", "/to-rent"] },
-    { href: "/insights", label: "Insights", icon: ChartBarIcon, match: ["/calculators"] },
+    ACCOUNT,
   ],
   Agent: [
     { href: "/agent/dashboard", label: "Console", icon: BriefcaseIcon },
     { href: "/seller/listings/new", label: "Mandate", icon: HomeIcon },
     { href: "/search", label: "Browse", icon: SearchIcon, match: ["/property", "/for-sale", "/to-rent"] },
     { href: "/agents", label: "Directory", icon: UsersIcon },
-    { href: "/insights", label: "Insights", icon: ChartBarIcon },
+    ACCOUNT,
   ],
   Admin: [
     { href: "/admin", label: "Admin", icon: ShieldIcon },
     { href: "/search", label: "Listings", icon: SearchIcon, match: ["/property", "/for-sale", "/to-rent"] },
-    { href: "/insights", label: "Insights", icon: ChartBarIcon },
+    ACCOUNT,
   ],
 };
 
@@ -94,6 +107,25 @@ export default function MobileNav() {
       <ul className="mx-auto flex h-full w-full max-w-lg items-stretch justify-around px-1">
         {items.map((item) => {
           const Icon = item.icon;
+          if (item.action === "account") {
+            return (
+              <li key={item.href} className="min-w-0 flex-1">
+                <button
+                  type="button"
+                  data-account-tab
+                  onClick={() => window.dispatchEvent(new Event(OPEN_ACCOUNT_MENU_EVENT))}
+                  className="flex h-full w-full cursor-pointer flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 text-slate-600 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200"
+                >
+                  <span className="flex h-7 w-10 items-center justify-center rounded-full">
+                    <Icon className="h-[18px] w-[18px]" />
+                  </span>
+                  <span className="max-w-full truncate text-xs font-semibold leading-none tracking-tight">
+                    {item.label}
+                  </span>
+                </button>
+              </li>
+            );
+          }
           const active = isActive(item);
           return (
             <li key={item.href} className="min-w-0 flex-1">

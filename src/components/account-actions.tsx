@@ -26,6 +26,9 @@ const ROLE_BADGES: Record<UserRole, { label: string; icon: typeof UserIcon; tone
   Admin: { label: "Platform Moderator", icon: ShieldIcon, tone: "text-purple-600" },
 };
 
+/** Dispatched on `window` by the phone tab bar's Account tab. */
+export const OPEN_ACCOUNT_MENU_EVENT = "dynasty:open-account-menu";
+
 export default function AccountActions({ showOnMobile = false }: { showOnMobile?: boolean } = {}) {
   const { user: firebaseUser, demoUser, profile, signOut } = useAuth();
   const { role: activeRole } = useUserRole();
@@ -115,6 +118,9 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
+      // The tab bar's Account tab toggles this menu itself; closing it here
+      // first would make every tap on an open menu close-then-reopen.
+      if ((event.target as Element | null)?.closest?.("[data-account-tab]")) return;
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
@@ -143,6 +149,22 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen, showSupportModal]);
+
+  /*
+    The phone tab bar's Account tab opens this menu (MobileNav dispatches the
+    event). Only the instance in MobileAppBar (`showOnMobile`) listens: the
+    desktop one is hidden below `lg`, and opening both would stack two panels.
+    The tab is at the bottom and the menu opens under the app bar at the top,
+    which is sticky, so it is on screen wherever the page is scrolled.
+  */
+  useEffect(() => {
+    if (!showOnMobile) return;
+    function handleOpenRequest() {
+      setIsOpen((wasOpen) => !wasOpen);
+    }
+    window.addEventListener(OPEN_ACCOUNT_MENU_EVENT, handleOpenRequest);
+    return () => window.removeEventListener(OPEN_ACCOUNT_MENU_EVENT, handleOpenRequest);
+  }, [showOnMobile]);
 
   async function handleSignOut() {
     setIsOpen(false);
@@ -227,7 +249,7 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
             id="account-menu-panel"
             ref={panelRef}
             onKeyDown={handlePanelKeyDown}
-            className="absolute right-0 top-full mt-2 w-76 sm:w-80 rounded-2xl border border-slate-200/90 dark:border-white/10 bg-white/95 dark:bg-[#071315]/95 p-3 shadow-2xl backdrop-blur-xl z-50 animate-in fade-in-0 zoom-in-95 duration-150"
+            className="absolute right-0 top-full mt-2 w-76 sm:w-80 rounded-2xl border border-slate-200/90 dark:border-white/10 bg-white dark:bg-[#071315] p-3 shadow-2xl z-50 animate-in fade-in-0 zoom-in-95 duration-150"
           >
             {/* User Identity Header */}
             <div className="flex items-center gap-3 pb-3 border-b border-slate-200/80 dark:border-white/10">
