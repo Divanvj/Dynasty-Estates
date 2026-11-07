@@ -105,10 +105,6 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
               169px toggle needed 20px more than the row had and pushed the
               document into a horizontal scroll. */}
           <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-emerald-800 dark:text-emerald-400">
-              Featured
-            </p>
-            <span className="hidden text-slate-300 min-[400px]:inline dark:text-slate-600">•</span>
             {/* Direct Rent vs Buy Switcher */}
             <div className="inline-flex rounded-full border border-slate-200/90 bg-white/80 dark:border-white/10 dark:bg-surface-ink/60 p-0.5 shadow-sm">
               <button

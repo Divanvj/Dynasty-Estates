@@ -906,7 +906,7 @@ export default function ExpandableSearchPanel({
           {/* Soft Dimming Backdrop */}
           <div
             onClick={() => setIsOpen(false)}
-            className={`fixed inset-0 z-[9999] bg-slate-950/50 backdrop-blur-xs duration-200 ${
+            className={`fixed inset-0 z-[9999] bg-slate-950/50 backdrop-blur-xs duration-200 transition-none ${
               closing ? "animate-out fade-out" : "animate-in fade-in"
             }`}
             aria-hidden="true"
@@ -943,9 +943,13 @@ export default function ExpandableSearchPanel({
               ref={modalCardRef}
               // --dyn-enter-scale overrides what `zoom-in-95` sets, to pair with
               // the origin pinned to the search bar in the layout effect above.
+              // `transition-none` matters: `duration-*` also sets
+              // transition-duration, and with the default `transition: all`
+              // the pinned transform-origin slid across the screen while the
+              // zoom played, so the card drifted as it opened.
               style={{ "--dyn-enter-scale": ENTER_SCALE } as React.CSSProperties}
-              className={`relative flex h-[100dvh] max-h-none w-full max-w-4xl flex-col overflow-hidden border-slate-200/90 bg-white shadow-[0_25px_90px_rgba(15,23,42,0.4)] duration-200 sm:h-auto sm:max-h-[88vh] sm:rounded-3xl sm:border dark:border-white/10 dark:bg-[#0a1517] dark:shadow-[0_25px_90px_rgba(0,0,0,0.8)] ${
-                closing ? "animate-out fade-out zoom-out-95" : "animate-in fade-in zoom-in-95"
+              className={`relative flex h-[100dvh] max-h-none w-full max-w-4xl flex-col overflow-hidden border-slate-200/90 bg-white shadow-[0_25px_90px_rgba(15,23,42,0.4)] sm:h-auto sm:max-h-[88vh] sm:rounded-3xl sm:border dark:border-white/10 dark:bg-[#0a1517] dark:shadow-[0_25px_90px_rgba(0,0,0,0.8)] ${
+                closing ? "animate-out fade-out zoom-out-95 duration-200 transition-none" : "animate-in fade-in zoom-in-95 duration-[260ms] transition-none"
               }`}
             >
               {/* UNIFIED CONTINUOUS BOX HEADER: SEARCH CONSOLE */}
@@ -1140,7 +1144,9 @@ export default function ExpandableSearchPanel({
           {/* `px-4` on a phone, not `px-5`: 40px of horizontal padding left
               only 256px of content at 320px, and the price row is two controls
               side by side inside it. */}
-          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 scrollbar-thin bg-white sm:px-5 dark:bg-[#0a1517]">
+          {/* The filters settle a beat after the card (70ms) so the panel arrives
+              as one motion rather than everything landing at once. */}
+          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 scrollbar-thin bg-white sm:px-5 dark:bg-[#0a1517] animate-in fade-in slide-in-from-bottom-2 duration-300 transition-none [animation-delay:70ms]">
             {/* Category Intent Pill Slider */}
             <div className="flex items-center justify-between pb-1">
               <div className="relative grid grid-cols-2 w-56 sm:w-64 p-1 rounded-full bg-slate-100 dark:bg-[#061214] border border-slate-200 dark:border-white/10 shadow-inner transition-all duration-300 hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_18px_rgba(16,185,129,0.38)] dark:hover:shadow-[0_0_22px_rgba(52,211,153,0.38)]">

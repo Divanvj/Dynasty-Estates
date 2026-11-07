@@ -93,9 +93,23 @@ Each row: **what was there → what replaced it (or "removed")**, and where. "Ad
 | "Google Maps & 360° Street View Inspection" | "Street View and map" | same |
 | "Spatial Navigation Active:" | "Tip:" | same |
 
-## Phase 7 — phone tab bar (this branch)
+## Phase 7 — phone tab bar (merged 7 Nov)
 
 | Was | Now | Where |
 |---|---|---|
 | "Insights" tab (Buyer, Seller, Agent, Admin) | "Account" tab that opens the account menu (Insights still in Tools and in that menu) | `mobile-nav.tsx`, `account-actions.tsx` |
 | Account menu slightly see-through on phones (blur didn't work inside the top bar; text behind showed through) | Solid background | `account-actions.tsx` |
+
+## Phase 9 — polish (merged 7 Nov)
+
+| Was | Now | Where |
+|---|---|---|
+| Page shifting sideways behind the search panel, pop-ups and the phone menu (the scrollbar vanished when scrolling locked) | Scrollbar space always reserved, so nothing moves | `globals.css` |
+| Search panel: zoom origin sliding across the screen while it opened (a hidden 0.2 s transition on every property) | Removed; only the intended animations run | `expandable-search-panel.tsx` |
+| Search panel opening in 0.2 s, everything at once | Card grows from the search bar over 0.26 s; the filters fade up 70 ms later; closing stays 0.2 s | same |
+| Theme switch knob overshooting and springing back | Smooth ease-out, no overshoot | `theme-toggle.tsx` |
+| 3D tour hotspot buttons bouncing up and down constantly | Still (the small pulsing dot on each stays) | `virtual-tour-3d-viewer.tsx` |
+| Map panel blank for several seconds while tiles load | "Loading map…" until the first tiles arrive; "The map couldn’t load. Check your connection." if none do | `dynasty-property-map.tsx` |
+| "Catalogue •" label above "South African Homes For Sale" | Removed | `search/page.tsx` |
+| "Featured •" label above "Homes for sale" on the home feed | Removed | `home-trending-listings.tsx` |
+| "Move-In Capital Transparency" label above "Estimated Move-In Schedule" (rentals) | Removed | `property/[slug]/page.tsx` |

@@ -311,6 +311,11 @@
 
 html {
   scroll-behavior: smooth;
+  /* Reserve the scrollbar's width even while scrolling is locked. Every
+     overlay here (search panel, sheets, dialogs) sets body overflow hidden;
+     with classic scrollbars that removed a 6px bar and the whole page shifted
+     sideways behind the overlay on open, and back on close. */
+  scrollbar-gutter: stable;
 }
 
 body {

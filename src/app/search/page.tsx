@@ -492,8 +492,6 @@ function SearchContent() {
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 dark:border-white/10 pb-4">
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-1.5">
-              <span className="text-xs uppercase tracking-[0.24em] text-slate-600 dark:text-slate-400 font-bold">Catalogue</span>
-              <span className="text-slate-300 dark:text-slate-600">•</span>
               {/* Category Segmented Control: Strict Separation. Order matches
                   the search panel rendered further down this same page — they
                   sit ~160px apart, so a mismatch is immediately visible.

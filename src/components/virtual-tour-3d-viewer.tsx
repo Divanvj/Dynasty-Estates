@@ -379,7 +379,7 @@ export default function VirtualTour3DViewer({
                     switchRoom(spot.targetRoomId);
                   }}
                   style={{ left: `${screenX}%`, top: `${spot.y}%` }}
-                  className="group absolute -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 rounded-full bg-white/90 px-3.5 py-1.5 text-xs font-bold text-slate-950 shadow-[0_8px_24px_rgba(0,0,0,0.5)] border border-white/80 hover:bg-rose-600 hover:text-white transition-all transform hover:scale-110 cursor-pointer backdrop-blur-md animate-bounce dark:bg-surface-panel/90 dark:border-white/20 dark:text-white dark:hover:bg-emerald-600 dark:hover:border-emerald-400"
+                  className="group absolute -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 rounded-full bg-white/90 px-3.5 py-1.5 text-xs font-bold text-slate-950 shadow-[0_8px_24px_rgba(0,0,0,0.5)] border border-white/80 hover:bg-rose-600 hover:text-white transition-all transform hover:scale-110 cursor-pointer backdrop-blur-md dark:bg-surface-panel/90 dark:border-white/20 dark:text-white dark:hover:bg-emerald-600 dark:hover:border-emerald-400"
                 >
                   <span className="h-2.5 w-2.5 rounded-full bg-rose-500 group-hover:bg-white animate-ping" />
                   <span>{spot.label}</span>
