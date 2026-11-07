@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 import { formatDate } from "@/lib/formatters";
 import {
@@ -209,8 +210,8 @@ export default function CollectionsPage() {
         )}
 
         {/* Modal: Create Collection */}
-        {showCreateModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 p-4 backdrop-blur-sm">
+        {showCreateModal && createPortal(
+          <div className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-950/40 p-4 backdrop-blur-sm">
             <div className="w-full max-w-md rounded-panel border border-white/80 bg-white/90 p-6 shadow-2xl backdrop-blur-2xl dark:bg-surface-panel dark:border-white/10 dark:shadow-[0_25px_60px_rgba(0,0,0,0.8)]">
               <h2 className="text-xl font-semibold text-slate-950 dark:text-white">Create Property Collection</h2>
               <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
@@ -260,7 +261,8 @@ export default function CollectionsPage() {
                 </div>
               </form>
             </div>
-          </div>
+          </div>,
+          document.body,
         )}
 
         {/* Collection Selector Tabs */}
@@ -320,11 +322,11 @@ export default function CollectionsPage() {
             </div>
 
             {/* Invite Partner Modal */}
-            {showInviteModal && (
+            {showInviteModal && createPortal(
               <div
                 role="dialog"
                 aria-modal="true"
-                className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+                className="fixed inset-0 z-[80] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
                 onClick={() => setShowInviteModal(false)}
               >
                 <div
@@ -395,7 +397,8 @@ export default function CollectionsPage() {
                     </form>
                   )}
                 </div>
-              </div>
+              </div>,
+              document.body,
             )}
 
             {/* Property Cards in Collection */}

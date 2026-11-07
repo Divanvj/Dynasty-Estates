@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import {
   ArrowLeftIcon,
   CheckIcon,
@@ -131,11 +132,11 @@ export default function AgentsPage() {
         </div>
 
         {/* Contact Modal */}
-        {selectedAgent && (
+        {selectedAgent && createPortal(
           <div
             role="dialog"
             aria-modal="true"
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+            className="fixed inset-0 z-[80] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
             onClick={() => setSelectedAgent(null)}
           >
             <div
@@ -189,7 +190,8 @@ export default function AgentsPage() {
                 </form>
               )}
             </div>
-          </div>
+          </div>,
+          document.body,
         )}
       </div>
     </main>
