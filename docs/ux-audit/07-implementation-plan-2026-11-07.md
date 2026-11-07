@@ -204,6 +204,10 @@ No design decisions needed except where marked ⚠.
 
 - **9.1 Map loading message:** "Loading map…" in the empty map panel until tiles arrive (`dynasty-property-map.tsx`, after the other agent's claim clears).
 - **9.2 Smooth motion:** replace the bounce curve at `theme-toggle.tsx:245` and `animate-bounce` at `virtual-tour-3d-viewer.tsx:377` with a smooth ease-out.
+- **9.4 Smoother search panel opening** *(owner request, 7 Nov)*:
+  - Make `expandable-search-panel.tsx` open and close as one smooth motion: the height or grid-rows expands with an ease-out curve, and the content fades in slightly after.
+  - Respect `prefers-reduced-motion`.
+  - Accept: no jump or snap when opening at 375 and 1280 px.
 - **9.3 Fewer eyebrow labels:** keep the small spaced-out labels only where they add meaning (e.g. Spotlight); remove the rest on home, search and listing.
 
 ---

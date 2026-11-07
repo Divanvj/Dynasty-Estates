@@ -8,7 +8,7 @@ import {
   where,
   type WriteBatch,
 } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 
 import { db, isFirebaseConfigured, storage } from "./firebase";
 import {
@@ -259,6 +259,7 @@ export const FLOOR_PLAN_TYPES: Record<string, string> = {
   "application/pdf": "pdf",
 };
 export const FLOOR_PLAN_MAX_BYTES = 10 * 1024 * 1024;
+const FLOOR_PLAN_STALL_MS = 20_000;
 
 /**
  * Uploads an agent's floor plan as-is (no re-encoding: a PDF must stay a PDF,
@@ -274,10 +275,22 @@ export async function uploadFloorPlan(ownerId: string, file: File): Promise<List
   }
   const storagePath = `floor-plans/${ownerId}/${crypto.randomUUID()}.${ext}`;
   const target = ref(storage, storagePath);
+  // The SDK retries a refused request (CORS failure, missing bucket) silently
+  // for up to ten minutes, leaving the field on "Uploading…". Cancel once no
+  // bytes have moved for FLOOR_PLAN_STALL_MS and say so instead.
+  const task = uploadBytesResumable(target, file, { contentType: file.type });
+  let stall = setTimeout(() => task.cancel(), FLOOR_PLAN_STALL_MS);
+  const unsubscribe = task.on("state_changed", () => {
+    clearTimeout(stall);
+    stall = setTimeout(() => task.cancel(), FLOOR_PLAN_STALL_MS);
+  });
   try {
-    await uploadBytes(target, file, { contentType: file.type });
+    await task;
   } catch (error) {
     const code = (error as { code?: string }).code ?? "";
+    if (code === "storage/canceled") {
+      throw new Error("File storage isn't reachable right now, so the floor plan can't be saved. Try again later.", { cause: error });
+    }
     const status = (error as { status_?: number }).status_;
     if (status === 404 || code === "storage/bucket-not-found" || code === "storage/project-not-found") {
       throw new Error("File storage isn't set up on this site yet, so the floor plan can't be saved. This is our problem, not your file's.", { cause: error });
@@ -286,6 +299,9 @@ export async function uploadFloorPlan(ownerId: string, file: File): Promise<List
       throw new Error("You need to be signed in to upload a floor plan.", { cause: error });
     }
     throw new Error("The upload failed. Check your connection and try again.", { cause: error });
+  } finally {
+    clearTimeout(stall);
+    unsubscribe();
   }
   return { url: await getDownloadURL(target), storagePath, contentType: file.type, name: file.name };
 }
