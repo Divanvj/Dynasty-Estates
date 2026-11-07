@@ -9,13 +9,16 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/ux-phase11-tour-map` | UX Phase 11: `virtual-tour-3d-viewer.tsx`, `property-media-tabs.tsx`, `map-search/page.tsx`, `property-split-map-view.tsx`, `dynasty-property-map.tsx` | 2026-11-07 |
+| | | | |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
 
+- 2026-11-07 — UX Phase 11 merged: 3D tour phone layout (`virtual-tour-3d-viewer.tsx`),
+  full-screen `/map-search`; `DynastyPropertyMap` gained `focus` and
+  `clearSignal` props and resizes itself with a ResizeObserver.
 - 2026-11-07 — `DESKTOP-1R37EBU/ux-phase9-polish` merged. `html` now has
   `scrollbar-gutter: stable`; the search panel card uses `transition-none`
   (`duration-*` alone animates every property).
