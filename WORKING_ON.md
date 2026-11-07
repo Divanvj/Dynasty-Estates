@@ -9,7 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/ux-listing-show-day` | Listing: badges, show-day section (`on-show-banner.tsx`, new `lib/on-show.ts`), mock floor plans in `property-data.ts`, wizard show-day field, `property-grid-card.tsx` | 2026-11-07 |
+| | | | |
 
 ## Recently merged
 
