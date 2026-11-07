@@ -10,13 +10,17 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | alet-elize | `alet-elize/map-touch-targets` | Map touch targets: `dynasty-property-map.tsx` overlay chips, and the Leaflet control/cluster sizing in `globals.css` | 2026-11-06 |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/ux-phase1-honesty` | UX Phase 1: `property-media-tabs.tsx`, `auth/login`, home `page.tsx` panels, `agents/*` PPRA badge, `seller/listings/new`, `photo-intake.ts`, `seller-listings.ts`, `storage.rules` | 2026-11-07 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
 
+- 2026-11-07 — `DESKTOP-1R37EBU/ux-phase1-honesty` merged (UX Phase 1, see
+  `docs/ux-audit/07-implementation-plan-2026-11-07.md`). Floor Plan tab only
+  shows when a listing has `floorPlanImage`; agents attach one in the wizard
+  (step 5) → `floorPlanUrl` on the listing, `floor-plans/` rule added to
+  `storage.rules` (not deployed). Home metros panel and fake shortlists removed.
 - 2026-11-06 — `ux/audit-overhaul` (UX audit S1–S8) merged into `main`. Pull
   before editing the property page, media tabs or gallery lightbox.
 - 2026-11-06 — `alet-elize/mobile-polish` merged. **`--dyn-mobile-nav-h` is now
