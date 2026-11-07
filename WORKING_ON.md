@@ -9,13 +9,16 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/ux-phase9-polish` | UX Phase 9 polish: `expandable-search-panel.tsx` (open/close motion), `theme-toggle.tsx`, `virtual-tour-3d-viewer.tsx` (easing), `dynasty-property-map.tsx` (loading state), eyebrow labels on home/search/listing | 2026-11-07 |
+| | | | |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
 
+- 2026-11-07 — `DESKTOP-1R37EBU/ux-phase9-polish` merged. `html` now has
+  `scrollbar-gutter: stable`; the search panel card uses `transition-none`
+  (`duration-*` alone animates every property).
 - 2026-11-07 — the `alet-elize/map-touch-targets` claim was removed from the table:
   the owner confirmed no other agent is working (map touch work finished).
 - 2026-11-07 — `DESKTOP-1R37EBU/ux-phase7-account-tab` merged. Phone tab bar: "Account"
