@@ -172,17 +172,6 @@ export default function LoginPage() {
               <Link href="/" className="text-sm text-slate-600 hover:text-slate-900 transition-colors dark:text-slate-300 dark:hover:text-emerald-400">Back home</Link>
             </div>
 
-            <div className="mb-6 rounded-2xl border border-slate-300/50 bg-white/50 p-4 backdrop-blur-md dark:bg-surface-ink/60 dark:border-white/10">
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-700 dark:text-emerald-400">
-                Role-based access
-              </span>
-              <p className="mt-1 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
-                Your view of Dynasty Estates is determined by the account you sign in with.
-                Visitors browse as a Buyer; Seller, Agent and Admin tools unlock once you sign
-                in with credentials for that role.
-              </p>
-            </div>
-
             <div className="space-y-3">
               <button
                 type="button"

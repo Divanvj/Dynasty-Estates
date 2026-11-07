@@ -74,6 +74,16 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
   });
 
   /*
+    Six homes, then a way into the full search. The home page used to render
+    the entire catalogue here as long cards with full descriptions (~6,500px of
+    page at 1280). Map and Table keep every match: they are overviews.
+    No total count on the link — counts belong on results, not the home page.
+  */
+  const FEATURED_COUNT = 6;
+  const featured = filtered.slice(0, FEATURED_COUNT);
+  const seeAllHref = `/search?intent=${intent}${activeFilter !== "All" ? `&type=${encodeURIComponent(activeFilter)}` : ""}`;
+
+  /*
     Full-bleed below `md`. This panel is a bordered, padded, blurred box whose
     only contents are bordered, padded, blurred cards — a frame around frames.
     On a 375px screen it cost 34px, and with `main`'s own gutter that left the
@@ -96,7 +106,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
               document into a horizontal scroll. */}
           <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-emerald-800 dark:text-emerald-400">
-              {intent === "rent" ? "Trending Rentals" : "Properties For Sale"}
+              Featured
             </p>
             <span className="hidden text-slate-300 min-[400px]:inline dark:text-slate-600">•</span>
             {/* Direct Rent vs Buy Switcher */}
@@ -118,7 +128,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
             </div>
           </div>
           <h2 className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white md:text-3xl">
-            {intent === "rent" ? "Curated Rental Properties" : "Curated Luxury Homes & Estates"}
+            {intent === "rent" ? "Homes to rent" : "Homes for sale"}
           </h2>
         </div>
 
@@ -212,7 +222,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
           {/* 1. Grid View (Photo-first Cards) */}
           {viewMode === "grid" && (
             <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {filtered.map((card) => (
+              {featured.map((card) => (
                 <article
                   key={card.id}
                   className="group overflow-hidden rounded-card border border-white/70 bg-white/55 dark:border-white/10 dark:bg-surface-panel/75 shadow-[0_16px_35px_rgba(15,23,42,0.06)] dark:shadow-[0_16px_35px_rgba(0,0,0,0.4)] backdrop-blur-md transition-all hover:-translate-y-1 hover:shadow-xl"
@@ -306,7 +316,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
           {/* 2. List View (Detailed Horizontal Cards) */}
           {viewMode === "list" && (
             <div className="mt-6 space-y-4">
-              {filtered.map((card) => (
+              {featured.map((card) => (
                 <PropertyListCard key={card.id} property={card} />
               ))}
             </div>
@@ -323,6 +333,16 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
           {viewMode === "compact" && (
             <div className="mt-6">
               <PropertyCompactTable properties={filtered} />
+            </div>
+          )}
+          {(viewMode === "grid" || viewMode === "list") && filtered.length > FEATURED_COUNT && (
+            <div className="mt-6 flex justify-center">
+              <Link
+                href={seeAllHref}
+                className="pill-lg border border-emerald-400/30 bg-[var(--brand)] px-6 font-bold text-white shadow-sm transition-colors hover:bg-[var(--brand-hover)] dark:bg-emerald-600 dark:hover:bg-emerald-500"
+              >
+                {intent === "rent" ? "See all homes to rent" : "See all homes for sale"} →
+              </Link>
             </div>
           )}
         </>

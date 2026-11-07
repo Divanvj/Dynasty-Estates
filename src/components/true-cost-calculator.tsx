@@ -752,7 +752,7 @@ export default function TrueCostCalculator({
               Interest Rate ({interestRate.toFixed(2)}%)
             </label>
             <span className="text-slate-600 font-medium text-xs dark:text-slate-400">
-              Benchmark Prime = 11.75%
+              Prime rate: 11.75%
             </span>
           </div>
 
@@ -833,7 +833,7 @@ export default function TrueCostCalculator({
         {/* Insurance Toggle */}
         <div className="flex items-center justify-between rounded-xl border border-slate-200/80 bg-white/60 p-3 dark:border-white/10 dark:bg-surface-ink/60">
           <div>
-            <p className="font-bold text-slate-900 text-xs dark:text-white">Include HOC & Life Assurance</p>
+            <p className="font-bold text-slate-900 text-xs dark:text-white">Include home insurance (HOC) & life cover</p>
             <p className="text-xs text-slate-600 dark:text-slate-400">
               Estimated R {formatNumber(Math.round(purchasePrice * 0.00035 + principal * 0.00045))}/mo
             </p>

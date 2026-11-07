@@ -444,7 +444,7 @@ export default function CalculatorsView({
               <div>
                 <div className="flex justify-between font-semibold mb-1">
                   <label htmlFor={rateId}>Interest Rate ({interestRate.toFixed(2)}%)</label>
-                  <span className="text-slate-600 font-medium text-xs dark:text-slate-400">Benchmark Prime = 11.75%</span>
+                  <span className="text-slate-600 font-medium text-xs dark:text-slate-400">Prime rate: 11.75%</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <button
