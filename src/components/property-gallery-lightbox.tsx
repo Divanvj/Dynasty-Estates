@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { createPortal } from "react-dom";
 import { ArrowLeftIcon, ArrowRightIcon, XMarkIcon } from "@/components/icons";
 
 type Props = {
@@ -65,9 +66,12 @@ export default function PropertyGalleryLightbox({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [open, index, images.length, onClose, onIndexChange]);
 
-  if (!open || index === null) return null;
+  if (!open || index === null || typeof document === "undefined") return null;
 
-  return (
+  // Portaled to <body>: the hero it opens from is a backdrop-blur card, and
+  // backdrop-filter makes an ancestor the containing block for position:fixed,
+  // so the "full-screen" viewer was confined to that card (349x530 at 375px).
+  return createPortal(
     <div
       role="dialog"
       aria-modal="true"
@@ -129,6 +133,7 @@ export default function PropertyGalleryLightbox({
           </>
         )}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

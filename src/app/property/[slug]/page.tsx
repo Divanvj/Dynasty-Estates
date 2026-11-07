@@ -256,11 +256,11 @@ export default async function PropertyPage({
                       {property.category}
                     </span>
                   </div>
-                  <h1 className="mt-1 text-2xl font-light tracking-[-0.04em] text-white sm:text-4xl md:text-5xl lg:text-6xl">
+                  <h1 className="mt-1 text-2xl font-light tracking-[-0.04em] text-slate-950 dark:text-white sm:text-4xl sm:text-white md:text-5xl lg:text-6xl">
                     {property.title}
                   </h1>
-                  <div className="flex items-center gap-1.5 text-xs text-slate-200 mt-1 md:text-sm">
-                    <LocationPinIcon className="h-4 w-4 text-emerald-300 shrink-0" />
+                  <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-300 mt-1 sm:text-slate-200 md:text-sm">
+                    <LocationPinIcon className="h-4 w-4 text-emerald-700 dark:text-emerald-300 sm:text-emerald-300 shrink-0" />
                     <span>{property.location}</span>
                   </div>
                 </div>
@@ -661,10 +661,14 @@ export default async function PropertyPage({
           still set its height.
         */}
         <div className="min-w-0">
-          <span className="text-xs uppercase tracking-wider text-slate-600 font-bold block dark:text-slate-400">
-            {property.listingType === "rent" ? "Monthly Rental" : "Asking Price"}
+          {/* "MONTHLY RENTAL / R 13,500 / mo…" was cut off at 375px. The label
+              carries the period, so the figure can drop its "/ month". */}
+          <span className="text-xs uppercase tracking-wider text-slate-600 font-bold block whitespace-nowrap dark:text-slate-400">
+            {property.listingType === "rent" ? "Rent per month" : "Asking price"}
           </span>
-          <span className="block truncate text-base font-extrabold text-slate-950 dark:text-white">{property.price}</span>
+          <span className="block truncate text-base font-extrabold tabular-nums text-slate-950 dark:text-white">
+            {property.listingType === "rent" ? property.price.replace(/\s*\/\s*month$/i, "") : property.price}
+          </span>
         </div>
         {/* Contact first. A buyer on a phone wants to reach the agent, and in
             this market that means WhatsApp or a call rather than a form. The
