@@ -1,17 +1,42 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 import { ArrowLeftIcon, PrinterIcon, XMarkIcon } from "@/components/icons";
 
 import { fallbackProperties, type PropertyRecord } from "@/lib/property-data";
 
+/**
+ * `?ids=a,b` opens Compare with those homes, which is what a card's Compare
+ * link now sends. It used to link to plain /compare, which always opened on
+ * the first three catalogue listings — so "Add to Compare" never added the
+ * home it was on. Without ids the old starting trio is kept.
+ */
+function initialCompared(idsParam: string | null): PropertyRecord[] {
+  const ids = (idsParam ?? "").split(",").map((id) => id.trim()).filter(Boolean);
+  const picked = ids
+    .map((id) => fallbackProperties.find((p) => p.id === id || p.slug === id))
+    .filter((p): p is PropertyRecord => Boolean(p))
+    .slice(0, 4);
+  if (picked.length > 0) return picked;
+  return [fallbackProperties[0], fallbackProperties[1], fallbackProperties[2] ?? fallbackProperties[0]];
+}
+
 export default function ComparePage() {
-  const [comparedProperties, setComparedProperties] = useState<PropertyRecord[]>([
-    fallbackProperties[0],
-    fallbackProperties[1],
-    fallbackProperties[2] ?? fallbackProperties[0],
-  ]);
+  // useSearchParams needs a Suspense boundary on a prerendered client page.
+  return (
+    <Suspense fallback={null}>
+      <CompareContent />
+    </Suspense>
+  );
+}
+
+function CompareContent() {
+  const searchParams = useSearchParams();
+  const [comparedProperties, setComparedProperties] = useState<PropertyRecord[]>(() =>
+    initialCompared(searchParams.get("ids")),
+  );
 
   function removeProperty(id: string) {
     setComparedProperties((prev) => prev.filter((p) => p.id !== id));
