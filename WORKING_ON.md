@@ -10,13 +10,16 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | alet-elize | `alet-elize/map-touch-targets` | Map touch targets: `dynasty-property-map.tsx` overlay chips, and the Leaflet control/cluster sizing in `globals.css` | 2026-11-06 |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/ux-phase6-8-home-wording` | UX Phase 6+8: `home-trending-listings.tsx`, wording in `property/[slug]`, `true-cost-calculator.tsx`, `calculators-view.tsx`, `map-search/page.tsx`, `auth/login` | 2026-11-07 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
 
+- 2026-11-07 — header dropdown fix merged: **layer contract** — page content
+  ≤ z-50, `SiteHeader` z-[60], dialogs z-[80]+ rendered via `createPortal` to
+  body (backdrop-blur ancestors trap `position: fixed`). Phase 6+8 merged too:
+  home feed shows 6 + See all; wording sweep (see the merge commit).
 - 2026-11-07 — `DESKTOP-1R37EBU/ux-phase5-search` merged. /search: count line +
   removable filter chips above results; `ExpandableSearchPanel` has a new
   `hideIntentToggle` prop; `/compare?ids=a,b` now opens with those homes
