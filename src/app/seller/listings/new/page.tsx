@@ -9,6 +9,7 @@ import RoleGuard from "@/components/role-guard";
 import CustomSelect from "@/components/custom-select";
 import PredictiveLocationInput from "@/components/predictive-location-input";
 import ListingFloorPlanField from "@/components/listing-floor-plan-field";
+import ShowDayField from "@/components/listing-show-day-field";
 import ListingPhotoUploader from "@/components/listing-photo-uploader";
 import {
   AreaIcon,
@@ -718,6 +719,10 @@ export default function NewListingWizardPage() {
                     onPhotosChange={updatePhotos}
                   />
                 </div>
+                <ShowDayField
+                  value={formData.onShow}
+                  onChange={(onShow) => updateField("onShow", onShow)}
+                />
                 <ListingFloorPlanField
                   ownerId={user?.uid ?? null}
                   authLoading={authLoading}

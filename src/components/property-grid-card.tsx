@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { describeShow } from "@/lib/on-show";
 
 import { BathIcon, BedIcon, CarIcon, LocationPinIcon } from "@/components/icons";
 import type { PropertyRecord } from "@/lib/property-data";
@@ -89,9 +90,11 @@ export default function PropertyGridCard({
           {/* Only the for-sale city page showed this before. It is driven by
               the listing's own data and appears only when a show day is set,
               so every grid can carry it. */}
-          {property.onShow && (
+          {/* Only while the show is still ahead; it used to say "On Show
+              Sunday" for a date long past. */}
+          {describeShow(property.onShow) && property.onShow && (
             <span className="badge bg-amber-500/90 text-white backdrop-blur-md">
-              On Show Sunday
+              On show {property.onShow.date.replace(/^(\w{3})\w*,/, "$1")}
             </span>
           )}
         </div>
