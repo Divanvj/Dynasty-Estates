@@ -9,7 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| | | | |
+| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/ux-phase11-tour-map` | UX Phase 11: `virtual-tour-3d-viewer.tsx`, `property-media-tabs.tsx`, `map-search/page.tsx`, `property-split-map-view.tsx`, `dynasty-property-map.tsx` | 2026-11-07 |
 
 ## Recently merged
 
