@@ -242,7 +242,8 @@ export default function ThemeToggle({
             height: `${config.knobH}px`,
             transform: !isDark ? `translateX(${config.travel}px)` : "translateX(0px)",
             transition:
-              "transform 300ms cubic-bezier(0.34, 1.4, 0.64, 1), background 300ms ease, box-shadow 300ms ease, border-color 300ms ease",
+              // Ease-out, no overshoot: the knob used to spring past its stop and back.
+              "transform 300ms cubic-bezier(0.22, 1, 0.36, 1), background 300ms ease, box-shadow 300ms ease, border-color 300ms ease",
             background: isDark
               ? "linear-gradient(180deg, #444c52 0%, #2f363c 45%, #21272c 95%, #191f23 100%)"
               : "linear-gradient(180deg, #ffffff 0%, #ffffff 40%, #f8fafc 75%, #f1f5f9 100%)",

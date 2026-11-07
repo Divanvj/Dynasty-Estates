@@ -601,10 +601,7 @@ export default async function PropertyPage({
             {/* Move-In Cost Schedule for Rentals */}
             {property.listingType === "rent" && (
               <div className="rounded-panel border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] backdrop-blur-xl dark:bg-surface-panel/75 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-                <span className="text-xs uppercase tracking-[0.22em] text-emerald-800 dark:text-emerald-400 font-bold">
-                  Move-In Capital Transparency
-                </span>
-                <h3 className="mt-1 text-sm font-bold text-slate-950 dark:text-white">Estimated Move-In Schedule</h3>
+                <h3 className="text-sm font-bold text-slate-950 dark:text-white">Estimated Move-In Schedule</h3>
                 <div className="mt-4 space-y-2 text-xs text-slate-700 dark:text-slate-300">
                   <div className="flex justify-between">
                     <span>First Month Rental:</span>

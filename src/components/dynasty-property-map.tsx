@@ -221,6 +221,9 @@ export default function DynastyPropertyMap({
   const skipFitRef = useRef(false);
 
   const [ready, setReady] = useState(false);
+  /** "loading" until the first basemap tiles arrive; the panel used to sit
+   *  blank for several seconds with nothing saying a map was on its way. */
+  const [tiles, setTiles] = useState<"loading" | "loaded" | "failed">("loading");
   const [filter, setFilter] = useState<ResilienceFilter>("all");
   const [pinMode, setPinMode] = useState<PinMode>("price");
   const [tool, setTool] = useState<AreaTool>("none");
@@ -317,7 +320,19 @@ export default function DynastyPropertyMap({
     const L = leafletRef.current;
     const map = mapRef.current;
     if (!L || !map || tileRef.current) return;
-    tileRef.current = L.tileLayer(TILES.url, { attribution: TILES.attribution, maxZoom: 19 }).addTo(map);
+    const layer = L.tileLayer(TILES.url, { attribution: TILES.attribution, maxZoom: 19 });
+    // The first tile that arrives hides the message. Leaflet fires "load" once
+    // the first batch is settled even when every tile in it failed, so "load"
+    // with nothing loaded means the basemap is unreachable (offline, blocked).
+    let anyTileLoaded = false;
+    layer.on("tileload", () => {
+      anyTileLoaded = true;
+      setTiles("loaded");
+    });
+    layer.once("load", () => {
+      if (!anyTileLoaded) setTiles("failed");
+    });
+    tileRef.current = layer.addTo(map);
   }, [ready]);
 
   /* ------------------------- radius & draw tools ------------------------- */
@@ -614,6 +629,17 @@ export default function DynastyPropertyMap({
         data-drawing={tool !== "none" ? "true" : undefined}
         className="h-full w-full rounded-card bg-slate-100 dark:bg-[#08171a]"
       />
+
+      {tiles !== "loaded" && (
+        <div className="pointer-events-none absolute inset-0 z-[400] flex items-center justify-center">
+          <p
+            role="status"
+            className="rounded-full border border-white/70 bg-white/90 px-4 py-2 text-sm font-semibold text-slate-700 shadow-md dark:border-white/10 dark:bg-surface-panel/90 dark:text-slate-200"
+          >
+            {tiles === "failed" ? "The map couldn’t load. Check your connection." : "Loading map…"}
+          </p>
+        </div>
+      )}
 
       {/* Metro quick-jump */}
       {/* The width budget is what is left after the area tools, not a flat
