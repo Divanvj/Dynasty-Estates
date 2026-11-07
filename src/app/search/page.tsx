@@ -35,6 +35,27 @@ import {
 
 export type ViewMode = "grid" | "list" | "map" | "compact";
 
+/** "All" plus every value the filter panel's type options can set. */
+const KNOWN_PROPERTY_TYPES = [
+  "All",
+  "All types",
+  "House",
+  "Villa",
+  "Apartment",
+  "Penthouse",
+  "Estate Home",
+  "Townhouse",
+  "Land",
+];
+
+/** R 950 000 / R 2.5m — short enough for a filter chip. */
+function shortRand(amount: number): string {
+  if (amount >= 1_000_000) return `R ${Number((amount / 1_000_000).toFixed(1))}m`;
+  return `R ${amount.toLocaleString("en-ZA")}`;
+}
+
+type ActiveFilter = { id: string; label: string; remove: string[]; dropLocation?: string };
+
 function SearchContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -47,7 +68,11 @@ function SearchContent() {
   const province = rawProv && rawProv !== "All Provinces" ? rawProv : "";
   const rawCity = searchParams.get("city");
   const city = rawCity && rawCity !== "All Towns" ? rawCity : "";
-  const selectedType = searchParams.get("type") ?? "All";
+  // An unknown value (a hand-edited or old link such as `?type=sale`) used to
+  // filter on a type no listing has and silently return zero. It now falls
+  // back to All, the same as a missing value.
+  const rawType = searchParams.get("type") ?? "All";
+  const selectedType = KNOWN_PROPERTY_TYPES.includes(rawType) ? rawType : "All";
   const minBeds = searchParams.get("beds") ?? "Any";
   const minBaths = searchParams.get("baths") ?? "Any";
   const minParking = searchParams.get("parking") ?? "Any";
@@ -404,6 +429,59 @@ function SearchContent() {
       .filter(Boolean);
   }, [query]);
 
+  /**
+   * Every narrowing the visitor has applied, as removable chips. Shown above
+   * the results and named in the empty state — "No properties matched your
+   * criteria" used to leave the visitor to guess which filter emptied the list.
+   */
+  const activeFilters: ActiveFilter[] = [
+    ...locationChips.map((loc) => ({ id: `q:${loc}`, label: loc, remove: [], dropLocation: loc })),
+    ...(province ? [{ id: "province", label: province, remove: ["province"] }] : []),
+    ...(city ? [{ id: "city", label: city, remove: ["city"] }] : []),
+    ...(selectedType !== "All" && selectedType !== "All types"
+      ? [{ id: "type", label: selectedType, remove: ["type"] }]
+      : []),
+    ...(minBeds !== "Any" ? [{ id: "beds", label: `${minBeds.replace("+", "")}+ beds`, remove: ["beds"] }] : []),
+    ...(minBaths !== "Any" ? [{ id: "baths", label: `${minBaths.replace("+", "")}+ baths`, remove: ["baths"] }] : []),
+    ...(minParking !== "Any"
+      ? [{ id: "parking", label: `${minParking.replace("+", "")}+ parking`, remove: ["parking"] }]
+      : []),
+    ...(furnished !== "Any" ? [{ id: "furnished", label: furnished, remove: ["furnished"] }] : []),
+    ...(minPrice > 0 || maxPrice > 0
+      ? [
+          {
+            id: "price",
+            label:
+              minPrice > 0 && maxPrice > 0
+                ? `${shortRand(minPrice)} – ${shortRand(maxPrice)}`
+                : maxPrice > 0
+                  ? `Under ${shortRand(maxPrice)}`
+                  : `From ${shortRand(minPrice)}`,
+            remove: ["minPrice", "maxPrice"],
+          },
+        ]
+      : []),
+    ...urlFeatures.map((f) => ({ id: `f:${f}`, label: featureLabel(f), remove: [] as string[] })),
+  ];
+
+  function removeFilter(filter: ActiveFilter) {
+    const params = new URLSearchParams(searchParams.toString());
+    for (const key of filter.remove) params.delete(key);
+    if (filter.dropLocation) {
+      const rest = locationChips.filter((loc) => loc !== filter.dropLocation);
+      if (rest.length) params.set("q", rest.join(", "));
+      else params.delete("q");
+    }
+    if (filter.id.startsWith("f:")) {
+      const rest = urlFeatures.filter((f) => `f:${f}` !== filter.id);
+      if (rest.length) params.set("features", rest.join(","));
+      else params.delete("features");
+    }
+    router.replace(`/search?${params.toString()}`, { scroll: false });
+  }
+
+  const resultNoun = listingCategory === "rent" ? "to rent" : "for sale";
+
   return (
     <div className="mx-auto max-w-[1440px]">
       {/* No page header: brand, menu and account are SiteHeader (lg+) and
@@ -458,14 +536,11 @@ function SearchContent() {
             </h1>
           </div>
 
-          {/* Results Count, View Switcher & Sort Dropdown */}
-          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
-            {!loading && hasActiveFilters && (
-              <span className="badge border border-emerald-200 bg-emerald-100/90 text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-950/60 dark:text-emerald-300">
-                {filteredProperties.length} {filteredProperties.length === 1 ? "match" : "matches"}
-              </span>
-            )}
-
+          {/* View Switcher & Sort. On a phone these share one row (sort takes
+              the remaining width) instead of stacking into three, which with
+              Reset All pushed the first listing two-thirds of the way down the
+              screen. The result count now sits directly above the results. */}
+          <div className="flex w-full flex-nowrap items-center gap-2.5 sm:w-auto sm:flex-wrap sm:gap-3">
             {/* View Mode Switcher Segmented Control.
 
                 The unselected states carry `border border-transparent` so all
@@ -536,7 +611,7 @@ function SearchContent() {
             </div>
 
             {/* Sort Dropdown */}
-            <div className="relative min-w-[170px]">
+            <div className="relative min-w-0 flex-1 sm:min-w-[170px] sm:flex-none">
               <CustomSelect
                 value={sortBy}
                 onChange={(val) => handleSortChange(val)}
@@ -550,12 +625,16 @@ function SearchContent() {
               />
             </div>
 
-            <button
-              onClick={handleResetFilters}
-              className="text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-300 underline cursor-pointer"
-            >
-              Reset All
-            </button>
+            {/* Only when there is something to reset; the active-filter chips
+                above the results carry it on phones too. */}
+            {hasActiveFilters && (
+              <button
+                onClick={handleResetFilters}
+                className="hidden text-xs font-medium text-slate-600 underline cursor-pointer hover:text-emerald-800 sm:inline dark:text-slate-400 dark:hover:text-emerald-300"
+              >
+                Reset All
+              </button>
+            )}
           </div>
         </div>
 
@@ -576,7 +655,9 @@ function SearchContent() {
             initialFeatures={urlFeatures}
             onSearch={handlePanelSearch}
             autoNavigate={true}
-            hideIntentToggleOnMobile
+            // The catalogue switch above is this page's one For Sale / To Rent
+            // control; the panel's own copy sat ~160px below it on desktop.
+            hideIntentToggle
             placeholder="Suburb or city"
           />
         </div>
@@ -617,8 +698,38 @@ function SearchContent() {
         </div>
       </section>
 
+      {/* Results count and active filters, directly above the first card. */}
+      {!loading && !loadError && (
+        <div className="mt-6 flex flex-wrap items-center gap-2">
+          <p aria-live="polite" className="mr-1 text-sm font-semibold text-slate-800 tabular-nums dark:text-slate-200">
+            {filteredProperties.length} {filteredProperties.length === 1 ? "home" : "homes"} {resultNoun}
+          </p>
+          {activeFilters.map((filter) => (
+            <button
+              key={filter.id}
+              type="button"
+              onClick={() => removeFilter(filter)}
+              aria-label={`Remove filter: ${filter.label}`}
+              className="tap-44 relative inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-900 transition-colors hover:bg-emerald-100 cursor-pointer dark:bg-emerald-950/50 dark:text-emerald-200 dark:hover:bg-emerald-900/60"
+            >
+              {filter.label}
+              <span aria-hidden="true">×</span>
+            </button>
+          ))}
+          {activeFilters.length > 1 && (
+            <button
+              type="button"
+              onClick={handleResetFilters}
+              className="text-xs font-medium text-slate-600 underline cursor-pointer hover:text-emerald-800 dark:text-slate-400 dark:hover:text-emerald-300"
+            >
+              Clear all
+            </button>
+          )}
+        </div>
+      )}
+
       {/* Results Grid */}
-      <section className="relative z-10 mt-8">
+      <section className="relative z-10 mt-4">
         {loading ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[1, 2, 3].map((n) => (
@@ -759,7 +870,7 @@ function SearchContent() {
                         {/* z-30 for the same reason as Save: comparing is not
                             opening. */}
                         <Link
-                          href={`/compare`}
+                          href={`/compare?ids=${encodeURIComponent(property.id)}`}
                           className="tap-44 relative z-30 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-emerald-700 dark:hover:text-emerald-300"
                         >
                           Compare →
@@ -770,7 +881,7 @@ function SearchContent() {
                           aria-hidden="true"
                           className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 group-hover:from-[#093e3f] group-hover:to-[#052c2d] dark:group-hover:from-emerald-500 dark:group-hover:to-emerald-600 px-5 py-2 text-xs font-bold text-white shadow-md dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-500/30 dark:border-emerald-400/50 transition-all sm:min-h-0 sm:inline-block"
                         >
-                          {property.listingType === "rent" ? "View Rental Experience →" : "View Home Experience →"}
+                          View home →
                         </span>
                       </div>
                     </div>
@@ -804,16 +915,46 @@ function SearchContent() {
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white/80 dark:bg-surface-ink/80 dark:border dark:border-white/10 shadow-md mb-3 text-slate-600 dark:text-slate-300">
               <HomeIcon className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
             </div>
-            <h3 className="mt-3 text-xl font-bold text-slate-900 dark:text-white">No properties matched your criteria</h3>
-            <p className="mt-1 text-xs text-slate-600 dark:text-slate-300 max-w-md mx-auto">
-              We couldn&rsquo;t find homes matching this combination of province, suburb, price range, and amenities. Try expanding your search or clearing selected filters.
+            <h3 className="mt-3 text-xl font-bold text-slate-900 dark:text-white">
+              No homes {resultNoun}
+              {activeFilters.length > 0 ? ` match ${activeFilters.map((f) => f.label).join(" · ")}` : " yet"}
+            </h3>
+            <p className="mx-auto mt-1 max-w-md text-sm text-slate-600 dark:text-slate-300">
+              {activeFilters.length > 0
+                ? "Remove a filter above to widen the search."
+                : listingCategory === "rent"
+                  ? "Try homes for sale instead."
+                  : "Try homes to rent instead."}
             </p>
-            <button
-              onClick={handleResetFilters}
-              className="pill-lg mt-5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 font-bold text-white shadow-md dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-500/40 cursor-pointer transition-all duration-200"
-            >
-              Reset All Filters
-            </button>
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5">
+              {activeFilters.length > 0 ? (
+                <>
+                  {/* The single most likely fix first: the last filter added. */}
+                  <button
+                    type="button"
+                    onClick={() => removeFilter(activeFilters[activeFilters.length - 1])}
+                    className="pill-lg border border-emerald-500/40 bg-[var(--brand)] font-bold text-white shadow-md hover:bg-[var(--brand-hover)] cursor-pointer transition-colors"
+                  >
+                    Remove &ldquo;{activeFilters[activeFilters.length - 1].label}&rdquo;
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleResetFilters}
+                    className="pill-lg border border-slate-300 bg-white/80 font-bold text-slate-800 hover:bg-white cursor-pointer dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200"
+                  >
+                    Clear all filters
+                  </button>
+                </>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => handleCategoryChange(listingCategory === "rent" ? "buy" : "rent")}
+                  className="pill-lg border border-emerald-500/40 bg-[var(--brand)] font-bold text-white shadow-md hover:bg-[var(--brand-hover)] cursor-pointer transition-colors"
+                >
+                  {listingCategory === "rent" ? "Show homes for sale" : "Show homes to rent"}
+                </button>
+              )}
+            </div>
           </div>
         )}
       </section>

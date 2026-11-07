@@ -68,6 +68,8 @@ interface ExpandableSearchPanelProps {
    * the two sat one above the other; this drops the duplicate below `sm` only.
    */
   hideIntentToggleOnMobile?: boolean;
+  /** Set where the host page shows its own Rent/Buy control at every width. */
+  hideIntentToggle?: boolean;
 }
 
 const rentMinPriceOptions = [
@@ -120,6 +122,8 @@ const buyMaxPriceOptions = [
 const bedOptions = ["Any", "1+", "2+", "3+", "4+", "5+"];
 const bathOptions = ["Any", "1+", "2+", "3+", "4+"];
 const parkingOptions = ["Any", "1+", "2+", "3+"];
+
+const POPULAR_AREAS = ["Johannesburg", "Cape Town", "Pretoria", "Durban", "Sandton", "Stellenbosch"];
 
 const propertyTypeOptions = [
   { label: "All Types", value: "All types" },
@@ -200,6 +204,7 @@ export default function ExpandableSearchPanel({
   className = "",
   placeholder = "Search city or suburb...",
   hideIntentToggleOnMobile = false,
+  hideIntentToggle = false,
 }: ExpandableSearchPanelProps) {
   const router = useRouter();
 
@@ -696,7 +701,7 @@ export default function ExpandableSearchPanel({
         {/* Category Intent Pill Slider */}
         <div
           className={`items-center justify-center px-1 mb-3 ${
-            hideIntentToggleOnMobile ? "hidden sm:flex" : "flex"
+            hideIntentToggle ? "hidden" : hideIntentToggleOnMobile ? "hidden sm:flex" : "flex"
           }`}
         >
           <div className="relative grid grid-cols-2 w-52 sm:w-56 p-1 rounded-full bg-white/90 dark:bg-[#071315]/90 backdrop-blur-md border border-slate-200/90 dark:border-white/10 shadow-sm transition-all duration-300 hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_18px_rgba(16,185,129,0.38)] dark:hover:shadow-[0_0_22px_rgba(52,211,153,0.38)]">
@@ -1109,21 +1114,22 @@ export default function ExpandableSearchPanel({
             <div className="border-b border-slate-100 dark:border-white/10 bg-slate-50/60 dark:bg-[#071113] px-4 py-2.5 text-xs">
               <div className="flex items-center justify-between mb-1.5">
                 <span className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
-                  Premier Metros & Locations
+                  Popular areas
                 </span>
-                <span className="text-xs text-slate-600 dark:text-slate-500">Click to add to search</span>
+                <span className="text-xs text-slate-600 dark:text-slate-500">Tap to add</span>
               </div>
               <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
-                {getAllCitiesAlphabetical()
-                  .slice(0, 20)
-                  .map((city) => (
+                {/* Six places people actually search, not the first twenty of an
+                    A–Z list (Alberton, Amanzimtoti, Ballito…). Typing above
+                    still finds every suburb and city. */}
+                {POPULAR_AREAS.map((name) => (
                     <button
-                      key={city.name}
+                      key={name}
                       type="button"
-                      onClick={() => addLocationTag(city.name)}
+                      onClick={() => addLocationTag(name)}
                       className="pill-sm border border-slate-200/90 dark:border-white/10 bg-white dark:bg-[#0c181a] font-medium text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-white/10 hover:text-emerald-950 dark:hover:text-emerald-300 hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_12px_rgba(16,185,129,0.3)] dark:hover:shadow-[0_0_16px_rgba(52,211,153,0.35)] transition-all cursor-pointer shadow-2xs"
                     >
-                      + {city.name}
+                      + {name}
                     </button>
                   ))}
               </div>
@@ -1178,11 +1184,8 @@ export default function ExpandableSearchPanel({
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="text-xs font-bold text-slate-900 dark:text-white tracking-wide">
-                  Estate Portfolio
+                  Property category
                 </label>
-                <span className="text-xs uppercase tracking-wider text-slate-600 dark:text-slate-500 font-medium">
-                  Asset Class
-                </span>
               </div>
               {/*
                 Still 2x2 on a phone, but each one is a 44px row instead of a

@@ -212,6 +212,54 @@ No design decisions needed except where marked ⚠.
 
 ---
 
+## Phase 11 — Owner requests, 7 Nov *(~2 days)*
+
+### Step 11.1 — 3D tour: calm it down on phones (~½ day)
+- **Seen at 375 px:** about 17 controls sit on top of a ~430 px photo:
+  - a large pink title pill and a room-name bubble;
+  - the 360° Walk / Dollhouse / Laser Tape tabs;
+  - two "Walk to…" bubbles and two info dots;
+  - a four-room list covering the lower half;
+  - Auto-Pan and the − 100% + zoom.
+  The house is barely visible.
+- **File:** `src/components/virtual-tour-3d-viewer.tsx`. Its bounce animation is Phase 9.2, so do both together.
+- **Change (phones):** the photo comes first, with only:
+  - a small room name, top-left;
+  - one row under the photo: ‹ previous room · room name · next room ›;
+  - a "More" button that opens a bottom sheet with Dollhouse, Laser Tape, Auto-Pan, zoom and the room list.
+
+  Then:
+  - Drop the title pill; the page already says which house it is.
+  - Remove the hotspot bubbles below `sm`.
+  - Desktop keeps today's layout, minus the title pill.
+- **Accept:** at 375 px, at least 80% of the tour frame shows the photo, ≤ 4 controls are visible before tapping More, and every feature can still be reached.
+
+### Step 11.2 — Map view: full screen, opens on your town (~1–1½ days)
+- **Seen at 375 px:** the map starts 406 px down the page, under five stacked bars:
+  - the title;
+  - the type chips;
+  - the Map / List toggle;
+  - a second Map / Street View toggle;
+  - the area chips plus Radius / Draw.
+
+  It then fills only about half the screen.
+- **Files:**
+  - `src/app/map-search/page.tsx`
+  - `src/components/property-split-map-view.tsx`
+  - `src/components/dynasty-property-map.tsx` — ⚠ currently claimed by the other agent (map touch targets). Wait for that claim to clear, or coordinate in `WORKING_ON.md`.
+- **Change:**
+  1. **Full-screen map.** On phones and desktop the map fills the screen between the top bar and the tab bar. Type, Radius and Draw float over it as one slim control row. The duplicate Map / Street View toggle goes.
+  2. **Opens on the visitor's town.** On first open, ask for the browser's location (the browser's own permission prompt). If allowed, centre on that point at about city zoom. If refused or unavailable, open on all of South Africa, as now. Remember the choice in the viewer's browser so they aren't asked again.
+  3. **Select or draw, then see listings.** Results stay hidden until the visitor picks an area (radius, freehand draw, or tapping a cluster or suburb). Then a bottom sheet (phones) or side panel (desktop) slides up listing the homes inside that area, with "Clear area" to start again.
+- **Accept:**
+  - At 375 × 812 the map covers ≥ 85% of the space between the bars.
+  - Allowing location centres on the visitor's town.
+  - Refusing it opens on all of South Africa with no error.
+  - Drawing an area shows only the homes inside it, with a count.
+- **Caveat:** listings have no real coordinates yet; pins are placed at synthetic suburb centres (`geo-data.ts`). "Inside the area" means inside by those approximate points until real coordinates exist.
+
+---
+
 ## Phase 10 — Remaining work from the earlier plan, plus areas not yet audited
 
 | Step | What | Status |
@@ -245,7 +293,8 @@ No design decisions needed except where marked ⚠.
 5. **Phase 5** — search page
 6. **Phase 6, Phase 8** — home length and plain language (can run alongside each other; different files)
 7. **Phase 7** — tab bar *(after decision)*
-8. **Phase 9** — polish
-9. **Phase 10** — signed-in audit, S12/S14, then S15 performance last
+8. **Phase 11** — 3D tour on phones; full-screen map that opens on your town *(map waits for the other agent's map claim)*
+9. **Phase 9** — polish
+10. **Phase 10** — signed-in audit, S12/S14, then S15 performance last
 
 Total: roughly **9–11 working days** for Phases 1–9. Phase 10 depends on what the signed-in audit finds.

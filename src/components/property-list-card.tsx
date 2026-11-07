@@ -222,10 +222,10 @@ export default function PropertyListCard({
           <div className="flex items-center gap-3">
             {/* z-30 for the same reason as Save: comparing is not opening. */}
             <Link
-              href="/compare"
+              href={`/compare?ids=${encodeURIComponent(property.id)}`}
               className="tap-44 relative z-30 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors"
             >
-              Add to Compare →
+              Compare
             </Link>
             {property.developmentInfo?.developerName && (
               <span className="text-xs text-slate-600 border-l border-slate-200 dark:border-white/10 pl-3 dark:text-slate-400">
@@ -250,7 +250,7 @@ export default function PropertyListCard({
               aria-hidden="true"
               className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 group-hover:from-[#0d595b] group-hover:to-[#094344] dark:group-hover:from-emerald-500 dark:group-hover:to-emerald-600 px-5 py-2 text-xs font-bold text-white shadow-md shadow-emerald-950/20 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-400/30 dark:border-emerald-400/50 group-hover:scale-102 transition-all sm:min-h-0 sm:inline-block"
             >
-              {property.listingType === "rent" ? "View Rental Experience →" : "View Property Experience →"}
+              View home →
             </span>
           </div>
         </div>
