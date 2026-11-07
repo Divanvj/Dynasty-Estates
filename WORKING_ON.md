@@ -10,6 +10,7 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | alet-elize | `alet-elize/map-touch-targets` | Map touch targets: `dynasty-property-map.tsx` overlay chips, and the Leaflet control/cluster sizing in `globals.css` | 2026-11-06 |
+| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/ux-phase7-account-tab` | UX Phase 7: `mobile-nav.tsx`, `account-actions.tsx` (open-menu event) | 2026-11-07 |
 
 ## Recently merged
 
