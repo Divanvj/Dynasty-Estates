@@ -113,3 +113,13 @@ Each row: **what was there → what replaced it (or "removed")**, and where. "Ad
 | "Catalogue •" label above "South African Homes For Sale" | Removed | `search/page.tsx` |
 | "Featured •" label above "Homes for sale" on the home feed | Removed | `home-trending-listings.tsx` |
 | "Move-In Capital Transparency" label above "Estimated Move-In Schedule" (rentals) | Removed | `property/[slug]/page.tsx` |
+
+## Phase 11.1 — 3D tour on phones (merged 7 Nov)
+
+| Was | Now | Where |
+|---|---|---|
+| Pink title pill "<HOUSE NAME> · 3D TOUR" (and "3D Interactive Live Tour") on the tour | Removed at every width (the page already names the house) | `virtual-tour-3d-viewer.tsx` |
+| Phones: room badge, 360° Walk / Dollhouse / Laser Tape tabs, two "Walk to…" bubbles, info dots, instruction banner, four-room list, Auto-Pan and zoom all over the photo (~17 controls) | One bottom row (‹ previous · room name · next › · ⋯) + full-screen button; everything else in a "Tour options" panel behind ⋯ ("Laser Tape" is called "Measure" there). Walk-to bubbles, info dots and the instruction banner are not shown on phones | same |
+| Desktop tour | Unchanged apart from the title pill | same |
+| Info card label "✓ Verified Specification" | "Specification" | same |
+| Media panel padding on phones 24px | 12px (more room for the photo) | `property-media-tabs.tsx` |
