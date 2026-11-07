@@ -280,7 +280,8 @@ export default async function PropertyPage({
                   <span className="text-xs uppercase tracking-widest text-slate-300 block">
                     {property.listingType === "rent" ? "Monthly Rental" : "Asking Price"}
                   </span>
-                  <span className="text-2xl sm:text-3xl font-extrabold text-white md:text-4xl">{property.price}</span>
+                  {/* nowrap: at 1280px "R 2,950,000" broke after the "R". */}
+                  <span className="whitespace-nowrap tabular-nums text-2xl sm:text-3xl font-extrabold text-white md:text-4xl">{property.price}</span>
                 </div>
               </div>
         </PropertyHeroGallery>
@@ -484,6 +485,108 @@ export default async function PropertyPage({
 
           {/* Sidebar: True Cost Calculator & Agent Contact */}
           <aside className="space-y-6">
+            {/* Contact first (UX Phase 4). The practitioner card used to sit below
+                the whole calculator, so on desktop the one thing that wins an
+                enquiry was off-screen while a cost estimate took the column. */}
+            {/* Agent / Practitioner Card */}
+            <div className="rounded-panel border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+              <p className="text-xs uppercase tracking-[0.22em] text-slate-600 font-bold dark:text-slate-400">Listing agent</p>
+              {/* Was hardcoded to one practitioner ("SG / Sherry Gallagher") on
+                  every listing in the catalogue. Now resolved per listing. */}
+              <div className="mt-4 flex items-center gap-3 rounded-control border border-white/80 bg-white/70 p-3.5 shadow-sm dark:bg-surface-ink/60 dark:border-white/10">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-slate-900 text-sm font-bold text-white dark:bg-emerald-600/30 dark:border dark:border-emerald-500/40 dark:text-emerald-300 dark:shadow-[0_0_12px_rgba(16,185,129,0.25)]">
+                  {(contact?.name ?? "Dynasty Estates")
+                    .split(" ")
+                    .map((part) => part[0])
+                    .slice(0, 2)
+                    .join("")}
+                </div>
+                <div className="min-w-0">
+                  <p className="font-bold text-slate-900 dark:text-white">
+                    {agentProfile ? (
+                      <Link
+                        href={`/agents/${agentProfile.slug}`}
+                        className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                      >
+                        {contact?.name ?? agentProfile.name}
+                      </Link>
+                    ) : (
+                      contact?.name ?? "Dynasty Estates"
+                    )}
+                  </p>
+                  <p className="truncate text-xs text-slate-600 dark:text-slate-400">
+                    {contact?.agencyName ?? agentProfile?.agency ?? "Property Practitioner"}
+                  </p>
+                </div>
+              </div>
+
+              {/*
+                One main action (UX Phase 4): Book a viewing is the only filled
+                control. WhatsApp was a second fill in brand green beside it, so
+                the card had two buttons competing for the same glance; WhatsApp,
+                Call and Message now sit beneath it as equal secondary buttons.
+
+                WhatsApp and Call stay desktop-only (`lg`): below `lg` the
+                sticky bar at the foot of the page carries them under the same
+                `contact` condition and never leaves the screen.
+
+                Every control is `pill-lg` (44px, the touch floor). Compare and
+                Add to Collection live with Save and Share in the action row at
+                the top, since they do not reach the practitioner.
+              */}
+              <div className="no-print mt-4 md:mt-6 flex flex-col gap-2.5">
+                <PropertyInquiryButton
+                  propertyId={property.id}
+                  propertyTitle={property.title}
+                  kind="viewing"
+                  className="pill-lg w-full bg-slate-950 font-bold text-white shadow-md hover:bg-slate-800 transition-all cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
+                >
+                  Book a viewing
+                </PropertyInquiryButton>
+
+                <div className={`grid gap-2.5 ${contact ? "lg:grid-cols-3" : ""}`}>
+                  {contact && (
+                    <>
+                      <a
+                        href={contact.whatsappHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="pill-lg hidden w-full border border-slate-300 bg-white/80 font-bold text-slate-800 transition-all hover:bg-white lg:inline-flex dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
+                      >
+                        {/* The brand green stays on the mark, where it identifies
+                            WhatsApp at a glance without becoming a second CTA. */}
+                        <WhatsAppIcon className="h-4 w-4 text-[#128C7E] dark:text-[#25D366]" />
+                        WhatsApp
+                      </a>
+                      <a
+                        href={contact.telHref}
+                        className="pill-lg hidden w-full border border-slate-300 bg-white/80 font-bold text-slate-800 transition-all hover:bg-white lg:inline-flex dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
+                      >
+                        <PhoneIcon className="h-4 w-4" />
+                        Call
+                      </a>
+                    </>
+                  )}
+                  <PropertyInquiryButton
+                    propertyId={property.id}
+                    propertyTitle={property.title}
+                    kind="message"
+                    className="pill-lg w-full border border-slate-300 bg-white/80 font-bold text-slate-800 hover:bg-white transition-all cursor-pointer dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
+                  >
+                    Message
+                  </PropertyInquiryButton>
+                </div>
+
+                {property.listingType === "rent" ? (
+                  <TenantApplicationButton
+                    propertyId={property.id}
+                    propertyTitle={property.title}
+                    monthlyRentZAR={property.numericPrice}
+                    depositZAR={property.depositRequired}
+                  />
+                ) : null}
+              </div>
+            </div>
             {/* Interactive True Cost Calculator */}
             <TrueCostCalculator
               listingType={property.listingType ?? "sale"}
@@ -535,119 +638,6 @@ export default async function PropertyPage({
               </div>
             )}
 
-            {/* Agent / Practitioner Card */}
-            <div className="rounded-panel border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-              <p className="text-xs uppercase tracking-[0.22em] text-slate-600 font-bold dark:text-slate-400">Mandate Property Practitioner</p>
-              {/* Was hardcoded to one practitioner ("SG / Sherry Gallagher") on
-                  every listing in the catalogue. Now resolved per listing. */}
-              <div className="mt-4 flex items-center gap-3 rounded-control border border-white/80 bg-white/70 p-3.5 shadow-sm dark:bg-surface-ink/60 dark:border-white/10">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-slate-900 text-sm font-bold text-white dark:bg-emerald-600/30 dark:border dark:border-emerald-500/40 dark:text-emerald-300 dark:shadow-[0_0_12px_rgba(16,185,129,0.25)]">
-                  {(contact?.name ?? "Dynasty Estates")
-                    .split(" ")
-                    .map((part) => part[0])
-                    .slice(0, 2)
-                    .join("")}
-                </div>
-                <div className="min-w-0">
-                  <p className="font-bold text-slate-900 dark:text-white">
-                    {agentProfile ? (
-                      <Link
-                        href={`/agents/${agentProfile.slug}`}
-                        className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
-                      >
-                        {contact?.name ?? agentProfile.name}
-                      </Link>
-                    ) : (
-                      contact?.name ?? "Dynasty Estates"
-                    )}
-                  </p>
-                  <p className="truncate text-xs text-slate-600 dark:text-slate-400">
-                    {contact?.agencyName ?? agentProfile?.agency ?? "Property Practitioner"}
-                  </p>
-                </div>
-              </div>
-
-              {/* Desktop only. The sticky bar at the foot of this page already
-                  carries WhatsApp and Call on a phone, under the same `contact`
-                  condition, and it is on screen the whole way down rather than
-                  only where the card happens to sit. Two sets of the same two
-                  buttons is what the sticky bar's own note warned about when
-                  the duplicate tenant-application button was taken out of it.
-
-                  `lg`, moved from `md`, to stay the exact complement of that
-                  bar now that it runs to `lg` as well. */}
-              {contact && (
-                <div className="no-print mt-3 hidden lg:grid grid-cols-2 gap-2.5">
-                  {/* Dark ink on WhatsApp green rather than white: white on
-                      #25D366 measures 1.98:1, while #0f172a on the same green
-                      is 9.00:1. The brand colour is kept exactly; only the
-                      label flips. */}
-                  <a
-                    href={contact.whatsappHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="pill-lg w-full bg-[#25D366] font-bold text-slate-900 shadow-sm transition-all hover:brightness-95"
-                  >
-                    <WhatsAppIcon className="h-4 w-4" />
-                    WhatsApp
-                  </a>
-                  <a
-                    href={contact.telHref}
-                    className="pill-lg w-full border border-slate-300 bg-white/80 font-bold text-slate-800 transition-all hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
-                  >
-                    <PhoneIcon className="h-4 w-4" />
-                    Call
-                  </a>
-                </div>
-              )}
-
-              {/*
-                Every control in this card now contacts the practitioner, and
-                every one of them is `pill-lg` — 44px, which is also the touch
-                floor. Stacked full-width, the old 44 / 40 / 42px drift showed
-                as mismatched edges down the card; the 40 and the 42 differed
-                only because the outlined one's border was added to a
-                padding-derived box, which is the trap globals.css documents.
-
-                Exactly one filled control: Schedule Private Viewing. On a
-                rental there were two — emerald Apply for Tenancy and dark
-                Schedule — competing for the same glance, so Apply is now
-                outlined and the viewing CTA carries the fill on every listing.
-
-                Compare Homes and Add to Collection have gone from here. They
-                were the only two controls in a practitioner card that did not
-                reach the practitioner. Add to Collection is in the header with
-                Save and Share, and now actually adds; Compare is reached from
-                a collection or from Saved, where there is something to compare.
-              */}
-              <div className="no-print mt-4 md:mt-6 flex flex-col gap-3">
-                {property.listingType === "rent" ? (
-                  <TenantApplicationButton
-                    propertyId={property.id}
-                    propertyTitle={property.title}
-                    monthlyRentZAR={property.numericPrice}
-                    depositZAR={property.depositRequired}
-                  />
-                ) : null}
-
-                <PropertyInquiryButton
-                  propertyId={property.id}
-                  propertyTitle={property.title}
-                  kind="viewing"
-                  className="pill-lg w-full bg-slate-950 font-bold text-white shadow-md hover:bg-slate-800 transition-all cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
-                >
-                  Schedule Private Viewing
-                </PropertyInquiryButton>
-                <PropertyInquiryButton
-                  propertyId={property.id}
-                  propertyTitle={property.title}
-                  kind="message"
-                  className="pill-lg w-full border border-slate-300 bg-white/80 font-bold text-slate-800 hover:bg-white transition-all cursor-pointer dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
-                >
-                  Message Practitioner
-                </PropertyInquiryButton>
-              </div>
-            </div>
           </aside>
         </section>
       </div>
