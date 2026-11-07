@@ -9,7 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| | | | |
+| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/ux-feed-toolbar-hero-photo` | Owner fixes: `home-trending-listings.tsx` toolbar, `property-hero-gallery.tsx` + hero block in `property/[slug]/page.tsx` | 2026-11-07 |
 
 ## Recently merged
 
