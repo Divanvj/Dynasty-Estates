@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useRef, useState } from "react";
 import type { ConfirmationResult, RecaptchaVerifier } from "firebase/auth";
+import BrandLogo from "@/components/brand-logo";
 
 import {
   confirmPhoneSignIn,
@@ -138,15 +139,8 @@ export default function LoginPage() {
       <div className="mx-auto flex min-h-[calc(100vh-40px)] max-w-[1400px] items-center justify-center">
         <div className="grid w-full max-w-5xl overflow-hidden rounded-panel border border-white/45 bg-white/45 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl lg:grid-cols-[1.1fr_0.9fr] dark:bg-surface-panel/90 dark:border-white/10 dark:shadow-[0_25px_60px_rgba(0,0,0,0.6)]">
           <div className="relative hidden min-h-[640px] bg-[linear-gradient(160deg,rgba(15,23,42,0.9),rgba(26,56,68,0.82))] p-8 text-white lg:flex lg:flex-col lg:justify-between dark:bg-[linear-gradient(160deg,#060d0e,#0c2327)]">
-            <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/10 text-lg font-semibold text-white dark:bg-emerald-950/60 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_15px_rgba(16,185,129,0.25)] dark:text-emerald-400">
-                D
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-[0.24em] text-slate-200 dark:text-slate-400">Dynasty</p>
-                <p className="text-lg font-semibold">Estates</p>
-              </div>
-            </div>
+            {/* The real mark, light-on-dark: this panel is dark in both themes. */}
+            <BrandLogo onDark showOnMobile />
 
             <div>
               <p className="text-xs uppercase tracking-[0.24em] text-emerald-200 dark:text-emerald-400">Property intelligence</p>

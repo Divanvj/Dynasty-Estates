@@ -1,12 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import BrandLogo from "@/components/brand-logo";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";
 
 import SavePropertyButton from "@/components/save-property-button";
-import AccountActions from "@/components/account-actions";
 import ExpandableSearchPanel, { type SearchFilters } from "@/components/expandable-search-panel";
 import PropertyCardPhotos from "@/components/property-card-photos";
 import PropertyListCard from "@/components/property-list-card";
@@ -408,21 +406,9 @@ function SearchContent() {
 
   return (
     <div className="mx-auto max-w-[1440px]">
-      {/* Header */}
-      <header className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 dark:border-white/10 dark:bg-[#0b1719]/70 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] dark:shadow-[0_12px_28px_rgba(0,0,0,0.4)] backdrop-blur-xl">
-        <BrandLogo />
-
-        <div className="flex items-center gap-2 sm:gap-4">
-          <div className="hidden md:flex items-center gap-4 text-xs font-semibold text-slate-700 dark:text-slate-300">
-            <Link href="/" className="hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Home</Link>
-            <Link href="/collections" className="hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Collections</Link>
-            <Link href="/compare" className="hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Compare</Link>
-            <Link href="/saved" className="hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Saved Homes</Link>
-          </div>
-          <AccountActions />
-        </div>
-      </header>
-
+      {/* No page header: brand, menu and account are SiteHeader (lg+) and
+          MobileAppBar. This one repeated Home · Collections · Compare · Saved,
+          all of which the global menu and account menu already carry. */}
       {/* Comprehensive Search & Filter Console */}
       <section className="relative z-30 rounded-panel border border-white/80 bg-white/60 dark:border-white/10 dark:bg-surface-panel/65 p-4 sm:p-6 shadow-[0_20px_45px_rgba(36,48,50,0.1)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)] backdrop-blur-xl">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 dark:border-white/10 pb-4">

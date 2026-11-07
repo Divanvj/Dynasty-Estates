@@ -272,7 +272,7 @@ export default function NewListingWizardPage() {
       <main className="min-h-screen bg-[var(--background)] px-3 py-4 text-slate-900 md:px-8 dark:text-white">
       <div className="mx-auto max-w-4xl">
         {/* Navigation Bar */}
-        <header className="mb-6 flex items-center justify-between rounded-card border border-white/70 bg-white/40 px-3.5 sm:px-5 py-3 shadow-[0_10px_25px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <div className="mb-6 flex items-center justify-between rounded-card border border-white/70 bg-white/40 px-3.5 sm:px-5 py-3 shadow-[0_10px_25px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <Link href="/seller/portal" className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-slate-700 hover:text-slate-950 transition-colors dark:text-white">
             <ArrowLeftIcon className="h-4 w-4" />
             <span className="hidden sm:inline">Back to seller portal</span>
@@ -284,7 +284,7 @@ export default function NewListingWizardPage() {
               Quality {qualityScore}%
             </span>
           </div>
-        </header>
+        </div>
 
         {/* Draft Restore Alert */}
         {savedDraftRaw && !draftDismissed && (

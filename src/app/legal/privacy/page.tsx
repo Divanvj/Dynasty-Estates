@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import BrandLogo from "@/components/brand-logo";
 import { absoluteUrl } from "@/lib/site-url";
 
 export const metadata: Metadata = {
@@ -21,9 +20,8 @@ export default function PrivacyPolicyPage() {
     <main className="min-h-screen bg-[var(--background)] px-3 py-4 text-slate-900 md:px-8 dark:text-white">
       <div className="mx-auto max-w-4xl">
         {/* Header */}
-        <header className="mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-5 py-3.5 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <div className="mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-5 py-3.5 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <div className="flex items-center gap-3">
-            <BrandLogo markOnly />
             <div>
               <p className="text-xs uppercase tracking-[0.2em] text-slate-600 font-bold dark:text-slate-400">Compliance & Trust</p>
               <h1 className="text-sm font-semibold tracking-wide text-slate-900 dark:text-white">POPIA & Privacy Policy</h1>
@@ -35,7 +33,7 @@ export default function PrivacyPolicyPage() {
           >
             ← Back to Home
           </Link>
-        </header>
+        </div>
 
         {/* Legal Document Container */}
         <article className="rounded-panel border border-white/80 bg-white/65 p-6 shadow-sm backdrop-blur-xl md:p-10 space-y-6 text-xs leading-relaxed text-slate-700 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] dark:text-slate-300">

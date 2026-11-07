@@ -4,7 +4,6 @@ import Link from "next/link";
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { useEffect, useState } from "react";
 
-import BrandLogo from "@/components/brand-logo";
 import RoleGuard from "@/components/role-guard";
 import { getRecentInquiries, type AgentInquiry } from "@/lib/agent-inquiries";
 import { auth } from "@/lib/firebase";
@@ -75,16 +74,8 @@ export default function AgentDashboard() {
     <RoleGuard allowedRoles={["Agent", "Admin"]} featureName="Agent Console">
       <main className="min-h-screen bg-[var(--background)] px-4 py-5 text-slate-900 md:px-6 lg:px-8 dark:text-white">
       <div className="mx-auto max-w-[1500px]">
-        <header className="mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-4 py-3 shadow-[0_12px_30px_rgba(15,23,42,0.06)] backdrop-blur-xl md:px-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-          <BrandLogo />
-
-          <div className="hidden items-center gap-6 text-sm text-slate-700 md:flex dark:text-slate-300">
-            <Link href="/" className="hover:text-emerald-500 transition-colors">Home</Link>
-            <Link href="/search" className="hover:text-emerald-500 transition-colors">Search</Link>
-            <Link href="/agent/dashboard" className="text-emerald-800 dark:text-emerald-400 font-semibold">Dashboard</Link>
-          </div>
-        </header>
-
+        {/* No page bar: it held only Home / Search / Dashboard links, which
+            SiteHeader (lg+) and MobileAppBar carry on every page. */}
         {!user ? <p className="mb-4 rounded-2xl border border-amber-300/30 bg-amber-400/10 p-3 text-sm text-amber-900 dark:text-amber-200">Sign in as an agent to view live portfolio data.</p> : null}
         {loadError ? <p className="mb-4 rounded-2xl border border-rose-300/30 bg-rose-400/10 p-3 text-sm text-rose-900 dark:text-rose-200">{loadError}</p> : null}
 

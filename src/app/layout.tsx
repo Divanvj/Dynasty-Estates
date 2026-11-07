@@ -4,6 +4,7 @@ import "./globals.css";
 import { AuthProvider } from "@/components/auth-provider";
 import MobileAppBar from "@/components/mobile-app-bar";
 import MobileNav from "@/components/mobile-nav";
+import SiteHeader from "@/components/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SITE_URL } from "@/lib/site-url";
 
@@ -118,9 +119,10 @@ export default function RootLayout({
           <AuthProvider>
             {/* Before `{children}`, so the sticky bar pins to the top of the
                 document rather than to whatever the first page section is.
-                Below `lg` only — the desktop keeps SiteNavigation and the
-                per-page headers exactly as they are. */}
+                Below `lg` only. From `lg` up, SiteHeader is the one header
+                on every page (UX Phase 3). */}
             <MobileAppBar />
+            <SiteHeader />
             {children}
             <MobileNav />
           </AuthProvider>

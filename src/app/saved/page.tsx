@@ -1,11 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import BrandLogo from "@/components/brand-logo";
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { useEffect, useState } from "react";
 
-import AccountActions from "@/components/account-actions";
 import PropertyCardPhotos from "@/components/property-card-photos";
 import {
   AreaIcon,
@@ -122,8 +120,7 @@ export default function SavedPropertiesPage() {
     <main className="min-h-screen bg-[var(--background)] px-3 py-4 text-slate-900 md:px-8 dark:text-white">
       <div className="mx-auto max-w-6xl">
         {/* Navigation Header */}
-        <header className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_12px_28px_rgba(0,0,0,0.3)]">
-          <BrandLogo />
+        <div className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_12px_28px_rgba(0,0,0,0.3)]">
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5 gap-y-2 sm:gap-2.5">
             {/* The stray `hidden` on these two is gone.
                 `.pill` is declared inside `@layer components` and Tailwind's
@@ -146,9 +143,8 @@ export default function SavedPropertiesPage() {
               <span className="hidden sm:inline">Browse Catalogue</span>
               <span className="sm:hidden">Catalogue</span>
             </Link>
-            <AccountActions />
           </div>
-        </header>
+        </div>
 
         {/* Hero Title */}
         <section className="rounded-panel border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.08)] backdrop-blur-xl mb-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">

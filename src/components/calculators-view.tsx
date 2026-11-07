@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import BrandLogo from "@/components/brand-logo";
 import { useId, useMemo, useState } from "react";
 import {
   ArrowLeftIcon,
@@ -278,9 +277,8 @@ export default function CalculatorsView({
     <main className="min-h-screen bg-transparent px-3 py-4 text-slate-900 dark:text-slate-100 md:px-8 transition-colors duration-300">
       <div className="mx-auto max-w-5xl">
         {/* Navigation Header */}
-        <header className="mb-6 flex items-center justify-between rounded-card border border-white/75 dark:border-white/10 bg-white/45 dark:bg-surface-panel/80 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] dark:shadow-[0_12px_28px_rgba(0,0,0,0.3)] backdrop-blur-xl">
+        <div className="mb-6 flex items-center justify-between rounded-card border border-white/75 dark:border-white/10 bg-white/45 dark:bg-surface-panel/80 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] dark:shadow-[0_12px_28px_rgba(0,0,0,0.3)] backdrop-blur-xl">
           <div className="flex items-center gap-2.5 sm:gap-3">
-            <BrandLogo markOnly />
             <div>
               <p className="text-xs uppercase tracking-[0.2em] text-slate-600 font-bold dark:text-slate-400">Property Finance</p>
               <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">
@@ -296,7 +294,7 @@ export default function CalculatorsView({
             <span className="hidden sm:inline">Browse Properties</span>
             <span className="sm:hidden">Catalogue</span>
           </Link>
-        </header>
+        </div>
 
         {/* Tab Switcher.
 

@@ -1,11 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import BrandLogo from "@/components/brand-logo";
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { useEffect, useState } from "react";
 
-import AccountActions from "@/components/account-actions";
 import { formatDate } from "@/lib/formatters";
 import {
   AreaIcon,
@@ -177,9 +175,8 @@ export default function CollectionsPage() {
     <main className="min-h-screen bg-[var(--background)] px-3 py-4 text-slate-900 md:px-8 dark:text-white">
       <div className="mx-auto max-w-6xl">
         {/* Navigation Header */}
-        <header className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <div className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <div className="flex items-center gap-2.5 sm:gap-3">
-            <BrandLogo markOnly />
             <div>
               <p className="text-xs uppercase tracking-[0.2em] text-slate-600 hidden sm:block dark:text-slate-400">Collaborative Discovery</p>
               <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">Collections</h1>
@@ -199,9 +196,8 @@ export default function CollectionsPage() {
               <span className="hidden sm:inline">+ New Collection</span>
               <span className="sm:hidden">+ New</span>
             </button>
-            <AccountActions />
           </div>
-        </header>
+        </div>
 
         {loadError && (
           <p

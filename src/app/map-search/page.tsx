@@ -1,11 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import BrandLogo from "@/components/brand-logo";
 import { useEffect, useMemo, useState } from "react";
 
 import PropertySplitMapView from "@/components/property-split-map-view";
-import AccountActions from "@/components/account-actions";
 import { SparklesIcon } from "@/components/icons";
 import { getPropertyList, type PropertyRecord } from "@/lib/property-data";
 
@@ -60,9 +58,8 @@ export default function MapSearchPage() {
     <main className="min-h-screen bg-transparent px-3 py-4 text-slate-900 dark:text-slate-100 md:px-8">
       <div className="mx-auto max-w-[1500px]">
         {/* Navigation Header */}
-        <header className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 dark:border-white/10 dark:bg-[#0b1719]/70 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] dark:shadow-[0_12px_28px_rgba(0,0,0,0.4)] backdrop-blur-xl">
+        <div className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 dark:border-white/10 dark:bg-[#0b1719]/70 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] dark:shadow-[0_12px_28px_rgba(0,0,0,0.4)] backdrop-blur-xl">
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
-            <BrandLogo markOnly />
             <div>
               <p className="text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-emerald-400/80 font-bold hidden sm:block">Geospatial Intelligence</p>
               <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">
@@ -86,9 +83,8 @@ export default function MapSearchPage() {
               <SparklesIcon className="h-3 w-3 text-emerald-300 dark:text-emerald-100" />
               <span>AI Search</span>
             </Link>
-            <AccountActions />
           </div>
-        </header>
+        </div>
 
         {/* Filter Toolbar */}
         <div className="relative z-30 mb-6 flex flex-wrap items-center justify-between gap-3 rounded-card border border-white/80 bg-white/50 dark:border-white/10 dark:bg-surface-panel/80 p-3 backdrop-blur-xl shadow-sm dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">

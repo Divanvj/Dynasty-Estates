@@ -1,9 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import BrandLogo from "@/components/brand-logo";
 import { useState } from "react";
-import AccountActions from "@/components/account-actions";
 import { ArrowLeftIcon, PrinterIcon, XMarkIcon } from "@/components/icons";
 
 import { fallbackProperties, type PropertyRecord } from "@/lib/property-data";
@@ -37,9 +35,8 @@ export default function ComparePage() {
             context, so without an explicit z-index it sits at `auto` and the
             blurred comparison table below — also `auto`, but later in the DOM —
             painted over the Profile dropdown. See src/app/page.tsx. */}
-        <header className="no-print relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl sm:px-5 dark:bg-surface-panel/70 dark:border-white/10 dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
+        <div className="no-print relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl sm:px-5 dark:bg-surface-panel/70 dark:border-white/10 dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
           <div className="flex items-center gap-2.5 sm:gap-3">
-            <BrandLogo markOnly />
             <div>
               <p className="hidden text-xs uppercase tracking-[0.2em] text-slate-600 sm:block sm:text-xs dark:text-slate-400">Buyer Decision Support</p>
               <h1 className="text-xs font-semibold tracking-wide text-slate-900 sm:text-sm dark:text-white">
@@ -57,7 +54,6 @@ export default function ComparePage() {
               <PrinterIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-300" />
               <span className="hidden sm:inline">Print / Export PDF</span>
             </button>
-            <AccountActions />
             <Link
               href="/collections"
               className="pill gap-1 border border-slate-300/80 bg-white/60 font-semibold text-slate-700 transition-all hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10"
@@ -67,7 +63,7 @@ export default function ComparePage() {
               <span className="hidden sm:inline">← Back to Collections</span>
             </Link>
           </div>
-        </header>
+        </div>
 
         {/* Replaces the navigation bar on paper, where there is nothing to say
             what the sheet is or when it was run. Screen-hidden by .print-only. */}

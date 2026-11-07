@@ -4,7 +4,6 @@ import Link from "next/link";
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { useEffect, useState } from "react";
 
-import BrandLogo from "@/components/brand-logo";
 import RoleGuard from "@/components/role-guard";
 import { auth } from "@/lib/firebase";
 import { formatNumber } from "@/lib/formatters";
@@ -74,16 +73,8 @@ export default function SellerPortal() {
     >
       <main className="min-h-screen bg-[var(--background)] px-4 py-5 text-slate-900 md:px-6 lg:px-8 dark:text-white">
       <div className="mx-auto max-w-[1500px]">
-        <header className="mb-6 flex items-center justify-between rounded-card border border-white/45 bg-white/35 px-4 py-3 backdrop-blur-xl shadow-[0_12px_30px_rgba(15,23,42,0.06)] md:px-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-          <BrandLogo />
-
-          <div className="hidden items-center gap-6 text-sm text-slate-700 md:flex dark:text-slate-300">
-            <Link href="/" className="hover:text-emerald-500 transition-colors">Home</Link>
-            <Link href="/search" className="hover:text-emerald-500 transition-colors">Search</Link>
-            <Link href="/seller/portal" className="text-emerald-800 dark:text-emerald-400 font-semibold">Seller portal</Link>
-          </div>
-        </header>
-
+        {/* No page bar: it held only Home / Search / Seller portal links, which
+            SiteHeader (lg+) and MobileAppBar carry on every page. */}
         {user ? <p className="mb-4 text-sm text-slate-600 dark:text-slate-300">Showing listings owned by {user.email}.</p> : null}
 
         <section className="mb-6 rounded-panel border border-white/45 bg-[linear-gradient(135deg,rgba(255,255,255,0.6),rgba(220,238,244,0.72))] dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-7">
