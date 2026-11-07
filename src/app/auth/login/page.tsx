@@ -200,13 +200,9 @@ export default function LoginPage() {
                 Continue with Google
               </button>
 
-              <button
-                type="button"
-                className="pill-lg w-full gap-2 border border-slate-300 bg-white/80 sm:text-sm font-medium text-slate-700 hover:bg-white transition-all dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/10 dark:hover:border-white/20"
-              >
-                <span></span>
-                Continue with Apple
-              </button>
+              {/* "Continue with Apple" stood here with no click handler: Apple sign-in
+                  is not configured on the Firebase project. Add it back with the
+                  provider, not before. */}
             </div>
 
             <div className="my-5 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-slate-500">

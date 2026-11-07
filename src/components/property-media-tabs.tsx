@@ -34,12 +34,19 @@ export default function PropertyMediaTabs({
     the default panel now, so that is what a printed listing carries under the
     hero rather than the thumbnail grid.
   */
-  const [activeTab, setActiveTab] = useState<"floorplan" | "virtual-tour" | "street-view">("floorplan");
+  /*
+    The Floor Plan tab exists only when the listing carries a plan. It used to
+    fall back to a stock photograph of another house's exterior, captioned
+    "verified by practitioner", with a "Download PDF Blueprint" link that opened
+    the same photograph. Agents now attach a real plan when they list
+    (seller/listings/new); without one, the panel opens on the tour.
+  */
+  const hasFloorPlan = Boolean(floorPlanImage);
+  const [activeTab, setActiveTab] = useState<"floorplan" | "virtual-tour" | "street-view">(
+    hasFloorPlan ? "floorplan" : "virtual-tour"
+  );
   const [mapMode, setMapMode] = useState<"map" | "street">("street");
-
-  const defaultFloorPlan =
-    floorPlanImage ||
-    "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80";
+  const isPdfPlan = /\.pdf($|\?)/i.test(floorPlanImage ?? "");
 
   const mapQuery = encodeURIComponent(`${title}, ${location || "South Africa"}`);
   const streetViewQuery = encodeURIComponent(`${location || title}, South Africa`);
@@ -49,17 +56,19 @@ export default function PropertyMediaTabs({
       {/* Media Tab Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/70 dark:border-white/10 pb-4 mb-6">
         <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 dark:bg-surface-ink/80 border border-slate-200/80 dark:border-white/10 w-fit">
-          <button
-            type="button"
-            onClick={() => setActiveTab("floorplan")}
-            className={`rounded-xl px-4 py-2 text-xs font-bold transition-all cursor-pointer ${
-              activeTab === "floorplan"
-                ? "bg-white dark:bg-emerald-600 text-slate-900 dark:text-white shadow-sm dark:border dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-            }`}
-          >
-            Floor Plan
-          </button>
+          {hasFloorPlan && (
+            <button
+              type="button"
+              onClick={() => setActiveTab("floorplan")}
+              className={`rounded-xl px-4 py-2 text-xs font-bold transition-all cursor-pointer ${
+                activeTab === "floorplan"
+                  ? "bg-white dark:bg-emerald-600 text-slate-900 dark:text-white shadow-sm dark:border dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+              }`}
+            >
+              Floor Plan
+            </button>
+          )}
           <button
             type="button"
             onClick={() => setActiveTab("virtual-tour")}
@@ -87,34 +96,44 @@ export default function PropertyMediaTabs({
 
         {/* An instruction about clicking is meaningless on paper. */}
         <div className="no-print hidden text-xs text-slate-600 font-medium sm:block dark:text-slate-400">
-          {activeTab === "floorplan" && `Architectural Under-Roof Layout · ${area} ${erfSize ? `(Erf ${erfSize})` : ""}`}
+          {activeTab === "floorplan" && `Floor plan · ${area} ${erfSize ? `(Erf ${erfSize})` : ""}`}
           {activeTab === "virtual-tour" && "Interactive 3D Walkthrough Experience"}
           {activeTab === "street-view" && "Google Maps & 360° Street View Inspection"}
         </div>
       </div>
 
       {/* Tab 1: Floor Plan */}
-      {activeTab === "floorplan" && (
+      {activeTab === "floorplan" && floorPlanImage && (
         <div className="space-y-4 animate-in fade-in duration-200">
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-950/5 p-2 sm:p-4 text-center dark:border-white/10 dark:bg-surface-ink/60">
-            <div
-              className="relative mx-auto h-[360px] sm:h-[460px] w-full max-w-2xl rounded-xl bg-contain bg-center bg-no-repeat shadow-inner"
-              style={{ backgroundImage: `url(${defaultFloorPlan})` }}
-            >
-              <div className="absolute bottom-3 right-3 rounded-full bg-slate-900/80 px-3 py-1 text-xs font-bold text-white backdrop-blur-md dark:border dark:border-white/10">
-                Floor Area: {area} {erfSize ? `· Erf: ${erfSize}` : ""}
+            {isPdfPlan ? (
+              <iframe
+                title={`Floor plan for ${title}`}
+                src={floorPlanImage}
+                className="mx-auto h-[360px] sm:h-[460px] w-full max-w-2xl rounded-xl bg-white"
+              />
+            ) : (
+              <div
+                role="img"
+                aria-label={`Floor plan for ${title}`}
+                className="relative mx-auto h-[360px] sm:h-[460px] w-full max-w-2xl rounded-xl bg-contain bg-center bg-no-repeat shadow-inner"
+                style={{ backgroundImage: `url(${floorPlanImage})` }}
+              >
+                <div className="absolute bottom-3 right-3 rounded-full bg-slate-900/80 px-3 py-1 text-xs font-bold text-white backdrop-blur-md dark:border dark:border-white/10">
+                  Floor Area: {area} {erfSize ? `· Erf: ${erfSize}` : ""}
+                </div>
               </div>
-            </div>
+            )}
           </div>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600 rounded-xl bg-slate-50 p-3 border border-slate-200 dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300">
-            <span>Dimensions and layouts are indicative architectural representations verified by practitioner.</span>
+            <span>Supplied by the listing agent. Confirm dimensions before you make an offer.</span>
             <a
-              href={defaultFloorPlan}
+              href={floorPlanImage}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-lg bg-slate-900 px-3.5 py-1.5 font-bold text-white hover:bg-slate-800 transition-colors shrink-0 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
             >
-              Download PDF Blueprint ↗
+              Open floor plan ↗
             </a>
           </div>
         </div>

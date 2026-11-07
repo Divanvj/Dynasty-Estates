@@ -1094,6 +1094,9 @@ export async function getPropertyList(): Promise<PropertyRecord[]> {
           ? data.gallery
           : [data.image ?? fallbackProperties[0].image],
         features,
+        // Attached by the agent in the listing wizard. Absent means the page
+        // shows no Floor Plan tab, never a stand-in image.
+        floorPlanImage: typeof data.floorPlanUrl === "string" && data.floorPlanUrl ? data.floorPlanUrl : undefined,
       };
     });
 

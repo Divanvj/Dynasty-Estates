@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore";
 
 import { db, isFirebaseConfigured } from "./firebase";
-import { addPhotoFingerprints, type ListingPhoto } from "./photo-intake";
+import { addPhotoFingerprints, type ListingFloorPlan, type ListingPhoto } from "./photo-intake";
 import type { ListingLifecycleStatus } from "./types/domain";
 
 // Re-exported for the call sites that already import it from here. The single
@@ -70,6 +70,8 @@ export type ListingFormData = {
   gallery?: string[];
   /** Checked, uploaded photos; the first is the cover. Supersedes image/gallery. */
   photos?: ListingPhoto[];
+  /** Optional plan attached by the agent; shown as the listing's Floor Plan tab. */
+  floorPlan?: ListingFloorPlan;
   status?: ListingLifecycleStatus;
 };
 
@@ -210,6 +212,7 @@ export async function createSellerListing(formData: ListingFormData): Promise<st
     description: formData.description,
     image,
     gallery,
+    floorPlanUrl: formData.floorPlan?.url ?? "",
     // What each photo measured when it passed the checks, for moderators.
     photoChecks: photos.map((photo) => ({ url: photo.url, width: photo.width, height: photo.height, ...photo.checks })),
     category: `${formData.type} listing`,

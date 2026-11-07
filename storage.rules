@@ -21,6 +21,20 @@ service firebase.storage {
         && (request.auth.uid == ownerId || request.auth.token.role == 'admin');
     }
 
+    // Floor plans attached by the listing agent. Drawings and PDFs, stored
+    // as uploaded (see uploadFloorPlan in src/lib/photo-intake.ts).
+    match /floor-plans/{ownerId}/{fileId} {
+      allow read: if true;
+      allow create: if request.auth != null
+        && request.auth.uid == ownerId
+        && fileId.matches('[0-9a-f-]{36}\\.(jpg|png|webp|pdf)')
+        && request.resource.contentType in ['image/jpeg', 'image/png', 'image/webp', 'application/pdf']
+        && request.resource.size < 10 * 1024 * 1024;
+      allow update: if false;
+      allow delete: if request.auth != null
+        && (request.auth.uid == ownerId || request.auth.token.role == 'admin');
+    }
+
     match /{allPaths=**} {
       allow read, write: if false;
     }

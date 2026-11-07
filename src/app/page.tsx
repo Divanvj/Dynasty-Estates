@@ -5,7 +5,7 @@ import BrandLogo from "@/components/brand-logo";
 import HeroHeadline from "@/components/hero-headline";
 import HomeHeroSearch from "@/components/home-hero-search";
 import HomeTrendingListings from "@/components/home-trending-listings";
-import { CheckVoteIcon, SparklesIcon, UsersIcon } from "@/components/icons";
+import { SparklesIcon } from "@/components/icons";
 import HomeSpotlight from "@/components/home-spotlight";
 import SiteNavigation from "@/components/site-navigation";
 import { fallbackProperties, getPropertyList } from "@/lib/property-data";
@@ -103,89 +103,31 @@ export default async function Home() {
 
         <HomeTrendingListings properties={properties} />
 
-        {/* Market Pulse Section */}
-        {/* `grid-cols-1` is load-bearing below lg. Without a base column
-            definition the grid falls back to one implicit `auto` track, which
-            sizes to its content's max-content width: at 320px the track
-            measured 326px inside a 296px container and pushed the document
-            18px sideways. Tailwind's `grid-cols-1` is `minmax(0, 1fr)`, and
-            that zero minimum is what lets the panels shrink. */}
-        <section id="insights" className="mx-auto mt-8 grid grid-cols-1 max-w-[1440px] gap-4 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="rounded-panel border border-white/70 bg-white/45 dark:border-white/10 dark:bg-surface-panel/65 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl">
-            <div className="flex items-center justify-between">
-              <p className="text-xs uppercase tracking-[0.22em] text-slate-600 dark:text-slate-400 font-bold">Market intelligence</p>
-              <Link href="/insights" className="text-xs font-bold text-emerald-800 dark:text-emerald-400 hover:underline">
-                Full Report →
-              </Link>
-            </div>
-            <h3 className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white">South African Metros at a Glance</h3>
-
-            <div className="mt-5 space-y-3">
-              {[
-                { area: "Pretoria East & Waterkloof", query: "Pretoria", value: "+7.8% High demand for solar estates" },
-                { area: "Sandton & Bryanston", query: "Sandton", value: "+6.4% Secure cluster living priority" },
-                { area: "Cape Town Atlantic Seaboard", query: "Camps Bay", value: "+9.2% Coastal luxury international interest" },
-                { area: "Umhlanga & Ballito", query: "Umhlanga", value: "+8.1% Gated coastal developments" },
-              ].map((item) => (
-                <Link
-                  key={item.area}
-                  href={`/search?q=${encodeURIComponent(item.query)}`}
-                  className="flex items-center justify-between rounded-2xl border border-white/70 bg-white/60 dark:border-white/10 dark:bg-surface-ink/60 px-4 py-3 text-xs transition-all hover:bg-white dark:hover:bg-surface-panel hover:border-emerald-400 text-slate-800 dark:text-slate-200"
-                >
-                  <span className="font-semibold">{item.area}</span>
-                  <span className="font-medium text-emerald-800 dark:text-emerald-400">{item.value} →</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-panel border border-emerald-500/25 bg-gradient-to-br from-[#082224] to-[#041416] p-6 text-white shadow-[0_20px_45px_rgba(4,20,22,0.35)] backdrop-blur-xl">
+        {/* Collections. This section used to pair a "Metros at a Glance" panel
+            of growth figures typed into this file (+7.8%, +6.4%…) with two
+            invented shortlists ("2 collaborators · 4 votes cast") shown to
+            every visitor. Neither came from data, so both are gone; the panel
+            now says what Collections does and sends people to start one.
+            Market figures live on /insights, which labels them as sample. */}
+        <section className="mx-auto mt-8 max-w-[1440px]">
+          <div className="rounded-panel border border-emerald-500/25 bg-gradient-to-br from-[#082224] to-[#041416] p-6 text-white shadow-[0_20px_45px_rgba(4,20,22,0.35)] backdrop-blur-xl md:p-8">
             {/* `flex-wrap` + `min-w-0`: `.pill` is `flex-shrink: 0` and
-                `white-space: nowrap`, so this 186px link could not give way and
-                overflowed its 301px row by 51px at 375px — enough to push the
-                whole document into a 14px horizontal scroll, which on a phone
-                reads as the page being subtly broken. It now drops to its own
-                line when the heading beside it needs the width. */}
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="min-w-0">
-                <p className="text-xs uppercase tracking-[0.2em] text-emerald-400 font-semibold">Collaboration & Shortlisting</p>
+                `white-space: nowrap`; without them the button overflowed its
+                row at 375px and pushed the document into a horizontal scroll. */}
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="min-w-0 max-w-2xl">
+                <p className="text-xs uppercase tracking-[0.2em] text-emerald-400 font-semibold">Collections</p>
                 <h3 className="mt-1 text-2xl font-light text-white">Find homes with your partner</h3>
+                <p className="mt-3 text-sm leading-relaxed text-emerald-100/80">
+                  Save homes into a shared collection, invite your partner or family, and vote Love, Like or Reject on each one together.
+                </p>
               </div>
               <Link
                 href="/collections"
                 className="pill border border-emerald-400/40 bg-emerald-500/20 font-semibold text-emerald-200 hover:bg-emerald-500/30 transition-all"
               >
-                Open Collections →
+                Start a collection →
               </Link>
-            </div>
-
-            <p className="mt-3 text-xs leading-relaxed text-emerald-100/80">
-              Dynasty Estates lets you invite partners, family members, or investment colleagues to vote (Love/Like/Reject) and comment on properties in real-time.
-            </p>
-
-            <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              {[
-                { title: "Our Pretoria East Shortlist", members: "2 collaborators", votes: "4 votes cast" },
-                { title: "Cape Town Oceanfront Search", members: "3 collaborators", votes: "6 votes cast" },
-              ].map((col, idx) => (
-                <Link
-                  key={idx}
-                  href="/collections"
-                  className="rounded-control border border-emerald-500/20 bg-emerald-950/40 p-4 backdrop-blur-md hover:bg-emerald-950/60 transition-all block"
-                >
-                  <p className="text-sm font-semibold text-white">{col.title}</p>
-                  <div className="mt-2 flex items-center justify-between text-xs text-emerald-300/70">
-                    <span className="flex items-center gap-1.5">
-                      <UsersIcon className="h-3.5 w-3.5" />
-                      <span>{col.members}</span>
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <CheckVoteIcon className="h-3.5 w-3.5" />
-                      <span>{col.votes}</span>
-                    </span>
-                  </div>
-                </Link>
-              ))}
             </div>
           </div>
         </section>
@@ -196,12 +138,7 @@ export default async function Home() {
         <footer className="mx-auto mt-12 max-w-[1440px] rounded-panel border border-white/70 bg-white/40 dark:border-white/10 dark:bg-[#091517]/75 p-8 max-md:p-5 shadow-sm backdrop-blur-xl">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 text-xs">
             <div>
-              <div className="flex items-center gap-2 mb-3">
-                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#0c4e50] to-[#073839] border border-emerald-400/30 text-xs font-bold text-white shadow-sm">
-                  D
-                </div>
-                <span className="font-bold text-sm tracking-wide text-slate-900 dark:text-white">Dynasty Estates</span>
-              </div>
+              <BrandLogo showOnMobile className="mb-3" />
               <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
                 South Africa&rsquo;s premium property discovery, intelligence and transaction platform. Developed for Tricore Enterprises.
               </p>
