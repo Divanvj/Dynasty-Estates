@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import PropertyGridCard from "@/components/property-grid-card";
 import Link from "next/link";
 
-import SiteNavigation from "@/components/site-navigation";
-import BrandLogo from "@/components/brand-logo";
-import AccountActions from "@/components/account-actions";
 import { getPropertyList, matchProvinceName, southAfricanCitiesByProvince } from "@/lib/property-data";
 import { getListingsByLocation, enrichedListingToPropertyRecord } from "@/lib/server/property-service";
 import { absoluteUrl, SITE_URL } from "@/lib/site-url";
@@ -87,20 +84,6 @@ export default async function ForSaleProvincePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      {/* relative z-50: the bar below is a `backdrop-blur` stacking context, so
-          at `auto` the page content that follows painted over the Sell / Tools
-          dropdowns. See src/app/page.tsx for the full note. */}
-      {/* Hidden below lg: brand, nav and account all live in MobileAppBar now. */}
-      <header className="relative z-50 mx-auto hidden max-w-[1400px] px-4 pt-4 sm:px-6 lg:block lg:px-8">
-        <div className="flex items-center justify-between rounded-card border border-white/70 bg-white/40 px-4 py-3 backdrop-blur-xl shadow-xs dark:border-white/10 dark:bg-[#0b1719]/70">
-          <BrandLogo />
-          <SiteNavigation />
-          {/* See the note in src/app/for-sale/page.tsx — these browse routes had
-              no account control at all. */}
-          <AccountActions />
-        </div>
-      </header>
-
       <main className="mx-auto max-w-[1400px] px-4 py-8 sm:px-6 lg:px-8">
         {/* Breadcrumbs Navigation */}
         <nav aria-label="Breadcrumbs" className="mb-6 flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300">

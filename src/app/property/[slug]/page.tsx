@@ -139,22 +139,12 @@ export default async function PropertyPage({
       {/* Feeds the homepage spotlight. Stored in the viewer's browser only. */}
       <RecordPropertyView propertyId={property.id} />
       <div className="mx-auto max-w-[1400px]">
-        {/* Navigation Header */}
-        <header className="no-print relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/40 px-3.5 py-2.5 backdrop-blur-xl shadow-[0_12px_30px_rgba(36,48,50,0.06)] md:px-6 md:py-3 dark:bg-[#0b1719]/70 dark:border-white/10 dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
-          <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink-0">
-            <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-2xl bg-slate-950 text-sm font-semibold text-white shadow-md">
-              D
-            </div>
-            {/* Mark only on phones, which is what every other interior page
-                does via `BrandLogo markOnly`. The wordmark is 88px of the 336
-                available at 390px, and with it there the five action pills
-                beside it wrapped to a second row; without it they sit on one. */}
-            <div className="hidden sm:block">
-              <p className="text-xs uppercase tracking-[0.24em] text-slate-600 dark:text-slate-400">Dynasty</p>
-              <p className="text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-300">Estates</p>
-            </div>
-          </Link>
-
+        {/* Listing actions. This was a second site header with a hand-drawn
+            "D" tile; brand, menu and account are now SiteHeader (lg+) and
+            MobileAppBar, so only what the visitor does with this listing stays.
+            Still `relative z-50`: the Share and Collection popovers open from
+            here and must clear the hero below. */}
+        <div className="no-print relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/40 px-3.5 py-2.5 backdrop-blur-xl shadow-[0_12px_30px_rgba(36,48,50,0.06)] md:px-6 md:py-3 dark:bg-[#0b1719]/70 dark:border-white/10 dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
           {/*
             One tier, one job: everything here is something the visitor does
             with this listing for themselves — go back, print it, share it,
@@ -169,14 +159,14 @@ export default async function PropertyPage({
             where five labelled pills do not fit it had nowhere to go. Wrapping
             is what the /ai-search and /map-search headers already do.
           */}
-          <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5 gap-y-2 sm:gap-2.5">
+          <div className="flex w-full min-w-0 flex-wrap items-center justify-end gap-1.5 gap-y-2 sm:gap-2.5">
             {/* One back link, not two. There were separate desktop and mobile
                 copies differing only in whether the label showed — which is
                 what `hidden sm:inline` on the label does, with one control. */}
             <Link
               href="/search"
               aria-label="Back to search catalogue"
-              className="pill border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
+              className="pill mr-auto border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
             >
               <ArrowLeftIcon className="h-4 w-4" />
               <span className="hidden sm:inline">Search Catalogue</span>
@@ -196,7 +186,7 @@ export default async function PropertyPage({
                 under two names — and stored them under two different `kind`
                 values, which is why /inquiries could not show half of them. */}
           </div>
-        </header>
+        </div>
 
         {/* Stands in for the navigation bar on paper, which `.no-print` has
             removed by then. Rendered on the server, so unlike the comparison

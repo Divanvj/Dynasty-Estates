@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-import BrandLogo from "@/components/brand-logo";
 import PropertyGridCard from "@/components/property-grid-card";
 import { ShieldCheckIcon, PhoneIcon, WhatsAppIcon } from "@/components/icons";
 import { getAgentByIdOrSlug, verifiedPractitioners } from "@/lib/agents-data";
@@ -138,9 +137,8 @@ export default async function AgentProfilePage({
 
       <div className="mx-auto max-w-6xl">
         {/* Header / Nav */}
-        <header className="mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-4 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <div className="mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-4 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <div className="flex items-center gap-2.5 sm:gap-3">
-            <BrandLogo markOnly />
             <nav className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400">
               <Link href="/" className="hover:text-slate-900 dark:hover:text-white">Home</Link>
               <span>/</span>
@@ -155,7 +153,7 @@ export default async function AgentProfilePage({
           >
             ← All Agents
           </Link>
-        </header>
+        </div>
 
         {/* Profile Card */}
         <section className="mb-10 rounded-3xl border border-white/80 bg-white/60 p-6 sm:p-8 backdrop-blur-xl shadow-[0_20px_45px_rgba(36,48,50,0.06)] dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">

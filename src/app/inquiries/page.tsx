@@ -1,11 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import BrandLogo from "@/components/brand-logo";
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { useEffect, useState } from "react";
 
-import AccountActions from "@/components/account-actions";
 import { auth } from "@/lib/firebase";
 import { formatDate } from "@/lib/formatters";
 import { getUserInquiries, type UserInquiry } from "@/lib/user-inquiries";
@@ -92,8 +90,7 @@ export default function InquiriesPage() {
     <main className="min-h-screen bg-[var(--background)] px-4 py-5 text-slate-900 md:px-6 lg:px-8 dark:text-white">
       <div className="mx-auto max-w-4xl">
         {/* Header */}
-        <header className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-5 py-3.5 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-          <BrandLogo />
+        <div className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-5 py-3.5 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-2.5 gap-y-2">
             <Link
               href="/saved"
@@ -107,9 +104,8 @@ export default function InquiriesPage() {
             >
               Browse Catalogue
             </Link>
-            <AccountActions />
           </div>
-        </header>
+        </div>
 
         {/* Hero Section */}
         <section className="rounded-panel border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.08)] backdrop-blur-xl mb-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">

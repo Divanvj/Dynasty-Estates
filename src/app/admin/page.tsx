@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import BrandLogo from "@/components/brand-logo";
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { useEffect, useState } from "react";
 
@@ -93,9 +92,8 @@ export default function AdminPage() {
       <main className="min-h-screen bg-[var(--background)] px-3 py-4 text-slate-900 md:px-8 dark:text-white">
         <div className="mx-auto max-w-6xl">
         {/* Admin Command Header */}
-        <header className="mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+        <div className="mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
-            <BrandLogo markOnly />
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-xs uppercase tracking-[0.2em] text-slate-600 hidden sm:inline dark:text-emerald-400 font-bold">Governance & Trust</span>
@@ -114,7 +112,7 @@ export default function AdminPage() {
               Agent View
             </Link>
           </div>
-        </header>
+        </div>
 
         {errorNotice && (
           <div

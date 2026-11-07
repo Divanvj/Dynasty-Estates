@@ -1,13 +1,11 @@
 import Link from "next/link";
 
-import AccountActions from "@/components/account-actions";
 import BrandLogo from "@/components/brand-logo";
 import HeroHeadline from "@/components/hero-headline";
 import HomeHeroSearch from "@/components/home-hero-search";
 import HomeTrendingListings from "@/components/home-trending-listings";
 import { SparklesIcon } from "@/components/icons";
 import HomeSpotlight from "@/components/home-spotlight";
-import SiteNavigation from "@/components/site-navigation";
 import { fallbackProperties, getPropertyList } from "@/lib/property-data";
 export default async function Home() {
   // The one place a catalogue failure still renders demo data. The homepage
@@ -26,31 +24,6 @@ export default async function Home() {
   return (
     <main className="min-h-screen bg-transparent px-3 py-4 text-slate-900 dark:text-slate-100 md:px-6 lg:px-8">
       <div className="mx-auto max-w-[1500px]">
-        {/*
-          Navigation Header.
-
-          z-50, not z-30. A positioned element with a z-index creates a stacking
-          context, so the Sell / Tools / Profile dropdowns inside this header can
-          never paint above a *sibling* that outranks the header itself, however
-          high their own z-index is. At z-30 the hero below (z-40) won, and all
-          three dropdowns opened behind the hero panel. Every other page that
-          carries these dropdowns already uses z-50; this one was the exception.
-
-          If you add a section here that must cover the header, portal it to the
-          body as ExpandableSearchPanel does rather than raising its z-index —
-          that is what keeps its overlay clear of this stacking context.
-        */}
-        {/* `hidden lg:flex`: below lg every child of this bar — brand, nav and
-            account — is now in MobileAppBar, so on a phone it rendered as an
-            empty bordered box under the real one. */}
-        <header className="relative z-50 mx-auto hidden max-w-[1440px] items-center justify-between rounded-card border border-white/70 bg-white/40 dark:border-white/10 dark:bg-[#0b1719]/70 px-3.5 sm:px-6 py-3 backdrop-blur-xl shadow-[0_12px_30px_rgba(36,48,50,0.06)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)] lg:flex">
-          <BrandLogo />
-
-          <SiteNavigation />
-
-          <AccountActions />
-        </header>
-
         {/* Full-Width Hero Section */}
         <section id="discover" className="relative z-40 mx-auto mt-4 sm:mt-6 max-w-[1440px]">
           <div className="relative rounded-card sm:rounded-panel border border-white/70 bg-white/45 dark:border-white/10 dark:bg-surface-panel/65 p-3.5 sm:p-6 shadow-[0_20px_45px_rgba(36,48,50,0.08)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)] backdrop-blur-xl md:p-8 lg:p-10">
