@@ -1,4 +1,5 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
+import { nextSundayShow, showDateLabel } from "./on-show";
 
 import { db, isFirebaseConfigured } from "./firebase";
 import { ACTIVE_CATALOGUE_STATUSES, PUBLIC_LISTING_STATUSES } from "./types/domain";
@@ -392,11 +393,10 @@ export const fallbackProperties: PropertyRecord[] = [
     ],
     features: ["inverter_battery", "security_estate", "fibre_ready"],
     onShow: {
-      date: "Sunday, 14 Sep",
+      ...nextSundayShow(), // mock: always the coming Sunday
       time: "14:00 – 17:00",
       directionsNote: "Follow Dynasty Estates pointer boards from Oxford Road into Bath Avenue",
     },
-    floorPlanImage: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80",
     virtualTourUrl: "https://my.matterport.com/show/?m=sample-matterport-tour",
     ratesAndTaxes: 1250,
     levies: 2100,
@@ -435,11 +435,10 @@ export const fallbackProperties: PropertyRecord[] = [
     ],
     features: ["solar_system", "inverter_battery", "garden", "pet_friendly", "fibre_ready", "braai_area"],
     onShow: {
-      date: "Sunday, 14 Sep",
+      ...nextSundayShow(), // mock: always the coming Sunday
       time: "14:00 – 17:00",
       directionsNote: "Follow boards along R44 into Brandwacht avenue",
     },
-    floorPlanImage: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80",
     ratesAndTaxes: 1450,
   },
   {
@@ -735,11 +734,10 @@ export const fallbackProperties: PropertyRecord[] = [
     ],
     features: ["inverter_battery", "security_estate", "braai_area", "garden", "pet_friendly", "fibre_ready"],
     onShow: {
-      date: "Sunday, 14 Sep",
+      ...nextSundayShow(), // mock: always the coming Sunday
       time: "14:00 – 17:00",
       directionsNote: "Pointers from Palmyra Rd into Keurboom Rd",
     },
-    floorPlanImage: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80",
     ratesAndTaxes: 1850,
     levies: 2400,
   },
@@ -834,11 +832,10 @@ export const fallbackProperties: PropertyRecord[] = [
     ],
     features: ["solar_system", "inverter_battery", "borehole", "security_estate", "swimming_pool", "braai_area", "garden", "staff_quarters", "pet_friendly", "fibre_ready"],
     onShow: {
-      date: "Sunday, 14 Sep",
+      ...nextSundayShow(), // mock: always the coming Sunday
       time: "14:00 – 17:00",
       directionsNote: "Access via Mount Street boomed gate from William Nicol Drive",
     },
-    floorPlanImage: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80",
     virtualTourUrl: "https://my.matterport.com/show/?m=sample-matterport-tour",
     ratesAndTaxes: 2600,
   },
@@ -914,11 +911,10 @@ export const fallbackProperties: PropertyRecord[] = [
     ],
     features: ["solar_system", "inverter_battery", "borehole", "water_tanks", "security_estate", "swimming_pool", "flatlet", "garden", "braai_area", "fibre_ready", "staff_quarters"],
     onShow: {
-      date: "Sunday, 14 Sep",
+      ...nextSundayShow(), // mock: always the coming Sunday
       time: "14:00 – 17:00",
       directionsNote: "Follow Dynasty Estates flags along Rigel Ave, Waterkloof Ridge",
     },
-    floorPlanImage: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80",
     virtualTourUrl: "https://my.matterport.com/show/?m=sample-matterport-tour",
     ratesAndTaxes: 3400,
   },
@@ -1097,6 +1093,17 @@ export async function getPropertyList(): Promise<PropertyRecord[]> {
         // Attached by the agent in the listing wizard. Absent means the page
         // shows no Floor Plan tab, never a stand-in image.
         floorPlanImage: typeof data.floorPlanUrl === "string" && data.floorPlanUrl ? data.floorPlanUrl : undefined,
+        // Set by the agent in the listing wizard; only an ISO date can be
+        // checked against today, so a show without one is not advertised.
+        onShow:
+          data.onShow && typeof data.onShow.isoDate === "string" && data.onShow.isoDate
+            ? {
+                isoDate: data.onShow.isoDate,
+                date: showDateLabel(data.onShow.isoDate),
+                time: String(data.onShow.time ?? ""),
+                directionsNote: data.onShow.directionsNote ? String(data.onShow.directionsNote) : undefined,
+              }
+            : undefined,
       };
     });
 

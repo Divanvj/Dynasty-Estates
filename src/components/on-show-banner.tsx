@@ -1,126 +1,88 @@
 "use client";
 
 import { CalendarIcon, LocationPinIcon } from "@/components/icons";
+import PropertyInquiryButton from "@/components/property-inquiry-button";
+import { describeShow, type OnShow } from "@/lib/on-show";
 
 interface OnShowBannerProps {
+  propertyId: string;
   propertyTitle: string;
   location: string;
-  onShow: {
-    date: string;
-    /**
-     * Machine-readable date, `YYYY-MM-DD`. `date` above is display text with
-     * no year ("Sunday, 14 Sep"), which cannot be compared to today — which is
-     * how every listing came to advertise a show seven weeks in the past under
-     * a "This Weekend" badge. Without this field the banner does not render.
-     */
-    isoDate?: string;
-    time: string;
-    directionsNote?: string;
-  };
+  onShow: OnShow;
 }
 
 /**
- * Whether a show is still worth advertising, and whether "this weekend" is
- * honest.
- *
- * The past cut-off is yesterday rather than today on purpose. This is a client
- * component that also renders on the server: Vercel runs UTC and the reader is
- * on SAST (+2), so a same-day comparison can disagree across the two and
- * change whether the banner exists, which React reports as a hydration
- * mismatch. A full day of slack makes that practically impossible while still
- * catching the case this fixes, where the date is weeks stale.
+ * The listing's viewing section. Replaces the "ON SHOW SUNDAY" pill that sat
+ * on the photo: that pill gave no date, no time and no way to act, and it read
+ * a yearless date so it stayed up after the show was over. This says when,
+ * how to get there, and offers a private viewing to anyone who can't make it.
+ * Renders only when the show day is known and still ahead.
  */
-function describeShow(isoDate: string | undefined, now: Date) {
-  if (!isoDate) return null;
-  const when = new Date(`${isoDate}T12:00:00`);
-  if (Number.isNaN(when.getTime())) return null;
-
-  const dayMs = 24 * 60 * 60 * 1000;
-  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const daysAway = Math.round((when.getTime() - startOfToday.getTime()) / dayMs);
-
-  if (daysAway < -1) return null;
-
-  const weekday = when.getDay(); // 0 Sun, 6 Sat
-  const isWeekend = weekday === 0 || weekday === 6;
-  const label =
-    daysAway >= 0 && daysAway <= 7 && isWeekend
-      ? "On show this weekend"
-      : daysAway === 0
-        ? "On show today"
-        : "On show";
-
-  return { label };
-}
-
-export default function OnShowBanner({ propertyTitle, location, onShow }: OnShowBannerProps) {
-  const show = describeShow(onShow.isoDate, new Date());
-  // Nothing to advertise: a past or undated viewing is worse than none, because
-  // a reader can act on it.
+export default function OnShowBanner({ propertyId, propertyTitle, location, onShow }: OnShowBannerProps) {
+  const show = describeShow(onShow);
   if (!show) return null;
 
-  // Generate Google Calendar Link
-  const calendarEventTitle = encodeURIComponent(`Dynasty Estates On Show: ${propertyTitle}`);
-  const calendarLocation = encodeURIComponent(location);
-  const calendarDetails = encodeURIComponent(
-    `Viewing hours: ${onShow.time}\n${onShow.directionsNote || "Follow pointer boards"}\nProperty: ${propertyTitle}`
-  );
-  const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${calendarEventTitle}&location=${calendarLocation}&details=${calendarDetails}`;
+  const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+    `Show day: ${propertyTitle}`
+  )}&location=${encodeURIComponent(location)}&details=${encodeURIComponent(
+    `Viewing hours: ${onShow.time}${onShow.directionsNote ? `\nHow to get there: ${onShow.directionsNote}` : ""}`
+  )}`;
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
 
   return (
-    <div className="overflow-hidden rounded-card border border-rose-200/90 bg-gradient-to-r from-rose-50 via-rose-50/70 to-amber-50/40 p-4 sm:p-5 shadow-sm backdrop-blur-xl dark:border-rose-500/20 dark:from-rose-950/40 dark:via-rose-950/20 dark:to-amber-950/20 dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="rounded-full bg-rose-600 px-3 py-0.5 text-xs font-extrabold uppercase tracking-widest text-white shadow-xs flex items-center gap-1.5 dark:shadow-[0_0_12px_rgba(225,29,72,0.4)]">
-              <span className="h-2 w-2 rounded-full bg-white animate-pulse" />
-              <span>{show.label}</span>
-            </span>
-            <span className="text-xs font-bold text-slate-900 dark:text-white">
+    <section
+      aria-label="Show day"
+      className="rounded-card border border-white/80 bg-white/70 p-4 shadow-sm backdrop-blur-xl sm:p-5 dark:border-white/10 dark:bg-surface-panel/80"
+    >
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div className="flex items-start gap-3">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[var(--brand-quiet)] text-[var(--brand)] dark:bg-emerald-950/60 dark:text-emerald-300">
+            <CalendarIcon className="h-5 w-5" />
+          </span>
+          <div className="min-w-0">
+            <p className="text-sm font-semibold text-[var(--brand)] dark:text-emerald-300">{show.label}</p>
+            <p className="text-lg font-bold text-slate-950 dark:text-white">
               {onShow.date} · {onShow.time}
-            </span>
-          </div>
-
-          {onShow.directionsNote && (
-            <p className="text-xs text-rose-950/80 flex items-start sm:items-center gap-1.5 pt-0.5 dark:text-rose-200/80">
-              <LocationPinIcon className="h-3.5 w-3.5 text-rose-600 shrink-0 mt-0.5 sm:mt-0 dark:text-rose-400" />
-              <span>
-                <strong className="font-semibold text-rose-900 dark:text-rose-300">Showboard Route: </strong>
-                {onShow.directionsNote}
-              </span>
             </p>
-          )}
+            {onShow.directionsNote && (
+              <p className="mt-0.5 flex items-start gap-1.5 text-sm text-slate-600 dark:text-slate-300">
+                <LocationPinIcon className="mt-0.5 h-4 w-4 shrink-0 text-slate-500 dark:text-slate-400" />
+                <span>{onShow.directionsNote}</span>
+              </p>
+            )}
+          </div>
         </div>
 
-        {/* Links, not buttons, so the print rules do not catch them: a dead
-            "Directions" pill on paper is clutter, while the date, time and
-            showboard route beside it are what a reader actually needs. */}
-        <div className="no-print flex items-center gap-2 shrink-0">
+        {/* Links, not buttons, for calendar and directions so the print rules
+            keep the date and route on paper and drop only the controls. */}
+        <div className="no-print flex flex-wrap items-center gap-2 md:shrink-0">
           <a
             href={calendarUrl}
             target="_blank"
             rel="noopener noreferrer"
-            // `.pill`, like Directions beside it. Hand-rolled, the primary of
-            // this pair rendered 32px at 12px type against the outlined
-            // control's 40px at 16px — the quiet one was taller and larger
-            // than the loud one.
-            className="pill gap-1.5 bg-slate-900 font-bold text-white shadow-sm hover:bg-slate-800 transition-all cursor-pointer dark:bg-rose-600 dark:hover:bg-rose-500 dark:shadow-[0_0_16px_rgba(225,29,72,0.3)]"
+            className="pill gap-1.5 bg-slate-950 font-bold text-white hover:bg-slate-800 transition-colors dark:bg-emerald-600 dark:hover:bg-emerald-500"
           >
-            <CalendarIcon className="h-3.5 w-3.5 text-rose-300 dark:text-white" />
-            <span>Add to Calendar</span>
+            <CalendarIcon className="h-3.5 w-3.5" />
+            Add to calendar
           </a>
           <a
             href={mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="pill gap-1.5 border border-slate-300 bg-white/90 font-bold text-slate-800 shadow-2xs hover:bg-white transition-all cursor-pointer dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:text-white"
+            className="pill border border-slate-300 bg-white font-bold text-slate-800 hover:bg-slate-50 transition-colors dark:border-white/10 dark:bg-surface-ink dark:text-slate-200"
           >
-            <span>Directions ↗</span>
+            Directions ↗
           </a>
+          <PropertyInquiryButton
+            propertyId={propertyId}
+            propertyTitle={propertyTitle}
+            kind="viewing"
+            className="pill border border-slate-300 bg-white font-bold text-slate-800 hover:bg-slate-50 transition-colors cursor-pointer dark:border-white/10 dark:bg-surface-ink dark:text-slate-200"
+          >
+            Can&rsquo;t make it? Book a private viewing
+          </PropertyInquiryButton>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
-

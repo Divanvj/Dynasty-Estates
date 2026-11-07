@@ -147,3 +147,16 @@ Unchanged: the map views inside `/search` (Map view) and the home feed still use
 | "Full-screen" photo viewer confined to the photo card (349 × 530 at 375px) | Truly full screen (rendered at page level) | `property-gallery-lightbox.tsx` |
 | Phone height of the listing photo 380px | 320px (the caption moved below it) | `property-hero-gallery.tsx` |
 | Bottom bar "MONTHLY RENTAL / R 13,500 / mo…" (cut off) | "RENT PER MONTH / R 13,500"; "ASKING PRICE" became "Asking price" (shown in capitals) | `property/[slug]/page.tsx` |
+
+## Owner fixes — floor plans, listing badges, show day (merged 7 Nov)
+
+| Was | Now | Where |
+|---|---|---|
+| Mock "floor plan" on 5 listings: the same stock photo of a house exterior | Removed from the data; the Floor Plan tab is hidden until an agent uploads a real plan | `property-data.ts` |
+| "FOR SALE" / "TO RENT" pill on the listing photo / caption | Removed (the visitor chose sale or rent to get there) | `property/[slug]/page.tsx` |
+| "ON SHOW SUNDAY" pill (no date, no time, stayed up after the show) | Removed; replaced by a show-day section under the photo: "On show this weekend · Sunday, 8 Nov · 14:00 – 17:00", how to get there, Add to calendar, Directions, "Can’t make it? Book a private viewing". Only shown while the show is ahead | `on-show-banner.tsx`, new `lib/on-show.ts` |
+| The old rose on-show banner ("Showboard Route:", pulsing pill) — never visible because no listing had a full date | The section above | same |
+| Mock show dates "Sunday, 14 Sep" (no year, long past) | Mock listings use the coming Sunday | `property-data.ts` |
+| *(no way for agents to set a show day)* | **Added:** optional Show day in the listing wizard, step 5 (date, from, until, how to get there) | new `listing-show-day-field.tsx`, `seller-listings.ts`, `property-data.ts` |
+| Listing card badge "On Show Sunday" shown regardless of date | "On show Sun 8 Nov", only while upcoming | `property-grid-card.tsx` |
+| Bottom bar "RENT PER MONTH" (ran under the WhatsApp button) | "PER MONTH" | `property/[slug]/page.tsx` |

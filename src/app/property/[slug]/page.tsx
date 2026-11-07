@@ -218,13 +218,8 @@ export default async function PropertyPage({
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                 <div>
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className={`rounded-full px-3 py-1 text-xs uppercase tracking-[0.2em] font-bold backdrop-blur-md border ${
-                      property.listingType === "rent"
-                        ? "border-amber-300/60 bg-amber-950/70 text-amber-200"
-                        : "border-emerald-300/60 bg-emerald-950/70 text-emerald-200"
-                    }`}>
-                      {property.listingType === "rent" ? "To Rent" : "For Sale"}
-                    </span>
+                    {/* No For Sale / To Rent pill: the visitor chose sale or rent
+                        to get here, and the page title and price say it again. */}
                     {property.status === "Sold" && (
                       <span className="rounded-full border border-red-400 bg-red-950/90 px-3 py-1 text-xs uppercase tracking-widest font-extrabold text-red-200 backdrop-blur-md">
                         Sold by Dynasty Estates
@@ -235,12 +230,9 @@ export default async function PropertyPage({
                         Let Agreed / Rented
                       </span>
                     )}
-                    {property.onShow && (
-                      <span className="rounded-full border border-rose-300/80 bg-rose-950/85 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-rose-200 backdrop-blur-md flex items-center gap-1.5">
-                        <span className="h-1.5 w-1.5 rounded-full bg-rose-400 animate-pulse" />
-                        <span>On Show {property.onShow.date.split(",")[0]}</span>
-                      </span>
-                    )}
+                    {/* No "On Show Sunday" pill: it gave no date or time and
+                        stayed up after the show. The show-day section under
+                        the photo carries the real details. */}
                     {/* Both of these are said again within a screen of here —
                         the transfer-duty exemption by the off-plan banner
                         directly below the hero, the category by the "Category"
@@ -325,6 +317,7 @@ export default async function PropertyPage({
         {property.onShow && (
           <div className="mt-6">
             <OnShowBanner
+              propertyId={property.id}
               propertyTitle={property.title}
               location={property.location}
               onShow={property.onShow}
@@ -664,7 +657,7 @@ export default async function PropertyPage({
           {/* "MONTHLY RENTAL / R 13,500 / mo…" was cut off at 375px. The label
               carries the period, so the figure can drop its "/ month". */}
           <span className="text-xs uppercase tracking-wider text-slate-600 font-bold block whitespace-nowrap dark:text-slate-400">
-            {property.listingType === "rent" ? "Rent per month" : "Asking price"}
+            {property.listingType === "rent" ? "Per month" : "Asking price"}
           </span>
           <span className="block truncate text-base font-extrabold tabular-nums text-slate-950 dark:text-white">
             {property.listingType === "rent" ? property.price.replace(/\s*\/\s*month$/i, "") : property.price}

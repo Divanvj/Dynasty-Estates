@@ -72,6 +72,8 @@ export type ListingFormData = {
   photos?: ListingPhoto[];
   /** Optional plan attached by the agent; shown as the listing's Floor Plan tab. */
   floorPlan?: ListingFloorPlan;
+  /** Optional show day, entered by the agent. */
+  onShow?: { isoDate: string; time: string; directionsNote?: string };
   status?: ListingLifecycleStatus;
 };
 
@@ -213,6 +215,13 @@ export async function createSellerListing(formData: ListingFormData): Promise<st
     image,
     gallery,
     floorPlanUrl: formData.floorPlan?.url ?? "",
+    onShow: formData.onShow?.isoDate
+      ? {
+          isoDate: formData.onShow.isoDate,
+          time: formData.onShow.time,
+          directionsNote: formData.onShow.directionsNote ?? "",
+        }
+      : null,
     // What each photo measured when it passed the checks, for moderators.
     photoChecks: photos.map((photo) => ({ url: photo.url, width: photo.width, height: photo.height, ...photo.checks })),
     category: `${formData.type} listing`,
