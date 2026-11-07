@@ -26,6 +26,14 @@ export interface DynastyPropertyMapProps {
   onHover?: (id: string | undefined) => void;
   /** Lets the host page mirror the map's area filter in its listing feed. */
   onAreaFilterChange?: (visibleIds: string[] | null) => void;
+  /**
+   * Where to look, e.g. the visitor's own town. While set, the map stops
+   * auto-fitting to every pin, which would otherwise zoom straight back out
+   * to the whole country the next time the listings change.
+   */
+  focus?: { lat: number; lng: number; zoom: number } | null;
+  /** Bump to clear a drawn area from outside (e.g. a results panel). */
+  clearSignal?: number;
   className?: string;
 }
 
@@ -207,6 +215,8 @@ export default function DynastyPropertyMap({
   onSelect,
   onHover,
   onAreaFilterChange,
+  focus = null,
+  clearSignal = 0,
   className = "",
 }: DynastyPropertyMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -498,6 +508,25 @@ export default function DynastyPropertyMap({
     else map.dragging.disable();
   }, [tool]);
 
+  const focusRef = useRef(focus);
+  useEffect(() => {
+    focusRef.current = focus;
+    const map = mapRef.current;
+    if (!map || !focus) return;
+    map.setView([focus.lat, focus.lng], focus.zoom, { animate: true });
+  }, [focus, ready]);
+
+  // Leaflet only measures its container on a window resize. A results panel
+  // opening beside or under the map changes the container without one, which
+  // left grey bands and pins drawn in the old box.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(() => mapRef.current?.invalidateSize());
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [ready]);
+
   function clearArea() {
     shapeRef.current?.remove();
     shapeRef.current = null;
@@ -506,6 +535,13 @@ export default function DynastyPropertyMap({
     setPolygonArea(null);
     setTool("none");
   }
+
+  const lastClearSignal = useRef(clearSignal);
+  useEffect(() => {
+    if (clearSignal === lastClearSignal.current) return;
+    lastClearSignal.current = clearSignal;
+    clearArea();
+  }, [clearSignal]);
 
   /* ----------------------------- markers -------------------------------- */
   useEffect(() => {
@@ -574,7 +610,7 @@ export default function DynastyPropertyMap({
     // clearing one — the user is still looking at that neighbourhood.
     if (skipFitRef.current) {
       skipFitRef.current = false;
-    } else if (bounds.length && !radiusArea && !polygonArea) {
+    } else if (bounds.length && !radiusArea && !polygonArea && !focusRef.current) {
       map.fitBounds(bounds, { padding: [48, 48], maxZoom: 13 });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

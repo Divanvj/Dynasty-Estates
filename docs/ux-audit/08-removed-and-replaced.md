@@ -123,3 +123,16 @@ Each row: **what was there → what replaced it (or "removed")**, and where. "Ad
 | Desktop tour | Unchanged apart from the title pill | same |
 | Info card label "✓ Verified Specification" | "Specification" | same |
 | Media panel padding on phones 24px | 12px (more room for the photo) | `property-media-tabs.tsx` |
+
+## Phase 11.2 — full-screen map (merged 7 Nov)
+
+| Was | Now | Where |
+|---|---|---|
+| Map page: title bar ("Map search / Homes on the map" + List View + AI Search), a separate Type toolbar with a "x matches" badge, a Map / List switch, and a second Map / Street View toggle above the map | One slim bar: property type · Near me · List view (title kept for screen readers only); the map fills the rest of the screen | `map-search/page.tsx` |
+| AI Search button on the map page | Removed from this page (still in the site header and phone tab bar) | same |
+| Street View inside the map page | Removed from this page (still on every listing's Street View & Map tab) | same |
+| A listing column beside the map (desktop) / a List tab (phones) showing every home all the time | Listings appear only after drawing a radius or shape ("N homes in this area" + Clear area) or tapping a pin ("Selected home"); beside the map on desktop, under it on phones | same |
+| Map always opening on all of South Africa | Asks for the visitor's location once; opens on their town (zoom 12) if allowed and inside South Africa, otherwise all of South Africa with a note. "Near me" asks again | same, `dynasty-property-map.tsx` (`focus`, `clearSignal` props) |
+| Map re-zooming to the whole country whenever the type filter changed | Stays where the visitor is looking once it has a focus | `dynasty-property-map.tsx` |
+
+Unchanged: the map views inside `/search` (Map view) and the home feed still use the older side-by-side layout.
