@@ -60,6 +60,8 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
   /** Which photograph the full-screen viewer is on; `null` while it is shut. */
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const touchStartX = useRef<number | null>(null);
+  /** Set by a swipe; the click a touch produces afterwards is then ignored. */
+  const swipedRef = useRef(false);
   const railRef = useRef<HTMLDivElement>(null);
 
   const reducedMotion = usePrefersReducedMotion();
@@ -135,8 +137,9 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
 
   return (
     <section className="overflow-hidden rounded-panel border border-white/80 bg-white/40 shadow-[0_20px_45px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:border-white/10 dark:bg-surface-panel/70 dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)]">
+      <div className="relative">
       <div
-        className="group relative h-[380px] sm:h-[440px] md:h-[540px]"
+        className="group relative h-[320px] sm:h-[440px] md:h-[540px]"
         role="region"
         aria-roledescription="carousel"
         aria-label={`Photographs of ${title}`}
@@ -150,7 +153,11 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
           touchStartX.current = null;
           if (start === null || !many) return;
           const delta = (e.changedTouches[0]?.clientX ?? start) - start;
-          if (Math.abs(delta) > 45) go(delta < 0 ? index + 1 : index - 1, true);
+          if (Math.abs(delta) > 45) {
+            swipedRef.current = true;
+            window.setTimeout(() => (swipedRef.current = false), 400);
+            go(delta < 0 ? index + 1 : index - 1, true);
+          }
         }}
       >
         {frames.map((src, i) => (
@@ -197,7 +204,21 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
           Same bug, same cause, as the one that hid the price on the /search
           grid cards: photo frames at z-10 over un-indexed chrome.
         */}
-        <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 z-20 hidden bg-gradient-to-t from-black/80 via-black/20 to-transparent sm:block" />
+
+        {/* Tap or click the photograph itself to open it full screen (owner
+            request). Below the arrows and counter (z-30), above the scrim.
+            Not a tab stop: the counter button is the keyboard route in. */}
+        <button
+          type="button"
+          tabIndex={-1}
+          onClick={() => {
+            if (swipedRef.current) return;
+            setLightboxIndex(index);
+          }}
+          aria-label="Open photographs full screen"
+          className="absolute inset-0 z-[25] cursor-zoom-in"
+        />
 
         {/*
           The way into the full-screen viewer. The detail page's "Photos" media
@@ -219,9 +240,9 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
               ? `View all ${frames.length} photographs full screen`
               : "View this photograph full screen"
           }
-          className="tap-44 absolute right-3 top-3 z-30 flex cursor-pointer items-center gap-1.5 rounded-full border border-white/25 bg-black/40 px-3 py-1.5 text-xs font-bold tracking-[0.2em] text-white backdrop-blur-md transition-all hover:bg-black/65 sm:right-6 sm:top-6"
+          className="tap-44 absolute right-3 top-3 z-30 flex cursor-pointer items-center gap-1.5 rounded-full bg-black/45 px-2.5 py-1 text-xs font-semibold tabular-nums text-white backdrop-blur-md transition-all hover:bg-black/65 sm:right-6 sm:top-6 sm:border sm:border-white/25 sm:px-3 sm:py-1.5 sm:font-bold sm:tracking-[0.2em]"
         >
-          <SearchIcon className="h-3.5 w-3.5 shrink-0" />
+          <SearchIcon className="hidden h-3.5 w-3.5 shrink-0 sm:block" />
           {many && (
             <span>
               {String(index + 1).padStart(2, "0")}
@@ -239,7 +260,7 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
               type="button"
               onClick={() => go(index - 1, true)}
               aria-label="Previous photograph"
-              className="tap-44 absolute left-3 top-[34%] z-30 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white opacity-85 shadow-lg backdrop-blur-md transition-all hover:bg-black/65 hover:opacity-100 sm:left-5 sm:top-1/2 sm:h-11 sm:w-11"
+              className="tap-44 absolute left-3 top-[34%] z-30 hidden sm:flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white opacity-85 shadow-lg backdrop-blur-md transition-all hover:bg-black/65 hover:opacity-100 sm:left-5 sm:top-1/2 sm:h-11 sm:w-11"
             >
               <ArrowLeftIcon className="h-4 w-4" />
             </button>
@@ -247,7 +268,7 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
               type="button"
               onClick={() => go(index + 1, true)}
               aria-label="Next photograph"
-              className="tap-44 absolute right-3 top-[34%] z-30 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white opacity-85 shadow-lg backdrop-blur-md transition-all hover:bg-black/65 hover:opacity-100 sm:right-5 sm:top-1/2 sm:h-11 sm:w-11"
+              className="tap-44 absolute right-3 top-[34%] z-30 hidden sm:flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-black/40 text-white opacity-85 shadow-lg backdrop-blur-md transition-all hover:bg-black/65 hover:opacity-100 sm:right-5 sm:top-1/2 sm:h-11 sm:w-11"
             >
               <ArrowRightIcon className="h-4 w-4" />
             </button>
@@ -266,7 +287,12 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
           </>
         )}
 
-        <div className="absolute inset-x-0 bottom-0 z-30 p-5 sm:p-6 md:p-10">{children}</div>
+      </div>
+
+      {/* Below the photograph on a phone, so nothing but the counter sits on
+          it; over its foot from `sm`. `pointer-events-none` there so a click
+          on the caption still opens the photographs. */}
+      <div className="relative z-30 px-4 pb-1 pt-4 sm:pointer-events-none sm:absolute sm:inset-x-0 sm:bottom-0 sm:p-6 md:p-10">{children}</div>
       </div>
 
       {/* The rail. Sits directly under the hero so choosing a photograph never

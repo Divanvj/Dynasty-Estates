@@ -128,10 +128,13 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
           </h2>
         </div>
 
-        {/* View Switcher & Type Filter Toolbar */}
-        <div className="flex flex-wrap items-center gap-3">
+        {/* View Switcher & Type Filter Toolbar. On a phone this is one row: a
+            compact List / Map switch and a single swipeable row of type chips.
+            It was two 44px squares on their own line and chips wrapping onto
+            two more — four rows of controls before the first home. */}
+        <div className="flex min-w-0 items-center gap-2 lg:flex-wrap lg:gap-3">
           {/* View Mode Switcher Segmented Control */}
-          <div className="inline-flex items-center rounded-2xl border border-slate-200/90 bg-white/80 dark:border-white/10 dark:bg-surface-ink/60 p-1 shadow-2xs backdrop-blur-md">
+          <div className="inline-flex shrink-0 items-center rounded-full border border-slate-200/90 bg-white/80 p-0.5 shadow-2xs backdrop-blur-md lg:rounded-2xl lg:p-1 dark:border-white/10 dark:bg-surface-ink/60">
             <button
               type="button"
               onClick={() => setViewMode("grid")}
@@ -149,7 +152,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
             <button
               type="button"
               onClick={() => setViewMode("list")}
-              className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
+              className={`flex h-10 w-10 items-center justify-center gap-1.5 rounded-full text-xs font-bold transition-all cursor-pointer lg:h-auto lg:w-auto lg:rounded-xl lg:px-2.5 lg:py-1 ${
                 viewMode === "list"
                   ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                   : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
@@ -162,7 +165,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
             <button
               type="button"
               onClick={() => setViewMode("map")}
-              className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
+              className={`flex h-10 w-10 items-center justify-center gap-1.5 rounded-full text-xs font-bold transition-all cursor-pointer lg:h-auto lg:w-auto lg:rounded-xl lg:px-2.5 lg:py-1 ${
                 viewMode === "map"
                   ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                   : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
@@ -188,8 +191,8 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
             </button>
           </div>
 
-          {/* Property Type Sub-filter Pills */}
-          <div className="flex flex-wrap gap-1.5">
+          {/* Property Type Sub-filter Pills — one swipeable row on phones. */}
+          <div className="flex min-w-0 flex-1 gap-1.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:flex-wrap lg:overflow-visible">
             {filters.map((filter) => (
               <button
                 key={filter}
@@ -199,7 +202,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
                    and the last in the DOM would take its neighbours' taps.
                    Real height instead, back to compact from `lg` where there
                    is a pointer. */
-                className={`inline-flex min-h-[44px] items-center justify-center rounded-full px-3 py-1 text-xs font-semibold transition-all cursor-pointer lg:min-h-0 ${
+                className={`inline-flex h-10 shrink-0 items-center justify-center rounded-full px-3.5 text-xs font-semibold transition-all cursor-pointer lg:h-auto lg:py-1 ${
                   activeFilter === filter
                     ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 text-white shadow-md border border-emerald-400/30 dark:border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                     : "border border-slate-200/80 bg-white/60 dark:border-white/10 dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-surface-panel hover:border-emerald-400/50"

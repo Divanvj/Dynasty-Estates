@@ -136,3 +136,14 @@ Each row: **what was there → what replaced it (or "removed")**, and where. "Ad
 | Map re-zooming to the whole country whenever the type filter changed | Stays where the visitor is looking once it has a focus | `dynasty-property-map.tsx` |
 
 Unchanged: the map views inside `/search` (Map view) and the home feed still use the older side-by-side layout.
+
+## Owner fixes after Phase 11 — home feed toolbar, listing photo (merged 7 Nov)
+
+| Was | Now | Where |
+|---|---|---|
+| Phones: home feed List / Map as two 44px squares on their own row, type chips wrapping onto two more rows | One 46px row: a compact round List / Map switch and a single swipeable row of type chips (desktop unchanged) | `home-trending-listings.tsx` |
+| Phones: listing title, address and the To Rent / On Show badges printed over the photo, plus a dark fade, two arrows and a big "🔍 02 / 02" counter | Only a small "02 / 02" counter on the photo; title, address and badges sit below it in dark text; no arrows (swipe or thumbnails). Desktop keeps the overlay | `property-hero-gallery.tsx`, `property/[slug]/page.tsx` |
+| Full screen only via the counter button | Tap or click anywhere on the photo opens it full screen (a swipe does not) | `property-hero-gallery.tsx` |
+| "Full-screen" photo viewer confined to the photo card (349 × 530 at 375px) | Truly full screen (rendered at page level) | `property-gallery-lightbox.tsx` |
+| Phone height of the listing photo 380px | 320px (the caption moved below it) | `property-hero-gallery.tsx` |
+| Bottom bar "MONTHLY RENTAL / R 13,500 / mo…" (cut off) | "RENT PER MONTH / R 13,500"; "ASKING PRICE" became "Asking price" (shown in capitals) | `property/[slug]/page.tsx` |
