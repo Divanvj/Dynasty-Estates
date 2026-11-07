@@ -244,6 +244,52 @@ export async function uploadListingPhoto(
   };
 }
 
+export type ListingFloorPlan = {
+  url: string;
+  storagePath: string;
+  contentType: string;
+  name: string;
+};
+
+/** Floor plans are drawings or PDFs, so the photo checks above don't apply. */
+export const FLOOR_PLAN_TYPES: Record<string, string> = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+  "application/pdf": "pdf",
+};
+export const FLOOR_PLAN_MAX_BYTES = 10 * 1024 * 1024;
+
+/**
+ * Uploads an agent's floor plan as-is (no re-encoding: a PDF must stay a PDF,
+ * and re-compressing line drawings blurs the dimensions). Type and size are
+ * checked here and enforced again by storage.rules.
+ */
+export async function uploadFloorPlan(ownerId: string, file: File): Promise<ListingFloorPlan> {
+  const ext = FLOOR_PLAN_TYPES[file.type];
+  if (!ext) throw new Error("Floor plans must be a JPG, PNG, WebP or PDF file.");
+  if (file.size >= FLOOR_PLAN_MAX_BYTES) throw new Error("Floor plans must be smaller than 10 MB.");
+  if (!isFirebaseConfigured || !storage) {
+    throw new Error("File storage is not configured.");
+  }
+  const storagePath = `floor-plans/${ownerId}/${crypto.randomUUID()}.${ext}`;
+  const target = ref(storage, storagePath);
+  try {
+    await uploadBytes(target, file, { contentType: file.type });
+  } catch (error) {
+    const code = (error as { code?: string }).code ?? "";
+    const status = (error as { status_?: number }).status_;
+    if (status === 404 || code === "storage/bucket-not-found" || code === "storage/project-not-found") {
+      throw new Error("File storage isn't set up on this site yet, so the floor plan can't be saved. This is our problem, not your file's.", { cause: error });
+    }
+    if (code === "storage/unauthorized" || code === "storage/unauthenticated") {
+      throw new Error("You need to be signed in to upload a floor plan.", { cause: error });
+    }
+    throw new Error("The upload failed. Check your connection and try again.", { cause: error });
+  }
+  return { url: await getDownloadURL(target), storagePath, contentType: file.type, name: file.name };
+}
+
 /**
  * Registers a saved listing's photos so later uploads elsewhere are caught as
  * duplicates. Added to the caller's batch so the listing and its fingerprints

@@ -452,7 +452,7 @@ export default async function PropertyPage({
               {/* Verified Amenities Checklist */}
               <div className="mt-6 border-t border-slate-200/80 pt-5 sm:mt-8 sm:pt-6 dark:border-white/10">
                 <h3 className="mb-3 text-xs font-bold uppercase text-slate-600 sm:tracking-wider dark:text-slate-400">
-                  Verified South African Features & Resilience
+                  South African Features & Resilience
                 </h3>
                 {/*
                   Ticked lines on a phone, the emerald chip from `sm` up — the

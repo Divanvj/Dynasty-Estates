@@ -8,6 +8,7 @@ import { useAuth } from "@/components/auth-provider";
 import RoleGuard from "@/components/role-guard";
 import CustomSelect from "@/components/custom-select";
 import PredictiveLocationInput from "@/components/predictive-location-input";
+import ListingFloorPlanField from "@/components/listing-floor-plan-field";
 import ListingPhotoUploader from "@/components/listing-photo-uploader";
 import {
   AreaIcon,
@@ -717,6 +718,12 @@ export default function NewListingWizardPage() {
                     onPhotosChange={updatePhotos}
                   />
                 </div>
+                <ListingFloorPlanField
+                  ownerId={user?.uid ?? null}
+                  authLoading={authLoading}
+                  floorPlan={formData.floorPlan}
+                  onChange={(floorPlan) => updateField("floorPlan", floorPlan)}
+                />
                 <div>
                   <label htmlFor={descId} className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300">
                     Property Description *
