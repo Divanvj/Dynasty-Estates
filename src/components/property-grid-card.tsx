@@ -97,7 +97,7 @@ export default function PropertyGridCard({
         </div>
         {overlayBadge && <div className="absolute top-3 right-3 z-10">{overlayBadge}</div>}
         <div className="absolute bottom-3 left-3 right-3 flex items-baseline justify-between text-white z-10">
-          <p className="text-xl font-extrabold tracking-tight">{property.price}</p>
+          <p className="text-xl font-extrabold tracking-tight tabular-nums">{property.price}</p>
           <span className="text-xs font-semibold text-slate-300">{property.area}</span>
         </div>
       </div>

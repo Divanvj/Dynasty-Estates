@@ -43,7 +43,7 @@ export default function HomeHeroSearch() {
       <div className="relative z-50">
         <ExpandableSearchPanel
           defaultIntent="buy"
-          placeholder="Search city or suburb..."
+          placeholder="Suburb or city"
         />
       </div>
 

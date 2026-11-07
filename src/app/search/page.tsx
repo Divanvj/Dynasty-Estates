@@ -591,7 +591,7 @@ function SearchContent() {
             onSearch={handlePanelSearch}
             autoNavigate={true}
             hideIntentToggleOnMobile
-            placeholder="Search by suburb, city, province or property ID..."
+            placeholder="Suburb or city"
           />
         </div>
 
