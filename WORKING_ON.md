@@ -10,13 +10,15 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | alet-elize | `alet-elize/map-touch-targets` | Map touch targets: `dynasty-property-map.tsx` overlay chips, and the Leaflet control/cluster sizing in `globals.css` | 2026-11-06 |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/ux-phase7-account-tab` | UX Phase 7: `mobile-nav.tsx`, `account-actions.tsx` (open-menu event) | 2026-11-07 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
 
+- 2026-11-07 — `DESKTOP-1R37EBU/ux-phase7-account-tab` merged. Phone tab bar: "Account"
+  (opens the account menu via `OPEN_ACCOUNT_MENU_EVENT`) replaces "Insights" in
+  every role.
 - 2026-11-07 — header dropdown fix merged: **layer contract** — page content
   ≤ z-50, `SiteHeader` z-[60], dialogs z-[80]+ rendered via `createPortal` to
   body (backdrop-blur ancestors trap `position: fixed`). Phase 6+8 merged too:
