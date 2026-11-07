@@ -9,13 +9,15 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| alet-elize | `alet-elize/map-touch-targets` | Map touch targets: `dynasty-property-map.tsx` overlay chips, and the Leaflet control/cluster sizing in `globals.css` | 2026-11-06 |
+| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/ux-phase9-polish` | UX Phase 9 polish: `expandable-search-panel.tsx` (open/close motion), `theme-toggle.tsx`, `virtual-tour-3d-viewer.tsx` (easing), `dynasty-property-map.tsx` (loading state), eyebrow labels on home/search/listing | 2026-11-07 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
 
+- 2026-11-07 — the `alet-elize/map-touch-targets` claim was removed from the table:
+  the owner confirmed no other agent is working (map touch work finished).
 - 2026-11-07 — `DESKTOP-1R37EBU/ux-phase7-account-tab` merged. Phone tab bar: "Account"
   (opens the account menu via `OPEN_ACCOUNT_MENU_EVENT`) replaces "Insights" in
   every role.
