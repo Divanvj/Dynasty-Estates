@@ -171,7 +171,7 @@ export default async function ForSaleProvincePage({
             </p>
             <Link
               href="/search?intent=buy"
-              className="pill mt-4 gap-1.5 bg-slate-950 font-bold text-white dark:bg-emerald-600 dark:text-white"
+              className="pill mt-4 gap-1.5 bg-slate-950 font-bold text-white dark:bg-emerald-700 dark:text-white"
             >
               Browse National Catalogue →
             </Link>

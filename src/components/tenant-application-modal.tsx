@@ -339,7 +339,7 @@ export default function TenantApplicationModal({
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full rounded-full bg-slate-950 hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 py-3 text-xs font-bold text-white shadow-lg dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-transparent dark:border-emerald-500/50 disabled:opacity-50 transition-all cursor-pointer text-center"
+                  className="w-full rounded-full bg-slate-950 hover:bg-slate-800 dark:bg-emerald-700 dark:hover:bg-emerald-800 py-3 text-xs font-bold text-white shadow-lg dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-transparent dark:border-emerald-500/50 disabled:opacity-50 transition-all cursor-pointer text-center"
                 >
                   {submitting ? "Submitting Application..." : "Submit Digital Tenancy Application →"}
                 </button>

@@ -272,7 +272,7 @@ export default function PropertyInquiryButton({
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full rounded-full bg-slate-950 py-3 text-xs font-bold text-white shadow-lg hover:bg-slate-800 transition-all cursor-pointer disabled:opacity-60 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
+                    className="w-full rounded-full bg-slate-950 py-3 text-xs font-bold text-white shadow-lg hover:bg-slate-800 transition-all cursor-pointer disabled:opacity-60 dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
                   >
                     {loading ? "Submitting..." : kind === "message" ? "Send Message to Practitioner" : "Confirm Viewing Request"}
                   </button>

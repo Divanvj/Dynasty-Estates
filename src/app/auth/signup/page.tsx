@@ -96,7 +96,7 @@ export default function SignupPage() {
               </button>
             </div>
 
-            <div className="my-5 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-slate-500">
+            <div className="my-5 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-slate-400">
               <div className="h-px flex-1 bg-slate-300 dark:bg-white/10" />
               or with email & password
               <div className="h-px flex-1 bg-slate-300 dark:bg-white/10" />
@@ -162,7 +162,7 @@ export default function SignupPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="pill-lg w-full bg-[#0f172a] text-sm font-semibold text-white shadow-lg shadow-slate-900/15 hover:bg-slate-800 transition-all disabled:cursor-not-allowed disabled:opacity-70 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
+                className="pill-lg w-full bg-[#0f172a] text-sm font-semibold text-white shadow-lg shadow-slate-900/15 hover:bg-slate-800 transition-all disabled:cursor-not-allowed disabled:opacity-70 dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
               >
                 {loading ? "Creating account..." : "Create account"}
               </button>

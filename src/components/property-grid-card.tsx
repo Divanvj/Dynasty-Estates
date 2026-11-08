@@ -149,7 +149,7 @@ export default function PropertyGridCard({
             Private Property puts a button on a feed tile. */}
         <span
           aria-hidden="true"
-          className="mt-4 hidden md:flex items-center justify-center gap-1.5 rounded-xl bg-slate-950 px-4 py-2.5 text-xs font-bold text-white shadow-sm group-hover:bg-slate-800 dark:bg-gradient-to-r dark:from-emerald-600 dark:to-emerald-700 dark:text-white dark:border dark:border-emerald-500/30 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] dark:group-hover:from-emerald-500 dark:group-hover:to-emerald-600 transition-all"
+          className="mt-4 hidden md:flex items-center justify-center gap-1.5 rounded-xl bg-slate-950 px-4 py-2.5 text-xs font-bold text-white shadow-sm group-hover:bg-slate-800 dark:bg-gradient-to-r dark:from-emerald-700 dark:to-emerald-800 dark:text-white dark:border dark:border-emerald-500/30 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] dark:group-hover:from-emerald-800 dark:group-hover:to-emerald-900 transition-all"
         >
           <span>{isRental ? "View Rental Details" : "View Property Details"}</span>
           <span>→</span>

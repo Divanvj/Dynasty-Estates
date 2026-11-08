@@ -297,7 +297,7 @@ export default async function PropertyPage({
                 {property.province && property.city && (
                   <Link
                     href={`/${property.listingType === "rent" ? "to-rent" : "for-sale"}/${property.province.toLowerCase().replace(/\s+/g, "-")}/${property.city.toLowerCase().replace(/\s+/g, "-")}`}
-                    className="pill bg-slate-950 font-bold text-white shadow-xs hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 transition-colors"
+                    className="pill bg-slate-950 font-bold text-white shadow-xs hover:bg-slate-800 dark:bg-emerald-700 dark:hover:bg-emerald-800 transition-colors"
                   >
                     View Active {property.city} Listings →
                   </Link>
@@ -531,7 +531,7 @@ export default async function PropertyPage({
                   propertyId={property.id}
                   propertyTitle={property.title}
                   kind="viewing"
-                  className="pill-lg w-full bg-slate-950 font-bold text-white shadow-md hover:bg-slate-800 transition-all cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
+                  className="pill-lg w-full bg-slate-950 font-bold text-white shadow-md hover:bg-slate-800 transition-all cursor-pointer dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:text-white dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
                 >
                   Book a viewing
                 </PropertyInquiryButton>
@@ -699,7 +699,7 @@ export default async function PropertyPage({
             propertyId={property.id}
             propertyTitle={property.title}
             kind="viewing"
-            className="pill-lg bg-slate-950 font-bold text-white shadow-lg cursor-pointer hover:bg-slate-800 transition-all dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+            className="pill-lg bg-slate-950 font-bold text-white shadow-lg cursor-pointer hover:bg-slate-800 transition-all dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
           >
             <CalendarIcon className="h-4 w-4 text-emerald-400" />
             <span>Viewing</span>

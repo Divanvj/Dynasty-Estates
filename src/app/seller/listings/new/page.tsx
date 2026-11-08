@@ -321,7 +321,7 @@ export default function NewListingWizardPage() {
               onClick={() => setCurrentStep(step.num)}
               className={`rounded-2xl p-2.5 text-center text-xs transition-all cursor-pointer ${
                 currentStep === step.num
-                  ? "border border-slate-900 bg-slate-900 text-white shadow-md dark:border-emerald-500/50 dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+                  ? "border border-slate-900 bg-slate-900 text-white shadow-md dark:border-emerald-500/50 dark:bg-emerald-700 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
                   : currentStep > step.num
                   ? "border border-emerald-300 bg-emerald-100/70 text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-500/20 dark:text-emerald-300"
                   : "border border-white/60 bg-white/30 text-slate-600 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-surface-panel"
@@ -568,7 +568,7 @@ export default function NewListingWizardPage() {
                           : "border-white/60 bg-white/40 text-slate-700 hover:bg-white/60 font-medium dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel"
                       }`}
                     >
-                      <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md border ${isChecked ? "border-emerald-600 bg-emerald-600 text-white dark:border-emerald-500 dark:bg-emerald-600" : "border-slate-300 bg-white dark:border-white/20 dark:bg-surface-ink/80"}`}>
+                      <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md border ${isChecked ? "border-emerald-600 bg-emerald-600 text-white dark:border-emerald-500 dark:bg-emerald-700" : "border-slate-300 bg-white dark:border-white/20 dark:bg-surface-ink/80"}`}>
                         {isChecked ? <CheckIcon className="h-3.5 w-3.5 text-white" /> : null}
                       </span>
                       <span>{feat.label}</span>
@@ -875,7 +875,7 @@ export default function NewListingWizardPage() {
                 <button
                   type="button"
                   onClick={() => setCurrentStep((s) => s + 1)}
-                  className="pill-lg bg-slate-900 font-semibold text-white shadow-md hover:bg-slate-800 dark:bg-emerald-600 dark:text-white dark:border dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] dark:hover:bg-emerald-500 transition-all cursor-pointer"
+                  className="pill-lg bg-slate-900 font-semibold text-white shadow-md hover:bg-slate-800 dark:bg-emerald-700 dark:text-white dark:border dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] dark:hover:bg-emerald-800 transition-all cursor-pointer"
                 >
                   Next Step →
                 </button>
@@ -893,7 +893,7 @@ export default function NewListingWizardPage() {
                     type="button"
                     disabled={loading}
                     onClick={() => void handleComplete("Submitted")}
-                    className="pill-lg bg-emerald-600 font-semibold text-white shadow-md hover:bg-emerald-700 disabled:opacity-50 dark:bg-emerald-600 dark:text-white dark:border dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] dark:hover:bg-emerald-500 transition-all cursor-pointer"
+                    className="pill-lg bg-emerald-600 font-semibold text-white shadow-md hover:bg-emerald-700 disabled:opacity-50 dark:bg-emerald-700 dark:text-white dark:border dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] dark:hover:bg-emerald-800 transition-all cursor-pointer"
                   >
                     {loading ? "Submitting..." : "Submit for Moderation"}
                   </button>

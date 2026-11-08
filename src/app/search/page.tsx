@@ -556,7 +556,7 @@ function SearchContent() {
                 // button that appears to do nothing.
                 className={`hidden min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:flex lg:min-h-0 lg:min-w-0 ${
                   viewMode === "grid"
-                    ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                    ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                     : "border border-transparent text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
                 }`}
                 title="Grid View (3 Columns)"
@@ -569,7 +569,7 @@ function SearchContent() {
                 onClick={() => handleViewChange("list")}
                 className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
                   viewMode === "list"
-                    ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                    ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                     : "border border-transparent text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
                 }`}
                 title="List View (Detailed Horizontal Cards)"
@@ -582,7 +582,7 @@ function SearchContent() {
                 onClick={() => handleViewChange("map")}
                 className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
                   viewMode === "map"
-                    ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                    ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                     : "border border-transparent text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
                 }`}
                 title="Split Map View (Interactive Map + Listings)"
@@ -598,7 +598,7 @@ function SearchContent() {
                 // reasoning as Grid above.
                 className={`hidden min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:flex lg:min-h-0 lg:min-w-0 ${
                   viewMode === "compact"
-                    ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                    ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                     : "border border-transparent text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
                 }`}
                 title="Compact Table View (Investor & Yield Matrix)"
@@ -664,7 +664,7 @@ function SearchContent() {
         {/* One swipeable row on phones — wrapping these chips cost four rows and
             pushed the first listing off the screen. Unchanged from `sm` up. */}
         <div className="mt-4 border-t border-slate-200/60 dark:border-white/10 pt-3 -mx-4 px-4 sm:mx-0 sm:px-0 flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:overflow-visible sm:flex-wrap sm:justify-center">
-          <span className="hidden sm:inline text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-500 mr-1">
+          <span className="hidden sm:inline text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mr-1">
             Quick Filters:
           </span>
           {[
@@ -684,7 +684,7 @@ function SearchContent() {
                 onClick={() => toggleFeature(feat.id)}
                 className={`flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 sm:py-1 text-xs font-semibold transition-all cursor-pointer ${
                   isChecked
-                    ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] border border-emerald-500/40 dark:border-emerald-400/50"
+                    ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-700 dark:to-emerald-800 text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] border border-emerald-500/40 dark:border-emerald-400/50"
                     : "border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
                 }`}
               >
@@ -877,7 +877,7 @@ function SearchContent() {
                             so as a link it duplicated the tab stop. */}
                         <span
                           aria-hidden="true"
-                          className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 group-hover:from-[#093e3f] group-hover:to-[#052c2d] dark:group-hover:from-emerald-500 dark:group-hover:to-emerald-600 px-5 py-2 text-xs font-bold text-white shadow-md dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-500/30 dark:border-emerald-400/50 transition-all sm:min-h-0 sm:inline-block"
+                          className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-700 dark:to-emerald-800 group-hover:from-[#093e3f] group-hover:to-[#052c2d] dark:group-hover:from-emerald-800 dark:group-hover:to-emerald-900 px-5 py-2 text-xs font-bold text-white shadow-md dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-500/30 dark:border-emerald-400/50 transition-all sm:min-h-0 sm:inline-block"
                         >
                           View home →
                         </span>

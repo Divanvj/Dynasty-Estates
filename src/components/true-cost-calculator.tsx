@@ -374,7 +374,7 @@ export default function TrueCostCalculator({
             <button
               type="button"
               onClick={() => setShowPreApprovalModal(true)}
-              className="flex items-center justify-center gap-2 rounded-2xl bg-slate-950 py-3 text-xs font-bold text-white shadow-md hover:bg-slate-800 transition-all cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_20px_rgba(16,185,129,0.25)]"
+              className="flex items-center justify-center gap-2 rounded-2xl bg-slate-950 py-3 text-xs font-bold text-white shadow-md hover:bg-slate-800 transition-all cursor-pointer dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:shadow-[0_0_20px_rgba(16,185,129,0.25)]"
             >
               <SparklesIcon className="h-4 w-4 text-amber-400 dark:text-white" />
               <span>Check Tenant Qualification & Affordability</span>
@@ -455,7 +455,7 @@ export default function TrueCostCalculator({
               <button
                 type="button"
                 onClick={() => setShowUpfrontModal(false)}
-                className="w-full rounded-2xl bg-slate-950 py-3 text-xs font-bold text-white hover:bg-slate-800 cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500"
+                className="w-full rounded-2xl bg-slate-950 py-3 text-xs font-bold text-white hover:bg-slate-800 cursor-pointer dark:bg-emerald-700 dark:hover:bg-emerald-800"
               >
                 Done
               </button>
@@ -545,7 +545,7 @@ export default function TrueCostCalculator({
                       setShowPreApprovalModal(false);
                       setShowTenantApplication(true);
                     }}
-                    className="pill-lg flex-1 bg-slate-950 font-bold text-white hover:bg-slate-800 cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500"
+                    className="pill-lg flex-1 bg-slate-950 font-bold text-white hover:bg-slate-800 cursor-pointer dark:bg-emerald-700 dark:hover:bg-emerald-800"
                   >
                     Apply to Lease
                   </button>
@@ -691,21 +691,21 @@ export default function TrueCostCalculator({
             <button
               type="button"
               onClick={() => setPurchasePrice(Math.round(askingPriceZAR * 0.95))}
-              className={`pill-sm font-semibold transition-all cursor-pointer ${ purchasePrice === Math.round(askingPriceZAR * 0.95) ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white" }`}
+              className={`pill-sm font-semibold transition-all cursor-pointer ${ purchasePrice === Math.round(askingPriceZAR * 0.95) ? "bg-slate-900 text-white dark:bg-emerald-700 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white" }`}
             >
               -5% Offer
             </button>
             <button
               type="button"
               onClick={() => setPurchasePrice(askingPriceZAR)}
-              className={`pill-sm font-semibold transition-all cursor-pointer ${ purchasePrice === askingPriceZAR ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white" }`}
+              className={`pill-sm font-semibold transition-all cursor-pointer ${ purchasePrice === askingPriceZAR ? "bg-slate-900 text-white dark:bg-emerald-700 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white" }`}
             >
               Asking Price (R {(askingPriceZAR / 1000000).toFixed(2)}M)
             </button>
             <button
               type="button"
               onClick={() => setPurchasePrice(Math.round(askingPriceZAR * 1.05))}
-              className={`pill-sm font-semibold transition-all cursor-pointer ${ purchasePrice === Math.round(askingPriceZAR * 1.05) ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white" }`}
+              className={`pill-sm font-semibold transition-all cursor-pointer ${ purchasePrice === Math.round(askingPriceZAR * 1.05) ? "bg-slate-900 text-white dark:bg-emerald-700 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white" }`}
             >
               +5% Compete
             </button>
@@ -762,7 +762,7 @@ export default function TrueCostCalculator({
                 key={pct}
                 type="button"
                 onClick={() => setDepositPercent(pct)}
-                className={`pill-sm font-semibold transition-all cursor-pointer ${ depositPercent === pct ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white" }`}
+                className={`pill-sm font-semibold transition-all cursor-pointer ${ depositPercent === pct ? "bg-slate-900 text-white dark:bg-emerald-700 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white" }`}
               >
                 {pct === 0 ? "0% (100% Bond)" : `${pct}%`}
               </button>
@@ -824,7 +824,7 @@ export default function TrueCostCalculator({
                 key={chip.label}
                 type="button"
                 onClick={() => setInterestRate(chip.value)}
-                className={`pill-sm font-semibold transition-all cursor-pointer ${ Math.abs(interestRate - chip.value) < 0.01 ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white" }`}
+                className={`pill-sm font-semibold transition-all cursor-pointer ${ Math.abs(interestRate - chip.value) < 0.01 ? "bg-slate-900 text-white dark:bg-emerald-700 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white" }`}
               >
                 {chip.label}
               </button>
@@ -845,7 +845,7 @@ export default function TrueCostCalculator({
                 onClick={() => setTenureYears(years)}
                 className={`rounded-xl py-2 text-xs font-bold transition-all cursor-pointer ${
                   tenureYears === years
-                    ? "bg-slate-950 text-white shadow-sm dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
+                    ? "bg-slate-950 text-white shadow-sm dark:bg-emerald-700 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
                     : "border border-slate-200 bg-white/60 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
                 }`}
               >
@@ -966,7 +966,7 @@ export default function TrueCostCalculator({
           <button
             type="button"
             onClick={() => setShowPreApprovalModal(true)}
-            className="flex items-center justify-center gap-2 rounded-2xl bg-slate-950 py-3 text-xs font-bold text-white shadow-md hover:bg-slate-800 transition-all cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_20px_rgba(16,185,129,0.25)]"
+            className="flex items-center justify-center gap-2 rounded-2xl bg-slate-950 py-3 text-xs font-bold text-white shadow-md hover:bg-slate-800 transition-all cursor-pointer dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:shadow-[0_0_20px_rgba(16,185,129,0.25)]"
           >
             <SparklesIcon className="h-4 w-4 text-emerald-400 dark:text-white" />
             <span>Check Bond Affordability</span>
@@ -1052,7 +1052,7 @@ export default function TrueCostCalculator({
             <button
               type="button"
               onClick={() => setShowUpfrontModal(false)}
-              className="w-full rounded-2xl bg-slate-950 py-3 text-xs font-bold text-white hover:bg-slate-800 cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500"
+              className="w-full rounded-2xl bg-slate-950 py-3 text-xs font-bold text-white hover:bg-slate-800 cursor-pointer dark:bg-emerald-700 dark:hover:bg-emerald-800"
             >
               Done
             </button>
@@ -1131,7 +1131,7 @@ export default function TrueCostCalculator({
               <button
                 type="button"
                 onClick={() => setShowPreApprovalModal(false)}
-                className="pill-lg flex-1 bg-slate-950 font-bold text-white hover:bg-slate-800 cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500"
+                className="pill-lg flex-1 bg-slate-950 font-bold text-white hover:bg-slate-800 cursor-pointer dark:bg-emerald-700 dark:hover:bg-emerald-800"
               >
                 Done
               </button>

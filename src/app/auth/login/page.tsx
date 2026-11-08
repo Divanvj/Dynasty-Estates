@@ -149,18 +149,9 @@ export default function LoginPage() {
               </h1>
             </div>
 
-            <div className="rounded-card border border-white/15 bg-white/5 p-5 backdrop-blur-sm dark:bg-surface-ink/80 dark:border-white/10 dark:shadow-lg">
-              <p className="text-sm text-slate-200 dark:text-slate-300">Recommended for you</p>
-              <div className="mt-4 flex items-center justify-between">
-                <div>
-                  <p className="text-2xl font-semibold">R 8.9M</p>
-                  <p className="text-sm text-slate-300 dark:text-slate-400">Morningside • 4 bed • 3 bath</p>
-                </div>
-                <div className="rounded-full border border-emerald-300/40 bg-emerald-500/10 px-2.5 py-1 text-xs uppercase tracking-[0.14em] text-emerald-200 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border-emerald-500/40 dark:shadow-[0_0_10px_rgba(16,185,129,0.25)]">
-                  4.8 match
-                </div>
-              </div>
-            </div>
+            {/* A "Recommended for you · R 8.9M · Morningside · 4.8 match" card
+                sat here: a made-up home shown to someone not yet signed in. */}
+            <p className="text-sm text-slate-300">Your saved homes, collections and enquiries in one place.</p>
           </div>
 
           <div className="p-6 md:p-8 lg:p-10">
@@ -188,7 +179,7 @@ export default function LoginPage() {
                   provider, not before. */}
             </div>
 
-            <div className="my-5 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-slate-500">
+            <div className="my-5 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-slate-400">
               <div className="h-px flex-1 bg-slate-300 dark:bg-white/10" />
               {mode === "email" ? "or with email & password" : "or with your phone"}
               <div className="h-px flex-1 bg-slate-300 dark:bg-white/10" />
@@ -204,7 +195,7 @@ export default function LoginPage() {
                     setError("");
                     setNotice("");
                   }}
-                  className={`pill font-semibold transition-all cursor-pointer ${ mode === m ? "bg-white text-slate-900 shadow-sm dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white" }`}
+                  className={`pill font-semibold transition-all cursor-pointer ${ mode === m ? "bg-white text-slate-900 shadow-sm dark:bg-emerald-700 dark:text-white dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white" }`}
                 >
                   {m === "email" ? "Email" : "Phone"}
                 </button>
@@ -244,7 +235,7 @@ export default function LoginPage() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="pill-lg w-full bg-[#0f172a] text-sm font-semibold text-white shadow-lg shadow-slate-900/15 hover:bg-slate-800 transition-all disabled:cursor-not-allowed disabled:opacity-70 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
+                    className="pill-lg w-full bg-[#0f172a] text-sm font-semibold text-white shadow-lg shadow-slate-900/15 hover:bg-slate-800 transition-all disabled:cursor-not-allowed disabled:opacity-70 dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
                   >
                     {loading ? "Verifying..." : "Verify & sign in"}
                   </button>
@@ -290,7 +281,7 @@ export default function LoginPage() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="pill-lg w-full bg-[#0f172a] text-sm font-semibold text-white shadow-lg shadow-slate-900/15 hover:bg-slate-800 transition-all disabled:cursor-not-allowed disabled:opacity-70 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
+                    className="pill-lg w-full bg-[#0f172a] text-sm font-semibold text-white shadow-lg shadow-slate-900/15 hover:bg-slate-800 transition-all disabled:cursor-not-allowed disabled:opacity-70 dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
                   >
                     {loading ? "Sending code..." : "Send verification code"}
                   </button>
@@ -356,7 +347,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="pill-lg w-full bg-[#0f172a] text-sm font-semibold text-white shadow-lg shadow-slate-900/15 hover:bg-slate-800 transition-all disabled:cursor-not-allowed disabled:opacity-70 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
+                className="pill-lg w-full bg-[#0f172a] text-sm font-semibold text-white shadow-lg shadow-slate-900/15 hover:bg-slate-800 transition-all disabled:cursor-not-allowed disabled:opacity-70 dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
               >
                 {loading ? "Signing in..." : "Sign in"}
               </button>

@@ -130,7 +130,10 @@ export async function getPendingModerationQueue(): Promise<ModerationItem[]> {
       limit(20)
     );
     const snap = await getDocs(q);
-    if (snap.empty) return fallbackModerationQueue;
+    // An empty queue is an empty queue. It used to return the demo items here,
+    // so a signed-in moderator saw made-up submissions (with fraud flags) and
+    // could "approve" a listing that does not exist.
+    if (snap.empty) return [];
 
     return snap.docs.map((d) => {
       const data = d.data();
@@ -254,7 +257,8 @@ export async function getAuditLogs(): Promise<AuditLogEntry[]> {
   try {
     const q = query(collection(db, "audit_logs"), orderBy("createdAt", "desc"), limit(25));
     const snap = await getDocs(q);
-    if (snap.empty) return fallbackAuditLogs;
+    // Same as the queue: no stored entries means none, not the demo trail.
+    if (snap.empty) return [];
 
     return snap.docs.map((d) => {
       const data = d.data();

@@ -709,7 +709,7 @@ export default function ExpandableSearchPanel({
                 pill slides right for "rent" — invert this if the buttons are
                 ever reordered again, or it animates away from the click. */}
             <span
-              className={`absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 border border-emerald-400/50 dark:border-emerald-400/60 shadow-[0_0_12px_rgba(16,185,129,0.3)] dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] transition-transform duration-200 ease-out pointer-events-none ${
+              className={`absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-700 dark:to-emerald-800 border border-emerald-400/50 dark:border-emerald-400/60 shadow-[0_0_12px_rgba(16,185,129,0.3)] dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] transition-transform duration-200 ease-out pointer-events-none ${
                 intent === "rent" ? "translate-x-full" : "translate-x-0"
               }`}
             />
@@ -850,7 +850,7 @@ export default function ExpandableSearchPanel({
               aria-label="Open search filters"
               className={`relative tap-44 flex h-10 w-10 sm:h-12 sm:w-auto items-center justify-center sm:gap-1.5 rounded-full border px-0 sm:px-4.5 text-xs sm:text-sm font-bold transition-all cursor-pointer shrink-0 ${
                 activeFilterCount > 0
-                  ? "border-emerald-600 dark:border-emerald-500/50 bg-[#0b4d4e] dark:bg-emerald-600 text-white shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                  ? "border-emerald-600 dark:border-emerald-500/50 bg-[#0b4d4e] dark:bg-emerald-700 text-white shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                   : "border-slate-200 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 shadow-2xs hover:bg-slate-50 dark:hover:bg-surface-panel hover:text-emerald-900 dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
               }`}
               title="Open search filters"
@@ -883,7 +883,7 @@ export default function ExpandableSearchPanel({
                 e.stopPropagation();
                 handleExecuteSearch();
               }}
-              className="relative tap-44 flex h-10 w-10 sm:h-12 sm:w-auto items-center justify-center sm:gap-1.5 rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 hover:from-[#0d595b] hover:to-[#094344] dark:hover:from-emerald-500 dark:hover:to-emerald-600 px-0 sm:px-7 text-xs sm:text-sm font-bold text-white shadow-md shadow-emerald-950/20 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-400/30 dark:border-emerald-400/50 hover:border-emerald-400 transition-all hover:scale-102 cursor-pointer shrink-0"
+              className="relative tap-44 flex h-10 w-10 sm:h-12 sm:w-auto items-center justify-center sm:gap-1.5 rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-700 dark:to-emerald-800 hover:from-[#0d595b] hover:to-[#094344] dark:hover:from-emerald-800 dark:hover:to-emerald-900 px-0 sm:px-7 text-xs sm:text-sm font-bold text-white shadow-md shadow-emerald-950/20 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-400/30 dark:border-emerald-400/50 hover:border-emerald-400 transition-all hover:scale-102 cursor-pointer shrink-0"
               /* Below `sm` this button is an icon alone. `title` was the only
                  name it had, and a title is not announced reliably and never
                  appears on touch at all. */
@@ -1041,7 +1041,7 @@ export default function ExpandableSearchPanel({
                   <button
                     type="button"
                     onClick={() => handleExecuteSearch()}
-                    className="hidden h-10 sm:h-11 sm:flex items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 hover:from-[#0d595b] hover:to-[#094344] dark:hover:from-emerald-500 dark:hover:to-emerald-600 px-5 sm:px-6 text-xs sm:text-sm font-bold text-white shadow-md shadow-emerald-950/20 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-400/30 dark:border-emerald-400/50 hover:border-emerald-400 transition-all hover:scale-102 cursor-pointer"
+                    className="hidden h-10 sm:h-11 sm:flex items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-700 dark:to-emerald-800 hover:from-[#0d595b] hover:to-[#094344] dark:hover:from-emerald-800 dark:hover:to-emerald-900 px-5 sm:px-6 text-xs sm:text-sm font-bold text-white shadow-md shadow-emerald-950/20 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-400/30 dark:border-emerald-400/50 hover:border-emerald-400 transition-all hover:scale-102 cursor-pointer"
                   >
                     <span>Search</span>
                     <span className="text-emerald-300">→</span>
@@ -1153,7 +1153,7 @@ export default function ExpandableSearchPanel({
                 {/* Sliding indicator pill — see the collapsed bar's copy of
                     this above: For Sale is column one, so "rent" slides right. */}
                 <span
-                  className={`absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 border border-emerald-400/50 dark:border-emerald-400/60 shadow-[0_0_12px_rgba(16,185,129,0.3)] dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] transition-transform duration-200 ease-out pointer-events-none ${
+                  className={`absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-700 dark:to-emerald-800 border border-emerald-400/50 dark:border-emerald-400/60 shadow-[0_0_12px_rgba(16,185,129,0.3)] dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] transition-transform duration-200 ease-out pointer-events-none ${
                     intent === "rent" ? "translate-x-full" : "translate-x-0"
                   }`}
                 />
@@ -1235,7 +1235,7 @@ export default function ExpandableSearchPanel({
                       onClick={() => setCategory(item.id as "Residential" | "Commercial" | "Farms" | "Developments")}
                       className={`flex min-h-[44px] items-center justify-center gap-1.5 rounded-xl border px-2 transition-all cursor-pointer sm:min-h-0 sm:flex-col sm:gap-0 sm:rounded-2xl sm:p-3 sm:text-center ${
                         isSelected
-                          ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border-emerald-500/70 dark:border-emerald-400/60 shadow-md ring-1 ring-emerald-400/50 dark:shadow-[0_0_20px_rgba(16,185,129,0.4)]"
+                          ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border-emerald-500/70 dark:border-emerald-400/60 shadow-md ring-1 ring-emerald-400/50 dark:shadow-[0_0_20px_rgba(16,185,129,0.4)]"
                           : "bg-white/90 dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:bg-white dark:hover:bg-surface-panel hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_16px_rgba(16,185,129,0.3)] dark:hover:shadow-[0_0_20px_rgba(52,211,153,0.35)] shadow-2xs"
                       }`}
                     >
@@ -1263,7 +1263,7 @@ export default function ExpandableSearchPanel({
                       onClick={() => togglePropertyType(item.value)}
                       className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
                         isChecked
-                          ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white shadow-sm border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                          ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white shadow-sm border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                           : "border border-slate-200 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-surface-panel hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_14px_rgba(16,185,129,0.3)] dark:hover:shadow-[0_0_18px_rgba(52,211,153,0.35)]"
                       }`}
                     >
@@ -1437,7 +1437,7 @@ export default function ExpandableSearchPanel({
                       onClick={() => toggleFeature(feat.id)}
                       className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all cursor-pointer ${
                         isChecked
-                          ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white shadow-xs border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                          ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white shadow-xs border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                           : "border border-slate-200 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-surface-panel hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_14px_rgba(16,185,129,0.3)] dark:hover:shadow-[0_0_18px_rgba(52,211,153,0.35)]"
                       }`}
                     >
@@ -1473,7 +1473,7 @@ export default function ExpandableSearchPanel({
               <button
                 type="button"
                 onClick={() => handleExecuteSearch()}
-                className="flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 hover:from-[#0d595b] hover:to-[#094344] dark:hover:from-emerald-500 dark:hover:to-emerald-600 border border-emerald-400/30 dark:border-emerald-400/50 px-6 py-2.5 text-xs sm:text-sm font-bold text-white shadow-md shadow-emerald-950/20 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] hover:border-emerald-400 transition-all cursor-pointer hover:scale-102 sm:min-h-0 sm:flex-initial"
+                className="flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-700 dark:to-emerald-800 hover:from-[#0d595b] hover:to-[#094344] dark:hover:from-emerald-800 dark:hover:to-emerald-900 border border-emerald-400/30 dark:border-emerald-400/50 px-6 py-2.5 text-xs sm:text-sm font-bold text-white shadow-md shadow-emerald-950/20 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] hover:border-emerald-400 transition-all cursor-pointer hover:scale-102 sm:min-h-0 sm:flex-initial"
               >
                 <span>Search Properties</span>
                 {activeFilterCount > 0 && (

@@ -250,7 +250,7 @@ export default async function AgentProfilePage({
               </p>
               <Link
                 href="/search"
-                className="pill mt-3 bg-slate-950 font-bold text-white dark:bg-emerald-600"
+                className="pill mt-3 bg-slate-950 font-bold text-white dark:bg-emerald-700"
               >
                 Browse All Properties →
               </Link>

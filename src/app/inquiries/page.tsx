@@ -76,36 +76,17 @@ export default function InquiriesPage() {
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-5 text-slate-900 md:px-6 lg:px-8 dark:text-white">
       <div className="mx-auto max-w-4xl">
-        {/* Header */}
-        <div className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-5 py-3.5 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-          <div className="flex min-w-0 flex-wrap items-center justify-end gap-2.5 gap-y-2">
-            <Link
-              href="/saved"
-              className="pill border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
-            >
-              Saved Homes
-            </Link>
-            <Link
-              href="/search"
-              className="pill bg-slate-950 font-bold text-white shadow-md hover:bg-slate-800 transition-all dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
-            >
-              Browse Catalogue
-            </Link>
-          </div>
-        </div>
-
+        {/* No link bar: "Saved Homes" and "Browse Catalogue" are in the site
+            header and the phone tab bar on every page. */}
         {/* Hero Section */}
         <section className="rounded-panel border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.08)] backdrop-blur-xl mb-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs uppercase font-bold tracking-widest text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.2)]">
-                Buyer Communication Hub
-              </span>
-              <h1 className="mt-2 text-3xl font-light tracking-tight text-slate-950 md:text-4xl dark:text-white">
-                My Appointments &amp; Requests
+              <h1 className="text-3xl font-light tracking-tight text-slate-950 md:text-4xl dark:text-white">
+                My enquiries
               </h1>
               <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
-                Track status of viewing appointments, property brochures, and practitioner correspondences.
+                Viewings you&rsquo;ve asked for and messages you&rsquo;ve sent to agents.
               </p>
             </div>
 
@@ -120,14 +101,16 @@ export default function InquiriesPage() {
         {/* Filter Pills */}
         <div className="mb-4 flex gap-2">
           {[
-            { id: "all", label: "All Requests" },
-            { id: "tour", label: "Viewing Appointments" },
-            { id: "message", label: "Practitioner Messages" },
+            { id: "all", label: "All" },
+            { id: "tour", label: "Viewings" },
+            { id: "message", label: "Messages" },
           ].map((tab) => (
             <button
               key={tab.id}
+              type="button"
+              aria-pressed={filterKind === tab.id}
               onClick={() => setFilterKind(tab.id)}
-              className={`pill-sm font-semibold transition-all cursor-pointer ${ filterKind === tab.id ? "bg-slate-950 text-white shadow-sm dark:bg-emerald-600 dark:text-white dark:border dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/60 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10" }`}
+              className={`pill-sm font-semibold transition-all cursor-pointer ${ filterKind === tab.id ? "bg-slate-950 text-white shadow-sm dark:bg-emerald-700 dark:text-white dark:border dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/60 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10" }`}
             >
               {tab.label}
             </button>
@@ -154,7 +137,7 @@ export default function InquiriesPage() {
             </p>
             <Link
               href={!user && !loadError ? "/auth/login" : "/search"}
-              className="pill-lg mt-4 bg-slate-950 font-bold text-white transition-all dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+              className="pill-lg mt-4 bg-slate-950 font-bold text-white transition-all dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
             >
               {!user && !loadError ? "Sign in →" : "Browse Properties →"}
             </Link>
@@ -205,7 +188,7 @@ export default function InquiriesPage() {
                        so as a link it duplicated the tab stop. */
                     <span
                       aria-hidden="true"
-                      className="rounded-full bg-slate-950 px-4 py-2 text-xs font-semibold text-white shadow-sm group-hover:bg-slate-800 transition-all dark:bg-emerald-600 dark:group-hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+                      className="rounded-full bg-slate-950 px-4 py-2 text-xs font-semibold text-white shadow-sm group-hover:bg-slate-800 transition-all dark:bg-emerald-700 dark:group-hover:bg-emerald-800 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
                     >
                       View Home →
                     </span>

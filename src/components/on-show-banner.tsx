@@ -60,7 +60,7 @@ export default function OnShowBanner({ propertyId, propertyTitle, location, onSh
             href={calendarUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="pill gap-1.5 bg-slate-950 font-bold text-white hover:bg-slate-800 transition-colors dark:bg-emerald-600 dark:hover:bg-emerald-500"
+            className="pill gap-1.5 bg-slate-950 font-bold text-white hover:bg-slate-800 transition-colors dark:bg-emerald-700 dark:hover:bg-emerald-800"
           >
             <CalendarIcon className="h-3.5 w-3.5" />
             Add to calendar

@@ -29,6 +29,8 @@ export default function AdminPage() {
   const [feedbackMap, setFeedbackMap] = useState<Record<string, string>>({});
   const [actionNotice, setActionNotice] = useState("");
   const [errorNotice, setErrorNotice] = useState("");
+  // So an empty list reads "nothing waiting" only once the queue has loaded.
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     async function loadData() {
@@ -43,6 +45,8 @@ export default function AdminPage() {
         setErrorNotice(
           error instanceof Error ? error.message : "Unable to load the moderation console.",
         );
+      } finally {
+        setLoaded(true);
       }
       // Separate, so a missing support rule cannot take the moderation queue down with it.
       try {
@@ -108,7 +112,7 @@ export default function AdminPage() {
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-xs uppercase tracking-[0.2em] text-slate-600 hidden sm:inline dark:text-emerald-400 font-bold">Governance & Trust</span>
-                <span className="rounded-full bg-slate-900 px-2 py-0.5 text-xs font-bold text-white dark:bg-emerald-600">ADMIN</span>
+                <span className="rounded-full bg-slate-900 px-2 py-0.5 text-xs font-bold text-white dark:bg-emerald-700">ADMIN</span>
               </div>
               <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">
                 <span className="hidden sm:inline">Platform </span>Command Console
@@ -157,7 +161,7 @@ export default function AdminPage() {
                 onClick={() => setActiveTab(tab.key as typeof activeTab)}
                 className={`flex items-center gap-2 rounded-2xl px-3.5 sm:px-4 py-2.5 text-xs font-semibold transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                   activeTab === tab.key
-                    ? "border border-slate-950 bg-slate-950 text-white shadow-md dark:border-emerald-500/50 dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+                    ? "border border-slate-950 bg-slate-950 text-white shadow-md dark:border-emerald-500/50 dark:bg-emerald-700 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
                     : "border border-white/70 bg-white/45 text-slate-700 hover:bg-white/75 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-white"
                 }`}
               >
@@ -179,6 +183,10 @@ export default function AdminPage() {
             </div>
 
             <div className="grid gap-4">
+              {!loaded && <p role="status" className="p-1 text-sm text-slate-600 dark:text-slate-400">Loading the queue…</p>}
+              {loaded && !errorNotice && queue.length === 0 && (
+                <p className="rounded-control border border-dashed border-slate-300 dark:border-white/15 p-4 text-sm text-slate-600 dark:text-slate-400">Nothing is waiting for review.</p>
+              )}
               {queue.map((item) => (
                 <div
                   key={item.id}
@@ -252,6 +260,9 @@ export default function AdminPage() {
             </div>
 
             <div className="grid gap-3">
+              {loaded && !errorNotice && fraudFlagged.length === 0 && (
+                <p className="rounded-control border border-dashed border-slate-300 dark:border-white/15 p-4 text-sm text-slate-600 dark:text-slate-400">No submitted listing has a fraud signal.</p>
+              )}
               {fraudFlagged.map((item) => (
                 <div key={item.id} className="rounded-card border border-rose-200 bg-rose-50/70 dark:bg-rose-950/30 dark:border-rose-500/30 p-4">
                   <h3 className="text-sm font-bold text-rose-950 dark:text-rose-200">{item.title} ({item.price})</h3>
@@ -293,7 +304,7 @@ export default function AdminPage() {
                   <div className="flex items-center justify-between">
                     <h3 className="text-base font-bold text-slate-900 dark:text-white">{pkg.name}</h3>
                     {pkg.isPopular && (
-                      <span className="rounded-full bg-emerald-500 px-2 py-0.5 text-xs font-bold text-white dark:bg-emerald-600">
+                      <span className="rounded-full bg-emerald-500 px-2 py-0.5 text-xs font-bold text-white dark:bg-emerald-700">
                         POPULAR
                       </span>
                     )}
@@ -337,6 +348,13 @@ export default function AdminPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200/60 dark:divide-white/5 text-slate-700 dark:text-slate-300">
+                  {loaded && auditLogs.length === 0 && (
+                    <tr>
+                      <td colSpan={5} className="py-6 px-4 text-center text-sm text-slate-600 dark:text-slate-400">
+                        {errorNotice ? "The audit trail could not be loaded." : "No actions recorded yet."}
+                      </td>
+                    </tr>
+                  )}
                   {auditLogs.map((log) => (
                     <tr key={log.id} className="hover:bg-white/40 dark:hover:bg-surface-panel/60 transition-colors">
                       <td className="py-3 px-4 whitespace-nowrap text-slate-600 dark:text-slate-400">
