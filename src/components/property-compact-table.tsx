@@ -111,7 +111,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
             key={col}
             type="button"
             onClick={() => handleHeaderClick(col)}
-            className={`pill-sm font-semibold transition-all ${ sortCol === col ? "bg-slate-950 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300" }`}
+            className={`pill-sm font-semibold transition-all ${ sortCol === col ? "bg-slate-950 text-white dark:bg-emerald-700 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300" }`}
           >
             {label}
             {sortCol === col && <span className="ml-1">{sortDir === "asc" ? "▲" : "▼"}</span>}
@@ -207,7 +207,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
 
               <Link
                 href={`/property/${prop.slug || prop.id}`}
-                className="pill-lg mt-3 bg-slate-950 font-bold text-white transition-colors hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+                className="pill-lg mt-3 bg-slate-950 font-bold text-white transition-colors hover:bg-slate-800 dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
               >
                 View Home →
               </Link>
@@ -390,7 +390,7 @@ export default function PropertyCompactTable({ properties }: PropertyCompactTabl
                       <SavePropertyButton propertyId={prop.id} />
                       <Link
                         href={`/property/${prop.slug || prop.id}`}
-                        className="rounded-xl bg-slate-950 hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] px-3 py-1.5 text-xs font-bold text-white shadow-sm border border-transparent dark:border-emerald-500/40 transition-all cursor-pointer inline-flex items-center gap-1"
+                        className="rounded-xl bg-slate-950 hover:bg-slate-800 dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] px-3 py-1.5 text-xs font-bold text-white shadow-sm border border-transparent dark:border-emerald-500/40 transition-all cursor-pointer inline-flex items-center gap-1"
                       >
                         <span>View</span>
                         <span>→</span>

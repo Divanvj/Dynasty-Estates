@@ -690,7 +690,7 @@ export default function DynastyPropertyMap({
             key={v.label}
             type="button"
             onClick={() => jumpTo(v)}
-            className="pill-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-900 hover:text-white dark:hover:bg-emerald-600 dark:hover:text-white transition-colors"
+            className="pill-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-900 hover:text-white dark:hover:bg-emerald-800 dark:hover:text-white transition-colors"
           >
             {v.label}
           </button>
@@ -703,7 +703,7 @@ export default function DynastyPropertyMap({
           type="button"
           onClick={() => setTool(tool === "radius" ? "none" : "radius")}
           title="Drag on the map to search within a radius"
-          className={`pill-sm font-bold transition-all ${ tool === "radius" ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10" }`}
+          className={`pill-sm font-bold transition-all ${ tool === "radius" ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10" }`}
         >
           ◎ Radius
         </button>
@@ -711,7 +711,7 @@ export default function DynastyPropertyMap({
           type="button"
           onClick={() => setTool(tool === "draw" ? "none" : "draw")}
           title="Draw your own search area"
-          className={`pill-sm font-bold transition-all ${ tool === "draw" ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10" }`}
+          className={`pill-sm font-bold transition-all ${ tool === "draw" ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10" }`}
         >
           ✎ Draw
         </button>
@@ -735,7 +735,7 @@ export default function DynastyPropertyMap({
 
       {/* Result count while an area is applied */}
       {areaActive && (
-        <div className="pointer-events-none absolute left-1/2 bottom-3 z-[500] -translate-x-1/2 rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 px-3 py-1.5 text-xs font-bold text-white shadow-lg dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]">
+        <div className="pointer-events-none absolute left-1/2 bottom-3 z-[500] -translate-x-1/2 rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-700 dark:to-emerald-800 px-3 py-1.5 text-xs font-bold text-white shadow-lg dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]">
           {shown.length} in your area
         </div>
       )}
@@ -762,7 +762,7 @@ export default function DynastyPropertyMap({
                 rail ? "pl-0" : "pl-2"
               } ${
                 filter === id
-                  ? "bg-gradient-to-br from-[#0b4d4e] to-[#062a2b] dark:from-emerald-600 dark:to-emerald-700 text-white ring-1 ring-white/25 dark:ring-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
+                  ? "bg-gradient-to-br from-[#0b4d4e] to-[#062a2b] dark:from-emerald-700 dark:to-emerald-800 text-white ring-1 ring-white/25 dark:ring-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]"
                   : "bg-white/70 text-slate-600 ring-1 ring-slate-200 dark:bg-surface-ink/60 dark:text-slate-300 dark:ring-white/10 dark:hover:bg-surface-panel"
               }`}
             >
@@ -778,7 +778,7 @@ export default function DynastyPropertyMap({
             type="button"
             onClick={() => setPinMode(pinMode === "price" ? "value" : "price")}
             title="Colour pins by price, or by how each home prices against its own suburb median"
-            className={`pill-sm font-bold transition-all cursor-pointer ${ pinMode === "value" ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 dark:border-white/10 bg-white/70 dark:bg-surface-ink/60 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-surface-panel dark:hover:text-white" }`}
+            className={`pill-sm font-bold transition-all cursor-pointer ${ pinMode === "value" ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 dark:border-white/10 bg-white/70 dark:bg-surface-ink/60 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-surface-panel dark:hover:text-white" }`}
           >
             {pinMode === "value" ? "vs Median" : "Price"}
           </button>

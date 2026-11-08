@@ -7,33 +7,42 @@ import { useEffect, useState } from "react";
 import RoleGuard from "@/components/role-guard";
 import { auth } from "@/lib/firebase";
 import { formatNumber } from "@/lib/formatters";
-import { ACTIVE_CATALOGUE_STATUSES } from "@/lib/types/domain";
+import { ACTIVE_CATALOGUE_STATUSES, PUBLIC_LISTING_STATUSES } from "@/lib/types/domain";
 import { getSellerListings, type SellerListing } from "@/lib/seller-listings";
 
 // Three sample listings used to show here when nobody was signed in. Only the
 // account's own stored listings are shown now.
+//
+// A four-step "Next steps" checklist (Upload media, Refine pricing, Set
+// visibility, Review leads) also sat beside the list. Nothing in it was
+// clickable or ever ticked off, so it was removed.
 
-const steps = [
-  "Upload media",
-  "Refine pricing",
-  "Set visibility",
-  "Review leads",
-];
+type LoadState = "loading" | "ready" | "error";
 
 export default function SellerPortal() {
   const [user, setUser] = useState<User | null>(null);
   const [listings, setListings] = useState<SellerListing[]>([]);
+  // The counters used to read 0 while the query was still running, and a
+  // failed query left them at 0 for good with nothing said.
+  const [loadState, setLoadState] = useState<LoadState>(auth ? "loading" : "error");
 
   useEffect(() => {
     if (!auth) return;
 
     return onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
-      if (currentUser) {
-        const sellerListings = await getSellerListings(currentUser.uid);
-        setListings(sellerListings);
-      } else {
+      if (!currentUser) {
         setListings([]);
+        setLoadState("ready");
+        return;
+      }
+      setLoadState("loading");
+      try {
+        setListings(await getSellerListings(currentUser.uid));
+        setLoadState("ready");
+      } catch (error) {
+        console.error("Could not load the seller's listings:", error);
+        setLoadState("error");
       }
     });
   }, []);
@@ -72,76 +81,99 @@ export default function SellerPortal() {
       <div className="mx-auto max-w-[1500px]">
         {/* No page bar: it held only Home / Search / Seller portal links, which
             SiteHeader (lg+) and MobileAppBar carry on every page. */}
-        {user ? <p className="mb-4 text-sm text-slate-600 dark:text-slate-300">Showing listings owned by {user.email}.</p> : null}
-
-        <section className="mb-6 rounded-panel border border-white/45 bg-[linear-gradient(135deg,rgba(255,255,255,0.6),rgba(220,238,244,0.72))] dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-7">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <section className="mb-6 rounded-panel border border-white/45 bg-[linear-gradient(135deg,rgba(255,255,255,0.6),rgba(220,238,244,0.72))] dark:bg-none dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-7">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-emerald-400 font-bold">Seller portal</p>
-              <h1 className="mt-2 text-3xl font-semibold tracking-[-0.06em] text-slate-900 md:text-5xl dark:text-white">
-                Sell smarter, faster, and with more confidence.
+              {/* Was the slogan "Sell smarter, faster, and with more
+                  confidence." under a "Seller portal" eyebrow. */}
+              <h1 className="text-3xl font-semibold tracking-[-0.04em] text-slate-900 md:text-4xl dark:text-white">
+                Seller portal
               </h1>
+              {user ? (
+                <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">Listings owned by {user.email}</p>
+              ) : null}
             </div>
 
-            <Link href="/seller/listings/new" className="pill-lg bg-slate-900 text-white dark:bg-emerald-600 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] hover:opacity-95 text-sm font-semibold shadow-lg transition-all">
-              Publish listing
+            <Link href="/seller/listings/new" className="pill-lg bg-slate-900 text-white dark:bg-emerald-700 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] hover:opacity-95 text-sm font-semibold shadow-lg transition-all self-start sm:self-auto">
+              List a home
             </Link>
           </div>
         </section>
 
-        <section className="mb-6 grid gap-4 md:grid-cols-3">
+        <section aria-label="Totals" className="mb-6 grid gap-4 grid-cols-3">
           {cards.map((card) => (
-            <div key={card.label} className="rounded-card border border-white/45 bg-white/40 p-5 shadow-[0_18px_35px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-600 dark:text-slate-400 font-bold">{card.label}</p>
-              <p className="mt-4 text-3xl font-semibold text-slate-900 dark:text-white">{card.value}</p>
+            <div key={card.label} className="rounded-card border border-white/45 bg-white/40 p-4 sm:p-5 shadow-[0_18px_35px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+              <p className="text-xs uppercase tracking-[0.14em] text-slate-600 dark:text-slate-400 font-bold">{card.label}</p>
+              <p className="mt-3 text-2xl sm:text-3xl font-semibold tabular-nums text-slate-900 dark:text-white">
+                {loadState === "ready" ? card.value : "–"}
+              </p>
             </div>
           ))}
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="rounded-panel border border-white/45 bg-white/40 p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-            <div className="mb-5 flex items-center justify-between">
-              <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-emerald-400 font-bold">Portfolio</p>
-                <h2 className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white">Your listings</h2>
-              </div>
-              <Link href="/seller/listings/new" className="pill border border-slate-300 bg-white/60 text-sm text-slate-700 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-surface-panel dark:hover:text-white font-semibold transition-all">Manage</Link>
-            </div>
+        <section className="rounded-panel border border-white/45 bg-white/40 p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+          {/* No "Manage" button: it opened the new-listing form, the same
+              place as "List a home" above. There is no edit screen yet. */}
+          <h2 className="mb-4 text-2xl font-semibold text-slate-900 dark:text-white">Your listings</h2>
 
-            <div className="space-y-3">
-              {listings.map((item) => (
-                <div key={item.id} className="flex items-center justify-between rounded-control border border-slate-200 bg-[#f4f7f7] dark:bg-surface-ink/70 dark:border-white/10 p-3.5 transition-all">
-                  <div>
-                    <p className="font-semibold text-slate-900 dark:text-white">{item.title}</p>
-                    <p className="mt-1 text-sm text-slate-600 dark:text-slate-300 font-medium">{item.price}{item.views ? ` • ${item.views} views` : ""}</p>
-                  </div>
-                  <span className="rounded-full border border-emerald-400/30 bg-emerald-500/10 px-2.5 py-1 text-xs uppercase tracking-[0.14em] text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/40 font-bold">
-                    {item.status}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
+          {loadState === "loading" && (
+            <p role="status" className="text-sm text-slate-600 dark:text-slate-300">Loading your listings…</p>
+          )}
 
-          <div className="rounded-panel border border-white/45 bg-white/40 p-5 shadow-[0_20px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-6 dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-            <div className="mb-5 flex items-center justify-between">
-              <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-emerald-400 font-bold">Checklist</p>
-                <h2 className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white">Next steps</h2>
-              </div>
-            </div>
+          {loadState === "error" && (
+            <p role="alert" className="rounded-control border border-rose-200 bg-rose-50 p-3.5 text-sm text-rose-800 dark:border-rose-500/30 dark:bg-rose-950/40 dark:text-rose-200">
+              Your listings couldn&rsquo;t be loaded. Check your connection and refresh the page.
+            </p>
+          )}
 
-            <div className="space-y-3">
-              {steps.map((step, index) => (
-                <div key={step} className="flex items-center gap-3 rounded-control border border-slate-200 bg-[#f4f7f7] dark:bg-surface-ink/70 dark:border-white/10 p-3.5 transition-all">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0f172a] dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_10px_rgba(16,185,129,0.3)] text-xs font-bold text-white shrink-0">
-                    {index + 1}
-                  </div>
-                  <p className="text-sm font-semibold text-slate-700 dark:text-slate-200">{step}</p>
-                </div>
-              ))}
+          {loadState === "ready" && listings.length === 0 && (
+            <div className="rounded-control border border-dashed border-slate-300 p-6 text-center dark:border-white/15">
+              <p className="font-semibold text-slate-900 dark:text-white">You haven&rsquo;t listed a home yet.</p>
+              <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
+                Add photos, the price and the details, then publish.
+              </p>
+              <Link
+                href="/seller/listings/new"
+                className="pill mt-4 inline-flex bg-slate-900 font-semibold text-white hover:bg-slate-800 dark:bg-emerald-700 dark:hover:bg-emerald-800"
+              >
+                List a home
+              </Link>
             </div>
-          </div>
+          )}
+
+          {loadState === "ready" && listings.length > 0 && (
+            <ul className="space-y-3">
+              {listings.map((item) => {
+                // Only public listings have a page to open; a draft or one
+                // waiting for review would 404.
+                const isPublic = (PUBLIC_LISTING_STATUSES as readonly string[]).includes(item.status);
+                return (
+                  <li key={item.id} className="flex flex-wrap items-center justify-between gap-3 rounded-control border border-slate-200 bg-[#f4f7f7] dark:bg-surface-ink/70 dark:border-white/10 p-3.5">
+                    <div className="min-w-0">
+                      <p className="truncate font-semibold text-slate-900 dark:text-white">{item.title}</p>
+                      <p className="mt-1 text-sm text-slate-600 dark:text-slate-300 font-medium">
+                        {item.price}
+                        {item.views ? ` • ${formatNumber(item.views)} views` : ""}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="rounded-full border border-emerald-400/30 bg-emerald-500/10 px-2.5 py-1 text-xs uppercase tracking-[0.14em] text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/40 font-bold">
+                        {item.status}
+                      </span>
+                      {isPublic && (
+                        <Link
+                          href={`/property/${item.id}`}
+                          className="text-sm font-semibold text-emerald-800 underline-offset-2 hover:underline dark:text-emerald-300"
+                        >
+                          View<span className="sr-only"> {item.title}</span>
+                        </Link>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </section>
       </div>
     </main>

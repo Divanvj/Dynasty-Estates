@@ -193,7 +193,7 @@ export default function AISearchPage() {
               <button
                 type="submit"
                 disabled={!queryText.trim()}
-                className="rounded-2xl bg-slate-950 px-6 py-3.5 text-xs font-bold text-white shadow-lg hover:bg-slate-800 transition-all cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-slate-950 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:disabled:hover:bg-emerald-600 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
+                className="rounded-2xl bg-slate-950 px-6 py-3.5 text-xs font-bold text-white shadow-lg hover:bg-slate-800 transition-all cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-slate-950 dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:disabled:hover:bg-emerald-700 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
               >
                 Search with AI →
               </button>
@@ -224,7 +224,7 @@ export default function AISearchPage() {
                   key={key}
                   className={`badge ${
                     strong
-                      ? "bg-emerald-700 text-white dark:bg-emerald-600"
+                      ? "bg-emerald-700 text-white dark:bg-emerald-700"
                       : "border border-emerald-200 bg-emerald-50 text-emerald-900 dark:border-emerald-500/30 dark:bg-surface-ink/80 dark:text-emerald-300"
                   }`}
                 >

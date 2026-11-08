@@ -94,6 +94,10 @@
   background: rgb(12 26 28 / 0.75) !important;
   color: #94a3b8 !important;
 }
+/* Leaflet's own link blue (#0078a8) is 3.7:1 on the dark strip. */
+:where(.dark) .leaflet-control-attribution a {
+  color: #7dd3fc !important;
+}
 
 :root {
   --background: #dce4e3;
@@ -1411,6 +1415,21 @@ input[type="range"]::-moz-range-track {
 :where(.dark) input[type="range"]::-moz-range-track,
 .dark input[type="range"]::-moz-range-track {
   background: rgba(255, 255, 255, 0.12);
+}
+
+/* The track hides the browser's focus ring (outline: none above), so a
+   keyboard user needs one on the thumb instead. */
+input[type="range"]:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px #ffffff, 0 0 0 5px var(--brand, #0b4d4e);
+}
+input[type="range"]:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 3px #ffffff, 0 0 0 5px var(--brand, #0b4d4e);
+}
+:where(.dark) input[type="range"]:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px #0b1416, 0 0 0 5px #34d399;
+}
+:where(.dark) input[type="range"]:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 3px #0b1416, 0 0 0 5px #34d399;
 }
 
 input[type="range"]::-moz-range-thumb {

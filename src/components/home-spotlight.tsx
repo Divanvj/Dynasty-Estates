@@ -259,7 +259,7 @@ export default function HomeSpotlight({ properties }: { properties: PropertyReco
                       a link it duplicated the tab stop. */}
                   <span
                     aria-hidden="true"
-                    className="whitespace-nowrap rounded-2xl border border-emerald-400/30 bg-gradient-to-r from-[#0b4d4e] to-[#07393a] px-6 py-3 text-center text-xs font-bold text-white shadow-lg transition-all group-hover:scale-102 group-hover:from-[#0d595b] group-hover:to-[#094344] sm:text-sm dark:bg-gradient-to-r dark:from-emerald-600 dark:to-emerald-700 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_20px_rgba(16,185,129,0.4)] dark:group-hover:from-emerald-500 dark:group-hover:to-emerald-600"
+                    className="whitespace-nowrap rounded-2xl border border-emerald-400/30 bg-gradient-to-r from-[#0b4d4e] to-[#07393a] px-6 py-3 text-center text-xs font-bold text-white shadow-lg transition-all group-hover:scale-102 group-hover:from-[#0d595b] group-hover:to-[#094344] sm:text-sm dark:bg-gradient-to-r dark:from-emerald-700 dark:to-emerald-800 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_20px_rgba(16,185,129,0.4)] dark:group-hover:from-emerald-800 dark:group-hover:to-emerald-900"
                   >
                     View this residence →
                   </span>

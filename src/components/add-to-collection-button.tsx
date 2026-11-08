@@ -145,7 +145,7 @@ export default function AddToCollectionButton({
               </p>
               <Link
                 href="/auth/login"
-                className="pill-sm mt-2.5 w-full bg-slate-950 font-bold text-white hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500"
+                className="pill-sm mt-2.5 w-full bg-slate-950 font-bold text-white hover:bg-slate-800 dark:bg-emerald-700 dark:hover:bg-emerald-800"
               >
                 Sign in
               </Link>

@@ -110,14 +110,14 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
               <button
                 type="button"
                 onClick={() => handleIntentChange("buy")}
-                className={`pill-sm font-bold transition-all cursor-pointer ${ intent === "buy" ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white" }`}
+                className={`pill-sm font-bold transition-all cursor-pointer ${ intent === "buy" ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-700 dark:to-emerald-800 text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white" }`}
               >
                 For Sale
               </button>
               <button
                 type="button"
                 onClick={() => handleIntentChange("rent")}
-                className={`pill-sm font-bold transition-all cursor-pointer ${ intent === "rent" ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white" }`}
+                className={`pill-sm font-bold transition-all cursor-pointer ${ intent === "rent" ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-700 dark:to-emerald-800 text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white" }`}
               >
                 To Rent
               </button>
@@ -141,7 +141,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
               // Desktop-only, matching /search: phones get List and Map.
               className={`hidden min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:flex lg:min-h-0 lg:min-w-0 ${
                 viewMode === "grid"
-                  ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                  ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                   : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
               }`}
               title="Grid View (Photo Cards)"
@@ -154,7 +154,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
               onClick={() => setViewMode("list")}
               className={`flex h-10 w-10 items-center justify-center gap-1.5 rounded-full text-xs font-bold transition-all cursor-pointer lg:h-auto lg:w-auto lg:rounded-xl lg:px-2.5 lg:py-1 ${
                 viewMode === "list"
-                  ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                  ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                   : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
               }`}
               title="List View (Detailed Cards)"
@@ -167,7 +167,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
               onClick={() => setViewMode("map")}
               className={`flex h-10 w-10 items-center justify-center gap-1.5 rounded-full text-xs font-bold transition-all cursor-pointer lg:h-auto lg:w-auto lg:rounded-xl lg:px-2.5 lg:py-1 ${
                 viewMode === "map"
-                  ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                  ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                   : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
               }`}
               title="Split Map View (Interactive Map + Listings)"
@@ -181,7 +181,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
               // Desktop-only, matching /search.
               className={`hidden min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:flex lg:min-h-0 lg:min-w-0 ${
                 viewMode === "compact"
-                  ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                  ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                   : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
               }`}
               title="Compact Table View (Investor Spreadsheet)"
@@ -204,7 +204,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
                    is a pointer. */
                 className={`inline-flex h-10 shrink-0 items-center justify-center rounded-full px-3.5 text-xs font-semibold transition-all cursor-pointer lg:h-auto lg:py-1 ${
                   activeFilter === filter
-                    ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 text-white shadow-md border border-emerald-400/30 dark:border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                    ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-700 dark:to-emerald-800 text-white shadow-md border border-emerald-400/30 dark:border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                     : "border border-slate-200/80 bg-white/60 dark:border-white/10 dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-surface-panel hover:border-emerald-400/50"
                 }`}
               >
@@ -301,7 +301,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
                       </div>
                       <Link
                         href={`/property/${card.slug || card.id}`}
-                        className="pill bg-gradient-to-r from-[#0b4d4e] to-[#07393a] hover:from-[#0d595b] hover:to-[#094344] dark:from-emerald-600 dark:to-emerald-700 dark:hover:from-emerald-500 dark:hover:to-emerald-600 font-bold text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] border border-emerald-400/30 dark:border-emerald-400/50 transition-all"
+                        className="pill bg-gradient-to-r from-[#0b4d4e] to-[#07393a] hover:from-[#0d595b] hover:to-[#094344] dark:from-emerald-700 dark:to-emerald-800 dark:hover:from-emerald-800 dark:hover:to-emerald-900 font-bold text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] border border-emerald-400/30 dark:border-emerald-400/50 transition-all"
                       >
                         {card.listingType === "rent" ? "View Rental →" : "View Home →"}
                       </Link>
@@ -338,7 +338,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
             <div className="mt-6 flex justify-center">
               <Link
                 href={seeAllHref}
-                className="pill-lg border border-emerald-400/30 bg-[var(--brand)] px-6 font-bold text-white shadow-sm transition-colors hover:bg-[var(--brand-hover)] dark:bg-emerald-600 dark:hover:bg-emerald-500"
+                className="pill-lg border border-emerald-400/30 bg-[var(--brand)] px-6 font-bold text-white shadow-sm transition-colors hover:bg-[var(--brand-hover)] dark:bg-emerald-700 dark:hover:bg-emerald-800"
               >
                 {intent === "rent" ? "See all homes to rent" : "See all homes for sale"} →
               </Link>

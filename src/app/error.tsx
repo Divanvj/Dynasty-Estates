@@ -53,7 +53,7 @@ export default function Error({
           <button
             type="button"
             onClick={() => retry()}
-            className="pill-lg cursor-pointer bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] font-bold text-white shadow-md transition-all hover:from-[#093e3f] hover:to-[#052c2d] dark:hover:from-emerald-500 dark:hover:to-emerald-600"
+            className="pill-lg cursor-pointer bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-700 dark:to-emerald-800 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] font-bold text-white shadow-md transition-all hover:from-[#093e3f] hover:to-[#052c2d] dark:hover:from-emerald-800 dark:hover:to-emerald-900"
           >
             Try again
           </button>

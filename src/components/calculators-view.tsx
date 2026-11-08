@@ -54,6 +54,9 @@ export default function CalculatorsView({
 
   const priceId = useId();
   const depId = useId();
+  const levyId = useId();
+  const ratesId = useId();
+  const amortRateId = useId();
   const rateId = useId();
   const incomeId = useId();
   const expenseId = useId();
@@ -323,7 +326,7 @@ export default function CalculatorsView({
                 onClick={() => setActiveTab(tab.id as typeof activeTab)}
                 className={`flex items-center gap-2 rounded-2xl px-3.5 sm:px-4 py-2.5 text-xs font-semibold transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                   activeTab === tab.id
-                    ? "bg-slate-950 dark:bg-emerald-600 text-white shadow-md border border-emerald-400/40 dark:border-emerald-500/50 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
+                    ? "bg-slate-950 dark:bg-emerald-700 text-white shadow-md border border-emerald-400/40 dark:border-emerald-500/50 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
                     : "border border-white/70 dark:border-white/10 bg-white/45 dark:bg-surface-panel/80 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-white/10"
                 }`}
               >
@@ -382,7 +385,7 @@ export default function CalculatorsView({
                       key={val}
                       type="button"
                       onClick={() => setPurchasePrice(val)}
-                      className={`pill-sm font-semibold transition-all cursor-pointer ${ purchasePrice === val ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
+                      className={`pill-sm font-semibold transition-all cursor-pointer ${ purchasePrice === val ? "bg-slate-900 text-white dark:bg-emerald-700 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                     >
                       R {(val / 1000000).toFixed(val % 1000000 === 0 ? 0 : 2)}M
                     </button>
@@ -432,7 +435,7 @@ export default function CalculatorsView({
                       key={pct}
                       type="button"
                       onClick={() => setDepositPct(pct)}
-                      className={`pill-sm font-semibold transition-all cursor-pointer ${ depositPct === pct ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
+                      className={`pill-sm font-semibold transition-all cursor-pointer ${ depositPct === pct ? "bg-slate-900 text-white dark:bg-emerald-700 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                     >
                       {pct === 0 ? "0% (100% Bond)" : `${pct}%`}
                     </button>
@@ -486,7 +489,7 @@ export default function CalculatorsView({
                       key={chip.label}
                       type="button"
                       onClick={() => setInterestRate(chip.val)}
-                      className={`pill-sm font-semibold transition-all cursor-pointer ${ Math.abs(interestRate - chip.val) < 0.01 ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
+                      className={`pill-sm font-semibold transition-all cursor-pointer ${ Math.abs(interestRate - chip.val) < 0.01 ? "bg-slate-900 text-white dark:bg-emerald-700 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                     >
                       {chip.label}
                     </button>
@@ -497,8 +500,9 @@ export default function CalculatorsView({
               {/* Levies & Rates */}
               <div className="grid grid-cols-2 gap-3 pt-2">
                 <div>
-                  <label className="font-semibold block mb-1">Body Corporate Levy</label>
+                  <label htmlFor={levyId} className="font-semibold block mb-1">Body Corporate Levy</label>
                   <input
+                    id={levyId}
                     type="number"
                     min="0"
                     step="100"
@@ -508,8 +512,9 @@ export default function CalculatorsView({
                   />
                 </div>
                 <div>
-                  <label className="font-semibold block mb-1">Municipal Rates & Taxes</label>
+                  <label htmlFor={ratesId} className="font-semibold block mb-1">Municipal Rates & Taxes</label>
                   <input
+                    id={ratesId}
                     type="number"
                     min="0"
                     step="100"
@@ -531,7 +536,7 @@ export default function CalculatorsView({
                       onClick={() => setLoanYears(yr)}
                       className={`rounded-xl py-2 text-xs font-bold transition-all cursor-pointer ${
                         loanYears === yr
-                          ? "bg-slate-950 text-white shadow-sm dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_14px_rgba(16,185,129,0.35)]"
+                          ? "bg-slate-950 text-white shadow-sm dark:bg-emerald-700 dark:border-emerald-500/50 dark:shadow-[0_0_14px_rgba(16,185,129,0.35)]"
                           : "border border-slate-300 bg-white/60 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40"
                       }`}
                     >
@@ -579,7 +584,7 @@ export default function CalculatorsView({
 
               <Link
                 href={`/search?type=House`}
-                className="mt-6 block w-full rounded-2xl bg-slate-950 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_25px_rgba(16,185,129,0.35)] py-3 text-center text-xs font-bold text-white shadow-lg hover:bg-slate-800 transition-all cursor-pointer"
+                className="mt-6 block w-full rounded-2xl bg-slate-950 dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:text-white dark:shadow-[0_0_25px_rgba(16,185,129,0.35)] py-3 text-center text-xs font-bold text-white shadow-lg hover:bg-slate-800 transition-all cursor-pointer"
               >
                 Find Homes Within This Budget →
               </Link>
@@ -635,7 +640,7 @@ export default function CalculatorsView({
                       key={val}
                       type="button"
                       onClick={() => setGrossIncome(val)}
-                      className={`pill-sm font-semibold transition-all cursor-pointer ${ grossIncome === val ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
+                      className={`pill-sm font-semibold transition-all cursor-pointer ${ grossIncome === val ? "bg-slate-900 text-white dark:bg-emerald-700 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                     >
                       R {(val / 1000).toFixed(0)}k
                     </button>
@@ -685,7 +690,7 @@ export default function CalculatorsView({
                       key={val}
                       type="button"
                       onClick={() => setMonthlyExpenses(val)}
-                      className={`pill-sm font-semibold transition-all cursor-pointer ${ monthlyExpenses === val ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
+                      className={`pill-sm font-semibold transition-all cursor-pointer ${ monthlyExpenses === val ? "bg-slate-900 text-white dark:bg-emerald-700 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                     >
                       R {(val / 1000).toFixed(0)}k
                     </button>
@@ -729,7 +734,7 @@ export default function CalculatorsView({
 
               <Link
                 href={`/search`}
-                className="mt-6 block w-full rounded-2xl bg-slate-950 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_25px_rgba(16,185,129,0.35)] py-3 text-center text-xs font-bold text-white shadow-lg hover:bg-slate-800 transition-all cursor-pointer"
+                className="mt-6 block w-full rounded-2xl bg-slate-950 dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:text-white dark:shadow-[0_0_25px_rgba(16,185,129,0.35)] py-3 text-center text-xs font-bold text-white shadow-lg hover:bg-slate-800 transition-all cursor-pointer"
               >
                 Search Qualified Properties →
               </Link>
@@ -804,7 +809,7 @@ export default function CalculatorsView({
                       key={p}
                       type="button"
                       onClick={() => setCustomTransferPrice(p)}
-                      className={`pill-sm font-semibold transition-all cursor-pointer ${ customTransferPrice === p ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
+                      className={`pill-sm font-semibold transition-all cursor-pointer ${ customTransferPrice === p ? "bg-slate-900 text-white dark:bg-emerald-700 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                     >
                       R {(p / 1000000).toFixed(p % 1000000 === 0 ? 0 : 1)}M
                     </button>
@@ -927,7 +932,7 @@ export default function CalculatorsView({
                           setConveyPrice(val);
                           setConveyBond(Math.round(val * 0.9));
                         }}
-                        className={`pill-sm font-semibold transition-all cursor-pointer ${ conveyPrice === val ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
+                        className={`pill-sm font-semibold transition-all cursor-pointer ${ conveyPrice === val ? "bg-slate-900 text-white dark:bg-emerald-700 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                       >
                         R {(val / 1000000).toFixed(val % 1000000 === 0 ? 0 : 1)}M
                       </button>
@@ -985,7 +990,7 @@ export default function CalculatorsView({
                           key={b.label}
                           type="button"
                           onClick={() => setConveyBond(targetVal)}
-                          className={`pill-sm font-semibold transition-all cursor-pointer ${ conveyBond === targetVal ? "bg-slate-900 text-white dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
+                          className={`pill-sm font-semibold transition-all cursor-pointer ${ conveyBond === targetVal ? "bg-slate-900 text-white dark:bg-emerald-700 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                         >
                           {b.label}
                         </button>
@@ -1077,7 +1082,7 @@ export default function CalculatorsView({
 
                 <Link
                   href="/search"
-                  className="mt-6 block w-full rounded-2xl bg-slate-950 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_25px_rgba(16,185,129,0.35)] py-3 text-center text-xs font-bold text-white shadow-lg hover:bg-slate-800 transition-all cursor-pointer"
+                  className="mt-6 block w-full rounded-2xl bg-slate-950 dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:text-white dark:shadow-[0_0_25px_rgba(16,185,129,0.35)] py-3 text-center text-xs font-bold text-white shadow-lg hover:bg-slate-800 transition-all cursor-pointer"
                 >
                   Explore Properties in Budget →
                 </Link>
@@ -1143,8 +1148,9 @@ export default function CalculatorsView({
                 {/* Interest Rate & Term */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-semibold mb-1">Interest Rate (% Prime)</label>
+                    <label htmlFor={amortRateId} className="block font-semibold mb-1">Interest Rate (% Prime)</label>
                     <input
+                      id={amortRateId}
                       type="number"
                       step="0.25"
                       min="7"
@@ -1213,7 +1219,7 @@ export default function CalculatorsView({
                         key={val}
                         type="button"
                         onClick={() => setAmortExtraMonthly(val)}
-                        className={`pill-sm font-semibold transition-all cursor-pointer ${ amortExtraMonthly === val ? "bg-emerald-800 dark:bg-emerald-600 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] text-white" : "border border-emerald-300 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-emerald-900 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
+                        className={`pill-sm font-semibold transition-all cursor-pointer ${ amortExtraMonthly === val ? "bg-emerald-800 dark:bg-emerald-700 dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] text-white" : "border border-emerald-300 dark:border-white/10 bg-white dark:bg-surface-ink/60 text-emerald-900 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
                       >
                         +R {formatNumber(val)}
                       </button>

@@ -273,7 +273,7 @@ export default function CollectionsPage() {
               onClick={() => setSelectedColId(col.id)}
               className={`flex items-center gap-2 whitespace-nowrap rounded-2xl px-4 py-2.5 text-xs font-medium transition-all ${
                 (activeCollection?.id === col.id)
-                  ? "border border-slate-900 bg-slate-900 text-white shadow-md dark:border-emerald-500/50 dark:bg-emerald-600 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+                  ? "border border-slate-900 bg-slate-900 text-white shadow-md dark:border-emerald-500/50 dark:bg-emerald-700 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
                   : "border border-white/70 bg-white/45 text-slate-700 hover:bg-white/80 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-white"
               }`}
             >
@@ -389,7 +389,7 @@ export default function CollectionsPage() {
                         </button>
                         <button
                           type="submit"
-                          className="pill flex-1 bg-slate-950 font-bold text-white shadow-md hover:bg-slate-800 cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+                          className="pill flex-1 bg-slate-950 font-bold text-white shadow-md hover:bg-slate-800 cursor-pointer dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
                         >
                           Send Invite →
                         </button>
@@ -516,7 +516,7 @@ export default function CollectionsPage() {
                           />
                           <button
                             onClick={() => void handleSendComment(prop.id)}
-                            className="rounded-xl bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_12px_rgba(16,185,129,0.3)] cursor-pointer"
+                            className="rounded-xl bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:shadow-[0_0_12px_rgba(16,185,129,0.3)] cursor-pointer"
                           >
                             Post
                           </button>

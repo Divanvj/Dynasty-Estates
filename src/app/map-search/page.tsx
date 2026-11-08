@@ -175,7 +175,7 @@ export default function MapSearchPage() {
               aria-pressed={activeType === t}
               className={`pill-sm tap-44 relative shrink-0 font-semibold transition-colors cursor-pointer ${
                 activeType === t
-                  ? "bg-[var(--brand)] text-white dark:bg-emerald-600"
+                  ? "bg-[var(--brand)] text-white dark:bg-emerald-700"
                   : "text-slate-700 hover:bg-white dark:text-slate-300 dark:hover:bg-surface-ink"
               }`}
             >

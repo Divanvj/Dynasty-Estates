@@ -182,7 +182,7 @@ export default function InsightsPage() {
                 key={node}
                 type="button"
                 onClick={() => setSelectedNode(node)}
-                className={`pill-sm font-bold transition-all cursor-pointer ${ selectedNode === node ? "bg-slate-900 text-white shadow-sm dark:bg-emerald-600 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
+                className={`pill-sm font-bold transition-all cursor-pointer ${ selectedNode === node ? "bg-slate-900 text-white shadow-sm dark:bg-emerald-700 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]" : "border border-slate-200 bg-white/70 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-emerald-300 dark:hover:border-emerald-500/40" }`}
               >
                 {node}
               </button>

@@ -118,7 +118,7 @@ export default function PropertyGalleryLightbox({
               type="button"
               aria-label="Previous photo"
               onClick={() => onIndexChange((index - 1 + images.length) % images.length)}
-              className="tap-44 absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/70 text-white shadow-lg hover:bg-black cursor-pointer sm:left-6 dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:hover:bg-emerald-600 dark:hover:shadow-[0_0_12px_rgba(16,185,129,0.35)] transition-all"
+              className="tap-44 absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/70 text-white shadow-lg hover:bg-black cursor-pointer sm:left-6 dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:hover:bg-emerald-800 dark:hover:shadow-[0_0_12px_rgba(16,185,129,0.35)] transition-all"
             >
               <ArrowLeftIcon className="h-5 w-5" />
             </button>
@@ -126,7 +126,7 @@ export default function PropertyGalleryLightbox({
               type="button"
               aria-label="Next photo"
               onClick={() => onIndexChange((index + 1) % images.length)}
-              className="tap-44 absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/70 text-white shadow-lg hover:bg-black cursor-pointer sm:right-6 dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:hover:bg-emerald-600 dark:hover:shadow-[0_0_12px_rgba(16,185,129,0.35)] transition-all"
+              className="tap-44 absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/70 text-white shadow-lg hover:bg-black cursor-pointer sm:right-6 dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:hover:bg-emerald-800 dark:hover:shadow-[0_0_12px_rgba(16,185,129,0.35)] transition-all"
             >
               <ArrowRightIcon className="h-5 w-5" />
             </button>

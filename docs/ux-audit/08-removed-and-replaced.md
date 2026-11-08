@@ -173,3 +173,32 @@ Unchanged: the map views inside `/search` (Map view) and the home feed still use
 | "🗺️ Street View & Map" tab, "👁️ Street View 360°" and "🗺️ Google Map" buttons | Line map icon + "Street View & Map"; buttons "Street View" and "Map" | `property-media-tabs.tsx` |
 | Media tabs wrapping one per line on phones | One row (scrolls sideways if ever too wide) | `property-media-tabs.tsx` |
 
+## Phase 10 — dark mode, accessibility, signed-in pages (merged 8 Nov)
+
+| Was | Now | Where |
+|---|---|---|
+| Dark mode: every filled green button / active chip in emerald-600 (#009966), white text at 3.65:1 | emerald-700 (5.36:1); hovers emerald-800; gradients 700→800. 214 class swaps in 41 files; tinted greens (`/10`, `/20`…) unchanged | site-wide |
+| Dark mode: seller portal top panel kept its light gradient, white title on light grey (2.4:1) | Dark panel like the rest | `seller/portal/page.tsx` |
+| Dark mode: "Quick Filters:" and the login/sign-up "or" divider in slate-500 (3.8:1) | slate-400 | `search/page.tsx`, `auth/login`, `auth/signup` |
+| Dark mode: map credit links in Leaflet blue (3.7:1) | Light blue | `globals.css` |
+| Slider handles had no visible keyboard focus | Focus ring on the handle | `globals.css` |
+| Calculator inputs "Body Corporate Levy", "Municipal Rates & Taxes", "Interest Rate" not tied to their labels (screen readers read "edit, number") | Labelled | `calculators-view.tsx` |
+| /compare and /agents jumped from h1 to h3 | h2 | `compare/page.tsx`, `agents/page.tsx` |
+| Login side panel: "Recommended for you · R 8.9M · Morningside · 4 bed · 3 bath · 4.8 match" (a made-up home) | **Removed**; one line: "Your saved homes, collections and enquiries in one place." | `auth/login/page.tsx` |
+| Seller portal: slogan "Sell smarter, faster, and with more confidence." under a "Seller portal" eyebrow | Heading "Seller portal" + "Listings owned by …" | `seller/portal/page.tsx` |
+| Seller portal: "Publish listing" | "List a home" | same |
+| Seller portal: "Manage" button (opened the new-listing form) | **Removed** (no edit screen exists) | same |
+| Seller portal: "Next steps" checklist (Upload media, Refine pricing, Set visibility, Review leads), never clickable or ticked | **Removed** | same |
+| Seller portal: counters showed 0 while loading; a failed load stayed at 0 silently; empty list showed nothing | "–" while loading, an error message on failure, and an empty state with "List a home" | same |
+| Seller portal / agent dashboard: listing rows could not be opened | "View" link on public listings | `seller/portal`, `agent/dashboard` |
+| Agent dashboard: "Live data" badge on all four numbers (also on zeros) | **Removed** | `agent/dashboard/page.tsx` |
+| Agent dashboard: no page heading | "Agent dashboard" | same |
+| Agent dashboard: "New leads", "Tour bookings", "Listings overview" (+ "Portfolio" eyebrow), "Hot leads" (+ "Pipeline" eyebrow) | "New enquiries", "Viewing requests", "Your listings", "Recent enquiries" | same |
+| Agent dashboard: "Last contact" label over the enquiry's status ("new") | "Status" ("New") | same |
+| Agent dashboard: "View all leads →" (went to /inquiries, the enquiries *you sent*, so always empty for an agent) | **Removed** | same |
+| Agent dashboard: zeros while loading; raw Firebase error text on failure | "–" / "Loading…"; plain-language error | same |
+| /inquiries: link bar (Saved Homes, Browse Catalogue) | **Removed** (both in the header and tab bar) | `inquiries/page.tsx` |
+| /inquiries: "Buyer Communication Hub" pill, "My Appointments & Requests", "…property brochures, and practitioner correspondences" | "My enquiries", "Viewings you've asked for and messages you've sent to agents." | same |
+| /inquiries tabs "All Requests / Viewing Appointments / Practitioner Messages" | "All / Viewings / Messages" (now announce which is selected) | same |
+| Admin: an empty moderation queue or audit trail was filled with demo entries ("mod-1", "Perceptual hash match 98%") that could be "approved" | Real empty list: "Nothing is waiting for review." / "No actions recorded yet." / "No submitted listing has a fraud signal."; "Loading the queue…" while loading | `lib/moderation.ts`, `admin/page.tsx` |
+

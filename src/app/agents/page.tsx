@@ -105,11 +105,11 @@ export default function AgentsPage() {
                     />
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-slate-950 dark:text-white">
+                    <h2 className="text-base font-bold text-slate-950 dark:text-white">
                       <Link href={`/agents/${agent.slug}`} className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
                         {agent.name}
                       </Link>
-                    </h3>
+                    </h2>
                     <p className="text-xs text-slate-600 font-medium dark:text-slate-400">{agent.agency}</p>
                     <span className="mt-1 inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-bold text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-500/30 dark:shadow-[0_0_10px_rgba(16,185,129,0.2)]">
                       <CheckIcon className="h-3 w-3" />
@@ -139,7 +139,7 @@ export default function AgentsPage() {
               <div className="mt-6 flex flex-col gap-2 pt-3 border-t border-slate-200/60 dark:border-white/10">
                 <Link
                   href={`/agents/${agent.slug}`}
-                  className="w-full rounded-xl bg-slate-950 py-2.5 text-center text-xs font-bold text-white shadow-md hover:bg-slate-800 transition-all cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+                  className="w-full rounded-xl bg-slate-950 py-2.5 text-center text-xs font-bold text-white shadow-md hover:bg-slate-800 transition-all cursor-pointer dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
                 >
                   View Practitioner Profile →
                 </Link>
@@ -224,7 +224,7 @@ export default function AgentsPage() {
                   <button
                     type="submit"
                     disabled={sending}
-                    className="w-full disabled:opacity-60 rounded-full bg-slate-950 py-2.5 text-xs font-bold text-white shadow-md hover:bg-slate-800 cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+                    className="w-full disabled:opacity-60 rounded-full bg-slate-950 py-2.5 text-xs font-bold text-white shadow-md hover:bg-slate-800 cursor-pointer dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
                   >
                     {sending ? "Sending…" : "Send to Practitioner"}
                   </button>

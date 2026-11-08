@@ -248,7 +248,7 @@ export default function PropertyListCard({
             */}
             <span
               aria-hidden="true"
-              className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-600 dark:to-emerald-700 group-hover:from-[#0d595b] group-hover:to-[#094344] dark:group-hover:from-emerald-500 dark:group-hover:to-emerald-600 px-5 py-2 text-xs font-bold text-white shadow-md shadow-emerald-950/20 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-400/30 dark:border-emerald-400/50 group-hover:scale-102 transition-all sm:min-h-0 sm:inline-block"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-700 dark:to-emerald-800 group-hover:from-[#0d595b] group-hover:to-[#094344] dark:group-hover:from-emerald-800 dark:group-hover:to-emerald-900 px-5 py-2 text-xs font-bold text-white shadow-md shadow-emerald-950/20 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-400/30 dark:border-emerald-400/50 group-hover:scale-102 transition-all sm:min-h-0 sm:inline-block"
             >
               View home →
             </span>

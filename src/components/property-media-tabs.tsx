@@ -67,7 +67,7 @@ export default function PropertyMediaTabs({
               onClick={() => setActiveTab("floorplan")}
               className={`rounded-xl px-4 py-2 text-xs font-bold transition-all cursor-pointer ${
                 activeTab === "floorplan"
-                  ? "bg-white dark:bg-emerald-600 text-slate-900 dark:text-white shadow-sm dark:border dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                  ? "bg-white dark:bg-emerald-700 text-slate-900 dark:text-white shadow-sm dark:border dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                   : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
               }`}
             >
@@ -80,7 +80,7 @@ export default function PropertyMediaTabs({
             onClick={() => setActiveTab("virtual-tour")}
             className={`rounded-xl px-4 py-2 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === "virtual-tour"
-                ? "bg-white dark:bg-emerald-600 text-slate-900 dark:text-white shadow-sm dark:border dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                ? "bg-white dark:bg-emerald-700 text-slate-900 dark:text-white shadow-sm dark:border dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                 : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
             }`}
           >
@@ -93,7 +93,7 @@ export default function PropertyMediaTabs({
             onClick={() => setActiveTab("street-view")}
             className={`rounded-xl px-4 py-2 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === "street-view"
-                ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                 : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
             }`}
           >
@@ -139,7 +139,7 @@ export default function PropertyMediaTabs({
               href={floorPlanImage}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-lg bg-slate-900 px-3.5 py-1.5 font-bold text-white hover:bg-slate-800 transition-colors shrink-0 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+              className="rounded-lg bg-slate-900 px-3.5 py-1.5 font-bold text-white hover:bg-slate-800 transition-colors shrink-0 dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
             >
               Open floor plan ↗
             </a>
@@ -173,7 +173,7 @@ export default function PropertyMediaTabs({
               href={tour.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-lg bg-slate-900 px-3.5 py-1.5 font-bold text-white hover:bg-slate-800 transition-colors shrink-0 dark:bg-emerald-600 dark:hover:bg-emerald-500"
+              className="rounded-lg bg-slate-900 px-3.5 py-1.5 font-bold text-white hover:bg-slate-800 transition-colors shrink-0 dark:bg-emerald-700 dark:hover:bg-emerald-800"
             >
               Open tour ↗
             </a>
@@ -193,7 +193,7 @@ export default function PropertyMediaTabs({
                   onClick={() => setMapMode("street")}
                   className={`rounded-lg px-3 py-1 text-xs font-bold transition-all cursor-pointer ${
                     mapMode === "street"
-                      ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                      ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                       : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
@@ -204,7 +204,7 @@ export default function PropertyMediaTabs({
                   onClick={() => setMapMode("map")}
                   className={`rounded-lg px-3 py-1 text-xs font-bold transition-all cursor-pointer ${
                     mapMode === "map"
-                      ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                      ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                       : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
@@ -216,7 +216,7 @@ export default function PropertyMediaTabs({
                 <button
                   type="button"
                   onClick={() => setMapMode("map")}
-                  className="rounded-xl bg-[#0b4d4e] dark:bg-emerald-600 text-white border border-emerald-500/50 px-3 py-1 text-xs font-bold shadow-xs hover:bg-[#093e3f] dark:hover:bg-emerald-500 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] transition-all cursor-pointer inline-flex items-center gap-1"
+                  className="rounded-xl bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-500/50 px-3 py-1 text-xs font-bold shadow-xs hover:bg-[#093e3f] dark:hover:bg-emerald-800 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] transition-all cursor-pointer inline-flex items-center gap-1"
                 >
                   <span>← Back to Map</span>
                 </button>
@@ -229,7 +229,7 @@ export default function PropertyMediaTabs({
                 href={`https://www.google.com/maps/search/?api=1&query=${streetViewQuery}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-xl bg-slate-900 dark:bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white hover:bg-slate-800 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] transition-colors"
+                className="rounded-xl bg-slate-900 dark:bg-emerald-700 px-3 py-1.5 text-xs font-bold text-white hover:bg-slate-800 dark:hover:bg-emerald-800 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)] transition-colors"
               >
                 Open in Google Maps ↗
               </a>

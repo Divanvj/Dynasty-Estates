@@ -110,7 +110,7 @@ export default function RoleGuard({
         <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:justify-center">
           <Link
             href="/auth/login"
-            className="rounded-xl bg-slate-950 px-5 py-2.5 text-xs font-bold text-white shadow-md hover:bg-slate-800 transition-all dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+            className="rounded-xl bg-slate-950 px-5 py-2.5 text-xs font-bold text-white shadow-md hover:bg-slate-800 transition-all dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
           >
             {isSignedIn ? "Sign in as another account →" : "Sign in →"}
           </Link>

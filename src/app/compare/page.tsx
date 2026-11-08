@@ -155,11 +155,11 @@ function CompareContent() {
                           rather than only the button in the Action row. The
                           overlay is bounded by the `relative` wrapper above, so
                           it covers the header and not the whole column. */}
-                      <h3 className="mt-2 text-sm font-bold text-slate-900 dark:text-white">
+                      <h2 className="mt-2 text-sm font-bold text-slate-900 dark:text-white">
                         <Link className="card-link" href={`/property/${prop.slug}`}>
                           {prop.title}
                         </Link>
-                      </h3>
+                      </h2>
                       <p className="text-xs text-slate-600 dark:text-slate-400">{prop.location}</p>
                       <p className="mt-1 text-sm font-extrabold text-emerald-700 dark:text-emerald-400">{prop.price}</p>
                     </div>
@@ -221,7 +221,7 @@ function CompareContent() {
                   <td key={p.id} className="py-3.5 px-3 text-center">
                     <Link
                       href={`/property/${p.slug}`}
-                      className="pill bg-slate-900 font-semibold text-white shadow-sm hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500"
+                      className="pill bg-slate-900 font-semibold text-white shadow-sm hover:bg-slate-800 dark:bg-emerald-700 dark:hover:bg-emerald-800"
                     >
                       View Details
                     </Link>

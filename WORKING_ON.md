@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/ux-phase10-a11y-dark | Phase 10: dark-mode emerald fills (mechanical class swap, many files), globals.css focus + Leaflet, calculator labels | 2026-11-08 |
 
 ## Recently merged
 

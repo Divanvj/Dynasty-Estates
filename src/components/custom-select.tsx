@@ -297,7 +297,7 @@ export default function CustomSelect({
                       onClick={() => handleSelect(option.value)}
                       className={`flex w-full items-center justify-between gap-2 rounded-xl px-3 py-2 text-left text-xs transition-all cursor-pointer ${
                         isSelected
-                          ? "bg-[#0b4d4e] dark:bg-emerald-600 text-white font-bold shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                          ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white font-bold shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                           : "text-slate-700 dark:text-slate-200 font-semibold hover:bg-emerald-50/90 dark:hover:bg-emerald-500/20 hover:text-emerald-950 dark:hover:text-emerald-300"
                       }`}
                     >

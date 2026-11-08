@@ -138,7 +138,7 @@ export default function SavedPropertiesPage() {
             </Link>
             <Link
               href="/search"
-              className="pill bg-slate-950 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] font-bold text-white shadow-md hover:bg-slate-800 transition-all"
+              className="pill bg-slate-950 dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] font-bold text-white shadow-md hover:bg-slate-800 transition-all"
             >
               <span className="hidden sm:inline">Browse Catalogue</span>
               <span className="sm:hidden">Catalogue</span>
@@ -180,7 +180,7 @@ export default function SavedPropertiesPage() {
             </p>
             <Link
               href="/search"
-              className="pill-lg mt-5 bg-slate-950 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] font-bold text-white shadow-md hover:bg-slate-800"
+              className="pill-lg mt-5 bg-slate-950 dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] font-bold text-white shadow-md hover:bg-slate-800"
             >
               Explore Properties →
             </Link>
@@ -262,7 +262,7 @@ export default function SavedPropertiesPage() {
                         a link it duplicated the tab stop. */}
                     <span
                       aria-hidden="true"
-                      className="rounded-full bg-slate-950 dark:bg-emerald-600 dark:group-hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] px-4 py-1.5 text-xs font-bold text-white shadow-md group-hover:bg-slate-800 transition-all"
+                      className="rounded-full bg-slate-950 dark:bg-emerald-700 dark:group-hover:bg-emerald-800 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] px-4 py-1.5 text-xs font-bold text-white shadow-md group-hover:bg-slate-800 transition-all"
                     >
                       View Home →
                     </span>

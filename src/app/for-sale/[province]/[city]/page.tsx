@@ -173,7 +173,7 @@ export default async function ForSaleLocationPage({
             </p>
             <Link
               href="/search?intent=buy"
-              className="pill mt-4 gap-1.5 bg-slate-950 font-bold text-white dark:bg-emerald-600 dark:text-white dark:border dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+              className="pill mt-4 gap-1.5 bg-slate-950 font-bold text-white dark:bg-emerald-700 dark:text-white dark:border dark:border-emerald-500/50 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
             >
               Browse National Catalogue →
             </Link>
