@@ -1,12 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import VirtualTour3DViewer from "@/components/virtual-tour-3d-viewer";
-import { SparklesIcon } from "@/components/icons";
+import { MapSplitIcon, SparklesIcon } from "@/components/icons";
+import { parseTourUrl, tourTabLabel } from "@/lib/virtual-tour";
 
 interface PropertyMediaTabsProps {
   title: string;
-  gallery: string[];
   floorPlanImage?: string;
   virtualTourUrl?: string;
   area: string;
@@ -16,7 +15,6 @@ interface PropertyMediaTabsProps {
 
 export default function PropertyMediaTabs({
   title,
-  gallery,
   floorPlanImage,
   virtualTourUrl,
   area,
@@ -42,8 +40,15 @@ export default function PropertyMediaTabs({
     (seller/listings/new); without one, the panel opens on the tour.
   */
   const hasFloorPlan = Boolean(floorPlanImage);
+  /*
+    The tour tab exists only when the agent supplied a real tour link
+    (Matterport, YouTube, Vimeo or another https tour). It used to show a
+    "3D tour" built from the ordinary photos: panned stills, invented room
+    hotspots, a "Dollhouse" view and a "Laser Tape" with made-up measurements.
+  */
+  const tour = parseTourUrl(virtualTourUrl);
   const [activeTab, setActiveTab] = useState<"floorplan" | "virtual-tour" | "street-view">(
-    hasFloorPlan ? "floorplan" : "virtual-tour"
+    hasFloorPlan ? "floorplan" : tour ? "virtual-tour" : "street-view"
   );
   const [mapMode, setMapMode] = useState<"map" | "street">("street");
   const isPdfPlan = /\.pdf($|\?)/i.test(floorPlanImage ?? "");
@@ -55,7 +60,7 @@ export default function PropertyMediaTabs({
     <div className="rounded-panel border border-white/80 dark:border-white/10 bg-white/55 dark:bg-surface-panel/80 p-3 sm:p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl md:p-8">
       {/* Media Tab Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/70 dark:border-white/10 pb-4 mb-6">
-        <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 dark:bg-surface-ink/80 border border-slate-200/80 dark:border-white/10 w-fit">
+        <div className="flex max-w-full items-center gap-1.5 self-start overflow-x-auto whitespace-nowrap p-1 rounded-2xl bg-slate-100/90 dark:bg-surface-ink/80 border border-slate-200/80 dark:border-white/10 [scrollbar-width:none]">
           {hasFloorPlan && (
             <button
               type="button"
@@ -69,6 +74,7 @@ export default function PropertyMediaTabs({
               Floor Plan
             </button>
           )}
+          {tour && (
           <button
             type="button"
             onClick={() => setActiveTab("virtual-tour")}
@@ -79,8 +85,9 @@ export default function PropertyMediaTabs({
             }`}
           >
             <SparklesIcon className="h-3.5 w-3.5 text-rose-500 dark:text-rose-400" />
-            <span>3D Tour</span>
+            <span>{tourTabLabel(tour.kind)}</span>
           </button>
+          )}
           <button
             type="button"
             onClick={() => setActiveTab("street-view")}
@@ -90,14 +97,15 @@ export default function PropertyMediaTabs({
                 : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
             }`}
           >
-            <span>🗺️ Street View & Map</span>
+            <MapSplitIcon className="h-3.5 w-3.5" />
+            <span>Street View &amp; Map</span>
           </button>
         </div>
 
         {/* An instruction about clicking is meaningless on paper. */}
         <div className="no-print hidden text-xs text-slate-600 font-medium sm:block dark:text-slate-400">
           {activeTab === "floorplan" && `Floor plan · ${area} ${erfSize ? `(Erf ${erfSize})` : ""}`}
-          {activeTab === "virtual-tour" && "3D walkthrough"}
+          {activeTab === "virtual-tour" && tour && tourTabLabel(tour.kind)}
           {activeTab === "street-view" && "Street View and map"}
         </div>
       </div>
@@ -140,25 +148,35 @@ export default function PropertyMediaTabs({
       )}
 
       {/* Tab 2: 3D Virtual Tour */}
-      {activeTab === "virtual-tour" && (
+      {activeTab === "virtual-tour" && tour && (
         <div className="space-y-4 animate-in fade-in duration-200">
-          <VirtualTour3DViewer
-            title={title}
-            gallery={gallery}
-            area={area}
-            erfSize={erfSize}
-            virtualTourUrl={virtualTourUrl}
-          />
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600 rounded-2xl bg-slate-50 p-4 border border-slate-200/80 dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300">
-            <div className="flex items-center gap-2">
-              <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>
-                <strong>Tip:</strong> Click and drag to pan 360°, switch room zones, or click <strong>Dollhouse</strong> for isometric cutaway.
-              </span>
+          {tour.embedUrl && (
+            <div className={`relative w-full overflow-hidden rounded-2xl border border-slate-200 bg-slate-900 dark:border-white/10 ${tour.kind === "video" ? "aspect-video" : "aspect-[4/3] sm:aspect-video"}`}>
+              <iframe
+                title={`${tourTabLabel(tour.kind)} of ${title}`}
+                src={tour.embedUrl}
+                loading="lazy"
+                allow="fullscreen; xr-spatial-tracking; autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+                referrerPolicy="strict-origin-when-cross-origin"
+                className="absolute inset-0 h-full w-full"
+              />
             </div>
-            {/* No "Back to Gallery" button. It returned to the Photos tab,
-                which no longer exists, and the tab row is three lines above
-                it either way. */}
+          )}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600 rounded-xl bg-slate-50 p-3 border border-slate-200 dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300">
+            <span>
+              {tour.embedUrl
+                ? "Supplied by the listing agent."
+                : "The listing agent has shared a tour hosted on another site."}
+            </span>
+            <a
+              href={tour.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-lg bg-slate-900 px-3.5 py-1.5 font-bold text-white hover:bg-slate-800 transition-colors shrink-0 dark:bg-emerald-600 dark:hover:bg-emerald-500"
+            >
+              Open tour ↗
+            </a>
           </div>
         </div>
       )}
@@ -179,7 +197,7 @@ export default function PropertyMediaTabs({
                       : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
-                  👁️ Street View 360°
+                  Street View
                 </button>
                 <button
                   type="button"
@@ -190,7 +208,7 @@ export default function PropertyMediaTabs({
                       : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
-                  🗺️ Google Map
+                  Map
                 </button>
               </div>
 

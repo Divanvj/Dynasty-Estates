@@ -296,11 +296,13 @@ export default function PropertyHeroGallery({ images, title, children }: Props) 
       </div>
 
       {/* The rail. Sits directly under the hero so choosing a photograph never
-          means scrolling away from the one on show. */}
+          means scrolling away from the one on show. From `sm` only: on a
+          phone it sat half under the bottom bar and repeated what swipe, the
+          counter and tap-to-enlarge already do. */}
       {many && (
         <div
           ref={railRef}
-          className="flex gap-2 overflow-x-auto px-3 py-3 sm:gap-2.5 sm:px-5 sm:py-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="hidden gap-2 overflow-x-auto px-3 py-3 sm:flex sm:gap-2.5 sm:px-5 sm:py-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {frames.map((src, i) => (
             <button
