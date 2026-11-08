@@ -132,6 +132,22 @@ service cloud.firestore {
       allow delete: if signedIn() && resource.data.ownerId == request.auth.uid;
     }
 
+    // Support & Guidance messages (src/lib/support-requests.ts). Filed by the
+    // signed-in sender as themselves; only admins read and triage them.
+    match /support_requests/{requestId} {
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['userId', 'userEmail', 'message', 'status', 'createdAt'])
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.message is string
+        && request.resource.data.message.size() > 0
+        && request.resource.data.message.size() <= 5000
+        && request.resource.data.status == 'new';
+      allow read: if (signedIn() && request.auth.token.role == 'admin')
+        || (signedIn() && resource.data.userId == request.auth.uid);
+      allow update: if signedIn() && request.auth.token.role == 'admin';
+      allow delete: if false;
+    }
+
     // Append-only record of every moderation decision (src/lib/moderation.ts).
     // recordAuditLog() runs before the listing update it describes, so with no
     // rule here the write was denied and every moderation decision failed

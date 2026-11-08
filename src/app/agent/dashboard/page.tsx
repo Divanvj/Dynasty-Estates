@@ -11,21 +11,14 @@ import { formatNumber } from "@/lib/formatters";
 import { getSellerListings, type SellerListing } from "@/lib/seller-listings";
 import { ACTIVE_CATALOGUE_STATUSES } from "@/lib/types/domain";
 
-const fallbackAgentListings: SellerListing[] = [
-  { id: "prop-1", title: "Waterkloof Crest Architectural Villa", price: "R 6,850,000", status: "Published", views: 2410, location: "Waterkloof, Pretoria", type: "Estate Home", beds: 5, baths: 4 },
-  { id: "prop-2", title: "Juniper Ridge Family Estate", price: "R 4,900,000", status: "Published", views: 1890, location: "Sandton, Johannesburg", type: "House", beds: 4, baths: 3 },
-  { id: "prop-3", title: "Silver Lakes Golf Estate Sanctuary", price: "R 5,600,000", status: "Draft", views: 0, location: "Silver Lakes, Pretoria", type: "Estate Home", beds: 4, baths: 3 },
-];
-
-const fallbackAgentLeads: AgentInquiry[] = [
-  { id: "lead-1", userEmail: "dr.pretorius@med.co.za", propertyTitle: "Waterkloof Crest Villa", kind: "tour", status: "Pending", propertyId: "waterkloof-crest", createdAt: new Date().toISOString() },
-  { id: "lead-2", userEmail: "sipho.m@vodamail.co.za", propertyTitle: "Juniper Ridge Estate", kind: "message", status: "Pending", propertyId: "juniper-ridge", createdAt: new Date().toISOString() },
-];
+// Sample listings and leads used to fill this page whenever an account had
+// none (or nobody was signed in), under metrics labelled "Live data". They
+// are gone: the console shows stored data only, with its empty states.
 
 export default function AgentDashboard() {
   const [user, setUser] = useState<User | null>(null);
-  const [leads, setLeads] = useState<AgentInquiry[]>(fallbackAgentLeads);
-  const [listings, setListings] = useState<SellerListing[]>(fallbackAgentListings);
+  const [leads, setLeads] = useState<AgentInquiry[]>([]);
+  const [listings, setListings] = useState<SellerListing[]>([]);
   const [loadError, setLoadError] = useState("");
 
   useEffect(() => {
@@ -38,8 +31,8 @@ export default function AgentDashboard() {
       setLoadError("");
 
       if (!currentUser) {
-        setListings(fallbackAgentListings);
-        setLeads(fallbackAgentLeads);
+        setListings([]);
+        setLeads([]);
         return;
       }
 
@@ -48,8 +41,8 @@ export default function AgentDashboard() {
           getSellerListings(currentUser.uid),
           getRecentInquiries(),
         ]);
-        setListings(sellerListings.length > 0 ? sellerListings : fallbackAgentListings);
-        setLeads(inquiries.length > 0 ? inquiries : fallbackAgentLeads);
+        setListings(sellerListings);
+        setLeads(inquiries);
       } catch (error) {
         setLoadError(error instanceof Error ? error.message : "Unable to load dashboard data.");
       }

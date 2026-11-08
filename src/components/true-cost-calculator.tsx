@@ -10,6 +10,7 @@ import {
   SparklesIcon,
   XMarkIcon,
 } from "@/components/icons";
+import TenantApplicationModal from "@/components/tenant-application-modal";
 import { formatNumber } from "@/lib/formatters";
 
 export function calculateSARSTransferDuty(price: number): number {
@@ -28,6 +29,8 @@ export default function TrueCostCalculator({
   leaseTerm = "12 Months",
   depositRequiredZAR,
   furnishedStatus,
+  propertyId,
+  propertyTitle,
 }: {
   askingPriceZAR: number;
   monthlyLevy?: number;
@@ -36,6 +39,9 @@ export default function TrueCostCalculator({
   leaseTerm?: string;
   depositRequiredZAR?: number;
   furnishedStatus?: string;
+  /** When given, "Apply to Lease" opens the real tenancy application for this listing. */
+  propertyId?: string;
+  propertyTitle?: string;
 }) {
   const [purchasePrice, setPurchasePrice] = useState<number>(askingPriceZAR);
   const [depositPercent, setDepositPercent] = useState<number>(10);
@@ -46,6 +52,7 @@ export default function TrueCostCalculator({
   const [includeInsurance, setIncludeInsurance] = useState<boolean>(false);
   const [showUpfrontModal, setShowUpfrontModal] = useState<boolean>(false);
   const [showPreApprovalModal, setShowPreApprovalModal] = useState<boolean>(false);
+  const [showTenantApplication, setShowTenantApplication] = useState<boolean>(false);
   const [showCustomSettings, setShowCustomSettings] = useState<boolean>(false);
   /* Collapsed at every width (UX Phase 4) — see the toggle beside each controls block.
      It starts closed on both server and client, so there is nothing for
@@ -526,20 +533,38 @@ export default function TrueCostCalculator({
                 >
                   Close
                 </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowPreApprovalModal(false);
-                    alert("Your tenant application request has been submitted to the listing practitioner.");
-                  }}
-                  className="pill-lg flex-1 bg-slate-950 font-bold text-white hover:bg-slate-800 cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500"
-                >
-                  Apply to Lease
-                </button>
+                {/* This used to show an alert claiming the application was
+                    submitted, with nothing stored. It now opens the same
+                    tenancy application as the agent card (applications
+                    collection). Without a listing id there is nothing to apply
+                    for, so the button is not shown. */}
+                {propertyId && propertyTitle ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowPreApprovalModal(false);
+                      setShowTenantApplication(true);
+                    }}
+                    className="pill-lg flex-1 bg-slate-950 font-bold text-white hover:bg-slate-800 cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500"
+                  >
+                    Apply to Lease
+                  </button>
+                ) : null}
               </div>
             </div>
           </div>
         )}
+
+        {propertyId && propertyTitle ? (
+          <TenantApplicationModal
+            isOpen={showTenantApplication}
+            onClose={() => setShowTenantApplication(false)}
+            propertyId={propertyId}
+            propertyTitle={propertyTitle}
+            monthlyRentZAR={monthlyRent}
+            depositZAR={depositZAR}
+          />
+        ) : null}
       </div>
     );
   }
@@ -944,7 +969,7 @@ export default function TrueCostCalculator({
             className="flex items-center justify-center gap-2 rounded-2xl bg-slate-950 py-3 text-xs font-bold text-white shadow-md hover:bg-slate-800 transition-all cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_20px_rgba(16,185,129,0.25)]"
           >
             <SparklesIcon className="h-4 w-4 text-emerald-400 dark:text-white" />
-            <span>Check Pre-Approval & Affordability</span>
+            <span>Check Bond Affordability</span>
           </button>
 
           <div className="flex items-center justify-between pt-1">
@@ -1099,15 +1124,16 @@ export default function TrueCostCalculator({
               >
                 All Calculators
               </Link>
+              {/* Was "Request Pre-Approval": an alert claimed a partner bond
+                  originator would be in touch, but no request was stored and
+                  there is no originator integration. This snapshot is a
+                  calculation, so the honest next step is to close it. */}
               <button
                 type="button"
-                onClick={() => {
-                  setShowPreApprovalModal(false);
-                  alert("Your finance inquiry has been recorded. Our partner bond originator (Ooba / BetterBond) will assist you with multi-bank pre-qualification.");
-                }}
+                onClick={() => setShowPreApprovalModal(false)}
                 className="pill-lg flex-1 bg-slate-950 font-bold text-white hover:bg-slate-800 cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500"
               >
-                Request Pre-Approval
+                Done
               </button>
             </div>
           </div>

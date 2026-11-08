@@ -10,11 +10,8 @@ import { formatNumber } from "@/lib/formatters";
 import { ACTIVE_CATALOGUE_STATUSES } from "@/lib/types/domain";
 import { getSellerListings, type SellerListing } from "@/lib/seller-listings";
 
-const demoListings: SellerListing[] = [
-  { id: "demo-houghton", title: "Houghton Family Villa", price: "R 9.8M", status: "Published", views: 1240, location: "Houghton, Johannesburg", type: "Villa", beds: 5, baths: 4 },
-  { id: "demo-waterfall", title: "Waterfall Modern Estate", price: "R 5.4M", status: "Published", views: 820, location: "Midrand, Johannesburg", type: "Estate Home", beds: 4, baths: 3 },
-  { id: "demo-claremont", title: "Claremont Terrace", price: "R 3.2M", status: "Draft", views: 0, location: "Claremont, Cape Town", type: "Townhouse", beds: 3, baths: 2 },
-];
+// Three sample listings used to show here when nobody was signed in. Only the
+// account's own stored listings are shown now.
 
 const steps = [
   "Upload media",
@@ -25,7 +22,7 @@ const steps = [
 
 export default function SellerPortal() {
   const [user, setUser] = useState<User | null>(null);
-  const [listings, setListings] = useState<SellerListing[]>(demoListings);
+  const [listings, setListings] = useState<SellerListing[]>([]);
 
   useEffect(() => {
     if (!auth) return;
@@ -36,7 +33,7 @@ export default function SellerPortal() {
         const sellerListings = await getSellerListings(currentUser.uid);
         setListings(sellerListings);
       } else {
-        setListings(demoListings);
+        setListings([]);
       }
     });
   }, []);

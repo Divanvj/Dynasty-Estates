@@ -18,6 +18,7 @@ import {
 import ThemeToggle from "@/components/theme-toggle";
 import { useAuth } from "@/components/auth-provider";
 import { accountCan, useUserRole, type UserRole } from "@/lib/use-user-role";
+import { createSupportRequest } from "@/lib/support-requests";
 
 const ROLE_BADGES: Record<UserRole, { label: string; icon: typeof UserIcon; tone: string }> = {
   Buyer: { label: "Buyer / Renter", icon: UserIcon, tone: "text-slate-600" },
@@ -37,6 +38,8 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
   const [showSupportModal, setShowSupportModal] = useState(false);
   const [supportMessage, setSupportMessage] = useState("");
   const [supportSent, setSupportSent] = useState(false);
+  const [supportSending, setSupportSending] = useState(false);
+  const [supportError, setSupportError] = useState<string | null>(null);
 
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -131,6 +134,7 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
       // menu instead would leave the dialog stranded over the page.
       if (showSupportModal) {
         setShowSupportModal(false);
+        setSupportSent(false);
         return;
       }
       if (isOpen) {
@@ -171,15 +175,34 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
     await signOut();
   }
 
-  function handleSupportSubmit(e: React.FormEvent) {
+  // Used to show "Message Received" after a timer with nothing stored. It now
+  // files the message in `support_requests`; admins read it on /admin. No
+  // email is sent (there is no mail service or support inbox yet).
+  async function handleSupportSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!supportMessage.trim()) return;
-    setSupportSent(true);
-    setTimeout(() => {
-      setShowSupportModal(false);
-      setSupportSent(false);
+    const message = supportMessage.trim();
+    if (!message) return;
+    if (!firebaseUser) {
+      setSupportError("Sign in to send a support request.");
+      return;
+    }
+    setSupportSending(true);
+    setSupportError(null);
+    try {
+      await createSupportRequest({ userId: firebaseUser.uid, userEmail: firebaseUser.email, message });
+      setSupportSent(true);
       setSupportMessage("");
-    }, 2000);
+    } catch {
+      setSupportError("Your request could not be saved. Please try again.");
+    } finally {
+      setSupportSending(false);
+    }
+  }
+
+  function closeSupport() {
+    setShowSupportModal(false);
+    setSupportSent(false);
+    setSupportError(null);
   }
 
   return (
@@ -426,7 +449,8 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
           <div className="relative w-full max-w-md rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#071315] p-6 shadow-2xl text-slate-900 dark:text-white">
             <button
               type="button"
-              onClick={() => setShowSupportModal(false)}
+              onClick={closeSupport}
+              aria-label="Close"
               className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 cursor-pointer"
             >
               <XMarkIcon className="h-5 w-5" />
@@ -444,9 +468,9 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
 
             {supportSent ? (
               <div className="rounded-2xl bg-emerald-500/10 border border-emerald-500/30 p-4 text-center">
-                <p className="text-sm font-bold text-emerald-800 dark:text-emerald-300">Message Received</p>
+                <p className="text-sm font-bold text-emerald-800 dark:text-emerald-300">Request saved</p>
                 <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
-                  Our South African property concierges will respond to {userEmail} shortly.
+                  Our team will reply to {userEmail}.
                 </p>
               </div>
             ) : (
@@ -483,11 +507,17 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
                   </Link>
                 </div>
 
+                {supportError && (
+                  <p role="alert" className="rounded-xl border border-rose-300 bg-rose-50 p-2.5 text-xs font-medium text-rose-800 dark:border-rose-500/30 dark:bg-rose-950/30 dark:text-rose-300">
+                    {supportError}
+                  </p>
+                )}
                 <button
                   type="submit"
-                  className="w-full rounded-xl bg-gradient-to-r from-[#0b4d4e] to-[#07393a] py-2.5 text-xs font-bold text-white hover:from-[#0d595b] hover:to-[#094344] transition-all cursor-pointer shadow-md"
+                  disabled={supportSending}
+                  className="w-full disabled:opacity-60 rounded-xl bg-gradient-to-r from-[#0b4d4e] to-[#07393a] py-2.5 text-xs font-bold text-white hover:from-[#0d595b] hover:to-[#094344] transition-all cursor-pointer shadow-md"
                 >
-                  Send Inquiry to Support
+                  {supportSending ? "Sending…" : "Send Inquiry to Support"}
                 </button>
               </form>
             )}

@@ -9,6 +9,7 @@ import { BriefcaseIcon, CheckIcon, InfoCircleIcon, ShieldIcon, TagIcon } from "@
 import { auth } from "@/lib/firebase";
 import { listingPackages } from "@/lib/billing";
 import { formatDateTime, formatNumber } from "@/lib/formatters";
+import { getSupportRequests, type SupportRequest } from "@/lib/support-requests";
 import {
   executeModerationDecision,
   getAuditLogs,
@@ -20,7 +21,9 @@ import {
 
 export default function AdminPage() {
   const [user, setUser] = useState<User | null>(null);
-  const [activeTab, setActiveTab] = useState<"moderation" | "fraud" | "billing" | "audit">("moderation");
+  const [activeTab, setActiveTab] = useState<"moderation" | "fraud" | "billing" | "audit" | "support">("moderation");
+  const [supportRequests, setSupportRequests] = useState<SupportRequest[]>([]);
+  const [supportError, setSupportError] = useState("");
   const [queue, setQueue] = useState<ModerationItem[]>([]);
   const [auditLogs, setAuditLogs] = useState<AuditLogEntry[]>([]);
   const [feedbackMap, setFeedbackMap] = useState<Record<string, string>>({});
@@ -40,6 +43,14 @@ export default function AdminPage() {
         setErrorNotice(
           error instanceof Error ? error.message : "Unable to load the moderation console.",
         );
+      }
+      // Separate, so a missing support rule cannot take the moderation queue down with it.
+      try {
+        setSupportRequests(await getSupportRequests());
+        setSupportError("");
+      } catch (error) {
+        setSupportRequests([]);
+        setSupportError(error instanceof Error ? error.message : "Unable to load support requests.");
       }
     }
 
@@ -137,6 +148,7 @@ export default function AdminPage() {
             { key: "fraud", label: `Fraud Signals (${fraudFlagged.length})`, Icon: InfoCircleIcon },
             { key: "billing", label: "Commercial Packages", Icon: TagIcon },
             { key: "audit", label: `Audit Trail (${auditLogs.length})`, Icon: BriefcaseIcon },
+            { key: "support", label: `Support (${supportRequests.length})`, Icon: InfoCircleIcon },
           ].map((tab) => {
             const TabIcon = tab.Icon;
             return (
@@ -345,6 +357,41 @@ export default function AdminPage() {
                 </tbody>
               </table>
             </div>
+          </section>
+        )}
+
+        {/* TAB 5: Support requests from the account menu's Support & Guidance form */}
+        {activeTab === "support" && (
+          <section className="space-y-4">
+            <div className="rounded-card border border-white/80 bg-white/50 p-5 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+              <h2 className="text-xl font-bold text-slate-950 dark:text-white">Support Requests</h2>
+              <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
+                Sent from Support &amp; Guidance in the account menu. Reply to the sender by email; nothing is sent automatically.
+              </p>
+            </div>
+            {supportError ? (
+              <p className="rounded-2xl border border-rose-300/30 bg-rose-400/10 p-3 text-sm text-rose-900 dark:text-rose-200">{supportError}</p>
+            ) : supportRequests.length === 0 ? (
+              <p className="rounded-control border border-dashed border-slate-300 dark:border-white/15 p-4 text-sm text-slate-600 dark:text-slate-400">No support requests yet.</p>
+            ) : (
+              <ul className="space-y-3">
+                {supportRequests.map((request) => (
+                  <li key={request.id} className="rounded-card border border-white/80 bg-white/55 p-4 text-xs shadow-sm dark:bg-surface-ink/60 dark:border-white/10">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      {request.userEmail ? (
+                        <a href={`mailto:${request.userEmail}`} className="font-bold text-emerald-700 hover:underline dark:text-emerald-400">{request.userEmail}</a>
+                      ) : (
+                        <span className="font-bold text-slate-900 dark:text-white">{request.userId}</span>
+                      )}
+                      <span className="text-slate-600 dark:text-slate-400">
+                        {request.createdAt ? formatDateTime(request.createdAt) : "Just now"} · {request.status}
+                      </span>
+                    </div>
+                    <p className="mt-2 whitespace-pre-wrap text-slate-700 dark:text-slate-300">{request.message}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
           </section>
         )}
       </div>

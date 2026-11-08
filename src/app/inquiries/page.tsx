@@ -14,45 +14,32 @@ const labels: Record<string, string> = {
   message: "Direct Practitioner Message",
 };
 
-const sampleInquiries: UserInquiry[] = [
-  {
-    id: "inq-1",
-    propertyId: "waterkloof-crest",
-    propertyTitle: "Waterkloof Crest Architectural Villa",
-    kind: "tour",
-    status: "Confirmed",
-    createdAt: "2026-09-02T14:30:00Z",
-  },
-  {
-    id: "inq-2",
-    propertyId: "juniper-ridge",
-    propertyTitle: "Juniper Ridge Family Estate",
-    kind: "message",
-    status: "In progress",
-    createdAt: "2026-09-03T09:15:00Z",
-  },
-];
+// The two sample enquiries that used to stand in here (one marked
+// "Confirmed") were shown as the visitor's own whenever they had none, so
+// the page claimed appointments nobody had made. It shows stored ones only.
+
+/** An enquiry sent from /agents is about a practitioner, not a listing. */
+function propertyHref(propertyId: string): string | null {
+  if (!propertyId || propertyId.startsWith("agent:")) return null;
+  return `/property/${propertyId}`;
+}
 
 export default function InquiriesPage() {
   const [user, setUser] = useState<User | null>(null);
-  const [inquiries, setInquiries] = useState<UserInquiry[]>(sampleInquiries);
+  const [inquiries, setInquiries] = useState<UserInquiry[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterKind, setFilterKind] = useState<string>("all");
+  const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
     async function load(currentUser: User | null) {
       setLoading(true);
       try {
-        if (currentUser) {
-          const dbInquiries = await getUserInquiries(currentUser.uid);
-          if (dbInquiries.length > 0) {
-            setInquiries(dbInquiries);
-            return;
-          }
-        }
-        setInquiries(sampleInquiries);
+        setLoadError(false);
+        setInquiries(currentUser ? await getUserInquiries(currentUser.uid) : []);
       } catch {
-        setInquiries(sampleInquiries);
+        setInquiries([]);
+        setLoadError(true);
       } finally {
         setLoading(false);
       }
@@ -156,12 +143,20 @@ export default function InquiriesPage() {
           </div>
         ) : filteredInquiries.length === 0 ? (
           <div className="rounded-card border border-dashed border-slate-300 bg-white/40 p-8 text-center dark:bg-surface-panel/60 dark:border-white/15 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-            <p className="text-sm font-semibold text-slate-800 dark:text-slate-300">No requests under this category</p>
+            <p className="text-sm font-semibold text-slate-800 dark:text-slate-300">
+              {loadError
+                ? "Your requests could not be loaded. Please refresh to try again."
+                : !user
+                  ? "Sign in to see your viewing requests and messages."
+                  : inquiries.length === 0
+                    ? "You have not sent any requests yet."
+                    : "No requests under this category"}
+            </p>
             <Link
-              href="/search"
+              href={!user && !loadError ? "/auth/login" : "/search"}
               className="pill-lg mt-4 bg-slate-950 font-bold text-white transition-all dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
             >
-              Browse Properties →
+              {!user && !loadError ? "Sign in →" : "Browse Properties →"}
             </Link>
           </div>
         ) : (
@@ -182,8 +177,8 @@ export default function InquiriesPage() {
                       property has gone has nothing to open, so it stays plain
                       text rather than becoming a link to nowhere. */}
                   <h2 className="mt-1.5 text-base font-bold text-slate-950 dark:text-white">
-                    {inquiry.propertyId ? (
-                      <Link className="card-link" href={`/property/${inquiry.propertyId}`}>
+                    {propertyHref(inquiry.propertyId) ? (
+                      <Link className="card-link" href={propertyHref(inquiry.propertyId)!}>
                         {inquiry.propertyTitle}
                       </Link>
                     ) : (
@@ -205,7 +200,7 @@ export default function InquiriesPage() {
                   >
                     ● {inquiry.status}
                   </span>
-                  {inquiry.propertyId && (
+                  {propertyHref(inquiry.propertyId) && (
                     /* A span, not a link: same destination as the title above,
                        so as a link it duplicated the tab stop. */
                     <span

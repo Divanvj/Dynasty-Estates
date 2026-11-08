@@ -13,20 +13,52 @@ import {
   XMarkIcon,
 } from "@/components/icons";
 import { verifiedPractitioners as agentsList, type AgentProfile as AgentRecord } from "@/lib/agents-data";
+import { auth } from "@/lib/firebase";
+import { createPropertyInquiry } from "@/lib/inquiries";
 
 export default function AgentsPage() {
   const [selectedAgent, setSelectedAgent] = useState<AgentRecord | null>(null);
   const [contactMessage, setContactMessage] = useState("");
   const [sentNotice, setSentNotice] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState<string | null>(null);
 
-  function handleSendMessage(e: React.FormEvent) {
+  // This used to flip to "notified via email and SMS" without storing or
+  // sending anything. It now files a message enquiry in `inquiries` (the
+  // collection the agent dashboard reads), tagged with the practitioner. No
+  // email or SMS is sent: there is no outbound messaging service.
+  async function handleSendMessage(e: React.FormEvent) {
     e.preventDefault();
-    setSentNotice(true);
-    setTimeout(() => {
-      setSentNotice(false);
-      setSelectedAgent(null);
+    if (!selectedAgent) return;
+    const user = auth?.currentUser;
+    if (!user) {
+      setSendError("Sign in to send a message to a practitioner.");
+      return;
+    }
+    setSending(true);
+    setSendError(null);
+    try {
+      await createPropertyInquiry({
+        userId: user.uid,
+        userEmail: user.email,
+        propertyId: `agent:${selectedAgent.id}`,
+        propertyTitle: `Message for ${selectedAgent.name} (${selectedAgent.agency})`,
+        kind: "message",
+        notes: contactMessage.trim(),
+      });
+      setSentNotice(true);
       setContactMessage("");
-    }, 2500);
+    } catch {
+      setSendError("Your message could not be saved. Please try again.");
+    } finally {
+      setSending(false);
+    }
+  }
+
+  function closeContact() {
+    setSelectedAgent(null);
+    setSentNotice(false);
+    setSendError(null);
   }
 
   return (
@@ -137,7 +169,7 @@ export default function AgentsPage() {
             role="dialog"
             aria-modal="true"
             className="fixed inset-0 z-[80] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
-            onClick={() => setSelectedAgent(null)}
+            onClick={closeContact}
           >
             <div
               className="w-full max-w-md rounded-3xl border border-white/80 bg-white/95 p-6 shadow-2xl backdrop-blur-2xl text-slate-900 dark:bg-surface-panel dark:border-white/10 dark:shadow-[0_25px_60px_rgba(0,0,0,0.6)] dark:text-white"
@@ -151,7 +183,7 @@ export default function AgentsPage() {
                 </div>
                 <button
                   type="button"
-                  onClick={() => setSelectedAgent(null)}
+                  onClick={closeContact}
                   className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-600 hover:bg-slate-200 cursor-pointer dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-white"
                 >
                   <XMarkIcon className="h-4 w-4" />
@@ -161,9 +193,9 @@ export default function AgentsPage() {
               {sentNotice ? (
                 <div className="py-6 text-center">
                   <CheckIcon className="h-8 w-8 text-emerald-600 dark:text-emerald-400 mx-auto" />
-                  <h4 className="text-sm font-bold text-emerald-800 dark:text-emerald-400 mt-2">Message Dispatched!</h4>
+                  <h4 className="text-sm font-bold text-emerald-800 dark:text-emerald-400 mt-2">Message saved</h4>
                   <p className="text-xs text-slate-600 mt-1 dark:text-slate-300">
-                    {selectedAgent.name} has been notified via email and SMS and will respond shortly.
+                    It is in {selectedAgent.name}&apos;s enquiries. You can follow it under My Enquiries.
                   </p>
                 </div>
               ) : (
@@ -181,11 +213,20 @@ export default function AgentsPage() {
                       className="w-full rounded-xl border border-slate-300 bg-white p-3 font-medium text-slate-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-emerald-500"
                     />
                   </div>
+                  {sendError && (
+                    <p role="alert" className="rounded-xl border border-rose-300 bg-rose-50 p-2.5 font-medium text-rose-800 dark:border-rose-500/30 dark:bg-rose-950/30 dark:text-rose-300">
+                      {sendError}{" "}
+                      {!auth?.currentUser && (
+                        <Link href="/auth/login" className="font-bold underline">Sign in</Link>
+                      )}
+                    </p>
+                  )}
                   <button
                     type="submit"
-                    className="w-full rounded-full bg-slate-950 py-2.5 text-xs font-bold text-white shadow-md hover:bg-slate-800 cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+                    disabled={sending}
+                    className="w-full disabled:opacity-60 rounded-full bg-slate-950 py-2.5 text-xs font-bold text-white shadow-md hover:bg-slate-800 cursor-pointer dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
                   >
-                    Send to Practitioner
+                    {sending ? "Sending…" : "Send to Practitioner"}
                   </button>
                 </form>
               )}

@@ -167,7 +167,7 @@ export default async function ForSaleProvincePage({
           <div className="rounded-3xl border border-white/80 bg-white/60 p-12 text-center backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
             <h3 className="text-lg font-bold text-slate-900 dark:text-white">No active for-sale listings in {provName} today</h3>
             <p className="mt-1 text-xs text-slate-600 max-w-md mx-auto dark:text-slate-400">
-              Browse our wider national catalogue or request property alerts for {provName}.
+              Browse our wider national catalogue in the meantime.
             </p>
             <Link
               href="/search?intent=buy"

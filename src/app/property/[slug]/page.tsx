@@ -589,6 +589,8 @@ export default async function PropertyPage({
               leaseTerm={property.leaseTerm}
               depositRequiredZAR={property.depositRequired}
               furnishedStatus={property.furnishedStatus}
+              propertyId={property.id}
+              propertyTitle={property.title}
             />
 
             {/* Move-In Cost Schedule for Rentals */}

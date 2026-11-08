@@ -360,7 +360,7 @@ export default function TenantApplicationModal({
               {refNumber || "DY-TEN-849201"}
             </div>
             <p className="text-xs text-slate-600 dark:text-slate-400 max-w-sm mx-auto">
-              Our leasing practitioner will review your pre-vetting score and contact you within 24 hours to collect FICA documents (3 months bank statements & payslips).
+              Your application is saved. The listing practitioner will review it and contact you to collect FICA documents (3 months bank statements & payslips).
             </p>
             <button
               onClick={handleReset}
