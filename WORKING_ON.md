@@ -15,6 +15,11 @@ lines keep its own merges trivial.
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
 
+- 2026-11-08 — `DESKTOP-1R37EBU/fix-fake-actions` merged. /agents contact now writes
+  `inquiries` (propertyId `agent:<id>`; /inquiries does not link those), Support &
+  Guidance writes `support_requests` (new rule, not deployed; admin Support tab).
+  Sample enquiries/listings removed from /inquiries, agent dashboard, seller portal.
+
 - 2026-11-08 — `DESKTOP-1R37EBU/ux-3d-tour-honesty` merged. `virtual-tour-3d-viewer.tsx`
   is deleted; the listing tour tab shows only a real agent link parsed by
   `lib/virtual-tour.ts` (`parseTourUrl`). Wizard step 5 has a tour link field
