@@ -1,5 +1,6 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { nextSundayShow, showDateLabel } from "./on-show";
+import { parseTourUrl } from "./virtual-tour";
 
 import { db, isFirebaseConfigured } from "./firebase";
 import { ACTIVE_CATALOGUE_STATUSES, PUBLIC_LISTING_STATUSES } from "./types/domain";
@@ -397,7 +398,6 @@ export const fallbackProperties: PropertyRecord[] = [
       time: "14:00 – 17:00",
       directionsNote: "Follow Dynasty Estates pointer boards from Oxford Road into Bath Avenue",
     },
-    virtualTourUrl: "https://my.matterport.com/show/?m=sample-matterport-tour",
     ratesAndTaxes: 1250,
     levies: 2100,
   },
@@ -836,7 +836,6 @@ export const fallbackProperties: PropertyRecord[] = [
       time: "14:00 – 17:00",
       directionsNote: "Access via Mount Street boomed gate from William Nicol Drive",
     },
-    virtualTourUrl: "https://my.matterport.com/show/?m=sample-matterport-tour",
     ratesAndTaxes: 2600,
   },
   {
@@ -915,7 +914,6 @@ export const fallbackProperties: PropertyRecord[] = [
       time: "14:00 – 17:00",
       directionsNote: "Follow Dynasty Estates flags along Rigel Ave, Waterkloof Ridge",
     },
-    virtualTourUrl: "https://my.matterport.com/show/?m=sample-matterport-tour",
     ratesAndTaxes: 3400,
   },
   {
@@ -1093,6 +1091,8 @@ export async function getPropertyList(): Promise<PropertyRecord[]> {
         // Attached by the agent in the listing wizard. Absent means the page
         // shows no Floor Plan tab, never a stand-in image.
         floorPlanImage: typeof data.floorPlanUrl === "string" && data.floorPlanUrl ? data.floorPlanUrl : undefined,
+        // The agent's tour link from the wizard. Absent means no tour tab.
+        virtualTourUrl: typeof data.virtualTourUrl === "string" ? parseTourUrl(data.virtualTourUrl)?.url : undefined,
         // Set by the agent in the listing wizard; only an ISO date can be
         // checked against today, so a show without one is not advertised.
         onShow:

@@ -13,6 +13,7 @@ import {
 import { db, isFirebaseConfigured } from "./firebase";
 import { addPhotoFingerprints, type ListingFloorPlan, type ListingPhoto } from "./photo-intake";
 import type { ListingLifecycleStatus } from "./types/domain";
+import { parseTourUrl } from "./virtual-tour";
 
 // Re-exported for the call sites that already import it from here. The single
 // definition lives in ./types/domain — do not redeclare it in this file.
@@ -74,6 +75,8 @@ export type ListingFormData = {
   floorPlan?: ListingFloorPlan;
   /** Optional show day, entered by the agent. */
   onShow?: { isoDate: string; time: string; directionsNote?: string };
+  /** Optional Matterport / YouTube / Vimeo link; shown as the listing's tour tab. */
+  virtualTourUrl?: string;
   status?: ListingLifecycleStatus;
 };
 
@@ -215,6 +218,8 @@ export async function createSellerListing(formData: ListingFormData): Promise<st
     image,
     gallery,
     floorPlanUrl: formData.floorPlan?.url ?? "",
+    // Only a link the listing page can actually use is stored.
+    virtualTourUrl: parseTourUrl(formData.virtualTourUrl)?.url ?? "",
     onShow: formData.onShow?.isoDate
       ? {
           isoDate: formData.onShow.isoDate,

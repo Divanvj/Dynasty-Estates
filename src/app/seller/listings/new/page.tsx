@@ -10,6 +10,7 @@ import CustomSelect from "@/components/custom-select";
 import PredictiveLocationInput from "@/components/predictive-location-input";
 import ListingFloorPlanField from "@/components/listing-floor-plan-field";
 import ShowDayField from "@/components/listing-show-day-field";
+import ListingTourField from "@/components/listing-tour-field";
 import ListingPhotoUploader from "@/components/listing-photo-uploader";
 import {
   AreaIcon,
@@ -728,6 +729,10 @@ export default function NewListingWizardPage() {
                   authLoading={authLoading}
                   floorPlan={formData.floorPlan}
                   onChange={(floorPlan) => updateField("floorPlan", floorPlan)}
+                />
+                <ListingTourField
+                  value={formData.virtualTourUrl}
+                  onChange={(url) => updateField("virtualTourUrl", url)}
                 />
                 <div>
                   <label htmlFor={descId} className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300">
