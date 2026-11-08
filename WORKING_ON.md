@@ -9,12 +9,16 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/ux-phase10-a11y-dark | Phase 10: dark-mode emerald fills (mechanical class swap, many files), globals.css focus + Leaflet, calculator labels | 2026-11-08 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-08 — `DESKTOP-1R37EBU/ux-phase10-a11y-dark` merged. Dark-mode fills are
+  emerald-700 (hover 800), not 600: white on 600 fails contrast. Use `dark:bg-emerald-700`
+  for new filled buttons. `lib/moderation.ts` no longer returns demo items for an empty
+  queue or audit trail.
 
 - 2026-11-08 — `DESKTOP-1R37EBU/fix-fake-actions` merged. /agents contact now writes
   `inquiries` (propertyId `agent:<id>`; /inquiries does not link those), Support &
