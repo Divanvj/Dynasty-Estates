@@ -464,10 +464,9 @@ export default async function PropertyPage({
               </div>
             </div>
 
-            {/* Media Tabs: High-Res Photos, Architectural Floor Plan & 3D Virtual Tour */}
+            {/* Media tabs: floor plan and tour (when the agent supplied them), Street View */}
             <PropertyMediaTabs
               title={property.title}
-              gallery={property.gallery}
               floorPlanImage={property.floorPlanImage}
               virtualTourUrl={property.virtualTourUrl}
               area={property.area}
