@@ -9,7 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| | | | |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/ux-3d-tour-honesty | property-media-tabs, virtual-tour-3d-viewer, property-data (tour fields) | 2026-11-08 |
 
 ## Recently merged
 
