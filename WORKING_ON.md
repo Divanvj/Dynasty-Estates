@@ -9,12 +9,16 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/ux-3d-tour-honesty | property-media-tabs, virtual-tour-3d-viewer, property-data (tour fields) | 2026-11-08 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-08 — `DESKTOP-1R37EBU/ux-3d-tour-honesty` merged. `virtual-tour-3d-viewer.tsx`
+  is deleted; the listing tour tab shows only a real agent link parsed by
+  `lib/virtual-tour.ts` (`parseTourUrl`). Wizard step 5 has a tour link field
+  (`virtualTourUrl`). `PropertyMediaTabs` no longer takes `gallery`.
 
 - 2026-11-07 — UX Phase 11 merged: 3D tour phone layout (`virtual-tour-3d-viewer.tsx`),
   full-screen `/map-search`; `DynastyPropertyMap` gained `focus` and

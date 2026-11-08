@@ -160,3 +160,16 @@ Unchanged: the map views inside `/search` (Map view) and the home feed still use
 | *(no way for agents to set a show day)* | **Added:** optional Show day in the listing wizard, step 5 (date, from, until, how to get there) | new `listing-show-day-field.tsx`, `seller-listings.ts`, `property-data.ts` |
 | Listing card badge "On Show Sunday" shown regardless of date | "On show Sun 8 Nov", only while upcoming | `property-grid-card.tsx` |
 | Bottom bar "RENT PER MONTH" (ran under the WhatsApp button) | "PER MONTH" | `property/[slug]/page.tsx` |
+
+## Owner fixes — 3D tour, phone thumbnails, tab icon (merged 8 Nov)
+
+| Was | Now | Where |
+|---|---|---|
+| "3D Tour" tab on every listing, built from the ordinary photos: panned stills, invented room hotspots ("Walk to Kitchen"), a "Dollhouse" view, a "Laser Tape" with made-up measurements, and a "Tip: click and drag to pan 360°" line | **Removed** (the whole 782-line viewer). The tour tab now appears only when the agent supplied a real link: "3D tour" (Matterport, embedded), "Video tour" (YouTube or Vimeo, embedded) or "Virtual tour" (any other https site, as an "Open tour ↗" link) | deleted `virtual-tour-3d-viewer.tsx`; `property-media-tabs.tsx`, new `lib/virtual-tour.ts` |
+| Mock tour link `my.matterport.com/show/?m=sample-matterport-tour` on 3 listings (not a real tour) | Removed from the data | `property-data.ts` |
+| *(no way for agents to add a tour)* | **Added:** optional "Virtual tour link" in the listing wizard, step 5, with a hint that says how it will show | new `listing-tour-field.tsx`, `seller-listings.ts`, `property-data.ts` |
+| Listing with no plan and no tour opened the media panel on the fake tour | Opens on Street View & Map | `property-media-tabs.tsx` |
+| Phones: thumbnail rail under the listing photo (half under the bottom bar; repeats swipe, counter and tap-to-enlarge) | Hidden on phones; still shown from tablet width up | `property-hero-gallery.tsx` |
+| "🗺️ Street View & Map" tab, "👁️ Street View 360°" and "🗺️ Google Map" buttons | Line map icon + "Street View & Map"; buttons "Street View" and "Map" | `property-media-tabs.tsx` |
+| Media tabs wrapping one per line on phones | One row (scrolls sideways if ever too wide) | `property-media-tabs.tsx` |
+
