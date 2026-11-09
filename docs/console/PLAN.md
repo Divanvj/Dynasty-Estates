@@ -50,8 +50,28 @@ with the reason.
 Not Blaze, but needs a grant: Firestore usage charts need the **Monitoring
 Viewer** IAM role on the Admin SDK service account (currently 403).
 
-## Owner actions after merge
+## Status (2026-11-10)
 
-1. Add `FIREBASE_SERVICE_ACCOUNT` to Vercel (Production) and redeploy.
-2. Optional: `GITHUB_TOKEN` (higher rate limit), `VERCEL_TOKEN` (deploy list).
-3. Optional: grant Monitoring Viewer to the service account.
+Built and merged. Checked on the local dev server, signed in as the test admin:
+dashboard figures, go-live checks, Firebase (rules match, indexes ready),
+deploys (GitHub), event log, integrity scan, users list, a test error stored
+and resolved, a health check, and a site switch saved, read back through
+`/api/platform/status`, shown on `/ai-search`, and switched back on. Phone width
+(375px) has no horizontal overflow and the menu drawer opens.
+
+Not yet checked: a session with the `developer` claim (none exists yet), the
+role-change and disable actions (not run, to avoid changing live accounts),
+CSV export download, and anything on production (not deployed).
+
+## Owner actions
+
+1. Create the developer account: sign up on the site with
+   `dev@tricore.enterprises`, then run
+   `node scripts/set-role.mjs dev@tricore.enterprises developer --key <service-account.json>`
+   and sign out and back in.
+2. Add `FIREBASE_SERVICE_ACCOUNT` (the key JSON) to Vercel → Production, then
+   deploy: `npx --yes vercel@65.2.0 deploy --prod --yes`.
+3. Optional: `GITHUB_TOKEN` (higher rate limit), `VERCEL_TOKEN` (deploy list).
+4. Optional: grant the service account **Monitoring Viewer** in Google Cloud IAM.
+5. Rotate the test-account passwords: they are in the public repo
+   (`scripts/seed-firebase-roles.mjs`); the go-live checklist flags it.

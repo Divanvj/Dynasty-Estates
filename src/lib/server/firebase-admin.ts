@@ -4,6 +4,7 @@ import path from "node:path";
 import { cert, getApp, getApps, initializeApp, type App, type ServiceAccount } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
 import { getFirestore } from "firebase-admin/firestore";
+import { getSecurityRules } from "firebase-admin/security-rules";
 
 /**
  * The Admin SDK, for server route handlers only (the developer console and the
@@ -89,6 +90,9 @@ function requireApp(): App {
 
 export const adminAuth = () => getAuth(requireApp());
 export const adminDb = () => getFirestore(requireApp());
+// Every service must be bound to the named app: the no-argument getters look
+// for the default app, which this module never creates.
+export const adminRules = () => getSecurityRules(requireApp());
 
 /** An OAuth token for Google REST APIs the Admin SDK does not wrap. */
 export async function googleAccessToken(): Promise<string> {

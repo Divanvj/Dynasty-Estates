@@ -1,8 +1,6 @@
-import { getSecurityRules } from "firebase-admin/security-rules";
-
 import { SITE_URL } from "@/lib/site-url";
 
-import { adminApp, adminConfigError, adminDb, googleApi, PROJECT_ID } from "./firebase-admin";
+import { adminApp, adminConfigError, adminDb, adminRules, googleApi, PROJECT_ID } from "./firebase-admin";
 
 /*
   Infrastructure checks for the console's Platform, Firebase, Deploys and
@@ -177,10 +175,19 @@ export function normaliseRules(source: string): string {
     .replace(/\s+/g, "");
 }
 
-type IndexDef = { collectionGroup: string; queryScope?: string; fields: Array<{ fieldPath: string; order?: string; arrayConfig?: string }> };
+type IndexDef = {
+  /** Present in firestore.indexes.json. The REST API omits it; it is in `name`. */
+  collectionGroup?: string;
+  name?: string;
+  queryScope?: string;
+  fields: Array<{ fieldPath: string; order?: string; arrayConfig?: string }>;
+};
+
+const collectionOf = (i: IndexDef) =>
+  i.collectionGroup ?? i.name?.match(/collectionGroups\/([^/]+)\//)?.[1] ?? "unknown";
 
 const indexKey = (i: IndexDef) =>
-  `${i.collectionGroup}|${i.queryScope ?? "COLLECTION"}|${i.fields
+  `${collectionOf(i)}|${i.queryScope ?? "COLLECTION"}|${i.fields
     .filter((f) => f.fieldPath !== "__name__")
     .map((f) => `${f.fieldPath}:${f.order ?? f.arrayConfig}`)
     .join(",")}`;
@@ -211,7 +218,7 @@ export async function getFirebaseStatus() {
   const bucket = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || `${PROJECT_ID}.firebasestorage.app`;
 
   const [deployedRules, repoRules, deployedIndexes, repoIndexes, authConfig, storage, monitoring, sizes] = await Promise.all([
-    getSecurityRules()
+    adminRules()
       .getFirestoreRuleset()
       .then((r) => ({ source: r.source[0]?.content ?? "", name: r.name, createTime: r.createTime, error: null as string | null }))
       .catch((e: Error) => ({ source: null, name: null, createTime: null, error: e.message })),
@@ -239,7 +246,7 @@ export async function getFirebaseStatus() {
     ),
   ]);
 
-  const google = await googleApi<{ config?: Array<{ providerId?: string; enabled?: boolean }> }>(
+  const google = await googleApi<{ defaultSupportedIdpConfigs?: Array<{ name?: string; enabled?: boolean }> }>(
     `https://identitytoolkit.googleapis.com/admin/v2/projects/${PROJECT_ID}/defaultSupportedIdpConfigs`,
   );
 
@@ -280,7 +287,8 @@ export async function getFirebaseStatus() {
         : "unknown") as CheckState,
       error: deployedIndexes.error,
       deployed: deployedIndexList.map((i) => ({ key: indexKey(i), state: i.state, inRepo: repoKeys.has(indexKey(i)) })),
-      missing: repoIndexList.filter((i) => !deployedKeys.has(indexKey(i))).map(indexKey),
+      // Only claim an index is missing when the deployed list was actually read.
+      missing: deployedIndexes.ok ? repoIndexList.filter((i) => !deployedKeys.has(indexKey(i))).map(indexKey) : [],
     },
     auth: {
       error: authConfig.error,
@@ -288,7 +296,7 @@ export async function getFirebaseStatus() {
         email: authConfig.data?.signIn?.email?.enabled === true,
         phone: authConfig.data?.signIn?.phoneNumber?.enabled === true,
         anonymous: authConfig.data?.signIn?.anonymous?.enabled === true,
-        google: (google.data?.config ?? []).some((c) => c.providerId === "google.com" && c.enabled),
+        google: (google.data?.defaultSupportedIdpConfigs ?? []).some((c) => c.name?.endsWith("/google.com") && c.enabled),
       },
       authorizedDomains: domains,
       siteHost,

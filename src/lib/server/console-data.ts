@@ -1,5 +1,7 @@
 import type { UserRecord } from "firebase-admin/auth";
 
+import { fallbackProperties } from "@/lib/property-data";
+
 import { adminAuth, adminDb } from "./firebase-admin";
 
 /*
@@ -573,19 +575,35 @@ export async function runIntegrityScan(): Promise<{ ranAt: string; findings: Int
       .filter((d) => !referencedPhysical.has(d.id))
       .map((d) => ({ id: d.id, label: `${String(d.data.location ?? "")} ${String(d.data.city ?? "")}`.trim() || d.id, collection: "physical_properties" })),
   });
+  // While Firestore holds no published listings the site shows built-in sample
+  // listings (fallbackProperties), and visitors can enquire on those. Such
+  // records are reported separately: the listing never existed in Firestore,
+  // rather than having been deleted.
+  const sampleIds = new Set(fallbackProperties.flatMap((p) => [p.id, p.slug]));
+  const listingRefs = [
+    ...inquiries.docs
+      .filter((d) => typeof d.data.propertyId === "string" && !(d.data.propertyId as string).startsWith("agent:"))
+      .map((d) => ({ d, collection: "inquiries" })),
+    ...applications.docs.filter((d) => typeof d.data.propertyId === "string").map((d) => ({ d, collection: "applications" })),
+  ].filter(({ d }) => !propertyIds.has(d.data.propertyId as string));
+  const toItem = ({ d, collection }: { d: Doc; collection: string }) => ({
+    id: d.id,
+    label: `${String(d.data.propertyTitle ?? d.data.propertyId)} (${String(d.data.propertyId)})`,
+    collection,
+  });
   add({
     check: "enquiry-listing",
     title: "Enquiries and applications for listings that no longer exist",
     severity: "warning",
-    description: "Agent enquiries (propertyId starting agent:) are excluded; they do not reference a listing.",
-    items: [
-      ...inquiries.docs
-        .filter((d) => typeof d.data.propertyId === "string" && !(d.data.propertyId as string).startsWith("agent:") && !propertyIds.has(d.data.propertyId as string))
-        .map((d) => ({ id: d.id, label: String(d.data.propertyTitle ?? d.data.propertyId), collection: "inquiries" })),
-      ...applications.docs
-        .filter((d) => typeof d.data.propertyId === "string" && !propertyIds.has(d.data.propertyId as string))
-        .map((d) => ({ id: d.id, label: String(d.data.propertyTitle ?? d.data.propertyId), collection: "applications" })),
-    ],
+    description: "The listing is neither in Firestore nor one of the built-in samples. Agent enquiries (propertyId agent:…) are excluded.",
+    items: listingRefs.filter(({ d }) => !sampleIds.has(d.data.propertyId as string)).map(toItem),
+  });
+  add({
+    check: "enquiry-sample",
+    title: "Enquiries and applications on sample listings",
+    severity: "info",
+    description: "Filed against the built-in sample listings the site shows while Firestore has no published listings. Expected during testing; they will never reach a real agent.",
+    items: listingRefs.filter(({ d }) => sampleIds.has(d.data.propertyId as string)).map(toItem),
   });
   add({
     check: "auth-no-profile",

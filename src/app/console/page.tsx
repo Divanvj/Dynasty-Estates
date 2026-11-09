@@ -101,6 +101,11 @@ export default function DashboardPage() {
           <ErrorNotice error={overview.error} onRetry={overview.refresh} />
         </div>
       ) : null}
+      {goLive.error ? (
+        <div className="mb-6">
+          <ErrorNotice error={goLive.error} onRetry={goLive.refresh} />
+        </div>
+      ) : null}
 
       {/* Needs attention */}
       <section aria-labelledby="attention-heading" className="mb-6 rounded-2xl border border-white/[0.07] bg-[#0a1517] px-5 py-4">
@@ -109,11 +114,13 @@ export default function DashboardPage() {
             Needs attention
           </h2>
           <span className="text-xs text-[var(--ink-subtle)] tabular-nums">
-            {!o || !checks ? "checking…" : `${attention.length} ${attention.length === 1 ? "item" : "items"}`}
+            {!o || (!checks && !goLive.error) ? "checking…" : `${attention.length} ${attention.length === 1 ? "item" : "items"}`}
           </span>
         </div>
-        {!o || !checks ? (
+        {!o || (!checks && !goLive.error) ? (
           <Skeleton className="mt-3 h-8 w-2/3" />
+        ) : !checks ? (
+          <p className="mt-2 text-xs text-rose-200">The platform checks could not run, so this list may be incomplete. See the error above.</p>
         ) : attention.length === 0 ? (
           <p className="mt-2 text-xs text-emerald-300">Nothing needs attention. Every check that can run is passing.</p>
         ) : (
@@ -176,9 +183,9 @@ export default function DashboardPage() {
               href="/console/go-live"
               icon={<RocketIcon className="h-4 w-4" />}
               label="Go-live checks"
-              value={checks ? `${passing}/${checks.length}` : "…"}
+              value={checks ? `${passing}/${checks.length}` : goLive.error ? "—" : "…"}
               tone={!checks ? "neutral" : checks.some((c) => c.state === "error") ? "bad" : checks.some((c) => c.state === "warning") ? "warn" : "good"}
-              sub={checks ? `${blocked} blocked until Blaze or a grant` : "Checking Firebase, GitHub and production"}
+              sub={checks ? `${blocked} blocked until Blaze or a grant` : goLive.error ? "The checks failed to run" : "Checking Firebase, GitHub and production"}
             />
           </>
         ) : (
@@ -224,8 +231,8 @@ export default function DashboardPage() {
             <div className="mt-5">
               {o.listings.total === 0 ? (
                 <p className="text-xs leading-relaxed text-[var(--ink-subtle)]">
-                  No listings in Firestore. Listings can only be saved as drafts until Cloud Storage exists for photos
-                  (Blaze plan).
+                  No listings in Firestore, so the public site is showing its built-in sample listings. New listings
+                  can only be saved as drafts until Cloud Storage exists for photos (Blaze plan).
                 </p>
               ) : (
                 <BarList data={o.listings.byStatus} />

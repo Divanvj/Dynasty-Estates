@@ -82,7 +82,7 @@ export function consoleRoute(
       if (error instanceof AdminUnavailableError) {
         return NextResponse.json({ error: error.message, notConnected: true }, { status: 503 });
       }
-      console.error("[console]", error);
+      console.error("[console]", error instanceof Error ? (error.stack ?? error.message) : error);
       return NextResponse.json(
         { error: error instanceof Error ? error.message : "Console request failed." },
         { status: 500 },
