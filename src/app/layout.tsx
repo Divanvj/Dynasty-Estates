@@ -4,7 +4,10 @@ import "./globals.css";
 import { AuthProvider } from "@/components/auth-provider";
 import MobileAppBar from "@/components/mobile-app-bar";
 import MobileNav from "@/components/mobile-nav";
+import { MaintenanceBanner } from "@/components/platform-status";
+import SiteChrome from "@/components/site-chrome";
 import SiteHeader from "@/components/site-header";
+import TelemetryReporter from "@/components/telemetry-reporter";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SITE_URL } from "@/lib/site-url";
 
@@ -121,8 +124,14 @@ export default function RootLayout({
                 document rather than to whatever the first page section is.
                 Below `lg` only. From `lg` up, SiteHeader is the one header
                 on every page (UX Phase 3). */}
+            <TelemetryReporter />
+            <MaintenanceBanner />
             <MobileAppBar />
-            <SiteHeader />
+            {/* SiteChrome hides the desktop header on /console, which draws
+                its own sidebar shell. */}
+            <SiteChrome>
+              <SiteHeader />
+            </SiteChrome>
             {children}
             <MobileNav />
           </AuthProvider>

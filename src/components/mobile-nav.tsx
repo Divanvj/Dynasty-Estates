@@ -68,6 +68,11 @@ const NAV: Record<UserRole, NavItem[]> = {
     { href: "/search", label: "Listings", icon: SearchIcon, match: ["/property", "/for-sale", "/to-rent"] },
     ACCOUNT,
   ],
+  Developer: [
+    { href: "/console", label: "Console", icon: ShieldIcon },
+    { href: "/search", label: "Browse", icon: SearchIcon, match: ["/property", "/for-sale", "/to-rent"] },
+    ACCOUNT,
+  ],
 };
 
 export default function MobileNav() {
@@ -76,7 +81,8 @@ export default function MobileNav() {
 
   // The auth screens are full-bleed and self-contained; a nav bar over them
   // would just be in the way.
-  if (pathname?.startsWith("/auth")) return null;
+  // The console draws its own sidebar shell.
+  if (pathname?.startsWith("/auth") || pathname?.startsWith("/console")) return null;
 
   // Render the Buyer set during SSR/hydration so the bar never pops in late.
   const items = NAV[isMounted ? role : "Buyer"];
