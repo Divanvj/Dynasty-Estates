@@ -2,7 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 
-export type UserRole = "Buyer" | "Seller" | "Agent" | "Admin";
+export type UserRole = "Buyer" | "Seller" | "Agent" | "Admin" | "Developer";
 
 /**
  * The active role is derived from the signed-in account, never chosen by the
@@ -24,7 +24,7 @@ export type UserRole = "Buyer" | "Seller" | "Agent" | "Admin";
  * valid Fidelity Fund Certificate, so "agency" is a verified status and cannot
  * be a preference a visitor selects.
  */
-export type Capability = "sell" | "agency" | "admin";
+export type Capability = "sell" | "agency" | "admin" | "console";
 
 /**
  * What this account may do. Deliberately mirrors the guard on each route, so the
@@ -56,6 +56,12 @@ export function accountCan(
       return account.role === "Agent" || account.role === "Admin";
     case "admin":
       return account.role === "Admin";
+    case "console":
+      // The developer console (/console). A platform role, not a moderation
+      // one: developers get the console but not /admin. Admins get both. The
+      // console's API routes re-check the claim server-side; this only decides
+      // whether the menu offers the link.
+      return account.role === "Developer" || account.role === "Admin";
     default:
       return false;
   }
@@ -68,7 +74,13 @@ export function getActiveUserRole(): UserRole {
   if (typeof window === "undefined") return "Buyer";
   try {
     const stored = localStorage.getItem(ROLE_STORAGE_KEY);
-    if (stored === "Buyer" || stored === "Seller" || stored === "Agent" || stored === "Admin") {
+    if (
+      stored === "Buyer" ||
+      stored === "Seller" ||
+      stored === "Agent" ||
+      stored === "Admin" ||
+      stored === "Developer"
+    ) {
       return stored;
     }
   } catch {

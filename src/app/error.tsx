@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useEffect } from "react";
 
+import { reportClientError } from "@/lib/telemetry-client";
+
 /**
  * Catches runtime errors thrown while rendering any route in the app.
  *
@@ -24,6 +26,9 @@ export default function Error({
 }) {
   useEffect(() => {
     console.error("Unhandled error while rendering a route:", error);
+    // Server-side throws are already recorded by instrumentation.ts; this
+    // catches the ones thrown while rendering in the browser.
+    reportClientError({ error, source: "boundary", digest: error.digest });
   }, [error]);
 
   const isPermissionError = /permission|insufficient/i.test(error.message);

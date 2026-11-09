@@ -97,7 +97,8 @@ export type UserRole =
   | "agent"
   | "agency_admin"
   | "moderator"
-  | "admin";
+  | "admin"
+  | "developer";
 
 const ROLE_TO_PERSONA: Record<string, PersonaRole> = {
   buyer: "Buyer",
@@ -108,6 +109,7 @@ const ROLE_TO_PERSONA: Record<string, PersonaRole> = {
   agency_admin: "Admin",
   admin: "Admin",
   moderator: "Admin",
+  developer: "Developer",
 };
 
 const ROLE_LANDING: Record<PersonaRole, string> = {
@@ -115,6 +117,7 @@ const ROLE_LANDING: Record<PersonaRole, string> = {
   Seller: "/seller/portal",
   Agent: "/agent/dashboard",
   Admin: "/admin",
+  Developer: "/console",
 };
 
 /** Where a freshly signed-in user should land, based on their role. */

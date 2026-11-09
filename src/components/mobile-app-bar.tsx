@@ -107,7 +107,8 @@ export default function MobileAppBar() {
 
   // The auth screens are full-bleed and self-contained, the same reason
   // MobileNav sits them out.
-  if (pathname?.startsWith("/auth")) return null;
+  // The console draws its own sidebar shell.
+  if (pathname?.startsWith("/auth") || pathname?.startsWith("/console")) return null;
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname === href || pathname?.startsWith(`${href}/`);
