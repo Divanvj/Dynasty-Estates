@@ -9,12 +9,18 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/dev-console | New `/console` + `api/console`, `api/telemetry`, developer role (use-user-role, auth, account-actions, mobile-nav/app-bar), layout.tsx, error pages, next.config | 2026-11-09 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-10 — `DESKTOP-1R37EBU/dev-console` merged. **Developer console at `/console`** and a
+  new `developer` role (claim; persona "Developer", lands on /console). Root layout now
+  mounts `TelemetryReporter`, `MaintenanceBanner` and wraps `SiteHeader` in `SiteChrome`;
+  MobileNav/MobileAppBar return null on /console. `/map-search` and `/ai-search` have a
+  `FeatureGate` layout. Server code uses `src/lib/server/firebase-admin.ts` (needs
+  `FIREBASE_SERVICE_ACCOUNT_PATH` in .env.local). firebase-admin is now a dependency.
 
 - 2026-11-08 — `DESKTOP-1R37EBU/ux-phase10-a11y-dark` merged. Dark-mode fills are
   emerald-700 (hover 800), not 600: white on 600 fails contrast. Use `dark:bg-emerald-700`
