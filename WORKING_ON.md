@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/dev-console | New `/console` + `api/console`, `api/telemetry`, developer role (use-user-role, auth, account-actions, mobile-nav/app-bar), layout.tsx, error pages, next.config | 2026-11-09 |
 
 ## Recently merged
 
