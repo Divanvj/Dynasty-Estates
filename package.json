@@ -2,6 +2,9 @@
   "name": "dynasty-estates-app",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "next dev -p 3000 -H 0.0.0.0",
     "dev:alt": "next dev -p 3100 -H 0.0.0.0",
@@ -12,8 +15,7 @@
     "firebase:deploy:auth": "firebase-tools deploy --only auth --project dynasty-estates",
     "firebase:deploy:rules": "firebase-tools deploy --only firestore:rules --project dynasty-estates",
     "firebase:deploy:indexes": "firebase-tools deploy --only firestore:indexes --project dynasty-estates",
-    "firebase:deploy:storage": "firebase-tools deploy --only storage --project dynasty-estates",
-    "firebase:seed-roles": "node scripts/seed-firebase-roles.mjs"
+    "firebase:deploy:storage": "firebase-tools deploy --only storage --project dynasty-estates"
   },
   "dependencies": {
     "firebase": "^12.18.0",

@@ -4,7 +4,13 @@ import type { User } from "firebase/auth";
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 
 /** Who is using the console, as confirmed by /api/console/me (server-checked claim). */
-export type ConsoleCaller = { uid: string; email: string | null; role: "developer" | "admin" };
+export type ConsoleCaller = {
+  uid: string;
+  email: string | null;
+  role: "developer" | "admin";
+  /** The role a developer account is testing as, or null. */
+  testingAs: string | null;
+};
 export type BuildInfo = { sha: string; builtAt: string | null; env: string };
 
 type ConsoleContextValue = {

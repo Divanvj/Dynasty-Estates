@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import { accountRole, claimsForRole, isDeveloperAccount } from "@/lib/server/claims";
 import { consoleRoute, recordConsoleEvent } from "@/lib/server/console-auth";
 import { ASSIGNABLE_ROLES, getUsers, type AssignableRole } from "@/lib/server/console-data";
 import { adminAuth, adminDb } from "@/lib/server/firebase-admin";
@@ -28,17 +29,19 @@ export const PATCH = consoleRoute(async (request, caller) => {
 
   const target = await adminAuth().getUser(body.uid);
   const label = target.email ?? target.phoneNumber ?? target.uid;
-  const currentRole = typeof target.customClaims?.role === "string" ? (target.customClaims.role as string) : null;
+  // A developer testing as another role is still a developer here.
+  const currentRole = accountRole(target.customClaims);
+  const targetIsDeveloper = isDeveloperAccount(target.customClaims);
 
   if (body.action === "setRole") {
     if (!ASSIGNABLE_ROLES.includes(body.role)) {
       return NextResponse.json({ error: "Unknown role." }, { status: 400 });
     }
     // Only a developer may hand out or take away the developer role.
-    if ((body.role === "developer" || currentRole === "developer") && caller.role !== "developer") {
+    if ((body.role === "developer" || targetIsDeveloper) && caller.role !== "developer") {
       return NextResponse.json({ error: "Only a developer can grant or remove the developer role." }, { status: 403 });
     }
-    await adminAuth().setCustomUserClaims(target.uid, { ...(target.customClaims ?? {}), role: body.role });
+    await adminAuth().setCustomUserClaims(target.uid, claimsForRole(target.customClaims, body.role));
     // The profile role is a display mirror of the claim; keep them agreeing.
     await adminDb()
       .doc(`users/${target.uid}`)
@@ -61,7 +64,7 @@ export const PATCH = consoleRoute(async (request, caller) => {
   }
 
   if (body.action === "setDisabled") {
-    if (currentRole === "developer" && caller.role !== "developer") {
+    if (targetIsDeveloper && caller.role !== "developer") {
       return NextResponse.json({ error: "Only a developer can disable a developer account." }, { status: 403 });
     }
     await adminAuth().updateUser(target.uid, { disabled: body.disabled === true });

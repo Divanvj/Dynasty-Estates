@@ -28,7 +28,8 @@ export default function UsersPage() {
       : all;
   }, [data, query]);
 
-  const testAccounts = (data?.users ?? []).filter((u) => u.testAccount);
+  const retiredAccounts = (data?.users ?? []).filter((u) => u.retiredTestAccount);
+  const stillActive = retiredAccounts.filter((u) => !u.disabled);
 
   async function apply(action: Pending) {
     setBusy(true);
@@ -67,29 +68,23 @@ export default function UsersPage() {
 
       {error ? <ErrorNotice error={error} onRetry={refresh} /> : null}
 
-      {testAccounts.length ? (
-        <Panel className="mb-6" title="Test accounts" description="The four role logins used for testing. Passwords live in TEST_ACCOUNTS.md (not in git).">
+      {stillActive.length ? (
+        <Panel
+          className="mb-6"
+          title="Old test accounts can still sign in"
+          description="Their passwords are in the public repo's git history. Disable them below; testing now uses developer accounts that switch role from the console sidebar."
+        >
           <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-            {testAccounts.map((u) => {
-              const healthy = u.role === u.expectedTestRole && !u.disabled && u.hasProfile;
-              return (
-                <li key={u.uid} className="rounded-xl border border-white/[0.06] bg-black/20 p-3 text-xs">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="font-semibold capitalize text-[var(--ink)]">{u.expectedTestRole}</span>
-                    <StateBadge state={healthy ? "ok" : "warning"} label={healthy ? "Ready" : "Check"} />
-                  </div>
-                  <p className="mt-1 truncate text-[var(--ink-subtle)]">{u.email}</p>
-                  <p className="mt-1 text-[var(--ink-subtle)]">Last sign-in {timeAgo(u.lastSignInAt)}</p>
-                  {!healthy ? (
-                    <p className="mt-1 text-amber-200">
-                      {u.role !== u.expectedTestRole ? `Claim is ${u.role ?? "missing"}, expected ${u.expectedTestRole}. ` : ""}
-                      {u.disabled ? "Disabled. " : ""}
-                      {!u.hasProfile ? "No profile document." : ""}
-                    </p>
-                  ) : null}
-                </li>
-              );
-            })}
+            {stillActive.map((u) => (
+              <li key={u.uid} className="rounded-xl border border-white/[0.06] bg-black/20 p-3 text-xs">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-semibold capitalize text-[var(--ink)]">{u.retiredTestRole}</span>
+                  <StateBadge state="error" label="Active" />
+                </div>
+                <p className="mt-1 truncate text-[var(--ink-subtle)]">{u.email}</p>
+                <p className="mt-1 text-[var(--ink-subtle)]">Last sign-in {timeAgo(u.lastSignInAt)}</p>
+              </li>
+            ))}
           </ul>
         </Panel>
       ) : null}
@@ -151,7 +146,8 @@ export default function UsersPage() {
                         {!u.hasProfile ? <Pill tone="warn">no profile</Pill> : null}
                         {u.email && !u.emailVerified ? <Pill>email unverified</Pill> : null}
                         {u.profileRole && u.profileRole !== (u.role ?? "buyer") ? <Pill tone="warn">profile says {u.profileRole}</Pill> : null}
-                        {u.testAccount ? <Pill>test account</Pill> : null}
+                        {u.retiredTestAccount ? <Pill>old test account</Pill> : null}
+                        {u.testingAs ? <Pill tone="brand">testing as {u.testingAs}</Pill> : null}
                       </div>
                     </td>
                     <td className="px-3 py-3">

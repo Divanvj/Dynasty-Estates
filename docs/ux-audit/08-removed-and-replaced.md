@@ -202,3 +202,8 @@ Unchanged: the map views inside `/search` (Map view) and the home feed still use
 | /inquiries tabs "All Requests / Viewing Appointments / Practitioner Messages" | "All / Viewings / Messages" (now announce which is selected) | same |
 | Admin: an empty moderation queue or audit trail was filled with demo entries ("mod-1", "Perceptual hash match 98%") that could be "approved" | Real empty list: "Nothing is waiting for review." / "No actions recorded yet." / "No submitted listing has a fraud signal."; "Loading the queue…" while loading | `lib/moderation.ts`, `admin/page.tsx` |
 
+| Four shared test logins (demo.buyer/seller/agent/admin@dynastyestates-demo.com) | **Disabled** (2026-11-10; data kept). Testing uses developer accounts that switch role: "Developer" pill on every page, "Use the site as" in the /console sidebar | Firebase Auth, `TEST_ACCOUNTS.md` |
+| `scripts/seed-firebase-roles.mjs` (created the four, passwords in plain text) and `npm run firebase:seed-roles` | **Removed**; `scripts/create-dev-account.mjs` makes a developer account with a random password | `scripts/` |
+| Offline demo sign-in (`src/lib/demo-accounts.ts`, the four passwords in the client bundle) | **Removed**; without Firebase config, sign-in says it is not configured | `lib/auth.ts` |
+| Go-live check "No passwords in the public repo" | "Old test accounts disabled" | `lib/server/platform-checks.ts` |
+| Console Users page: "Test accounts" health panel | Panel only appears if an old test account can sign in again; "testing as …" tag on developer accounts | `console/users/page.tsx` |

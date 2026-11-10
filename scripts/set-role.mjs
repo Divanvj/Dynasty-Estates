@@ -29,8 +29,15 @@ const credential = keyPath ? cert(JSON.parse(readFileSync(keyPath, "utf8"))) : a
 initializeApp({ credential, projectId: "dynasty-estates" });
 
 const user = await getAuth().getUserByEmail(email);
-const before = user.customClaims?.role ?? "none";
-await getAuth().setCustomUserClaims(user.uid, { ...(user.customClaims ?? {}), role });
+const before = user.customClaims?.developer === true ? "developer" : (user.customClaims?.role ?? "none");
+// Same shape as claimsForRole in src/lib/server/claims.ts: a developer carries
+// `developer: true` (kept while it tests as other roles); any other role drops it.
+const otherClaims = { ...(user.customClaims ?? {}) };
+delete otherClaims.developer;
+await getAuth().setCustomUserClaims(
+  user.uid,
+  role === "developer" ? { ...otherClaims, role, developer: true } : { ...otherClaims, role },
+);
 await getFirestore().doc(`users/${user.uid}`).set({ role, updatedAt: new Date().toISOString() }, { merge: true });
 await getFirestore().collection("console_events").add({
   actorId: "script",

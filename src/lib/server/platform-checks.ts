@@ -1,6 +1,7 @@
 import { SITE_URL } from "@/lib/site-url";
 
-import { adminApp, adminConfigError, adminDb, adminRules, googleApi, PROJECT_ID } from "./firebase-admin";
+import { RETIRED_TEST_ACCOUNTS } from "./console-data";
+import { adminApp, adminAuth, adminConfigError, adminDb, adminRules, googleApi, PROJECT_ID } from "./firebase-admin";
 
 /*
   Infrastructure checks for the console's Platform, Firebase, Deploys and
@@ -318,11 +319,22 @@ export async function getFirebaseStatus() {
 
 // ---------------------------------------------------------------- Go-live
 
+/** Which of the retired shared test logins could still sign in. Null if Auth could not be read. */
+async function retiredTestAccountsStatus(): Promise<{ active: string[] } | null> {
+  if (!adminApp()) return null;
+  try {
+    const { users } = await adminAuth().getUsers(Object.keys(RETIRED_TEST_ACCOUNTS).map((email) => ({ email })));
+    return { active: users.filter((u) => !u.disabled).map((u) => u.email ?? u.uid) };
+  } catch {
+    return null;
+  }
+}
+
 export async function getGoLiveChecks(): Promise<Check[]> {
-  const [firebase, deploys, seedScript] = await Promise.all([
+  const [firebase, deploys, retired] = await Promise.all([
     getFirebaseStatus(),
     getDeploys(),
-    github<string>("scripts/seed-firebase-roles.mjs", true),
+    retiredTestAccountsStatus(),
   ]);
   const checks: Check[] = [];
 
@@ -423,15 +435,17 @@ export async function getGoLiveChecks(): Promise<Check[]> {
     href: ci?.url,
   });
 
-  const passwordsInRepo = /password\s*:\s*["'`]/i.test(seedScript.data ?? "");
   checks.push({
-    id: "test-passwords",
-    label: "No passwords in the public repo",
-    state: seedScript.data === null ? "unknown" : passwordsInRepo ? "error" : "ok",
-    summary: passwordsInRepo
-      ? "scripts/seed-firebase-roles.mjs on main contains the test-account passwords, and the repo is public. Anyone can sign in as the test admin."
-      : "The seed script on main carries no passwords.",
-    fix: "Move the passwords out of the script (read them from TEST_ACCOUNTS.md or env), then rotate all four test-account passwords.",
+    id: "test-accounts",
+    label: "Old test accounts disabled",
+    state: retired === null ? "unknown" : retired.active.length ? "error" : "ok",
+    summary:
+      retired === null
+        ? "Could not read the accounts."
+        : retired.active.length
+          ? `${retired.active.join(", ")} can still sign in, and their passwords are in the public repo's git history.`
+          : "The four demo.*@dynastyestates-demo.com accounts are disabled or gone. Testing uses developer accounts that switch role.",
+    fix: "Disable them on the Users page (or Firebase console → Authentication). Their passwords stay in git history, so do not re-enable them.",
   });
 
   checks.push({

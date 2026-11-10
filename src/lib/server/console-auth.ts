@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import { isDeveloperAccount, testingAs } from "./claims";
 import { AdminUnavailableError, adminAuth, adminDb } from "./firebase-admin";
 
 /**
@@ -10,7 +11,14 @@ import { AdminUnavailableError, adminAuth, adminDb } from "./firebase-admin";
 export const CONSOLE_ROLES = ["developer", "admin"] as const;
 export type ConsoleRole = (typeof CONSOLE_ROLES)[number];
 
-export type ConsoleCaller = { uid: string; email: string | null; role: ConsoleRole };
+export type ConsoleCaller = {
+  uid: string;
+  email: string | null;
+  /** The account's real console role. A developer stays "developer" while testing as another role. */
+  role: ConsoleRole;
+  /** The role a developer account is currently testing as, or null. */
+  testingAs: string | null;
+};
 
 export class ConsoleAuthError extends Error {
   constructor(
@@ -36,11 +44,15 @@ export async function requireConsoleCaller(request: Request): Promise<ConsoleCal
     throw new ConsoleAuthError("Your session has expired. Sign in again.", 401);
   }
 
-  const role = decoded.role;
-  if (role !== "developer" && role !== "admin") {
+  // A developer keeps the console while testing as any other role (see
+  // src/lib/server/claims.ts), so it can always switch back.
+  if (isDeveloperAccount(decoded)) {
+    return { uid: decoded.uid, email: decoded.email ?? null, role: "developer", testingAs: testingAs(decoded) };
+  }
+  if (decoded.role !== "admin") {
     throw new ConsoleAuthError("This account does not hold the developer or admin role.", 403);
   }
-  return { uid: decoded.uid, email: decoded.email ?? null, role };
+  return { uid: decoded.uid, email: decoded.email ?? null, role: "admin", testingAs: null };
 }
 
 /** Records a privileged console action. Every write the console makes calls this. */

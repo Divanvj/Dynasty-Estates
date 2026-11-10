@@ -26,10 +26,9 @@ Auth model: the `role` **custom claim** on the ID token is the source of truth.
 be forged by the client and rules need no extra document reads. The
 `users/{uid}` document mirrors the role for display only.
 
-Until `.env.local` is filled in, the app runs on the local demo personas in
-`src/lib/demo-accounts.ts` and no Firebase call is made. That fallback is
-deliberate — it keeps the shared demo link alive while the project is being
-provisioned.
+Until `.env.local` is filled in, sign-in is unavailable: there is no offline
+fallback. (The old demo personas in `src/lib/demo-accounts.ts` were removed on
+2026-11-10; they shipped the shared test passwords in the client bundle.)
 
 ## Steps that need a signed-in human
 
@@ -107,33 +106,40 @@ anything automated — real numbers in a demo burn quota and cost money.
 npm run firebase:deploy:rules
 ```
 
-### 6. Seed the four role accounts and their claims
+### 6. Create a developer account for testing
 
 Download a service-account key from
 <https://console.firebase.google.com/project/dynasty-estates/settings/serviceaccounts/adminsdk>,
 then:
 
 ```bash
-npm run firebase:seed-roles -- --key ./service-account.json
+node scripts/create-dev-account.mjs <email> "<display name>" --key ./service-account.json
 ```
 
 Keep that key out of the repo — it grants full admin access to the project.
 
-This creates (or updates) the four accounts, sets each one's `role` claim, and
-writes the mirrored profile documents. Re-running it is safe.
+This creates an email/password account with the developer claims and prints
+its password once (record it in the gitignored `TEST_ACCOUNTS.md`). A developer
+account switches itself between Buyer, Seller, Agent and Admin from the site or
+the console, so no per-role test logins are needed. Make one per machine.
 
 ## Roles
 
-| Account                              | Claim    | Persona |
-| ------------------------------------ | -------- | ------- |
-| demo.buyer@dynastyestates-demo.com   | `buyer`  | Buyer   |
-| demo.seller@dynastyestates-demo.com  | `seller` | Seller  |
-| demo.agent@dynastyestates-demo.com   | `agent`  | Agent   |
-| demo.admin@dynastyestates-demo.com   | `admin`  | Admin   |
+| Claims                                  | Persona   |
+| --------------------------------------- | --------- |
+| none, or `role: "buyer"`                | Buyer     |
+| `role: "seller"`                        | Seller    |
+| `role: "agent"`                         | Agent     |
+| `role: "admin"`                         | Admin     |
+| `role: "developer", developer: true`    | Developer |
+| `role: "<any>", developer: true`        | A developer testing as that role |
 
 New Google and phone sign-ups get no claim and therefore resolve to **Buyer**.
-Promote someone by adding them to `scripts/seed-firebase-roles.mjs` and
-re-running it, or by calling `setCustomUserClaims` directly.
+Change a role from the console (`/console/users`) or with
+`node scripts/set-role.mjs <email> <role> --key <key.json>`; both log it.
+
+The four `demo.*@dynastyestates-demo.com` accounts used until 2026-11-10 are
+disabled. Their passwords are in git history, so they must stay disabled.
 
 A claim is baked into the ID token, so a role change is not visible until the
 token refreshes (up to an hour) or the user signs out and back in. To force it
