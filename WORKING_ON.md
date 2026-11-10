@@ -15,6 +15,10 @@ lines keep its own merges trivial.
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
 
+- 2026-11-10 — **`docs/handover/` removed again** at the owner's request, once DESKTOP-1R37EBU
+  had copied the brief locally. The brief is not kept in the repo; it is still in git history
+  (commit 9b138dd) if the other machine needs it.
+
 - 2026-11-10 — `alet-elize/market-intel-brief` merged. **`docs/handover/` is new**: the
   Market Intelligence & Monetisation brief (18 Oct 2026) as a self-contained HTML page,
   plus `BRIEF_HANDOVER.md` explaining how to read it. Docs only — nothing in `src/`.
