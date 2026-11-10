@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/dev-role-switch | Developer role switching (auth.ts, use-user-role, console-auth, /api/console/*), test-account removal (demo-accounts.ts, seed script, docs) | 2026-11-10 |
 
 ## Recently merged
 
