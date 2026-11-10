@@ -78,7 +78,8 @@ before they start, then delete it after a few days.
   `scrollbar-gutter: stable`; the search panel card uses `transition-none`
   (`duration-*` alone animates every property).
 - 2026-11-07 — the `alet-elize/map-touch-targets` claim was removed from the table:
-  the owner confirmed no other agent is working (map touch work finished).
+  the owner confirmed no other agent is working. (It was believed finished; it was not —
+  see the 2026-11-10 alet-elize re-sync note above.)
 - 2026-11-07 — `DESKTOP-1R37EBU/ux-phase7-account-tab` merged. Phone tab bar: "Account"
   (opens the account menu via `OPEN_ACCOUNT_MENU_EVENT`) replaces "Insights" in
   every role.
