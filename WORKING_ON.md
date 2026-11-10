@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| alet-elize | `alet-elize/market-intel-brief` | New `docs/handover/` only — adds the Market Intelligence brief. No source files. | 2026-11-10 |
 
 ## Recently merged
 
