@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import RoleGuard from "@/components/role-guard";
 import { BriefcaseIcon, CheckIcon, InfoCircleIcon, ShieldIcon, TagIcon } from "@/components/icons";
 import { auth } from "@/lib/firebase";
-import { listingPackages } from "@/lib/billing";
+import { agentPlans, listingExtensions, listingPackages } from "@/lib/pricing";
 import { formatDateTime, formatNumber } from "@/lib/formatters";
 import { getSupportRequests, type SupportRequest } from "@/lib/support-requests";
 import {
@@ -285,43 +285,56 @@ export default function AdminPage() {
         {activeTab === "billing" && (
           <section className="space-y-4">
             <div className="rounded-card border border-white/80 bg-white/50 p-5 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-              <h2 className="text-xl font-bold text-slate-950 dark:text-white">Commercial Listing Packages</h2>
-              <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
-                Transparent revenue model separated strictly from quality scoring.
+              <h2 className="text-xl font-bold text-slate-950 dark:text-white">Packages and plans</h2>
+              {/* Read from src/lib/pricing.ts, the same list /pricing shows.
+                  The three packages that used to sit here (R1,450 / R2,950 /
+                  R5,800) were hardcoded and advertised features that don't
+                  exist. Requests arrive in the Support tab as "Package
+                  request: …"; invoice them by hand until payment is online. */}
+              <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
+                The published price list. Package and plan requests arrive in the Support tab. Payment is by invoice until online payment is built.
               </p>
+              <Link href="/pricing" className="mt-2 inline-block text-sm font-semibold text-emerald-800 underline underline-offset-4 dark:text-emerald-300">
+                Open the public prices page
+              </Link>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-3">
-              {listingPackages.map((pkg) => (
-                <div
-                  key={pkg.id}
-                  className={`rounded-card border p-5 backdrop-blur-xl ${
-                    pkg.isPopular
-                      ? "border-emerald-400 bg-white/70 shadow-lg ring-2 ring-emerald-500/30 dark:border-emerald-500/50 dark:bg-surface-panel dark:shadow-[0_0_20px_rgba(16,185,129,0.25)]"
-                      : "border-white/80 bg-white/50 shadow-sm dark:bg-surface-ink/70 dark:border-white/10"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-base font-bold text-slate-900 dark:text-white">{pkg.name}</h3>
-                    {pkg.isPopular && (
-                      <span className="rounded-full bg-emerald-500 px-2 py-0.5 text-xs font-bold text-white dark:bg-emerald-700">
-                        POPULAR
-                      </span>
-                    )}
-                  </div>
-                  <p className="mt-2 text-2xl font-extrabold text-slate-950 dark:text-emerald-400">R {formatNumber(pkg.priceZAR)}</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-400">Active for {pkg.durationDays} days</p>
-
-                  <ul className="mt-4 space-y-2 border-t border-slate-200/60 dark:border-white/10 pt-3 text-xs text-slate-700 dark:text-slate-300">
-                    {pkg.features.map((feat, idx) => (
-                      <li key={idx} className="flex items-start gap-1.5">
-                        <CheckIcon className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
-                        <span>{feat}</span>
+            <div className="grid gap-4 lg:grid-cols-3">
+              {([
+                ["Private sale (incl. VAT)", listingPackages.filter((pkg) => pkg.audience === "sale"), listingExtensions.find((ext) => ext.audience === "sale")],
+                ["Private rental (incl. VAT)", listingPackages.filter((pkg) => pkg.audience === "rent"), listingExtensions.find((ext) => ext.audience === "rent")],
+              ] as const).map(([title, pkgs, ext]) => (
+                <div key={title} className="rounded-card border border-white/80 bg-white/50 p-5 shadow-sm dark:bg-surface-ink/70 dark:border-white/10">
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white">{title}</h3>
+                  <ul className="mt-3 space-y-1.5 text-sm text-slate-700 dark:text-slate-300">
+                    {pkgs.map((pkg) => (
+                      <li key={pkg.id} className="flex justify-between gap-3">
+                        <span>{pkg.name} · {pkg.durationDays} days</span>
+                        <span className="font-semibold tabular-nums">R {formatNumber(pkg.priceZAR)}</span>
                       </li>
                     ))}
+                    {ext && (
+                      <li className="flex justify-between gap-3 border-t border-slate-200/60 pt-1.5 dark:border-white/10">
+                        <span>Extend · +{ext.durationDays} days</span>
+                        <span className="font-semibold tabular-nums">R {formatNumber(ext.priceZAR)}</span>
+                      </li>
+                    )}
                   </ul>
                 </div>
               ))}
+              <div className="rounded-card border border-white/80 bg-white/50 p-5 shadow-sm dark:bg-surface-ink/70 dark:border-white/10">
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">Agent plans (per month, excl. VAT)</h3>
+                <ul className="mt-3 space-y-1.5 text-sm text-slate-700 dark:text-slate-300">
+                  {agentPlans.map((plan) => (
+                    <li key={plan.id} className="flex justify-between gap-3">
+                      <span>{plan.name} · {plan.liveListings ?? "150+"} listings</span>
+                      <span className="font-semibold tabular-nums">
+                        {plan.monthlyZAR === null ? "Quoted" : `R ${formatNumber(plan.monthlyZAR)}`}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </section>
         )}

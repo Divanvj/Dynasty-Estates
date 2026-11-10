@@ -173,6 +173,17 @@ Unchanged: the map views inside `/search` (Map view) and the home feed still use
 | "🗺️ Street View & Map" tab, "👁️ Street View 360°" and "🗺️ Google Map" buttons | Line map icon + "Street View & Map"; buttons "Street View" and "Map" | `property-media-tabs.tsx` |
 | Media tabs wrapping one per line on phones | One row (scrolls sideways if ever too wide) | `property-media-tabs.tsx` |
 
+## S13 — sell page and prices, phase 1 (merged 10 Nov)
+
+| Was | Now | Where |
+|---|---|---|
+| Three hardcoded packages on /admin: Standard R1,450 / 30 days, Showcase R2,950 / 45 days, Prestige Spotlight R5,800 / 60 days, listing "Featured Obsidian Glass glow badge", "AI MatchScore recommendation boost", "Homepage flagship banner rotation", "Real-time lead SMS and instant WhatsApp alert", "Dedicated social media showcase" (none of which exist) | **Removed.** Published price list in `lib/pricing.ts`: sale 30 / 90 / 180 days R399 / R799 / R1,399, +30 days R299; rental 14 / 30 / 90 days R149 / R249 / R449, +14 days R129 (incl. VAT); agent plans Starter free (3) · Solo R399 (10) · Team R799 (25) · Agency R1,499 (60) · Branch R2,999 (150) · Enterprise quoted (excl. VAT). /admin shows the same list | `lib/billing.ts` (deleted), `lib/pricing.ts`, `admin/page.tsx` |
+| `MockSouthAfricanPaymentGateway` ("PayFast / Ozow"), which reported every payment as successful; unused | **Removed.** No payment code until a provider is chosen; buttons say payment is by emailed invoice | `lib/billing.ts` (deleted) |
+| No seller landing page; no published prices anywhere | `/sell` (how it works, example listing, the sale packages, agent link) and `/pricing` (Selling / Renting / Agents tabs, "Not available yet" list, FAQ) | new routes |
+| Header Sell menu: "Sell Privately" → /seller/portal (sign-in wall) and "Sell as an Agency" → /agent/dashboard (role-guarded), "Agent console, team mandates & listing distribution" | "Sell Privately" → /sell; "Plans for agents" → /pricing?for=agents; new "Prices" → /pricing | `site-navigation.tsx` |
+| Sell menu blurb "List directly to buyers with zero agent commissions." | "Advertise it yourself for a once-off fee, with no commission." | same |
+| Home footer had no sell or price links | "Sell Your Home Privately" and "Prices for Sellers & Agents" added (seller portal link kept) | `app/page.tsx` |
+
 ## Phase 10 — dark mode, accessibility, signed-in pages (merged 8 Nov)
 
 | Was | Now | Where |

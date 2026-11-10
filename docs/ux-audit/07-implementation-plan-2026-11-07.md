@@ -265,7 +265,7 @@ No design decisions needed except where marked ⚠.
 | Step | What | Status |
 |---|---|---|
 | S12 | Seller portal truth (no test listings, counters match the list) | **done** 8 Nov (code). Stored test listings remain in the database (see report) |
-| S13 | Seller landing page | **blocked** on decision: portal or brokerage |
+| S13 | Seller landing page | **done** 10 Nov: owner chose **portal**. `/sell` + `/pricing` (Selling / Renting / Agents), one price list in `lib/pricing.ts`. Phase 1 of the pricing plan only: packages are requested and invoiced by hand; attaching them to listings, expiry, agent limits and online payment are phases 2–4 |
 | S14 | Agent dashboard empty states (no "LIVE DATA" on a zero) | **done** 8 Nov |
 | S15 | Mobile performance (home LCP ≤ 4 s, search TBT ≤ 1,200 ms) | **blocked**: needs a production build or the deployed site; dev-server timings are not meaningful |
 | — | Audit signed-in pages (seller, agent, admin) with test accounts | **done** 8 Nov |
@@ -280,7 +280,7 @@ No design decisions needed except where marked ⚠.
 2. **"PPRA Verified":** are the agents real and PPRA-checked? If not, the claim comes off. *(Step 1.5)*
 3. **Approve Phase 3:** one shared header, removing ~22 per-page headers. This is a structural change.
 4. **Phone tab bar:** replace Insights with **Account** or **Sell**? *(Phase 7)*
-5. Still open from the earlier plan: **portal or brokerage** (blocks S13).
+5. ~~Portal or brokerage~~ (S13): **portal**, owner decision 10 Nov.
 
 ---
 

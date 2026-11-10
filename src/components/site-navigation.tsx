@@ -243,7 +243,7 @@ export default function SiteNavigation() {
           onClick={() => toggleDropdown("sell")}
           onKeyDown={(event) => handleTriggerKeyDown(event, "sell")}
           className={`flex items-center gap-1 px-2 py-1 rounded-full transition-colors cursor-pointer ${
-            openDropdown === "sell" || pathname.startsWith("/seller")
+            openDropdown === "sell" || pathname.startsWith("/seller") || pathname === "/sell" || pathname === "/pricing"
               ? "text-emerald-900 dark:text-emerald-300 font-bold"
               : "hover:text-emerald-900 dark:hover:text-emerald-300"
           }`}
@@ -268,8 +268,10 @@ export default function SiteNavigation() {
             onKeyDown={(event) => handlePanelKeyDown(event, "sell")}
             className="absolute left-0 top-full mt-2 w-64 rounded-2xl border border-slate-200/90 dark:border-white/10 bg-white/95 dark:bg-[#071315]/95 p-2 shadow-2xl backdrop-blur-xl z-50 animate-in fade-in-0 zoom-in-95 duration-150"
           >
+            {/* Was /seller/portal, which is behind sign-in: a visitor thinking
+                about selling met a login wall before learning anything. */}
             <Link
-              href="/seller/portal"
+              href="/sell"
               className="flex items-start gap-3 rounded-xl p-2.5 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group"
             >
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 group-hover:scale-105 transition-transform">
@@ -280,13 +282,15 @@ export default function SiteNavigation() {
                   Sell Privately
                 </p>
                 <p className="text-xs text-slate-600 dark:text-slate-400 leading-snug">
-                  List directly to buyers with zero agent commissions.
+                  Advertise it yourself for a once-off fee, with no commission.
                 </p>
               </div>
             </Link>
 
+            {/* Was /agent/dashboard: role-guarded, so an agent who hadn't
+                signed up yet was refused instead of shown what it costs. */}
             <Link
-              href="/agent/dashboard"
+              href="/pricing?for=agents"
               className="flex items-start gap-3 rounded-xl p-2.5 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group mt-1"
             >
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 group-hover:scale-105 transition-transform">
@@ -294,10 +298,27 @@ export default function SiteNavigation() {
               </div>
               <div>
                 <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
-                  Sell as an Agency
+                  Plans for agents
                 </p>
                 <p className="text-xs text-slate-600 dark:text-slate-400 leading-snug">
-                  Agent console, team mandates & listing distribution.
+                  Monthly plans by number of live listings, from free.
+                </p>
+              </div>
+            </Link>
+
+            <Link
+              href="/pricing"
+              className="flex items-start gap-3 rounded-xl p-2.5 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group mt-1"
+            >
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 group-hover:scale-105 transition-transform">
+                <TagIcon className="h-4 w-4" />
+              </div>
+              <div>
+                <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
+                  Prices
+                </p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 leading-snug">
+                  Every package and plan, published.
                 </p>
               </div>
             </Link>
@@ -449,13 +470,9 @@ export default function SiteNavigation() {
       </div>
 
       {/*
-        A "For agents" entry belongs here — agents and agencies have no
-        top-level entry point, and both SA incumbents give them one. It is
-        deliberately NOT added yet: the only plausible destination today is
-        /agents, which is a PPRA directory built for buyers looking for an
-        agent, not a proposition aimed at agents. Pointing a labelled entry at
-        the wrong page is the exact failure this audit catalogued elsewhere in
-        the menu. The entry goes in with the agent landing page, in S13.
+        Agents now have an entry: "Plans for agents" in the Sell menu above,
+        pointing at /pricing?for=agents (S13). /agents stays the buyer-facing
+        PPRA directory.
       */}
 
       {/*

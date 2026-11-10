@@ -146,6 +146,8 @@ export default async function Home() {
               <ul className="space-y-1 text-slate-600 dark:text-slate-400">
                 <li><Link href="/collections" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Collaborative Shortlists</Link></li>
                 <li><Link href="/agents" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">PPRA Verified Agents</Link></li>
+                <li><Link href="/sell" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Sell Your Home Privately</Link></li>
+                <li><Link href="/pricing" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Prices for Sellers & Agents</Link></li>
                 <li><Link href="/seller/portal" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Private Seller Portal</Link></li>
                 <li><Link href="/seller/listings/new" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Publish New Listing</Link></li>
                 {/* "Agent Command Console" (/agent/dashboard) removed. The

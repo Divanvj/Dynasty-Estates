@@ -9,12 +9,17 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/pricing-sell | new /pricing + /sell, src/lib/pricing.ts, src/lib/billing.ts, admin Commercial Packages tab, header/footer links | 2026-11-10 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-10 — `DESKTOP-1R37EBU/pricing-sell` merged (S13). **Dynasty is a portal** (owner). New `/sell` and
+  `/pricing`; one price list in `src/lib/pricing.ts` (`node scripts/check-pricing.mjs` checks its rules).
+  `src/lib/billing.ts` and its mock payment gateway are gone. Package/plan requests go to
+  `support_requests` (admin Support tab) and are invoiced by hand: there is no payment, expiry or
+  plan limit in code yet. Private sellers cannot read enquiries on their own listings (rules).
 
 - 2026-11-10 — **`docs/handover/` removed again** at the owner's request, once DESKTOP-1R37EBU
   had copied the brief locally. The brief is not kept in the repo; it is still in git history
