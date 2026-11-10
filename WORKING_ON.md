@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
