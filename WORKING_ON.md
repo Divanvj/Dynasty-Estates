@@ -15,6 +15,14 @@ lines keep its own merges trivial.
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
 
+- 2026-11-10 — **alet-elize re-synced** to `main` 7c25b9e after four days away. Correction to
+  the 2026-11-07 note below: the map touch work was **not** finished — it was sitting
+  uncommitted here. It is now saved on `alet-elize/map-touch-targets` (pushed, WIP, unmerged,
+  unmeasured; rebased onto Phase 10/11). Not claimed: it waits for the owner's decision, so
+  leave map sizing alone until it is either claimed or deleted. `ux/audit-overhaul` and the
+  `dyn-ux` worktree are gone (fully merged). alet-elize has no developer account or Admin key
+  yet, so `/console` role switching does not work on this machine.
+
 - 2026-11-10 — `DESKTOP-1R37EBU/pricing-sell` merged (S13). **Dynasty is a portal** (owner). New `/sell` and
   `/pricing`; one price list in `src/lib/pricing.ts` (`node scripts/check-pricing.mjs` checks its rules).
   `src/lib/billing.ts` and its mock payment gateway are gone. Package/plan requests go to
