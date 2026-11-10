@@ -10,6 +10,7 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | DESKTOP-1R37EBU | DESKTOP-1R37EBU/seller-enquiries | enquiries: ownerId + rules, seller portal inbox, inquiry button | 2026-11-10 |
+| alet-elize | `alet-elize/map-touch-targets` | Map touch targets (owner: finish + merge): `dynasty-property-map.tsx` chips/pins/clusters, Leaflet zoom sizing in `globals.css` | 2026-11-10 |
 
 ## Recently merged
 
