@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/dashboards-phase-a` | app/agent/*, app/admin/*, mobile-nav agent/admin tabs, enquiry-inbox | 2026-11-10 |
 
 ## Recently merged
 
