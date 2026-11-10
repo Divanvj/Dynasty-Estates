@@ -17,6 +17,10 @@ service cloud.firestore {
       );
     }
 
+    function isAdmin() {
+      return signedIn() && request.auth.token.role == 'admin';
+    }
+
     // The physical entity behind a listing (size, rooms, location). A listing in
     // /properties references one of these, so it must be world-readable for the
     // public catalogue, but only its creator or a practitioner may change it.
@@ -86,27 +90,30 @@ service cloud.firestore {
       allow delete: if false;
     }
 
-    // Readable by the sender, by practitioners, and by the account that listed
-    // the home (ownerId), so a private seller sees enquiries on their listings.
+    // Readable by the sender, by admins, and by the account that listed the
+    // home (ownerId) — a private seller or an agent sees enquiries on their own
+    // listings and nobody else's. Agents used to read every enquiry on the
+    // platform, so the agent dashboard showed each agent other agents' and
+    // private sellers' buyers (names, emails, phone numbers).
     // The sender cannot choose ownerId: it must match the listing's owner, or
     // anyone could drop messages into a stranger's inbox. It may be left off
     // (sample listings, agent profiles, and clients older than this rule); then
-    // only the sender and practitioners see the enquiry. The owner may change
-    // its status and nothing else.
+    // only the sender and admins see the enquiry. The owner may change its
+    // status and nothing else.
     match /inquiries/{inquiryId} {
       allow create: if signedIn()
         && request.resource.data.userId == request.auth.uid
         && (!('ownerId' in request.resource.data)
             || request.resource.data.ownerId == get(/databases/$(database)/documents/properties/$(request.resource.data.propertyId)).data.ownerId);
-      allow read: if isAgentOrAdmin()
+      allow read: if isAdmin()
         || (signedIn() && resource.data.userId == request.auth.uid)
         || (signedIn() && resource.data.ownerId == request.auth.uid);
-      allow update: if isAgentOrAdmin()
+      allow update: if isAdmin()
         || (signedIn()
             && resource.data.ownerId == request.auth.uid
             && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
             && request.resource.data.status in ['new', 'contacted']);
-      allow delete: if isAgentOrAdmin();
+      allow delete: if isAdmin();
     }
 
     // Perceptual hashes of every photo on a saved listing, for duplicate

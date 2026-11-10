@@ -3,7 +3,9 @@ import { collection, doc, getDocs, query, updateDoc, where } from "firebase/fire
 import { db, isFirebaseConfigured } from "./firebase";
 
 /**
- * Enquiries on the signed-in owner's own listings, for the seller portal.
+ * Enquiries on the signed-in owner's own listings, for the seller portal and
+ * the agent dashboard (both through components/enquiry-inbox.tsx). An agent
+ * is an owner like any other here: they see enquiries on listings they filed.
  *
  * Until this existed a private seller could not see a single enquiry: they
  * were stored with no record of whose listing they were for, and only agents,

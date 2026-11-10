@@ -4,17 +4,11 @@ import Link from "next/link";
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { useEffect, useState } from "react";
 
+import { EnquiryList, useOwnerInquiries } from "@/components/enquiry-inbox";
 import RoleGuard from "@/components/role-guard";
 import { auth } from "@/lib/firebase";
-import { formatDateTime, formatNumber } from "@/lib/formatters";
 import { ACTIVE_CATALOGUE_STATUSES, PUBLIC_LISTING_STATUSES } from "@/lib/types/domain";
 import { getSellerListings, type SellerListing } from "@/lib/seller-listings";
-import {
-  getSellerInquiries,
-  setSellerInquiryStatus,
-  type SellerInquiry,
-  type SellerInquiryStatus,
-} from "@/lib/seller-inquiries";
 
 // Three sample listings used to show here when nobody was signed in. Only the
 // account's own stored listings are shown now.
@@ -26,15 +20,14 @@ import {
 type LoadState = "loading" | "ready" | "error";
 
 export default function SellerPortal() {
-  const [user, setUser] = useState<User | null>(null);
+  // undefined until Firebase has said whether anyone is signed in.
+  const [user, setUser] = useState<User | null | undefined>(auth ? undefined : null);
   const [listings, setListings] = useState<SellerListing[]>([]);
   // The counters used to read 0 while the query was still running, and a
   // failed query left them at 0 for good with nothing said.
   const [loadState, setLoadState] = useState<LoadState>(auth ? "loading" : "error");
-  const [inquiries, setInquiries] = useState<SellerInquiry[]>([]);
-  const [inquiryState, setInquiryState] = useState<LoadState>(auth ? "loading" : "error");
-  const [savingId, setSavingId] = useState<string | null>(null);
-  const [statusError, setStatusError] = useState<string | null>(null);
+  // Shared with the agent dashboard (components/enquiry-inbox.tsx).
+  const inbox = useOwnerInquiries(user === undefined ? undefined : (user?.uid ?? null));
 
   useEffect(() => {
     if (!auth) return;
@@ -44,22 +37,9 @@ export default function SellerPortal() {
       if (!currentUser) {
         setListings([]);
         setLoadState("ready");
-        setInquiries([]);
-        setInquiryState("ready");
         return;
       }
       setLoadState("loading");
-      setInquiryState("loading");
-      // Loaded on its own so a failure here still shows the listings.
-      getSellerInquiries(currentUser.uid)
-        .then((items) => {
-          setInquiries(items);
-          setInquiryState("ready");
-        })
-        .catch((error) => {
-          console.error("Could not load enquiries on the seller's listings:", error);
-          setInquiryState("error");
-        });
       try {
         setListings(await getSellerListings(currentUser.uid));
         setLoadState("ready");
@@ -86,28 +66,15 @@ export default function SellerPortal() {
     (ACTIVE_CATALOGUE_STATUSES as readonly string[]).includes(listing.status),
   ).length;
   const draftListings = listings.filter((listing) => listing.status === "Draft").length;
-  const totalViews = listings.reduce((sum, listing) => sum + listing.views, 0);
-
+  const inquiries = inbox.items;
   const newInquiries = inquiries.filter((item) => item.status === "new").length;
 
-  async function changeStatus(item: SellerInquiry, status: SellerInquiryStatus) {
-    setSavingId(item.id);
-    setStatusError(null);
-    try {
-      await setSellerInquiryStatus(item.id, status);
-      setInquiries((current) => current.map((row) => (row.id === item.id ? { ...row, status } : row)));
-    } catch (error) {
-      console.error("Could not update the enquiry:", error);
-      setStatusError("That change wasn't saved. Check your connection and try again.");
-    } finally {
-      setSavingId(null);
-    }
-  }
-
+  // "Property views" was the third card, summing a `views` field that nothing
+  // ever writes, so it always read 0. It comes back once views are recorded.
   const cards = [
-    { label: "Active listings", value: `${activeListings}` },
-    { label: "Drafts", value: `${draftListings}` },
-    { label: "Property views", value: formatNumber(totalViews) },
+    { label: "Active listings", value: `${activeListings}`, ready: loadState === "ready" },
+    { label: "Drafts", value: `${draftListings}`, ready: loadState === "ready" },
+    { label: "New enquiries", value: `${newInquiries}`, ready: inbox.state === "ready" },
   ];
 
   return (
@@ -144,7 +111,7 @@ export default function SellerPortal() {
             <div key={card.label} className="rounded-card border border-white/45 bg-white/40 p-4 sm:p-5 shadow-[0_18px_35px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <p className="text-xs uppercase tracking-[0.14em] text-slate-600 dark:text-slate-400 font-bold">{card.label}</p>
               <p className="mt-3 text-2xl sm:text-3xl font-semibold tabular-nums text-slate-900 dark:text-white">
-                {loadState === "ready" ? card.value : "–"}
+                {card.ready ? card.value : "–"}
               </p>
             </div>
           ))}
@@ -192,7 +159,6 @@ export default function SellerPortal() {
                       <p className="truncate font-semibold text-slate-900 dark:text-white">{item.title}</p>
                       <p className="mt-1 text-sm text-slate-600 dark:text-slate-300 font-medium">
                         {item.price}
-                        {item.views ? ` • ${formatNumber(item.views)} views` : ""}
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
@@ -227,7 +193,7 @@ export default function SellerPortal() {
             <h2 id="enquiries-heading" className="text-2xl font-semibold text-slate-900 dark:text-white">
               Enquiries
             </h2>
-            {inquiryState === "ready" && newInquiries > 0 ? (
+            {inbox.state === "ready" && newInquiries > 0 ? (
               <p className="text-sm font-semibold text-emerald-800 dark:text-emerald-300">{newInquiries} new</p>
             ) : null}
           </div>
@@ -236,85 +202,7 @@ export default function SellerPortal() {
             Messages and viewing requests from buyers. We don&rsquo;t send email or SMS alerts yet, so check back here.
           </p>
 
-          {statusError ? (
-            <p role="alert" className="mb-3 rounded-control border border-rose-200 bg-rose-50 p-3.5 text-sm text-rose-800 dark:border-rose-500/30 dark:bg-rose-950/40 dark:text-rose-200">
-              {statusError}
-            </p>
-          ) : null}
-
-          {inquiryState === "loading" && (
-            <p role="status" className="text-sm text-slate-600 dark:text-slate-300">Loading enquiries…</p>
-          )}
-
-          {inquiryState === "error" && (
-            <p role="alert" className="rounded-control border border-rose-200 bg-rose-50 p-3.5 text-sm text-rose-800 dark:border-rose-500/30 dark:bg-rose-950/40 dark:text-rose-200">
-              Your enquiries couldn&rsquo;t be loaded. Check your connection and refresh the page.
-            </p>
-          )}
-
-          {inquiryState === "ready" && inquiries.length === 0 && (
-            <p className="rounded-control border border-dashed border-slate-300 p-6 text-center text-sm text-slate-600 dark:border-white/15 dark:text-slate-300">
-              No enquiries yet. When a buyer messages you or asks to view one of your homes, it shows here.
-            </p>
-          )}
-
-          {inquiryState === "ready" && inquiries.length > 0 && (
-            <ul className="space-y-3">
-              {inquiries.map((item) => {
-                const isNew = item.status === "new";
-                return (
-                  <li key={item.id} className="rounded-control border border-slate-200 bg-[#f4f7f7] p-3.5 dark:border-white/10 dark:bg-surface-ink/70">
-                    <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
-                      <div className="min-w-0">
-                        <p className="font-semibold text-slate-900 dark:text-white">
-                          {item.kind === "message" ? "Message" : "Viewing request"}
-                          <span className="font-medium text-slate-600 dark:text-slate-300"> · {item.propertyTitle}</span>
-                        </p>
-                        <p className="mt-0.5 text-sm text-slate-600 dark:text-slate-300">
-                          {item.contactName || "A buyer"}
-                          {item.createdAt ? ` · ${formatDateTime(item.createdAt)}` : ""}
-                        </p>
-                      </div>
-                      <span
-                        className={`rounded-full border px-2.5 py-1 text-xs font-bold uppercase tracking-[0.14em] ${
-                          isNew
-                            ? "border-emerald-400/30 bg-emerald-500/10 text-emerald-800 dark:border-emerald-500/40 dark:bg-emerald-500/20 dark:text-emerald-300"
-                            : "border-slate-300 bg-white/60 text-slate-600 dark:border-white/15 dark:bg-white/5 dark:text-slate-300"
-                        }`}
-                      >
-                        {isNew ? "New" : "Contacted"}
-                      </span>
-                    </div>
-
-                    {item.notes ? (
-                      <p className="mt-2 whitespace-pre-line text-sm text-slate-800 dark:text-slate-200">{item.notes}</p>
-                    ) : null}
-
-                    <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-                      {item.contactEmail ? (
-                        <a href={`mailto:${item.contactEmail}`} className="font-semibold text-emerald-800 underline-offset-2 hover:underline dark:text-emerald-300">
-                          {item.contactEmail}
-                        </a>
-                      ) : null}
-                      {item.contactPhone ? (
-                        <a href={`tel:${item.contactPhone.replace(/\s+/g, "")}`} className="font-semibold text-emerald-800 underline-offset-2 hover:underline dark:text-emerald-300">
-                          {item.contactPhone}
-                        </a>
-                      ) : null}
-                      <button
-                        type="button"
-                        disabled={savingId === item.id}
-                        onClick={() => changeStatus(item, isNew ? "contacted" : "new")}
-                        className="pill ml-auto border border-slate-300 bg-white/80 font-semibold text-slate-800 transition-colors hover:bg-white disabled:opacity-60 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
-                      >
-                        {savingId === item.id ? "Saving…" : isNew ? "Mark as contacted" : "Mark as new"}
-                      </button>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
+          <EnquiryList {...inbox} emptyMessage="No enquiries yet. When a buyer messages you or asks to view one of your homes, it shows here." />
         </section>
       </div>
     </main>
