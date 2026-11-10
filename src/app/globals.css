@@ -822,6 +822,20 @@ select option {
     height: max(100%, 44px);
     transform: translate(-50%, -50%);
   }
+
+  /* Leaflet draws its own zoom buttons at 30x30 and we cannot put a class on
+     them, so they are sized here. Unlike our own chips these are a stacked
+     pair with no gap between them, so growing the painted box is the only
+     option open — a hit-area helper would make the two overlap and the one
+     drawn second would swallow taps meant for the other.
+
+     `line-height` has to move with the height or the glyph stops being
+     centred: Leaflet centres the + and - with line-height, not flexbox. */
+  .leaflet-control-zoom a {
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+  }
 }
 
 /* ==========================================================================
