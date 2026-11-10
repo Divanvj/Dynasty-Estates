@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/pricing-sell | new /pricing + /sell, src/lib/pricing.ts, src/lib/billing.ts, admin Commercial Packages tab, header/footer links | 2026-11-10 |
 
 ## Recently merged
 
