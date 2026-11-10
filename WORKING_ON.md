@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/dashboards-phase-b` | listing_stats (rules/indexes), api/track, property page tracking, save button, agent/seller listing detail | 2026-11-11 |
 
 ## Recently merged
 
