@@ -9,12 +9,20 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| alet-elize | `alet-elize/market-intel-brief` | New `docs/handover/` only — adds the Market Intelligence brief. No source files. | 2026-11-10 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-10 — `alet-elize/market-intel-brief` merged. **`docs/handover/` is new**: the
+  Market Intelligence & Monetisation brief (18 Oct 2026) as a self-contained HTML page,
+  plus `BRIEF_HANDOVER.md` explaining how to read it. Docs only — nothing in `src/`.
+  It is a **planning document, not a spec**: every figure is tagged Research / Model /
+  Team estimate / Proposal / Added analysis, the incumbent revenue and payer figures are
+  low-confidence models rather than disclosures, and the product surface it describes
+  (pricing tiers, Intelligence Console, Ask Dynasty, Performance Wallet, feed ingestion)
+  does not exist yet. Do not treat any of it as built or as agreed pricing.
 
 - 2026-11-10 — `DESKTOP-1R37EBU/dev-role-switch` merged. **Test with a developer account, not
   the four demo.* logins** (now disabled; seed script and `lib/demo-accounts.ts` removed). A
