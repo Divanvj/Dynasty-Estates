@@ -26,6 +26,12 @@ export type PropertyRecord = {
    * channel at all, which is the correct answer when nobody is assigned.
    */
   agentId?: string;
+  /**
+   * The account that filed the listing (stored listings only; the sample
+   * catalogue has none). Enquiries carry it so the owner can read them in the
+   * seller portal.
+   */
+  ownerId?: string;
   title: string;
   location: string;
   suburb?: string;
@@ -1062,6 +1068,7 @@ export async function getPropertyList(): Promise<PropertyRecord[]> {
         id: docSnap.id,
         slug: data.slug ?? docSnap.id,
         agentId: data.agentId ?? undefined,
+        ownerId: typeof data.ownerId === "string" && data.ownerId ? data.ownerId : undefined,
         title: data.title ?? "Untitled property",
         location: data.location ?? "South Africa",
         suburb: data.suburb ?? "",

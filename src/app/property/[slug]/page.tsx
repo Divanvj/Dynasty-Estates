@@ -530,6 +530,7 @@ export default async function PropertyPage({
                 <PropertyInquiryButton
                   propertyId={property.id}
                   propertyTitle={property.title}
+                  ownerId={property.ownerId}
                   kind="viewing"
                   className="pill-lg w-full bg-slate-950 font-bold text-white shadow-md hover:bg-slate-800 transition-all cursor-pointer dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:text-white dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
                 >
@@ -562,6 +563,7 @@ export default async function PropertyPage({
                   <PropertyInquiryButton
                     propertyId={property.id}
                     propertyTitle={property.title}
+                    ownerId={property.ownerId}
                     kind="message"
                     className="pill-lg w-full border border-slate-300 bg-white/80 font-bold text-slate-800 hover:bg-white transition-all cursor-pointer dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
                   >
@@ -698,6 +700,7 @@ export default async function PropertyPage({
           <PropertyInquiryButton
             propertyId={property.id}
             propertyTitle={property.title}
+            ownerId={property.ownerId}
             kind="viewing"
             className="pill-lg bg-slate-950 font-bold text-white shadow-lg cursor-pointer hover:bg-slate-800 transition-all dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
           >
