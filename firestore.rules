@@ -86,10 +86,26 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // Readable by the sender, by practitioners, and by the account that listed
+    // the home (ownerId), so a private seller sees enquiries on their listings.
+    // The sender cannot choose ownerId: it must match the listing's owner, or
+    // anyone could drop messages into a stranger's inbox. It may be left off
+    // (sample listings, agent profiles, and clients older than this rule); then
+    // only the sender and practitioners see the enquiry. The owner may change
+    // its status and nothing else.
     match /inquiries/{inquiryId} {
-      allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
-      allow read: if isAgentOrAdmin() || (signedIn() && resource.data.userId == request.auth.uid);
-      allow update: if isAgentOrAdmin();
+      allow create: if signedIn()
+        && request.resource.data.userId == request.auth.uid
+        && (!('ownerId' in request.resource.data)
+            || request.resource.data.ownerId == get(/databases/$(database)/documents/properties/$(request.resource.data.propertyId)).data.ownerId);
+      allow read: if isAgentOrAdmin()
+        || (signedIn() && resource.data.userId == request.auth.uid)
+        || (signedIn() && resource.data.ownerId == request.auth.uid);
+      allow update: if isAgentOrAdmin()
+        || (signedIn()
+            && resource.data.ownerId == request.auth.uid
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+            && request.resource.data.status in ['new', 'contacted']);
       allow delete: if isAgentOrAdmin();
     }
 

@@ -9,6 +9,9 @@ export async function createPropertyInquiry({
   userEmail,
   propertyId,
   propertyTitle,
+  ownerId,
+  contactName,
+  contactPhone,
   kind,
   notes,
 }: {
@@ -16,6 +19,10 @@ export async function createPropertyInquiry({
   userEmail: string | null;
   propertyId: string;
   propertyTitle: string;
+  /** The listing's owner, so they can read the enquiry. Omit when there is none. */
+  ownerId?: string;
+  contactName?: string;
+  contactPhone?: string;
   kind: InquiryKind;
   notes?: string;
 }) {
@@ -33,6 +40,13 @@ export async function createPropertyInquiry({
     userEmail,
     propertyId,
     propertyTitle,
+    // firestore.rules checks this against the listing's owner. Sample listings
+    // and agent profiles have no owner, so the field is left off for them.
+    ...(ownerId ? { ownerId } : {}),
+    // The form always asked for a name and phone number but never saved them,
+    // so whoever read the enquiry had only an email address to reply to.
+    contactName: contactName ?? "",
+    contactPhone: contactPhone ?? "",
     kind,
     notes: notes ?? "",
     status: "new",

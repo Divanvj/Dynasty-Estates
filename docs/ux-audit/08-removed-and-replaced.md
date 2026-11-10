@@ -173,6 +173,14 @@ Unchanged: the map views inside `/search` (Map view) and the home feed still use
 | "🗺️ Street View & Map" tab, "👁️ Street View 360°" and "🗺️ Google Map" buttons | Line map icon + "Street View & Map"; buttons "Street View" and "Map" | `property-media-tabs.tsx` |
 | Media tabs wrapping one per line on phones | One row (scrolls sideways if ever too wide) | `property-media-tabs.tsx` |
 
+## Seller enquiries (10 Nov)
+
+| Was | Now | Where |
+|---|---|---|
+| A buyer's enquiry on a private listing was stored without the listing's owner, and only agents, admins and the sender could read it, so private sellers never saw one | Enquiries carry the listing's `ownerId` (rules check it against the listing). The seller portal has an **Enquiries** section: name, email, phone, message, date, and "Mark as contacted" / "Mark as new" (the owner may change the status only). Enquiries filed before this have no owner and stay hidden from sellers | `firestore.rules`, `lib/inquiries.ts`, new `lib/seller-inquiries.ts`, `seller/portal/page.tsx` |
+| The enquiry form asked for a name and phone number and threw both away | Saved as `contactName` and `contactPhone` | `property-inquiry-button.tsx` |
+| "Notes or Questions for Practitioner", "Send Message to Practitioner" (wrong on a private listing) | "Notes or questions", "Send message"; on a listing with an owner, "Your name, phone number and email go to the person who listed this home." and the sent notice says they can now see it | same |
+
 ## S13 — sell page and prices, phase 1 (merged 10 Nov)
 
 | Was | Now | Where |

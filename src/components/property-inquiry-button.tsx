@@ -12,12 +12,15 @@ import { createPropertyInquiry, type InquiryKind } from "@/lib/inquiries";
 export default function PropertyInquiryButton({
   propertyId,
   propertyTitle,
+  ownerId,
   kind,
   children,
   className,
 }: {
   propertyId: string;
   propertyTitle: string;
+  /** The listing's owner. When set, the enquiry reaches their seller portal. */
+  ownerId?: string;
   kind: InquiryKind;
   children: React.ReactNode;
   className: string;
@@ -68,6 +71,9 @@ export default function PropertyInquiryButton({
         userEmail: email || user?.email || "anonymous@buyer.co.za",
         propertyId,
         propertyTitle,
+        ownerId,
+        contactName: fullName.trim(),
+        contactPhone: phone.trim(),
         kind,
         notes: summaryText,
       });
@@ -134,7 +140,9 @@ export default function PropertyInquiryButton({
                 <CheckIcon className="h-10 w-10 text-emerald-600 dark:text-emerald-400 mx-auto" />
                 <h4 className="mt-2 text-base font-bold text-emerald-800 dark:text-emerald-400">Request Sent</h4>
                 <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
-                  Your request has been recorded against this listing. The practitioner will be in touch.
+                  {ownerId
+                    ? "The person who listed this home can now see your request and will contact you."
+                    : "Your request has been recorded against this listing. The practitioner will be in touch."}
                 </p>
               </div>
             ) : (
@@ -255,7 +263,7 @@ export default function PropertyInquiryButton({
                 {/* Notes */}
                 <div>
                   <label htmlFor="inquiry-notes" className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1 dark:text-slate-400">
-                    Notes or Questions for Practitioner
+                    Notes or questions
                   </label>
                   <textarea
                     id="inquiry-notes"
@@ -269,12 +277,17 @@ export default function PropertyInquiryButton({
 
                 {/* Submit */}
                 <div className="pt-2">
+                  {ownerId ? (
+                    <p className="mb-2.5 text-xs text-slate-600 dark:text-slate-400">
+                      Your name, phone number and email go to the person who listed this home.
+                    </p>
+                  ) : null}
                   <button
                     type="submit"
                     disabled={loading}
                     className="w-full rounded-full bg-slate-950 py-3 text-xs font-bold text-white shadow-lg hover:bg-slate-800 transition-all cursor-pointer disabled:opacity-60 dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:shadow-[0_0_20px_rgba(16,185,129,0.35)]"
                   >
-                    {loading ? "Submitting..." : kind === "message" ? "Send Message to Practitioner" : "Confirm Viewing Request"}
+                    {loading ? "Submitting..." : kind === "message" ? "Send message" : "Confirm Viewing Request"}
                   </button>
                 </div>
               </form>
