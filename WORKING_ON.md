@@ -10,12 +10,21 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | DESKTOP-1R37EBU | DESKTOP-1R37EBU/seller-enquiries | enquiries: ownerId + rules, seller portal inbox, inquiry button | 2026-11-10 |
-| alet-elize | `alet-elize/map-touch-targets` | Map touch targets (owner: finish + merge): `dynasty-property-map.tsx` chips/pins/clusters, Leaflet zoom sizing in `globals.css` | 2026-11-10 |
-
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-10 — `alet-elize/map-touch-targets` merged (measured, finished). Map targets are 44px on
+  phones: zoom buttons, pin hit areas (`tap-44`), clusters (44/52/60 at **every** width, so desktop
+  clusters grew 6px), and the area/filter chips (`max-lg:min-h-11`). Leaflet's zoom rule needs
+  `.leaflet-touch .leaflet-bar.leaflet-control-zoom a` to win on phones — a plainer selector loses
+  silently. The `/map-search` hint sits at `max-lg:bottom-32` to clear the taller zoom bar.
+  **Build warning for both machines:** `next build --webpack` now fails on `main` itself
+  (`Can't resolve 'stream'` in firebase-admin's Firestore client), so the "build from a separate
+  worktree" route in COLLABORATION.md no longer works when that worktree links `node_modules`
+  (Turbopack refuses the link, webpack can't bundle the server code). Use a plain `npx next build`
+  in a folder whose dev server is stopped. CI does not run `next build`, so nothing else catches it.
 
 - 2026-11-10 — **alet-elize re-synced** to `main` 7c25b9e after four days away. Correction to
   the 2026-11-07 note below: the map touch work was **not** finished — it was sitting

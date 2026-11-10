@@ -149,7 +149,7 @@ function markerHtml(
     .join(" · ");
 
   return `
-    <div class="dyn-pin flex flex-col items-center transition-transform duration-150 ${lift}">
+    <div class="dyn-pin relative tap-44 flex flex-col items-center transition-transform duration-150 ${lift}">
       <div class="flex items-stretch overflow-hidden rounded-chip ring-1 ${edge} ${fill}"${title ? ` title="${title}"` : ""}>
         ${rail}
         <span class="whitespace-nowrap px-2 py-[5px] text-xs font-bold tracking-tight tabular-nums">${label}</span>
@@ -558,7 +558,10 @@ export default function DynastyPropertyMap({
       spiderfyOnMaxZoom: true,
       iconCreateFunction: (c) => {
         const n = c.getChildCount();
-        const size = n < 10 ? 38 : n < 50 ? 46 : 54;
+        // 44 at the smallest, which is the touch floor: a cluster is the only
+        // way to reach the listings inside it, and a two-property cluster was
+        // 38px. The ramp still grows with the digit count.
+        const size = n < 10 ? 44 : n < 50 ? 52 : 60;
         // `text-xs` rather than an inline font-size, so the count tracks the
         // type scale like the pin label does. It used to be 13px for one digit
         // and 12px for two or more, which sat under the 14px floor. The circle
@@ -690,7 +693,7 @@ export default function DynastyPropertyMap({
             key={v.label}
             type="button"
             onClick={() => jumpTo(v)}
-            className="pill-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-900 hover:text-white dark:hover:bg-emerald-800 dark:hover:text-white transition-colors"
+            className="pill-sm max-lg:min-h-11 font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-900 hover:text-white dark:hover:bg-emerald-800 dark:hover:text-white transition-colors"
           >
             {v.label}
           </button>
@@ -703,7 +706,8 @@ export default function DynastyPropertyMap({
           type="button"
           onClick={() => setTool(tool === "radius" ? "none" : "radius")}
           title="Drag on the map to search within a radius"
-          className={`pill-sm font-bold transition-all ${ tool === "radius" ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10" }`}
+          aria-label="Search within a radius you drag on the map"
+          className={`pill-sm max-lg:min-h-11 font-bold transition-all ${ tool === "radius" ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10" }`}
         >
           ◎ Radius
         </button>
@@ -711,7 +715,8 @@ export default function DynastyPropertyMap({
           type="button"
           onClick={() => setTool(tool === "draw" ? "none" : "draw")}
           title="Draw your own search area"
-          className={`pill-sm font-bold transition-all ${ tool === "draw" ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10" }`}
+          aria-label="Draw your own search area on the map"
+          className={`pill-sm max-lg:min-h-11 font-bold transition-all ${ tool === "draw" ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10" }`}
         >
           ✎ Draw
         </button>
@@ -719,7 +724,7 @@ export default function DynastyPropertyMap({
           <button
             type="button"
             onClick={clearArea}
-            className="pill-sm font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all"
+            className="pill-sm max-lg:min-h-11 font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all"
           >
             ✕ Clear
           </button>
@@ -758,7 +763,7 @@ export default function DynastyPropertyMap({
               type="button"
               onClick={() => setFilter(id)}
               title={id === "solar" ? "Solar / backup power" : id === "water" ? "Borehole / water backup" : "All residences"}
-              className={`flex items-center gap-1.5 overflow-hidden rounded-chip py-1 pr-2 text-xs font-bold transition-all ${
+              className={`flex items-center justify-center gap-1.5 overflow-hidden rounded-chip py-1 pr-2 text-xs font-bold transition-all max-lg:min-h-11 max-lg:min-w-11 ${
                 rail ? "pl-0" : "pl-2"
               } ${
                 filter === id
@@ -778,7 +783,7 @@ export default function DynastyPropertyMap({
             type="button"
             onClick={() => setPinMode(pinMode === "price" ? "value" : "price")}
             title="Colour pins by price, or by how each home prices against its own suburb median"
-            className={`pill-sm font-bold transition-all cursor-pointer ${ pinMode === "value" ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 dark:border-white/10 bg-white/70 dark:bg-surface-ink/60 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-surface-panel dark:hover:text-white" }`}
+            className={`pill-sm max-lg:min-h-11 font-bold transition-all cursor-pointer ${ pinMode === "value" ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]" : "border border-slate-200 dark:border-white/10 bg-white/70 dark:bg-surface-ink/60 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-surface-panel dark:hover:text-white" }`}
           >
             {pinMode === "value" ? "vs Median" : "Price"}
           </button>

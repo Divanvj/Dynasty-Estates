@@ -225,9 +225,15 @@ export default function MapSearchPage() {
                 focus={focus}
                 clearSignal={clearSignal}
               />
-              {/* Until an area or a pin is chosen, say how to get listings. */}
+              {/* Until an area or a pin is chosen, say how to get listings.
+                  `max-lg:bottom-32` clears Leaflet's zoom bar, which grew to
+                  44px buttons on phones for the touch floor and now reaches
+                  about 114px up the map. At bottom-14 the line ran under the
+                  "+" button and lost its last words; bottom-28 still grazed
+                  it by 2px. On desktop the bar keeps 30px buttons and the
+                  line sits clear of it. */}
               {!panelHomes && (
-                <p className="pointer-events-none absolute inset-x-0 bottom-14 z-[500] mx-auto w-fit max-w-[90%] rounded-full bg-slate-950/85 px-3.5 py-1.5 text-center text-xs font-semibold text-white shadow-lg">
+                <p className="pointer-events-none absolute inset-x-0 bottom-14 max-lg:bottom-32 z-[500] mx-auto w-fit max-w-[90%] rounded-full bg-slate-950/85 px-3.5 py-1.5 text-center text-xs font-semibold text-white shadow-lg">
                   {locationNote[locationState] ?? "Use Radius or Draw to see the homes in an area, or tap a pin."}
                 </p>
               )}
