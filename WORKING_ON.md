@@ -9,12 +9,18 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/dev-role-switch | Developer role switching (auth.ts, use-user-role, console-auth, /api/console/*), test-account removal (demo-accounts.ts, seed script, docs) | 2026-11-10 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-10 — `DESKTOP-1R37EBU/dev-role-switch` merged. **Test with a developer account, not
+  the four demo.* logins** (now disabled; seed script and `lib/demo-accounts.ts` removed). A
+  developer switches role via the "Developer" pill (every page) or "Use the site as" (console
+  sidebar); it sets the real `role` claim plus `developer: true` (`lib/server/claims.ts`).
+  Other machine: make your own with `scripts/create-dev-account.mjs` (needs the Admin key).
+  CI now runs Node 24 (firebase-admin needs 22+; typecheck was red on main since the console merge).
 
 - 2026-11-10 — `DESKTOP-1R37EBU/dev-console` merged. **Developer console at `/console`** and a
   new `developer` role (claim; persona "Developer", lands on /console). Root layout now
