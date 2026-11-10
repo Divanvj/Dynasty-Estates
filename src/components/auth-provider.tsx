@@ -12,13 +12,13 @@ import { onAuthStateChanged, type User } from "firebase/auth";
 import { auth, isFirebaseConfigured } from "@/lib/firebase";
 import {
   getUserProfile,
-  resolveUserRole,
+  resolveAccount,
   signOutUser,
   useDemoSession,
   type DemoSessionUser,
   type UserProfile,
 } from "@/lib/auth";
-import { setActiveUserRole, useUserRole } from "@/lib/use-user-role";
+import { setActiveUserRole, setDeveloperAccount, useUserRole } from "@/lib/use-user-role";
 
 interface AuthContextType {
   user: User | null;
@@ -52,7 +52,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const syncProfile = useCallback(async (currentUser: User) => {
     try {
       // The custom claim decides the role; the profile doc only feeds the UI.
-      setActiveUserRole(await resolveUserRole(currentUser));
+      const account = await resolveAccount(currentUser);
+      setActiveUserRole(account.role);
+      setDeveloperAccount(account.developer);
       setProfile(await getUserProfile(currentUser.uid));
     } catch (error) {
       // Non-fatal: the user stays signed in and the role falls back to the
@@ -87,6 +89,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setActiveUserRole(demoUser.role);
     } else if (!firebaseUser) {
       setActiveUserRole("Buyer");
+      setDeveloperAccount(false);
     }
   }, [loading, demoUser, firebaseUser]);
 

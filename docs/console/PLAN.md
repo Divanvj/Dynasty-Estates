@@ -65,13 +65,13 @@ CSV export download, and anything on production (not deployed).
 
 ## Owner actions
 
-1. Create the developer account: sign up on the site with
-   `dev@tricore.enterprises`, then run
-   `node scripts/set-role.mjs dev@tricore.enterprises developer --key <service-account.json>`
-   and sign out and back in.
+1. ~~Create the developer account~~ — done 2026-11-10 (`dev@tricore.enterprises`).
 2. Add `FIREBASE_SERVICE_ACCOUNT` (the key JSON) to Vercel → Production, then
    deploy: `npx --yes vercel@65.2.0 deploy --prod --yes`.
 3. Optional: `GITHUB_TOKEN` (higher rate limit), `VERCEL_TOKEN` (deploy list).
 4. Optional: grant the service account **Monitoring Viewer** in Google Cloud IAM.
-5. Rotate the test-account passwords: they are in the public repo
-   (`scripts/seed-firebase-roles.mjs`); the go-live checklist flags it.
+5. ~~Rotate the test-account passwords~~ — the four shared test accounts were
+   disabled on 2026-11-10 and the files holding their passwords removed. Testing
+   uses developer accounts that switch role (`/api/console/test-role`, the
+   "Developer" pill on the site, "Use the site as" in the console sidebar). The
+   go-live checklist turns red if any old account is re-enabled.

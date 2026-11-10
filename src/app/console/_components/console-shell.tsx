@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 import BrandLogo from "@/components/brand-logo";
 import { useAuth } from "@/components/auth-provider";
+import { TEST_ROLE_OPTIONS, useTestRoleSwitch } from "@/components/test-role-switcher";
 
 import {
   ConsoleProvider,
@@ -76,7 +77,58 @@ function isActive(pathname: string | null, href: string) {
   return href === "/console" ? pathname === "/console" : pathname === href || pathname.startsWith(`${href}/`);
 }
 
-function Sidebar({ caller, build, onNavigate }: { caller: ConsoleCaller; build: BuildInfo; onNavigate?: () => void }) {
+/**
+ * Developer accounts only: switch the account's real role claim to use the site
+ * as that role (src/components/test-role-switcher.tsx has the details).
+ */
+function TestAs({ onSwitched }: { onSwitched: () => void }) {
+  const { role, pending, error, switchTo } = useTestRoleSwitch(onSwitched);
+  return (
+    <div className="mt-4 border-t border-white/[0.06] pt-4">
+      <p className="px-2.5 pb-1.5 text-xs font-medium text-[var(--ink-subtle)]">Use the site as</p>
+      <div className="grid grid-cols-2 gap-1 px-1">
+        {TEST_ROLE_OPTIONS.map((option) => {
+          const current = option.persona === role;
+          return (
+            <button
+              key={option.claim}
+              type="button"
+              title={option.hint}
+              aria-pressed={current}
+              disabled={Boolean(pending)}
+              onClick={() => !current && void switchTo(option, option.claim !== "developer")}
+              className={cx(
+                "min-h-9 cursor-pointer rounded-lg px-2 text-xs font-semibold transition-colors duration-150 disabled:cursor-wait",
+                option.claim === "developer" && "col-span-2",
+                current
+                  ? "bg-[var(--brand-quiet)] text-[var(--ink)] ring-1 ring-inset ring-[var(--brand)]/40"
+                  : "text-[var(--ink-muted)] hover:bg-white/[0.05] hover:text-[var(--ink)]",
+              )}
+            >
+              {pending === option.persona ? "Switching…" : option.persona}
+            </button>
+          );
+        })}
+      </div>
+      <p className="px-2.5 pt-2 text-xs text-[var(--ink-subtle)]">
+        Changes your account&rsquo;s real role, so the security rules apply as that role. You keep the console.
+      </p>
+      {error ? <p className="px-2.5 pt-1 text-xs text-rose-300">{error}</p> : null}
+    </div>
+  );
+}
+
+function Sidebar({
+  caller,
+  build,
+  onNavigate,
+  onRoleSwitched,
+}: {
+  caller: ConsoleCaller;
+  build: BuildInfo;
+  onNavigate?: () => void;
+  onRoleSwitched: () => void;
+}) {
   const pathname = usePathname();
   const { signOut } = useAuth();
   return (
@@ -134,6 +186,8 @@ function Sidebar({ caller, build, onNavigate }: { caller: ConsoleCaller; build: 
             Back to the site
           </Link>
         </div>
+
+        {caller.role === "developer" ? <TestAs onSwitched={onRoleSwitched} /> : null}
       </nav>
 
       <div className="border-t border-white/[0.06] p-3">
@@ -143,7 +197,10 @@ function Sidebar({ caller, build, onNavigate }: { caller: ConsoleCaller; build: 
           </span>
           <div className="min-w-0 flex-1">
             <p className="truncate text-xs font-semibold text-[var(--ink)]">{caller.email ?? caller.uid}</p>
-            <p className="text-xs capitalize text-[var(--ink-subtle)]">{caller.role}</p>
+            <p className="text-xs capitalize text-[var(--ink-subtle)]">
+              {caller.role}
+              {caller.testingAs ? <span className="text-amber-200"> · testing as {caller.testingAs}</span> : null}
+            </p>
           </div>
           <button
             type="button"
@@ -206,6 +263,9 @@ export default function ConsoleShell({ children }: { children: React.ReactNode }
       cancelled = true;
     };
   }, [user, loading, attempt]);
+
+  // After a role switch, re-read /api/console/me so the footer shows the new role.
+  const reloadCaller = () => setAttempt((n) => n + 1);
 
   // Close the drawer when the route changes (render-time, as MobileAppBar does).
   const [prevPath, setPrevPath] = useState(pathname);
@@ -291,7 +351,7 @@ export default function ConsoleShell({ children }: { children: React.ReactNode }
       <ConsoleProvider value={{ user: user!, caller: access.caller, build: access.build }}>
         <div className="flex min-h-dvh">
           <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 border-r border-white/[0.06] bg-[#071113] lg:block">
-            <Sidebar caller={access.caller} build={access.build} />
+            <Sidebar caller={access.caller} build={access.build} onRoleSwitched={reloadCaller} />
           </aside>
 
           {/* Phone and tablet: a top bar with a drawer. */}
@@ -313,7 +373,12 @@ export default function ConsoleShell({ children }: { children: React.ReactNode }
                 >
                   <CloseIcon className="h-5 w-5" />
                 </button>
-                <Sidebar caller={access.caller} build={access.build} onNavigate={() => setDrawerOpen(false)} />
+                <Sidebar
+                  caller={access.caller}
+                  build={access.build}
+                  onNavigate={() => setDrawerOpen(false)}
+                  onRoleSwitched={reloadCaller}
+                />
               </div>
             </div>
           ) : null}

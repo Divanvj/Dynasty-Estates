@@ -17,7 +17,7 @@ import {
 } from "@/components/icons";
 import ThemeToggle from "@/components/theme-toggle";
 import { useAuth } from "@/components/auth-provider";
-import { accountCan, useUserRole, type UserRole } from "@/lib/use-user-role";
+import { accountCan, useIsDeveloperAccount, useUserRole, type UserRole } from "@/lib/use-user-role";
 import { createSupportRequest } from "@/lib/support-requests";
 
 const ROLE_BADGES: Record<UserRole, { label: string; icon: typeof UserIcon; tone: string }> = {
@@ -34,6 +34,7 @@ export const OPEN_ACCOUNT_MENU_EVENT = "dynasty:open-account-menu";
 export default function AccountActions({ showOnMobile = false }: { showOnMobile?: boolean } = {}) {
   const { user: firebaseUser, demoUser, profile, signOut } = useAuth();
   const { role: activeRole } = useUserRole();
+  const developerAccount = useIsDeveloperAccount();
 
   const [isOpen, setIsOpen] = useState(false);
   const [showSupportModal, setShowSupportModal] = useState(false);
@@ -114,7 +115,7 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
   // Capabilities need the auth state as well as the role — selling privately
   // turns on having an account, not on holding a claim.
   const can = (capability: Parameters<typeof accountCan>[0]) =>
-    accountCan(capability, { role: activeRole, signedIn: Boolean(user) });
+    accountCan(capability, { role: activeRole, signedIn: Boolean(user), developer: developerAccount });
 
   const userEmail = user?.email || (demoUser ? `${demoUser.email}` : "Guest Explorer");
   const roleBadge = ROLE_BADGES[activeRole];

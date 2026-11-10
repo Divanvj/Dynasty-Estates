@@ -2,6 +2,7 @@ import type { UserRecord } from "firebase-admin/auth";
 
 import { fallbackProperties } from "@/lib/property-data";
 
+import { accountRole, testingAs } from "./claims";
 import { adminAuth, adminDb } from "./firebase-admin";
 
 /*
@@ -112,7 +113,7 @@ export async function getOverview(period: Period) {
       adminDb().collectionGroup("savedProperties").count().get(),
     ]);
 
-  const roleOf = (u: UserRecord) => (typeof u.customClaims?.role === "string" ? (u.customClaims.role as string) : "none");
+  const roleOf = (u: UserRecord) => accountRole(u.customClaims) ?? "none";
   const created = (docs: Doc[]) => docs.map((d) => toMillis(d.data.createdAt));
 
   const listingStatus = countBy(properties.docs, (d) => String(d.data.status ?? "Unknown"));
@@ -384,7 +385,7 @@ export async function getEventLog(sinceMs: number): Promise<LogEvent[]> {
         category: "accounts",
         at: iso(signedIn),
         title: "Signed in (latest)",
-        detail: `${u.email ?? u.phoneNumber ?? u.uid} · role ${String(u.customClaims?.role ?? "none")}`,
+        detail: `${u.email ?? u.phoneNumber ?? u.uid} · role ${accountRole(u.customClaims) ?? "none"}`,
         actor: u.email ?? null,
         severity: "info",
       });
@@ -632,12 +633,13 @@ export async function runIntegrityScan(): Promise<{ ranAt: string; findings: Int
     items: users
       .filter((u) => profileRole.has(u.uid))
       .filter((u) => {
-        const claim = typeof u.customClaims?.role === "string" ? (u.customClaims.role as string) : "buyer";
+        // A developer testing as another role is still a developer, not a mismatch.
+        const claim = accountRole(u.customClaims) ?? "buyer";
         return profileRole.get(u.uid) !== claim;
       })
       .map((u) => ({
         id: u.uid,
-        label: `${u.email ?? u.phoneNumber ?? u.uid}: claim ${String(u.customClaims?.role ?? "none")}, profile ${profileRole.get(u.uid) || "none"}`,
+        label: `${u.email ?? u.phoneNumber ?? u.uid}: claim ${accountRole(u.customClaims) ?? "none"}, profile ${profileRole.get(u.uid) || "none"}`,
         collection: "auth",
       })),
   });
@@ -700,7 +702,13 @@ export async function runIntegrityScan(): Promise<{ ranAt: string; findings: Int
 export const ASSIGNABLE_ROLES = ["buyer", "seller", "agent", "admin", "developer"] as const;
 export type AssignableRole = (typeof ASSIGNABLE_ROLES)[number];
 
-export const TEST_ACCOUNT_EMAILS: Record<string, string> = {
+/**
+ * The four shared role logins used for testing until 2026-11-10. Their
+ * passwords are in the public repo's git history, so they are kept disabled;
+ * testing now uses developer accounts that switch role (/api/console/test-role).
+ * Listed so the console can confirm they stay disabled.
+ */
+export const RETIRED_TEST_ACCOUNTS: Record<string, string> = {
   "demo.buyer@dynastyestates-demo.com": "buyer",
   "demo.seller@dynastyestates-demo.com": "seller",
   "demo.agent@dynastyestates-demo.com": "agent",
@@ -718,7 +726,8 @@ export async function getUsers() {
         email: u.email ?? null,
         phone: u.phoneNumber ?? null,
         displayName: u.displayName ?? (profile?.displayName as string | undefined) ?? null,
-        role: typeof u.customClaims?.role === "string" ? (u.customClaims.role as string) : null,
+        role: accountRole(u.customClaims),
+        testingAs: testingAs(u.customClaims),
         profileRole: (profile?.role as string | undefined) ?? null,
         hasProfile: Boolean(profile),
         providers: u.providerData.map((p) => p.providerId),
@@ -727,8 +736,8 @@ export async function getUsers() {
         createdAt: u.metadata.creationTime ? new Date(u.metadata.creationTime).toISOString() : null,
         lastSignInAt: u.metadata.lastSignInTime ? new Date(u.metadata.lastSignInTime).toISOString() : null,
         tokensValidAfter: u.tokensValidAfterTime ? new Date(u.tokensValidAfterTime).toISOString() : null,
-        testAccount: Boolean(u.email && TEST_ACCOUNT_EMAILS[u.email]),
-        expectedTestRole: (u.email && TEST_ACCOUNT_EMAILS[u.email]) || null,
+        retiredTestAccount: Boolean(u.email && RETIRED_TEST_ACCOUNTS[u.email]),
+        retiredTestRole: (u.email && RETIRED_TEST_ACCOUNTS[u.email]) || null,
       };
     })
     .sort((a, b) => (b.lastSignInAt ?? "").localeCompare(a.lastSignInAt ?? ""));

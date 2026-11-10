@@ -111,7 +111,7 @@ diff: service-account JSON, `.env.local`, tokens, passwords.
 
 - `.env.local` is gitignored. Each machine needs its own copy; the owner
   transfers it directly, not through git.
-- `TEST_ACCOUNTS.md` (the four role logins) is gitignored for the same reason.
+- `TEST_ACCOUNTS.md` (each machine's developer-account login) is gitignored for the same reason.
   The owner copies it to each machine directly.
 - Service-account keys never enter the repo (`*-firebase-adminsdk-*.json` is
   ignored).

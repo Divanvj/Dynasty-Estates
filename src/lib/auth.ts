@@ -13,9 +13,8 @@ import {
 } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
-import { authenticateDemoUser, isDemoEmail } from "./demo-accounts";
 import { auth, db, isFirebaseConfigured } from "./firebase";
-import { setActiveUserRole, type UserRole as PersonaRole } from "./use-user-role";
+import { setActiveUserRole, setDeveloperAccount, type UserRole as PersonaRole } from "./use-user-role";
 
 import { useSyncExternalStore } from "react";
 
@@ -144,17 +143,55 @@ export function toPersonaRole(role: string | null | undefined): PersonaRole {
  * visible until the token refreshes; pass forceRefresh to pick it up at once.
  */
 export async function resolveUserRole(user: User, forceRefresh = false): Promise<PersonaRole> {
+  return (await resolveAccount(user, forceRefresh)).role;
+}
+
+/**
+ * The role plus whether this is a developer account. A developer testing the
+ * site as another role carries that role in `role` (what the rules enforce) and
+ * keeps `developer: true`, which is what shows the role switcher.
+ */
+export async function resolveAccount(
+  user: User,
+  forceRefresh = false,
+): Promise<{ role: PersonaRole; developer: boolean }> {
   try {
     const { claims } = await user.getIdTokenResult(forceRefresh);
+    const developer = claims.developer === true || claims.role === "developer";
     if (typeof claims.role === "string" && claims.role) {
-      return toPersonaRole(claims.role);
+      return { role: toPersonaRole(claims.role), developer };
     }
   } catch {
     // Fall through to the profile document.
   }
 
   const profile = await getUserProfile(user.uid);
-  return toPersonaRole(profile?.role);
+  return { role: toPersonaRole(profile?.role), developer: false };
+}
+
+/**
+ * Switches a developer account into another role for testing (or back to
+ * "developer"), then refreshes the ID token so Firestore and the UI use the new
+ * role at once. Returns the persona and the page to land on.
+ */
+export async function switchTestRole(
+  user: User,
+  role: "buyer" | "seller" | "agent" | "admin" | "developer",
+): Promise<{ role: PersonaRole; landing: string }> {
+  const token = await user.getIdToken();
+  const response = await fetch("/api/console/test-role", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ role }),
+  });
+  const body = (await response.json().catch(() => null)) as { error?: string } | null;
+  if (!response.ok) {
+    throw new Error(body?.error ?? `Could not switch role (HTTP ${response.status}).`);
+  }
+  const account = await resolveAccount(user, true);
+  setActiveUserRole(account.role);
+  setDeveloperAccount(account.developer);
+  return { role: account.role, landing: roleLandingPath(account.role) };
 }
 
 export type UserProfile = {
@@ -238,40 +275,11 @@ export async function signUpWithEmail(
 }
 
 export async function signInWithEmail(email: string, password: string) {
-  const normalizedEmail = email.trim().toLowerCase();
-
-  // The local demo shim is only a stand-in for an unconfigured project. Once
-  // Firebase is connected the same four addresses exist as real users (see
-  // scripts/seed-firebase-roles.mjs), so real authentication must win —
-  // otherwise the demo accounts would never get a genuine session or claim.
+  // There is no offline sign-in. The old demo shim checked four shared test
+  // passwords shipped in the client bundle; those accounts are retired, and
+  // testing now uses developer accounts that switch role (switchTestRole).
   if (!isFirebaseConfigured || !auth) {
-    const demoAccount = authenticateDemoUser(normalizedEmail, password);
-    if (!demoAccount) {
-      if (isDemoEmail(normalizedEmail)) {
-        throw new Error("Invalid demo account credentials. Please verify your password.");
-      }
-      throw new Error(
-        "Firebase authentication is not active in this demo environment. Please use one of the dedicated demo accounts (demo.buyer@..., demo.seller@..., demo.agent@..., or demo.admin@...)."
-      );
-    }
-
-    const demoUser: DemoSessionUser = {
-      uid: `demo-${demoAccount.role.toLowerCase()}`,
-      email: demoAccount.email,
-      displayName: demoAccount.displayName,
-      role: demoAccount.role,
-    };
-
-    setDemoSession(demoUser);
-    setActiveUserRole(demoAccount.role);
-
-    return {
-      uid: demoUser.uid,
-      email: demoUser.email,
-      displayName: demoUser.displayName,
-      demoRole: demoAccount.role,
-      initialPath: demoAccount.initialPath,
-    };
+    throw new Error("Firebase authentication is not configured. Add your Firebase settings to .env.local.");
   }
 
   const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -288,8 +296,9 @@ export async function signInWithEmail(email: string, password: string) {
 
   // Force a token refresh so a role claim set since the last sign-in is picked
   // up immediately, then land the user in the workspace for that role.
-  const role = await resolveUserRole(userCredential.user, true);
+  const { role, developer } = await resolveAccount(userCredential.user, true);
   setActiveUserRole(role);
+  setDeveloperAccount(developer);
 
   return {
     uid: userCredential.user.uid,
@@ -303,6 +312,7 @@ export async function signInWithEmail(email: string, password: string) {
 export async function signOutUser(): Promise<void> {
   setDemoSession(null);
   setActiveUserRole("Buyer");
+  setDeveloperAccount(false);
 
   if (auth) {
     try {

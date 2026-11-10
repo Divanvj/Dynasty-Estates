@@ -8,6 +8,7 @@ import { MaintenanceBanner } from "@/components/platform-status";
 import SiteChrome from "@/components/site-chrome";
 import SiteHeader from "@/components/site-header";
 import TelemetryReporter from "@/components/telemetry-reporter";
+import TestRoleDock from "@/components/test-role-switcher";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SITE_URL } from "@/lib/site-url";
 
@@ -134,6 +135,8 @@ export default function RootLayout({
             </SiteChrome>
             {children}
             <MobileNav />
+            {/* Developer accounts only: switch the account's role for testing. */}
+            <TestRoleDock />
           </AuthProvider>
         </ThemeProvider>
       </body>

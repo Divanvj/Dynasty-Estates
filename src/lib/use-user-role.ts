@@ -37,7 +37,7 @@ export type Capability = "sell" | "agency" | "admin" | "console";
  */
 export function accountCan(
   capability: Capability,
-  account: { role: UserRole; signedIn: boolean }
+  account: { role: UserRole; signedIn: boolean; developer?: boolean }
 ): boolean {
   // Nothing is offered to a visitor who has not signed in. Every one of these
   // ends in a Firestore write keyed to request.auth.uid, which would be denied.
@@ -60,8 +60,9 @@ export function accountCan(
       // The developer console (/console). A platform role, not a moderation
       // one: developers get the console but not /admin. Admins get both. The
       // console's API routes re-check the claim server-side; this only decides
-      // whether the menu offers the link.
-      return account.role === "Developer" || account.role === "Admin";
+      // whether the menu offers the link. A developer account keeps it while
+      // testing as another role, so it can always switch back.
+      return account.developer === true || account.role === "Developer" || account.role === "Admin";
     default:
       return false;
   }
@@ -69,6 +70,43 @@ export function accountCan(
 
 const ROLE_STORAGE_KEY = "dynasty_active_role";
 const ROLE_EVENT_NAME = "dynasty_role_change";
+
+/*
+  Whether the signed-in account is a developer account (`developer: true`
+  claim), which stays true while it tests the site as another role. Like the
+  role above it is a mirror written only by the auth layer, used to show the
+  role switcher; the switch itself is authorised server-side.
+*/
+const DEVELOPER_STORAGE_KEY = "dynasty_developer_account";
+let developerAccount: boolean | null = null;
+
+function readDeveloperAccount(): boolean {
+  if (developerAccount !== null) return developerAccount;
+  if (typeof window === "undefined") return false;
+  try {
+    developerAccount = sessionStorage.getItem(DEVELOPER_STORAGE_KEY) === "1";
+  } catch {
+    developerAccount = false;
+  }
+  return developerAccount;
+}
+
+export function setDeveloperAccount(value: boolean): void {
+  if (typeof window === "undefined" || readDeveloperAccount() === value) return;
+  developerAccount = value;
+  try {
+    if (value) sessionStorage.setItem(DEVELOPER_STORAGE_KEY, "1");
+    else sessionStorage.removeItem(DEVELOPER_STORAGE_KEY);
+  } catch {
+    // Storage restricted: the in-memory value still drives this tab.
+  }
+  window.dispatchEvent(new CustomEvent(ROLE_EVENT_NAME));
+}
+
+/** True while a developer account is signed in, whatever role it is testing as. */
+export function useIsDeveloperAccount(): boolean {
+  return useSyncExternalStore(subscribeRole, readDeveloperAccount, () => false);
+}
 
 export function getActiveUserRole(): UserRole {
   if (typeof window === "undefined") return "Buyer";
