@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/agent-dashboard-fixes` | agent/dashboard, lib/agent-inquiries.ts, inquiries rules | 2026-11-10 |
 
 ## Recently merged
 
