@@ -157,6 +157,10 @@ export function ConfirmDialog({
 }) {
   const ref = useRef<HTMLDialogElement>(null);
   const cancelRef = useRef<HTMLButtonElement>(null);
+  const onCancelRef = useRef(onCancel);
+  useEffect(() => {
+    onCancelRef.current = onCancel;
+  }, [onCancel]);
 
   useEffect(() => {
     const dialog = ref.current;
@@ -168,10 +172,26 @@ export function ConfirmDialog({
     if (!open && dialog.open) dialog.close();
   }, [open]);
 
+  // Escape is handled on the key itself (below), so cancelling never depends
+  // on the dialog's async `close` event; that event is still caught for any
+  // other way the browser closes it, so `open` can't get stuck at true.
+  useEffect(() => {
+    const dialog = ref.current;
+    if (!dialog) return;
+    const handle = () => onCancelRef.current();
+    dialog.addEventListener("close", handle);
+    return () => dialog.removeEventListener("close", handle);
+  }, []);
+
   return (
     <dialog
       ref={ref}
-      onClose={onCancel}
+      onKeyDown={(event) => {
+        if (event.key === "Escape") {
+          event.preventDefault();
+          onCancel();
+        }
+      }}
       aria-labelledby="confirm-dialog-title"
       className="m-auto w-[min(480px,calc(100vw-32px))] rounded-card border border-white/70 bg-white p-0 text-slate-900 shadow-[0_30px_80px_rgba(15,23,42,0.35)] backdrop:bg-slate-950/55 dark:border-white/10 dark:bg-[#0d1b1d] dark:text-white"
     >

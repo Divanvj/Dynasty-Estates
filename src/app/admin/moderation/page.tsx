@@ -155,7 +155,7 @@ function ModerationQueue() {
       {actionError ? <p role="alert" className={`mb-4 ${errorBoxClass}`}>{actionError}</p> : null}
 
       <div className="mb-4 flex flex-wrap items-end gap-3">
-        <div className="min-w-0 flex-1 sm:max-w-sm">
+        <div className="w-full min-w-0 sm:w-auto sm:flex-1 sm:max-w-sm">
           <label htmlFor={searchId} className="mb-1 block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">Search</label>
           <div className="relative">
             <span aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"><SearchIcon className="h-4 w-4" /></span>

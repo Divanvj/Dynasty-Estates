@@ -50,7 +50,7 @@ function ListingsIndex() {
       />
 
       <div className="mb-4 flex flex-wrap items-end gap-3">
-        <div className="min-w-0 flex-1 sm:max-w-sm">
+        <div className="w-full min-w-0 sm:w-auto sm:flex-1 sm:max-w-sm">
           <label htmlFor={searchId} className="mb-1 block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">
             Search
           </label>
@@ -80,6 +80,7 @@ function ListingsIndex() {
       {/* The table frame stays on screen while loading, empty or failed. */}
       <div className="overflow-hidden rounded-card border border-slate-200 bg-white/70 shadow-sm dark:border-white/10 dark:bg-surface-panel/80">
         <div className="overflow-x-auto">
+          {/* Messages sit below the scrolling table, so they never scroll off a phone. */}
           <table className="w-full min-w-[640px] text-left text-sm">
             <thead className="border-b border-slate-200 bg-slate-50/80 text-xs uppercase tracking-wider text-slate-600 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-400">
               <tr>
@@ -92,29 +93,7 @@ function ListingsIndex() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 text-slate-700 dark:divide-white/10 dark:text-slate-300">
-              {listings.state === "loading" ? (
-                <tr><td colSpan={6} className="px-4 py-6 text-slate-600 dark:text-slate-400" role="status">Loading your listings…</td></tr>
-              ) : listings.state === "error" ? (
-                <tr><td colSpan={6} className="px-4 py-6 text-rose-800 dark:text-rose-200" role="alert">Your listings couldn&rsquo;t be loaded. Check your connection and refresh the page.</td></tr>
-              ) : rows.length === 0 ? (
-                <tr>
-                  <td colSpan={6} className="px-4 py-8 text-center text-slate-600 dark:text-slate-400">
-                    {filtered ? (
-                      <>
-                        No listings match.{" "}
-                        <button type="button" onClick={() => { setStatus(ALL); setSearch(""); }} className={`cursor-pointer ${linkClass}`}>
-                          Clear the filters
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        You haven&rsquo;t filed a listing yet.{" "}
-                        <Link href="/seller/listings/new" className={linkClass}>Create your first listing</Link>
-                      </>
-                    )}
-                  </td>
-                </tr>
-              ) : (
+              {listings.state === "ready" &&
                 rows.map((item) => {
                   const isPublic = (PUBLIC_LISTING_STATUSES as readonly string[]).includes(item.status);
                   return (
@@ -145,10 +124,31 @@ function ListingsIndex() {
                     </tr>
                   );
                 })
-              )}
+              }
             </tbody>
           </table>
         </div>
+        {listings.state === "loading" ? (
+          <p role="status" className="px-4 py-6 text-sm text-slate-600 dark:text-slate-400">Loading your listings…</p>
+        ) : listings.state === "error" ? (
+          <p role="alert" className="px-4 py-6 text-sm text-rose-800 dark:text-rose-200">Your listings couldn&rsquo;t be loaded. Check your connection and refresh the page.</p>
+        ) : rows.length === 0 ? (
+          <p className="px-4 py-8 text-center text-sm text-slate-600 dark:text-slate-400">
+            {filtered ? (
+              <>
+                No listings match.{" "}
+                <button type="button" onClick={() => { setStatus(ALL); setSearch(""); }} className={`cursor-pointer ${linkClass}`}>
+                  Clear the filters
+                </button>
+              </>
+            ) : (
+              <>
+                You haven&rsquo;t filed a listing yet.{" "}
+                <Link href="/seller/listings/new" className={linkClass}>Create your first listing</Link>
+              </>
+            )}
+          </p>
+        ) : null}
       </div>
     </>
   );
