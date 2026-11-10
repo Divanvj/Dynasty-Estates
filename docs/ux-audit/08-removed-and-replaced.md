@@ -173,6 +173,16 @@ Unchanged: the map views inside `/search` (Map view) and the home feed still use
 | "🗺️ Street View & Map" tab, "👁️ Street View 360°" and "🗺️ Google Map" buttons | Line map icon + "Street View & Map"; buttons "Street View" and "Map" | `property-media-tabs.tsx` |
 | Media tabs wrapping one per line on phones | One row (scrolls sideways if ever too wide) | `property-media-tabs.tsx` |
 
+## Dashboards Phase B — view tracking and listing performance (branch, 11 Nov; not merged)
+
+| Was | Now | Where |
+|---|---|---|
+| No record of views, saves or contact clicks anywhere | Anonymous daily counts per listing in `listing_stats` (views once per browser session, the owner's own visits excluded; saves; WhatsApp / Call clicks), written only by the server at `/api/track`; owner and admins read them. Rules + 2 indexes need deploying | new `api/track`, `lib/listing-stats*.ts`, `lib/server/listing-stats.ts`, `firestore.rules`, `firestore.indexes.json` |
+| Listings had no page of their own in the consoles | `/agent/listings/{id}` and `/seller/listings/{id}`: Overview · Performance (30-day views, saves, contact clicks and enquiries with daily table, enquiries per 100 views, price vs ≥5 live comparables in suburb/city, listing checklist) · Enquiries | new `components/listing-detail.tsx`, `sparkline.tsx` |
+| Agent listings: "View" link; no views | Title opens the listing page; "Public page" link; **Views, 30 d** column | `agent/listings/page.tsx` |
+| Agent dashboard: 4 tiles | 5 tiles: **Views (7 days)** added | `agent/dashboard/page.tsx` |
+| Seller portal: three cards; "View" link per listing | Fourth card **Views, 30 days**; per listing "Performance" and "Public page", views in 30 days | `seller/portal/page.tsx` |
+
 ## Dashboards Phase A — one page per job (11 Nov, docs/dashboards/PLAN.md)
 
 | Was | Now | Where |

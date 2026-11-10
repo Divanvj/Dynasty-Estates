@@ -44,6 +44,14 @@ export type SellerListing = {
   updatedAt?: string;
   /** The moderator's note when a listing is sent back or rejected. */
   moderationFeedback?: string;
+  city?: string;
+  publishedAt?: string;
+  /** Listing-quality facts for the health checklist (Phase B). */
+  photoCount?: number;
+  hasFloorPlan?: boolean;
+  hasTour?: boolean;
+  hasShowDay?: boolean;
+  descriptionLength?: number;
 };
 
 export type ListingFormData = {
@@ -143,6 +151,15 @@ export async function getSellerListings(ownerId: string): Promise<SellerListing[
       image: data.image ?? "",
       createdAt: data.createdAt?.toDate?.()?.toISOString(),
       moderationFeedback: typeof data.moderationFeedback === "string" && data.moderationFeedback ? data.moderationFeedback : undefined,
+      // Stored as display text ("R 1 250 000"); the digits are the number.
+      numericPrice: Number(String(data.price ?? "").replace(/[^0-9]/g, "")) || undefined,
+      city: typeof data.city === "string" ? data.city : undefined,
+      publishedAt: data.publishedAt?.toDate?.()?.toISOString(),
+      photoCount: Array.isArray(data.gallery) ? data.gallery.length : data.image ? 1 : 0,
+      hasFloorPlan: typeof data.floorPlanUrl === "string" && data.floorPlanUrl.length > 0,
+      hasTour: typeof data.virtualTourUrl === "string" && data.virtualTourUrl.length > 0,
+      hasShowDay: Boolean(data.onShow?.isoDate),
+      descriptionLength: typeof data.description === "string" ? data.description.trim().length : 0,
     };
   });
 }

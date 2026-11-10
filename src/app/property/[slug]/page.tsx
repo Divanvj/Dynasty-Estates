@@ -12,6 +12,7 @@ import PropertyMediaTabs from "@/components/property-media-tabs";
 import PrintButton from "@/components/print-button";
 import PropertyShareButton from "@/components/property-share-button";
 import RecordPropertyView from "@/components/record-property-view";
+import TrackedContactLink from "@/components/tracked-contact-link";
 import SavePropertyButton from "@/components/save-property-button";
 import SeoStructuredData from "@/components/seo-structured-data";
 import TenantApplicationButton from "@/components/tenant-application-button";
@@ -137,7 +138,7 @@ export default async function PropertyPage({
     <main className="min-h-screen bg-[var(--background)] px-3 py-4 text-slate-900 pb-[76px] lg:pb-6 md:px-6 lg:px-8 dark:text-white">
       <SeoStructuredData property={property} />
       {/* Feeds the homepage spotlight. Stored in the viewer's browser only. */}
-      <RecordPropertyView propertyId={property.id} />
+      <RecordPropertyView propertyId={property.id} ownerId={property.ownerId} />
       <div className="mx-auto max-w-[1400px]">
         {/* Listing actions. This was a second site header with a hand-drawn
             "D" tile; brand, menu and account are now SiteHeader (lg+) and
@@ -540,7 +541,8 @@ export default async function PropertyPage({
                 <div className={`grid gap-2.5 ${contact ? "lg:grid-cols-3" : ""}`}>
                   {contact && (
                     <>
-                      <a
+                      <TrackedContactLink
+                        listingId={property.id}
                         href={contact.whatsappHref}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -550,14 +552,15 @@ export default async function PropertyPage({
                             WhatsApp at a glance without becoming a second CTA. */}
                         <WhatsAppIcon className="h-4 w-4 text-[#128C7E] dark:text-[#25D366]" />
                         WhatsApp
-                      </a>
-                      <a
+                      </TrackedContactLink>
+                      <TrackedContactLink
+                        listingId={property.id}
                         href={contact.telHref}
                         className="pill-lg hidden w-full border border-slate-300 bg-white/80 font-bold text-slate-800 transition-all hover:bg-white lg:inline-flex dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
                       >
                         <PhoneIcon className="h-4 w-4" />
                         Call
-                      </a>
+                      </TrackedContactLink>
                     </>
                   )}
                   <PropertyInquiryButton
@@ -674,7 +677,8 @@ export default async function PropertyPage({
         <div className="flex shrink-0 items-center gap-2">
           {contact && (
             <>
-              <a
+              <TrackedContactLink
+                listingId={property.id}
                 href={contact.whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -682,14 +686,15 @@ export default async function PropertyPage({
                 className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-slate-900 shadow-md transition-all hover:brightness-95"
               >
                 <WhatsAppIcon className="h-5 w-5" />
-              </a>
-              <a
+              </TrackedContactLink>
+              <TrackedContactLink
+                listingId={property.id}
                 href={contact.telHref}
                 aria-label={`Call ${contact.name} on ${contact.phoneDisplay}`}
                 className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-800 shadow-sm transition-all hover:bg-slate-50 dark:border-white/15 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
               >
                 <PhoneIcon className="h-[18px] w-[18px]" />
-              </a>
+              </TrackedContactLink>
             </>
           )}
           {/* `kind="viewing"`, matching the card's button. This was "tour",

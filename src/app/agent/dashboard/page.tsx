@@ -15,6 +15,8 @@ import {
   StatTile,
 } from "@/components/dashboard-ui";
 import { useOwnerInquiries } from "@/components/enquiry-inbox";
+import { lastDays, sumStats } from "@/lib/listing-stats";
+import { useOwnerStats } from "@/lib/listing-stats-client";
 import { useAccountUid, useOwnerListings } from "@/lib/use-owner-listings";
 import { ACTIVE_CATALOGUE_STATUSES } from "@/lib/types/domain";
 
@@ -22,7 +24,7 @@ import { ACTIVE_CATALOGUE_STATUSES } from "@/lib/types/domain";
 // A glance, read-only: four figures and what needs the agent today, each line
 // linking to the page where it is dealt with. The enquiry inbox that used to
 // sit here (with its status buttons) is /agent/enquiries now; the listing rows
-// are /agent/listings. "Property views" stays out until views are recorded.
+// are /agent/listings. Views come from listing_stats (Phase B).
 
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 const TODAY_LIMIT = 6;
@@ -31,6 +33,8 @@ export default function AgentDashboard() {
   const uid = useAccountUid();
   const inbox = useOwnerInquiries(uid);
   const listings = useOwnerListings(uid);
+  const [since] = useState(() => lastDays(7)[0]);
+  const stats = useOwnerStats(uid, since);
   const [now] = useState(() => Date.now());
 
   const unanswered = inbox.items
@@ -83,7 +87,7 @@ export default function AgentDashboard() {
         </p>
       ) : null}
 
-      <section aria-label="Totals" className="mb-6 grid grid-cols-2 gap-4 xl:grid-cols-4">
+      <section aria-label="Totals" className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-5">
         <StatTile label="New enquiries" value={inboxReady ? `${unanswered.length}` : null} />
         <StatTile
           label="Oldest unanswered"
@@ -91,6 +95,11 @@ export default function AgentDashboard() {
           detail={inboxReady && !oldest && inbox.items.length > 0 ? "Every enquiry has a reply." : undefined}
         />
         <StatTile label="Viewing requests" value={inboxReady ? `${viewingRequests7d}` : null} detail="Last 7 days" />
+        <StatTile
+          label="Views"
+          value={stats.rows ? String(sumStats(stats.rows).views) : stats.failed ? "Error" : null}
+          detail="Last 7 days, all listings"
+        />
         <StatTile label="Active listings" value={listingsReady ? `${activeListings}` : null} detail="Published or under offer" />
       </section>
 

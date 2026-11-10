@@ -6,6 +6,7 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 import { auth } from "@/lib/firebase";
 import { HeartIcon } from "@/components/icons";
 import { isPropertySaved, setPropertySaved } from "@/lib/saved-properties";
+import { trackListing } from "@/lib/track-client";
 
 const SAVED_STORAGE_KEY = "dynasty_saved_properties";
 const SAVED_EVENT_NAME = "dynasty_saved_change";
@@ -100,6 +101,10 @@ export default function SavePropertyButton({ propertyId }: { propertyId: string 
         // Fallback already in localStorage
       }
     }
+
+    // One anonymous "save" on the listing owner's statistics. Removing a save
+    // is not subtracted: the figure is "times saved", not "currently saved".
+    if (nextSaved) trackListing(propertyId, "save");
 
     setToast(nextSaved ? "Saved to your shortlist!" : "Removed from shortlist");
     setTimeout(() => setToast(""), 2000);

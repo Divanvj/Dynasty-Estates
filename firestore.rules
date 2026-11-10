@@ -171,6 +171,15 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // Daily view / save / contact-click counts per listing (lib/listing-stats.ts,
+    // docs/dashboards/PLAN.md F1). Only the server writes them, through the
+    // Admin SDK in /api/track, which reads the owner from the listing itself.
+    // The listing's owner and admins may read; no client may write.
+    match /listing_stats/{statId} {
+      allow read: if isAdmin() || (signedIn() && resource.data.ownerId == request.auth.uid);
+      allow write: if false;
+    }
+
     // Append-only record of every moderation decision (src/lib/moderation.ts).
     // recordAuditLog() runs before the listing update it describes, so with no
     // rule here the write was denied and every moderation decision failed

@@ -9,6 +9,8 @@ import RoleGuard from "@/components/role-guard";
 import { auth } from "@/lib/firebase";
 import { ACTIVE_CATALOGUE_STATUSES, PUBLIC_LISTING_STATUSES } from "@/lib/types/domain";
 import { getSellerListings, type SellerListing } from "@/lib/seller-listings";
+import { lastDays, sumStats } from "@/lib/listing-stats";
+import { useOwnerStats, viewsByListing } from "@/lib/listing-stats-client";
 
 // Three sample listings used to show here when nobody was signed in. Only the
 // account's own stored listings are shown now.
@@ -28,6 +30,9 @@ export default function SellerPortal() {
   const [loadState, setLoadState] = useState<LoadState>(auth ? "loading" : "error");
   // Shared with the agent dashboard (components/enquiry-inbox.tsx).
   const inbox = useOwnerInquiries(user === undefined ? undefined : (user?.uid ?? null));
+  const [since] = useState(() => lastDays(30)[0]);
+  const stats = useOwnerStats(user === undefined ? undefined : (user?.uid ?? null), since);
+  const views = stats.rows ? viewsByListing(stats.rows) : null;
 
   useEffect(() => {
     if (!auth) return;
@@ -69,12 +74,13 @@ export default function SellerPortal() {
   const inquiries = inbox.items;
   const newInquiries = inquiries.filter((item) => item.status === "new").length;
 
-  // "Property views" was the third card, summing a `views` field that nothing
-  // ever writes, so it always read 0. It comes back once views are recorded.
+  // "Property views" used to sum a `views` field nothing wrote (always 0).
+  // Views now come from listing_stats, counted by /api/track (Phase B).
   const cards = [
     { label: "Active listings", value: `${activeListings}`, ready: loadState === "ready" },
     { label: "Drafts", value: `${draftListings}`, ready: loadState === "ready" },
     { label: "New enquiries", value: `${newInquiries}`, ready: inbox.state === "ready" },
+    { label: "Views, 30 days", value: stats.rows ? `${sumStats(stats.rows).views}` : "Error", ready: Boolean(stats.rows) || stats.failed },
   ];
 
   return (
@@ -106,7 +112,7 @@ export default function SellerPortal() {
           </div>
         </section>
 
-        <section aria-label="Totals" className="mb-6 grid gap-4 grid-cols-3">
+        <section aria-label="Totals" className="mb-6 grid gap-4 grid-cols-2 lg:grid-cols-4">
           {cards.map((card) => (
             <div key={card.label} className="rounded-card border border-white/45 bg-white/40 p-4 sm:p-5 shadow-[0_18px_35px_rgba(15,23,42,0.06)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <p className="text-xs uppercase tracking-[0.14em] text-slate-600 dark:text-slate-400 font-bold">{card.label}</p>
@@ -159,18 +165,25 @@ export default function SellerPortal() {
                       <p className="truncate font-semibold text-slate-900 dark:text-white">{item.title}</p>
                       <p className="mt-1 text-sm text-slate-600 dark:text-slate-300 font-medium">
                         {item.price}
+                        {views ? ` · ${views.get(item.id) ?? 0} views in 30 days` : ""}
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="rounded-full border border-emerald-400/30 bg-emerald-500/10 px-2.5 py-1 text-xs uppercase tracking-[0.14em] text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/40 font-bold">
                         {item.status}
                       </span>
+                      <Link
+                        href={`/seller/listings/${item.id}`}
+                        className="text-sm font-semibold text-emerald-800 underline-offset-2 hover:underline dark:text-emerald-300"
+                      >
+                        Performance<span className="sr-only"> of {item.title}</span>
+                      </Link>
                       {isPublic && (
                         <Link
                           href={`/property/${item.id}`}
                           className="text-sm font-semibold text-emerald-800 underline-offset-2 hover:underline dark:text-emerald-300"
                         >
-                          View<span className="sr-only"> {item.title}</span>
+                          Public page<span className="sr-only"> of {item.title}</span>
                         </Link>
                       )}
                     </div>

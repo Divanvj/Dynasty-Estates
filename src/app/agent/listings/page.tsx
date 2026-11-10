@@ -9,12 +9,14 @@ import { linkClass, PageHeading, primaryButtonClass } from "@/components/dashboa
 import { useOwnerInquiries } from "@/components/enquiry-inbox";
 import { SearchIcon } from "@/components/icons";
 import { formatDate } from "@/lib/formatters";
+import { lastDays } from "@/lib/listing-stats";
+import { useOwnerStats, viewsByListing } from "@/lib/listing-stats-client";
 import { PUBLIC_LISTING_STATUSES } from "@/lib/types/domain";
 import { useAccountUid, useOwnerListings } from "@/lib/use-owner-listings";
 
 // Pattern 1 — List / Index (docs/dashboards/PLAN.md, Phase A). Every listing
 // this account filed, searchable and filterable by status. Views per listing
-// join this table once view tracking exists (Phase B).
+// come from listing_stats (Phase B).
 
 const ALL = "all";
 
@@ -26,6 +28,9 @@ function ListingsIndex() {
   const uid = useAccountUid();
   const listings = useOwnerListings(uid);
   const inbox = useOwnerInquiries(uid);
+  const [since] = useState(() => lastDays(30)[0]);
+  const stats = useOwnerStats(uid, since);
+  const views = stats.rows ? viewsByListing(stats.rows) : null;
 
   const statuses = Array.from(new Set(listings.items.map((item) => item.status))).sort();
   const term = search.trim().toLowerCase();
@@ -41,7 +46,7 @@ function ListingsIndex() {
     <>
       <PageHeading
         title="Listings"
-        description="Every home you have filed, with its status and the enquiries it has brought in."
+        description="Every home you have filed, with its status, views and enquiries. Open one to see how it is performing."
         action={
           <Link href="/seller/listings/new" className={primaryButtonClass}>
             New listing
@@ -81,12 +86,13 @@ function ListingsIndex() {
       <div className="overflow-hidden rounded-card border border-slate-200 bg-white/70 shadow-sm dark:border-white/10 dark:bg-surface-panel/80">
         <div className="overflow-x-auto">
           {/* Messages sit below the scrolling table, so they never scroll off a phone. */}
-          <table className="w-full min-w-[640px] text-left text-sm">
+          <table className="w-full min-w-[720px] text-left text-sm">
             <thead className="border-b border-slate-200 bg-slate-50/80 text-xs uppercase tracking-wider text-slate-600 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-400">
               <tr>
                 <th scope="col" className="px-4 py-3 font-bold">Listing</th>
                 <th scope="col" className="px-4 py-3 font-bold">Status</th>
                 <th scope="col" className="px-4 py-3 font-bold">Price</th>
+                <th scope="col" className="px-4 py-3 text-right font-bold">Views, 30 d</th>
                 <th scope="col" className="px-4 py-3 text-right font-bold">Enquiries</th>
                 <th scope="col" className="px-4 py-3 font-bold">Filed</th>
                 <th scope="col" className="px-4 py-3"><span className="sr-only">Open</span></th>
@@ -99,7 +105,10 @@ function ListingsIndex() {
                   return (
                     <tr key={item.id} className="align-top">
                       <td className="px-4 py-3">
-                        <p className="font-semibold text-slate-900 dark:text-white">{item.title}</p>
+                        {/* The title opens the listing's own page (Overview, Performance, Enquiries). */}
+                        <Link href={`/agent/listings/${item.id}`} className="font-semibold text-slate-900 underline decoration-slate-300 underline-offset-4 hover:decoration-slate-900 dark:text-white dark:decoration-white/30 dark:hover:decoration-white">
+                          {item.title}
+                        </Link>
                         <p className="text-xs text-slate-600 dark:text-slate-400">{item.location}</p>
                         {item.status === "Needs changes" && item.moderationFeedback ? (
                           <p className="mt-1 text-xs text-amber-800 dark:text-amber-300">Moderator: &ldquo;{item.moderationFeedback}&rdquo;</p>
@@ -111,13 +120,14 @@ function ListingsIndex() {
                         </span>
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap font-semibold text-slate-900 dark:text-white">{item.price}</td>
+                      <td className="px-4 py-3 text-right tabular-nums">{views ? views.get(item.id) ?? 0 : "–"}</td>
                       <td className="px-4 py-3 text-right tabular-nums">{inbox.state === "ready" ? enquiryCount(item.id) : "–"}</td>
                       <td className="px-4 py-3 whitespace-nowrap">{item.createdAt ? formatDate(item.createdAt) : "–"}</td>
                       <td className="px-4 py-3 text-right whitespace-nowrap">
-                        {/* Only public listings have a page; there is no edit screen yet. */}
+                        {/* Only public listings have a public page; there is no edit screen yet. */}
                         {isPublic ? (
                           <Link href={`/property/${item.id}`} className={linkClass}>
-                            View<span className="sr-only"> {item.title}</span>
+                            Public page<span className="sr-only"> of {item.title}</span>
                           </Link>
                         ) : null}
                       </td>
