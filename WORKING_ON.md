@@ -9,12 +9,17 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/dashboards-phase-a` | app/agent/*, app/admin/*, mobile-nav agent/admin tabs, enquiry-inbox | 2026-11-10 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-11 — `DESKTOP-1R37EBU/dashboards-phase-a` merged (plan: `docs/dashboards/PLAN.md`). **/admin and
+  /agent are now several routes** with a shared shell + tab row in each `layout.tsx` (`admin-shell.tsx`,
+  `agent-shell.tsx`; RoleGuard lives there, not in the pages). New: `/agent/enquiries`, `/agent/listings`,
+  `/admin/moderation|support|audit|packages`. Shared UI in `components/dashboard-ui.tsx` (tiles, tab row,
+  `ConfirmDialog`). No schema or rules change.
 
 - 2026-11-10 — `DESKTOP-1R37EBU/agent-dashboard-fixes` merged. **Agents no longer read every enquiry**:
   `inquiries` read/update/delete is admin, sender or listing owner (rules deployed live). The agent
