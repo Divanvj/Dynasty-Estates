@@ -9,12 +9,16 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/agent-dashboard-fixes` | agent/dashboard, lib/agent-inquiries.ts, inquiries rules | 2026-11-10 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-10 — `DESKTOP-1R37EBU/agent-dashboard-fixes` merged. **Agents no longer read every enquiry**:
+  `inquiries` read/update/delete is admin, sender or listing owner (rules deployed live). The agent
+  dashboard and seller portal share `components/enquiry-inbox.tsx` (`useOwnerInquiries` + `EnquiryList`);
+  `lib/agent-inquiries.ts` is gone. "Property views" removed — nothing writes `views` yet.
 
 - 2026-11-10 — `DESKTOP-1R37EBU/seller-enquiries` merged. **Enquiries carry `ownerId`** (the listing's owner;
   rules check it against `properties/{propertyId}`). Owners read them in the seller portal's new Enquiries
