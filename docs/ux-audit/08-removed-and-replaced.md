@@ -173,6 +173,28 @@ Unchanged: the map views inside `/search` (Map view) and the home feed still use
 | "🗺️ Street View & Map" tab, "👁️ Street View 360°" and "🗺️ Google Map" buttons | Line map icon + "Street View & Map"; buttons "Street View" and "Map" | `property-media-tabs.tsx` |
 | Media tabs wrapping one per line on phones | One row (scrolls sideways if ever too wide) | `property-media-tabs.tsx` |
 
+## Dashboards Phase A — one page per job (11 Nov, docs/dashboards/PLAN.md)
+
+| Was | Now | Where |
+|---|---|---|
+| /admin: one page with five tab *buttons* (Moderation Queue, Fraud Signals, Commercial Packages, Audit Trail, Support); a refresh or link always landed on Moderation | Five routes with a tab row: **Overview** `/admin`, **Moderation** `/admin/moderation`, **Support** `/admin/support`, **Audit trail** `/admin/audit`, **Packages** `/admin/packages` | `admin/layout.tsx`, new `admin/admin-shell.tsx`, new route folders |
+| /admin header "Governance & Trust · ADMIN · Platform Command Console" and an "Agent View" pill | **Removed**; page heading per route. The agent console stays reachable from the account menu | `admin/page.tsx` |
+| /admin had no overview | **Overview**: Live listings · Waiting for review (+ oldest) · Enquiries, 7 days · Support requests (new) · Package requests (open), and a "Needs action" list linking to each item | `admin/page.tsx`, new `lib/admin-overview.ts` |
+| Moderation: stacked cards with an optional feedback box and Approve / Request Changes / Reject that fired at once (Reject archived the listing with no confirmation); newest first; 20 items | Split pane: compact list (oldest first, 50 items, search, All / Fraud signals filter, arrow keys) and the selected listing (cover photo, details, fraud signals, note). "Send back for changes" and "Reject…" need a note; **Reject asks "Reject '{title}'?" first** (Cancel focused) | `admin/moderation/page.tsx`, `lib/moderation.ts` |
+| "Fraud Signals" tab (a second list of the same items) | **Removed**; signals show on the item and as a filter | same |
+| Support: read-only list | Inbox with New / In progress / Closed filters and status buttons (Mark in progress, Close, Reopen); package requests tagged | `admin/support/page.tsx`, `lib/support-requests.ts` |
+| Audit trail: table of raw codes (`moderation.approved`, `properties/abc`), last 25 | Feed in plain words ("… approved and published listing abc"), newest first, **Load more** | `admin/audit/page.tsx` |
+| Agent dashboard: four counters plus an editable enquiry inbox and the listing rows on one page | Read-only **Dashboard** (New enquiries · Oldest unanswered · Viewing requests, 7 days · Active listings + "Needs you today"), **Enquiries** `/agent/enquiries` (All / New / Contacted), **Listings** `/agent/listings` (search, status filter, enquiries per listing, moderator's note on sent-back listings). Tab row on all three | `agent/*`, new `agent/agent-shell.tsx` |
+| Agent phone tab bar: Console · Mandate · Browse · **Directory** · Account | Console · Mandate · Browse · **Enquiries** · Account (the agent directory is still in the header) | `mobile-nav.tsx` |
+| New enquiries looked like contacted ones apart from the chip | Bold title and a green leading bar (agent and seller portal) | `enquiry-inbox.tsx` |
+
+## Agent dashboard fixes (10 Nov)
+
+| Was | Now | Where |
+|---|---|---|
+| Agent dashboard "Recent enquiries": any 20 enquiries on the platform (other agents' and private sellers' buyers), unordered, undated; rules let every agent read and edit every enquiry | Only enquiries on the agent's own listings, newest first; rules: admin, sender or listing owner (deployed) | `agent/dashboard`, `firestore.rules`, `lib/agent-inquiries.ts` (deleted) |
+| "Property views" figure and "0 views" per listing (nothing records views) | **Removed** until view tracking exists (plan Phase B) | `agent/dashboard`, `seller/portal` |
+
 ## Seller enquiries (10 Nov)
 
 | Was | Now | Where |

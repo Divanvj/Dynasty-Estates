@@ -57,10 +57,11 @@ const NAV: Record<UserRole, NavItem[]> = {
     ACCOUNT,
   ],
   Agent: [
-    { href: "/agent/dashboard", label: "Console", icon: BriefcaseIcon },
+    { href: "/agent/dashboard", label: "Console", icon: BriefcaseIcon, match: ["/agent/listings"] },
     { href: "/seller/listings/new", label: "Mandate", icon: HomeIcon },
     { href: "/search", label: "Browse", icon: SearchIcon, match: ["/property", "/for-sale", "/to-rent"] },
-    { href: "/agents", label: "Directory", icon: UsersIcon },
+    // Was Directory (/agents, the public practitioner list, still in the header).
+    { href: "/agent/enquiries", label: "Enquiries", icon: UsersIcon },
     ACCOUNT,
   ],
   Admin: [

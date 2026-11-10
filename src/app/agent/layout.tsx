@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import AgentShell from "./agent-shell";
+
 export const metadata: Metadata = {
   title: "Practitioner Workspace | Dynasty Estates",
   robots: {
@@ -13,5 +15,5 @@ export default function AgentPortalLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return <AgentShell>{children}</AgentShell>;
 }

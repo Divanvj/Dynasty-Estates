@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import AdminShell from "./admin-shell";
+
 export const metadata: Metadata = {
   title: "Admin Portal | Dynasty Estates",
   robots: {
@@ -13,5 +15,5 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return <AdminShell>{children}</AdminShell>;
 }

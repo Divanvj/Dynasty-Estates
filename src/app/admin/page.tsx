@@ -1,433 +1,150 @@
 "use client";
 
 import Link from "next/link";
-import { onAuthStateChanged, type User } from "firebase/auth";
 import { useEffect, useState } from "react";
 
-import RoleGuard from "@/components/role-guard";
-import { BriefcaseIcon, CheckIcon, InfoCircleIcon, ShieldIcon, TagIcon } from "@/components/icons";
-import { auth } from "@/lib/firebase";
-import { agentPlans, listingExtensions, listingPackages } from "@/lib/pricing";
-import { formatDateTime, formatNumber } from "@/lib/formatters";
-import { getSupportRequests, type SupportRequest } from "@/lib/support-requests";
 import {
-  executeModerationDecision,
-  getAuditLogs,
-  getPendingModerationQueue,
-  type AuditLogEntry,
-  type ModerationDecision,
-  type ModerationItem,
-} from "@/lib/moderation";
+  emptyBoxClass,
+  errorBoxClass,
+  formatAge,
+  linkClass,
+  PageHeading,
+  panelClass,
+  rowClass,
+  StatTile,
+} from "@/components/dashboard-ui";
+import { countEnquiriesSince, countLiveListings, getWaitingForReview, type WaitingListing } from "@/lib/admin-overview";
+import { getSupportRequests, PACKAGE_REQUEST_PREFIX, type SupportRequest } from "@/lib/support-requests";
+import { useAccountUid } from "@/lib/use-owner-listings";
 
-export default function AdminPage() {
-  const [user, setUser] = useState<User | null>(null);
-  const [activeTab, setActiveTab] = useState<"moderation" | "fraud" | "billing" | "audit" | "support">("moderation");
-  const [supportRequests, setSupportRequests] = useState<SupportRequest[]>([]);
-  const [supportError, setSupportError] = useState("");
-  const [queue, setQueue] = useState<ModerationItem[]>([]);
-  const [auditLogs, setAuditLogs] = useState<AuditLogEntry[]>([]);
-  const [feedbackMap, setFeedbackMap] = useState<Record<string, string>>({});
-  const [actionNotice, setActionNotice] = useState("");
-  const [errorNotice, setErrorNotice] = useState("");
-  // So an empty list reads "nothing waiting" only once the queue has loaded.
-  const [loaded, setLoaded] = useState(false);
+// Pattern 4 — Dashboard / Overview (docs/dashboards/PLAN.md, Phase A). The
+// platform's business pulse at a glance, read-only; every line links to the
+// page that deals with it. Errors, deploys and vitals belong to the developer
+// console, not here.
 
+type Loaded<T> = { ok: true; value: T } | { ok: false } | null;
+
+/** Runs `load` once the admin is signed in; each figure fails on its own. */
+function useLoaded<T>(uid: string | null | undefined, load: () => Promise<T>): Loaded<T> {
+  const [result, setResult] = useState<Loaded<T>>(null);
   useEffect(() => {
-    async function loadData() {
-      try {
-        const [items, logs] = await Promise.all([getPendingModerationQueue(), getAuditLogs()]);
-        setQueue(items);
-        setAuditLogs(logs);
-        setErrorNotice("");
-      } catch (error) {
-        setQueue([]);
-        setAuditLogs([]);
-        setErrorNotice(
-          error instanceof Error ? error.message : "Unable to load the moderation console.",
-        );
-      } finally {
-        setLoaded(true);
-      }
-      // Separate, so a missing support rule cannot take the moderation queue down with it.
-      try {
-        setSupportRequests(await getSupportRequests());
-        setSupportError("");
-      } catch (error) {
-        setSupportRequests([]);
-        setSupportError(error instanceof Error ? error.message : "Unable to load support requests.");
-      }
-    }
-
-    if (!auth) {
-      void loadData();
-      return;
-    }
-
-    return onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      void loadData();
-    });
-  }, []);
-
-  async function handleDecision(listingId: string, decision: ModerationDecision) {
-    const feedback = feedbackMap[listingId] ?? "";
-    const moderatorId = user?.uid ?? "admin-system";
-    const moderatorEmail = user?.email ?? "compliance@dynastyestates.co.za";
-
-    // Only report success once the write has actually landed. This previously ran
-    // unconditionally, so a denied update still produced a success banner.
-    try {
-      await executeModerationDecision(listingId, decision, feedback, moderatorId, moderatorEmail);
-    } catch (error) {
-      setErrorNotice(
-        error instanceof Error ? error.message : `Could not apply the "${decision}" decision.`,
-      );
-      return;
-    }
-
-    setQueue((prev) =>
-      prev.map((item) => (item.id === listingId ? { ...item, status: decision === "Approved" ? "Approved" : "Needs changes" } : item))
-    );
-
-    try {
-      setAuditLogs(await getAuditLogs());
-    } catch (error) {
-      console.error("Decision applied but the audit trail could not be reloaded:", error);
-    }
-
-    setErrorNotice("");
-    setActionNotice(`Listing marked as ${decision}.`);
-    setTimeout(() => setActionNotice(""), 4000);
-  }
-
-  const fraudFlagged = queue.filter((i) => (i.fraudSignals ?? []).length > 0);
-
-  return (
-    <RoleGuard allowedRoles={["Admin"]} featureName="Platform Administration">
-      <main className="min-h-screen bg-[var(--background)] px-3 py-4 text-slate-900 md:px-8 dark:text-white">
-        <div className="mx-auto max-w-6xl">
-        {/* Admin Command Header */}
-        <div className="mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs uppercase tracking-[0.2em] text-slate-600 hidden sm:inline dark:text-emerald-400 font-bold">Governance & Trust</span>
-                <span className="rounded-full bg-slate-900 px-2 py-0.5 text-xs font-bold text-white dark:bg-emerald-700">ADMIN</span>
-              </div>
-              <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">
-                <span className="hidden sm:inline">Platform </span>Command Console
-              </h1>
-            </div>
-          </div>
-          <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5 gap-y-2 sm:gap-2.5">
-            <Link
-              href="/agent/dashboard"
-              className="pill border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-white"
-            >
-              Agent View
-            </Link>
-          </div>
-        </div>
-
-        {errorNotice && (
-          <div
-            role="alert"
-            className="mb-4 rounded-2xl border border-rose-300 bg-rose-100/80 px-4 py-2.5 text-xs font-medium text-rose-900 dark:border-rose-500/40 dark:bg-rose-500/10 dark:text-rose-200"
-          >
-            <span>{errorNotice}</span>
-          </div>
-        )}
-
-        {actionNotice && (
-          <div className="mb-4 flex items-center gap-2 rounded-2xl border border-emerald-300 bg-emerald-100/80 dark:bg-emerald-500/20 dark:border-emerald-500/40 dark:text-emerald-300 px-4 py-2.5 text-xs font-medium text-emerald-900">
-            <CheckIcon className="h-4 w-4 text-emerald-700 dark:text-emerald-300 shrink-0" />
-            <span>{actionNotice}</span>
-          </div>
-        )}
-
-        {/* Tab Navigation */}
-        <div className="mb-6 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {[
-            { key: "moderation", label: `Moderation Queue (${queue.length})`, Icon: ShieldIcon },
-            { key: "fraud", label: `Fraud Signals (${fraudFlagged.length})`, Icon: InfoCircleIcon },
-            { key: "billing", label: "Commercial Packages", Icon: TagIcon },
-            { key: "audit", label: `Audit Trail (${auditLogs.length})`, Icon: BriefcaseIcon },
-            { key: "support", label: `Support (${supportRequests.length})`, Icon: InfoCircleIcon },
-          ].map((tab) => {
-            const TabIcon = tab.Icon;
-            return (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key as typeof activeTab)}
-                className={`flex items-center gap-2 rounded-2xl px-3.5 sm:px-4 py-2.5 text-xs font-semibold transition-all cursor-pointer whitespace-nowrap shrink-0 ${
-                  activeTab === tab.key
-                    ? "border border-slate-950 bg-slate-950 text-white shadow-md dark:border-emerald-500/50 dark:bg-emerald-700 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
-                    : "border border-white/70 bg-white/45 text-slate-700 hover:bg-white/75 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-white"
-                }`}
-              >
-                <TabIcon className="h-4 w-4 shrink-0" />
-                <span>{tab.label}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* TAB 1: Moderation Queue */}
-        {activeTab === "moderation" && (
-          <section className="space-y-4">
-            <div className="rounded-card border border-white/80 bg-white/50 p-5 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-              <h2 className="text-xl font-bold text-slate-950 dark:text-white">Submitted Listings for Review</h2>
-              <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
-                Inspect seller submissions for accurate details, South African POPIA compliance, and quality scoring.
-              </p>
-            </div>
-
-            <div className="grid gap-4">
-              {!loaded && <p role="status" className="p-1 text-sm text-slate-600 dark:text-slate-400">Loading the queue…</p>}
-              {loaded && !errorNotice && queue.length === 0 && (
-                <p className="rounded-control border border-dashed border-slate-300 dark:border-white/15 p-4 text-sm text-slate-600 dark:text-slate-400">Nothing is waiting for review.</p>
-              )}
-              {queue.map((item) => (
-                <div
-                  key={item.id}
-                  className="rounded-card border border-white/80 bg-white/50 p-5 shadow-[0_12px_28px_rgba(36,48,50,0.06)] backdrop-blur-xl dark:bg-surface-ink/70 dark:border-white/10"
-                >
-                  <div className="flex flex-col justify-between gap-3 md:flex-row md:items-start">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="rounded-full bg-slate-900/10 px-2.5 py-0.5 text-xs font-bold text-slate-800 dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:text-slate-300">
-                          {item.status}
-                        </span>
-                        <span className="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border dark:border-emerald-500/30">
-                          Quality {item.qualityScore}%
-                        </span>
-                        {item.fraudSignals && item.fraudSignals.length > 0 ? (
-                          <span className="rounded-full bg-rose-500/15 px-2.5 py-0.5 text-xs font-bold text-rose-700 dark:bg-rose-500/20 dark:text-rose-300 dark:border dark:border-rose-500/30">
-                            Fraud Signal
-                          </span>
-                        ) : null}
-                      </div>
-                      <h3 className="mt-2 text-lg font-bold text-slate-950 dark:text-white">{item.title}</h3>
-                      <p className="text-xs text-slate-600 dark:text-slate-400">{item.location} · {item.sellerEmail}</p>
-                      <p className="mt-1 text-sm font-extrabold text-emerald-700 dark:text-emerald-400 dark:drop-shadow-[0_0_8px_rgba(16,185,129,0.25)]">{item.price}</p>
-                    </div>
-
-                    <div className="flex flex-col gap-2 md:w-80">
-                      <input
-                        type="text"
-                        placeholder="Feedback or reason (optional)..."
-                        value={feedbackMap[item.id] ?? ""}
-                        onChange={(e) => setFeedbackMap((prev) => ({ ...prev, [item.id]: e.target.value }))}
-                        className="rounded-xl border border-slate-300/80 bg-white px-3 py-1.5 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-200 dark:placeholder:text-slate-500"
-                      />
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => void handleDecision(item.id, "Approved")}
-                          className="inline-flex items-center justify-center gap-1 flex-1 rounded-xl bg-emerald-600 py-2 text-xs font-semibold text-white shadow-sm hover:bg-emerald-700 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] cursor-pointer"
-                        >
-                          <CheckIcon className="h-3.5 w-3.5" />
-                          <span>Approve</span>
-                        </button>
-                        <button
-                          onClick={() => void handleDecision(item.id, "Needs changes")}
-                          className="flex-1 rounded-xl border border-amber-300 bg-amber-50 py-2 text-xs font-semibold text-amber-800 hover:bg-amber-100 dark:bg-amber-950/40 dark:border-amber-500/30 dark:text-amber-200 dark:hover:bg-amber-900/40 cursor-pointer"
-                        >
-                          Request Changes
-                        </button>
-                        <button
-                          onClick={() => void handleDecision(item.id, "Rejected")}
-                          className="flex-1 rounded-xl border border-rose-300 bg-rose-50 py-2 text-xs font-semibold text-rose-800 hover:bg-rose-100 dark:bg-rose-950/40 dark:border-rose-500/30 dark:text-rose-200 dark:hover:bg-rose-900/40 cursor-pointer"
-                        >
-                          Reject
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* TAB 2: Fraud Signals */}
-        {activeTab === "fraud" && (
-          <section className="space-y-4">
-            <div className="rounded-card border border-white/80 bg-white/50 p-5 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-              <h2 className="text-xl font-bold text-slate-950 dark:text-white">Automated Fraud & Duplicate Alerts</h2>
-              <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
-                Signals generated by perceptual hashing and PPRA practitioner licence verification.
-              </p>
-            </div>
-
-            <div className="grid gap-3">
-              {loaded && !errorNotice && fraudFlagged.length === 0 && (
-                <p className="rounded-control border border-dashed border-slate-300 dark:border-white/15 p-4 text-sm text-slate-600 dark:text-slate-400">No submitted listing has a fraud signal.</p>
-              )}
-              {fraudFlagged.map((item) => (
-                <div key={item.id} className="rounded-card border border-rose-200 bg-rose-50/70 dark:bg-rose-950/30 dark:border-rose-500/30 p-4">
-                  <h3 className="text-sm font-bold text-rose-950 dark:text-rose-200">{item.title} ({item.price})</h3>
-                  <p className="text-xs text-rose-800 dark:text-rose-300 mt-1">Reported by system on submission from {item.sellerEmail}</p>
-                  <ul className="mt-2 space-y-1 text-xs text-rose-900 dark:text-rose-200 font-medium">
-                    {item.fraudSignals?.map((sig, idx) => (
-                      <li key={idx} className="flex items-center gap-1.5">
-                        <InfoCircleIcon className="h-3.5 w-3.5 text-rose-600 dark:text-rose-400 shrink-0" />
-                        <span>{sig}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* TAB 3: Commercial Packages */}
-        {activeTab === "billing" && (
-          <section className="space-y-4">
-            <div className="rounded-card border border-white/80 bg-white/50 p-5 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-              <h2 className="text-xl font-bold text-slate-950 dark:text-white">Packages and plans</h2>
-              {/* Read from src/lib/pricing.ts, the same list /pricing shows.
-                  The three packages that used to sit here (R1,450 / R2,950 /
-                  R5,800) were hardcoded and advertised features that don't
-                  exist. Requests arrive in the Support tab as "Package
-                  request: …"; invoice them by hand until payment is online. */}
-              <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
-                The published price list. Package and plan requests arrive in the Support tab. Payment is by invoice until online payment is built.
-              </p>
-              <Link href="/pricing" className="mt-2 inline-block text-sm font-semibold text-emerald-800 underline underline-offset-4 dark:text-emerald-300">
-                Open the public prices page
-              </Link>
-            </div>
-
-            <div className="grid gap-4 lg:grid-cols-3">
-              {([
-                ["Private sale (incl. VAT)", listingPackages.filter((pkg) => pkg.audience === "sale"), listingExtensions.find((ext) => ext.audience === "sale")],
-                ["Private rental (incl. VAT)", listingPackages.filter((pkg) => pkg.audience === "rent"), listingExtensions.find((ext) => ext.audience === "rent")],
-              ] as const).map(([title, pkgs, ext]) => (
-                <div key={title} className="rounded-card border border-white/80 bg-white/50 p-5 shadow-sm dark:bg-surface-ink/70 dark:border-white/10">
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white">{title}</h3>
-                  <ul className="mt-3 space-y-1.5 text-sm text-slate-700 dark:text-slate-300">
-                    {pkgs.map((pkg) => (
-                      <li key={pkg.id} className="flex justify-between gap-3">
-                        <span>{pkg.name} · {pkg.durationDays} days</span>
-                        <span className="font-semibold tabular-nums">R {formatNumber(pkg.priceZAR)}</span>
-                      </li>
-                    ))}
-                    {ext && (
-                      <li className="flex justify-between gap-3 border-t border-slate-200/60 pt-1.5 dark:border-white/10">
-                        <span>Extend · +{ext.durationDays} days</span>
-                        <span className="font-semibold tabular-nums">R {formatNumber(ext.priceZAR)}</span>
-                      </li>
-                    )}
-                  </ul>
-                </div>
-              ))}
-              <div className="rounded-card border border-white/80 bg-white/50 p-5 shadow-sm dark:bg-surface-ink/70 dark:border-white/10">
-                <h3 className="text-base font-bold text-slate-900 dark:text-white">Agent plans (per month, excl. VAT)</h3>
-                <ul className="mt-3 space-y-1.5 text-sm text-slate-700 dark:text-slate-300">
-                  {agentPlans.map((plan) => (
-                    <li key={plan.id} className="flex justify-between gap-3">
-                      <span>{plan.name} · {plan.liveListings ?? "150+"} listings</span>
-                      <span className="font-semibold tabular-nums">
-                        {plan.monthlyZAR === null ? "Quoted" : `R ${formatNumber(plan.monthlyZAR)}`}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* TAB 4: Audit Trail */}
-        {activeTab === "audit" && (
-          <section className="space-y-4">
-            <div className="rounded-card border border-white/80 bg-white/50 p-5 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-              <h2 className="text-xl font-bold text-slate-950 dark:text-white">Immutable Security Audit Trail</h2>
-              <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
-                Chronological record of sensitive actions, privilege escalations, and moderation decisions.
-              </p>
-            </div>
-
-            <div className="overflow-hidden rounded-card border border-white/80 bg-white/55 shadow-sm backdrop-blur-xl dark:bg-surface-ink/60 dark:border-white/10">
-              <table className="w-full text-left text-xs">
-                <thead className="border-b border-slate-200/80 bg-white/40 text-xs uppercase tracking-wider text-slate-600 dark:border-white/10 dark:bg-surface-panel dark:text-slate-400">
-                  <tr>
-                    <th className="py-3 px-4">Timestamp</th>
-                    <th className="py-3 px-4">Actor</th>
-                    <th className="py-3 px-4">Action</th>
-                    <th className="py-3 px-4">Resource</th>
-                    <th className="py-3 px-4">Details</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-200/60 dark:divide-white/5 text-slate-700 dark:text-slate-300">
-                  {loaded && auditLogs.length === 0 && (
-                    <tr>
-                      <td colSpan={5} className="py-6 px-4 text-center text-sm text-slate-600 dark:text-slate-400">
-                        {errorNotice ? "The audit trail could not be loaded." : "No actions recorded yet."}
-                      </td>
-                    </tr>
-                  )}
-                  {auditLogs.map((log) => (
-                    <tr key={log.id} className="hover:bg-white/40 dark:hover:bg-surface-panel/60 transition-colors">
-                      <td className="py-3 px-4 whitespace-nowrap text-slate-600 dark:text-slate-400">
-                        {formatDateTime(log.timestamp)}
-                      </td>
-                      <td className="py-3 px-4 font-semibold text-slate-900 dark:text-white">
-                        {log.actorEmail ?? log.actorId}
-                      </td>
-                      <td className="py-3 px-4">
-                        <span className="rounded-full bg-slate-900/10 dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:text-emerald-300 px-2.5 py-0.5 font-mono text-xs font-bold">
-                          {log.action}
-                        </span>
-                      </td>
-                      <td className="py-3 px-4 font-mono text-xs text-slate-600 dark:text-slate-300">{log.resource}</td>
-                      <td className="py-3 px-4 text-slate-600 dark:text-slate-300">{log.details}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
-        )}
-
-        {/* TAB 5: Support requests from the account menu's Support & Guidance form */}
-        {activeTab === "support" && (
-          <section className="space-y-4">
-            <div className="rounded-card border border-white/80 bg-white/50 p-5 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
-              <h2 className="text-xl font-bold text-slate-950 dark:text-white">Support Requests</h2>
-              <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
-                Sent from Support &amp; Guidance in the account menu. Reply to the sender by email; nothing is sent automatically.
-              </p>
-            </div>
-            {supportError ? (
-              <p className="rounded-2xl border border-rose-300/30 bg-rose-400/10 p-3 text-sm text-rose-900 dark:text-rose-200">{supportError}</p>
-            ) : supportRequests.length === 0 ? (
-              <p className="rounded-control border border-dashed border-slate-300 dark:border-white/15 p-4 text-sm text-slate-600 dark:text-slate-400">No support requests yet.</p>
-            ) : (
-              <ul className="space-y-3">
-                {supportRequests.map((request) => (
-                  <li key={request.id} className="rounded-card border border-white/80 bg-white/55 p-4 text-xs shadow-sm dark:bg-surface-ink/60 dark:border-white/10">
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      {request.userEmail ? (
-                        <a href={`mailto:${request.userEmail}`} className="font-bold text-emerald-700 hover:underline dark:text-emerald-400">{request.userEmail}</a>
-                      ) : (
-                        <span className="font-bold text-slate-900 dark:text-white">{request.userId}</span>
-                      )}
-                      <span className="text-slate-600 dark:text-slate-400">
-                        {request.createdAt ? formatDateTime(request.createdAt) : "Just now"} · {request.status}
-                      </span>
-                    </div>
-                    <p className="mt-2 whitespace-pre-wrap text-slate-700 dark:text-slate-300">{request.message}</p>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </section>
-        )}
-      </div>
-    </main>
-    </RoleGuard>
-  );
+    if (!uid) return;
+    let cancelled = false;
+    load()
+      .then((value) => !cancelled && setResult({ ok: true, value }))
+      .catch((error) => {
+        console.error("Admin overview figure failed:", error);
+        if (!cancelled) setResult({ ok: false });
+      });
+    return () => {
+      cancelled = true;
+    };
+    // `load` is a stable module-level function per call site.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uid]);
+  return result;
 }
 
+const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
+
+function show<T>(loaded: Loaded<T>, format: (value: T) => string): string | null {
+  if (!loaded) return null;
+  return loaded.ok ? format(loaded.value) : "Error";
+}
+
+export default function AdminOverview() {
+  const uid = useAccountUid();
+  const [now] = useState(() => Date.now());
+  const live = useLoaded(uid, countLiveListings);
+  const enquiries = useLoaded(uid, () => countEnquiriesSince(new Date(Date.now() - SEVEN_DAYS_MS)));
+  const waiting = useLoaded<WaitingListing[]>(uid, getWaitingForReview);
+  const support = useLoaded<SupportRequest[]>(uid, getSupportRequests);
+
+  const openSupport = support?.ok ? support.value.filter((r) => r.status !== "closed") : [];
+  const newSupport = openSupport.filter((r) => r.status === "new" && !r.message.startsWith(PACKAGE_REQUEST_PREFIX));
+  const openPackages = openSupport.filter((r) => r.message.startsWith(PACKAGE_REQUEST_PREFIX));
+  const oldestWaiting = waiting?.ok ? waiting.value.find((w) => w.submittedAt)?.submittedAt ?? null : null;
+  const anyFailed = [live, enquiries, waiting, support].some((x) => x && !x.ok);
+
+  type Action = { key: string; title: string; detail: string; href: string; age?: string };
+  const actions: Action[] = [
+    ...(waiting?.ok ? waiting.value.slice(0, 3) : []).map((w) => ({
+      key: `mod-${w.id}`,
+      title: `Review “${w.title}”`,
+      detail: "Waiting for moderation",
+      href: `/admin/moderation?id=${encodeURIComponent(w.id)}`,
+      age: w.submittedAt ? `Waiting ${formatAge(w.submittedAt, now)}` : undefined,
+    })),
+    ...openPackages.slice(0, 3).map((r) => ({
+      key: `pkg-${r.id}`,
+      title: r.message.split("\n")[0],
+      detail: `${r.userEmail ?? r.userId} · invoice by hand`,
+      href: "/admin/support?show=new",
+      age: r.createdAt ? formatAge(new Date(r.createdAt), now) + " ago" : undefined,
+    })),
+    ...newSupport.slice(0, 3).map((r) => ({
+      key: `sup-${r.id}`,
+      title: `Answer ${r.userEmail ?? "a user"}`,
+      detail: r.message.length > 90 ? `${r.message.slice(0, 90)}…` : r.message,
+      href: "/admin/support?show=new",
+      age: r.createdAt ? formatAge(new Date(r.createdAt), now) + " ago" : undefined,
+    })),
+  ];
+  const allLoaded = Boolean(waiting && support);
+
+  return (
+    <>
+      <PageHeading
+        title="Overview"
+        description="How the marketplace is doing and what is waiting for the Dynasty team."
+      />
+
+      <section aria-label="Totals" className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-5">
+        <StatTile label="Live listings" value={show(live, String)} detail="Published or under offer" />
+        <StatTile
+          label="Waiting for review"
+          value={show(waiting, (v) => String(v.length))}
+          detail={oldestWaiting ? `Oldest ${formatAge(oldestWaiting, now)}` : waiting?.ok ? "Queue is clear" : undefined}
+        />
+        <StatTile label="Enquiries" value={show(enquiries, String)} detail="Last 7 days" />
+        <StatTile label="Support requests" value={support?.ok ? String(newSupport.length) : show(support, () => "")} detail="New, not yet answered" />
+        <StatTile label="Package requests" value={support?.ok ? String(openPackages.length) : show(support, () => "")} detail="Open, to invoice" />
+      </section>
+
+      {anyFailed ? (
+        <p role="alert" className={`mb-4 ${errorBoxClass}`}>
+          Some figures couldn&rsquo;t be loaded. Check your connection and refresh the page.
+        </p>
+      ) : null}
+
+      <section aria-labelledby="actions-heading" className={panelClass}>
+        <h2 id="actions-heading" className="mb-4 text-2xl font-semibold text-slate-900 dark:text-white">Needs action</h2>
+        {!allLoaded ? (
+          <p role="status" className="text-sm text-slate-600 dark:text-slate-300">Loading…</p>
+        ) : actions.length === 0 ? (
+          <p className={emptyBoxClass}>Nothing is waiting. Submitted listings, package requests and support messages show here.</p>
+        ) : (
+          <ul className="space-y-3">
+            {actions.map((item) => (
+              <li key={item.key}>
+                <Link href={item.href} className={`${rowClass} flex flex-wrap items-center justify-between gap-x-4 gap-y-1 hover:border-slate-300 hover:bg-white dark:hover:bg-surface-ink`}>
+                  <span className="min-w-0">
+                    <span className="block font-semibold text-slate-900 dark:text-white">{item.title}</span>
+                    <span className="mt-0.5 block truncate text-sm text-slate-600 dark:text-slate-300">{item.detail}</span>
+                  </span>
+                  <span className="flex items-center gap-3 text-sm">
+                    {item.age ? <span className="font-semibold text-amber-800 dark:text-amber-300">{item.age}</span> : null}
+                    <span aria-hidden="true" className="text-slate-400">→</span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+        <p className="mt-4 text-sm text-slate-600 dark:text-slate-300">
+          Prices and plans: <Link href="/admin/packages" className={linkClass}>Packages</Link>.
+        </p>
+      </section>
+    </>
+  );
+}

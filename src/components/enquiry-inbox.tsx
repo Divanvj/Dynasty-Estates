@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+import { emptyBoxClass, errorBoxClass, formatAge, linkClass } from "@/components/dashboard-ui";
 import { formatDateTime } from "@/lib/formatters";
 import {
   getSellerInquiries,
@@ -74,23 +75,12 @@ export function useOwnerInquiries(uid: string | null | undefined) {
   return { items, state, savingId, statusError, toggle };
 }
 
-/** "3 h", "2 d": how long a new enquiry has waited for a reply. */
-function waitingFor(createdAt: Date, now: number): string {
-  const minutes = Math.max(0, Math.floor((now - createdAt.getTime()) / 60000));
-  if (minutes < 60) return `${minutes} min`;
-  const hours = Math.floor(minutes / 60);
-  if (hours < 48) return `${hours} h`;
-  return `${Math.floor(hours / 24)} d`;
-}
-
 /** wa.me wants the international number without "+": 082 123 4567 → 27821234567. */
 function whatsappHref(phone: string): string | null {
   let digits = phone.replace(/\D/g, "");
   if (digits.startsWith("0") && digits.length === 10) digits = `27${digits.slice(1)}`;
   return digits.length >= 10 ? `https://wa.me/${digits}` : null;
 }
-
-const linkClass = "font-semibold text-emerald-800 underline-offset-2 hover:underline dark:text-emerald-300";
 
 export function EnquiryList({
   items,
@@ -106,7 +96,7 @@ export function EnquiryList({
   return (
     <>
       {statusError ? (
-        <p role="alert" className="mb-3 rounded-control border border-rose-200 bg-rose-50 p-3.5 text-sm text-rose-800 dark:border-rose-500/30 dark:bg-rose-950/40 dark:text-rose-200">
+        <p role="alert" className={`mb-3 ${errorBoxClass}`}>
           {statusError}
         </p>
       ) : null}
@@ -116,13 +106,13 @@ export function EnquiryList({
       )}
 
       {state === "error" && (
-        <p role="alert" className="rounded-control border border-rose-200 bg-rose-50 p-3.5 text-sm text-rose-800 dark:border-rose-500/30 dark:bg-rose-950/40 dark:text-rose-200">
+        <p role="alert" className={errorBoxClass}>
           Your enquiries couldn&rsquo;t be loaded. Check your connection and refresh the page.
         </p>
       )}
 
       {state === "ready" && items.length === 0 && (
-        <p className="rounded-control border border-dashed border-slate-300 p-6 text-center text-sm text-slate-600 dark:border-white/15 dark:text-slate-300">
+        <p className={emptyBoxClass}>
           {emptyMessage}
         </p>
       )}
@@ -133,10 +123,19 @@ export function EnquiryList({
             const isNew = item.status === "new";
             const whatsapp = item.contactPhone ? whatsappHref(item.contactPhone) : null;
             return (
-              <li key={item.id} className="rounded-control border border-slate-200 bg-[#f4f7f7] p-3.5 dark:border-white/10 dark:bg-surface-ink/70">
+              // New ones carry weight AND a leading accent, so unread is not colour alone.
+              <li
+                key={item.id}
+                id={`enquiry-${item.id}`}
+                className={`scroll-mt-24 rounded-control border bg-[#f4f7f7] p-3.5 dark:bg-surface-ink/70 ${
+                  isNew
+                    ? "border-slate-200 border-l-4 border-l-emerald-600 dark:border-white/10 dark:border-l-emerald-400"
+                    : "border-slate-200 dark:border-white/10"
+                }`}
+              >
                 <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
                   <div className="min-w-0">
-                    <p className="font-semibold text-slate-900 dark:text-white">
+                    <p className={`text-slate-900 dark:text-white ${isNew ? "font-bold" : "font-medium"}`}>
                       {item.kind === "message" ? "Message" : "Viewing request"}
                       <span className="font-medium text-slate-600 dark:text-slate-300"> · {item.propertyTitle}</span>
                     </p>
@@ -148,7 +147,7 @@ export function EnquiryList({
                   <div className="flex items-center gap-2">
                     {isNew && item.createdAt ? (
                       <span className="text-xs font-semibold text-amber-800 dark:text-amber-300">
-                        Waiting {waitingFor(item.createdAt, now)}
+                        Waiting {formatAge(item.createdAt, now)}
                       </span>
                     ) : null}
                     <span
@@ -187,7 +186,7 @@ export function EnquiryList({
                     type="button"
                     disabled={savingId === item.id}
                     onClick={() => void toggle(item)}
-                    className="pill ml-auto border border-slate-300 bg-white/80 font-semibold text-slate-800 transition-colors hover:bg-white disabled:opacity-60 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
+                    className="pill max-lg:min-h-11 ml-auto border border-slate-300 bg-white/80 font-semibold text-slate-800 hover:bg-white disabled:opacity-60 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
                   >
                     {savingId === item.id ? "Saving…" : isNew ? "Mark as contacted" : "Mark as new"}
                   </button>

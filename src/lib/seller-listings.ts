@@ -42,6 +42,8 @@ export type SellerListing = {
   image?: string;
   createdAt?: string;
   updatedAt?: string;
+  /** The moderator's note when a listing is sent back or rejected. */
+  moderationFeedback?: string;
 };
 
 export type ListingFormData = {
@@ -139,6 +141,8 @@ export async function getSellerListings(ownerId: string): Promise<SellerListing[
       features: Array.isArray(data.features) ? data.features : [],
       qualityScore: Number(data.qualityScore ?? 75),
       image: data.image ?? "",
+      createdAt: data.createdAt?.toDate?.()?.toISOString(),
+      moderationFeedback: typeof data.moderationFeedback === "string" && data.moderationFeedback ? data.moderationFeedback : undefined,
     };
   });
 }

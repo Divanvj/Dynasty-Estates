@@ -53,6 +53,8 @@ export type ModerationItem = {
   status: ListingLifecycleStatus;
   submittedAt: string;
   fraudSignals?: string[];
+  /** Cover photo URL, when the listing has one. */
+  image?: string;
 };
 
 export type AuditLogEntry = {
@@ -127,7 +129,7 @@ export async function getPendingModerationQueue(): Promise<ModerationItem[]> {
       collection(db, "properties"),
       where("status", "==", "Submitted"),
       orderBy("createdAt", "desc"),
-      limit(20)
+      limit(50)
     );
     const snap = await getDocs(q);
     // An empty queue is an empty queue. It used to return the demo items here,
@@ -148,6 +150,7 @@ export async function getPendingModerationQueue(): Promise<ModerationItem[]> {
         status: (data.status as ListingLifecycleStatus) ?? "Submitted",
         submittedAt: data.createdAt?.toDate?.()?.toISOString() ?? new Date().toISOString(),
         fraudSignals: Array.isArray(data.fraudSignals) ? data.fraudSignals : [],
+        image: typeof data.image === "string" && data.image.startsWith("http") ? data.image : undefined,
       };
     });
   } catch (error) {
@@ -249,13 +252,13 @@ export async function executeModerationDecision(
   }
 }
 
-export async function getAuditLogs(): Promise<AuditLogEntry[]> {
+export async function getAuditLogs(max = 25): Promise<AuditLogEntry[]> {
   if (!isFirebaseConfigured || !db) {
     return fallbackAuditLogs;
   }
 
   try {
-    const q = query(collection(db, "audit_logs"), orderBy("createdAt", "desc"), limit(25));
+    const q = query(collection(db, "audit_logs"), orderBy("createdAt", "desc"), limit(max));
     const snap = await getDocs(q);
     // Same as the queue: no stored entries means none, not the demo trail.
     if (snap.empty) return [];

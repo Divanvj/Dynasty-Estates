@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs, limit, orderBy, query, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, limit, orderBy, query, serverTimestamp, updateDoc } from "firebase/firestore";
 
 import { db, isFirebaseConfigured } from "./firebase";
 
@@ -37,6 +37,18 @@ export async function createSupportRequest({
     createdAt: serverTimestamp(),
   });
   return ref.id;
+}
+
+export const SUPPORT_STATUSES = ["new", "in_progress", "closed"] as const;
+export type SupportStatus = (typeof SUPPORT_STATUSES)[number];
+
+/** Package and plan requests are support requests whose message starts with this. */
+export const PACKAGE_REQUEST_PREFIX = "Package request:";
+
+/** Admins only (firestore.rules). Status is the only field the admin page changes. */
+export async function setSupportRequestStatus(requestId: string, status: SupportStatus): Promise<void> {
+  if (!isFirebaseConfigured || !db) throw new Error("Firebase is not configured.");
+  await updateDoc(doc(db, "support_requests", requestId), { status });
 }
 
 export async function getSupportRequests(): Promise<SupportRequest[]> {
