@@ -9,11 +9,15 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/seller-enquiries | enquiries: ownerId + rules, seller portal inbox, inquiry button | 2026-11-10 |
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-10 — `DESKTOP-1R37EBU/seller-enquiries` merged. **Enquiries carry `ownerId`** (the listing's owner;
+  rules check it against `properties/{propertyId}`). Owners read them in the seller portal's new Enquiries
+  section and may change `status` to new / contacted only. `contactName` / `contactPhone` are now saved.
+  **Rules are deployed** to the live project. Pass `ownerId={property.ownerId}` to any new PropertyInquiryButton.
 
 - 2026-11-10 — `alet-elize/map-touch-targets` merged (measured, finished). Map targets are 44px on
   phones: zoom buttons, pin hit areas (`tap-44`), clusters (44/52/60 at **every** width, so desktop
@@ -38,7 +42,7 @@ before they start, then delete it after a few days.
   `/pricing`; one price list in `src/lib/pricing.ts` (`node scripts/check-pricing.mjs` checks its rules).
   `src/lib/billing.ts` and its mock payment gateway are gone. Package/plan requests go to
   `support_requests` (admin Support tab) and are invoiced by hand: there is no payment, expiry or
-  plan limit in code yet. Private sellers cannot read enquiries on their own listings (rules).
+  plan limit in code yet. Private sellers cannot read enquiries on their own listings (rules) — fixed, see seller-enquiries above.
 
 - 2026-11-10 — **`docs/handover/` removed again** at the owner's request, once DESKTOP-1R37EBU
   had copied the brief locally. The brief is not kept in the repo; it is still in git history
