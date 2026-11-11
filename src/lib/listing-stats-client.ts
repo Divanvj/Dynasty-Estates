@@ -64,7 +64,8 @@ export function useOwnerStats(uid: string | null | undefined, sinceDay: string) 
   }, [uid, sinceDay]);
   const current = loaded?.key === key ? loaded : null;
   return {
-    rows: uid === null ? [] : current?.rows ?? null,
+    // A failed load is "no data", never zero views.
+    rows: uid === null ? [] : current && !current.failed ? current.rows : null,
     failed: Boolean(current?.failed),
   };
 }
