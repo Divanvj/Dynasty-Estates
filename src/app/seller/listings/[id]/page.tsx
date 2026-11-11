@@ -15,7 +15,7 @@ export default function SellerListingPage() {
     <RoleGuard allowedRoles={["Seller", "Agent", "Admin"]} allowAnySignedIn featureName="Seller Portal">
       <main className="min-h-screen bg-[var(--background)] px-4 py-5 text-slate-900 md:px-6 lg:px-8 dark:text-white">
         <div className="mx-auto max-w-[1280px]">
-          <ListingDetail listingId={params.id} backHref="/seller/portal" backLabel="Seller portal" />
+          <ListingDetail listingId={params.id} backHref="/seller/portal" backLabel="Seller portal" basePath="/seller/listings" />
         </div>
       </main>
     </RoleGuard>

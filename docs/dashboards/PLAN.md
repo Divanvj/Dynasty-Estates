@@ -1,6 +1,6 @@
 # Agent & admin dashboards — implementation plan
 
-Written 2026-11-10 (DESKTOP-1R37EBU). Status: **plan only, nothing below is built** except where marked DONE.
+Written 2026-11-10 (DESKTOP-1R37EBU). Status (2026-11-11): **A DONE** (on main). **B, C, E built on branches, not merged** — B needs its rules/indexes deployed first (owner OK). D, F, G, H not started.
 Scope: the agent console (`/agent/*`), the agency principal's view, the admin pages (`/admin/*`) and the
 seller portal where it shares the same pieces. **The developer console (`/console`, `/api/console/*`) is out of
 scope — do not touch it** (owner, 2026-11-10).
@@ -99,7 +99,7 @@ admin revenue list depend on it.
 
 Sizes: S ≈ half a day, M ≈ 1–2 days, L ≈ 3+ days.
 
-### Phase A — Restructure to one pattern per page (M) · no schema · no approval needed
+### Phase A — Restructure to one pattern per page (M) · no schema · no approval needed · **DONE 2026-11-11**
 - `/agent/dashboard` becomes read-only: 4 tiles (New enquiries · Oldest unanswered · Viewing requests (7 days) ·
   Active listings), a "Needs you today" list (unanswered enquiries, listings sent back by moderation) linking to
   `/agent/enquiries` and `/agent/listings`.
@@ -112,7 +112,7 @@ Sizes: S ≈ half a day, M ≈ 1–2 days, L ≈ 3+ days.
 - Accept: each route names one pattern; empty/loading/error stay inside the frame; 375px no overflow; no console
   errors; status change on support persists (read back).
 
-### Phase B — View tracking and listing performance (L) · needs F1 approval
+### Phase B — View tracking and listing performance (L) · F1 approved 2026-11-11 · **built on `DESKTOP-1R37EBU/dashboards-phase-b`, not merged**
 - `/api/track` + client hooks on the listing page, save button and contact links.
 - Listing Detail **Performance** tab: views · saves · contact clicks · enquiries, last 30 days, as one
   small-multiples row of sparklines (one measure each, no dual axis) with a daily table view; enquiries per 100
@@ -128,7 +128,7 @@ Sizes: S ≈ half a day, M ≈ 1–2 days, L ≈ 3+ days.
 - Accept: a view on a published listing increments the day doc once per session (read back); a bot UA does not;
   a non-owner cannot read another listing's stats (emulator + live).
 
-### Phase C — Seller report + example template (M) · no schema beyond F1
+### Phase C — Seller report + example template (M) · no schema beyond F1 · **built on `DESKTOP-1R37EBU/dashboards-phase-c`, not merged**; example: `Dynasty-Seller-Report-Example.html/.pdf` in the project folder (outside the repo)
 - `/agent/listings/[id]/report`, an A4 print layout (uses the existing print stylesheet): agent/agency name,
   photo and contact **at the top**; the listing; this week vs last week (views, saves, enquiries, viewings);
   30-day trend; position vs suburb; agent's note to the seller (typed on the page, not stored unless the owner
@@ -145,7 +145,7 @@ Sizes: S ≈ half a day, M ≈ 1–2 days, L ≈ 3+ days.
 - Dashboard tiles: median first-response time (30 days), oldest unanswered.
 - Listing Detail **Enquiries** tab with the funnel (enquiries → viewings → offers) as a plain horizontal bar.
 
-### Phase E — Price snapshot (M) · no schema
+### Phase E — Price snapshot (M) · no schema · **built on `DESKTOP-1R37EBU/dashboards-phase-c` (`/agent/market`), not merged**
 - `/agent/market`: choose suburb, type, sale/rent → median price, price per m², active listings, price range
   (min–max, interquartile when ≥8), list of comparables. Printable.
 - Labelled honestly everywhere: "Dynasty listings only — asking prices, not sale prices or a valuation." Sold prices

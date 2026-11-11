@@ -38,7 +38,7 @@ export type SectionLink = { href: string; label: string; exact?: boolean };
 export function SectionNav({ label, links }: { label: string; links: SectionLink[] }) {
   const pathname = usePathname() ?? "";
   return (
-    <nav aria-label={label} className="mb-6 -mx-4 overflow-x-auto px-4 [scrollbar-width:none] md:mx-0 md:px-0 [&::-webkit-scrollbar]:hidden">
+    <nav aria-label={label} className="no-print mb-6 -mx-4 overflow-x-auto px-4 [scrollbar-width:none] md:mx-0 md:px-0 [&::-webkit-scrollbar]:hidden">
       <ul className="flex gap-2 whitespace-nowrap">
         {links.map((link) => {
           const active = link.exact ? pathname === link.href : pathname === link.href || pathname.startsWith(`${link.href}/`);

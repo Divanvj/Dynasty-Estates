@@ -8,5 +8,5 @@ import ListingDetail from "@/components/listing-detail";
 // check come from app/agent/layout.tsx.
 export default function AgentListingPage() {
   const params = useParams<{ id: string }>();
-  return <ListingDetail listingId={params.id} backHref="/agent/listings" backLabel="All listings" />;
+  return <ListingDetail listingId={params.id} backHref="/agent/listings" backLabel="All listings" basePath="/agent/listings" />;
 }

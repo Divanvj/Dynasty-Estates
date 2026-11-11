@@ -1636,6 +1636,13 @@ input[type="range"]::-moz-range-progress {
     display: table-header-group;
   }
 
+  /* The seller report keeps its one small Dynasty mark on paper: the mark is a
+     light glyph on a black tile, and the flattening rule above would erase
+     the tile. Scoped to the report footer only. */
+  .report-mark .bg-black {
+    background-color: #000 !important;
+  }
+
   /* Links print as plain text; a bare URL after every one is noise. */
   a[href]::after {
     content: none !important;

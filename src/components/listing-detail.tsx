@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-import { emptyBoxClass, errorBoxClass, linkClass, panelClass } from "@/components/dashboard-ui";
+import { emptyBoxClass, errorBoxClass, linkClass, panelClass, secondaryButtonClass } from "@/components/dashboard-ui";
 import { EnquiryList, useOwnerInquiries } from "@/components/enquiry-inbox";
 import { ArrowLeftIcon, CheckIcon } from "@/components/icons";
 import Sparkline from "@/components/sparkline";
@@ -24,7 +24,7 @@ import { useAccountUid, useOwnerListings } from "@/lib/use-owner-listings";
 // Pattern 2 — Detail / Record (docs/dashboards/PLAN.md, Phase B). One of the
 // signed-in account's own listings: Overview · Performance · Enquiries. Used by
 // /agent/listings/[id] and /seller/listings/[id]. The seller report (Phase C)
-// becomes a fourth tab.
+// is its own print page, linked from the header.
 
 /** Counting started with Phase B; days before it read as zero, not as "no views". */
 export const COUNTING_SINCE = "2026-11-11";
@@ -36,7 +36,18 @@ function shortDay(day: string): string {
   return formatDate(`${day}T12:00:00Z`).replace(/ \d{4}$/, "");
 }
 
-export default function ListingDetail({ listingId, backHref, backLabel }: { listingId: string; backHref: string; backLabel: string }) {
+export default function ListingDetail({
+  listingId,
+  backHref,
+  backLabel,
+  basePath,
+}: {
+  listingId: string;
+  backHref: string;
+  backLabel: string;
+  /** Where this account's listing pages live: /agent/listings or /seller/listings. */
+  basePath: string;
+}) {
   const uid = useAccountUid();
   const listings = useOwnerListings(uid);
   const inbox = useOwnerInquiries(uid);
@@ -82,9 +93,15 @@ export default function ListingDetail({ listingId, backHref, backLabel }: { list
             {dom !== null ? <span>{dom} {dom === 1 ? "day" : "days"} {listing.publishedAt ? "on the market" : "since filed"}</span> : null}
           </p>
         </div>
-        {isPublic ? (
-          <Link href={`/property/${listing.id}`} className={`text-sm ${linkClass}`}>Open the public listing</Link>
-        ) : null}
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+          {/* Seller report (Phase C): a printable page for the home's owner. */}
+          <Link href={`${basePath}/${listing.id}/report`} className={secondaryButtonClass}>
+            Seller report
+          </Link>
+          {isPublic ? (
+            <Link href={`/property/${listing.id}`} className={linkClass}>Open the public listing</Link>
+          ) : null}
+        </div>
       </div>
 
       <div role="tablist" aria-label="Listing sections" className="mb-5 flex gap-1 overflow-x-auto border-b border-slate-200 [scrollbar-width:none] dark:border-white/10 [&::-webkit-scrollbar]:hidden">

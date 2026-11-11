@@ -173,6 +173,14 @@ Unchanged: the map views inside `/search` (Map view) and the home feed still use
 | "🗺️ Street View & Map" tab, "👁️ Street View 360°" and "🗺️ Google Map" buttons | Line map icon + "Street View & Map"; buttons "Street View" and "Map" | `property-media-tabs.tsx` |
 | Media tabs wrapping one per line on phones | One row (scrolls sideways if ever too wide) | `property-media-tabs.tsx` |
 
+## Dashboards Phases C + E — seller report and price snapshot (branch, 11 Nov; not merged)
+
+| Was | Now | Where |
+|---|---|---|
+| Nothing an agent could hand a seller | **Seller report**: A4 print page per listing — agent/agency and contact at the top; this week vs the week before (views, saves, contact clicks, enquiries, viewing requests); 30-day views; price against the area; an optional note typed for the print (not stored); one small Dynasty mark + "Report prepared with Dynasty Estates" in the footer. "Seller report" button on each listing page | new `components/seller-report.tsx`, `agent/listings/[id]/report`, `seller/listings/[id]/report`, `globals.css` (`.report-mark`) |
+| No market figures for a listing appointment | **Price snapshot** `/agent/market` (new "Price snapshot" tab): sale/rent, home type, suburb or city → median, middle half (8+), range, median per m² and the listings themselves; live Dynasty listings only, nothing from fewer than 5; printable | new `agent/market/page.tsx`, `lib/listing-insights.ts` |
+| Agent console tab row printed on paper | Marked `no-print` | `components/dashboard-ui.tsx` |
+
 ## Dashboards Phase B — view tracking and listing performance (branch, 11 Nov; not merged)
 
 | Was | Now | Where |

@@ -19,6 +19,9 @@ export const MIN_COMPARABLES = 5;
 
 export type Comparable = {
   id: string;
+  title: string;
+  location: string;
+  status: string;
   suburb: string;
   city: string;
   listingType: "sale" | "rent";
@@ -43,6 +46,9 @@ export async function getLiveComparables(): Promise<Comparable[]> {
     const data = d.data();
     return {
       id: d.id,
+      title: String(data.title ?? "Untitled"),
+      location: String(data.location ?? ""),
+      status: String(data.status ?? ""),
       suburb: suburbOf(String(data.location ?? "")),
       city: norm(data.city ?? String(data.location ?? "").split(",")[1]),
       listingType: data.listingType === "rent" ? "rent" : "sale",
@@ -129,4 +135,37 @@ export function daysOnMarket(listing: SellerListing, now: number = Date.now()): 
   const from = listing.publishedAt ?? listing.createdAt;
   if (!from) return null;
   return Math.max(0, Math.floor((now - new Date(from).getTime()) / 86_400_000));
+}
+
+export type MarketSnapshot = {
+  count: number;
+  median: number;
+  min: number;
+  max: number;
+  /** Middle half of asking prices; only with 8+ listings. */
+  quartiles: { p25: number; p75: number } | null;
+  /** Median per m² over the listings that give a floor size, with how many did. */
+  perSqm: { median: number; count: number } | null;
+};
+
+function quantile(sorted: number[], q: number): number {
+  const pos = (sorted.length - 1) * q;
+  const lo = Math.floor(pos);
+  const hi = Math.ceil(pos);
+  return Math.round(sorted[lo] + (sorted[hi] - sorted[lo]) * (pos - lo));
+}
+
+/** Asking-price figures for a set of live listings (Phase E price snapshot). */
+export function marketSnapshot(rows: Comparable[]): MarketSnapshot | null {
+  const prices = rows.map((r) => r.price).filter((p) => p > 0).sort((a, b) => a - b);
+  if (prices.length === 0) return null;
+  const sized = rows.filter((r) => r.price > 0 && r.floorSizeSqm > 0).map((r) => r.price / r.floorSizeSqm).sort((a, b) => a - b);
+  return {
+    count: prices.length,
+    median: quantile(prices, 0.5),
+    min: prices[0],
+    max: prices[prices.length - 1],
+    quartiles: prices.length >= 8 ? { p25: quantile(prices, 0.25), p75: quantile(prices, 0.75) } : null,
+    perSqm: sized.length >= MIN_COMPARABLES ? { median: quantile(sized, 0.5), count: sized.length } : null,
+  };
 }
