@@ -17,6 +17,8 @@ const ACTION_LABEL: Record<string, string> = {
   "moderation.approved": "approved and published",
   "moderation.needs_changes": "sent back for changes",
   "moderation.rejected": "rejected",
+  "practitioner.verify": "verified the practitioner",
+  "practitioner.reject": "turned down the practitioner",
 };
 
 export default function AdminAuditPage() {
@@ -47,7 +49,7 @@ export default function AdminAuditPage() {
     <>
       <PageHeading
         title="Audit trail"
-        description="Every moderation decision, newest first. Entries can't be edited or deleted, by anyone."
+        description="Every moderation and agent-verification decision, newest first. Entries can't be edited or deleted, by anyone."
       />
       <section aria-label="Audit trail" className={panelClass}>
         {loadError ? (
@@ -55,12 +57,12 @@ export default function AdminAuditPage() {
         ) : !result ? (
           <p role="status" className="text-sm text-slate-600 dark:text-slate-300">Loading…</p>
         ) : logs.length === 0 ? (
-          <p className={emptyBoxClass}>No actions recorded yet. Moderation decisions appear here.</p>
+          <p className={emptyBoxClass}>No actions recorded yet. Moderation and agent-verification decisions appear here.</p>
         ) : (
           <>
             <ol className="divide-y divide-slate-200 dark:divide-white/10">
               {logs.map((log) => {
-                const resource = log.resource.replace(/^properties\//, "listing ");
+                const resource = log.resource.replace(/^properties\//, "listing ").replace(/^practitioners\//, "account ");
                 const label = ACTION_LABEL[log.action];
                 return (
                   <li key={log.id} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-3 text-sm">

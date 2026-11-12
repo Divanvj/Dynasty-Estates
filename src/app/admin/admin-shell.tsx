@@ -8,6 +8,7 @@ import RoleGuard from "@/components/role-guard";
 const LINKS = [
   { href: "/admin", label: "Overview", exact: true },
   { href: "/admin/moderation", label: "Moderation" },
+  { href: "/admin/agents", label: "Agents" },
   { href: "/admin/support", label: "Support" },
   { href: "/admin/audit", label: "Audit trail" },
   { href: "/admin/packages", label: "Packages" },

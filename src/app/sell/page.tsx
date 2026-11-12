@@ -221,6 +221,12 @@ export default function SellPage() {
             <p className="mt-2 max-w-xl text-base text-slate-700 dark:text-slate-300">
               Monthly plans by the number of live listings, starting with three free. Every price is published.
             </p>
+            <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
+              Registered practitioner?{" "}
+              <Link href="/join/agent" className="font-semibold text-emerald-800 underline-offset-2 hover:underline dark:text-emerald-300">
+                Apply for agent access
+              </Link>
+            </p>
           </div>
           <Link
             href="/pricing?for=agents"

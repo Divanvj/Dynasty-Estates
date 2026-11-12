@@ -52,7 +52,14 @@ export type SellerListing = {
   hasTour?: boolean;
   hasShowDay?: boolean;
   descriptionLength?: number;
+  /** Agent compliance (PLAN.md F3): the mandate held and when the seller signed the disclosure form. */
+  mandateType?: MandateType;
+  /** "YYYY-MM-DD", self-attested by the agent; no document is stored. */
+  disclosureSignedOn?: string;
 };
+
+export type MandateType = "sole" | "open";
+export const MANDATE_LABEL: Record<MandateType, string> = { sole: "Sole mandate", open: "Open mandate" };
 
 export type ListingFormData = {
   ownerId: string;
@@ -160,7 +167,26 @@ export async function getSellerListings(ownerId: string): Promise<SellerListing[
       hasTour: typeof data.virtualTourUrl === "string" && data.virtualTourUrl.length > 0,
       hasShowDay: Boolean(data.onShow?.isoDate),
       descriptionLength: typeof data.description === "string" ? data.description.trim().length : 0,
+      mandateType: data.mandateType === "sole" || data.mandateType === "open" ? data.mandateType : undefined,
+      disclosureSignedOn: typeof data.disclosureSignedOn === "string" && /^\d{4}-\d{2}-\d{2}$/.test(data.disclosureSignedOn) ? data.disclosureSignedOn : undefined,
     };
+  });
+}
+
+/**
+ * Records the agent's mandate on one of their listings (PLAN.md F3). Only
+ * these fields and updatedAt change; agents may update listings under the
+ * existing properties rule. Nothing about it is public.
+ */
+export async function setListingMandate(
+  listingId: string,
+  mandate: { mandateType: MandateType; disclosureSignedOn: string },
+): Promise<void> {
+  if (!isFirebaseConfigured || !db) throw new Error("Firebase database is not configured.");
+  await updateDoc(doc(db, "properties", listingId), {
+    mandateType: mandate.mandateType,
+    disclosureSignedOn: mandate.disclosureSignedOn,
+    updatedAt: serverTimestamp(),
   });
 }
 

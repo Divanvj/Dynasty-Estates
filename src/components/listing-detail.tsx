@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useId, useState } from "react";
 
-import { emptyBoxClass, errorBoxClass, linkClass, panelClass, secondaryButtonClass } from "@/components/dashboard-ui";
+import { emptyBoxClass, errorBoxClass, linkClass, panelClass, primaryButtonClass, secondaryButtonClass } from "@/components/dashboard-ui";
 import { EnquiryList, useOwnerInquiries } from "@/components/enquiry-inbox";
 import { ArrowLeftIcon, CheckIcon } from "@/components/icons";
 import Sparkline from "@/components/sparkline";
@@ -18,7 +19,8 @@ import {
 import { lastDays, seriesFor, sastDay, sumStats, type DayStats } from "@/lib/listing-stats";
 import { getListingStats } from "@/lib/listing-stats-client";
 import { asStage, REACHED_OFFER, REACHED_VIEWING, type SellerInquiry } from "@/lib/seller-inquiries";
-import type { SellerListing } from "@/lib/seller-listings";
+import { MANDATE_LABEL, setListingMandate, type MandateType, type SellerListing } from "@/lib/seller-listings";
+import { sastToday } from "@/lib/practitioner-compliance";
 import { PUBLIC_LISTING_STATUSES } from "@/lib/types/domain";
 import { useAccountUid, useOwnerListings } from "@/lib/use-owner-listings";
 
@@ -52,7 +54,9 @@ export default function ListingDetail({
   const uid = useAccountUid();
   const listings = useOwnerListings(uid);
   const inbox = useOwnerInquiries(uid);
-  const [tab, setTab] = useState<Tab>("performance");
+  // ?tab=overview|enquiries opens that tab (links from the dashboard).
+  const requested = useSearchParams()?.get("tab");
+  const [tab, setTab] = useState<Tab>(requested === "overview" || requested === "enquiries" ? requested : "performance");
   const listing = listings.items.find((item) => item.id === listingId) ?? null;
   const enquiries = inbox.items.filter((item) => item.propertyId === listingId);
   // Agents work enquiries through stages; private sellers keep New / Contacted.
@@ -129,7 +133,12 @@ export default function ListingDetail({
       </div>
 
       <div role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`}>
-        {tab === "overview" ? <Overview listing={listing} /> : null}
+        {tab === "overview" ? (
+          <>
+            {pipeline ? <Mandate listing={listing} /> : null}
+            <Overview listing={listing} />
+          </>
+        ) : null}
         {tab === "performance" ? <Performance listing={listing} uid={uid ?? null} enquiryDates={enquiries.map((e) => e.createdAt)} enquiriesReady={inbox.state === "ready"} /> : null}
         {tab === "enquiries" ? (
           <>
@@ -419,5 +428,120 @@ function AreaComparisonView({ comparison, listing }: { comparison: AreaCompariso
       </p>
       <p className="mt-2 text-slate-600 dark:text-slate-400">Asking prices on Dynasty only, not sale prices and not a valuation.</p>
     </div>
+  );
+}
+
+/**
+ * The agent's mandate on this listing (PLAN.md F3, Phase F): sole or open, and
+ * the day the seller signed the mandatory disclosure form. Self-attested; no
+ * document is stored. A listing without both shows in "Needs you today".
+ */
+function Mandate({ listing }: { listing: SellerListing }) {
+  const [saved, setSaved] = useState<{ mandateType?: MandateType; disclosureSignedOn?: string }>({
+    mandateType: listing.mandateType,
+    disclosureSignedOn: listing.disclosureSignedOn,
+  });
+  const complete = Boolean(saved.mandateType && saved.disclosureSignedOn);
+  const [editing, setEditing] = useState(!complete);
+  const [type, setType] = useState<MandateType | "">(saved.mandateType ?? "");
+  const [signed, setSigned] = useState(saved.disclosureSignedOn ?? "");
+  const [errors, setErrors] = useState<{ type?: string; signed?: string }>({});
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [today] = useState(() => sastToday());
+  const dateId = useId();
+  const typeName = useId();
+
+  function dateError(value: string) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return "Choose the day the seller signed the disclosure form.";
+    return value > today ? "The signing date can't be in the future." : "";
+  }
+
+  async function save(event: React.FormEvent) {
+    event.preventDefault();
+    const found = { type: type ? "" : "Choose the mandate you hold.", signed: dateError(signed) };
+    setErrors({ type: found.type || undefined, signed: found.signed || undefined });
+    if (found.type || found.signed || !type) return;
+    setSaving(true);
+    setSaveError(null);
+    try {
+      await setListingMandate(listing.id, { mandateType: type, disclosureSignedOn: signed });
+      setSaved({ mandateType: type, disclosureSignedOn: signed });
+      setEditing(false);
+    } catch (error) {
+      console.error("Could not save the mandate:", error);
+      setSaveError("The mandate wasn't saved. Check your connection and try again.");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <section aria-labelledby="mandate-heading" className={`mb-5 ${panelClass}`}>
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+        <h2 id="mandate-heading" className="text-xl font-semibold text-slate-900 dark:text-white">Mandate</h2>
+        {!editing ? (
+          <button type="button" onClick={() => setEditing(true)} className={`text-sm ${linkClass}`}>Change</button>
+        ) : null}
+      </div>
+      {!editing && complete ? (
+        <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
+          <span className="font-semibold text-slate-900 dark:text-white">{MANDATE_LABEL[saved.mandateType!]}</span>
+          {" · "}Disclosure form signed {formatDate(`${saved.disclosureSignedOn}T12:00:00Z`)}
+        </p>
+      ) : (
+        <form noValidate onSubmit={save} className="mt-3 grid gap-4 sm:grid-cols-2">
+          <fieldset aria-describedby={errors.type ? `${typeName}-error` : undefined}>
+            <legend className="mb-1.5 text-sm font-semibold text-slate-800 dark:text-slate-200">Mandate held</legend>
+            <div className="flex flex-wrap gap-x-5 gap-y-2">
+              {(["sole", "open"] as MandateType[]).map((value) => (
+                <label key={value} className="flex min-h-11 cursor-pointer items-center gap-2 text-sm text-slate-800 dark:text-slate-200">
+                  <input
+                    type="radio"
+                    name={typeName}
+                    value={value}
+                    checked={type === value}
+                    onChange={() => {
+                      setType(value);
+                      setErrors((prev) => ({ ...prev, type: undefined }));
+                    }}
+                    className="h-4 w-4 accent-emerald-700"
+                  />
+                  {MANDATE_LABEL[value]}
+                </label>
+              ))}
+            </div>
+            {errors.type ? <p id={`${typeName}-error`} className="mt-1 text-sm text-rose-700 dark:text-rose-300">{errors.type}</p> : null}
+          </fieldset>
+          <div>
+            <label htmlFor={dateId} className="mb-1.5 block text-sm font-semibold text-slate-800 dark:text-slate-200">Disclosure form signed on</label>
+            <input
+              id={dateId}
+              type="date"
+              max={today}
+              value={signed}
+              onChange={(e) => {
+                setSigned(e.target.value);
+                if (errors.signed) setErrors((prev) => ({ ...prev, signed: undefined }));
+              }}
+              onBlur={(e) => setErrors((prev) => ({ ...prev, signed: dateError(e.target.value) || undefined }))}
+              aria-invalid={errors.signed ? true : undefined}
+              aria-describedby={errors.signed ? `${dateId}-error` : undefined}
+              className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 focus:border-emerald-500 focus:outline-none aria-[invalid=true]:border-rose-500 dark:border-white/10 dark:bg-surface-ink dark:text-white"
+            />
+            {errors.signed ? <p id={`${dateId}-error`} className="mt-1 text-sm text-rose-700 dark:text-rose-300">{errors.signed}</p> : null}
+          </div>
+          <div className="sm:col-span-2">
+            {saveError ? <p role="alert" className={`mb-3 ${errorBoxClass}`}>{saveError}</p> : null}
+            <div className="flex flex-wrap gap-2">
+              <button type="submit" disabled={saving} className={primaryButtonClass}>{saving ? "Saving…" : "Save mandate"}</button>
+              {complete ? (
+                <button type="button" onClick={() => setEditing(false)} className={secondaryButtonClass}>Cancel</button>
+              ) : null}
+            </div>
+          </div>
+        </form>
+      )}
+    </section>
   );
 }

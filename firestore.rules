@@ -184,6 +184,37 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // Practitioner compliance (src/lib/practitioners.ts, PLAN.md F3). The
+    // practitioner files their own FFC details; every save is a fresh
+    // "pending" application at the server's time, so an edited certificate is
+    // checked again. Only /api/admin/practitioners (Admin SDK) decides one:
+    // verified / rejected, verifiedAt, verifiedBy, decisionNote, and the agent
+    // role claim. No client may write those, delete an application, or read
+    // anyone else's.
+    match /practitioners/{uid} {
+      function ownerFields() {
+        return ['fullName', 'email', 'phone', 'ffcNumber', 'ffcExpiry', 'agencyName', 'status', 'submittedAt'];
+      }
+      function validApplication(d) {
+        return d.fullName is string && d.fullName.size() >= 2 && d.fullName.size() <= 120
+          && d.phone is string && d.phone.size() <= 40
+          && d.ffcNumber is string && d.ffcNumber.size() >= 3 && d.ffcNumber.size() <= 40
+          && d.ffcExpiry is string && d.ffcExpiry.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+          && d.agencyName is string && d.agencyName.size() <= 120
+          && d.email == request.auth.token.get('email', null)
+          && d.status == 'pending'
+          && d.submittedAt == request.time;
+      }
+      allow read: if isAdmin() || isOwner(uid);
+      allow create: if isOwner(uid)
+        && request.resource.data.keys().hasOnly(ownerFields())
+        && validApplication(request.resource.data);
+      allow update: if isOwner(uid)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(ownerFields())
+        && validApplication(request.resource.data);
+      allow delete: if false;
+    }
+
     // Daily view / save / contact-click counts per listing (lib/listing-stats.ts,
     // docs/dashboards/PLAN.md F1). Only the server writes them, through the
     // Admin SDK in /api/track, which reads the owner from the listing itself.

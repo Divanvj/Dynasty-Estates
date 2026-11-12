@@ -15,6 +15,8 @@ import {
   StatTile,
 } from "@/components/dashboard-ui";
 import { useOwnerInquiries } from "@/components/enquiry-inbox";
+import { complianceMessage, usePractitioner } from "@/components/practitioner-profile";
+import { complianceState } from "@/lib/practitioner-compliance";
 import { lastDays, sumStats } from "@/lib/listing-stats";
 import { useOwnerStats } from "@/lib/listing-stats-client";
 import { medianReplyMs } from "@/lib/seller-inquiries";
@@ -29,6 +31,9 @@ import { ACTIVE_CATALOGUE_STATUSES } from "@/lib/types/domain";
 
 const TODAY_LIMIT = 6;
 
+/** Listing states in which the agent must hold a mandate and a signed disclosure (PLAN.md F3). */
+const NEEDS_MANDATE = ["Submitted", "Needs changes", "Approved", "Published", "Under offer", "Paused"];
+
 export default function AgentDashboard() {
   const uid = useAccountUid();
   const inbox = useOwnerInquiries(uid);
@@ -36,6 +41,9 @@ export default function AgentDashboard() {
   const [since] = useState(() => lastDays(7)[0]);
   const stats = useOwnerStats(uid, since);
   const [now] = useState(() => Date.now());
+  const practitioner = usePractitioner(uid);
+  const record = practitioner.load.state === "ready" ? practitioner.load.record : null;
+  const compliance = practitioner.load.state === "ready" ? complianceState(record, now) : null;
 
   const unanswered = inbox.items
     .filter((item) => item.status === "new")
@@ -46,12 +54,23 @@ export default function AgentDashboard() {
     (ACTIVE_CATALOGUE_STATUSES as readonly string[]).includes(listing.status),
   ).length;
   const sentBack = listings.items.filter((listing) => listing.status === "Needs changes");
+  const noMandate = listings.items.filter(
+    (listing) => NEEDS_MANDATE.includes(listing.status) && !(listing.mandateType && listing.disclosureSignedOn),
+  );
 
   const inboxReady = inbox.state === "ready";
   const listingsReady = listings.state === "ready";
 
   type TodayItem = { key: string; title: string; detail: string; href: string; age?: string };
   const today: TodayItem[] = [
+    ...(compliance && (compliance.kind === "none" || compliance.kind === "rejected")
+      ? [{
+          key: "ffc",
+          title: compliance.kind === "none" ? "File your Fidelity Fund Certificate" : "Correct your certificate details",
+          detail: complianceMessage(compliance, record),
+          href: "/agent/profile",
+        }]
+      : []),
     ...unanswered.map((item) => ({
       key: `enq-${item.id}`,
       title: `Reply to ${item.contactName || "a buyer"}`,
@@ -64,6 +83,12 @@ export default function AgentDashboard() {
       title: `Changes requested on ${listing.title}`,
       detail: listing.moderationFeedback ? `Moderator: “${listing.moderationFeedback}”` : "The moderator sent this listing back.",
       href: `/agent/listings?status=${encodeURIComponent("Needs changes")}`,
+    })),
+    ...noMandate.map((listing) => ({
+      key: `mandate-${listing.id}`,
+      title: `Record the mandate for ${listing.title}`,
+      detail: !listing.mandateType ? "Sole or open mandate, and the day the seller signed the disclosure form." : "Add the day the seller signed the disclosure form.",
+      href: `/agent/listings/${listing.id}?tab=overview`,
     })),
   ];
 
@@ -82,6 +107,20 @@ export default function AgentDashboard() {
       {uid === null ? (
         <p className="mb-4 rounded-2xl border border-amber-300/30 bg-amber-400/10 p-3 text-sm text-amber-900 dark:text-amber-200">
           Sign in as an agent to see your listings and enquiries.
+        </p>
+      ) : null}
+
+      {compliance && (compliance.kind === "expiring" || compliance.kind === "expired") ? (
+        <p
+          role="status"
+          className={`mb-4 rounded-control border p-3.5 text-sm ${
+            compliance.kind === "expired"
+              ? "border-rose-300 bg-rose-50 text-rose-800 dark:border-rose-500/30 dark:bg-rose-950/40 dark:text-rose-200"
+              : "border-amber-300/50 bg-amber-50 text-amber-900 dark:border-amber-500/30 dark:bg-amber-950/30 dark:text-amber-200"
+          }`}
+        >
+          {complianceMessage(compliance, record)}{" "}
+          <Link href="/agent/profile" className={linkClass}>Update your certificate</Link>
         </p>
       ) : null}
 
@@ -130,7 +169,7 @@ export default function AgentDashboard() {
         {!inboxReady || !listingsReady ? (
           <p role="status" className="text-sm text-slate-600 dark:text-slate-300">Loading…</p>
         ) : today.length === 0 ? (
-          <p className={emptyBoxClass}>Nothing needs you right now. New enquiries and listings sent back by a moderator show here.</p>
+          <p className={emptyBoxClass}>Nothing needs you right now. New enquiries, listings sent back by a moderator and missing mandates show here.</p>
         ) : (
           <ul className="space-y-3">
             {today.slice(0, TODAY_LIMIT).map((item) => (
