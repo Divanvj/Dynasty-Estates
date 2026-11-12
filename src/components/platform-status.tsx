@@ -25,7 +25,11 @@ const listeners = new Set<() => void>();
 function load() {
   if (started || typeof window === "undefined") return;
   started = true;
-  fetch("/api/platform/status")
+  // no-store: skip the browser's own cache. The response's
+  // stale-while-revalidate let Chrome reuse an old answer for another minute,
+  // so a switch changed in the console seemed not to work. The edge cache
+  // (s-maxage=30) still applies.
+  fetch("/api/platform/status", { cache: "no-store" })
     .then((response) => (response.ok ? response.json() : null))
     .then((body: Status | null) => {
       if (!body?.flags || !body.maintenance) return;
