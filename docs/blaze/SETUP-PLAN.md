@@ -15,7 +15,18 @@ bucket `dynasty-estates.firebasestorage.app` exists (us-central1). O2 (budget al
   screenshots, blur, resolution) and phone sign-in can each be turned off for testing. File type and the 10 MB limit
   stay enforced by `storage.rules`.
 
-Still open: B2 (scheduler) and e-mail, both waiting on the owner decisions in section 3.
+- **B2 (decided 2026-11-12, owner left the choice to us): Vercel Cron.** `vercel.json` calls `/api/cron/nightly` once a
+  day at 00:00 UTC (02:00 SAST): health probes against production, the integrity scan, and `listing_stats` retention
+  (13 months). Results go to the console event log (actor "Nightly job") and `platform_config/nightly`; the go-live
+  item "Nightly jobs ran" turns red if no run in 26 hours. Why Vercel Cron over Cloud Scheduler / Functions: the code
+  already lives in the Next app and deploys with every push to main, it needs no extra Google permissions or second
+  deploy pipeline, and it costs nothing. Its limit: on Vercel's free plan a cron runs at most once a day. A frequent
+  uptime check (every few minutes) only helps once failures can alert someone, so it waits for the e-mail provider;
+  then use Cloud Scheduler (it runs outside Vercel, so it still reports when Vercel is down).
+- **Owner step for B2:** add `CRON_SECRET` in Vercel → Settings → Environment Variables (Production) and redeploy.
+  Until then the route refuses every call (503), which the go-live list shows.
+
+Still open: e-mail provider (alerts, weekly seller report, FFC reminders) — owner decision in section 3.
 
 ## 1. Owner steps (only the account owner can do these)
 
@@ -63,8 +74,8 @@ Authorized domains.
 | E-mail sending (new-enquiry alerts, weekly seller report, FFC expiry reminders, alert e-mails from the checks) | Which provider (e.g. Resend, SendGrid, Amazon SES) and which sender address/domain. Not a Blaze feature in itself, but every alert depends on it. |
 | SMS / WhatsApp alerts to agents | Provider (e.g. Twilio, Clickatell, WhatsApp Business API) and budget. |
 | Approving a test listing in moderation during the photo test | It writes a **permanent** audit-trail entry (entries cannot be deleted). Approve, or test up to "Submitted" only. |
-| Stats retention | 13 months proposed. |
-| Scheduler | Vercel Cron (recommended) or Cloud Functions. |
+| Stats retention | Decided: 13 months (2026-11-12). |
+| Scheduler | Decided: Vercel Cron (2026-11-12); Cloud Scheduler later for frequent uptime checks. |
 
 ## 4. Not unlocked by Blaze (still separate work)
 

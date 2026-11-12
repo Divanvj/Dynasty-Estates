@@ -286,3 +286,10 @@ Unchanged: the map views inside `/search` (Map view) and the home feed still use
 | Login always offered Email / Phone | The Phone tab hides when the console turns phone sign-in off | `auth/login/page.tsx` |
 | Console texts "until Blaze" (overview, Firebase "Spark plan limits", integrity, tools, go-live) | Blaze is on; what is still missing is the scheduler, an owner decision. Go-live gains "Storage rules match main" | `console/*`, `lib/server/platform-checks.ts` |
 | storage.rules allowed overwriting a checked photo (Storage counts it as a create) | Create requires `resource == null` | `storage.rules` |
+
+## Nightly jobs (12 Nov)
+
+| Was | Now | Where |
+| --- | --- | --- |
+| Go-live "Scheduled jobs and alerts", always blocked | "Nightly jobs ran": green after a run in the last 26 hours, red if never or stale (says to add CRON_SECRET) | `lib/server/platform-checks.ts` |
+| Health check and integrity scan only on demand | Also every night at 02:00 SAST (Vercel Cron), plus listing_stats older than 13 months deleted; entries in the event log as "Nightly job (Vercel Cron)", failures as warnings | `vercel.json`, `api/cron/nightly/route.ts`, `lib/server/health.ts`, `lib/server/console-data.ts` |

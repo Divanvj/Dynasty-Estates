@@ -348,6 +348,13 @@ export type LogEvent = {
   href?: string;
 };
 
+/** A failed health probe, or a nightly run that reported problems. */
+function consoleEventWarns(action: string, details: Record<string, unknown> | undefined): boolean {
+  if (action === "health.check" || action === "nightly.health") return Number(details?.failed ?? 0) > 0;
+  if (action === "nightly.run") return Array.isArray(details?.failures) && details.failures.length > 0;
+  return false;
+}
+
 export async function getEventLog(sinceMs: number): Promise<LogEvent[]> {
   const iso = (ms: number | null) => new Date(ms ?? 0).toISOString();
   const after = (ms: number | null) => ms !== null && ms >= sinceMs;
@@ -497,8 +504,8 @@ export async function getEventLog(sinceMs: number): Promise<LogEvent[]> {
       at: iso(toMillis(data.createdAt)),
       title: String(data.summary ?? data.action ?? "Console action"),
       detail: String(data.action ?? ""),
-      actor: (data.actorEmail as string) ?? null,
-      severity: String(data.action ?? "").startsWith("health.") && data.details && (data.details as { failed?: number }).failed ? "warning" : "info",
+      actor: (data.actorEmail as string) ?? (data.actorRole === "system" ? "Nightly job (Vercel Cron)" : null),
+      severity: consoleEventWarns(String(data.action ?? ""), data.details as Record<string, unknown> | undefined) ? "warning" : "info",
     });
   }
   for (const { id, data } of errors) {

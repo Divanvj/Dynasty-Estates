@@ -349,11 +349,26 @@ async function retiredTestAccountsStatus(): Promise<{ active: string[] } | null>
   }
 }
 
+/** Written by /api/cron/nightly after every run. */
+export const NIGHTLY_DOC = "platform_config/nightly";
+type NightlyRun = { lastRunAt: string; ok: boolean; failures: string[]; summary: string };
+
+async function lastNightlyRun(): Promise<NightlyRun | null | "unknown"> {
+  if (!adminApp()) return "unknown";
+  try {
+    const snap = await adminDb().doc(NIGHTLY_DOC).get();
+    return snap.exists ? (snap.data() as NightlyRun) : null;
+  } catch {
+    return "unknown";
+  }
+}
+
 export async function getGoLiveChecks(): Promise<Check[]> {
-  const [firebase, deploys, retired] = await Promise.all([
+  const [firebase, deploys, retired, nightly] = await Promise.all([
     getFirebaseStatus(),
     getDeploys(),
     retiredTestAccountsStatus(),
+    lastNightlyRun(),
   ]);
   const checks: Check[] = [];
 
@@ -495,12 +510,28 @@ export async function getGoLiveChecks(): Promise<Check[]> {
     fix: "In Google Cloud IAM, grant the firebase-adminsdk service account the Monitoring Viewer role. Does not need Blaze.",
   });
 
+  const staleMs = 26 * 60 * 60 * 1000;
   checks.push({
     id: "scheduled",
-    label: "Scheduled jobs and alerts",
-    state: "blocked",
-    summary: "Blaze is on, but no scheduler is set up yet: uptime checks, integrity scans and stats retention run on demand from the console. Alert e-mails also need an e-mail provider.",
-    fix: "Owner decision (docs/blaze/SETUP-PLAN.md): Vercel Cron or Cloud Scheduler calling the existing routes, and an e-mail provider.",
+    label: "Nightly jobs ran",
+    state:
+      nightly === "unknown"
+        ? "unknown"
+        : !nightly
+          ? "error"
+          : Date.now() - Date.parse(nightly.lastRunAt) > staleMs
+            ? "error"
+            : nightly.ok
+              ? "ok"
+              : "warning",
+    summary:
+      nightly === "unknown"
+        ? "Could not read the last nightly run."
+        : !nightly
+          ? "The nightly jobs (health check, integrity scan, stats clean-up) have never run. Vercel Cron calls /api/cron/nightly at 02:00 SAST, and the route refuses every call until CRON_SECRET is set."
+          : `Last run ${nightly.lastRunAt}: ${nightly.summary}.${Date.now() - Date.parse(nightly.lastRunAt) > staleMs ? " That is more than a day ago." : ""} Results are in the event log. No alert e-mails yet: that needs an e-mail provider.`,
+    fix: "In Vercel → dynasty-estates → Settings → Environment Variables, add CRON_SECRET (a random value of 16+ characters) for Production, then redeploy. Check Vercel → Cron Jobs for failed runs.",
+    href: "/console/events",
   });
 
   return checks;

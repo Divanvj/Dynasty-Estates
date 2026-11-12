@@ -49,3 +49,34 @@ export async function recordListingEvent(listingId: string, event: ListingEvent)
     );
   return "counted";
 }
+
+/** Daily stats are kept this long (docs/dashboards/PLAN.md, open decision 3). */
+export const STATS_RETENTION_MONTHS = 13;
+
+/** The first SAST day that is kept: the same date STATS_RETENTION_MONTHS ago. */
+export function retentionCutoff(now: number = Date.now()): string {
+  const [y, m, d] = sastDay(now).split("-").map(Number);
+  const cutoff = new Date(Date.UTC(y, m - 1 - STATS_RETENTION_MONTHS, d));
+  return cutoff.toISOString().slice(0, 10);
+}
+
+/**
+ * Deletes listing_stats days older than the cutoff, in pages, so one night
+ * never runs long. Returns how many were deleted and whether any are left.
+ */
+export async function deleteOldStats(cutoff: string, maxDocs = 5000): Promise<{ deleted: number; more: boolean }> {
+  let deleted = 0;
+  while (deleted < maxDocs) {
+    const page = await adminDb()
+      .collection("listing_stats")
+      .where("date", "<", cutoff)
+      .limit(Math.min(400, maxDocs - deleted))
+      .get();
+    if (page.empty) return { deleted, more: false };
+    const batch = adminDb().batch();
+    page.docs.forEach((doc) => batch.delete(doc.ref));
+    await batch.commit();
+    deleted += page.size;
+  }
+  return { deleted, more: true };
+}

@@ -73,7 +73,7 @@ Mobile: the bottom tab bar (`mobile-nav.tsx`) for Agent gains Enquiries; admin s
   from `inquiries`, not from here. No user id, IP or cookie is stored.
 - Write budget: one write per counted event. Spark allows 20k writes/day; fine at launch. If it grows, batch in
   memory per instance and flush every few seconds.
-- Retention: keep daily docs 13 months (for "same month last year" later); owner to confirm.
+- Retention: keep daily docs 13 months (for "same month last year" later). Decided 2026-11-12 (owner left it to us); the nightly job deletes older days (`deleteOldStats` in `lib/server/listing-stats.ts`).
 
 ### F2 — Enquiry pipeline (Phase D) — schema + rules
 - `status` widens to `new → contacted → viewing → offer → won | lost` for agents (private sellers keep
@@ -185,9 +185,8 @@ the principal's own view and needs the agency schema, so it follows once the ind
 ## Blocked or external
 
 - E-mail / SMS / WhatsApp sending (weekly seller report, new-enquiry alerts, FFC reminders) — needs a provider and
-  either Blaze (Functions) or Vercel Cron; owner decision.
-- Listing photos (Storage needs Blaze): until then a listing can't be submitted, so the dashboards will have little
-  real data. See open decision 1.
+  a scheduler (Vercel Cron runs nightly since 2026-11-12) and an e-mail provider (owner decision).
+- Listing photos: Storage is live since 2026-11-12 (Blaze), so listings can be submitted.
 - Sold-price data (Lightstone / Deeds) — paid feed.
 - Online payment (pricing phase 4).
 
@@ -198,7 +197,7 @@ the principal's own view and needs the agency schema, so it follows once the ind
    public search; (b) a separate demo Firebase project; (c) show only real data and wait. Recommended: (a). No
    fake numbers inside the real product either way.
 2. F1 approved 2026-11-11, F2 approved 2026-11-12, F3 and F4 approved 2026-11-12.
-3. Stats retention (13 months proposed).
+3. Stats retention: 13 months, decided 2026-11-12; enforced nightly by `/api/cron/nightly`.
 4. Seller report: may the agent's note be stored on the listing (new field), or typed per print only?
 5. Agent role grant via `/admin/agents` (server route that sets claims) — taken as part of the F3 approval (2026-11-12); built as `/api/admin/practitioners` (admin claim only; never changes a developer or admin account's role; audit entry per decision).
 
