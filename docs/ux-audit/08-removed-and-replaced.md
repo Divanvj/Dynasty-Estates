@@ -293,3 +293,14 @@ Unchanged: the map views inside `/search` (Map view) and the home feed still use
 | --- | --- | --- |
 | Go-live "Scheduled jobs and alerts", always blocked | "Nightly jobs ran": green after a run in the last 26 hours, red if never or stale (says to add CRON_SECRET) | `lib/server/platform-checks.ts` |
 | Health check and integrity scan only on demand | Also every night at 02:00 SAST (Vercel Cron), plus listing_stats older than 13 months deleted; entries in the event log as "Nightly job (Vercel Cron)", failures as warnings | `vercel.json`, `api/cron/nightly/route.ts`, `lib/server/health.ts`, `lib/server/console-data.ts` |
+
+## Calmer dark mode + premium dashboards (13 Nov, docs/dashboards/REDESIGN-PLAN.md)
+
+| Was | Now | Where |
+| --- | --- | --- |
+| Dark mode: teal-tinted surfaces (#081012, panels #0c1a1c) and bright emerald buttons, links and chips | Near-neutral charcoal (#0b0e0f, panels #121617); the emerald scale re-pointed at a muted sea-glass ramp with the same lightness steps; champagne #cfb27a. Light mode and the developer console unchanged | `app/globals.css` (`html.dark`) |
+| Console tab rows: filled pill per tab | Underline tabs (teal line under the current page) | `components/dashboard-ui.tsx` `SectionNav` |
+| Frosted-glass panels and tiles on /agent, /agency, /admin | Solid cards (white / charcoal, hairline, soft shadow) | `dashboard-ui.tsx` `panelClass`, `rowClass`, `StatTile` |
+| Agent dashboard: heading, five number tiles, "Needs you today" | Petrol statement card (greeting, waiting buyers, top listing with its photo), speed-to-lead ring (1 h target), four KPIs with 30-day trend and change, Needs you today, buyer pipeline funnel with stuck flags, daily views chart, FFC compliance ring, listings table with photo, health and views trend | `agent/dashboard/page.tsx`, `components/charts/*`, `lib/dashboard-math.ts` |
+| Agency overview: four tiles + agents table | Statement card, agency speed-to-lead ring, KPIs with change, leaderboard with top-three podium (3+ agents) and inline bars, reply time per agent against 1 h, enquiries per day | `agency/page.tsx`, `components/agency-team.tsx` (60 days of stats) |
+| Admin overview: five tiles + "Needs action" list; tile "Enquiries last 7 days" | Marketplace statement card, queues-within-24 h ring, KPIs (new listings, enquiries with change, verified agents, open package requests), queues with age bars, supply mix (sale/rent, top cities), enquiries per day, honest Revenue placeholder until payments | `admin/page.tsx`, `lib/admin-overview.ts` (`getLiveListings`, `getEnquiryTimesSince`) |

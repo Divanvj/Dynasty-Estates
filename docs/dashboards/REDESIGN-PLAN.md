@@ -1,6 +1,6 @@
 # Premium dashboards — redesign plan (proposed 2026-11-12)
 
-Status: **PROPOSED — nothing built yet.** The concept to look at first is
+Status (2026-11-13): **calmer dark mode (1b), R1 shared pieces, R2 agent, R3 agency and R4 admin overviews BUILT and merged.** R5 (restyle the remaining inner pages in depth, partner walkthrough refresh) still to do. Original note: The concept to look at first is
 `Desktop/Dynasty_Estates_V2.0/Dynasty-Dashboard-Concept.html` (open it in a browser and switch
 between Agent, Agency and Admin, and between light and dark).
 

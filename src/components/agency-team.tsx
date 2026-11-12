@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import { useAuth } from "@/components/auth-provider";
 import { getMembers, getOwnAgency, getSentInvites, type Agency, type AgencyInvite, type AgencyMember } from "@/lib/agency";
-import { lastDays, sumStats } from "@/lib/listing-stats";
+import { lastDays, sumStats, type DayStats } from "@/lib/listing-stats";
 import { getOwnerStats } from "@/lib/listing-stats-client";
 import { getPractitioner } from "@/lib/practitioners";
 import { asStage, getSellerInquiries, medianReplyMs, type SellerInquiry } from "@/lib/seller-inquiries";
@@ -38,6 +38,8 @@ export type TeamAgent = {
   won30: number;
   reply: { ms: number; count: number } | null;
   views30: number | null;
+  /** Daily listing stats for the last 60 days (null = couldn't be loaded), for trends and changes. */
+  statsRows: DayStats[] | null;
 };
 
 export type AgencyLoad =
@@ -72,7 +74,9 @@ export function useAgencyTeam(uid: string | null | undefined) {
         getSentInvites(uid),
         getPractitioner(uid).catch(() => null),
       ]);
-      const since = lastDays(WINDOW_DAYS, now)[0];
+      // Two windows' worth, so the overview can compare with the 30 days before.
+      const since = lastDays(WINDOW_DAYS * 2, now)[0];
+      const currentStart = lastDays(WINDOW_DAYS, now)[0];
       const people = [
         { uid, name: self?.fullName || user?.displayName || "You", email: user?.email ?? "", isPrincipal: true, joinedAt: agency.createdAt },
         ...members.map((m) => ({ uid: m.memberUid, name: m.name || m.email, email: m.email, isPrincipal: false, joinedAt: m.joinedAt })),
@@ -101,7 +105,8 @@ export function useAgencyTeam(uid: string | null | undefined) {
           waiting: handling.filter((e) => asStage(e.status) === "new").length,
           won30: recent.filter((e) => asStage(e.status) === "won").length,
           reply: medianReplyMs(handling, now, WINDOW_DAYS),
-          views30: stats ? sumStats(stats).views : null,
+          views30: stats ? sumStats(stats.filter((s) => s.date >= currentStart)).views : null,
+          statsRows: stats,
         };
       });
       return { state: "ready", agency, agents, members, invites, enquiries: all } as AgencyLoad;

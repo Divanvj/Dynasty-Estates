@@ -9,12 +9,16 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/site-dark-calm | Calmer dark mode (globals.css dark tokens), then premium dashboards (dashboard-ui, components/charts, /agent /agency /admin overviews) — docs/dashboards/REDESIGN-PLAN.md. Worktree ../dynasty-wt-design | 2026-11-12 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-13 — `DESKTOP-1R37EBU/site-dark-calm` merged. **Dark mode is calmer site-wide**: `html.dark` in globals.css re-points
+  `--background`, `surface-ink/-panel` (now read through `--surface-*`) and the whole `emerald-*` scale to charcoal + muted sea-glass;
+  the console keeps the old values via its own `.dark` wrapper. Dashboards use `--dash-*` tokens ("D · Petrol") and new
+  `components/charts/*` + `KpiCard`, `StatementCard`, `RingCard`, `DashCard`, `Delta`, `AgeChip` in `dashboard-ui.tsx`.
 
 - 2026-11-12 — `DESKTOP-1R37EBU/nightly-cron` merged. **`vercel.json` now has a cron**: `/api/cron/nightly` daily at 02:00 SAST
   (health probes, integrity scan, listing_stats older than 13 months deleted). Needs `CRON_SECRET` in Vercel (owner step;

@@ -28,6 +28,48 @@ export async function countEnquiriesSince(since: Date): Promise<number> {
   return snap.data().count;
 }
 
+export type LiveListing = {
+  id: string;
+  title: string;
+  city: string;
+  listingType: "sale" | "rent";
+  image: string;
+  /** When it went live (publishedAt, else createdAt). */
+  liveSince: Date | null;
+};
+
+const toDate = (value: unknown): Date | null => {
+  const at = (value as { toDate?: () => Date } | null)?.toDate?.();
+  return at instanceof Date ? at : null;
+};
+
+/**
+ * Every live listing, with only what the premium overview needs: where it is,
+ * sale or rent, its cover photo and when it went live. One read per live
+ * listing — fine at today's size; switch to aggregate counts per city if the
+ * catalogue grows into the thousands (REDESIGN-PLAN.md, R4).
+ */
+export async function getLiveListings(): Promise<LiveListing[]> {
+  const snap = await getDocs(query(collection(requireDb(), "properties"), where("status", "in", [...ACTIVE_CATALOGUE_STATUSES])));
+  return snap.docs.map((d) => {
+    const data = d.data();
+    return {
+      id: d.id,
+      title: String(data.title ?? "Untitled"),
+      city: String(data.city ?? "").trim(),
+      listingType: data.listingType === "rent" ? "rent" : "sale",
+      image: typeof data.image === "string" && data.image.startsWith("http") ? data.image : "",
+      liveSince: toDate(data.publishedAt) ?? toDate(data.createdAt),
+    };
+  });
+}
+
+/** When each enquiry since `since` arrived (one read per enquiry; single-field index). */
+export async function getEnquiryTimesSince(since: Date): Promise<Date[]> {
+  const snap = await getDocs(query(collection(requireDb(), "inquiries"), where("createdAt", ">=", Timestamp.fromDate(since))));
+  return snap.docs.map((d) => toDate(d.data().createdAt)).filter((x): x is Date => x !== null);
+}
+
 export type WaitingListing = { id: string; title: string; submittedAt: Date | null };
 
 /**

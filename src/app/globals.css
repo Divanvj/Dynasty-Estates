@@ -229,6 +229,192 @@
   --brand-teal-deep: #0d5f61;
   --brand-teal-hover: #117375;
   --brand-teal-glow: rgba(16, 185, 129, 0.35);
+
+  /* The two dark surfaces (see @theme below) and Tailwind's own emerald,
+     restated at their original values. Nothing changes for anything under a
+     plain `.dark` element — which is how the developer console stays exactly
+     as it was: it sets `.dark` on its own wrapper, so these win there. */
+  --surface-ink: #060d0e;
+  --surface-panel: #0c1a1c;
+  --color-emerald-50: oklch(97.9% 0.021 166.113);
+  --color-emerald-100: oklch(95% 0.052 163.051);
+  --color-emerald-200: oklch(90.5% 0.093 164.15);
+  --color-emerald-300: oklch(84.5% 0.143 164.978);
+  --color-emerald-400: oklch(76.5% 0.177 163.223);
+  --color-emerald-500: oklch(69.6% 0.17 162.48);
+  --color-emerald-600: oklch(59.6% 0.145 163.225);
+  --color-emerald-700: oklch(50.8% 0.118 165.612);
+  --color-emerald-800: oklch(43.2% 0.095 166.913);
+  --color-emerald-900: oklch(37.8% 0.077 168.94);
+  --color-emerald-950: oklch(26.2% 0.051 172.552);
+}
+
+/* ---------------------------------------------------------------------------
+   Calmer dark mode for the site (docs/dashboards/REDESIGN-PLAN.md, 1b; owner
+   2026-11-12: "the dark teal feels a bit overwhelming").
+
+   Before: every surface was tinted teal (#081012, #0c1a1c) and ~470 classes
+   painted buttons, links and chips in bright emerald, so the screen read green
+   and nothing stood out. Now the surfaces are near-neutral charcoal with only
+   a trace of teal, and the emerald scale is re-pointed at a muted sea-glass
+   ramp with the same lightness steps — so every existing `dark:…-emerald-…`
+   class keeps its contrast, it just stops shouting. Light mode is untouched.
+
+   `html.dark` (the visitor's theme on <html>) out-ranks the plain `.dark`
+   above, so only the site changes; the console's own `.dark` wrapper keeps
+   the original values. Contrast on the new page #0b0e0f: ink 17.6:1,
+   --ink-muted 12.3:1, --ink-subtle 7.0:1, --brand 9.6:1, emerald-400 8.4:1,
+   white on emerald-700 6.3:1. */
+html.dark {
+  --background: #0b0e0f;
+  --foreground: #eef1f0;
+
+  --ink: #eef1f0;
+  --ink-muted: #c4cbca;
+  --ink-subtle: #949d9c;
+  --ink-inverse: #0b0e0f;
+
+  --brand: #8cc1ba;
+  --brand-hover: #a9d3cd;
+  --brand-quiet: rgba(140, 193, 186, 0.12);
+
+  --good: #7cc4a4;
+  --warn: #dcc390;
+
+  --obsidian-bg: #090c0d;
+  --obsidian-surface: rgba(18, 22, 23, 0.85);
+  --obsidian-border: rgba(255, 255, 255, 0.08);
+  --obsidian-emerald: #8cc1ba;
+  --obsidian-emerald-glow: rgba(140, 193, 186, 0.2);
+  --obsidian-champagne: #cfb27a;
+  --obsidian-champagne-light: #efe4c8;
+
+  --brand-teal-deep: #1f4f4c;
+  --brand-teal-hover: #2a615d;
+  --brand-teal-glow: rgba(140, 193, 186, 0.2);
+
+  --surface-ink: #0e1112;
+  --surface-panel: #121617;
+
+  --color-emerald-50: #eef6f4;
+  --color-emerald-100: #d9ebe8;
+  --color-emerald-200: #b9dad5;
+  --color-emerald-300: #a3cdc7;
+  --color-emerald-400: #8cc1ba;
+  --color-emerald-500: #5f9e96;
+  --color-emerald-600: #43827b;
+  --color-emerald-700: #2f6a64;
+  --color-emerald-800: #25554f;
+  --color-emerald-900: #1f4541;
+  --color-emerald-950: #142a28;
+}
+
+/* ---------------------------------------------------------------------------
+   Dashboard palette — "D · Petrol" (owner's pick, 2026-11-12; concepts in
+   Dynasty-Dashboard-Concepts-v3.html). 60% neutrals, 30% Dynasty teal (the
+   statement card and every chart, as a sequential ramp d1 → d3), 10%
+   champagne: one highlight per card at most. Green and red appear only in
+   small change chips and "late" marks, never as chart fills.
+--------------------------------------------------------------------------- */
+:root {
+  --dash-card: #ffffff;
+  --dash-card-2: #f3f6f5;
+  --dash-line: rgba(17, 24, 24, 0.08);
+  --dash-line-2: rgba(17, 24, 24, 0.15);
+  --dash-shadow: 0 1px 2px rgba(17, 24, 24, 0.05), 0 12px 30px -18px rgba(17, 24, 24, 0.28);
+
+  --dash-hero: linear-gradient(135deg, #143e3f 0%, #0f2526 52%, #0c1213 100%);
+  --dash-hero-solid: #0f2526;
+  --dash-hero-ink: #f2f4f2;
+  --dash-hero-muted: #b4c0be; /* 7.9:1 on the hero's darkest stop */
+  --dash-hero-line: rgba(255, 255, 255, 0.1);
+  --dash-hero-track: rgba(255, 255, 255, 0.12);
+
+  --dash-d1: #164f4f;
+  --dash-d2: #5b8986;
+  --dash-d3: #b9cecb;
+  --dash-track: #e4eaea;
+
+  --dash-accent: #c5a059;
+  --dash-accent-ink: #7a5f2c; /* champagne as text on light: 5.6:1 */
+  --dash-accent-soft: #f5eedf;
+  --dash-accent-hero: #d9bf8a; /* champagne as small text on the hero */
+
+  --dash-up: #047857;
+  --dash-up-soft: #e4f1eb;
+  --dash-down: #9f1239;
+  --dash-down-soft: #f8e7ea;
+}
+
+html.dark {
+  --dash-card: #121617;
+  --dash-card-2: #161b1c;
+  --dash-line: rgba(255, 255, 255, 0.07);
+  --dash-line-2: rgba(255, 255, 255, 0.12);
+  --dash-shadow: 0 1px 2px rgba(0, 0, 0, 0.55), 0 18px 40px -22px rgba(0, 0, 0, 0.95);
+
+  --dash-hero: linear-gradient(135deg, #143334 0%, #0f1d1e 55%, #0c1011 100%);
+  --dash-hero-solid: #0f1d1e;
+  --dash-hero-muted: #a9b3b1;
+  --dash-hero-line: rgba(255, 255, 255, 0.09);
+  --dash-hero-track: rgba(255, 255, 255, 0.1);
+
+  --dash-d1: #8cc1ba;
+  --dash-d2: #557a76;
+  --dash-d3: #2b3b3a;
+  --dash-track: #1b2122;
+
+  --dash-accent: #cfb27a;
+  --dash-accent-ink: #dcc390;
+  --dash-accent-soft: rgba(207, 178, 122, 0.11);
+  --dash-accent-hero: #dcc390;
+
+  --dash-up: #8ccaa9;
+  --dash-up-soft: rgba(140, 202, 169, 0.1);
+  --dash-down: #f2a0b0;
+  --dash-down-soft: rgba(242, 160, 176, 0.1);
+}
+
+@keyframes dash-grow-x { from { transform: scaleX(0); } }
+@keyframes dash-grow-y { from { transform: scaleY(0); } }
+.dash-grow-x { transform-origin: left; animation: dash-grow-x 600ms var(--ease-out) both; }
+.dash-grow-y { transform-box: fill-box; transform-origin: bottom; animation: dash-grow-y 500ms var(--ease-out) both; }
+@media (prefers-reduced-motion: reduce) {
+  .dash-grow-x, .dash-grow-y { animation: none; }
+}
+
+html.dark select:not(div.dark select),
+html.dark select option:not(div.dark select option) {
+  background-color: #121617;
+  color: #eef1f0;
+}
+html.dark select:not(div.dark select) {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2.5' stroke='%238cc1ba'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E");
+}
+html.dark select:hover:not(div.dark select),
+html.dark select:focus:not(div.dark select) {
+  border-color: #8cc1ba !important;
+  box-shadow: 0 0 0 3px rgba(140, 193, 186, 0.18) !important;
+}
+html.dark :not(div.dark *)::selection {
+  background: rgba(140, 193, 186, 0.32);
+  color: #ffffff;
+}
+html.dark .glass-panel:not(div.dark .glass-panel) { background: rgba(18, 22, 23, 0.72); }
+html.dark .glass-card:not(div.dark .glass-card) { background: rgba(18, 22, 23, 0.68); }
+html.dark .glass-card:hover:not(div.dark .glass-card) {
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+html.dark .glass-dark:not(div.dark .glass-dark) {
+  background: rgba(11, 14, 15, 0.92);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+html.dark .glass-input:not(div.dark .glass-input) { background: rgba(14, 17, 18, 0.78); color: #eef1f0; }
+html.dark .champagne-badge:not(div.dark .champagne-badge) {
+  background: rgba(207, 178, 122, 0.1);
+  border-color: rgba(207, 178, 122, 0.32);
+  color: #efe4c8;
 }
 
 @theme inline {
@@ -248,8 +434,10 @@
      that is what makes them ordinary utilities — `bg-surface-ink/60`,
      `dark:border-surface-panel` — with the opacity modifier still working.
      A `bg-[var(--x)]/60` would not survive the slash the same way. */
-  --color-surface-ink: #060d0e;
-  --color-surface-panel: #0c1a1c;
+  /* Read through --surface-* so the calmer site dark mode (html.dark) can
+     change them while the console's own `.dark` keeps the originals. */
+  --color-surface-ink: var(--surface-ink, #060d0e);
+  --color-surface-panel: var(--surface-panel, #0c1a1c);
 
   /* Corner radius scale.
 
