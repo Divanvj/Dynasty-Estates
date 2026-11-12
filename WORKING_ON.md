@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/dashboards-phase-d` | enquiry stages + reply time: inquiries rules, lib/inquiries.ts, enquiry-inbox, agent dashboard/enquiries, listing-detail enquiries tab | 2026-11-12 |
 
 ## Recently merged
 
