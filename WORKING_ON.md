@@ -9,12 +9,16 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/blaze-setup | Blaze switch-on: storage.rules deploy, photo-check switches in /console/flags (platform-config, photo-intake, uploader), go-live checks | 2026-11-12 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-12 — `DESKTOP-1R37EBU/blaze-setup` merged. **Blaze is on; Cloud Storage live** (bucket
+  `dynasty-estates.firebasestorage.app`), `storage.rules` **deployed** (create now also needs `resource == null`). Listing
+  photos upload and listings can be submitted. `/console/flags` can switch off each photo check and phone sign-in: add new
+  switches to `FEATURE_FLAGS` in `lib/platform-config.ts` (with a `group`). Scheduler + e-mail still await owner decisions.
 
 - 2026-11-12 — `DESKTOP-1R37EBU/dashboards-phase-g` merged (agencies, F4). **New collections `agencies/{principalUid}`,
   `agency_invites/{principalUid}_{email}`, `agency_members/{principalUid}_{memberUid}`**; `inquiries` gain `assignedTo`, and
