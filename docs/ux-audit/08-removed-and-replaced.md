@@ -267,3 +267,5 @@ Unchanged: the map views inside `/search` (Map view) and the home feed still use
 | Go-live check "No passwords in the public repo" | "Old test accounts disabled" | `lib/server/platform-checks.ts` |
 | Console Users page: "Test accounts" health panel | Panel only appears if an old test account can sign in again; "testing as …" tag on developer accounts | `console/users/page.tsx` |
 | Enquiry, support and audit times as "2026-11-10 10:30 UTC" | South African time, "10 Nov 2026, 12:30" (2026-11-12) | `lib/formatters.ts` `formatDateTime` |
+| Agent dashboard tile "Viewing requests (last 7 days)" | "Reply time": median first reply over 30 days (viewings are now a stage, filterable in Enquiries) (2026-11-12, Phase D) | `agent/dashboard/page.tsx` |
+| Agent inbox "Mark as contacted / Mark as new" button and New / Contacted chips | A labelled Stage control per enquiry (New, Contacted, Viewing booked, Offer made, Won, Lost) and a chip per stage; private sellers keep the button | `components/enquiry-inbox.tsx`, `agent/enquiries/page.tsx` |

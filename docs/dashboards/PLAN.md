@@ -1,6 +1,6 @@
 # Agent & admin dashboards — implementation plan
 
-Written 2026-11-10 (DESKTOP-1R37EBU). Status (2026-11-12): **A, B, C, E DONE** (on main; listing_stats rules + indexes deployed live 2026-11-11, checked with live test data 2026-11-12). D, F, G, H not started.
+Written 2026-11-10 (DESKTOP-1R37EBU). Status (2026-11-12): **A, B, C, D, E DONE** (on main; listing_stats rules + indexes deployed live 2026-11-11; enquiry-stage rules (F2) deployed live 2026-11-12). F, G, H not started (F3/F4 need approval; H needs pricing phase 2).
 Scope: the agent console (`/agent/*`), the agency principal's view, the admin pages (`/admin/*`) and the
 seller portal where it shares the same pieces. **The developer console (`/console`, `/api/console/*`) is out of
 scope — do not touch it** (owner, 2026-11-10).
@@ -140,7 +140,7 @@ Sizes: S ≈ half a day, M ≈ 1–2 days, L ≈ 3+ days.
 - "Download PDF" = the browser's Save as PDF. Server-side PDF and the weekly e-mail are unbuilt (need an e-mail
   provider; see Blocked).
 
-### Phase D — Enquiry pipeline and response time (M) · needs F2 approval
+### Phase D — Enquiry pipeline and response time (M) · F2 approved 2026-11-12 · **DONE 2026-11-12**
 - Stages in `/agent/enquiries` (filter chips per stage, stage change in the row — no hover-only controls).
 - Dashboard tiles: median first-response time (30 days), oldest unanswered.
 - Listing Detail **Enquiries** tab with the funnel (enquiries → viewings → offers) as a plain horizontal bar.
@@ -188,14 +188,14 @@ the principal's own view and needs the agency schema, so it follows once the ind
    (a) a real "demo agency" account on live with clearly marked test listings, enquiries and stats, never shown in
    public search; (b) a separate demo Firebase project; (c) show only real data and wait. Recommended: (a). No
    fake numbers inside the real product either way.
-2. Approve F1 now (Phase B); F2–F4 when their phase starts.
+2. F1 approved 2026-11-11, F2 approved 2026-11-12; F3–F4 when their phase starts.
 3. Stats retention (13 months proposed).
 4. Seller report: may the agent's note be stored on the listing (new field), or typed per print only?
 5. Agent role grant via `/admin/agents` (server route that sets claims) — approve the architecture.
 
 ## Unbuilt (keep listed until done)
 
-View tracking · listing performance · seller report + template · enquiry stages & response time · price snapshot ·
-compliance card · agent verification queue · Register Agency / principal view / leaderboard / assignment · admin
+Built: view tracking · listing performance · seller report + template · enquiry stages & response time · price snapshot.
+Still unbuilt: compliance card · agent verification queue · Register Agency / principal view / leaderboard / assignment · admin
 pulse & sub-pages · revenue list · demand vs supply · e-mail/SMS/WhatsApp alerts · Saved Searches · listing edit
 screen · online payment · package expiry · tenancy applications screen for agents/landlords.

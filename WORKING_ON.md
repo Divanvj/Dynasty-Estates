@@ -9,12 +9,17 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/dashboards-phase-d` | enquiry stages + reply time: inquiries rules, lib/inquiries.ts, enquiry-inbox, agent dashboard/enquiries, listing-detail enquiries tab | 2026-11-12 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-12 — `DESKTOP-1R37EBU/dashboards-phase-d` merged (enquiry stages, F2). **`inquiries` gains stages and two
+  timestamps**: status `new|contacted|viewing|offer|won|lost` (later four for agents/admins only), `updatedAt` and
+  `firstRespondedAt` (server time, set once as it leaves New). Owner updates may touch only those three fields — rules
+  **deployed live**. Use `setInquiryStage()` in `lib/seller-inquiries.ts`, not a raw updateDoc. `formatDateTime` now
+  prints SAST ("10 Nov 2026, 12:30").
 
 - 2026-11-12 — `DESKTOP-1R37EBU/dashboards-phase-b` + `-phase-c` merged (Phases B, C, E of `docs/dashboards/PLAN.md`).
   **New collection `listing_stats`** (`{listingId}_{YYYYMMDD}`, SAST day): written only by `POST /api/track`
