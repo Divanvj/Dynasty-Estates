@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/dashboards-phase-g | Phase G: agencies/agency_invites/agency_members + inquiries/listing_stats rules, /agency/*, enquiry assignedTo | 2026-11-12 |
 
 ## Recently merged
 
