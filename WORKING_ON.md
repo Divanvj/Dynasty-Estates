@@ -9,13 +9,16 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/nightly-cron | Nightly jobs: vercel.json cron, /api/cron/nightly, lib/server/health.ts, stats retention, go-live scheduled check | 2026-11-12 |
 | DESKTOP-1R37EBU | DESKTOP-1R37EBU/site-dark-calm | Calmer dark mode (globals.css dark tokens), then premium dashboards (dashboard-ui, components/charts, /agent /agency /admin overviews) — docs/dashboards/REDESIGN-PLAN.md. Worktree ../dynasty-wt-design | 2026-11-12 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-12 — `DESKTOP-1R37EBU/nightly-cron` merged. **`vercel.json` now has a cron**: `/api/cron/nightly` daily at 02:00 SAST
+  (health probes, integrity scan, listing_stats older than 13 months deleted). Needs `CRON_SECRET` in Vercel (owner step;
+  refuses with 503 until then). Health probes now live in `lib/server/health.ts`. Last run: `platform_config/nightly`.
 
 - 2026-11-12 — `DESKTOP-1R37EBU/blaze-setup` merged. **Blaze is on; Cloud Storage live** (bucket
   `dynasty-estates.firebasestorage.app`), `storage.rules` **deployed** (create now also needs `resource == null`). Listing
