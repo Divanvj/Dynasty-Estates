@@ -11,6 +11,7 @@ const LINKS = [
   { href: "/agent/listings", label: "Listings" },
   { href: "/agent/market", label: "Price snapshot" },
   { href: "/agent/profile", label: "Profile" },
+  { href: "/agency", label: "Agency" },
 ];
 
 /** Frame for every /agent page: the role check and the section tabs. */

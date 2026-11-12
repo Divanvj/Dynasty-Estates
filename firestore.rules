@@ -21,6 +21,18 @@ service cloud.firestore {
       return signedIn() && request.auth.token.role == 'admin';
     }
 
+    // Agencies (PLAN.md F4, Phase G). A principal's agency is agencies/{their
+    // uid}; each agent who joined has agency_members/{principalUid}_{memberUid}.
+    // The principal reaches a member's enquiries and stats through that link,
+    // so nothing is copied onto listings or enquiries and leaving takes effect
+    // at once.
+    function principalOf(ownerId) {
+      return signedIn() && exists(/databases/$(database)/documents/agency_members/$(request.auth.uid + '_' + ownerId));
+    }
+    function isPrincipal() {
+      return signedIn() && exists(/databases/$(database)/documents/agencies/$(request.auth.uid));
+    }
+
     // The physical entity behind a listing (size, rooms, location). A listing in
     // /properties references one of these, so it must be world-readable for the
     // public catalogue, but only its creator or a practitioner may change it.
@@ -105,17 +117,31 @@ service cloud.firestore {
         && request.resource.data.userId == request.auth.uid
         && (!('ownerId' in request.resource.data)
             || request.resource.data.ownerId == get(/databases/$(database)/documents/properties/$(request.resource.data.propertyId)).data.ownerId);
+      // Also: the principal of an agency the owner belongs to, and the agent
+      // the enquiry is assigned to (Phase G).
       allow read: if isAdmin()
         || (signedIn() && resource.data.userId == request.auth.uid)
-        || (signedIn() && resource.data.ownerId == request.auth.uid);
-      // The listing owner moves an enquiry through its stages (F2, Phase D).
-      // Private sellers: new / contacted. Agents (and admins) also: viewing,
-      // offer, won, lost. updatedAt, when sent, is the server clock.
-      // firstRespondedAt is the first reply: settable once, only as the
-      // enquiry leaves "new", only to the server clock, never removed.
+        || (signedIn() && resource.data.ownerId == request.auth.uid)
+        || (signedIn() && resource.data.get('assignedTo', null) == request.auth.uid)
+        || principalOf(resource.data.ownerId);
+      // The listing owner — or the agent it is assigned to — moves an enquiry
+      // through its stages (F2, Phase D). Private sellers: new / contacted.
+      // Agents (and admins) also: viewing, offer, won, lost. updatedAt, when
+      // sent, is the server clock. firstRespondedAt is the first reply:
+      // settable once, only as the enquiry leaves "new", only to the server
+      // clock, never removed.
+      // A principal assigns (or unassigns) an enquiry on their own or a
+      // member's listing to themselves or a member, changing nothing else.
       allow update: if isAdmin()
+        || ((principalOf(resource.data.ownerId) || (resource.data.ownerId == request.auth.uid && isPrincipal()))
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['assignedTo', 'updatedAt'])
+            && (!('assignedTo' in request.resource.data)
+                || request.resource.data.assignedTo == request.auth.uid
+                || exists(/databases/$(database)/documents/agency_members/$(request.auth.uid + '_' + request.resource.data.assignedTo)))
+            && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['updatedAt'])
+                || request.resource.data.updatedAt == request.time))
         || (signedIn()
-            && resource.data.ownerId == request.auth.uid
+            && (resource.data.ownerId == request.auth.uid || resource.data.get('assignedTo', null) == request.auth.uid)
             && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt', 'firstRespondedAt'])
             && (request.resource.data.status in ['new', 'contacted']
                 || (isAgentOrAdmin() && request.resource.data.status in ['viewing', 'offer', 'won', 'lost']))
@@ -215,12 +241,73 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // An agency, keyed by its principal's uid (one agency per principal).
+    // Only an agent whose Fidelity Fund Certificate an admin has verified may
+    // register one. Members read it; nobody deletes it from the app.
+    match /agencies/{principalUid} {
+      function validAgency(d) {
+        return d.name is string && d.name.size() >= 2 && d.name.size() <= 120
+          && d.ppraFirmNumber is string && d.ppraFirmNumber.size() <= 40
+          && d.principalUid == principalUid;
+      }
+      allow read: if isOwner(principalUid) || isAdmin()
+        || (signedIn() && exists(/databases/$(database)/documents/agency_members/$(principalUid + '_' + request.auth.uid)));
+      allow create: if isOwner(principalUid) && isAgentOrAdmin()
+        && get(/databases/$(database)/documents/practitioners/$(request.auth.uid)).data.status == 'verified'
+        && request.resource.data.keys().hasOnly(['name', 'ppraFirmNumber', 'principalUid', 'createdAt'])
+        && validAgency(request.resource.data)
+        && request.resource.data.createdAt == request.time;
+      allow update: if isOwner(principalUid)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name', 'ppraFirmNumber'])
+        && validAgency(request.resource.data);
+      allow delete: if false;
+    }
+
+    // An invitation to join an agency, keyed {principalUid}_{e-mail in lower
+    // case}. No e-mail is sent yet: the invited agent sees it in their account.
+    match /agency_invites/{inviteId} {
+      allow read: if signedIn() && (resource.data.principalUid == request.auth.uid
+        || resource.data.email == request.auth.token.get('email', '').lower());
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['principalUid', 'agencyName', 'email', 'invitedAt'])
+        && request.resource.data.principalUid == request.auth.uid
+        && isPrincipal()
+        && request.resource.data.email is string
+        && request.resource.data.email.size() >= 3 && request.resource.data.email.size() <= 254
+        && request.resource.data.email == request.resource.data.email.lower()
+        && request.resource.data.email != request.auth.token.get('email', '').lower()
+        && inviteId == request.auth.uid + '_' + request.resource.data.email
+        && request.resource.data.agencyName == get(/databases/$(database)/documents/agencies/$(request.auth.uid)).data.name
+        && request.resource.data.invitedAt == request.time;
+      allow update: if false;
+      allow delete: if signedIn() && (resource.data.principalUid == request.auth.uid
+        || resource.data.email == request.auth.token.get('email', '').lower());
+    }
+
+    // Membership: {principalUid}_{memberUid}. Created by the invited agent,
+    // only while an invitation to their own e-mail exists; removed by either
+    // side. This link is what principalOf() checks.
+    match /agency_members/{linkId} {
+      allow read: if signedIn() && (resource.data.principalUid == request.auth.uid || resource.data.memberUid == request.auth.uid);
+      allow create: if signedIn() && isAgentOrAdmin()
+        && request.resource.data.keys().hasOnly(['principalUid', 'memberUid', 'name', 'email', 'joinedAt'])
+        && request.resource.data.memberUid == request.auth.uid
+        && request.resource.data.principalUid != request.auth.uid
+        && linkId == request.resource.data.principalUid + '_' + request.auth.uid
+        && request.resource.data.email == request.auth.token.get('email', '').lower()
+        && request.resource.data.name is string && request.resource.data.name.size() <= 120
+        && exists(/databases/$(database)/documents/agency_invites/$(request.resource.data.principalUid + '_' + request.auth.token.get('email', '').lower()))
+        && request.resource.data.joinedAt == request.time;
+      allow update: if false;
+      allow delete: if signedIn() && (resource.data.principalUid == request.auth.uid || resource.data.memberUid == request.auth.uid);
+    }
+
     // Daily view / save / contact-click counts per listing (lib/listing-stats.ts,
     // docs/dashboards/PLAN.md F1). Only the server writes them, through the
     // Admin SDK in /api/track, which reads the owner from the listing itself.
     // The listing's owner and admins may read; no client may write.
     match /listing_stats/{statId} {
-      allow read: if isAdmin() || (signedIn() && resource.data.ownerId == request.auth.uid);
+      allow read: if isAdmin() || (signedIn() && resource.data.ownerId == request.auth.uid) || principalOf(resource.data.ownerId);
       allow write: if false;
     }
 

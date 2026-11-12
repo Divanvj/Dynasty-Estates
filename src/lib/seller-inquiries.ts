@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, query, serverTimestamp, updateDoc, where } from "firebase/firestore";
+import { collection, deleteField, doc, getDocs, query, serverTimestamp, updateDoc, where } from "firebase/firestore";
 
 import { db, isFirebaseConfigured } from "./firebase";
 
@@ -77,6 +77,10 @@ export type SellerInquiry = {
   /** When the owner first moved it out of New. Set once; older enquiries have none. */
   firstRespondedAt: Date | null;
   updatedAt: Date | null;
+  /** The listing's owner (the agent or seller who filed it). */
+  ownerId: string;
+  /** Agent an agency principal assigned it to (Phase G); null = the listing's own agent. */
+  assignedTo: string | null;
 };
 
 function toDate(value: unknown): Date | null {
@@ -86,31 +90,65 @@ function toDate(value: unknown): Date | null {
   return null;
 }
 
+function fromDoc(id: string, data: Record<string, unknown>): SellerInquiry {
+  return {
+    id,
+    propertyId: String(data.propertyId ?? ""),
+    propertyTitle: String(data.propertyTitle ?? "Your listing"),
+    kind: String(data.kind ?? "message"),
+    status: String(data.status ?? "new"),
+    notes: String(data.notes ?? ""),
+    contactName: String(data.contactName ?? ""),
+    contactEmail: String(data.userEmail ?? ""),
+    contactPhone: String(data.contactPhone ?? ""),
+    createdAt: toDate(data.createdAt),
+    firstRespondedAt: toDate(data.firstRespondedAt),
+    updatedAt: toDate(data.updatedAt),
+    ownerId: String(data.ownerId ?? ""),
+    assignedTo: typeof data.assignedTo === "string" && data.assignedTo ? data.assignedTo : null,
+  };
+}
+
+const newestFirst = (a: SellerInquiry, b: SellerInquiry) => (b.createdAt?.getTime() ?? 0) - (a.createdAt?.getTime() ?? 0);
+
+/**
+ * Enquiries on listings owned by `ownerId`. The owner reads their own; an
+ * agency principal reads a member's (firestore.rules, Phase G).
+ */
 export async function getSellerInquiries(ownerId: string): Promise<SellerInquiry[]> {
   if (!isFirebaseConfigured || !db) return [];
-
-  // Sorted here rather than with orderBy, which would need a composite index.
   const snapshot = await getDocs(query(collection(db, "inquiries"), where("ownerId", "==", ownerId)));
+  return snapshot.docs.map((item) => fromDoc(item.id, item.data())).sort(newestFirst);
+}
 
-  return snapshot.docs
-    .map((item) => {
-      const data = item.data();
-      return {
-        id: item.id,
-        propertyId: String(data.propertyId ?? ""),
-        propertyTitle: String(data.propertyTitle ?? "Your listing"),
-        kind: String(data.kind ?? "message"),
-        status: String(data.status ?? "new"),
-        notes: String(data.notes ?? ""),
-        contactName: String(data.contactName ?? ""),
-        contactEmail: String(data.userEmail ?? ""),
-        contactPhone: String(data.contactPhone ?? ""),
-        createdAt: toDate(data.createdAt),
-        firstRespondedAt: toDate(data.firstRespondedAt),
-        updatedAt: toDate(data.updatedAt),
-      };
-    })
-    .sort((a, b) => (b.createdAt?.getTime() ?? 0) - (a.createdAt?.getTime() ?? 0));
+/** Enquiries an agency principal assigned to this agent (Phase G). */
+export async function getAssignedInquiries(uid: string): Promise<SellerInquiry[]> {
+  if (!isFirebaseConfigured || !db) return [];
+  const snapshot = await getDocs(query(collection(db, "inquiries"), where("assignedTo", "==", uid)));
+  return snapshot.docs.map((item) => fromDoc(item.id, item.data())).sort(newestFirst);
+}
+
+/**
+ * The agent's working inbox: their own listings' enquiries, minus any a
+ * principal handed to someone else, plus any handed to them.
+ */
+export async function getInboxInquiries(uid: string): Promise<SellerInquiry[]> {
+  const [own, assigned] = await Promise.all([getSellerInquiries(uid), getAssignedInquiries(uid)]);
+  const mine = own.filter((item) => !item.assignedTo || item.assignedTo === uid);
+  const seen = new Set(mine.map((item) => item.id));
+  return [...mine, ...assigned.filter((item) => !seen.has(item.id))].sort(newestFirst);
+}
+
+/**
+ * Hands an enquiry to an agent of the agency, or back to the listing's own
+ * agent (`null`). Principals only; nothing else on the enquiry changes.
+ */
+export async function assignInquiry(id: string, assignee: string | null): Promise<void> {
+  if (!isFirebaseConfigured || !db) throw new Error("Firebase is not configured.");
+  await updateDoc(doc(db, "inquiries", id), {
+    assignedTo: assignee ?? deleteField(),
+    updatedAt: serverTimestamp(),
+  });
 }
 
 /**

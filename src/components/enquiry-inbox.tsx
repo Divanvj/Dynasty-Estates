@@ -7,7 +7,7 @@ import { emptyBoxClass, errorBoxClass, formatAge, linkClass } from "@/components
 import { formatDateTime } from "@/lib/formatters";
 import {
   asStage,
-  getSellerInquiries,
+  getInboxInquiries,
   INQUIRY_STAGES,
   setInquiryStage,
   STAGE_LABEL,
@@ -23,6 +23,8 @@ import {
  * owner filter and in no order, so every agent saw other agents' and private
  * sellers' buyers. Both pages now read only enquiries whose `ownerId` is the
  * signed-in account, newest first, and firestore.rules enforces the same.
+ * An agent in an agency also gets enquiries the principal assigned to them,
+ * and loses ones the principal handed to someone else (Phase G).
  */
 
 export type InboxState = "loading" | "ready" | "error";
@@ -38,7 +40,7 @@ export function useOwnerInquiries(uid: string | null | undefined) {
   useEffect(() => {
     if (!uid) return;
     let cancelled = false;
-    getSellerInquiries(uid)
+    getInboxInquiries(uid)
       .then((rows) => {
         if (!cancelled) setLoaded({ uid, items: rows, failed: false });
       })
@@ -81,7 +83,7 @@ export function useOwnerInquiries(uid: string | null | undefined) {
     return setStage(item, item.status === "new" ? "contacted" : "new");
   }
 
-  return { items, state, savingId, statusError, toggle, setStage };
+  return { uid, items, state, savingId, statusError, toggle, setStage };
 }
 
 /** wa.me wants the international number without "+": 082 123 4567 → 27821234567. */
@@ -92,6 +94,7 @@ function whatsappHref(phone: string): string | null {
 }
 
 export function EnquiryList({
+  uid,
   items,
   state,
   savingId,
@@ -156,6 +159,9 @@ export function EnquiryList({
                       {item.kind === "message" ? "Message" : "Viewing request"}
                       <span className="font-medium text-slate-600 dark:text-slate-300"> · {item.propertyTitle}</span>
                     </p>
+                    {uid && item.assignedTo === uid && item.ownerId !== uid ? (
+                      <p className="mt-0.5 text-xs font-semibold uppercase tracking-[0.12em] text-emerald-800 dark:text-emerald-300">Assigned to you by your agency</p>
+                    ) : null}
                     <p className="mt-0.5 text-sm text-slate-600 dark:text-slate-300">
                       {item.contactName || "A buyer"}
                       {item.createdAt ? ` · ${formatDateTime(item.createdAt)}` : ""}

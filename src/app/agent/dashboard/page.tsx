@@ -14,6 +14,8 @@ import {
   rowClass,
   StatTile,
 } from "@/components/dashboard-ui";
+import { useAgencyInvites } from "@/components/agency-membership";
+import { useAuth } from "@/components/auth-provider";
 import { useOwnerInquiries } from "@/components/enquiry-inbox";
 import { complianceMessage, usePractitioner } from "@/components/practitioner-profile";
 import { complianceState } from "@/lib/practitioner-compliance";
@@ -42,6 +44,8 @@ export default function AgentDashboard() {
   const stats = useOwnerStats(uid, since);
   const [now] = useState(() => Date.now());
   const practitioner = usePractitioner(uid);
+  const { user } = useAuth();
+  const { invites } = useAgencyInvites(user?.email);
   const record = practitioner.load.state === "ready" ? practitioner.load.record : null;
   const compliance = practitioner.load.state === "ready" ? complianceState(record, now) : null;
 
@@ -63,6 +67,12 @@ export default function AgentDashboard() {
 
   type TodayItem = { key: string; title: string; detail: string; href: string; age?: string };
   const today: TodayItem[] = [
+    ...(invites ?? []).map((invite) => ({
+      key: `invite-${invite.id}`,
+      title: `${invite.agencyName} invited you to join`,
+      detail: "Accept or decline on your profile.",
+      href: "/agent/profile",
+    })),
     ...(compliance && (compliance.kind === "none" || compliance.kind === "rejected")
       ? [{
           key: "ffc",

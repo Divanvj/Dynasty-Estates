@@ -1,5 +1,6 @@
 "use client";
 
+import { AgencyMembership } from "@/components/agency-membership";
 import { PageHeading } from "@/components/dashboard-ui";
 import { PractitionerProfile } from "@/components/practitioner-profile";
 import { useAccountUid } from "@/lib/use-owner-listings";
@@ -14,9 +15,10 @@ export default function AgentProfilePage() {
     <>
       <PageHeading
         title="Profile"
-        description="Your practitioner details. Dynasty checks your Fidelity Fund Certificate against the PPRA register and reminds you before it expires."
+        description="Your practitioner details and your agency. Dynasty checks your Fidelity Fund Certificate against the PPRA register and reminds you before it expires."
       />
       <PractitionerProfile uid={uid} />
+      <AgencyMembership uid={uid} />
     </>
   );
 }
