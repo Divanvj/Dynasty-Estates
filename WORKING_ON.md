@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/sast-times` | lib/formatters.ts formatDateTime (enquiries, support, audit times in SAST) | 2026-11-12 |
 
 ## Recently merged
 
