@@ -2,13 +2,17 @@
 
 import { useEffect, useState } from "react";
 
+import CustomSelect from "@/components/custom-select";
 import { emptyBoxClass, errorBoxClass, formatAge, linkClass } from "@/components/dashboard-ui";
 import { formatDateTime } from "@/lib/formatters";
 import {
+  asStage,
   getSellerInquiries,
-  setSellerInquiryStatus,
+  INQUIRY_STAGES,
+  setInquiryStage,
+  STAGE_LABEL,
+  type InquiryStage,
   type SellerInquiry,
-  type SellerInquiryStatus,
 } from "@/lib/seller-inquiries";
 
 /**
@@ -57,13 +61,13 @@ export function useOwnerInquiries(uid: string | null | undefined) {
     setLoaded((prev) => (prev ? { ...prev, items: update(prev.items) } : prev));
   }
 
-  async function toggle(item: SellerInquiry) {
-    const next: SellerInquiryStatus = item.status === "new" ? "contacted" : "new";
+  async function setStage(item: SellerInquiry, stage: InquiryStage) {
+    if (asStage(item.status) === stage) return;
     setSavingId(item.id);
     setStatusError(null);
     try {
-      await setSellerInquiryStatus(item.id, next);
-      setItems((current) => current.map((row) => (row.id === item.id ? { ...row, status: next } : row)));
+      const saved = await setInquiryStage(item, stage);
+      setItems((current) => current.map((row) => (row.id === item.id ? { ...row, ...saved } : row)));
     } catch (error) {
       console.error("Could not update the enquiry:", error);
       setStatusError("That change wasn't saved. Check your connection and try again.");
@@ -72,7 +76,12 @@ export function useOwnerInquiries(uid: string | null | undefined) {
     }
   }
 
-  return { items, state, savingId, statusError, toggle };
+  /** The private seller's single button: New ↔ Contacted. */
+  function toggle(item: SellerInquiry) {
+    return setStage(item, item.status === "new" ? "contacted" : "new");
+  }
+
+  return { items, state, savingId, statusError, toggle, setStage };
 }
 
 /** wa.me wants the international number without "+": 082 123 4567 → 27821234567. */
@@ -88,8 +97,14 @@ export function EnquiryList({
   savingId,
   statusError,
   toggle,
+  setStage,
   emptyMessage,
-}: ReturnType<typeof useOwnerInquiries> & { emptyMessage: string }) {
+  stages = "simple",
+}: ReturnType<typeof useOwnerInquiries> & {
+  emptyMessage: string;
+  /** "pipeline": agents pick any stage. "simple": New / Contacted, for private sellers. */
+  stages?: "simple" | "pipeline";
+}) {
   // Read once when the list mounts; "waiting" is a rough age, not a live clock.
   const [now] = useState(() => Date.now());
 
@@ -120,7 +135,9 @@ export function EnquiryList({
       {state === "ready" && items.length > 0 && (
         <ul className="space-y-3">
           {items.map((item) => {
-            const isNew = item.status === "new";
+            const stage = asStage(item.status);
+            const isNew = stage === "new";
+            const closed = stage === "won" || stage === "lost";
             const whatsapp = item.contactPhone ? whatsappHref(item.contactPhone) : null;
             return (
               // New ones carry weight AND a leading accent, so unread is not colour alone.
@@ -142,6 +159,9 @@ export function EnquiryList({
                     <p className="mt-0.5 text-sm text-slate-600 dark:text-slate-300">
                       {item.contactName || "A buyer"}
                       {item.createdAt ? ` · ${formatDateTime(item.createdAt)}` : ""}
+                      {item.createdAt && item.firstRespondedAt
+                        ? ` · First reply after ${formatAge(item.createdAt, item.firstRespondedAt.getTime())}`
+                        : ""}
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
@@ -150,15 +170,20 @@ export function EnquiryList({
                         Waiting {formatAge(item.createdAt, now)}
                       </span>
                     ) : null}
+                    {/* In pipeline mode the Stage control below names the stage; only New keeps its badge. */}
+                    {stages === "simple" || isNew ? (
                     <span
                       className={`rounded-full border px-2.5 py-1 text-xs font-bold uppercase tracking-[0.14em] ${
                         isNew
                           ? "border-emerald-400/30 bg-emerald-500/10 text-emerald-800 dark:border-emerald-500/40 dark:bg-emerald-500/20 dark:text-emerald-300"
-                          : "border-slate-300 bg-white/60 text-slate-600 dark:border-white/15 dark:bg-white/5 dark:text-slate-300"
+                          : closed
+                            ? "border-slate-900/20 bg-slate-900/5 text-slate-800 dark:border-white/25 dark:bg-white/10 dark:text-slate-100"
+                            : "border-slate-300 bg-white/60 text-slate-600 dark:border-white/15 dark:bg-white/5 dark:text-slate-300"
                       }`}
                     >
-                      {isNew ? "New" : "Contacted"}
+                      {STAGE_LABEL[stage]}
                     </span>
+                    ) : null}
                   </div>
                 </div>
 
@@ -182,14 +207,32 @@ export function EnquiryList({
                       WhatsApp<span className="sr-only"> {item.contactName || "the buyer"}</span>
                     </a>
                   ) : null}
-                  <button
-                    type="button"
-                    disabled={savingId === item.id}
-                    onClick={() => void toggle(item)}
-                    className="pill max-lg:min-h-11 ml-auto border border-slate-300 bg-white/80 font-semibold text-slate-800 hover:bg-white disabled:opacity-60 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
-                  >
-                    {savingId === item.id ? "Saving…" : isNew ? "Mark as contacted" : "Mark as new"}
-                  </button>
+                  {stages === "pipeline" ? (
+                    <div className="ml-auto flex items-center gap-2">
+                      {savingId === item.id ? (
+                        <span role="status" className="text-xs text-slate-600 dark:text-slate-400">Saving…</span>
+                      ) : null}
+                      <CustomSelect
+                        ariaLabel={`Stage of the enquiry from ${item.contactName || "a buyer"}`}
+                        value={stage}
+                        disabled={savingId === item.id}
+                        onChange={(value) => void setStage(item, asStage(value))}
+                        options={INQUIRY_STAGES.map((value) => ({ value, label: STAGE_LABEL[value] }))}
+                        label="Stage"
+                        align="right"
+                        className="w-44"
+                      />
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      disabled={savingId === item.id}
+                      onClick={() => void toggle(item)}
+                      className="pill max-lg:min-h-11 ml-auto border border-slate-300 bg-white/80 font-semibold text-slate-800 hover:bg-white disabled:opacity-60 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
+                    >
+                      {savingId === item.id ? "Saving…" : isNew ? "Mark as contacted" : "Mark as new"}
+                    </button>
+                  )}
                 </div>
               </li>
             );

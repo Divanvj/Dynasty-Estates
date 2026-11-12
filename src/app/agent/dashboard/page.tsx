@@ -17,16 +17,16 @@ import {
 import { useOwnerInquiries } from "@/components/enquiry-inbox";
 import { lastDays, sumStats } from "@/lib/listing-stats";
 import { useOwnerStats } from "@/lib/listing-stats-client";
+import { medianReplyMs } from "@/lib/seller-inquiries";
 import { useAccountUid, useOwnerListings } from "@/lib/use-owner-listings";
 import { ACTIVE_CATALOGUE_STATUSES } from "@/lib/types/domain";
 
 // Pattern 4 — Dashboard / Overview (docs/dashboards/PLAN.md, Phase A).
-// A glance, read-only: four figures and what needs the agent today, each line
+// A glance, read-only: five figures and what needs the agent today, each line
 // linking to the page where it is dealt with. The enquiry inbox that used to
 // sit here (with its status buttons) is /agent/enquiries now; the listing rows
 // are /agent/listings. Views come from listing_stats (Phase B).
 
-const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 const TODAY_LIMIT = 6;
 
 export default function AgentDashboard() {
@@ -41,9 +41,7 @@ export default function AgentDashboard() {
     .filter((item) => item.status === "new")
     .sort((a, b) => (a.createdAt?.getTime() ?? now) - (b.createdAt?.getTime() ?? now));
   const oldest = unanswered.find((item) => item.createdAt)?.createdAt ?? null;
-  const viewingRequests7d = inbox.items.filter(
-    (item) => item.kind !== "message" && item.createdAt && now - item.createdAt.getTime() <= SEVEN_DAYS_MS,
-  ).length;
+  const reply = medianReplyMs(inbox.items, now, 30);
   const activeListings = listings.items.filter((listing) =>
     (ACTIVE_CATALOGUE_STATUSES as readonly string[]).includes(listing.status),
   ).length;
@@ -94,7 +92,17 @@ export default function AgentDashboard() {
           value={inboxReady ? (oldest ? formatAge(oldest, now) : "None") : null}
           detail={inboxReady && !oldest && inbox.items.length > 0 ? "Every enquiry has a reply." : undefined}
         />
-        <StatTile label="Viewing requests" value={inboxReady ? `${viewingRequests7d}` : null} detail="Last 7 days" />
+        <StatTile
+          label="Reply time"
+          value={inboxReady ? (reply ? formatAge(new Date(0), reply.ms) : "None yet") : null}
+          detail={
+            inboxReady
+              ? reply
+                ? `Median first reply, ${reply.count} ${reply.count === 1 ? "enquiry" : "enquiries"}, last 30 days`
+                : "Counted once you move a new enquiry on"
+              : undefined
+          }
+        />
         <StatTile
           label="Views"
           value={stats.rows ? String(sumStats(stats.rows).views) : stats.failed ? "Error" : null}

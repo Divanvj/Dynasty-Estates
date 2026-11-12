@@ -17,6 +17,7 @@ import {
 } from "@/lib/listing-insights";
 import { lastDays, seriesFor, sastDay, sumStats, type DayStats } from "@/lib/listing-stats";
 import { getListingStats } from "@/lib/listing-stats-client";
+import { asStage, REACHED_OFFER, REACHED_VIEWING, type SellerInquiry } from "@/lib/seller-inquiries";
 import type { SellerListing } from "@/lib/seller-listings";
 import { PUBLIC_LISTING_STATUSES } from "@/lib/types/domain";
 import { useAccountUid, useOwnerListings } from "@/lib/use-owner-listings";
@@ -54,6 +55,8 @@ export default function ListingDetail({
   const [tab, setTab] = useState<Tab>("performance");
   const listing = listings.items.find((item) => item.id === listingId) ?? null;
   const enquiries = inbox.items.filter((item) => item.propertyId === listingId);
+  // Agents work enquiries through stages; private sellers keep New / Contacted.
+  const pipeline = basePath.startsWith("/agent");
 
   const back = (
     <Link href={backHref} className={`mb-4 inline-flex items-center gap-1.5 text-sm ${linkClass}`}>
@@ -129,12 +132,73 @@ export default function ListingDetail({
         {tab === "overview" ? <Overview listing={listing} /> : null}
         {tab === "performance" ? <Performance listing={listing} uid={uid ?? null} enquiryDates={enquiries.map((e) => e.createdAt)} enquiriesReady={inbox.state === "ready"} /> : null}
         {tab === "enquiries" ? (
-          <section className={panelClass} aria-label="Enquiries on this listing">
-            <EnquiryList {...inbox} items={enquiries} emptyMessage="No enquiries on this listing yet." />
-          </section>
+          <>
+            {pipeline && inbox.state === "ready" && enquiries.length > 0 ? <Funnel enquiries={enquiries} /> : null}
+            <section className={panelClass} aria-label="Enquiries on this listing">
+              <EnquiryList
+                {...inbox}
+                stages={pipeline ? "pipeline" : "simple"}
+                items={enquiries}
+                emptyMessage="No enquiries on this listing yet."
+              />
+            </section>
+          </>
         ) : null}
       </div>
     </>
+  );
+}
+
+/**
+ * How far this listing's buyers got: enquiries → viewing → offer → won, as
+ * plain bars against the number of enquiries (dataviz: one series, labelled
+ * values, no axis needed; the table is the accessible form).
+ */
+function Funnel({ enquiries }: { enquiries: SellerInquiry[] }) {
+  const total = enquiries.length;
+  const count = (stages: readonly string[]) => enquiries.filter((item) => stages.includes(asStage(item.status))).length;
+  const rows: [string, number][] = [
+    ["Enquiries", total],
+    ["Viewing or later", count(REACHED_VIEWING)],
+    ["Offer or later", count(REACHED_OFFER)],
+    ["Won", count(["won"])],
+  ];
+  return (
+    <section aria-labelledby="funnel-heading" className={`mb-6 ${panelClass}`}>
+      <h2 id="funnel-heading" className="text-lg font-semibold text-slate-900 dark:text-white">How far buyers got</h2>
+      <table className="mt-4 w-full border-separate border-spacing-y-2 text-sm">
+        <caption className="sr-only">Enquiries on this listing by the furthest stage reached</caption>
+        <thead className="sr-only">
+          <tr>
+            <th scope="col">Stage</th>
+            <th scope="col">Buyers</th>
+            <th scope="col">Share of enquiries</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(([label, value]) => {
+            const share = total ? Math.round((value / total) * 100) : 0;
+            return (
+              <tr key={label}>
+                <th scope="row" className="whitespace-nowrap pr-4 text-left font-medium text-slate-700 dark:text-slate-300">{label}</th>
+                <td className="w-full">
+                  <div className="h-3 rounded-full bg-slate-900/5 dark:bg-white/10">
+                    <div className="h-3 rounded-full bg-[#047857] dark:bg-[#0fa673]" style={{ width: `${share}%` }} />
+                  </div>
+                </td>
+                <td className="whitespace-nowrap pl-4 text-right tabular-nums text-slate-900 dark:text-white">
+                  <span className="font-semibold">{value}</span>
+                  <span className="text-slate-600 dark:text-slate-400"> · {share}%</span>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+      <p className="mt-2 text-xs text-slate-600 dark:text-slate-400">
+        Counted from each enquiry&rsquo;s current stage. A lost enquiry counts only as an enquiry, because we don&rsquo;t record how far it got.
+      </p>
+    </section>
   );
 }
 

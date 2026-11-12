@@ -108,11 +108,24 @@ service cloud.firestore {
       allow read: if isAdmin()
         || (signedIn() && resource.data.userId == request.auth.uid)
         || (signedIn() && resource.data.ownerId == request.auth.uid);
+      // The listing owner moves an enquiry through its stages (F2, Phase D).
+      // Private sellers: new / contacted. Agents (and admins) also: viewing,
+      // offer, won, lost. updatedAt, when sent, is the server clock.
+      // firstRespondedAt is the first reply: settable once, only as the
+      // enquiry leaves "new", only to the server clock, never removed.
       allow update: if isAdmin()
         || (signedIn()
             && resource.data.ownerId == request.auth.uid
-            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
-            && request.resource.data.status in ['new', 'contacted']);
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt', 'firstRespondedAt'])
+            && (request.resource.data.status in ['new', 'contacted']
+                || (isAgentOrAdmin() && request.resource.data.status in ['viewing', 'offer', 'won', 'lost']))
+            && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['updatedAt'])
+                || request.resource.data.updatedAt == request.time)
+            && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['firstRespondedAt'])
+                || (!('firstRespondedAt' in resource.data)
+                    && resource.data.status == 'new'
+                    && request.resource.data.status != 'new'
+                    && request.resource.data.firstRespondedAt == request.time)));
       allow delete: if isAdmin();
     }
 
