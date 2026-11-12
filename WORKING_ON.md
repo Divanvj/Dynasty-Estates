@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/dashboards-phase-f | Phase F: practitioners collection + rules, /agent/profile, /admin/agents, /api/admin/practitioners, mandate fields | 2026-11-12 |
 
 ## Recently merged
 
