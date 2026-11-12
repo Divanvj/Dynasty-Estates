@@ -151,13 +151,13 @@ Sizes: S ≈ half a day, M ≈ 1–2 days, L ≈ 3+ days.
 - Labelled honestly everywhere: "Dynasty listings only — asking prices, not sale prices or a valuation." Sold prices
   (Deeds Office / Lightstone) are out of scope unless the owner buys a data feed.
 
-### Phase F — Compliance and agent verification (M) · needs F3 approval
+### Phase F — Compliance and agent verification (M) · F3 approved 2026-11-12
 - `/agent/profile`: FFC number + expiry; banner 60 days before expiry; a listing without mandate/disclosure shows
   it in "Needs you today".
 - `/admin/agents`: verification queue — check FFC on the PPRA register (manual, link out), approve → sets the
   `agent` role claim via a server route + audit log entry. Today roles are set by script only.
 
-### Phase G — Agency principal (L) · needs F4 approval
+### Phase G — Agency principal (L) · F4 approved 2026-11-12
 - Register Agency flow (principal creates the agency, invites agents by e-mail address — the invite is shown in the
   agent's account, since no e-mail is sent yet).
 - `/agency` dashboard: agency totals, leaderboard (enquiries, median response time, active listings), unassigned
@@ -188,7 +188,7 @@ the principal's own view and needs the agency schema, so it follows once the ind
    (a) a real "demo agency" account on live with clearly marked test listings, enquiries and stats, never shown in
    public search; (b) a separate demo Firebase project; (c) show only real data and wait. Recommended: (a). No
    fake numbers inside the real product either way.
-2. F1 approved 2026-11-11, F2 approved 2026-11-12; F3–F4 when their phase starts.
+2. F1 approved 2026-11-11, F2 approved 2026-11-12, F3 and F4 approved 2026-11-12.
 3. Stats retention (13 months proposed).
 4. Seller report: may the agent's note be stored on the listing (new field), or typed per print only?
 5. Agent role grant via `/admin/agents` (server route that sets claims) — approve the architecture.
