@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useRef, useState } from "react";
 import type { ConfirmationResult, RecaptchaVerifier } from "firebase/auth";
 import BrandLogo from "@/components/brand-logo";
+import { usePlatformStatus } from "@/components/platform-status";
 
 import {
   confirmPhoneSignIn,
@@ -25,7 +26,10 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [resetLoading, setResetLoading] = useState(false);
 
-  const [mode, setMode] = useState<"email" | "phone">("email");
+  const [chosenMode, setMode] = useState<"email" | "phone">("email");
+  // The developer console can switch phone sign-in off (/console/flags).
+  const phoneOn = usePlatformStatus().flags.phoneSignIn !== false;
+  const mode = phoneOn ? chosenMode : "email";
   const [phone, setPhone] = useState("");
   const [smsCode, setSmsCode] = useState("");
   const [confirmation, setConfirmation] = useState<ConfirmationResult | null>(null);
@@ -185,7 +189,7 @@ export default function LoginPage() {
               <div className="h-px flex-1 bg-slate-300 dark:bg-white/10" />
             </div>
 
-            <div className="mb-4 grid grid-cols-2 gap-1 rounded-full bg-slate-200/70 p-1 dark:bg-surface-ink/80 dark:border dark:border-white/10">
+            <div className={`mb-4 grid grid-cols-2 gap-1 rounded-full bg-slate-200/70 p-1 dark:bg-surface-ink/80 dark:border dark:border-white/10 ${phoneOn ? "" : "hidden"}`}>
               {(["email", "phone"] as const).map((m) => (
                 <button
                   key={m}

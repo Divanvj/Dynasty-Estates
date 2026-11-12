@@ -1,7 +1,21 @@
 # Blaze plan — what it unlocks and the order we switch it on
 
-Written 2026-11-12 (DESKTOP-1R37EBU). Status: **waiting for the owner to move project `dynasty-estates` to Blaze.**
-Everything below is already built or designed for the Spark plan's limits; this is the switch-on list.
+Written 2026-11-12 (DESKTOP-1R37EBU). Status: **Blaze is on (owner, 2026-11-12).** O1 and O3 are done: the default
+bucket `dynasty-estates.firebasestorage.app` exists (us-central1). O2 (budget alert) is the owner's to confirm.
+
+## Done 2026-11-12
+
+- **B1:** `storage.rules` tested on the Storage emulator (21 allowed / denied cases) and deployed; the bucket had the
+  console's default deny-all rules until then. The test found that Storage counts overwriting a file as a *create*, so
+  `allow update: if false` did not stop a checked photo being replaced in place; the create rules now also require
+  `resource == null`. The developer console's go-live list gains "Storage rules match main".
+- **B3:** already in place: phone sign-in on, SMS region policy is South Africa only, the Vercel domain is authorised.
+  A stale `*.trycloudflare.com` demo tunnel domain is still authorised (owner may remove it).
+- **Switches** in `/console/flags` (`lib/platform-config.ts`): the listing photo checks (AI-generated, duplicates,
+  screenshots, blur, resolution) and phone sign-in can each be turned off for testing. File type and the 10 MB limit
+  stay enforced by `storage.rules`.
+
+Still open: B2 (scheduler) and e-mail, both waiting on the owner decisions in section 3.
 
 ## 1. Owner steps (only the account owner can do these)
 

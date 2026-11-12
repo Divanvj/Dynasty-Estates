@@ -10,7 +10,10 @@ service firebase.storage {
       // Public: listing photos are shown to every visitor. Paths carry a
       // random UUID, so draft photos are not discoverable by listing them.
       allow read: if true;
+      // resource == null: Storage counts overwriting an existing file as a
+      // create, so this is what stops a checked file being replaced in place.
       allow create: if request.auth != null
+        && resource == null
         && request.auth.uid == ownerId
         && photoId.matches('[0-9a-f-]{36}\\.jpg')
         && request.resource.contentType == 'image/jpeg'
@@ -25,7 +28,10 @@ service firebase.storage {
     // as uploaded (see uploadFloorPlan in src/lib/photo-intake.ts).
     match /floor-plans/{ownerId}/{fileId} {
       allow read: if true;
+      // resource == null: Storage counts overwriting an existing file as a
+      // create, so this is what stops a checked file being replaced in place.
       allow create: if request.auth != null
+        && resource == null
         && request.auth.uid == ownerId
         && fileId.matches('[0-9a-f-]{36}\\.(jpg|png|webp|pdf)')
         && request.resource.contentType in ['image/jpeg', 'image/png', 'image/webp', 'application/pdf']

@@ -22,22 +22,74 @@ export type PlatformConfig = {
   updatedBy: string | null;
 };
 
+/** How /console/flags groups the switches. */
+export const FLAG_GROUPS = {
+  pages: { title: "Pages", description: "Switched-off pages show a short notice and a link to search instead." },
+  photos: {
+    title: "Listing photo checks",
+    description:
+      "Checks every photo goes through in the listing wizard before upload. Turning one off lets those photos through for everyone, so switch it back on after testing. File type and the 10 MB limit are always enforced by storage.rules.",
+  },
+  accounts: { title: "Sign-in", description: "Ways to sign in on /auth/login." },
+} as const;
+
 export const FEATURE_FLAGS = {
   mapSearch: {
+    group: "pages",
     label: "Map search",
     description: "The full-screen map at /map-search.",
   },
   aiSearch: {
+    group: "pages",
     label: "AI search",
     description: "The AI Concierge search at /ai-search.",
   },
-} as const;
+  photoAiCheck: {
+    group: "photos",
+    label: "Block AI-generated photos",
+    description: "Turns down photos tagged as made or edited by an image generator.",
+  },
+  photoDuplicateCheck: {
+    group: "photos",
+    label: "Block duplicate photos",
+    description: "Turns down a photo added twice to one listing, or already used on another listing.",
+  },
+  photoScreenshotCheck: {
+    group: "photos",
+    label: "Block screenshots",
+    description: "Turns down screenshots of other apps and websites.",
+  },
+  photoBlurCheck: {
+    group: "photos",
+    label: "Block blurry photos",
+    description: "Turns down photos with nothing in focus.",
+  },
+  photoResolutionCheck: {
+    group: "photos",
+    label: "Block low-resolution photos",
+    description: "Turns down photos smaller than 1024 × 640 pixels.",
+  },
+  phoneSignIn: {
+    group: "accounts",
+    label: "Phone sign-in",
+    description: "Signing in with an SMS code. Each real SMS is billed on the Blaze plan; test numbers are free.",
+  },
+} as const satisfies Record<string, { group: keyof typeof FLAG_GROUPS; label: string; description: string }>;
 
 export type FeatureFlag = keyof typeof FEATURE_FLAGS;
 
 export const DEFAULT_PLATFORM_CONFIG: PlatformConfig = {
   maintenance: { enabled: false, message: "", tone: "info" },
-  flags: { mapSearch: true, aiSearch: true },
+  flags: {
+    mapSearch: true,
+    aiSearch: true,
+    photoAiCheck: true,
+    photoDuplicateCheck: true,
+    photoScreenshotCheck: true,
+    photoBlurCheck: true,
+    photoResolutionCheck: true,
+    phoneSignIn: true,
+  },
   updatedAt: null,
   updatedBy: null,
 };

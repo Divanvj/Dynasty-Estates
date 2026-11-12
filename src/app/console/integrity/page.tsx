@@ -32,7 +32,7 @@ export default function IntegrityPage() {
     <>
       <PageHeader
         title="Data integrity"
-        description="Looks for records that point at something that no longer exists, accounts missing their profile, and role claims that disagree with profiles. Read-only: it reports and changes nothing. Runs on demand until Blaze allows a nightly schedule."
+        description="Looks for records that point at something that no longer exists, accounts missing their profile, and role claims that disagree with profiles. Read-only: it reports and changes nothing. Runs on demand; no nightly schedule is set up yet."
         actions={
           <Button variant="primary" onClick={() => void run()} loading={running}>
             {running ? null : <ScanIcon className="h-4 w-4" />}

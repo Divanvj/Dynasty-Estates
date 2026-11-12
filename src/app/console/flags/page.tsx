@@ -2,12 +2,15 @@
 
 import { useState } from "react";
 
-import type { FeatureFlag, PlatformConfig } from "@/lib/platform-config";
+import { FLAG_GROUPS, type FeatureFlag, type PlatformConfig } from "@/lib/platform-config";
 
 import { ConsoleRequestError, consoleJson, dateTime, useConsole, useConsoleData } from "../_lib/console-client";
 import { Button, ErrorNotice, PageHeader, Panel, Segmented, SkeletonRows, cx } from "../_components/ui";
 
-type ConfigResponse = { config: PlatformConfig; flags: Record<FeatureFlag, { label: string; description: string }> };
+type ConfigResponse = {
+  config: PlatformConfig;
+  flags: Record<FeatureFlag, { group: keyof typeof FLAG_GROUPS; label: string; description: string }>;
+};
 
 function Switch({ checked, onChange, label, disabled }: { checked: boolean; onChange: (v: boolean) => void; label: string; disabled?: boolean }) {
   return (
@@ -77,7 +80,7 @@ export default function FlagsPage() {
     <>
       <PageHeader
         title="Site switches"
-        description="A notice banner across the site, and switches that pause individual features. Visitors see changes within about 30 seconds. These hide things in the interface; they are not security."
+        description="A notice banner across the site, switches that pause individual features, and the listing photo checks. Visitors see changes within about 30 seconds. These change the interface; they are not security."
         actions={
           <>
             {dirty ? (
@@ -150,9 +153,19 @@ export default function FlagsPage() {
             </div>
           </Panel>
 
-          <Panel title="Features" description="Switched-off pages show a short notice and a link to search instead.">
+          {(Object.keys(FLAG_GROUPS) as (keyof typeof FLAG_GROUPS)[]).map((group) => {
+            const keys = (Object.keys(data?.flags ?? {}) as FeatureFlag[]).filter((key) => data!.flags[key].group === group);
+            if (keys.length === 0) return null;
+            const off = keys.filter((key) => !current.flags[key]).length;
+            return (
+          <Panel
+            key={group}
+            title={FLAG_GROUPS[group].title}
+            description={FLAG_GROUPS[group].description}
+            actions={off > 0 ? <span className="rounded-full border border-amber-400/30 bg-amber-400/10 px-2 py-0.5 text-xs font-semibold text-amber-200">{off} off</span> : null}
+          >
             <ul className="divide-y divide-white/[0.05]">
-              {(Object.keys(data?.flags ?? {}) as FeatureFlag[]).map((key) => (
+              {keys.map((key) => (
                 <li key={key} className="flex items-start justify-between gap-4 py-3 first:pt-0 last:pb-0">
                   <div>
                     <p className="text-sm font-semibold text-[var(--ink)]">{data!.flags[key].label}</p>
@@ -167,6 +180,8 @@ export default function FlagsPage() {
               ))}
             </ul>
           </Panel>
+            );
+          })}
 
           {data?.config.updatedAt ? (
             <p className="text-xs text-[var(--ink-subtle)] lg:col-span-2">

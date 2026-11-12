@@ -185,7 +185,7 @@ export default function DashboardPage() {
               label="Go-live checks"
               value={checks ? `${passing}/${checks.length}` : goLive.error ? "—" : "…"}
               tone={!checks ? "neutral" : checks.some((c) => c.state === "error") ? "bad" : checks.some((c) => c.state === "warning") ? "warn" : "good"}
-              sub={checks ? `${blocked} blocked until Blaze or a grant` : goLive.error ? "The checks failed to run" : "Checking Firebase, GitHub and production"}
+              sub={checks ? `${blocked} blocked, waiting on a decision or a grant` : goLive.error ? "The checks failed to run" : "Checking Firebase, GitHub and production"}
             />
           </>
         ) : (
@@ -231,8 +231,7 @@ export default function DashboardPage() {
             <div className="mt-5">
               {o.listings.total === 0 ? (
                 <p className="text-xs leading-relaxed text-[var(--ink-subtle)]">
-                  No listings in Firestore, so the public site is showing its built-in sample listings. New listings
-                  can only be saved as drafts until Cloud Storage exists for photos (Blaze plan).
+                  No listings in Firestore, so the public site is showing its built-in sample listings.
                 </p>
               ) : (
                 <BarList data={o.listings.byStatus} />

@@ -22,6 +22,7 @@ import {
   sniffFormat,
   type AiImageDetector,
   type PhotoIssue,
+  type PhotoIssueCode,
   type PhotoMetrics,
 } from "./photo-analysis";
 
@@ -75,8 +76,18 @@ function draw(bitmap: ImageBitmap, longSide: number): HTMLCanvasElement {
   return canvas;
 }
 
-/** Runs every per-file check. Duplicates are checked separately, below. */
-export async function checkPhoto(file: File): Promise<PhotoCheckResult> {
+/**
+ * Issue codes a site switch in /console/flags can turn off. The file-type,
+ * size and readability checks cannot be switched off: storage.rules and the
+ * upload itself depend on them.
+ */
+export type SkippableCheck = Extract<PhotoIssueCode, "ai_generated" | "ai_edited" | "screenshot" | "blurry" | "low_resolution">;
+
+/**
+ * Runs every per-file check. Duplicates are checked separately, below.
+ * Issues whose code is in `skip` are dropped (the console switched them off).
+ */
+export async function checkPhoto(file: File, skip: ReadonlySet<SkippableCheck> = new Set()): Promise<PhotoCheckResult> {
   const head = new Uint8Array(await file.slice(0, 16).arrayBuffer());
   const format = sniffFormat(head);
   if (format === "unknown" || format === "gif") {
@@ -132,8 +143,9 @@ export async function checkPhoto(file: File): Promise<PhotoCheckResult> {
       pixels: { width: image.width, height: image.height, data: image.data },
     });
 
-    const issues = [...result.issues];
-    if (!issues.some((issue) => issue.code === "ai_generated" || issue.code === "ai_edited")) {
+    const issues = result.issues.filter((issue) => !skip.has(issue.code as SkippableCheck));
+    const aiChecked = !skip.has("ai_generated");
+    if (aiChecked && !result.issues.some((issue) => issue.code === "ai_generated" || issue.code === "ai_edited")) {
       for (const detector of aiDetectors) {
         const reason = await detector.detect(file);
         if (reason) {

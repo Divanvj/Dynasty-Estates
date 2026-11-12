@@ -4,6 +4,7 @@ import { useEffect, useId, useRef, useState } from "react";
 
 import PhotoRejectionDialog, { type RejectedPhoto } from "@/components/photo-rejection-dialog";
 import { CameraIcon, XMarkIcon } from "@/components/icons";
+import { usePlatformStatus } from "@/components/platform-status";
 import { duplicateIssue } from "@/lib/photo-analysis";
 import {
   checkPhoto,
@@ -11,6 +12,7 @@ import {
   isNearDuplicate,
   uploadListingPhoto,
   type ListingPhoto,
+  type SkippableCheck,
 } from "@/lib/photo-intake";
 
 export const MAX_LISTING_PHOTOS = 30;
@@ -48,6 +50,16 @@ export default function ListingPhotoUploader({
   useEffect(() => {
     hashesRef.current = photos.map((photo) => photo.hash);
   }, [photos]);
+
+  // Checks the developer console has switched off (/console/flags).
+  const { flags } = usePlatformStatus();
+  const checkDuplicates = flags.photoDuplicateCheck !== false;
+  const skip = new Set<SkippableCheck>([
+    ...(flags.photoAiCheck === false ? (["ai_generated", "ai_edited"] as const) : []),
+    ...(flags.photoScreenshotCheck === false ? (["screenshot"] as const) : []),
+    ...(flags.photoBlurCheck === false ? (["blurry"] as const) : []),
+    ...(flags.photoResolutionCheck === false ? (["low_resolution"] as const) : []),
+  ]);
 
   const busy = pending.length > 0 || authLoading;
 
@@ -95,16 +107,16 @@ export default function ListingPhotoUploader({
       };
 
       try {
-        const result = await checkPhoto(file);
+        const result = await checkPhoto(file, skip);
         if (!result.ok) {
           reject(result.issues);
           continue;
         }
-        if (isNearDuplicate(result.hash, seen)) {
+        if (checkDuplicates && isNearDuplicate(result.hash, seen)) {
           reject([duplicateIssue("batch")]);
           continue;
         }
-        const existing = await findExistingDuplicate(result.hash);
+        const existing = checkDuplicates ? await findExistingDuplicate(result.hash) : null;
         if (existing) {
           reject([existing]);
           continue;

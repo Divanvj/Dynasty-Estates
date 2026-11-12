@@ -203,6 +203,11 @@ export const KNOWN_COLLECTIONS = [
   "collections",
   "audit_logs",
   "photo_fingerprints",
+  "listing_stats",
+  "practitioners",
+  "agencies",
+  "agency_members",
+  "agency_invites",
   "app_errors",
   "app_error_groups",
   "web_vitals",
@@ -218,7 +223,7 @@ export async function getFirebaseStatus() {
 
   const bucket = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || `${PROJECT_ID}.firebasestorage.app`;
 
-  const [deployedRules, repoRules, deployedIndexes, repoIndexes, authConfig, storage, monitoring, sizes] = await Promise.all([
+  const [deployedRules, repoRules, deployedIndexes, repoIndexes, authConfig, storage, monitoring, sizes, deployedStorageRules, repoStorageRules] = await Promise.all([
     adminRules()
       .getFirestoreRuleset()
       .then((r) => ({ source: r.source[0]?.content ?? "", name: r.name, createTime: r.createTime, error: null as string | null }))
@@ -245,6 +250,11 @@ export async function getFirebaseStatus() {
         }
       }),
     ),
+    adminRules()
+      .getStorageRuleset(bucket)
+      .then((r) => ({ source: r.source[0]?.content ?? "", createTime: r.createTime, error: null as string | null }))
+      .catch((e: Error) => ({ source: null, createTime: null, error: e.message })),
+    github<string>("storage.rules", true),
   ]);
 
   const google = await googleApi<{ defaultSupportedIdpConfigs?: Array<{ name?: string; enabled?: boolean }> }>(
@@ -308,6 +318,15 @@ export async function getFirebaseStatus() {
       bucket,
       state: (storage.ok ? "ok" : storage.status === 404 ? "blocked" : "unknown") as CheckState,
       error: storage.ok ? null : storage.error,
+      rules: {
+        state: (deployedStorageRules.source && repoStorageRules.data
+          ? normaliseRules(deployedStorageRules.source) === normaliseRules(repoStorageRules.data)
+            ? "ok"
+            : "warning"
+          : "unknown") as CheckState,
+        deployedAt: deployedStorageRules.createTime,
+        error: deployedStorageRules.error ?? (repoStorageRules.ok ? null : "Could not read storage.rules from GitHub main."),
+      },
     },
     monitoring: {
       state: (monitoring.ok ? "ok" : monitoring.status === 403 ? "blocked" : "unknown") as CheckState,
@@ -364,6 +383,23 @@ export async function getGoLiveChecks(): Promise<Check[]> {
     fix: "Upgrade the Firebase project to Blaze, create the default bucket, then deploy storage.rules.",
     href: `https://console.firebase.google.com/project/${firebase.projectId}/usage/details`,
   });
+
+  if (firebase.storage.state === "ok") {
+    const storageRules = firebase.storage.rules;
+    checks.push({
+      id: "storage-rules",
+      label: "Storage rules match main",
+      state: storageRules.state,
+      summary:
+        storageRules.state === "ok"
+          ? "Deployed Storage rules match storage.rules on main (comments ignored)."
+          : storageRules.state === "warning"
+            ? `The bucket's rules differ from storage.rules on main, so photo uploads may be refused. Deployed ${storageRules.deployedAt ?? "at an unknown time"}.`
+            : (storageRules.error ?? "Could not compare."),
+      fix: "Deploy from a scratch copy of origin/main: npx.cmd firebase-tools deploy --only storage --project dynasty-estates",
+      href: "/console/firebase",
+    });
+  }
 
   checks.push({
     id: "rules",
@@ -463,8 +499,8 @@ export async function getGoLiveChecks(): Promise<Check[]> {
     id: "scheduled",
     label: "Scheduled jobs and alerts",
     state: "blocked",
-    summary: "Uptime checks, nightly integrity scans and alert e-mails need Cloud Functions or a scheduler, which need Blaze. Checks run on demand from the console until then.",
-    fix: "After Blaze: deploy scheduled functions that call the same checks.",
+    summary: "Blaze is on, but no scheduler is set up yet: uptime checks, integrity scans and stats retention run on demand from the console. Alert e-mails also need an e-mail provider.",
+    fix: "Owner decision (docs/blaze/SETUP-PLAN.md): Vercel Cron or Cloud Scheduler calling the existing routes, and an e-mail provider.",
   });
 
   return checks;

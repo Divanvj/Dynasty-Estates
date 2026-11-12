@@ -276,3 +276,13 @@ Unchanged: the map views inside `/search` (Map view) and the home feed still use
 | Account menu promise "My Agency / Console" with no agency anywhere; "+ Register Agency" removed earlier because nothing existed | **Added:** Agency tab in the agent console → `/agency` (register an agency, overview + agent leaderboard), `/agency/team` (invite by e-mail, remove), `/agency/enquiries` (hand an enquiry to an agent) (2026-11-12, Phase G) | `app/agency/*` |
 | Agent inbox: only enquiries on the agent's own listings | Also enquiries the principal handed to them ("Assigned to you by your agency"); ones handed to someone else leave it | `components/enquiry-inbox.tsx`, `lib/seller-inquiries.ts` |
 | Agent profile: certificate only | Agency section: accept / decline invitations, leave the agency; open invitations also in "Needs you today" | `components/agency-membership.tsx` |
+
+## Blaze switch-on (12 Nov, docs/blaze/SETUP-PLAN.md)
+
+| Was | Now | Where |
+| --- | --- | --- |
+| Console Site switches: one "Features" panel (Map search, AI search) | Panels per group: Pages; **Listing photo checks** (AI-generated, duplicates, screenshots, blur, resolution); Sign-in (phone) — each with an "n off" count | `console/flags/page.tsx`, `lib/platform-config.ts` |
+| Photo checks always on | The console can turn each one off; the wizard skips it (file type and 10 MB stay enforced by storage.rules) | `lib/photo-intake.ts`, `components/listing-photo-uploader.tsx` |
+| Login always offered Email / Phone | The Phone tab hides when the console turns phone sign-in off | `auth/login/page.tsx` |
+| Console texts "until Blaze" (overview, Firebase "Spark plan limits", integrity, tools, go-live) | Blaze is on; what is still missing is the scheduler, an owner decision. Go-live gains "Storage rules match main" | `console/*`, `lib/server/platform-checks.ts` |
+| storage.rules allowed overwriting a checked photo (Storage counts it as a create) | Create requires `resource == null` | `storage.rules` |

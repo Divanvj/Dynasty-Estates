@@ -41,11 +41,12 @@ with the reason.
 - `error.tsx` and new `global-error.tsx` report the boundary error.
 - `MaintenanceBanner` reads `/api/platform/status`.
 
-## Blocked until Blaze (shown locked in the console)
+## Blaze (on since 2026-11-12)
 
-- Cloud Storage (listing photos) and storage rules.
-- Cloud Functions: scheduled uptime checks, scheduled integrity scans, alert e-mails.
-- Budget alerts.
+- Cloud Storage (listing photos) and storage rules: done; go-live checks the bucket and that its rules match main.
+- Scheduled uptime checks, integrity scans, alert e-mails: not built; scheduler and e-mail provider are owner decisions.
+- Budget alerts: owner (Google Cloud billing).
+- `/console/flags` also switches the listing photo checks and phone sign-in.
 
 Not Blaze, but needs a grant: Firestore usage charts need the **Monitoring
 Viewer** IAM role on the Admin SDK service account (currently 403).

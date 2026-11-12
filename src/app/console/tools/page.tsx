@@ -63,7 +63,7 @@ export default function ToolsPage() {
         <Panel
           className="lg:col-span-2"
           title="Health check"
-          description="Times Firestore, Auth, the key pages and GitHub from the server running this console. The only uptime check until Blaze allows a schedule."
+          description="Times Firestore, Auth, the key pages and GitHub from the server running this console. The only uptime check until a scheduler is set up."
           actions={
             <Button variant="primary" loading={running === "health"} onClick={() => void task("health", async () => setHealth(await consoleJson(user, "/api/console/health", { method: "POST" })))}>
               {running === "health" ? null : <PulseIcon className="h-4 w-4" />}

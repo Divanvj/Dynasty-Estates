@@ -89,7 +89,7 @@ export default function FirebasePage() {
             ) : null}
           </Panel>
 
-          <Panel title="Spark plan limits" description="Services that need the Blaze plan or an access grant.">
+          <Panel title="Blaze plan services" description="Services that needed the Blaze plan, and one that needs an access grant.">
             <ul className="space-y-3 text-xs">
               <li className="flex items-start justify-between gap-3">
                 <div>
@@ -101,6 +101,21 @@ export default function FirebasePage() {
                 </div>
                 <StateBadge state={fb.storage.state} />
               </li>
+              {fb.storage.state === "ok" ? (
+                <li className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="font-semibold text-[var(--ink)]">Storage rules</p>
+                    <p className="mt-0.5 text-[var(--ink-subtle)]">
+                      {fb.storage.rules.state === "ok"
+                        ? "Match storage.rules on main."
+                        : fb.storage.rules.state === "warning"
+                          ? "Differ from storage.rules on main, so photo uploads may be refused."
+                          : (fb.storage.rules.error ?? "Could not compare.")}
+                    </p>
+                  </div>
+                  <StateBadge state={fb.storage.rules.state} />
+                </li>
+              ) : null}
               <li className="flex items-start justify-between gap-3">
                 <div>
                   <p className="font-semibold text-[var(--ink)]">Usage metrics (Cloud Monitoring)</p>
@@ -115,7 +130,7 @@ export default function FirebasePage() {
               <li className="flex items-start justify-between gap-3">
                 <div>
                   <p className="font-semibold text-[var(--ink)]">Cloud Functions and scheduled jobs</p>
-                  <p className="mt-0.5 text-[var(--ink-subtle)]">Uptime checks, nightly scans and alerts run on demand from the console until Blaze.</p>
+                  <p className="mt-0.5 text-[var(--ink-subtle)]">Blaze is on; no scheduler is set up yet, so uptime checks, scans and alerts run on demand from the console.</p>
                 </div>
                 <StateBadge state="blocked" />
               </li>

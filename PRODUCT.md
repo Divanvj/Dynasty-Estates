@@ -33,11 +33,11 @@ Practitioners Act, never a self-selected preference.
 ## Operating Context
 
 - Next.js 16 / React 19 / Tailwind v4 on Vercel (manual deploys), Firebase Auth
-  and Firestore on the free Spark plan (project `dynasty-estates`).
+  and Firestore on the Blaze plan (project `dynasty-estates`, since 2026-11-12).
 - Two Claude agents on two PCs share one GitHub repo (`COLLABORATION.md`,
   `WORKING_ON.md`). Roles come from the Firebase `role` custom claim.
-- Spark plan limits: no Cloud Storage bucket (no listing photos), no Cloud
-  Functions or scheduled jobs. These stay blocked until the Blaze plan.
+- Cloud Storage holds listing photos and floor plans (`storage.rules`). No
+  scheduled jobs yet: that waits on an owner decision (docs/blaze/SETUP-PLAN.md).
 
 ## Capabilities and Constraints
 
