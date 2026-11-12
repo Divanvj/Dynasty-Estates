@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/nightly-cron | Nightly jobs: vercel.json cron, /api/cron/nightly, lib/server/health.ts, stats retention, go-live scheduled check | 2026-11-12 |
 
 ## Recently merged
 
