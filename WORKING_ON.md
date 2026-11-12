@@ -9,12 +9,16 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/dashboards-phase-f | Phase F: practitioners collection + rules, /agent/profile, /admin/agents, /api/admin/practitioners, mandate fields | 2026-11-12 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-12 — `DESKTOP-1R37EBU/dashboards-phase-f` merged (agent compliance, F3). **New collection `practitioners/{uid}`**
+  (FFC number + expiry; owner files as "pending", only `/api/admin/practitioners` decides and grants the agent role) — rules
+  **deployed live**. New routes `/agent/profile`, `/admin/agents`, `/join/agent`. Listings gain `mandateType` (sole|open) and
+  `disclosureSignedOn` (YYYY-MM-DD) via `setListingMandate()`. Admin-only API auth: `lib/server/admin-auth.ts`.
 
 - 2026-11-12 — `DESKTOP-1R37EBU/dashboards-phase-d` merged (enquiry stages, F2). **`inquiries` gains stages and two
   timestamps**: status `new|contacted|viewing|offer|won|lost` (later four for agents/admins only), `updatedAt` and

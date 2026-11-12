@@ -1,6 +1,6 @@
 # Agent & admin dashboards — implementation plan
 
-Written 2026-11-10 (DESKTOP-1R37EBU). Status (2026-11-12): **A, B, C, D, E DONE** (on main; listing_stats rules + indexes deployed live 2026-11-11; enquiry-stage rules (F2) deployed live 2026-11-12). F, G, H not started (F3/F4 need approval; H needs pricing phase 2).
+Written 2026-11-10 (DESKTOP-1R37EBU). Status (2026-11-12): **A, B, C, D, E, F DONE** (on main; listing_stats rules + indexes deployed live 2026-11-11; enquiry-stage rules (F2) and practitioners rules (F3) deployed live 2026-11-12). G next (F4 approved); H needs pricing phase 2.
 Scope: the agent console (`/agent/*`), the agency principal's view, the admin pages (`/admin/*`) and the
 seller portal where it shares the same pieces. **The developer console (`/console`, `/api/console/*`) is out of
 scope — do not touch it** (owner, 2026-11-10).
@@ -83,7 +83,11 @@ Mobile: the bottom tab bar (`mobile-nav.tsx`) for Agent gains Enquiries; admin s
 - Gives: median response time, enquiry → viewing → offer funnel per listing.
 
 ### F3 — Practitioner compliance (Phase F) — schema + rules
-- `users/{uid}.practitioner`: `ffcNumber, ffcExpiry, verifiedAt, verifiedBy, agencyId`. Owner reads; only admin
+- **As built:** its own collection `practitioners/{uid}` (`fullName, email, phone, ffcNumber, ffcExpiry, agencyName,
+  status, submittedAt` by the owner, always as a fresh "pending"; `verifiedAt, verifiedBy, decisionNote` and
+  verified/rejected only by `/api/admin/practitioners`), not a map on `users/{uid}`, because the owner may write
+  anything on their user document. `agencyId` waits for Phase G (free-text agency name until then).
+- Planned: `users/{uid}.practitioner`: `ffcNumber, ffcExpiry, verifiedAt, verifiedBy, agencyId`. Owner reads; only admin
   writes (verification). Listing fields `mandateType` (sole / open) and `disclosureSigned` (date, self-attested —
   no document upload while Storage is blocked).
 
@@ -151,7 +155,7 @@ Sizes: S ≈ half a day, M ≈ 1–2 days, L ≈ 3+ days.
 - Labelled honestly everywhere: "Dynasty listings only — asking prices, not sale prices or a valuation." Sold prices
   (Deeds Office / Lightstone) are out of scope unless the owner buys a data feed.
 
-### Phase F — Compliance and agent verification (M) · F3 approved 2026-11-12
+### Phase F — Compliance and agent verification (M) · F3 approved 2026-11-12 · **DONE 2026-11-12**
 - `/agent/profile`: FFC number + expiry; banner 60 days before expiry; a listing without mandate/disclosure shows
   it in "Needs you today".
 - `/admin/agents`: verification queue — check FFC on the PPRA register (manual, link out), approve → sets the
@@ -191,11 +195,11 @@ the principal's own view and needs the agency schema, so it follows once the ind
 2. F1 approved 2026-11-11, F2 approved 2026-11-12, F3 and F4 approved 2026-11-12.
 3. Stats retention (13 months proposed).
 4. Seller report: may the agent's note be stored on the listing (new field), or typed per print only?
-5. Agent role grant via `/admin/agents` (server route that sets claims) — approve the architecture.
+5. Agent role grant via `/admin/agents` (server route that sets claims) — taken as part of the F3 approval (2026-11-12); built as `/api/admin/practitioners` (admin claim only; never changes a developer or admin account's role; audit entry per decision).
 
 ## Unbuilt (keep listed until done)
 
-Built: view tracking · listing performance · seller report + template · enquiry stages & response time · price snapshot.
-Still unbuilt: compliance card · agent verification queue · Register Agency / principal view / leaderboard / assignment · admin
+Built: view tracking · listing performance · seller report + template · enquiry stages & response time · price snapshot · compliance card · agent verification queue · listing mandate.
+Still unbuilt: Register Agency / principal view / leaderboard / assignment · admin
 pulse & sub-pages · revenue list · demand vs supply · e-mail/SMS/WhatsApp alerts · Saved Searches · listing edit
 screen · online payment · package expiry · tenancy applications screen for agents/landlords.
