@@ -9,13 +9,18 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/dashboards-phase-b` | listing_stats (rules/indexes), api/track, property page tracking, save button, agent/seller listing detail | 2026-11-11 |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/dashboards-phase-c` (on top of phase-b) | seller report (agent/seller listings/[id]/report), price snapshot /agent/market | 2026-11-11 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-12 — `DESKTOP-1R37EBU/dashboards-phase-b` + `-phase-c` merged (Phases B, C, E of `docs/dashboards/PLAN.md`).
+  **New collection `listing_stats`** (`{listingId}_{YYYYMMDD}`, SAST day): written only by `POST /api/track`
+  (Admin SDK; views/saves/contact clicks, bots and repeats throttled), read by the owner or admin. Rules +
+  2 composite indexes are **deployed live**. New routes: `/agent/listings/[id]` (+ `/report`),
+  `/seller/listings/[id]` (+ `/report`), `/agent/market`. Pass `ownerId` to `RecordPropertyView`; use
+  `TrackedContactLink` for Call/WhatsApp links on the listing page.
 
 - 2026-11-11 — `DESKTOP-1R37EBU/dashboards-phase-a` merged (plan: `docs/dashboards/PLAN.md`). **/admin and
   /agent are now several routes** with a shared shell + tab row in each `layout.tsx` (`admin-shell.tsx`,
