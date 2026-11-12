@@ -10,6 +10,7 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | DESKTOP-1R37EBU | DESKTOP-1R37EBU/nightly-cron | Nightly jobs: vercel.json cron, /api/cron/nightly, lib/server/health.ts, stats retention, go-live scheduled check | 2026-11-12 |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/site-dark-calm | Calmer dark mode (globals.css dark tokens), then premium dashboards (dashboard-ui, components/charts, /agent /agency /admin overviews) — docs/dashboards/REDESIGN-PLAN.md. Worktree ../dynasty-wt-design | 2026-11-12 |
 
 ## Recently merged
 
