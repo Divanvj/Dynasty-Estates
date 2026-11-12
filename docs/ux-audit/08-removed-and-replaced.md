@@ -266,3 +266,4 @@ Unchanged: the map views inside `/search` (Map view) and the home feed still use
 | Offline demo sign-in (`src/lib/demo-accounts.ts`, the four passwords in the client bundle) | **Removed**; without Firebase config, sign-in says it is not configured | `lib/auth.ts` |
 | Go-live check "No passwords in the public repo" | "Old test accounts disabled" | `lib/server/platform-checks.ts` |
 | Console Users page: "Test accounts" health panel | Panel only appears if an old test account can sign in again; "testing as …" tag on developer accounts | `console/users/page.tsx` |
+| Enquiry, support and audit times as "2026-11-10 10:30 UTC" | South African time, "10 Nov 2026, 12:30" (2026-11-12) | `lib/formatters.ts` `formatDateTime` |

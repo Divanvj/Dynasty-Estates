@@ -42,13 +42,18 @@ export function formatDate(isoOrDate: string | Date | number | null | undefined)
   return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
 }
 
+/**
+ * A date and time as "2 Nov 2026, 14:05", South African time. It used to
+ * print "2026-11-02 12:05 UTC", which made an agent convert every enquiry's
+ * time in their head. Same hand-applied offset as `formatDate`, for the same
+ * reason.
+ */
 export function formatDateTime(isoOrDate: string | Date | number | null | undefined): string {
   if (!isoOrDate) return "";
-  try {
-    const d = new Date(isoOrDate);
-    if (isNaN(d.getTime())) return "";
-    return d.toISOString().slice(0, 16).replace("T", " ") + " UTC";
-  } catch {
-    return "";
-  }
+  const parsed = new Date(isoOrDate);
+  if (isNaN(parsed.getTime())) return "";
+  const d = new Date(parsed.getTime() + SAST_OFFSET_MS);
+  const hh = String(d.getUTCHours()).padStart(2, "0");
+  const mm = String(d.getUTCMinutes()).padStart(2, "0");
+  return `${formatDate(parsed)}, ${hh}:${mm}`;
 }
