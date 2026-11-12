@@ -9,12 +9,17 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/dashboards-phase-g | Phase G: agencies/agency_invites/agency_members + inquiries/listing_stats rules, /agency/*, enquiry assignedTo | 2026-11-12 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-12 — `DESKTOP-1R37EBU/dashboards-phase-g` merged (agencies, F4). **New collections `agencies/{principalUid}`,
+  `agency_invites/{principalUid}_{email}`, `agency_members/{principalUid}_{memberUid}`**; `inquiries` gain `assignedTo`, and
+  inquiries / listing_stats reads now also admit the principal of the owner's agency and the assignee — rules **deployed
+  live**. Use `getInboxInquiries()` (own + assigned) for an agent's inbox. New routes `/agency`, `/agency/team`,
+  `/agency/enquiries`.
 
 - 2026-11-12 — `DESKTOP-1R37EBU/dashboards-phase-f` merged (agent compliance, F3). **New collection `practitioners/{uid}`**
   (FFC number + expiry; owner files as "pending", only `/api/admin/practitioners` decides and grants the agent role) — rules

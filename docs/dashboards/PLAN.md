@@ -1,6 +1,6 @@
 # Agent & admin dashboards — implementation plan
 
-Written 2026-11-10 (DESKTOP-1R37EBU). Status (2026-11-12): **A, B, C, D, E, F DONE** (on main; listing_stats rules + indexes deployed live 2026-11-11; enquiry-stage rules (F2) and practitioners rules (F3) deployed live 2026-11-12). G next (F4 approved); H needs pricing phase 2.
+Written 2026-11-10 (DESKTOP-1R37EBU). Status (2026-11-12): **A–G DONE** (on main; listing_stats rules + indexes deployed live 2026-11-11; enquiry-stage rules (F2) practitioners rules (F3) and agency rules (F4) deployed live 2026-11-12). H needs pricing phase 2.
 Scope: the agent console (`/agent/*`), the agency principal's view, the admin pages (`/admin/*`) and the
 seller portal where it shares the same pieces. **The developer console (`/console`, `/api/console/*`) is out of
 scope — do not touch it** (owner, 2026-11-10).
@@ -92,7 +92,12 @@ Mobile: the bottom tab bar (`mobile-nav.tsx`) for Agent gains Enquiries; admin s
   no document upload while Storage is blocked).
 
 ### F4 — Agency (Phase G) — schema + rules (this is "Register Agency", already on the unbuilt list)
-- `agencies/{id}`: `name, principalUid, memberUids[], ppraFirmNumber?`. Listings and enquiries carry `agencyId`.
+- **As built:** `agencies/{principalUid}` (`name, ppraFirmNumber, principalUid, createdAt`; only a verified practitioner
+  may register one), `agency_invites/{principalUid}_{email}` and `agency_members/{principalUid}_{memberUid}`. The principal
+  reads a member's enquiries and listing stats through the membership link (rule `exists()`), so nothing is copied onto
+  listings or enquiries, no backfill was needed, and leaving ends access at once. Enquiries gain `assignedTo`; the
+  principal may change only that, the assignee works the stages.
+- Planned: `agencies/{id}`: `name, principalUid, memberUids[], ppraFirmNumber?`. Listings and enquiries carry `agencyId`.
 - Principal reads every listing/enquiry/stat with their `agencyId` (rule `get()` on the agency doc). Enquiry gains
   `assignedTo`.
 
@@ -161,7 +166,7 @@ Sizes: S ≈ half a day, M ≈ 1–2 days, L ≈ 3+ days.
 - `/admin/agents`: verification queue — check FFC on the PPRA register (manual, link out), approve → sets the
   `agent` role claim via a server route + audit log entry. Today roles are set by script only.
 
-### Phase G — Agency principal (L) · F4 approved 2026-11-12
+### Phase G — Agency principal (L) · F4 approved 2026-11-12 · **DONE 2026-11-12**
 - Register Agency flow (principal creates the agency, invites agents by e-mail address — the invite is shown in the
   agent's account, since no e-mail is sent yet).
 - `/agency` dashboard: agency totals, leaderboard (enquiries, median response time, active listings), unassigned
@@ -199,7 +204,7 @@ the principal's own view and needs the agency schema, so it follows once the ind
 
 ## Unbuilt (keep listed until done)
 
-Built: view tracking · listing performance · seller report + template · enquiry stages & response time · price snapshot · compliance card · agent verification queue · listing mandate.
-Still unbuilt: Register Agency / principal view / leaderboard / assignment · admin
+Built: view tracking · listing performance · seller report + template · enquiry stages & response time · price snapshot · compliance card · agent verification queue · listing mandate · Register Agency · principal view + leaderboard · invitations · enquiry hand-out.
+Still unbuilt: invitation e-mails · admin
 pulse & sub-pages · revenue list · demand vs supply · e-mail/SMS/WhatsApp alerts · Saved Searches · listing edit
 screen · online payment · package expiry · tenancy applications screen for agents/landlords.
