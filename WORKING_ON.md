@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/blaze-setup | Blaze switch-on: storage.rules deploy, photo-check switches in /console/flags (platform-config, photo-intake, uploader), go-live checks | 2026-11-12 |
 
 ## Recently merged
 
