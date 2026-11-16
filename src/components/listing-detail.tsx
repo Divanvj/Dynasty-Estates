@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useId, useState } from "react";
 
-import { emptyBoxClass, errorBoxClass, linkClass, panelClass, primaryButtonClass, secondaryButtonClass } from "@/components/dashboard-ui";
+import { AgeChip, emptyBoxClass, errorBoxClass, linkClass, listingStatusTone, panelClass, primaryButtonClass, secondaryButtonClass } from "@/components/dashboard-ui";
 import { EnquiryList, useOwnerInquiries } from "@/components/enquiry-inbox";
 import { ArrowLeftIcon, CheckIcon } from "@/components/icons";
 import Sparkline from "@/components/sparkline";
@@ -94,7 +94,7 @@ export default function ListingDetail({
           <h1 className="text-3xl font-semibold tracking-[-0.04em] text-slate-900 md:text-4xl dark:text-white">{listing.title}</h1>
           {/* Status and key facts stand in for a description line. */}
           <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-600 dark:text-slate-300">
-            <span className="rounded-full border border-slate-200 bg-white/70 px-2.5 py-0.5 text-xs font-bold uppercase tracking-[0.1em] text-slate-700 dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-300">{listing.status}</span>
+            <AgeChip label={listing.status} tone={listingStatusTone(listing.status)} />
             <span className="font-semibold text-slate-900 dark:text-white">{listing.price}</span>
             {listing.location ? <span>{listing.location}</span> : null}
             {dom !== null ? <span>{dom} {dom === 1 ? "day" : "days"} {listing.publishedAt ? "on the market" : "since filed"}</span> : null}
@@ -111,7 +111,7 @@ export default function ListingDetail({
         </div>
       </div>
 
-      <div role="tablist" aria-label="Listing sections" className="mb-5 flex gap-1 overflow-x-auto border-b border-slate-200 [scrollbar-width:none] dark:border-white/10 [&::-webkit-scrollbar]:hidden">
+      <div role="tablist" aria-label="Listing sections" className="mb-5 flex gap-1 overflow-x-auto border-b border-[var(--dash-line-2)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {tabs.map((t) => (
           <button
             key={t.key}
@@ -123,7 +123,7 @@ export default function ListingDetail({
             onClick={() => setTab(t.key)}
             className={`min-h-11 shrink-0 cursor-pointer whitespace-nowrap border-b-2 px-4 text-sm font-semibold ${
               tab === t.key
-                ? "border-slate-900 text-slate-900 dark:border-emerald-400 dark:text-white"
+                ? "border-[var(--dash-d1)] text-slate-900 dark:text-white"
                 : "border-transparent text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
             }`}
           >
@@ -191,8 +191,8 @@ function Funnel({ enquiries }: { enquiries: SellerInquiry[] }) {
               <tr key={label}>
                 <th scope="row" className="whitespace-nowrap pr-4 text-left font-medium text-slate-700 dark:text-slate-300">{label}</th>
                 <td className="w-full">
-                  <div className="h-3 rounded-full bg-slate-900/5 dark:bg-white/10">
-                    <div className="h-3 rounded-full bg-[#047857] dark:bg-[#0fa673]" style={{ width: `${share}%` }} />
+                  <div className="h-3 rounded-full bg-[var(--dash-track)]">
+                    <div className="h-3 rounded-full bg-[var(--dash-d1)]" style={{ width: `${share}%` }} />
                   </div>
                 </td>
                 <td className="whitespace-nowrap pl-4 text-right tabular-nums text-slate-900 dark:text-white">
@@ -225,13 +225,13 @@ function Overview({ listing }: { listing: SellerListing }) {
   return (
     <section className={panelClass} aria-label="Listing details">
       {listing.moderationFeedback ? (
-        <p className="mb-4 rounded-control border border-amber-300/50 bg-amber-50 p-3.5 text-sm text-amber-900 dark:border-amber-500/30 dark:bg-amber-950/30 dark:text-amber-200">
+        <p className="mb-4 rounded-control border border-[var(--dash-line-2)] border-l-[3px] border-l-[var(--dash-accent)] bg-[var(--dash-accent-soft)] p-3.5 text-sm text-[var(--dash-accent-ink)]">
           Moderator&rsquo;s note: &ldquo;{listing.moderationFeedback}&rdquo;
         </p>
       ) : null}
       <dl className="grid gap-x-8 gap-y-3 sm:grid-cols-2">
         {facts.map(([k, v]) => (
-          <div key={k} className="flex justify-between gap-4 border-b border-slate-200/70 pb-2 text-sm dark:border-white/10">
+          <div key={k} className="flex justify-between gap-4 border-b border-[var(--dash-line)] pb-2 text-sm">
             <dt className="text-slate-600 dark:text-slate-400">{k}</dt>
             <dd className="text-right font-semibold text-slate-900 dark:text-white">{v}</dd>
           </div>
@@ -326,14 +326,14 @@ function Performance({
         ) : null}
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {tiles.map((tile) => (
-            <div key={tile.label} className="rounded-card border border-slate-200 bg-white/70 p-4 dark:border-white/10 dark:bg-surface-ink/60">
-              <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-600 dark:text-slate-400">{tile.label}</p>
+            <div key={tile.label} className="rounded-2xl border border-[var(--dash-line)] bg-[var(--dash-card-2)] p-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">{tile.label}</p>
               <p className="mt-2 text-3xl font-semibold tabular-nums text-slate-900 dark:text-white">{tile.total ?? "–"}</p>
               <div className="mt-2">
                 {tile.points ? (
                   <Sparkline label={tile.label} points={tile.points} formatDay={shortDay} />
                 ) : (
-                  <div aria-hidden="true" className="h-14 animate-pulse rounded bg-slate-200/60 motion-reduce:animate-none dark:bg-white/5" />
+                  <div aria-hidden="true" className="h-14 animate-pulse rounded bg-[var(--dash-track)] motion-reduce:animate-none" />
                 )}
               </div>
             </div>
@@ -346,9 +346,9 @@ function Performance({
           </button>
         </div>
         {showTable && series ? (
-          <div className="mt-3 max-h-80 overflow-auto rounded-control border border-slate-200 dark:border-white/10">
+          <div className="mt-3 max-h-80 overflow-auto rounded-control border border-[var(--dash-line)]">
             <table className="w-full text-left text-sm tabular-nums">
-              <thead className="sticky top-0 bg-slate-50 text-xs uppercase tracking-wider text-slate-600 dark:bg-surface-ink dark:text-slate-400">
+              <thead className="sticky top-0 bg-[var(--dash-card-2)] text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400">
                 <tr>
                   <th scope="col" className="px-3 py-2">Day</th>
                   <th scope="col" className="px-3 py-2 text-right">Views</th>
@@ -357,7 +357,7 @@ function Performance({
                   <th scope="col" className="px-3 py-2 text-right">Enquiries</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200 dark:divide-white/10">
+              <tbody className="divide-y divide-[var(--dash-line)]">
                 {[...series].reverse().map((row) => (
                   <tr key={row.date}>
                     <td className="px-3 py-1.5">{shortDay(row.date)}</td>
@@ -387,7 +387,7 @@ function Performance({
                 <span
                   aria-hidden="true"
                   className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${
-                    item.done ? "border-emerald-700 bg-emerald-700 text-white dark:border-emerald-500 dark:bg-emerald-700" : "border-slate-400 dark:border-white/30"
+                    item.done ? "border-[var(--dash-d1)] bg-[var(--dash-d1)] text-white dark:text-[#0b0e0f]" : "border-[var(--dash-line-2)]"
                   }`}
                 >
                   {item.done ? <CheckIcon className="h-3 w-3" /> : null}
@@ -505,7 +505,7 @@ function Mandate({ listing }: { listing: SellerListing }) {
                       setType(value);
                       setErrors((prev) => ({ ...prev, type: undefined }));
                     }}
-                    className="h-4 w-4 accent-emerald-700"
+                    className="h-4 w-4 accent-[var(--dash-d1)]"
                   />
                   {MANDATE_LABEL[value]}
                 </label>
@@ -527,7 +527,7 @@ function Mandate({ listing }: { listing: SellerListing }) {
               onBlur={(e) => setErrors((prev) => ({ ...prev, signed: dateError(e.target.value) || undefined }))}
               aria-invalid={errors.signed ? true : undefined}
               aria-describedby={errors.signed ? `${dateId}-error` : undefined}
-              className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 focus:border-emerald-500 focus:outline-none aria-[invalid=true]:border-rose-500 dark:border-white/10 dark:bg-surface-ink dark:text-white"
+              className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 focus:border-[var(--dash-d1)] focus:outline-none aria-[invalid=true]:border-rose-500 dark:border-white/10 dark:bg-surface-ink dark:text-white"
             />
             {errors.signed ? <p id={`${dateId}-error`} className="mt-1 text-sm text-rose-700 dark:text-rose-300">{errors.signed}</p> : null}
           </div>

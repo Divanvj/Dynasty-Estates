@@ -5,7 +5,7 @@ import { useId, useRef, useState, type PointerEvent } from "react";
 /**
  * One measure over time, as a small area line (dataviz: single series, no
  * legend — the tile's title names it; one hue, validated for light and dark:
- * #047857 on light surfaces, #0fa673 on the dark panel; 2px line; hover
+ * Dashboard teal (--dash-d1) in both themes; 2px line; hover
  * crosshair + tooltip; the numbers are also in the daily table beside it).
  */
 export default function Sparkline({
@@ -48,7 +48,7 @@ export default function Sparkline({
         preserveAspectRatio="none"
         role="img"
         aria-label={`${label}, last ${points.length} days, peak ${max === 1 && points.every((p) => p.value === 0) ? 0 : max} a day`}
-        className="block h-14 w-full touch-none text-[#047857] dark:text-[#0fa673]"
+        className="block h-14 w-full touch-none text-[var(--dash-d1)]"
         onPointerMove={onMove}
         onPointerDown={onMove}
         onPointerLeave={() => setHover(null)}
@@ -60,7 +60,7 @@ export default function Sparkline({
           </linearGradient>
         </defs>
         {/* Recessive baseline. */}
-        <line x1={pad} x2={W - pad} y1={H - pad} y2={H - pad} className="stroke-slate-300 dark:stroke-white/15" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+        <line x1={pad} x2={W - pad} y1={H - pad} y2={H - pad} className="stroke-[var(--dash-line-2)]" strokeWidth="1" vectorEffect="non-scaling-stroke" />
         <path d={area} fill={`url(#${gradientId})`} />
         <path d={line} fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
         {hover !== null ? (
@@ -70,7 +70,7 @@ export default function Sparkline({
       {hovered ? (
         <div
           role="status"
-          className="pointer-events-none absolute -top-9 z-10 -translate-x-1/2 whitespace-nowrap rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs font-semibold text-slate-900 shadow-md dark:border-white/10 dark:bg-[#0c1a1c] dark:text-white"
+          className="pointer-events-none absolute -top-9 z-10 -translate-x-1/2 whitespace-nowrap rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs font-semibold text-slate-900 shadow-md dark:border-white/10 dark:bg-[var(--dash-card)] dark:text-white"
           style={{ left: `${Math.min(88, Math.max(12, leftPct))}%` }}
         >
           {formatDay(hovered.day)}: {hovered.value}
