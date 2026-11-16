@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { linkClass, PageHeading } from "@/components/dashboard-ui";
+import { linkClass, PageHeading, panelClass } from "@/components/dashboard-ui";
 import { formatNumber } from "@/lib/formatters";
 import { agentPlans, listingExtensions, listingPackages } from "@/lib/pricing";
 
@@ -24,17 +24,17 @@ export default function AdminPackagesPage() {
           ["Private sale (incl. VAT)", listingPackages.filter((pkg) => pkg.audience === "sale"), listingExtensions.find((ext) => ext.audience === "sale")],
           ["Private rental (incl. VAT)", listingPackages.filter((pkg) => pkg.audience === "rent"), listingExtensions.find((ext) => ext.audience === "rent")],
         ] as const).map(([title, pkgs, ext]) => (
-          <div key={title} className="rounded-card border border-white/80 bg-white/50 p-5 shadow-sm dark:bg-surface-ink/70 dark:border-white/10">
-            <h2 className="text-base font-bold text-slate-900 dark:text-white">{title}</h2>
-            <ul className="mt-3 space-y-1.5 text-sm text-slate-700 dark:text-slate-300">
+          <div key={title} className={panelClass}>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">{title}</h2>
+            <ul className="mt-3 divide-y divide-[var(--dash-line)] text-sm text-slate-700 dark:text-slate-300">
               {pkgs.map((pkg) => (
-                <li key={pkg.id} className="flex justify-between gap-3">
+                <li key={pkg.id} className="flex justify-between gap-3 py-2.5">
                   <span>{pkg.name} · {pkg.durationDays} days</span>
-                  <span className="font-semibold tabular-nums">R {formatNumber(pkg.priceZAR)}</span>
+                  <span className="font-semibold tabular-nums text-slate-900 dark:text-white">R {formatNumber(pkg.priceZAR)}</span>
                 </li>
               ))}
               {ext && (
-                <li className="flex justify-between gap-3 border-t border-slate-200/60 pt-1.5 dark:border-white/10">
+                <li className="flex justify-between gap-3 py-2.5 text-slate-600 dark:text-slate-400">
                   <span>Extend · +{ext.durationDays} days</span>
                   <span className="font-semibold tabular-nums">R {formatNumber(ext.priceZAR)}</span>
                 </li>
@@ -42,11 +42,11 @@ export default function AdminPackagesPage() {
             </ul>
           </div>
         ))}
-        <div className="rounded-card border border-white/80 bg-white/50 p-5 shadow-sm dark:bg-surface-ink/70 dark:border-white/10">
-          <h2 className="text-base font-bold text-slate-900 dark:text-white">Agent plans (per month, excl. VAT)</h2>
-          <ul className="mt-3 space-y-1.5 text-sm text-slate-700 dark:text-slate-300">
+        <div className={panelClass}>
+          <h2 className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">Agent plans (per month, excl. VAT)</h2>
+          <ul className="mt-3 divide-y divide-[var(--dash-line)] text-sm text-slate-700 dark:text-slate-300">
             {agentPlans.map((plan) => (
-              <li key={plan.id} className="flex justify-between gap-3">
+              <li key={plan.id} className="flex justify-between gap-3 py-2.5">
                 <span>{plan.name} · {plan.liveListings ?? "150+"} listings</span>
                 <span className="font-semibold tabular-nums">
                   {plan.monthlyZAR === null ? "Quoted" : `R ${formatNumber(plan.monthlyZAR)}`}

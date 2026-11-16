@@ -8,13 +8,16 @@ import {
   emptyBoxClass,
   errorBoxClass,
   FilterChips,
+  Initials,
   linkClass,
   PageHeading,
   panelClass,
   primaryButtonClass,
   secondaryButtonClass,
+  SummaryStrip,
 } from "@/components/dashboard-ui";
 import { ComplianceBadge } from "@/components/practitioner-profile";
+import { QUEUE_TARGET_MS } from "@/lib/dashboard-math";
 import { formatDate, formatDateTime } from "@/lib/formatters";
 import {
   complianceState,
@@ -122,6 +125,7 @@ function AgentsQueue() {
   const all = rows ?? [];
   const visible = all.filter((row) => matches(row, show, now));
   const count = (s: Show) => (rows ? all.filter((row) => matches(row, s, now)).length : undefined);
+  const lateCount = all.filter((row) => row.status === "pending" && row.submittedAt && now - row.submittedAt.getTime() > QUEUE_TARGET_MS).length;
   const labels: Record<Show, string> = { pending: "Waiting", expiring: "Expiring", verified: "Verified", rejected: "Not accepted", all: "All" };
 
   return (
@@ -135,6 +139,20 @@ function AgentsQueue() {
           </a>
         }
       />
+      <SummaryStrip
+        label="Applications at a glance"
+        items={[
+          {
+            label: "Waiting",
+            value: rows ? String(count("pending")) : null,
+            note: lateCount ? `${lateCount} past the 24 h target` : "Applications to decide",
+            tone: lateCount ? "late" : undefined,
+          },
+          { label: "Verified", value: rows ? String(count("verified")) : null, note: "Agent access granted" },
+          { label: "Expiring", value: rows ? String(count("expiring")) : null, note: "Within 60 days", tone: count("expiring") ? "accent" : undefined },
+          { label: "Not accepted", value: rows ? String(count("rejected")) : null, note: "Turned down" },
+        ]}
+      />
       <section aria-label="Practitioner applications" className={panelClass}>
         <FilterChips<Show>
           label="Show applications"
@@ -143,7 +161,7 @@ function AgentsQueue() {
           options={SHOWS.map((value) => ({ value, label: labels[value], count: count(value) }))}
         />
 
-        {done ? <p role="status" className="mb-3 rounded-control border border-emerald-400/40 bg-emerald-50 p-3.5 text-sm text-emerald-900 dark:border-emerald-500/40 dark:bg-emerald-950/40 dark:text-emerald-200">{done}</p> : null}
+        {done ? <p role="status" className="mb-3 rounded-control border border-[var(--dash-line-2)] border-l-[3px] border-l-[var(--dash-d1)] bg-[var(--dash-card)] p-3.5 text-sm text-slate-800 dark:text-slate-200">{done}</p> : null}
 
         {loadError ? (
           <p role="alert" className={errorBoxClass}>Applications couldn&rsquo;t be loaded. Check your connection and refresh the page.</p>
@@ -161,12 +179,16 @@ function AgentsQueue() {
               return (
                 <li
                   key={row.uid}
-                  className={`rounded-control border bg-[#f4f7f7] p-3.5 text-sm dark:bg-surface-ink/70 ${
+                  className={`relative flex gap-3.5 rounded-2xl border p-4 text-sm ${
                     pending
-                      ? "border-slate-200 border-l-4 border-l-amber-500 dark:border-white/10 dark:border-l-amber-400"
-                      : "border-slate-200 dark:border-white/10"
+                      ? "border-[var(--dash-line-2)] bg-[var(--dash-card-2)] before:absolute before:inset-y-4 before:left-0 before:w-[3px] before:rounded-r-full before:bg-[var(--dash-accent)]"
+                      : "border-[var(--dash-line)] bg-[var(--dash-card)]"
                   }`}
                 >
+                  <span className="hidden sm:block">
+                    <Initials name={row.fullName || "?"} size={44} />
+                  </span>
+                  <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
                     <div className="min-w-0">
                       <p className="text-base font-semibold text-slate-900 dark:text-white">{row.fullName || "No name given"}</p>
@@ -178,14 +200,14 @@ function AgentsQueue() {
                     <ComplianceBadge state={state} />
                   </div>
 
-                  <dl className="mt-3 grid gap-x-6 gap-y-1 sm:grid-cols-2 lg:grid-cols-4">
+                  <dl className="mt-3 grid gap-x-6 gap-y-2 border-t border-[var(--dash-line)] pt-3 sm:grid-cols-2 lg:grid-cols-4">
                     <div><dt className="text-xs text-slate-600 dark:text-slate-400">FFC number</dt><dd className="font-semibold text-slate-900 dark:text-white">{row.ffcNumber}</dd></div>
                     <div>
                       <dt className="text-xs text-slate-600 dark:text-slate-400">Expires</dt>
                       <dd className="font-semibold text-slate-900 dark:text-white">
                         {row.ffcExpiry ? formatDate(`${row.ffcExpiry}T12:00:00Z`) : "–"}
-                        {state.kind === "expiring" ? <span className="font-normal text-amber-800 dark:text-amber-300"> · in {state.daysLeft} d</span> : null}
-                        {state.kind === "expired" ? <span className="font-normal text-rose-700 dark:text-rose-300"> · expired</span> : null}
+                        {state.kind === "expiring" ? <span className="font-normal text-[var(--dash-accent-ink)]"> · in {state.daysLeft} d</span> : null}
+                        {state.kind === "expired" ? <span className="font-normal text-[var(--dash-down)]"> · expired</span> : null}
                       </dd>
                     </div>
                     <div><dt className="text-xs text-slate-600 dark:text-slate-400">Email</dt><dd className="truncate">{row.email ? <a href={`mailto:${row.email}`} className={linkClass}>{row.email}</a> : "–"}</dd></div>
@@ -214,7 +236,7 @@ function AgentsQueue() {
                         }}
                         aria-invalid={noteError ? true : undefined}
                         aria-describedby={noteError ? `${noteId}-error` : `${noteId}-hint`}
-                        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 focus:border-emerald-500 focus:outline-none aria-[invalid=true]:border-rose-500 dark:border-white/10 dark:bg-surface-ink dark:text-white"
+                        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 focus:border-[var(--dash-d1)] focus:outline-none aria-[invalid=true]:border-rose-500 dark:border-white/10 dark:bg-surface-ink dark:text-white"
                       />
                       {noteError ? (
                         <p id={`${noteId}-error`} className="mt-1 text-rose-700 dark:text-rose-300">{noteError}</p>
@@ -240,6 +262,7 @@ function AgentsQueue() {
                       </button>
                     </div>
                   ) : null}
+                  </div>
                 </li>
               );
             })}

@@ -60,21 +60,21 @@ export default function AdminAuditPage() {
           <p className={emptyBoxClass}>No actions recorded yet. Moderation and agent-verification decisions appear here.</p>
         ) : (
           <>
-            <ol className="divide-y divide-slate-200 dark:divide-white/10">
+            <ol className="relative ml-1.5 border-l border-[var(--dash-line-2)]">
               {logs.map((log) => {
                 const resource = log.resource.replace(/^properties\//, "listing ").replace(/^practitioners\//, "account ");
                 const label = ACTION_LABEL[log.action];
                 return (
-                  <li key={log.id} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-3 text-sm">
+                  <li key={log.id} className="relative flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-3 pl-6 text-sm before:absolute before:-left-[5px] before:top-[1.15rem] before:size-2.5 before:rounded-full before:border-2 before:border-[var(--dash-card)] before:bg-[var(--dash-d1)]">
                     <div className="min-w-0">
                       <p className="text-slate-900 dark:text-white">
                         <span className="font-semibold">{log.actorEmail ?? log.actorId}</span>{" "}
-                        {label ?? <code className="rounded bg-slate-900/10 px-1 text-xs dark:bg-white/10">{log.action}</code>}{" "}
+                        {label ?? <code className="rounded bg-[var(--dash-track)] px-1 text-xs">{log.action}</code>}{" "}
                         <span className="text-slate-600 dark:text-slate-300">{resource}</span>
                       </p>
                       {log.details ? <p className="mt-0.5 text-slate-600 dark:text-slate-400">{log.details}</p> : null}
                     </div>
-                    <time dateTime={log.timestamp} className="shrink-0 text-slate-600 dark:text-slate-400">{formatDateTime(log.timestamp)}</time>
+                    <time dateTime={log.timestamp} className="shrink-0 tabular-nums text-xs text-slate-600 dark:text-slate-400">{formatDateTime(log.timestamp)}</time>
                   </li>
                 );
               })}

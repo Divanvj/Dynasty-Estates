@@ -5,15 +5,19 @@ import { Suspense, useEffect, useState } from "react";
 
 import { useAuth } from "@/components/auth-provider";
 import {
+  AgeChip,
   emptyBoxClass,
   errorBoxClass,
   FilterChips,
   formatAge,
+  Initials,
   linkClass,
   PageHeading,
   panelClass,
   secondaryButtonClass,
+  SummaryStrip,
 } from "@/components/dashboard-ui";
+import { QUEUE_TARGET_MS } from "@/lib/dashboard-math";
 import { formatDateTime } from "@/lib/formatters";
 import {
   getSupportRequests,
@@ -77,12 +81,33 @@ function SupportInbox() {
   const rows = requests ?? [];
   const count = (status: SupportStatus) => rows.filter((row) => asStatus(row.status) === status).length;
   const visible = rows.filter((row) => show === "all" || asStatus(row.status) === show);
+  const oldestNew = rows
+    .filter((row) => asStatus(row.status) === "new" && row.createdAt)
+    .reduce<Date | null>((old, row) => {
+      const at = new Date(row.createdAt!);
+      return !old || at < old ? at : old;
+    }, null);
+  const newLate = oldestNew !== null && now - oldestNew.getTime() > QUEUE_TARGET_MS;
+  const openPackages = rows.filter((row) => asStatus(row.status) !== "closed" && row.message.startsWith(PACKAGE_REQUEST_PREFIX)).length;
 
   return (
     <>
       <PageHeading
         title="Support"
         description="Messages from Support & Guidance and package requests, newest first. Reply by email; mark each one so the team knows where it stands."
+      />
+      <SummaryStrip
+        label="Support at a glance"
+        items={[
+          {
+            label: "New",
+            value: requests ? String(count("new")) : null,
+            note: oldestNew ? `Oldest ${formatAge(oldestNew, now)}${newLate ? ", past the 24 h target" : ""}` : "Nothing new",
+            tone: newLate ? "late" : undefined,
+          },
+          { label: "In progress", value: requests ? String(count("in_progress")) : null, note: "Being handled" },
+          { label: "Package requests", value: requests ? String(openPackages) : null, note: "Open, to invoice by hand", tone: openPackages ? "accent" : undefined },
+        ]}
       />
       <section aria-label="Support requests" className={panelClass}>
         <FilterChips<Show>
@@ -115,12 +140,16 @@ function SupportInbox() {
               return (
                 <li
                   key={request.id}
-                  className={`rounded-control border bg-[#f4f7f7] p-3.5 text-sm dark:bg-surface-ink/70 ${
+                  className={`relative flex gap-3.5 rounded-2xl border p-4 text-sm ${
                     isNew
-                      ? "border-slate-200 border-l-4 border-l-emerald-600 dark:border-white/10 dark:border-l-emerald-400"
-                      : "border-slate-200 dark:border-white/10"
+                      ? "border-[var(--dash-line-2)] bg-[var(--dash-card-2)] before:absolute before:inset-y-4 before:left-0 before:w-[3px] before:rounded-r-full before:bg-[var(--dash-d1)]"
+                      : "border-[var(--dash-line)] bg-[var(--dash-card)]"
                   }`}
                 >
+                  <span className="hidden sm:block">
+                    <Initials name={(request.userEmail || "?").split("@")[0].replace(/[._-]+/g, " ")} size={42} />
+                  </span>
+                  <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
                     <div className="flex min-w-0 flex-wrap items-center gap-2">
                       {request.userEmail ? (
@@ -129,18 +158,22 @@ function SupportInbox() {
                         <span className="font-semibold text-slate-900 dark:text-white">{request.userId}</span>
                       )}
                       {isPackage ? (
-                        <span className="rounded-full bg-amber-500/15 px-2 py-0.5 text-xs font-bold text-amber-900 dark:text-amber-200">Package request</span>
+                        <AgeChip label="Package request" tone="soon" />
                       ) : null}
                     </div>
-                    <span className="text-slate-600 dark:text-slate-400">
-                      {request.createdAt ? `${formatDateTime(request.createdAt)} · ${formatAge(new Date(request.createdAt), now)} ago` : "Just now"}
+                    <span className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+                      {request.createdAt ? formatDateTime(request.createdAt) : "Just now"}
+                      {request.createdAt ? (
+                        <AgeChip
+                          label={`${formatAge(new Date(request.createdAt), now)} ago`}
+                          tone={isNew && now - new Date(request.createdAt).getTime() > QUEUE_TARGET_MS ? "late" : "neutral"}
+                        />
+                      ) : null}
                     </span>
                   </div>
-                  <p className="mt-2 whitespace-pre-wrap text-slate-800 dark:text-slate-200">{request.message}</p>
+                  <p className="mt-2.5 whitespace-pre-wrap rounded-xl border border-[var(--dash-line)] bg-[var(--dash-card)] px-3.5 py-2.5 text-slate-800 dark:text-slate-200">{request.message}</p>
                   <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
-                    <span className="rounded-full border border-slate-300 bg-white/60 px-2.5 py-1 text-xs font-bold uppercase tracking-[0.12em] text-slate-700 dark:border-white/15 dark:bg-white/5 dark:text-slate-300">
-                      {STATUS_LABEL[status]}
-                    </span>
+                    <AgeChip label={STATUS_LABEL[status]} tone={status === "in_progress" ? "good" : "neutral"} />
                     <div className="flex flex-wrap gap-2">
                       {status === "new" ? (
                         <button type="button" disabled={saving} onClick={() => void change(request, "in_progress")} className={secondaryButtonClass}>
@@ -157,6 +190,7 @@ function SupportInbox() {
                         </button>
                       )}
                     </div>
+                  </div>
                   </div>
                 </li>
               );

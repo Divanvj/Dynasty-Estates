@@ -23,16 +23,28 @@ export const linkClass =
   "font-semibold text-emerald-800 underline-offset-2 hover:underline dark:text-emerald-300";
 
 export const secondaryButtonClass =
-  "pill max-lg:min-h-11 border border-slate-300 bg-white/80 font-semibold text-slate-800 hover:bg-white disabled:opacity-60 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10";
+  "pill max-lg:min-h-11 border border-[var(--dash-line-2)] bg-[var(--dash-card)] font-semibold text-slate-800 hover:bg-[var(--dash-card-2)] disabled:opacity-60 dark:text-slate-200";
 
+// Petrol in light (the statement card's own deep teal-obsidian), muted sea-glass in dark.
 export const primaryButtonClass =
-  "pill max-lg:min-h-11 bg-slate-900 font-semibold text-white shadow-md hover:bg-slate-800 disabled:opacity-60 dark:bg-emerald-700 dark:hover:bg-emerald-800";
+  "pill max-lg:min-h-11 bg-[var(--dash-hero-solid)] font-semibold text-white shadow-sm hover:bg-[var(--dash-d1)] disabled:opacity-60 dark:bg-emerald-700 dark:hover:bg-emerald-600";
 
 export const errorBoxClass =
   "rounded-control border border-rose-200 bg-rose-50 p-3.5 text-sm text-rose-800 dark:border-rose-500/30 dark:bg-rose-950/40 dark:text-rose-200";
 
 export const emptyBoxClass =
-  "rounded-control border border-dashed border-slate-300 p-6 text-center text-sm text-slate-600 dark:border-white/15 dark:text-slate-300";
+  "rounded-control border border-dashed border-[var(--dash-line-2)] bg-[var(--dash-card-2)] p-6 text-center text-sm text-slate-600 dark:text-slate-300";
+
+/** A table in a card: the frame, the header row and one body row. */
+export const tableFrameClass =
+  "overflow-hidden rounded-card border border-[var(--dash-line)] bg-[var(--dash-card)] shadow-[var(--dash-shadow)]";
+export const tableHeadClass =
+  "border-b border-[var(--dash-line)] bg-[var(--dash-card-2)] text-left text-xs font-semibold uppercase tracking-[0.1em] text-slate-600 dark:text-slate-400";
+export const tableRowClass = "border-t border-[var(--dash-line)] first:border-t-0";
+
+/** The search box above a list (label above, icon inside). */
+export const searchInputClass =
+  "h-11 w-full rounded-xl border border-[var(--dash-line-2)] bg-[var(--dash-card)] pl-9 pr-3 text-sm text-slate-900 placeholder:text-slate-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--dash-d1)] dark:text-white dark:placeholder:text-slate-400";
 
 export type SectionLink = { href: string; label: string; exact?: boolean };
 
@@ -283,6 +295,89 @@ export function AgeChip({ label, tone = "neutral" }: { label: string; tone?: "la
   return <span className={`shrink-0 whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-semibold tabular-nums ${cls}`}>{label}</span>;
 }
 
+/**
+ * The figures strip under a page heading: three or four facts in one card,
+ * divided by hairlines. `value` null = still loading (a dash, never 0).
+ * `tone` "late" marks a figure that needs attention (rose text, and the
+ * note says why, so it is never colour alone).
+ */
+export function SummaryStrip({
+  label,
+  items,
+}: {
+  label: string;
+  items: { label: string; value: string | null; note?: string; tone?: "late" | "accent" }[];
+}) {
+  return (
+    <section aria-label={label} className="mb-6 rounded-card border border-[var(--dash-line)] bg-[var(--dash-card)] shadow-[var(--dash-shadow)]">
+      <dl className={`grid grid-cols-2 ${items.length >= 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}>
+        {items.map((item, i) => (
+          <div
+            key={item.label}
+            className={`flex min-w-0 flex-col gap-1.5 p-4 md:px-6 md:py-5 ${i % 2 === 1 ? "border-l border-[var(--dash-line)]" : ""} ${
+              i >= 2 ? "border-t border-[var(--dash-line)] lg:border-t-0" : ""
+            } ${i === 2 ? "lg:border-l" : ""}`}
+          >
+            <dt className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">{item.label}</dt>
+            <dd
+              className={`text-[1.75rem] font-semibold leading-none tabular-nums tracking-[-0.035em] ${
+                item.tone === "late"
+                  ? "text-[var(--dash-down)]"
+                  : item.tone === "accent"
+                    ? "text-[var(--dash-accent-ink)]"
+                    : "text-slate-900 dark:text-white"
+              }`}
+            >
+              {item.value ?? "–"}
+            </dd>
+            {item.note ? <dd className="text-xs text-slate-600 dark:text-slate-400">{item.note}</dd> : null}
+          </div>
+        ))}
+      </dl>
+    </section>
+  );
+}
+
+/** Two-letter initials in a soft teal disc, for people in lists. */
+export function Initials({ name, size = 40 }: { name: string; size?: number }) {
+  const letters =
+    name
+      .replace(/[^\p{L}\s]/gu, " ")
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((w) => w[0]!.toUpperCase())
+      .join("") || "?";
+  return (
+    <span
+      aria-hidden="true"
+      style={{ width: size, height: size, fontSize: Math.round(size * 0.36) }}
+      className="inline-flex shrink-0 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--dash-d3)_55%,var(--dash-card))] font-semibold tracking-wide text-[var(--dash-d1)] ring-1 ring-[var(--dash-line)] dark:bg-[color-mix(in_srgb,var(--dash-d2)_35%,var(--dash-card))]"
+    >
+      {letters}
+    </span>
+  );
+}
+
+/** A listing's cover photo at thumbnail size; a Petrol tile when there is none. */
+export function ListingThumb({ src, className = "h-11 w-16" }: { src?: string | null; className?: string }) {
+  return src ? (
+    // eslint-disable-next-line @next/next/no-img-element -- Storage URLs of any size
+    <img src={src} alt="" className={`${className} shrink-0 rounded-lg border border-[var(--dash-line)] object-cover`} />
+  ) : (
+    <span aria-hidden="true" className={`${className} shrink-0 rounded-lg border border-[var(--dash-line)] [background:var(--dash-hero)]`} />
+  );
+}
+
+/** Tone of a listing status chip: rose when the owner must act, champagne while it moves, green when live. */
+export function listingStatusTone(status: string): "late" | "soon" | "neutral" | "good" {
+  if (status === "Needs changes" || status === "Rejected") return "late";
+  if (status === "Submitted" || status === "Under offer") return "soon";
+  if (status === "Published") return "good";
+  return "neutral";
+}
+
 /** Filter chips for an inbox: one is always selected; announces the selection. */
 export function FilterChips<T extends string>({
   label,
@@ -296,7 +391,7 @@ export function FilterChips<T extends string>({
   onChange: (value: T) => void;
 }) {
   return (
-    <div role="group" aria-label={label} className="mb-4 flex flex-wrap gap-2">
+    <div role="group" aria-label={label} className="-mx-1 mb-4 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] sm:flex-wrap sm:overflow-visible [&::-webkit-scrollbar]:hidden">
       {options.map((option) => {
         const active = option.value === value;
         return (
@@ -305,14 +400,22 @@ export function FilterChips<T extends string>({
             type="button"
             aria-pressed={active}
             onClick={() => onChange(option.value)}
-            className={`inline-flex min-h-11 cursor-pointer items-center gap-1.5 rounded-full border px-4 text-sm font-semibold ${
+            className={`inline-flex min-h-11 shrink-0 cursor-pointer items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-colors ${
               active
-                ? "border-slate-900 bg-slate-900 text-white dark:border-emerald-500/50 dark:bg-emerald-700"
-                : "border-slate-300 bg-white/70 text-slate-700 hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10"
+                ? "border-[var(--dash-d1)] bg-[var(--dash-d1)] text-white dark:text-[#0b0e0f]"
+                : "border-[var(--dash-line-2)] bg-[var(--dash-card)] text-slate-700 hover:border-[var(--dash-d2)] dark:text-slate-300"
             }`}
           >
             {option.label}
-            {option.count !== undefined ? <span className="tabular-nums opacity-80">{option.count}</span> : null}
+            {option.count !== undefined ? (
+              <span
+                className={`min-w-6 rounded-full px-1.5 text-center text-xs tabular-nums ${
+                  active ? "bg-white/20 dark:bg-black/15" : "bg-[var(--dash-track)] text-slate-600 dark:text-slate-300"
+                }`}
+              >
+                {option.count}
+              </span>
+            ) : null}
           </button>
         );
       })}

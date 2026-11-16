@@ -5,15 +5,19 @@ import { useId, useState } from "react";
 import { AgencyGate } from "@/components/agency-gate";
 import { useAgencyTeam } from "@/components/agency-team";
 import {
+  AgeChip,
   ConfirmDialog,
   emptyBoxClass,
   errorBoxClass,
+  formatAge,
+  Initials,
   linkClass,
   PageHeading,
   panelClass,
   primaryButtonClass,
   rowClass,
   secondaryButtonClass,
+  SummaryStrip,
 } from "@/components/dashboard-ui";
 import { deleteInvite, EMAIL_PATTERN, inviteAgent, removeMember, type AgencyInvite } from "@/lib/agency";
 import { formatDate } from "@/lib/formatters";
@@ -24,7 +28,7 @@ import { useAccountUid } from "@/lib/use-owner-listings";
 // sent yet: the invited agent sees the invitation on their profile.
 
 const inputClass =
-  "w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 focus:border-emerald-500 focus:outline-none aria-[invalid=true]:border-rose-500 dark:border-white/10 dark:bg-surface-ink dark:text-white";
+  "w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 focus:border-[var(--dash-d1)] focus:outline-none aria-[invalid=true]:border-rose-500 dark:border-white/10 dark:bg-surface-ink dark:text-white";
 
 export default function AgencyTeamPage() {
   const uid = useAccountUid();
@@ -108,37 +112,69 @@ export default function AgencyTeamPage() {
           <>
             <PageHeading title="Team" description={`The agents of ${agency.name}. Invite an agent by the e-mail address they sign in with.`} />
 
-            {notice ? <p role="status" className="mb-4 rounded-control border border-emerald-400/40 bg-emerald-50 p-3.5 text-sm text-emerald-900 dark:border-emerald-500/40 dark:bg-emerald-950/40 dark:text-emerald-200">{notice}</p> : null}
+            {notice ? <p role="status" className="mb-4 rounded-control border border-[var(--dash-line-2)] border-l-[3px] border-l-[var(--dash-d1)] bg-[var(--dash-card)] p-3.5 text-sm text-slate-800 dark:text-slate-200">{notice}</p> : null}
             {error ? <p role="alert" className={`mb-4 ${errorBoxClass}`}>{error}</p> : null}
 
-            <section aria-labelledby="agents-heading" className={`mb-6 ${panelClass}`}>
-              <h2 id="agents-heading" className="mb-4 text-2xl font-semibold text-slate-900 dark:text-white">Agents</h2>
-              <ul className="space-y-3">
+            <SummaryStrip
+              label="Team at a glance"
+              items={[
+                { label: "Agents", value: String(agents.length), note: "Including you" },
+                { label: "Active listings", value: String(agents.reduce((n, a) => n + a.activeListings, 0)), note: "Published or under offer" },
+                { label: "Enquiries, 30 days", value: String(agents.reduce((n, a) => n + a.enquiries30, 0)), note: "Across the team" },
+                {
+                  label: "Waiting for a reply",
+                  value: String(agents.reduce((n, a) => n + a.waiting, 0)),
+                  note: agents.some((a) => a.waiting > 0) ? "New, not yet answered" : "Nobody is waiting",
+                  tone: agents.some((a) => a.waiting > 0) ? "late" : undefined,
+                },
+              ]}
+            />
+
+            <section aria-labelledby="agents-heading" className="mb-6">
+              <h2 id="agents-heading" className="mb-3 text-base font-semibold text-slate-900 dark:text-white">Agents</h2>
+              <ul className="grid gap-4 md:grid-cols-2">
                 {agents.map((a) => (
-                  <li key={a.uid} className={`${rowClass} flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-sm`}>
-                    <div className="min-w-0">
-                      <p className="text-base font-semibold text-slate-900 dark:text-white">
-                        {a.name}
-                        {a.isPrincipal ? <span className="ml-2 text-xs font-normal text-slate-600 dark:text-slate-400">Principal (you)</span> : null}
-                      </p>
-                      <p className="mt-0.5 text-slate-600 dark:text-slate-300">
-                        {a.email ? <a href={`mailto:${a.email}`} className={linkClass}>{a.email}</a> : null}
-                        {a.joinedAt ? ` · ${a.isPrincipal ? "Registered" : "Joined"} ${formatDate(a.joinedAt)}` : ""}
-                        {` · ${a.activeListings} active ${a.activeListings === 1 ? "listing" : "listings"}`}
-                      </p>
+                  <li key={a.uid} className={`${panelClass} flex flex-col gap-4 text-sm`}>
+                    <div className="flex items-start gap-3.5">
+                      <Initials name={a.name} size={48} />
+                      <div className="min-w-0 flex-1">
+                        <p className="flex flex-wrap items-center gap-2 text-base font-semibold text-slate-900 dark:text-white">
+                          {a.name}
+                          {a.isPrincipal ? <AgeChip label="Principal · you" tone="neutral" /> : null}
+                        </p>
+                        <p className="mt-0.5 truncate text-slate-600 dark:text-slate-300">
+                          {a.email ? <a href={`mailto:${a.email}`} className={linkClass}>{a.email}</a> : null}
+                        </p>
+                        {a.joinedAt ? (
+                          <p className="text-xs text-slate-600 dark:text-slate-400">{a.isPrincipal ? "Registered" : "Joined"} {formatDate(a.joinedAt)}</p>
+                        ) : null}
+                      </div>
+                      {!a.isPrincipal ? (
+                        <button type="button" disabled={busy === a.uid} onClick={() => setRemoving({ uid: a.uid, name: a.name })} className={secondaryButtonClass}>
+                          Remove<span className="sr-only"> {a.name}</span>
+                        </button>
+                      ) : null}
                     </div>
-                    {!a.isPrincipal ? (
-                      <button type="button" disabled={busy === a.uid} onClick={() => setRemoving({ uid: a.uid, name: a.name })} className={secondaryButtonClass}>
-                        Remove
-                      </button>
-                    ) : null}
+                    <dl className="grid grid-cols-4 gap-2 border-t border-[var(--dash-line)] pt-4">
+                      {[
+                        { label: "Active listings", value: String(a.activeListings) },
+                        { label: "Enquiries, 30 d", value: String(a.enquiries30) },
+                        { label: "Waiting", value: String(a.waiting), late: a.waiting > 0 },
+                        { label: "Median reply", value: a.reply ? formatAge(new Date(0), a.reply.ms) : "–" },
+                      ].map((m) => (
+                        <div key={m.label} className="flex min-w-0 flex-col-reverse">
+                          <dt className="text-xs text-slate-600 dark:text-slate-400">{m.label}</dt>
+                          <dd className={`text-lg font-semibold tabular-nums ${m.late ? "text-[var(--dash-down)]" : "text-slate-900 dark:text-white"}`}>{m.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
                   </li>
                 ))}
               </ul>
             </section>
 
             <section aria-labelledby="invite-heading" className={panelClass}>
-              <h2 id="invite-heading" className="text-2xl font-semibold text-slate-900 dark:text-white">Invite an agent</h2>
+              <h2 id="invite-heading" className="text-base font-semibold text-slate-900 dark:text-white">Invite an agent</h2>
               <p className="mt-1 max-w-2xl text-sm text-slate-700 dark:text-slate-300">
                 No e-mail goes out yet. The agent sees the invitation on their profile once they sign in with this address, and must
                 hold the agent role on Dynasty to accept.
@@ -168,7 +204,7 @@ export default function AgencyTeamPage() {
                 </button>
               </form>
 
-              <h3 className="mt-6 text-sm font-bold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">Open invitations</h3>
+              <h3 className="mt-6 text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">Open invitations</h3>
               {invites.length === 0 ? (
                 <p className={`mt-2 ${emptyBoxClass}`}>No open invitations.</p>
               ) : (

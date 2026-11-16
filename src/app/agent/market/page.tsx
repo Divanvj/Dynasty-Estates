@@ -4,7 +4,18 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import CustomSelect from "@/components/custom-select";
-import { errorBoxClass, linkClass, PageHeading, panelClass, StatTile } from "@/components/dashboard-ui";
+import { PriceStrip } from "@/components/charts/price-strip";
+import {
+  DashCard,
+  errorBoxClass,
+  linkClass,
+  PageHeading,
+  panelClass,
+  SummaryStrip,
+  tableFrameClass,
+  tableHeadClass,
+  tableRowClass,
+} from "@/components/dashboard-ui";
 import PrintButton from "@/components/print-button";
 import { formatDate, formatNumber } from "@/lib/formatters";
 import { getLiveComparables, marketSnapshot, MIN_COMPARABLES, type Comparable } from "@/lib/listing-insights";
@@ -59,6 +70,9 @@ export default function MarketSnapshotPage() {
   const areaLabel = area === ANY ? "All areas" : `${title(area.slice(2))} (${area.startsWith("s:") ? "suburb" : "city"})`;
   const typeLabel = type === ANY ? "All home types" : title(type);
   const rand = (n: number) => `R ${formatNumber(n)}`;
+  // "R 2.8m" / "R 12k": short enough for a range in one line.
+  const short = (n: number) =>
+    n >= 1_000_000 ? `R ${Number((n / 1_000_000).toFixed(2))}m` : n >= 10_000 ? `R ${Math.round(n / 1000)}k` : rand(n);
 
   return (
     <>
@@ -114,45 +128,58 @@ export default function MarketSnapshotPage() {
         </section>
       ) : (
         <>
-          <section aria-label="Figures" className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
-            <StatTile label="Median asking price" value={rand(snapshot.median)} detail={`${snapshot.count} live listings`} />
-            <StatTile
-              label="Middle half"
-              value={snapshot.quartiles ? `${rand(snapshot.quartiles.p25)} – ${rand(snapshot.quartiles.p75)}` : "–"}
-              detail={snapshot.quartiles ? "25th to 75th percentile" : "Needs 8 or more listings"}
-            />
-            <StatTile label="Range" value={`${rand(snapshot.min)} – ${rand(snapshot.max)}`} detail="Lowest to highest" />
-            <StatTile
-              label="Median per m²"
-              value={snapshot.perSqm ? rand(snapshot.perSqm.median) : "–"}
-              detail={snapshot.perSqm ? `${snapshot.perSqm.count} listings give a floor size` : `Fewer than ${MIN_COMPARABLES} give a floor size`}
-            />
-          </section>
+          <SummaryStrip
+            label="Figures"
+            items={[
+              { label: "Median asking price", value: rand(snapshot.median), note: `${snapshot.count} live listings`, tone: "accent" },
+              {
+                label: "Middle half",
+                value: snapshot.quartiles ? `${short(snapshot.quartiles.p25)}–${short(snapshot.quartiles.p75)}` : "–",
+                note: snapshot.quartiles ? "25th to 75th percentile" : "Needs 8 or more listings",
+              },
+              { label: "Range", value: `${short(snapshot.min)}–${short(snapshot.max)}`, note: "Lowest to highest" },
+              {
+                label: "Median per m²",
+                value: snapshot.perSqm ? rand(snapshot.perSqm.median) : "–",
+                note: snapshot.perSqm ? `${snapshot.perSqm.count} listings give a floor size` : `Fewer than ${MIN_COMPARABLES} give a floor size`,
+              },
+            ]}
+          />
 
-          <section aria-labelledby="comparables-heading" className="overflow-hidden rounded-card border border-slate-200 bg-white/70 dark:border-white/10 dark:bg-surface-panel/80">
-            <h2 id="comparables-heading" className="px-4 pt-4 text-lg font-semibold text-slate-900 dark:text-white">The {rows.length} listings</h2>
+          <DashCard title="Where the asking prices sit" aside={`${typeLabel} · ${areaLabel}`} className="mb-6">
+            <PriceStrip
+              prices={rows.map((c) => c.price)}
+              median={snapshot.median}
+              quartiles={snapshot.quartiles}
+              format={rand}
+              label={`Asking prices of ${rows.length} live listings from ${rand(snapshot.min)} to ${rand(snapshot.max)}, median ${rand(snapshot.median)}.`}
+            />
+          </DashCard>
+
+          <section aria-labelledby="comparables-heading" className={tableFrameClass}>
+            <h2 id="comparables-heading" className="px-5 pb-3 pt-5 text-base font-semibold text-slate-900 dark:text-white">The {rows.length} listings</h2>
             <div className="overflow-x-auto">
-              <table className="mt-2 w-full min-w-[560px] text-left text-sm tabular-nums">
-                <thead className="border-y border-slate-200 bg-slate-50/80 text-xs uppercase tracking-wider text-slate-600 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-400">
+              <table className="w-full min-w-[560px] text-left text-sm tabular-nums">
+                <thead className={`${tableHeadClass} border-t`}>
                   <tr>
-                    <th scope="col" className="px-4 py-2 font-bold">Listing</th>
-                    <th scope="col" className="px-4 py-2 font-bold">Type</th>
-                    <th scope="col" className="px-4 py-2 text-right font-bold">Asking price</th>
-                    <th scope="col" className="px-4 py-2 text-right font-bold">Floor size</th>
-                    <th scope="col" className="px-4 py-2 text-right font-bold">Per m²</th>
+                    <th scope="col" className="px-5 py-2.5">Listing</th>
+                    <th scope="col" className="px-4 py-2.5">Type</th>
+                    <th scope="col" className="px-4 py-2.5 text-right">Asking price</th>
+                    <th scope="col" className="px-4 py-2.5 text-right">Floor size</th>
+                    <th scope="col" className="px-5 py-2.5 text-right">Per m²</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-200 text-slate-700 dark:divide-white/10 dark:text-slate-300">
+                <tbody className="text-slate-700 dark:text-slate-300">
                   {[...rows].sort((a, b) => a.price - b.price).map((c) => (
-                    <tr key={c.id}>
-                      <td className="px-4 py-2">
+                    <tr key={c.id} className={tableRowClass}>
+                      <td className="px-5 py-2.5">
                         <Link href={`/property/${c.id}`} className={linkClass}>{c.title}</Link>
                         <span className="block text-xs text-slate-600 dark:text-slate-400">{c.location}{c.status === "Under offer" ? " · Under offer" : ""}</span>
                       </td>
-                      <td className="px-4 py-2">{title(c.type)}</td>
-                      <td className="px-4 py-2 text-right font-semibold text-slate-900 dark:text-white">{rand(c.price)}</td>
-                      <td className="px-4 py-2 text-right">{c.floorSizeSqm ? `${formatNumber(c.floorSizeSqm)} m²` : "–"}</td>
-                      <td className="px-4 py-2 text-right">{c.floorSizeSqm ? rand(c.price / c.floorSizeSqm) : "–"}</td>
+                      <td className="px-4 py-2.5">{title(c.type)}</td>
+                      <td className="px-4 py-2.5 text-right font-semibold text-slate-900 dark:text-white">{rand(c.price)}</td>
+                      <td className="px-4 py-2.5 text-right">{c.floorSizeSqm ? `${formatNumber(c.floorSizeSqm)} m²` : "–"}</td>
+                      <td className="px-5 py-2.5 text-right">{c.floorSizeSqm ? rand(c.price / c.floorSizeSqm) : "–"}</td>
                     </tr>
                   ))}
                 </tbody>

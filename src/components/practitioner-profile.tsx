@@ -3,7 +3,8 @@
 import { useEffect, useId, useState } from "react";
 
 import { useAuth } from "@/components/auth-provider";
-import { errorBoxClass, linkClass, panelClass, primaryButtonClass, secondaryButtonClass } from "@/components/dashboard-ui";
+import { Ring } from "@/components/charts/ring";
+import { AgeChip, errorBoxClass, linkClass, panelClass, primaryButtonClass, secondaryButtonClass } from "@/components/dashboard-ui";
 import { resolveAccount } from "@/lib/auth";
 import { formatDate } from "@/lib/formatters";
 import {
@@ -26,7 +27,7 @@ import { setActiveUserRole, setDeveloperAccount } from "@/lib/use-user-role";
  */
 
 const inputClass =
-  "w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 focus:border-emerald-500 focus:outline-none aria-[invalid=true]:border-rose-500 dark:border-white/10 dark:bg-surface-ink dark:text-white";
+  "w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 focus:border-[var(--dash-d1)] focus:outline-none aria-[invalid=true]:border-rose-500 dark:border-white/10 dark:bg-surface-ink dark:text-white";
 const labelClass = "mb-1.5 block text-sm font-semibold text-slate-800 dark:text-slate-200";
 
 export type PractitionerLoad = { state: "loading" } | { state: "error" } | { state: "ready"; record: Practitioner | null };
@@ -55,22 +56,18 @@ export function usePractitioner(uid: string | null | undefined) {
   return { load, replace };
 }
 
-const STATE_COPY: Record<ComplianceState["kind"], { label: string; tone: string }> = {
-  none: { label: "Not filed", tone: "border-slate-300 bg-white/60 text-slate-700 dark:border-white/15 dark:bg-white/5 dark:text-slate-300" },
-  pending: { label: "Waiting for review", tone: "border-amber-400/40 bg-amber-50 text-amber-900 dark:border-amber-500/40 dark:bg-amber-950/40 dark:text-amber-200" },
-  rejected: { label: "Not accepted", tone: "border-rose-300 bg-rose-50 text-rose-800 dark:border-rose-500/40 dark:bg-rose-950/40 dark:text-rose-200" },
-  verified: { label: "Verified", tone: "border-emerald-400/40 bg-emerald-50 text-emerald-900 dark:border-emerald-500/40 dark:bg-emerald-950/40 dark:text-emerald-200" },
-  expiring: { label: "Expires soon", tone: "border-amber-400/40 bg-amber-50 text-amber-900 dark:border-amber-500/40 dark:bg-amber-950/40 dark:text-amber-200" },
-  expired: { label: "Expired", tone: "border-rose-300 bg-rose-50 text-rose-800 dark:border-rose-500/40 dark:bg-rose-950/40 dark:text-rose-200" },
+const STATE_COPY: Record<ComplianceState["kind"], { label: string; tone: "late" | "soon" | "neutral" | "good" }> = {
+  none: { label: "Not filed", tone: "neutral" },
+  pending: { label: "Waiting for review", tone: "soon" },
+  rejected: { label: "Not accepted", tone: "late" },
+  verified: { label: "Verified", tone: "good" },
+  expiring: { label: "Expires soon", tone: "soon" },
+  expired: { label: "Expired", tone: "late" },
 };
 
 export function ComplianceBadge({ state }: { state: ComplianceState }) {
   const copy = STATE_COPY[state.kind];
-  return (
-    <span className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-bold uppercase tracking-[0.12em] ${copy.tone}`}>
-      {copy.label}
-    </span>
-  );
+  return <AgeChip label={copy.label} tone={copy.tone} />;
 }
 
 /** One sentence on where the certificate stands and what to do next. */
@@ -114,6 +111,8 @@ export function PractitionerProfile({
 
   const record = load.state === "ready" ? load.record : null;
   const state = complianceState(record, now);
+  // Same count as the sentence above and the dashboard ring (complianceState).
+  const daysLeft = state.kind === "verified" || state.kind === "expiring" ? state.daysLeft : state.kind === "expired" ? -state.daysAgo : null;
 
   // Once verified, pick up the agent role the admin's decision granted.
   useEffect(() => {
@@ -213,21 +212,39 @@ export function PractitionerProfile({
       </div>
 
       {record && !editing ? (
-        <dl className="mt-5 grid gap-x-8 gap-y-3 sm:grid-cols-2">
-          {([
-            ["Full name", record.fullName],
-            ["FFC number", record.ffcNumber],
-            ["Expires", formatDate(`${record.ffcExpiry}T12:00:00Z`)],
-            ["Phone", record.phone],
-            ["Agency", record.agencyName || "Not given"],
-            ["Sent", record.submittedAt ? formatDate(record.submittedAt) : "–"],
-          ] as [string, string][]).map(([k, v]) => (
-            <div key={k} className="flex justify-between gap-4 border-b border-slate-200/70 pb-2 text-sm dark:border-white/10">
-              <dt className="text-slate-600 dark:text-slate-400">{k}</dt>
-              <dd className="text-right font-semibold text-slate-900 dark:text-white">{v}</dd>
+        <div className="mt-5 flex flex-col gap-6 md:flex-row md:items-center">
+          {daysLeft !== null ? (
+            <div className="flex shrink-0 items-center gap-4 rounded-2xl border border-[var(--dash-line)] bg-[var(--dash-card-2)] p-4 pr-6 text-slate-900 dark:text-white">
+              <Ring
+                tone="card"
+                size={96}
+                value={Math.max(0, Math.min(1, daysLeft / 365))}
+                label={daysLeft >= 0 ? `${daysLeft} days left on your certificate` : "Your certificate has expired"}
+                text={daysLeft >= 0 ? `${daysLeft} d` : "0 d"}
+              />
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">{daysLeft >= 0 ? "Days left" : "Expired"}</p>
+                <p className="mt-1 text-3xl font-semibold tabular-nums tracking-[-0.03em]">{Math.abs(daysLeft)}</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">{daysLeft >= 0 ? "until" : "days ago, on"} {formatDate(`${record.ffcExpiry}T12:00:00Z`)}</p>
+              </div>
             </div>
-          ))}
-        </dl>
+          ) : null}
+          <dl className="grid flex-1 gap-x-8 gap-y-3 sm:grid-cols-2">
+            {([
+              ["Full name", record.fullName],
+              ["FFC number", record.ffcNumber],
+              ["Expires", formatDate(`${record.ffcExpiry}T12:00:00Z`)],
+              ["Phone", record.phone],
+              ["Agency", record.agencyName || "Not given"],
+              ["Sent", record.submittedAt ? formatDate(record.submittedAt) : "–"],
+            ] as [string, string][]).map(([k, v]) => (
+              <div key={k} className="flex justify-between gap-4 border-b border-[var(--dash-line)] pb-2 text-sm">
+                <dt className="text-slate-600 dark:text-slate-400">{k}</dt>
+                <dd className="text-right font-semibold text-slate-900 dark:text-white">{v}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       ) : null}
 
       {editing ? (

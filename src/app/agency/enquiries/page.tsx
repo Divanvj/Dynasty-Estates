@@ -6,9 +6,10 @@ import { Suspense, useState } from "react";
 import { AgencyGate } from "@/components/agency-gate";
 import { useAgencyTeam } from "@/components/agency-team";
 import CustomSelect from "@/components/custom-select";
-import { emptyBoxClass, errorBoxClass, FilterChips, formatAge, PageHeading, panelClass } from "@/components/dashboard-ui";
+import { AgeChip, emptyBoxClass, errorBoxClass, FilterChips, formatAge, Initials, PageHeading, panelClass, SummaryStrip } from "@/components/dashboard-ui";
+import { REPLY_TARGET_MS } from "@/lib/dashboard-math";
 import { formatDateTime } from "@/lib/formatters";
-import { asStage, assignInquiry, STAGE_LABEL, type SellerInquiry } from "@/lib/seller-inquiries";
+import { asStage, assignInquiry, medianReplyMs, STAGE_LABEL, type SellerInquiry } from "@/lib/seller-inquiries";
 import { useAccountUid } from "@/lib/use-owner-listings";
 
 // Pattern 10A — Inbox (docs/dashboards/PLAN.md, Phase G). Every enquiry on the
@@ -52,6 +53,10 @@ function AgencyEnquiries() {
         const nameOf = new Map(agents.map((a) => [a.uid, a.isPrincipal ? `${a.name} (you)` : a.name]));
         const rows = enquiries.map((e) => (e.id in assigned ? { ...e, assignedTo: assigned[e.id] } : e));
         const visible = rows.filter((e) => matches(e, show));
+        const waiting = rows.filter((e) => asStage(e.status) === "new");
+        const oldest = waiting.reduce<Date | null>((old, e) => (e.createdAt && (!old || e.createdAt < old) ? e.createdAt : old), null);
+        const late = oldest !== null && now - oldest.getTime() > REPLY_TARGET_MS;
+        const reply = medianReplyMs(rows, now, 30);
 
         async function assign(e: SellerInquiry, value: string) {
           const target = value === LISTING_AGENT || value === e.ownerId ? null : value;
@@ -74,6 +79,19 @@ function AgencyEnquiries() {
             <PageHeading
               title="Agency enquiries"
               description="Every enquiry on your agency's listings, newest first. Hand one to another agent and it moves to their inbox; the listing's own agent handles the rest."
+            />
+            <SummaryStrip
+              label="Agency enquiries at a glance"
+              items={[
+                {
+                  label: "Waiting for a reply",
+                  value: String(waiting.length),
+                  note: oldest ? `Oldest ${formatAge(oldest, now)}${late ? ", past the 1 h target" : ""}` : "Nobody is waiting",
+                  tone: late ? "late" : undefined,
+                },
+                { label: "Median first reply", value: reply ? formatAge(new Date(0), reply.ms) : "–", note: reply ? `${reply.count} replies, last 30 days` : "No first replies in 30 days" },
+                { label: "Won, 30 days", value: String(agents.reduce((n, a) => n + a.won30, 0)), note: "Across the team", tone: "accent" },
+              ]}
             />
             <section aria-label="Agency enquiries" className={panelClass}>
               <FilterChips<Show>
@@ -98,23 +116,36 @@ function AgencyEnquiries() {
                     return (
                       <li
                         key={e.id}
-                        className={`rounded-control border bg-[#f4f7f7] p-3.5 text-sm dark:bg-surface-ink/70 ${
+                        className={`relative flex gap-3.5 rounded-2xl border p-4 text-sm ${
                           stage === "new"
-                            ? "border-slate-200 border-l-4 border-l-emerald-600 dark:border-white/10 dark:border-l-emerald-400"
-                            : "border-slate-200 dark:border-white/10"
+                            ? "border-[var(--dash-line-2)] bg-[var(--dash-card-2)] before:absolute before:inset-y-4 before:left-0 before:w-[3px] before:rounded-r-full before:bg-[var(--dash-d1)]"
+                            : "border-[var(--dash-line)] bg-[var(--dash-card)]"
                         }`}
                       >
+                        <span className="hidden sm:block">
+                          <Initials name={e.contactName || "Buyer"} size={42} />
+                        </span>
+                        <div className="min-w-0 flex-1">
                         <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
                           <div className="min-w-0">
-                            <p className={`text-slate-900 dark:text-white ${stage === "new" ? "font-bold" : "font-medium"}`}>
-                              {e.kind === "message" ? "Message" : "Viewing request"}
-                              <span className="font-medium text-slate-600 dark:text-slate-300"> · {e.propertyTitle}</span>
+                            <p className={`text-base text-slate-900 dark:text-white ${stage === "new" ? "font-bold" : "font-semibold"}`}>
+                              {e.contactName || "A buyer"}
+                              <span className="ml-2 inline-flex rounded-full bg-[var(--dash-track)] px-2 py-0.5 align-[2px] text-xs font-semibold text-slate-600 dark:text-slate-300">
+                                {e.kind === "message" ? "Message" : "Viewing request"}
+                              </span>
                             </p>
                             <p className="mt-0.5 text-slate-600 dark:text-slate-300">
-                              {e.contactName || "A buyer"}
+                              <span className="font-medium text-slate-700 dark:text-slate-200">{e.propertyTitle}</span>
                               {e.createdAt ? ` · ${formatDateTime(e.createdAt)}` : ""}
-                              {` · ${STAGE_LABEL[stage]}`}
-                              {stage === "new" && e.createdAt ? ` · waiting ${formatAge(e.createdAt, now)}` : ""}
+                            </p>
+                            <p className="mt-2 flex flex-wrap gap-1.5">
+                              <AgeChip label={STAGE_LABEL[stage]} tone={stage === "new" || stage === "lost" ? "neutral" : "good"} />
+                              {stage === "new" && e.createdAt ? (
+                                <AgeChip
+                                  label={`Waiting ${formatAge(e.createdAt, now)}`}
+                                  tone={now - e.createdAt.getTime() > REPLY_TARGET_MS ? "late" : "soon"}
+                                />
+                              ) : null}
                             </p>
                           </div>
                           <div className="flex items-center gap-2">
@@ -132,6 +163,7 @@ function AgencyEnquiries() {
                           </div>
                         </div>
                         {error?.id === e.id ? <p role="alert" className={`mt-3 ${errorBoxClass}`}>{error.message}</p> : null}
+                        </div>
                       </li>
                     );
                   })}

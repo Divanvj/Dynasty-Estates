@@ -4,16 +4,25 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
 
 import { useAuth } from "@/components/auth-provider";
+import { Meter } from "@/components/charts/meter";
 import {
+  AgeChip,
   ConfirmDialog,
   emptyBoxClass,
   errorBoxClass,
   FilterChips,
   formatAge,
+  ListingThumb,
+  listingStatusTone,
   PageHeading,
+  panelClass,
   primaryButtonClass,
+  searchInputClass,
   secondaryButtonClass,
+  SummaryStrip,
+  tableFrameClass,
 } from "@/components/dashboard-ui";
+import { QUEUE_TARGET_MS } from "@/lib/dashboard-math";
 import { ArrowLeftIcon, CheckIcon, InfoCircleIcon, SearchIcon } from "@/components/icons";
 import { formatDate } from "@/lib/formatters";
 import {
@@ -77,6 +86,11 @@ function ModerationQueue() {
 
   const items = queue ?? [];
   const fraudCount = items.filter((item) => (item.fraudSignals ?? []).length > 0).length;
+  const oldest = items.reduce<number | null>((min, item) => {
+    const at = new Date(item.submittedAt).getTime();
+    return min === null || at < min ? at : min;
+  }, null);
+  const overDay = items.filter((item) => now - new Date(item.submittedAt).getTime() > QUEUE_TARGET_MS).length;
   const term = search.trim().toLowerCase();
   const visible = items
     .filter((item) => show === "all" || (item.fraudSignals ?? []).length > 0)
@@ -146,8 +160,27 @@ function ModerationQueue() {
         description="Listings waiting for review, oldest first. Approving publishes the listing; the seller sees your note on changes and rejections."
       />
 
+      <SummaryStrip
+        label="Queue at a glance"
+        items={[
+          { label: "Waiting for review", value: queue ? String(items.length) : null, note: "Submitted listings" },
+          {
+            label: "Oldest",
+            value: queue ? (oldest !== null ? formatAge(new Date(oldest), now) : "–") : null,
+            note: overDay ? `${overDay} past the 24 h target` : "All within 24 h",
+            tone: overDay ? "late" : undefined,
+          },
+          {
+            label: "Fraud signals",
+            value: queue ? String(fraudCount) : null,
+            note: fraudCount ? "Check these first" : "None flagged",
+            tone: fraudCount ? "late" : undefined,
+          },
+        ]}
+      />
+
       {notice ? (
-        <p role="status" className="mb-4 flex items-center gap-2 rounded-2xl border border-emerald-300 bg-emerald-100/80 px-4 py-2.5 text-sm font-medium text-emerald-900 dark:border-emerald-500/40 dark:bg-emerald-500/20 dark:text-emerald-200">
+        <p role="status" className="mb-4 flex items-center gap-2 rounded-2xl border border-[var(--dash-line-2)] border-l-[3px] border-l-[var(--dash-d1)] bg-[var(--dash-card)] px-4 py-2.5 text-sm font-medium text-slate-800 dark:text-slate-200">
           <CheckIcon className="h-4 w-4 shrink-0" />
           {notice}
         </p>
@@ -165,7 +198,7 @@ function ModerationQueue() {
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder="Title, seller or suburb"
-              className="h-11 w-full rounded-xl border border-slate-300 bg-white pl-9 pr-3 text-sm text-slate-900 placeholder:text-slate-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 dark:border-white/15 dark:bg-surface-ink/80 dark:text-white dark:placeholder:text-slate-400"
+              className={searchInputClass}
             />
           </div>
         </div>
@@ -182,7 +215,7 @@ function ModerationQueue() {
 
       <div className="grid gap-4 lg:grid-cols-[minmax(280px,380px)_1fr]">
         {/* Left: compact list. */}
-        <div className={`${listHidden} overflow-hidden rounded-card border border-slate-200 bg-white/70 dark:border-white/10 dark:bg-surface-panel/80`}>
+        <div className={`${listHidden} ${tableFrameClass} self-start`}>
           {loadError ? (
             <p role="alert" className="p-4 text-sm text-rose-800 dark:text-rose-200">The queue couldn&rsquo;t be loaded. Check your connection and refresh the page.</p>
           ) : !queue ? (
@@ -192,7 +225,7 @@ function ModerationQueue() {
               {items.length === 0 ? "Nothing is waiting for review." : "No listings match."}
             </p>
           ) : (
-            <ul ref={listRef} aria-label="Listings waiting for review" onKeyDown={onListKey} className="max-h-[70vh] divide-y divide-slate-200 overflow-y-auto dark:divide-white/10">
+            <ul ref={listRef} aria-label="Listings waiting for review" onKeyDown={onListKey} className="max-h-[70vh] divide-y divide-[var(--dash-line)] overflow-y-auto">
               {visible.map((item) => {
                 const active = selected?.id === item.id;
                 const flagged = (item.fraudSignals ?? []).length > 0;
@@ -203,20 +236,28 @@ function ModerationQueue() {
                       data-id={item.id}
                       aria-current={active ? "true" : undefined}
                       onClick={() => select(item.id, true)}
-                      className={`flex w-full cursor-pointer flex-col gap-0.5 px-4 py-3 text-left ${
-                        active ? "bg-emerald-50 dark:bg-emerald-500/10" : "hover:bg-slate-50 dark:hover:bg-white/5"
+                      className={`relative flex w-full cursor-pointer gap-3 px-4 py-3.5 text-left ${
+                        active
+                          ? "bg-[var(--dash-card-2)] before:absolute before:inset-y-3 before:left-0 before:w-[3px] before:rounded-r-full before:bg-[var(--dash-d1)]"
+                          : "hover:bg-[var(--dash-card-2)]"
                       }`}
                     >
+                      <ListingThumb src={item.image} className="h-12 w-16" />
+                      <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                       <span className="flex items-start justify-between gap-3">
                         <span className="min-w-0 truncate font-semibold text-slate-900 dark:text-white">{item.title}</span>
-                        <span className="shrink-0 text-xs text-slate-600 dark:text-slate-400">{formatAge(new Date(item.submittedAt), now)}</span>
+                        <AgeChip
+                          label={formatAge(new Date(item.submittedAt), now)}
+                          tone={now - new Date(item.submittedAt).getTime() > QUEUE_TARGET_MS ? "late" : "neutral"}
+                        />
                       </span>
                       <span className="truncate text-xs text-slate-600 dark:text-slate-400">{item.location || item.sellerEmail}</span>
                       {flagged ? (
-                        <span className="mt-1 inline-flex w-fit items-center gap-1 rounded-full bg-rose-500/15 px-2 py-0.5 text-xs font-bold text-rose-800 dark:text-rose-300">
+                        <span className="mt-1 inline-flex w-fit items-center gap-1 rounded-full bg-[var(--dash-down-soft)] px-2 py-0.5 text-xs font-semibold text-[var(--dash-down)]">
                           <InfoCircleIcon className="h-3.5 w-3.5" /> Fraud signal
                         </span>
                       ) : null}
+                      </span>
                     </button>
                   </li>
                 );
@@ -230,7 +271,7 @@ function ModerationQueue() {
           id="moderation-detail"
           tabIndex={-1}
           aria-label="Selected listing"
-          className={`${detailHidden} rounded-card border border-slate-200 bg-white/70 p-5 focus:outline-none dark:border-white/10 dark:bg-surface-panel/80 md:p-6`}
+          className={`${detailHidden} ${panelClass} focus:outline-none`}
         >
           <button type="button" onClick={() => setMobileDetail(false)} className={`mb-4 lg:hidden ${secondaryButtonClass}`}>
             <ArrowLeftIcon className="mr-1.5 h-4 w-4" /> Back to the queue
@@ -244,17 +285,20 @@ function ModerationQueue() {
             <>
               {selected.image ? (
                 // eslint-disable-next-line @next/next/no-img-element -- remote listing photo, any host
-                <img src={selected.image} alt={`Cover photo of ${selected.title}`} className="mb-4 aspect-[16/9] w-full rounded-control object-cover" />
+                <img src={selected.image} alt={`Cover photo of ${selected.title}`} className="mb-5 aspect-[16/9] w-full rounded-2xl border border-[var(--dash-line)] object-cover" />
               ) : (
-                <p className="mb-4 rounded-control border border-dashed border-slate-300 p-4 text-sm text-slate-600 dark:border-white/15 dark:text-slate-400">No photo on this listing.</p>
+                <p className="mb-5 flex h-28 w-full items-center justify-center rounded-2xl border border-[var(--dash-hero-line)] text-sm text-[var(--dash-hero-muted)] [background:var(--dash-hero)]">No photo on this listing.</p>
               )}
 
               <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-slate-900/10 px-2.5 py-0.5 text-xs font-bold text-slate-800 dark:bg-white/10 dark:text-slate-200">{selected.status}</span>
-                <span className="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300">Quality {selected.qualityScore}%</span>
+                <AgeChip label={selected.status} tone={listingStatusTone(selected.status)} />
+                <span className="flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300">
+                  <span className="w-20"><Meter value={selected.qualityScore} max={100} height={6} /></span>
+                  Quality {selected.qualityScore}%
+                </span>
               </div>
               <h2 className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white">{selected.title}</h2>
-              <p className="mt-1 text-lg font-bold text-slate-900 dark:text-emerald-400">{selected.price}</p>
+              <p className="mt-1 text-lg font-semibold tabular-nums text-slate-900 dark:text-white">{selected.price}</p>
               <dl className="mt-3 grid gap-x-6 gap-y-1 text-sm sm:grid-cols-2">
                 <div><dt className="inline text-slate-600 dark:text-slate-400">Where: </dt><dd className="inline">{selected.location || "Not given"}</dd></div>
                 <div><dt className="inline text-slate-600 dark:text-slate-400">Seller: </dt><dd className="inline break-all">{selected.sellerEmail}</dd></div>
@@ -262,11 +306,11 @@ function ModerationQueue() {
               </dl>
 
               {(selected.fraudSignals ?? []).length > 0 ? (
-                <div className="mt-4 rounded-control border border-rose-200 bg-rose-50/70 p-4 dark:border-rose-500/30 dark:bg-rose-950/30">
-                  <h3 className="flex items-center gap-1.5 text-sm font-bold text-rose-900 dark:text-rose-200">
+                <div className="mt-4 rounded-2xl border border-[var(--dash-down)]/25 bg-[var(--dash-down-soft)] p-4">
+                  <h3 className="flex items-center gap-1.5 text-sm font-semibold text-[var(--dash-down)]">
                     <InfoCircleIcon className="h-4 w-4" /> Fraud signals
                   </h3>
-                  <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-rose-900 dark:text-rose-200">
+                  <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-[var(--dash-down)]">
                     {selected.fraudSignals?.map((signal) => <li key={signal}>{signal}</li>)}
                   </ul>
                 </div>
@@ -286,7 +330,7 @@ function ModerationQueue() {
                     setNotes((prev) => ({ ...prev, [selected.id]: event.target.value }));
                     if (noteError) setNoteError(null);
                   }}
-                  className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 dark:border-white/15 dark:bg-surface-ink/80 dark:text-white"
+                  className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--dash-d1)] dark:border-white/15 dark:bg-surface-ink/80 dark:text-white"
                 />
                 {noteError ? <p id={`${noteId}-error`} className="mt-1 text-sm text-rose-800 dark:text-rose-300">{noteError}</p> : null}
               </div>

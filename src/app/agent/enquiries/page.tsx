@@ -3,8 +3,9 @@
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
-import { FilterChips, PageHeading, panelClass } from "@/components/dashboard-ui";
+import { FilterChips, formatAge, PageHeading, panelClass, SummaryStrip } from "@/components/dashboard-ui";
 import { EnquiryList, useOwnerInquiries } from "@/components/enquiry-inbox";
+import { replyFigures, REPLY_TARGET_MS } from "@/lib/dashboard-math";
 import { asStage, INQUIRY_STAGES, STAGE_LABEL, type InquiryStage } from "@/lib/seller-inquiries";
 import { useAccountUid } from "@/lib/use-owner-listings";
 
@@ -37,6 +38,12 @@ function EnquiriesInbox() {
 
   // Arriving from the dashboard with #enquiry-<id>: scroll to it once loaded.
   const ready = inbox.state === "ready";
+  const [now] = useState(() => Date.now());
+  const waiting = inbox.items.filter((item) => asStage(item.status) === "new");
+  const oldestWait = waiting.reduce<Date | null>((old, item) => (item.createdAt && (!old || item.createdAt < old) ? item.createdAt : old), null);
+  const late = oldestWait !== null && now - oldestWait.getTime() > REPLY_TARGET_MS;
+  const replies = replyFigures(inbox.items, now);
+  const open = inbox.items.filter((item) => !["won", "lost"].includes(asStage(item.status))).length;
   useEffect(() => {
     if (!ready || !window.location.hash.startsWith("#enquiry-")) return;
     document.getElementById(window.location.hash.slice(1))?.scrollIntoView({ block: "start" });
@@ -47,6 +54,24 @@ function EnquiriesInbox() {
       <PageHeading
         title="Enquiries"
         description="Buyers’ messages and viewing requests on your listings, newest first. Move each one through its stages as it progresses. We don’t send email or SMS alerts yet, so check back here."
+      />
+      <SummaryStrip
+        label="Enquiries at a glance"
+        items={[
+          { label: "Open", value: ready ? String(open) : null, note: "Not yet won or lost" },
+          {
+            label: "Waiting for a reply",
+            value: ready ? String(waiting.length) : null,
+            note: oldestWait ? `Oldest ${formatAge(oldestWait, now)}${late ? ", past the 1 h target" : ""}` : "Nobody is waiting",
+            tone: late ? "late" : undefined,
+          },
+          {
+            label: "Replied within 1 h",
+            value: ready ? (replies ? `${Math.round(replies.withinTarget * 100)}%` : "–") : null,
+            note: replies ? `${replies.count} first ${replies.count === 1 ? "reply" : "replies"}, last 30 days` : "No first replies in 30 days",
+          },
+          { label: "Won", value: ready ? String(countOf("won")) : null, note: "All time", tone: "accent" },
+        ]}
       />
       <section aria-label="Enquiries" className={panelClass}>
         <FilterChips<Show>

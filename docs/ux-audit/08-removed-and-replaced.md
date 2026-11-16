@@ -304,3 +304,19 @@ Unchanged: the map views inside `/search` (Map view) and the home feed still use
 | Agent dashboard: heading, five number tiles, "Needs you today" | Petrol statement card (greeting, waiting buyers, top listing with its photo), speed-to-lead ring (1 h target), four KPIs with 30-day trend and change, Needs you today, buyer pipeline funnel with stuck flags, daily views chart, FFC compliance ring, listings table with photo, health and views trend | `agent/dashboard/page.tsx`, `components/charts/*`, `lib/dashboard-math.ts` |
 | Agency overview: four tiles + agents table | Statement card, agency speed-to-lead ring, KPIs with change, leaderboard with top-three podium (3+ agents) and inline bars, reply time per agent against 1 h, enquiries per day | `agency/page.tsx`, `components/agency-team.tsx` (60 days of stats) |
 | Admin overview: five tiles + "Needs action" list; tile "Enquiries last 7 days" | Marketplace statement card, queues-within-24 h ring, KPIs (new listings, enquiries with change, verified agents, open package requests), queues with age bars, supply mix (sale/rent, top cities), enquiries per day, honest Revenue placeholder until payments | `admin/page.tsx`, `lib/admin-overview.ts` (`getLiveListings`, `getEnquiryTimesSince`) |
+
+## Petrol inner pages (16 Nov, REDESIGN-PLAN.md R5)
+
+Replaced, nothing removed. Every figure still comes from stored data.
+
+- **Filter chips**: navy/emerald pills → deep-teal selected chip with a count badge; one scrolling row on phones (was up to five wrapped rows).
+- **Primary button**: slate-900 → the Petrol hero colour in light; dark unchanged (sea-glass). Secondary buttons, empty boxes, search boxes and tables now use the `--dash-*` tokens.
+- **New figures strip** (`SummaryStrip`) under the heading of Enquiries, Listings, Price snapshot, Team, Agency enquiries, Moderation, Agents and Support. Overdue figures turn rose and say why (1 h reply target; 24 h for admin queues, `QUEUE_TARGET_MS`).
+- **Enquiry rows** (agent, agency, seller portal, listing detail): buyer initials, buyer name first, kind as a chip, message in its own box, "Waiting" chip that turns rose after 1 h. The emerald left border on new rows → a thin teal rail plus tint.
+- **Listings table**: cover photo, status chip, a views bar per row.
+- **Price snapshot**: four tiles → figures strip plus a new price-spread chart (`charts/price-strip.tsx`: one dot per listing, middle half shaded, median in champagne).
+- **Profile**: certificate ring with days left beside the details; badge colours → shared chip tones (also on /admin/agents).
+- **Team**: agent list → one card per agent with initials and four figures (active listings, enquiries 30 d, waiting, median reply).
+- **Moderation**: queue rows with photo thumbnails and age chips; selected row gets a teal rail; no-photo box → a short Petrol panel; quality as a bar.
+- **Support / Agents**: same row pattern as the inbox; package requests as a champagne chip. **Audit trail**: list → timeline. **Packages**: solid cards.
+- Not touched: the developer console. Still open: `lib/moderation.ts` keeps made-up sample listings used only when Firebase is not configured (older code).

@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 
 import CustomSelect from "@/components/custom-select";
-import { emptyBoxClass, errorBoxClass, formatAge, linkClass } from "@/components/dashboard-ui";
+import { AgeChip, emptyBoxClass, errorBoxClass, formatAge, Initials, linkClass, secondaryButtonClass } from "@/components/dashboard-ui";
+import { REPLY_TARGET_MS } from "@/lib/dashboard-math";
 import { formatDateTime } from "@/lib/formatters";
 import {
   asStage,
@@ -143,27 +144,33 @@ export function EnquiryList({
             const closed = stage === "won" || stage === "lost";
             const whatsapp = item.contactPhone ? whatsappHref(item.contactPhone) : null;
             return (
-              // New ones carry weight AND a leading accent, so unread is not colour alone.
+              // New ones carry weight, a tinted row AND a leading rail, so unread is not colour alone.
               <li
                 key={item.id}
                 id={`enquiry-${item.id}`}
-                className={`scroll-mt-24 rounded-control border bg-[#f4f7f7] p-3.5 dark:bg-surface-ink/70 ${
+                className={`relative flex scroll-mt-24 gap-3.5 rounded-2xl border p-4 ${
                   isNew
-                    ? "border-slate-200 border-l-4 border-l-emerald-600 dark:border-white/10 dark:border-l-emerald-400"
-                    : "border-slate-200 dark:border-white/10"
+                    ? "border-[var(--dash-line-2)] bg-[var(--dash-card-2)] before:absolute before:inset-y-4 before:left-0 before:w-[3px] before:rounded-r-full before:bg-[var(--dash-d1)]"
+                    : "border-[var(--dash-line)] bg-[var(--dash-card)]"
                 }`}
               >
+                <span className="hidden sm:block">
+                  <Initials name={item.contactName || "Buyer"} size={42} />
+                </span>
+                <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
                   <div className="min-w-0">
-                    <p className={`text-slate-900 dark:text-white ${isNew ? "font-bold" : "font-medium"}`}>
-                      {item.kind === "message" ? "Message" : "Viewing request"}
-                      <span className="font-medium text-slate-600 dark:text-slate-300"> · {item.propertyTitle}</span>
+                    <p className={`text-slate-900 dark:text-white ${isNew ? "font-bold" : "font-semibold"}`}>
+                      {item.contactName || "A buyer"}
+                      <span className="ml-2 inline-flex rounded-full bg-[var(--dash-track)] px-2 py-0.5 align-[2px] text-xs font-semibold text-slate-600 dark:text-slate-300">
+                        {item.kind === "message" ? "Message" : "Viewing request"}
+                      </span>
                     </p>
                     {uid && item.assignedTo === uid && item.ownerId !== uid ? (
-                      <p className="mt-0.5 text-xs font-semibold uppercase tracking-[0.12em] text-emerald-800 dark:text-emerald-300">Assigned to you by your agency</p>
+                      <p className="mt-0.5 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--dash-d1)]">Assigned to you by your agency</p>
                     ) : null}
                     <p className="mt-0.5 text-sm text-slate-600 dark:text-slate-300">
-                      {item.contactName || "A buyer"}
+                      <span className="font-medium text-slate-700 dark:text-slate-200">{item.propertyTitle}</span>
                       {item.createdAt ? ` · ${formatDateTime(item.createdAt)}` : ""}
                       {item.createdAt && item.firstRespondedAt
                         ? ` · First reply after ${formatAge(item.createdAt, item.firstRespondedAt.getTime())}`
@@ -172,29 +179,20 @@ export function EnquiryList({
                   </div>
                   <div className="flex items-center gap-2">
                     {isNew && item.createdAt ? (
-                      <span className="text-xs font-semibold text-amber-800 dark:text-amber-300">
-                        Waiting {formatAge(item.createdAt, now)}
-                      </span>
+                      <AgeChip
+                        label={`Waiting ${formatAge(item.createdAt, now)}`}
+                        tone={now - item.createdAt.getTime() > REPLY_TARGET_MS ? "late" : "soon"}
+                      />
                     ) : null}
                     {/* In pipeline mode the Stage control below names the stage; only New keeps its badge. */}
                     {stages === "simple" || isNew ? (
-                    <span
-                      className={`rounded-full border px-2.5 py-1 text-xs font-bold uppercase tracking-[0.14em] ${
-                        isNew
-                          ? "border-emerald-400/30 bg-emerald-500/10 text-emerald-800 dark:border-emerald-500/40 dark:bg-emerald-500/20 dark:text-emerald-300"
-                          : closed
-                            ? "border-slate-900/20 bg-slate-900/5 text-slate-800 dark:border-white/25 dark:bg-white/10 dark:text-slate-100"
-                            : "border-slate-300 bg-white/60 text-slate-600 dark:border-white/15 dark:bg-white/5 dark:text-slate-300"
-                      }`}
-                    >
-                      {STAGE_LABEL[stage]}
-                    </span>
+                      <AgeChip label={STAGE_LABEL[stage]} tone={closed ? "neutral" : isNew ? "neutral" : "good"} />
                     ) : null}
                   </div>
                 </div>
 
                 {item.notes ? (
-                  <p className="mt-2 whitespace-pre-line text-sm text-slate-800 dark:text-slate-200">{item.notes}</p>
+                  <p className="mt-2.5 whitespace-pre-line rounded-xl border border-[var(--dash-line)] bg-[var(--dash-card)] px-3.5 py-2.5 text-sm text-slate-800 dark:text-slate-200">{item.notes}</p>
                 ) : null}
 
                 <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
@@ -234,11 +232,12 @@ export function EnquiryList({
                       type="button"
                       disabled={savingId === item.id}
                       onClick={() => void toggle(item)}
-                      className="pill max-lg:min-h-11 ml-auto border border-slate-300 bg-white/80 font-semibold text-slate-800 hover:bg-white disabled:opacity-60 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
+                      className={`ml-auto ${secondaryButtonClass}`}
                     >
                       {savingId === item.id ? "Saving…" : isNew ? "Mark as contacted" : "Mark as new"}
                     </button>
                   )}
+                </div>
                 </div>
               </li>
             );

@@ -9,12 +9,15 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/petrol-inner | Petrol polish of agent/agency/admin inner pages (dashboard-ui.tsx, src/app/{agent,agency,admin}/**) | 2026-11-16 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-16 — `DESKTOP-1R37EBU/petrol-inner` merged. Console inner pages in the Petrol style. New in `dashboard-ui.tsx`: `SummaryStrip`,
+  `Initials`, `ListingThumb`, `listingStatusTone`, `tableFrameClass/HeadClass/RowClass`, `searchInputClass`; `QUEUE_TARGET_MS` in dashboard-math;
+  `charts/price-strip.tsx`. `primaryButtonClass` and `FilterChips` changed look (also on the seller portal).
 
 - 2026-11-13 — `DESKTOP-1R37EBU/site-dark-calm` merged. **Dark mode is calmer site-wide**: `html.dark` in globals.css re-points
   `--background`, `surface-ink/-panel` (now read through `--surface-*`) and the whole `emerald-*` scale to charcoal + muted sea-glass;

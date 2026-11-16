@@ -9,6 +9,8 @@ import { asStage, INQUIRY_STAGES, type InquiryStage, type SellerInquiry } from "
 export const DAY_MS = 24 * 60 * 60 * 1000;
 /** First reply within this counts as "on target" (owner decision 2026-11-12). */
 export const REPLY_TARGET_MS = 60 * 60 * 1000;
+/** Admin queues (moderation, agents, package requests): handled within a day. */
+export const QUEUE_TARGET_MS = 24 * 60 * 60 * 1000;
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 

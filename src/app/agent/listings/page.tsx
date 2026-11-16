@@ -5,13 +5,26 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useId, useState } from "react";
 
 import CustomSelect from "@/components/custom-select";
-import { linkClass, PageHeading, primaryButtonClass } from "@/components/dashboard-ui";
+import { Meter } from "@/components/charts/meter";
+import {
+  AgeChip,
+  linkClass,
+  ListingThumb,
+  listingStatusTone,
+  PageHeading,
+  primaryButtonClass,
+  searchInputClass,
+  SummaryStrip,
+  tableFrameClass,
+  tableHeadClass,
+  tableRowClass,
+} from "@/components/dashboard-ui";
 import { useOwnerInquiries } from "@/components/enquiry-inbox";
 import { SearchIcon } from "@/components/icons";
 import { formatDate } from "@/lib/formatters";
 import { lastDays } from "@/lib/listing-stats";
 import { useOwnerStats, viewsByListing } from "@/lib/listing-stats-client";
-import { PUBLIC_LISTING_STATUSES } from "@/lib/types/domain";
+import { ACTIVE_CATALOGUE_STATUSES, PUBLIC_LISTING_STATUSES } from "@/lib/types/domain";
 import { useAccountUid, useOwnerListings } from "@/lib/use-owner-listings";
 
 // Pattern 1 — List / Index (docs/dashboards/PLAN.md, Phase A). Every listing
@@ -41,6 +54,11 @@ function ListingsIndex() {
 
   const enquiryCount = (id: string) => inbox.items.filter((lead) => lead.propertyId === id).length;
   const filtered = status !== ALL || term !== "";
+  const listingsReady = listings.state === "ready";
+  const live = listings.items.filter((item) => (ACTIVE_CATALOGUE_STATUSES as readonly string[]).includes(item.status));
+  const needsChanges = listings.items.filter((item) => item.status === "Needs changes");
+  const totalViews = views ? [...views.values()].reduce((a, b) => a + b, 0) : 0;
+  const maxViews = views ? Math.max(1, ...views.values()) : 1;
 
   return (
     <>
@@ -52,6 +70,21 @@ function ListingsIndex() {
             New listing
           </Link>
         }
+      />
+
+      <SummaryStrip
+        label="Listings at a glance"
+        items={[
+          { label: "Live", value: listingsReady ? String(live.length) : null, note: "Published or under offer" },
+          {
+            label: "Needs you",
+            value: listingsReady ? String(needsChanges.length) : null,
+            note: needsChanges.length ? "Sent back by a moderator" : "Nothing sent back",
+            tone: needsChanges.length ? "late" : undefined,
+          },
+          { label: "Views, 30 days", value: views ? String(totalViews) : null, note: "All your listings" },
+          { label: "Enquiries", value: inbox.state === "ready" ? String(inbox.items.length) : null, note: "All time" },
+        ]}
       />
 
       <div className="mb-4 flex flex-wrap items-end gap-3">
@@ -69,7 +102,7 @@ function ListingsIndex() {
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder="Title or suburb"
-              className="h-11 w-full rounded-xl border border-slate-300 bg-white pl-9 pr-3 text-sm text-slate-900 placeholder:text-slate-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 dark:border-white/15 dark:bg-surface-ink/80 dark:text-white dark:placeholder:text-slate-400"
+              className={searchInputClass}
             />
           </div>
         </div>
@@ -83,45 +116,60 @@ function ListingsIndex() {
       </div>
 
       {/* The table frame stays on screen while loading, empty or failed. */}
-      <div className="overflow-hidden rounded-card border border-slate-200 bg-white/70 shadow-sm dark:border-white/10 dark:bg-surface-panel/80">
+      <div className={tableFrameClass}>
         <div className="overflow-x-auto">
           {/* Messages sit below the scrolling table, so they never scroll off a phone. */}
-          <table className="w-full min-w-[720px] text-left text-sm">
-            <thead className="border-b border-slate-200 bg-slate-50/80 text-xs uppercase tracking-wider text-slate-600 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-400">
+          <table className="w-full min-w-[760px] text-left text-sm">
+            <thead className={tableHeadClass}>
               <tr>
-                <th scope="col" className="px-4 py-3 font-bold">Listing</th>
-                <th scope="col" className="px-4 py-3 font-bold">Status</th>
-                <th scope="col" className="px-4 py-3 font-bold">Price</th>
-                <th scope="col" className="px-4 py-3 text-right font-bold">Views, 30 d</th>
-                <th scope="col" className="px-4 py-3 text-right font-bold">Enquiries</th>
-                <th scope="col" className="px-4 py-3 font-bold">Filed</th>
+                <th scope="col" className="px-4 py-3">Listing</th>
+                <th scope="col" className="px-4 py-3">Status</th>
+                <th scope="col" className="px-4 py-3">Price</th>
+                <th scope="col" className="px-4 py-3">Views, 30 d</th>
+                <th scope="col" className="px-4 py-3 text-right">Enquiries</th>
+                <th scope="col" className="px-4 py-3">Filed</th>
                 <th scope="col" className="px-4 py-3"><span className="sr-only">Open</span></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200 text-slate-700 dark:divide-white/10 dark:text-slate-300">
+            <tbody className="text-slate-700 dark:text-slate-300">
               {listings.state === "ready" &&
                 rows.map((item) => {
                   const isPublic = (PUBLIC_LISTING_STATUSES as readonly string[]).includes(item.status);
+                  const viewCount = views ? views.get(item.id) ?? 0 : null;
                   return (
-                    <tr key={item.id} className="align-top">
+                    <tr key={item.id} className={`${tableRowClass} align-middle transition-colors hover:bg-[var(--dash-card-2)]`}>
                       <td className="px-4 py-3">
                         {/* The title opens the listing's own page (Overview, Performance, Enquiries). */}
-                        <Link href={`/agent/listings/${item.id}`} className="font-semibold text-slate-900 underline decoration-slate-300 underline-offset-4 hover:decoration-slate-900 dark:text-white dark:decoration-white/30 dark:hover:decoration-white">
-                          {item.title}
-                        </Link>
-                        <p className="text-xs text-slate-600 dark:text-slate-400">{item.location}</p>
-                        {item.status === "Needs changes" && item.moderationFeedback ? (
-                          <p className="mt-1 text-xs text-amber-800 dark:text-amber-300">Moderator: &ldquo;{item.moderationFeedback}&rdquo;</p>
-                        ) : null}
+                        <div className="flex min-w-[240px] items-center gap-3">
+                          <ListingThumb src={item.image} className="h-12 w-[4.5rem]" />
+                          <div className="min-w-0">
+                            <Link href={`/agent/listings/${item.id}`} className="font-semibold text-slate-900 underline decoration-[var(--dash-line-2)] underline-offset-4 hover:decoration-[var(--dash-d1)] dark:text-white">
+                              {item.title}
+                            </Link>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">{item.location}</p>
+                            {item.status === "Needs changes" && item.moderationFeedback ? (
+                              <p className="mt-1 text-xs text-[var(--dash-down)]">Moderator: &ldquo;{item.moderationFeedback}&rdquo;</p>
+                            ) : null}
+                          </div>
+                        </div>
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap">
-                        <span className="rounded-full border border-slate-200 bg-white/70 px-2.5 py-1 text-xs font-bold uppercase tracking-[0.1em] text-slate-700 dark:border-white/10 dark:bg-surface-ink/80 dark:text-slate-300">
-                          {item.status}
-                        </span>
+                        <AgeChip label={item.status} tone={listingStatusTone(item.status)} />
                       </td>
-                      <td className="px-4 py-3 whitespace-nowrap font-semibold text-slate-900 dark:text-white">{item.price}</td>
-                      <td className="px-4 py-3 text-right tabular-nums">{views ? views.get(item.id) ?? 0 : "–"}</td>
-                      <td className="px-4 py-3 text-right tabular-nums">{inbox.state === "ready" ? enquiryCount(item.id) : "–"}</td>
+                      <td className="px-4 py-3 whitespace-nowrap font-semibold tabular-nums text-slate-900 dark:text-white">{item.price}</td>
+                      <td className="px-4 py-3">
+                        {viewCount === null ? (
+                          "–"
+                        ) : (
+                          <span className="flex min-w-[130px] items-center gap-2.5">
+                            <span className="w-20">
+                              <Meter value={viewCount} max={maxViews} height={6} />
+                            </span>
+                            <b className="tabular-nums text-slate-900 dark:text-white">{viewCount}</b>
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 text-right font-semibold tabular-nums text-slate-900 dark:text-white">{inbox.state === "ready" ? enquiryCount(item.id) : "–"}</td>
                       <td className="px-4 py-3 whitespace-nowrap">{item.createdAt ? formatDate(item.createdAt) : "–"}</td>
                       <td className="px-4 py-3 text-right whitespace-nowrap">
                         {/* Only public listings have a public page; there is no edit screen yet. */}
