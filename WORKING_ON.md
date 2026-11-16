@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/petrol-inner | Petrol polish of agent/agency/admin inner pages (dashboard-ui.tsx, src/app/{agent,agency,admin}/**) | 2026-11-16 |
 
 ## Recently merged
 
