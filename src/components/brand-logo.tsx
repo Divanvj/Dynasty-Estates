@@ -15,6 +15,13 @@ interface BrandLogoProps {
    */
   compact?: boolean;
   /**
+   * The phone app bar's centred brand (owner decision, 18 Nov): a 44px mark,
+   * +22% on `compact`, and the wordmark at every width. There is room since
+   * the bar's Account button moved to the tab bar; 44px still leaves 6px
+   * above and below inside the 56px bar.
+   */
+  appBar?: boolean;
+  /**
    * Below `lg` the brand lives once, in `MobileAppBar`. Every other call site
    * sits inside a page header that the app bar now duplicates, so they hide
    * themselves on a phone rather than stacking a second logo under the first.
@@ -36,6 +43,7 @@ export default function BrandLogo({
   category = "Dynasty",
   markOnly = false,
   compact = false,
+  appBar = false,
   showOnMobile = false,
   onDark = false,
   className = "",
@@ -66,7 +74,7 @@ export default function BrandLogo({
       */}
       <div
         className={`relative flex shrink-0 items-center justify-center overflow-hidden shadow-md border border-neutral-800 dark:border-neutral-700/80 bg-black group-hover:scale-105 group-hover:border-emerald-500/50 group-hover:shadow-[0_0_16px_rgba(16,185,129,0.3)] transition-all ${
-          compact ? "h-9 w-9 rounded-xl p-0.5" : "h-12 w-12 rounded-2xl p-1"
+          appBar ? "h-11 w-11 rounded-xl p-0.5" : compact ? "h-9 w-9 rounded-xl p-0.5" : "h-12 w-12 rounded-2xl p-1"
         }`}
       >
         <Image
@@ -80,7 +88,7 @@ export default function BrandLogo({
       </div>
 
       {!markOnly && (
-        <span className="hidden min-[400px]:block">
+        <span className={appBar ? "block" : "hidden min-[400px]:block"}>
           <span
             className={`block text-xs font-bold uppercase leading-tight tracking-[0.24em] ${
               onDark ? "text-emerald-400/80" : "text-slate-600 dark:text-emerald-400/80"

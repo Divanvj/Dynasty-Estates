@@ -31,7 +31,19 @@ const ROLE_BADGES: Record<UserRole, { label: string; icon: typeof UserIcon; tone
 /** Dispatched on `window` by the phone tab bar's Account tab. */
 export const OPEN_ACCOUNT_MENU_EVENT = "dynasty:open-account-menu";
 
-export default function AccountActions({ showOnMobile = false }: { showOnMobile?: boolean } = {}) {
+export default function AccountActions({
+  showOnMobile = false,
+  hideTrigger = false,
+}: {
+  showOnMobile?: boolean;
+  /**
+   * Phone app bar (owner decision, 18 Nov): Account lives once, in the bottom
+   * tab bar. The menu stays mounted here, opened by the tab's event, but the
+   * top trigger is not drawn; its 44px box stays as the anchor for the panel
+   * and balances the menu button so the logo sits in the true centre.
+   */
+  hideTrigger?: boolean;
+} = {}) {
   const { user: firebaseUser, demoUser, profile, signOut } = useAuth();
   const { role: activeRole } = useUserRole();
   const developerAccount = useIsDeveloperAccount();
@@ -59,8 +71,13 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
       : [];
   }
 
+  /** The control that opened the menu: the bottom Account tab when the top trigger is hidden. */
+  function focusTarget(): HTMLElement | null {
+    return hideTrigger ? document.querySelector<HTMLElement>("[data-account-tab]") : triggerRef.current;
+  }
+
   function closeAndRestoreFocus() {
-    const trigger = triggerRef.current;
+    const trigger = focusTarget();
     setIsOpen(false);
     trigger?.focus();
   }
@@ -143,7 +160,7 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
         // Hand focus back to the control that opened the menu; it was being left
         // wherever it happened to be, which drops a keyboard user at the top of
         // the document.
-        const trigger = triggerRef.current;
+        const trigger = hideTrigger ? document.querySelector<HTMLElement>("[data-account-tab]") : triggerRef.current;
         setIsOpen(false);
         trigger?.focus();
       }
@@ -154,7 +171,7 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen, showSupportModal]);
+  }, [isOpen, showSupportModal, hideTrigger]);
 
   /*
     The phone tab bar's Account tab opens this menu (MobileNav dispatches the
@@ -216,7 +233,7 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
     <div
       className={`relative z-50 items-center gap-2 sm:gap-3 shrink-0 ${
         showOnMobile ? "flex" : "hidden lg:flex"
-      }`}
+      } ${hideTrigger ? "h-11 w-11" : ""}`}
     >
       {/*
         The theme switch used to sit here, outside the menu. At `lg` — the width
@@ -228,13 +245,14 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
       */}
 
       {/* 1. Unified Profile Icon Button with Reveal Text Hover Animation */}
-      <div className="relative" ref={menuRef}>
+      <div className={`relative ${hideTrigger ? "h-full w-full" : ""}`} ref={menuRef}>
         {/*
           A disclosure, not a `role="menu"` — the same reasoning as the Sell and
           Tools dropdowns in site-navigation.tsx. A menu role puts screen readers
           into application mode, where these entries stop being announced as the
           links they are.
         */}
+        {!hideTrigger && (
         <button
           ref={triggerRef}
           type="button"
@@ -267,6 +285,7 @@ export default function AccountActions({ showOnMobile = false }: { showOnMobile?
             }`}
           />
         </button>
+        )}
 
         {/* 2. Consolidated Profile Dropdown Menu */}
         {isOpen && (

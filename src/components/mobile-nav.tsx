@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { OPEN_ACCOUNT_MENU_EVENT } from "@/components/account-actions";
+import { useAuth } from "@/components/auth-provider";
 
 import {
   BriefcaseIcon,
@@ -79,6 +80,12 @@ const NAV: Record<UserRole, NavItem[]> = {
 export default function MobileNav() {
   const { role, isMounted } = useUserRole();
   const pathname = usePathname();
+  // The top bar's name pill is gone on phones (18 Nov), so the Account tab
+  // carries the signed-in cue: the account's initial instead of the icon.
+  const { user: firebaseUser, demoUser, profile } = useAuth();
+  const account = firebaseUser || demoUser;
+  const accountName = profile?.displayName || account?.displayName || account?.email?.split("@")[0] || "";
+  const initial = isMounted && account ? accountName.charAt(0).toUpperCase() : "";
 
   // The auth screens are full-bleed and self-contained; a nav bar over them
   // would just be in the way.
@@ -120,11 +127,21 @@ export default function MobileNav() {
                 <button
                   type="button"
                   data-account-tab
+                  aria-label={initial ? `Account, signed in as ${accountName}` : "Account, not signed in"}
                   onClick={() => window.dispatchEvent(new Event(OPEN_ACCOUNT_MENU_EVENT))}
                   className="flex h-full w-full cursor-pointer flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 text-slate-600 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200"
                 >
                   <span className="flex h-7 w-10 items-center justify-center rounded-full">
-                    <Icon className="h-[18px] w-[18px]" />
+                    {initial ? (
+                      <span
+                        aria-hidden="true"
+                        className="flex h-6 w-6 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/10 text-xs font-bold text-emerald-800 dark:text-emerald-300"
+                      >
+                        {initial}
+                      </span>
+                    ) : (
+                      <Icon className="h-[18px] w-[18px]" />
+                    )}
                   </span>
                   <span className="max-w-full truncate text-xs font-semibold leading-none tracking-tight">
                     {item.label}

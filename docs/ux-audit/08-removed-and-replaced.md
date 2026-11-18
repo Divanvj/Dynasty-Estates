@@ -342,3 +342,8 @@ Added, nothing removed.
 - **Developer console → E-mail** (`/console/email`): set-up (provider, sender, alerts address; never the key), test send to yourself or the alerts address, last 50 attempts with sent / skipped / failed and why. Three new switches under Site switches → E-mails. Go-live list: "E-mail sending".
 - **Fixed on the way**: a viewing booked from the show-day banner on a listing didn't carry the listing's owner, so the agent never saw it in their inbox (and would have had no e-mail).
 - **Not done**: weekly seller report, FFC expiry reminders, saved-search alerts (saved searches don't exist yet); an owner can't yet turn off their own enquiry e-mails; no per-sender limit beyond one e-mail per enquiry.
+
+## Phone header (18 Nov)
+
+- Removed: the Account/profile button in the phone top bar (MobileAppBar). Replaced by the bottom tab bar's Account tab, which now shows the signed-in initial.
+- Changed: the phone logo is centred and larger (44px mark, was 36px) and shows the wordmark at every width. Desktop unchanged.

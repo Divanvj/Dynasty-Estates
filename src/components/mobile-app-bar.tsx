@@ -130,9 +130,12 @@ export default function MobileAppBar() {
           <MenuIcon className="h-5 w-5" />
         </button>
 
-        <BrandLogo compact showOnMobile className="min-w-0" />
+        <BrandLogo appBar showOnMobile className="min-w-0" />
 
-        <AccountActions showOnMobile />
+        {/* Account is opened from the tab bar only (owner decision, 18 Nov).
+            The menu still lives here, under the sticky bar; its empty 44px box
+            mirrors the menu button so the logo sits in the true centre. */}
+        <AccountActions showOnMobile hideTrigger />
       </header>
 
       <Sheet open={open} onClose={() => setOpen(false)} side="left" label="Navigation menu">
