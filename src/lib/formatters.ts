@@ -16,6 +16,39 @@ export function formatZAR(val: number | string | null | undefined): string {
   return `R ${formatNumber(val)}`;
 }
 
+/**
+ * The whole rands of a typed amount, ignoring "R", spaces and commas. Only a
+ * point starts cents ("2500000.00"); a comma never does, or deleting a digit
+ * from "R 2,500" would leave "R 2,50" and read as R 2.
+ */
+function priceDigits(raw: string): string {
+  return raw.replace(/\.\d*\D*$/, "").replace(/[^0-9]/g, "").replace(/^0+(?=\d)/, "");
+}
+
+/**
+ * A money field as the person types: "2500000" becomes "R 2,500,000", so
+ * nobody has to type the R or the commas (owner request, 18 Nov). Empty stays
+ * empty so the placeholder shows.
+ */
+export function formatPriceInput(raw: string): string {
+  const digits = priceDigits(raw);
+  return digits ? `R ${formatNumber(digits)}` : "";
+}
+
+/**
+ * A listing price for display. Prices are stored as the text the lister
+ * typed, so the for-sale cards showed "2500000" or "R2 500 000" next to the
+ * seeded "R 4,850,000". Every amount now renders the same way; rentals get
+ * " / month". Text with no digits ("Price on request", "POA") is kept as is.
+ */
+export function formatListingPrice(raw: unknown, listingType?: string): string {
+  const text = typeof raw === "number" ? String(raw) : typeof raw === "string" ? raw.trim() : "";
+  if (!text) return "Price on request";
+  const digits = priceDigits(text);
+  if (!digits || Number(digits) === 0) return text;
+  return `R ${formatNumber(digits)}${listingType === "rent" ? " / month" : ""}`;
+}
+
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 /**

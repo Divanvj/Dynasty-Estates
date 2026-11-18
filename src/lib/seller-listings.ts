@@ -15,6 +15,7 @@ import {
 import { deleteObject, ref } from "firebase/storage";
 
 import { db, isFirebaseConfigured, storage } from "./firebase";
+import { formatListingPrice } from "./formatters";
 import { addPhotoFingerprints, type ListingFloorPlan, type ListingPhoto } from "./photo-intake";
 import type { ListingLifecycleStatus } from "./types/domain";
 import { parseTourUrl } from "./virtual-tour";
@@ -144,7 +145,7 @@ export async function getSellerListings(ownerId: string): Promise<SellerListing[
       id: item.id,
       propertyId: data.propertyId ?? item.id,
       title: data.title ?? "Untitled property",
-      price: data.price ?? "Price on request",
+      price: formatListingPrice(data.price, data.listingType),
       status: (data.status as ListingLifecycleStatus) ?? "Draft",
       views: Number(data.views ?? 0),
       location: data.location ?? "South Africa",

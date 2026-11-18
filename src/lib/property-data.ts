@@ -3,6 +3,7 @@ import { nextSundayShow, showDateLabel } from "./on-show";
 import { parseTourUrl } from "./virtual-tour";
 
 import { db, isFirebaseConfigured } from "./firebase";
+import { formatListingPrice } from "./formatters";
 import { ACTIVE_CATALOGUE_STATUSES, PUBLIC_LISTING_STATUSES } from "./types/domain";
 export * from "./types/domain";
 
@@ -1074,7 +1075,7 @@ export async function getPropertyList(): Promise<PropertyRecord[]> {
         suburb: data.suburb ?? "",
         city: data.city ?? "Pretoria",
         province: data.province ?? "Gauteng",
-        price: data.price ?? "Price on request",
+        price: formatListingPrice(data.price, data.listingType),
         numericPrice: cleanNum,
         type: (data.type as PropertyType) ?? "House",
         listingType: (data.listingType as "sale" | "rent") ?? "sale",

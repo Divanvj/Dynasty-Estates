@@ -1836,3 +1836,17 @@ input[type="range"]::-moz-range-progress {
     content: none !important;
   }
 }
+
+/*
+  No sideways page scroll, anywhere (owner request, 18 Nov).
+  1. A scroll box is the containing block for its positioned children. Without
+     it, an `sr-only` label (position: absolute) inside a wide table was placed
+     against the page, not the box, and escaped it: /agent/listings measured
+     1094px wide on a 375px phone, which also slid the tab bar off screen.
+     In the base layer, so a panel that is `absolute overflow-auto` keeps its
+     `absolute` utility.
+  2. The page itself clips anything else that strays past the edge. `clip`,
+     unlike `hidden`, makes no scroll container, so sticky headers still work.
+*/
+@layer base { .overflow-auto, .overflow-x-auto, .overflow-x-scroll, .overflow-scroll { position: relative; } }
+html, body { overflow-x: clip; }

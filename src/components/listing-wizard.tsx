@@ -27,6 +27,7 @@ import {
   type ListingFormData,
   type ListingLifecycleStatus,
 } from "@/lib/seller-listings";
+import { formatListingPrice, formatPriceInput } from "@/lib/formatters";
 import { HEALTH_FIX, type HealthKey } from "@/lib/listing-insights";
 import { PUBLIC_LISTING_STATUSES } from "@/lib/types/domain";
 import type { ListingPhoto } from "@/lib/photo-intake";
@@ -674,9 +675,10 @@ export default function ListingWizard({ edit }: { edit?: ListingWizardEdit }) {
                     </label>
                     <input
                       id={priceId}
-                      value={formData.price}
-                      onChange={(e) => updateField("price", e.target.value)}
-                      placeholder="e.g. R 28,000 / month"
+                      value={formatPriceInput(formData.price)}
+                      inputMode="numeric"
+                      onChange={(e) => updateField("price", formatPriceInput(e.target.value))}
+                      placeholder="e.g. R 28,000"
                       className={inputClass}
                     />
                   </div>
@@ -686,9 +688,10 @@ export default function ListingWizard({ edit }: { edit?: ListingWizardEdit }) {
                     </label>
                     <input
                       id={depositId}
-                      value={formData.depositRequired ?? ""}
-                      onChange={(e) => updateField("depositRequired", e.target.value)}
-                      placeholder="e.g. R 28,000 (1 month)"
+                      value={formatPriceInput(formData.depositRequired ?? "")}
+                      inputMode="numeric"
+                      onChange={(e) => updateField("depositRequired", formatPriceInput(e.target.value))}
+                      placeholder="e.g. R 28,000"
                       className={inputClass}
                     />
                   </div>
@@ -736,8 +739,9 @@ export default function ListingWizard({ edit }: { edit?: ListingWizardEdit }) {
                     </label>
                     <input
                       id={priceId}
-                      value={formData.price}
-                      onChange={(e) => updateField("price", e.target.value)}
+                      value={formatPriceInput(formData.price)}
+                      inputMode="numeric"
+                      onChange={(e) => updateField("price", formatPriceInput(e.target.value))}
                       placeholder="e.g. R 4,850,000"
                       className={inputClass}
                     />
@@ -748,8 +752,9 @@ export default function ListingWizard({ edit }: { edit?: ListingWizardEdit }) {
                     </label>
                     <input
                       id={levyId}
-                      value={formData.monthlyLevy ?? ""}
-                      onChange={(e) => updateField("monthlyLevy", e.target.value)}
+                      value={formatPriceInput(formData.monthlyLevy ?? "")}
+                      inputMode="numeric"
+                      onChange={(e) => updateField("monthlyLevy", formatPriceInput(e.target.value))}
                       placeholder="e.g. R 2,400"
                       className={inputClass}
                     />
@@ -760,8 +765,9 @@ export default function ListingWizard({ edit }: { edit?: ListingWizardEdit }) {
                     </label>
                     <input
                       id={ratesId}
-                      value={formData.ratesAndTaxes ?? ""}
-                      onChange={(e) => updateField("ratesAndTaxes", e.target.value)}
+                      value={formatPriceInput(formData.ratesAndTaxes ?? "")}
+                      inputMode="numeric"
+                      onChange={(e) => updateField("ratesAndTaxes", formatPriceInput(e.target.value))}
                       placeholder="e.g. R 1,950"
                       className={inputClass}
                     />
@@ -895,11 +901,7 @@ export default function ListingWizard({ edit }: { edit?: ListingWizardEdit }) {
                         )}
                       </div>
                       <span className="text-lg font-bold text-slate-900 dark:text-white">
-                        {formData.price
-                          ? (formData.listingType === "rent" && !formData.price.includes("/")
-                              ? `${formData.price} / mo`
-                              : formData.price)
-                          : "Price on request"}
+                        {formatListingPrice(formData.price, formData.listingType)}
                       </span>
                     </div>
                     <h3 className="mt-2 text-base font-semibold text-slate-900 dark:text-white">{formData.title || "Untitled Property"}</h3>
