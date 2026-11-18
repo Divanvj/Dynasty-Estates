@@ -9,12 +9,17 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/email-features | e-mail opt-out, saved searches + alerts, weekly seller report, photo clean-up, checklist links (mail*, notify, cron, seller-listings, listing-wizard, listing-detail, search, saved, firestore.rules) | 2026-11-18 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-18 — `DESKTOP-1R37EBU/email-features` merged. **Saved searches + alerts, weekly reports, e-mail opt-out.** Search matching now
+  lives in `lib/search-criteria.ts` (`criteriaFromParams` / `matchesCriteria`), used by /search and the alerts — change filters there.
+  New server-only collections `saved_searches`, `email_prefs` (Admin SDK via `/api/saved-searches`, `/api/email/preferences`; no rules).
+  `sendMail({ optOut: { uid, pref } })` skips e-mail a person turned off and adds List-Unsubscribe. Nightly cron also runs alerts,
+  Monday reports and `cleanUpListingFiles()`. Wizard takes `edit.fix` (checklist links, `#fix-<key>` ids). New page `/alerts`.
 
 - 2026-11-18 — `DESKTOP-1R37EBU/email` merged. **E-mail sending** via `sendMail()` in `lib/server/mail.ts` (server only; provider from
   BREVO_API_KEY or RESEND_API_KEY; logs to `mail_log`; never throws). Templates in `lib/server/mail-templates.ts` (escape user text).
