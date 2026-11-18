@@ -361,3 +361,12 @@ Added, nothing removed.
 - **Added – photo clean-up**: photos and a floor plan removed in an edit are deleted from storage when it is saved; each night, listing files no listing uses and older than 30 days are deleted, and photo fingerprints for removed photos are dropped (so the duplicate check stops refusing a photo that was taken off).
 - **Console**: two new switches under Site switches → E-mails (weekly reports, saved-search alerts); `/console/email` gains "Send me my weekly report" and "Run my saved-search alerts" (own account only).
 - **Not done**: price-drop alerts; FFC expiry reminders; signing in from `/alerts` doesn't return there afterwards (the login page always goes home); a per-search "stop" link (the e-mail link turns off all saved-search alerts; each search has its own switch on `/alerts`).
+
+## Sold prices recorded on Dynasty (19 Nov)
+
+- **Changed**: the public listing's "Sold by Dynasty Estates" badge now says **Sold** (a private seller's home isn't sold by Dynasty), and the concluded box says "Sold on <date> for R …" — or "· price not disclosed" — instead of "This mandate has been successfully sold".
+- **Changed**: `/agent/market` no longer says sold prices aren't included; its description and source line now cover recorded sales.
+- **Added – Mark as sold / Mark as rented** on a live listing's page in the agent and seller portals: price, date the offer was accepted (or lease signed), and "The seller agreed to show the price on the listing" (off by default). Once recorded: the price, % of asking, days on the market, **Correct the details** and **Not sold after all** (named confirmation; the listing goes back live).
+- **Added – Recorded sales** on `/agent/market` (same filters): median sold price, sold vs asking, days to sell, per m², and the sales whose price may be shown. Figures need 3 or more sales.
+- **Added – Recent sales in <city>** in the printable seller report.
+- **Not done**: Deeds Office / Lightstone data (paid feed, not bought); "Under offer" still can't be set from the portals; a home's earlier sale isn't shown when it is listed again (each listing is its own record); sold prices on the public area pages (`/for-sale/...`, `/insights`).

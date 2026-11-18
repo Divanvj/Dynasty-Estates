@@ -210,6 +210,7 @@ export const KNOWN_COLLECTIONS = [
   "agency_members",
   "agency_invites",
   "saved_searches",
+  "sales",
   "email_prefs",
   "app_errors",
   "app_error_groups",

@@ -56,6 +56,11 @@ export type PropertyRecord = {
   parking: number;
   rating: number;
   status: string;
+  /**
+   * Set when the listing was marked Sold or Rented on Dynasty (lib/sales.ts).
+   * `price` only when the seller agreed to show it.
+   */
+  sale?: { soldOn: string; price?: number };
   gallery: string[];
   features: string[];
   onShow?: {
@@ -1092,6 +1097,10 @@ export async function getPropertyList(): Promise<PropertyRecord[]> {
         parking: Number(data.parking ?? 2),
         rating: Number(data.rating ?? 4.8),
         status: data.status ?? "Published",
+        sale:
+          data.sale && typeof data.sale.soldOn === "string"
+            ? { soldOn: data.sale.soldOn, ...(typeof data.sale.price === "number" ? { price: data.sale.price } : {}) }
+            : undefined,
         gallery: Array.isArray(data.gallery) && data.gallery.length > 0
           ? data.gallery
           : [data.image ?? fallbackProperties[0].image],

@@ -35,7 +35,7 @@ import {
   SofaIcon,
   WhatsAppIcon,
 } from "@/components/icons";
-import { formatNumber } from "@/lib/formatters";
+import { formatDate, formatNumber } from "@/lib/formatters";
 import { getListingContact } from "@/lib/listing-contact";
 import { getAgentByIdOrSlug } from "@/lib/agents-data";
 import { getPropertyBySlug } from "@/lib/property-data";
@@ -223,7 +223,7 @@ export default async function PropertyPage({
                         to get here, and the page title and price say it again. */}
                     {property.status === "Sold" && (
                       <span className="rounded-full border border-red-400 bg-red-950/90 px-3 py-1 text-xs uppercase tracking-widest font-extrabold text-red-200 backdrop-blur-md">
-                        Sold by Dynasty Estates
+                        Sold
                       </span>
                     )}
                     {property.status === "Rented" && (
@@ -288,7 +288,15 @@ export default async function PropertyPage({
                   Listing Concluded · Historical Record Retained
                 </span>
                 <h2 className="text-sm sm:text-base font-bold text-slate-950 mt-1.5 dark:text-white">
-                  This mandate has been successfully {property.status.toLowerCase()}
+                  {/* Recorded by the listing's agent or seller (lib/sales.ts); the
+                      price shows only when the seller agreed. */}
+                  {property.sale
+                    ? `${property.status} on ${formatDate(`${property.sale.soldOn}T12:00:00Z`)}${
+                        property.sale.price
+                          ? ` for R ${formatNumber(property.sale.price)}${property.listingType === "rent" ? " a month" : ""}`
+                          : " · price not disclosed"
+                      }`
+                    : `This home has been ${property.status.toLowerCase()}`}
                 </h2>
                 <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
                   Explore other active mandates and property market trends in {property.suburb || property.city || "this region"}.

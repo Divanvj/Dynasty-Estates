@@ -5,7 +5,7 @@ import { auth } from "./firebase";
  * /api/saved-searches) with their ID token, and turns a refusal into an Error
  * carrying the server's message.
  */
-export async function accountApi<T>(path: string, init: { method?: "GET" | "POST" | "PATCH" | "DELETE"; body?: unknown } = {}): Promise<T> {
+export async function accountApi<T>(path: string, init: { method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE"; body?: unknown } = {}): Promise<T> {
   const user = auth?.currentUser;
   if (!user) throw new Error("Sign in first.");
   const token = await user.getIdToken();

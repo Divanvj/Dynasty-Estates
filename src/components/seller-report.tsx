@@ -9,6 +9,7 @@ import { emptyBoxClass, errorBoxClass, linkClass } from "@/components/dashboard-
 import { useOwnerInquiries } from "@/components/enquiry-inbox";
 import { ArrowLeftIcon } from "@/components/icons";
 import PrintButton from "@/components/print-button";
+import { RecentSales } from "@/components/recent-sales";
 import Sparkline from "@/components/sparkline";
 import { formatDate, formatNumber } from "@/lib/formatters";
 import { compareWithArea, daysOnMarket, getLiveComparables, type AreaComparison } from "@/lib/listing-insights";
@@ -207,6 +208,20 @@ export default function SellerReport({ listingId, backHref }: { listingId: strin
               </p>
             )}
           </div>
+        </section>
+
+        {/* Sold prices recorded on Dynasty in the same city, same home type. */}
+        <section className="mt-6 break-inside-avoid" aria-labelledby="report-sales-heading">
+          <h2 id="report-sales-heading" className="mb-2 text-base font-semibold">
+            {listing.listingType === "rent" ? "Recent rentals" : "Recent sales"} in {listing.city || "the area"}
+          </h2>
+          <RecentSales
+            kind={listing.listingType === "rent" ? "rental" : "sale"}
+            area={listing.city ?? ""}
+            type={listing.type ?? ""}
+            areaLabel={listing.city || "all areas"}
+            compact
+          />
         </section>
 
         <section className="mt-6" aria-labelledby={`${noteId}-h`}>

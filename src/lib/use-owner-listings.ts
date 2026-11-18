@@ -22,6 +22,8 @@ export function useAccountUid(): string | null | undefined {
 export function useOwnerListings(uid: string | null | undefined) {
   // Tagged with the uid it was loaded for, so a role switch never shows stale rows.
   const [loaded, setLoaded] = useState<{ uid: string; items: SellerListing[]; failed: boolean } | null>(null);
+  // Bumped by reload() after the page changes a listing (e.g. marks it sold).
+  const [version, setVersion] = useState(0);
 
   useEffect(() => {
     if (!uid) return;
@@ -38,9 +40,10 @@ export function useOwnerListings(uid: string | null | undefined) {
     return () => {
       cancelled = true;
     };
-  }, [uid]);
+  }, [uid, version]);
 
   const current = uid && loaded?.uid === uid ? loaded : null;
   const state: LoadState = uid === null ? "ready" : !current ? "loading" : current.failed ? "error" : "ready";
-  return { items: current?.items ?? [], state };
+  // Keeps the rows on screen while reloading, so the page doesn't flash "Loading".
+  return { items: current?.items ?? [], state, reload: () => setVersion((v) => v + 1) };
 }

@@ -187,7 +187,10 @@ the principal's own view and needs the agency schema, so it follows once the ind
 - E-mail / SMS / WhatsApp sending (weekly seller report, new-enquiry alerts, FFC reminders) — needs a provider and
   a scheduler (Vercel Cron runs nightly since 2026-11-12) and an e-mail provider (owner decision).
 - Listing photos: Storage is live since 2026-11-12 (Blaze), so listings can be submitted.
-- Sold-price data (Lightstone / Deeds) — paid feed.
+- Sold-price data from Lightstone / Deeds — paid feed, still not bought. Since 2026-11-19 sales are **recorded on Dynasty**
+  instead (owner decision): the agent or seller marks a listing Sold/Rented with price and date (`sales/{listingId}`,
+  server only); the price is public only with the seller's agreement; area figures need 3+ sales. A feed can later write
+  the same records with another `source`.
 - Online payment (pricing phase 4).
 
 ## Open decisions for the owner

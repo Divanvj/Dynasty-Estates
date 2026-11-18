@@ -17,6 +17,7 @@ import {
   tableRowClass,
 } from "@/components/dashboard-ui";
 import PrintButton from "@/components/print-button";
+import { RecentSales } from "@/components/recent-sales";
 import { formatDate, formatNumber } from "@/lib/formatters";
 import { getLiveComparables, marketSnapshot, MIN_COMPARABLES, type Comparable } from "@/lib/listing-insights";
 
@@ -78,7 +79,7 @@ export default function MarketSnapshotPage() {
     <>
       <PageHeading
         title="Price snapshot"
-        description="Asking prices of live Dynasty listings for an area and home type, to take to a listing appointment. Asking prices only: not sale prices and not a valuation."
+        description="Asking prices of live Dynasty listings and the prices recorded when homes sold, for an area and home type, to take to a listing appointment. Not a valuation."
         action={<PrintButton label="Print or save as PDF" title="Print this price snapshot or save it as a PDF" />}
       />
 
@@ -187,10 +188,23 @@ export default function MarketSnapshotPage() {
             </div>
           </section>
           <p className="mt-4 text-xs text-slate-600 dark:text-slate-400">
-            Source: listings published on Dynasty Estates, {formatDate(now)}. Asking prices only — sold prices (Deeds Office, Lightstone) are not included.
+            Source: listings published on Dynasty Estates, {formatDate(now)}. Asking prices of live listings; prices recorded when homes sold are below.
           </p>
         </>
       )}
+
+      {/* Sold prices recorded on Dynasty (lib/sales.ts), same filters. */}
+      <section aria-labelledby="sold-heading" className="mt-8">
+        <h2 id="sold-heading" className="mb-3 text-xl font-semibold text-slate-900 dark:text-white">
+          {listingType === "rent" ? "Recorded rentals" : "Recorded sales"}
+        </h2>
+        <RecentSales
+          kind={listingType === "rent" ? "rental" : "sale"}
+          area={area === ANY ? "" : area.slice(2)}
+          type={type === ANY ? "" : type}
+          areaLabel={areaLabel}
+        />
+      </section>
     </>
   );
 }
