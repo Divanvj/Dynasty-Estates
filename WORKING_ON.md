@@ -9,12 +9,15 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/sold-prices | sold prices: mark sold/rented, `sales` collection, property page, /agent/market, seller report (listing-detail, property-data, property/[slug]) | 2026-11-19 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-19 — `DESKTOP-1R37EBU/sold-prices` merged. **Sold prices recorded on Dynasty.** New server-only collection `sales/{listingId}`
+  (via `/api/listings/[id]/sale`, owner or admin); listings gain `sale: { soldOn, price? }` (price only if the seller agreed) — read it as
+  `PropertyRecord.sale`. Area figures: `/api/market/sales` + `<RecentSales>`. `useOwnerListings()` now returns `reload()`. No rules change.
 
 - 2026-11-18 — `DESKTOP-1R37EBU/email-features` merged. **Saved searches + alerts, weekly reports, e-mail opt-out.** Search matching now
   lives in `lib/search-criteria.ts` (`criteriaFromParams` / `matchesCriteria`), used by /search and the alerts — change filters there.
