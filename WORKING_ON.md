@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/listing-edit | Edit a listing after filing: listing wizard (seller/listings/new → shared component), new /seller/listings/[id]/edit, seller-listings.ts update fn, Edit links in seller portal, agent listings, listing-detail | 2026-11-18 |
 
 ## Recently merged
 
