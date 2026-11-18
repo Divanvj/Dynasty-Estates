@@ -8,7 +8,7 @@ import { EnquiryList, useOwnerInquiries } from "@/components/enquiry-inbox";
 import RoleGuard from "@/components/role-guard";
 import { auth } from "@/lib/firebase";
 import { ACTIVE_CATALOGUE_STATUSES, PUBLIC_LISTING_STATUSES } from "@/lib/types/domain";
-import { getSellerListings, type SellerListing } from "@/lib/seller-listings";
+import { CLOSED_LISTING_STATUSES, getSellerListings, type SellerListing } from "@/lib/seller-listings";
 import { lastDays, sumStats } from "@/lib/listing-stats";
 import { useOwnerStats, viewsByListing } from "@/lib/listing-stats-client";
 
@@ -178,6 +178,14 @@ export default function SellerPortal() {
                       >
                         Performance<span className="sr-only"> of {item.title}</span>
                       </Link>
+                      {!CLOSED_LISTING_STATUSES.includes(item.status) && (
+                        <Link
+                          href={`/seller/listings/${item.id}/edit?from=portal`}
+                          className="text-sm font-semibold text-emerald-800 underline-offset-2 hover:underline dark:text-emerald-300"
+                        >
+                          Edit<span className="sr-only"> {item.title}</span>
+                        </Link>
+                      )}
                       {isPublic && (
                         <Link
                           href={`/property/${item.id}`}

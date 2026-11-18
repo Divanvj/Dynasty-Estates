@@ -320,3 +320,14 @@ Replaced, nothing removed. Every figure still comes from stored data.
 - **Moderation**: queue rows with photo thumbnails and age chips; selected row gets a teal rail; no-photo box → a short Petrol panel; quality as a bar.
 - **Support / Agents**: same row pattern as the inbox; package requests as a champagne chip. **Audit trail**: list → timeline. **Packages**: solid cards.
 - Not touched: the developer console. Still open: `lib/moderation.ts` keeps made-up sample listings used only when Firebase is not configured (older code).
+
+## Listing edit (18 Nov)
+
+Added, nothing removed. The seller portal's "Manage" button (removed earlier because no edit screen existed) now has a real replacement.
+
+- **New `/seller/listings/[id]/edit`**: the six-step listing wizard opened on an existing listing, pre-filled (photos, floor plan, show day, tour, suburb). Save from any step. One editor for sellers and agents; `?from=` sends Save and Back to the page that opened it.
+- **What saving does**: a private seller's edit of a filed or live listing goes back to moderation (Submitted; a live listing is hidden until approved again, and the editor says so before saving). Agents and admins keep the listing's status. Drafts keep Save as Draft / Submit. Sold, Rented and Archived listings can't be edited.
+- **Edit links**: "Edit listing" on the listing page (agent and seller), "Edit" on seller-portal rows and in the agent listings table.
+- **Wizard moved** from `app/seller/listings/new/page.tsx` to `components/listing-wizard.tsx` (the new-listing page now only wraps it). Photos added during an edit get duplicate-check fingerprints; existing ones keep theirs. Edits are not autosaved in the browser, so they can't overwrite an unfinished new-listing draft.
+- **Fixed on the way**: an untouched province picker showed Gauteng but saved an empty province (the location read "Pretoria, "). On phones the six step tabs squashed their labels into each other; they now show numbers only below 640 px (names kept for screen readers).
+- **Not done**: photos removed in an edit stay in storage (and their fingerprints stay, so the same photo can't be re-used on another listing); the health checklist doesn't jump to a wizard step.

@@ -24,6 +24,7 @@ import { SearchIcon } from "@/components/icons";
 import { formatDate } from "@/lib/formatters";
 import { lastDays } from "@/lib/listing-stats";
 import { useOwnerStats, viewsByListing } from "@/lib/listing-stats-client";
+import { CLOSED_LISTING_STATUSES } from "@/lib/seller-listings";
 import { ACTIVE_CATALOGUE_STATUSES, PUBLIC_LISTING_STATUSES } from "@/lib/types/domain";
 import { useAccountUid, useOwnerListings } from "@/lib/use-owner-listings";
 
@@ -172,12 +173,19 @@ function ListingsIndex() {
                       <td className="px-4 py-3 text-right font-semibold tabular-nums text-slate-900 dark:text-white">{inbox.state === "ready" ? enquiryCount(item.id) : "–"}</td>
                       <td className="px-4 py-3 whitespace-nowrap">{item.createdAt ? formatDate(item.createdAt) : "–"}</td>
                       <td className="px-4 py-3 text-right whitespace-nowrap">
-                        {/* Only public listings have a public page; there is no edit screen yet. */}
-                        {isPublic ? (
-                          <Link href={`/property/${item.id}`} className={linkClass}>
-                            Public page<span className="sr-only"> of {item.title}</span>
-                          </Link>
-                        ) : null}
+                        {/* Only public listings have a public page; closed ones can't be edited. */}
+                        <span className="inline-flex items-center gap-4">
+                          {!CLOSED_LISTING_STATUSES.includes(item.status) ? (
+                            <Link href={`/seller/listings/${item.id}/edit?from=agent-list`} className={linkClass}>
+                              Edit<span className="sr-only"> {item.title}</span>
+                            </Link>
+                          ) : null}
+                          {isPublic ? (
+                            <Link href={`/property/${item.id}`} className={linkClass}>
+                              Public page<span className="sr-only"> of {item.title}</span>
+                            </Link>
+                          ) : null}
+                        </span>
                       </td>
                     </tr>
                   );

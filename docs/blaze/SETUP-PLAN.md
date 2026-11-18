@@ -80,4 +80,4 @@ Authorized domains.
 ## 4. Not unlocked by Blaze (still separate work)
 
 Online payment (pricing phase 4), sold-price data (paid Lightstone / Deeds feed), agency principal view (F4 approval),
-agent verification (F3 approval), Saved Searches, listing edit screen.
+agent verification (F3 approval), Saved Searches. (The listing edit screen was built on 18 Nov.)

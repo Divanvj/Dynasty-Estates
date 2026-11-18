@@ -19,7 +19,7 @@ import {
 import { lastDays, seriesFor, sastDay, sumStats, type DayStats } from "@/lib/listing-stats";
 import { getListingStats } from "@/lib/listing-stats-client";
 import { asStage, REACHED_OFFER, REACHED_VIEWING, type SellerInquiry } from "@/lib/seller-inquiries";
-import { MANDATE_LABEL, setListingMandate, type MandateType, type SellerListing } from "@/lib/seller-listings";
+import { CLOSED_LISTING_STATUSES, MANDATE_LABEL, setListingMandate, type MandateType, type SellerListing } from "@/lib/seller-listings";
 import { sastToday } from "@/lib/practitioner-compliance";
 import { PUBLIC_LISTING_STATUSES } from "@/lib/types/domain";
 import { useAccountUid, useOwnerListings } from "@/lib/use-owner-listings";
@@ -101,6 +101,12 @@ export default function ListingDetail({
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+          {/* One editor for both portals; ?from brings Save and Back here. */}
+          {!CLOSED_LISTING_STATUSES.includes(listing.status) ? (
+            <Link href={`/seller/listings/${listing.id}/edit?from=${pipeline ? "agent" : "seller"}`} className={primaryButtonClass}>
+              Edit listing
+            </Link>
+          ) : null}
           {/* Seller report (Phase C): a printable page for the home's owner. */}
           <Link href={`${basePath}/${listing.id}/report`} className={secondaryButtonClass}>
             Seller report

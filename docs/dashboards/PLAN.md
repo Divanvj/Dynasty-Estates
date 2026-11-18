@@ -130,8 +130,8 @@ Sizes: S ≈ half a day, M ≈ 1–2 days, L ≈ 3+ days.
   suburb and type (reuse `buildSuburbStats` in `lib/geo-data.ts`), shown only with ≥5 comparables, otherwise the
   city tier, otherwise "not enough listings yet". Never computed from the sample `fallbackProperties`.
 - Listing health checklist (photos, floor plan, tour, show day, description length, quality score) with the next
-  thing to fix — each item links to where it is fixed. Note: there is no listing edit screen yet; until one exists
-  the checklist says what is missing and offers nothing to click it would fake.
+  thing to fix — each item links to where it is fixed. Since 18 Nov the header has "Edit listing" (the wizard opened
+  on the listing); the checklist items themselves don't yet jump to the matching wizard step.
 - Dashboard tile swap: "Views (7 days)" replaces "Viewing requests (7 days)" if five tiles would be exceeded.
 - Seller portal gets the same Performance tab for private sellers.
 - Accept: a view on a published listing increments the day doc once per session (read back); a bot UA does not;
@@ -203,7 +203,6 @@ the principal's own view and needs the agency schema, so it follows once the ind
 
 ## Unbuilt (keep listed until done)
 
-Built: view tracking · listing performance · seller report + template · enquiry stages & response time · price snapshot · compliance card · agent verification queue · listing mandate · Register Agency · principal view + leaderboard · invitations · enquiry hand-out.
+Built: view tracking · listing performance · seller report + template · enquiry stages & response time · price snapshot · compliance card · agent verification queue · listing mandate · Register Agency · principal view + leaderboard · invitations · enquiry hand-out · listing edit (18 Nov).
 Still unbuilt: invitation e-mails · admin
-pulse & sub-pages · revenue list · demand vs supply · e-mail/SMS/WhatsApp alerts · Saved Searches · listing edit
-screen · online payment · package expiry · tenancy applications screen for agents/landlords.
+pulse & sub-pages · revenue list · demand vs supply · e-mail/SMS/WhatsApp alerts · Saved Searches · online payment · package expiry · tenancy applications screen for agents/landlords.

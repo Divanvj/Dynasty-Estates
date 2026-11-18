@@ -48,7 +48,9 @@ export default function ListingPhotoUploader({
   // the batch loop outlives the render it started in.
   const hashesRef = useRef<string[]>([]);
   useEffect(() => {
-    hashesRef.current = photos.map((photo) => photo.hash);
+    // An edited listing's older photos may have no fingerprint (empty hash);
+    // an empty hash would compare as near to everything.
+    hashesRef.current = photos.map((photo) => photo.hash).filter(Boolean);
   }, [photos]);
 
   // Checks the developer console has switched off (/console/flags).

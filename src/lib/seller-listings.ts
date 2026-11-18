@@ -1,7 +1,9 @@
 import {
   addDoc,
   collection,
+  deleteField,
   doc,
+  getDoc,
   getDocs,
   query,
   serverTimestamp,
@@ -190,60 +192,26 @@ export async function setListingMandate(
   });
 }
 
-export async function createSellerListing(formData: ListingFormData): Promise<string> {
-  if (!isFirebaseConfigured || !db) {
-    throw new Error("Firebase database is not configured.");
-  }
-
-  const slug = formData.title
+function slugify(title: string): string {
+  return title
     .toLowerCase()
     .trim()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
+}
 
+/**
+ * The listing fields the owner fills in through the wizard. Shared by create
+ * and edit, so an edited listing is stored exactly as a new one would be.
+ */
+function editableListingFields(formData: ListingFormData, status: ListingLifecycleStatus) {
   const photos = formData.photos ?? [];
   const image = photos[0]?.url ?? formData.image;
   const gallery = photos.length > 0 ? photos.map((photo) => photo.url) : formData.gallery ?? (image ? [image] : []);
-
   const { score: qualityScore } = calculateListingQualityScore({ ...formData, image });
-  const status = formData.status ?? "Submitted";
-  if (status === "Submitted" && !image) {
-    throw new Error("Add at least one photo before submitting for moderation.");
-  }
-
-  // Create or associate Physical Property entity reference
-  const physicalPropertyRef = await addDoc(collection(db, "physical_properties"), {
-    // Carry ownership onto the physical entity too, so security rules can scope
-    // it to the person who created it rather than leaving it world-writable.
-    ownerId: formData.ownerId,
-    erfSizeSqm: formData.erfSizeSqm ?? 0,
-    floorSizeSqm: formData.floorSizeSqm ?? 0,
-    bedrooms: formData.beds,
-    bathrooms: formData.baths,
-    parkingSpaces: formData.parking ?? 0,
-    propertyType: formData.type,
-    location: formData.location,
-    city: formData.city ?? "",
-    province: formData.province ?? "Gauteng",
-    createdAt: serverTimestamp(),
-  });
-
-  // Create commercial Listing entity referencing Physical Property. Written in
-  // one batch with its photo fingerprints, so a listing can never exist without
-  // them (its photos would then escape duplicate detection) or vice versa.
-  const listing = doc(collection(db, "properties"));
-  const batch = writeBatch(db);
-  batch.set(listing, {
-    propertyId: physicalPropertyRef.id,
-    ownerId: formData.ownerId,
-    ownerEmail: formData.ownerEmail,
-    // Who a buyer contacts about this listing. The creator is the contact, so
-    // it starts as the owner. It only resolves to a callable practitioner once
-    // that account is a registered agent — a private seller's listing correctly
-    // shows no phone number rather than someone else's.
-    agentId: formData.ownerId,
+  return {
     title: formData.title,
-    slug,
+    slug: slugify(formData.title),
     location: formData.location,
     city: formData.city ?? "",
     province: formData.province ?? "",
@@ -282,9 +250,56 @@ export async function createSellerListing(formData: ListingFormData): Promise<st
     // the rules' status list.
     tag: status === "Submitted" ? "Under Review" : "New listing",
     area: formData.erfSizeSqm ? `${formData.erfSizeSqm} m²` : "Available on request",
-    rating: 5.0,
     qualityScore,
     status,
+  };
+}
+
+export async function createSellerListing(formData: ListingFormData): Promise<string> {
+  if (!isFirebaseConfigured || !db) {
+    throw new Error("Firebase database is not configured.");
+  }
+
+  const photos = formData.photos ?? [];
+  const image = photos[0]?.url ?? formData.image;
+  const status = formData.status ?? "Submitted";
+  if (status === "Submitted" && !image) {
+    throw new Error("Add at least one photo before submitting for moderation.");
+  }
+
+  // Create or associate Physical Property entity reference
+  const physicalPropertyRef = await addDoc(collection(db, "physical_properties"), {
+    // Carry ownership onto the physical entity too, so security rules can scope
+    // it to the person who created it rather than leaving it world-writable.
+    ownerId: formData.ownerId,
+    erfSizeSqm: formData.erfSizeSqm ?? 0,
+    floorSizeSqm: formData.floorSizeSqm ?? 0,
+    bedrooms: formData.beds,
+    bathrooms: formData.baths,
+    parkingSpaces: formData.parking ?? 0,
+    propertyType: formData.type,
+    location: formData.location,
+    city: formData.city ?? "",
+    province: formData.province ?? "Gauteng",
+    createdAt: serverTimestamp(),
+  });
+
+  // Create commercial Listing entity referencing Physical Property. Written in
+  // one batch with its photo fingerprints, so a listing can never exist without
+  // them (its photos would then escape duplicate detection) or vice versa.
+  const listing = doc(collection(db, "properties"));
+  const batch = writeBatch(db);
+  batch.set(listing, {
+    propertyId: physicalPropertyRef.id,
+    ownerId: formData.ownerId,
+    ownerEmail: formData.ownerEmail,
+    // Who a buyer contacts about this listing. The creator is the contact, so
+    // it starts as the owner. It only resolves to a callable practitioner once
+    // that account is a registered agent — a private seller's listing correctly
+    // shows no phone number rather than someone else's.
+    agentId: formData.ownerId,
+    ...editableListingFields(formData, status),
+    rating: 5.0,
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
   });
@@ -304,4 +319,167 @@ export async function updateListingStatus(listingId: string, status: ListingLife
     status,
     updatedAt: serverTimestamp(),
   });
+}
+
+/** Statuses an owner may no longer edit: the home is gone or the listing is closed. */
+export const CLOSED_LISTING_STATUSES: readonly ListingLifecycleStatus[] = ["Sold", "Rented", "Archived"];
+
+export type ListingForEdit = {
+  form: ListingFormData;
+  status: ListingLifecycleStatus;
+  /** The physical_properties document holding the home's specs, if any. */
+  physicalPropertyId: string | null;
+  /** Photos already saved with fingerprints; only new ones get fingerprinted on save. */
+  existingPhotoIds: string[];
+  moderationFeedback?: string;
+};
+
+function storagePathFromUrl(url: string): string {
+  const encoded = url.split("/o/")[1]?.split("?")[0];
+  return encoded ? decodeURIComponent(encoded) : "";
+}
+
+/**
+ * Loads one of the account's own listings back into the wizard's shape.
+ * Photos are rebuilt from the gallery, their fingerprints (id + hash) and the
+ * measurements stored when they were checked. A photo without a fingerprint
+ * (older listings) keeps an empty hash and is simply not re-registered.
+ */
+export async function loadListingForEdit(listingId: string, uid: string): Promise<ListingForEdit> {
+  if (!isFirebaseConfigured || !db) throw new Error("Firebase database is not configured.");
+  const snapshot = await getDoc(doc(db, "properties", listingId));
+  if (!snapshot.exists()) throw new Error("This listing no longer exists.");
+  const data = snapshot.data();
+  if (data.ownerId !== uid) throw new Error("This listing isn't one of yours, so you can't edit it.");
+
+  const fingerprints = await getDocs(query(collection(db, "photo_fingerprints"), where("listingId", "==", listingId)));
+  const hashById = new Map(fingerprints.docs.map((item) => [item.id, String(item.data().hash ?? "")]));
+  const checksByUrl = new Map<string, Record<string, unknown>>(
+    (Array.isArray(data.photoChecks) ? data.photoChecks : []).map((check: Record<string, unknown>) => [String(check.url), check]),
+  );
+  const urls: string[] = Array.isArray(data.gallery) && data.gallery.length ? data.gallery : data.image ? [data.image] : [];
+  const existingPhotoIds: string[] = [];
+  const photos: ListingPhoto[] = urls.map((url) => {
+    const storagePath = storagePathFromUrl(url);
+    const fileId = storagePath.split("/").pop()?.replace(/\.jpg$/, "") ?? "";
+    const id = fileId || url;
+    if (hashById.has(id)) existingPhotoIds.push(id);
+    const check = checksByUrl.get(url) ?? {};
+    return {
+      id,
+      url,
+      storagePath,
+      hash: hashById.get(id) ?? "",
+      width: Number(check.width ?? 0),
+      height: Number(check.height ?? 0),
+      checks: {
+        sharpness: Number(check.sharpness ?? 0),
+        screenshotScore: Number(check.screenshotScore ?? 0),
+        ...(typeof check.cameraMake === "string" ? { cameraMake: check.cameraMake } : {}),
+        ...(typeof check.cameraModel === "string" ? { cameraModel: check.cameraModel } : {}),
+      },
+    };
+  });
+
+  // Stored as "Suburb, City, Province"; the suburb has no field of its own.
+  const parts = String(data.location ?? "").split(",").map((part) => part.trim()).filter(Boolean);
+  const suburb = parts.length >= 3 ? parts[0] : "";
+  const floorPlanUrl = typeof data.floorPlanUrl === "string" ? data.floorPlanUrl : "";
+
+  return {
+    status: (data.status as ListingLifecycleStatus) ?? "Draft",
+    physicalPropertyId: typeof data.propertyId === "string" && data.propertyId ? data.propertyId : null,
+    existingPhotoIds,
+    moderationFeedback: typeof data.moderationFeedback === "string" && data.moderationFeedback ? data.moderationFeedback : undefined,
+    form: {
+      ownerId: uid,
+      ownerEmail: data.ownerEmail ?? null,
+      title: data.title ?? "",
+      location: data.location ?? "",
+      suburb,
+      city: data.city ?? "",
+      province: data.province ?? "",
+      price: data.price ?? "",
+      type: data.type ?? "House",
+      listingType: data.listingType === "rent" ? "rent" : "sale",
+      leaseTerm: data.leaseTerm || "12 Months",
+      depositRequired: data.depositRequired ?? "",
+      furnishedStatus: data.furnishedStatus || "Unfurnished",
+      beds: Number(data.beds ?? 0),
+      baths: Number(data.baths ?? 0),
+      parking: Number(data.parking ?? 0),
+      erfSizeSqm: data.erfSizeSqm ? Number(data.erfSizeSqm) : undefined,
+      floorSizeSqm: data.floorSizeSqm ? Number(data.floorSizeSqm) : undefined,
+      monthlyLevy: data.monthlyLevy ?? "",
+      ratesAndTaxes: data.ratesAndTaxes ?? "",
+      features: Array.isArray(data.features) ? data.features : [],
+      description: data.description ?? "",
+      image: urls[0] ?? "",
+      gallery: [],
+      photos,
+      floorPlan: floorPlanUrl
+        ? {
+            url: floorPlanUrl,
+            storagePath: storagePathFromUrl(floorPlanUrl),
+            contentType: /\.pdf$/i.test(storagePathFromUrl(floorPlanUrl)) ? "application/pdf" : "image/jpeg",
+            name: "Current floor plan",
+          }
+        : undefined,
+      onShow: data.onShow?.isoDate
+        ? { isoDate: data.onShow.isoDate, time: data.onShow.time ?? "", directionsNote: data.onShow.directionsNote ?? "" }
+        : undefined,
+      virtualTourUrl: data.virtualTourUrl ?? "",
+      status: (data.status as ListingLifecycleStatus) ?? "Draft",
+    },
+  };
+}
+
+/**
+ * Saves the owner's edits. The caller picks the resulting status: a private
+ * seller's changes go back to moderation (the rules don't let them publish),
+ * an agent's or admin's keep the listing's status. Only photos added in this
+ * edit get fingerprints; they commit in one batch with the listing.
+ */
+export async function updateSellerListing(
+  listingId: string,
+  edit: Pick<ListingForEdit, "physicalPropertyId" | "existingPhotoIds">,
+  formData: ListingFormData,
+  status: ListingLifecycleStatus,
+): Promise<void> {
+  if (!isFirebaseConfigured || !db) throw new Error("Firebase database is not configured.");
+  const photos = formData.photos ?? [];
+  if (status === "Submitted" && photos.length === 0) {
+    throw new Error("Add at least one photo before submitting for moderation.");
+  }
+
+  const batch = writeBatch(db);
+  batch.update(doc(db, "properties", listingId), {
+    ...editableListingFields(formData, status),
+    // A fresh submission is reviewed on its own merits, not against old notes.
+    ...(status === "Submitted" ? { moderationFeedback: deleteField() } : {}),
+    updatedAt: serverTimestamp(),
+  });
+  const known = new Set(edit.existingPhotoIds);
+  addPhotoFingerprints(batch, listingId, formData.ownerId, photos.filter((photo) => !known.has(photo.id) && photo.hash));
+  await batch.commit();
+
+  // The specs are copied onto the physical record as on create. Nothing reads
+  // them back yet, so a failure here must not undo the saved edit.
+  if (edit.physicalPropertyId) {
+    try {
+      await updateDoc(doc(db, "physical_properties", edit.physicalPropertyId), {
+        erfSizeSqm: formData.erfSizeSqm ?? 0,
+        floorSizeSqm: formData.floorSizeSqm ?? 0,
+        bedrooms: formData.beds,
+        bathrooms: formData.baths,
+        parkingSpaces: formData.parking ?? 0,
+        propertyType: formData.type,
+        location: formData.location,
+        city: formData.city ?? "",
+        province: formData.province ?? "",
+      });
+    } catch (error) {
+      console.warn("[listing edit] physical property not updated:", error);
+    }
+  }
 }
