@@ -9,12 +9,16 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/listing-edit | Edit a listing after filing: listing wizard (seller/listings/new → shared component), new /seller/listings/[id]/edit, seller-listings.ts update fn, Edit links in seller portal, agent listings, listing-detail | 2026-11-18 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-18 — `DESKTOP-1R37EBU/listing-edit` merged. **Listings can be edited**: `/seller/listings/[id]/edit` (one editor
+  for sellers and agents, `?from=agent|seller|portal|agent-list`). The wizard now lives in `components/listing-wizard.tsx`;
+  `app/seller/listings/new/page.tsx` only wraps it. Save edits with `updateSellerListing()` / load with `loadListingForEdit()`
+  in `lib/seller-listings.ts` (shared `editableListingFields`). No rules change.
 
 - 2026-11-16 — `DESKTOP-1R37EBU/petrol-inner` merged. Console inner pages in the Petrol style. New in `dashboard-ui.tsx`: `SummaryStrip`,
   `Initials`, `ListingThumb`, `listingStatusTone`, `tableFrameClass/HeadClass/RowClass`, `searchInputClass`; `QUEUE_TARGET_MS` in dashboard-math;
