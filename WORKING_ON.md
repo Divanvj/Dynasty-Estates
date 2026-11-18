@@ -9,12 +9,16 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/email | E-mail sending (Brevo for now): lib/server/mail*.ts, /api/notify/*, /api/console/email + /console/email, e-mail switches in platform-config, nightly failure alert, enquiry + agency-invite callers | 2026-11-18 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-18 — `DESKTOP-1R37EBU/email` merged. **E-mail sending** via `sendMail()` in `lib/server/mail.ts` (server only; provider from
+  BREVO_API_KEY or RESEND_API_KEY; logs to `mail_log`; never throws). Templates in `lib/server/mail-templates.ts` (escape user text).
+  After a browser write, call `requestNotification()` (`lib/notify-client.ts`) → `/api/notify/*`. New switches emailEnquiryAlerts /
+  emailAgencyInvites / emailOpsAlerts; console page `/console/email`. Env: MAIL_FROM_EMAIL, MAIL_FROM_NAME, MAIL_ALERTS_TO.
 
 - 2026-11-18 — `DESKTOP-1R37EBU/listing-edit` merged. **Listings can be edited**: `/seller/listings/[id]/edit` (one editor
   for sellers and agents, `?from=agent|seller|portal|agent-list`). The wizard now lives in `components/listing-wizard.tsx`;
