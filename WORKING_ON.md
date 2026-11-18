@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/email | E-mail sending (Brevo for now): lib/server/mail*.ts, /api/notify/*, /api/console/email + /console/email, e-mail switches in platform-config, nightly failure alert, enquiry + agency-invite callers | 2026-11-18 |
 
 ## Recently merged
 
