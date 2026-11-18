@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/sold-prices | sold prices: mark sold/rented, `sales` collection, property page, /agent/market, seller report (listing-detail, property-data, property/[slug]) | 2026-11-19 |
 
 ## Recently merged
 
