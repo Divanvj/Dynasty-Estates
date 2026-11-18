@@ -12,7 +12,9 @@ import {
   writeBatch,
 } from "firebase/firestore";
 
-import { db, isFirebaseConfigured } from "./firebase";
+import { deleteObject, ref } from "firebase/storage";
+
+import { db, isFirebaseConfigured, storage } from "./firebase";
 import { addPhotoFingerprints, type ListingFloorPlan, type ListingPhoto } from "./photo-intake";
 import type { ListingLifecycleStatus } from "./types/domain";
 import { parseTourUrl } from "./virtual-tour";
@@ -442,7 +444,7 @@ export async function loadListingForEdit(listingId: string, uid: string): Promis
  */
 export async function updateSellerListing(
   listingId: string,
-  edit: Pick<ListingForEdit, "physicalPropertyId" | "existingPhotoIds">,
+  edit: Pick<ListingForEdit, "physicalPropertyId" | "existingPhotoIds"> & { form?: Pick<ListingFormData, "photos" | "floorPlan"> },
   formData: ListingFormData,
   status: ListingLifecycleStatus,
 ): Promise<void> {
@@ -462,6 +464,21 @@ export async function updateSellerListing(
   const known = new Set(edit.existingPhotoIds);
   addPhotoFingerprints(batch, listingId, formData.ownerId, photos.filter((photo) => !known.has(photo.id) && photo.hash));
   await batch.commit();
+
+  // Photos and a floor plan taken off the listing are deleted from storage now
+  // that the listing no longer points at them (storage.rules lets the owner).
+  // Best effort: the nightly clean-up catches anything left behind.
+  if (edit.form && storage) {
+    const kept = new Set([...photos.map((p) => p.storagePath), formData.floorPlan?.storagePath].filter(Boolean));
+    const removed = [...(edit.form.photos ?? []).map((p) => p.storagePath), edit.form.floorPlan?.storagePath]
+      .filter((p): p is string => Boolean(p) && /^(listing-photos|floor-plans)\/[^/]+\/[^/]+$/.test(p as string) && !kept.has(p as string));
+    const bucket = storage;
+    await Promise.all(
+      removed.map((path) =>
+        deleteObject(ref(bucket, path)).catch((error) => console.warn("[listing edit] old file not deleted:", path, error)),
+      ),
+    );
+  }
 
   // The specs are copied onto the physical record as on create. Nothing reads
   // them back yet, so a failure here must not undo the saved edit.

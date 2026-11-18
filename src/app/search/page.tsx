@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";
 
 import SavePropertyButton from "@/components/save-property-button";
+import SaveSearchButton from "@/components/save-search-button";
 import ExpandableSearchPanel, { type SearchFilters } from "@/components/expandable-search-panel";
 import PropertyCardPhotos from "@/components/property-card-photos";
 import PropertyListCard from "@/components/property-list-card";
@@ -12,6 +13,7 @@ import PropertyCompactTable from "@/components/property-compact-table";
 import PropertySplitMapView from "@/components/property-split-map-view";
 import CustomSelect from "@/components/custom-select";
 import { featureLabel } from "@/lib/feature-labels";
+import { criteriaFromParams, criteriaToParams, matchesCriteria } from "@/lib/search-criteria";
 import { LG_QUERY, useMediaQuery } from "@/lib/use-media-query";
 import {
   AreaIcon,
@@ -86,6 +88,9 @@ function SearchContent() {
     "Residential";
 
   // View mode preference: grid | list | map | compact (Default: list)
+  const criteria = useMemo(() => criteriaFromParams(searchParams), [searchParams]);
+  const savedQuery = useMemo(() => criteriaToParams(criteria).toString(), [criteria]);
+
   const urlView = searchParams.get("view");
   const [localView, setLocalView] = useState<ViewMode>(() => {
     if (typeof window === "undefined") return "list";
@@ -271,102 +276,8 @@ function SearchContent() {
 
   // Live Filtering Engine
   const filteredProperties = useMemo(() => {
-    const results = allProperties.filter((property) => {
-      // 0. Listing category filter (Buy vs Rent)
-      if (listingCategory === "buy" && property.listingType === "rent") {
-        return false;
-      }
-      if (listingCategory === "rent" && property.listingType !== "rent") {
-        return false;
-      }
-
-      // 1. Location Tags & Keyword search
-      if (query.trim()) {
-        const terms = query
-          .split(",")
-          .map((s) => s.trim().toLowerCase())
-          .filter(Boolean);
-
-        const haystack = `${property.title} ${property.location} ${property.description} ${
-          property.suburb ?? ""
-        } ${property.city ?? ""} ${property.province ?? ""} ${property.features.join(
-          " "
-        )}`.toLowerCase();
-
-        const matchesAny = terms.some((term) => haystack.includes(term));
-        if (!matchesAny) return false;
-      }
-
-      // 2. Province Filter
-      if (province && province.trim() && province !== "All Provinces") {
-        const resolved = matchProvinceName(province);
-        const provNeedle = (resolved || province).toLowerCase().trim();
-        const propProv = property.province?.toLowerCase() ?? "";
-        const propLoc = property.location.toLowerCase();
-        if (!propProv.includes(provNeedle) && !propLoc.includes(provNeedle)) {
-          return false;
-        }
-      }
-
-      // 3. City / Town Filter
-      if (city && city !== "All Towns") {
-        const propCity = property.city?.toLowerCase() ?? "";
-        const propSuburb = property.suburb?.toLowerCase() ?? "";
-        const propLoc = property.location.toLowerCase();
-        const cityNeedle = city.toLowerCase();
-        if (
-          !propCity.includes(cityNeedle) &&
-          !propSuburb.includes(cityNeedle) &&
-          !propLoc.includes(cityNeedle)
-        ) {
-          return false;
-        }
-      }
-
-      // 4. Property Type
-      if (selectedType !== "All" && selectedType !== "All types" && property.type !== selectedType) {
-        return false;
-      }
-
-      // 5. Bedrooms Count
-      if (minBeds !== "Any") {
-        const requiredBeds = parseInt(minBeds.replace("+", ""), 10);
-        if (!isNaN(requiredBeds) && property.beds < requiredBeds) return false;
-      }
-
-      // 6. Bathrooms Count
-      if (minBaths !== "Any") {
-        const requiredBaths = parseInt(minBaths.replace("+", ""), 10);
-        if (!isNaN(requiredBaths) && property.baths < requiredBaths) return false;
-      }
-
-      // 7. Garages / Parking
-      if (minParking !== "Any") {
-        const requiredParking = parseInt(minParking.replace("+", ""), 10);
-        if (!isNaN(requiredParking) && property.parking < requiredParking) return false;
-      }
-
-      // 8. Furnished Status
-      if (furnished !== "Any" && property.furnishedStatus !== furnished) {
-        return false;
-      }
-
-      // 9. Price Ceilings
-      if (minPrice > 0 && property.numericPrice < minPrice) {
-        return false;
-      }
-      if (maxPrice > 0 && property.numericPrice > maxPrice) {
-        return false;
-      }
-
-      // 10. Verified Amenity Features
-      if (urlFeatures.length > 0) {
-        const hasAllFeatures = urlFeatures.every((feat) => property.features.includes(feat));
-        if (!hasAllFeatures) return false;
-      }
-
-      return true;
-    });
+    // The same matching the saved-search alerts use (lib/search-criteria.ts).
+    const results = allProperties.filter((property) => matchesCriteria(property, criteria));
 
     // Sorting
     if (sortBy === "price_asc") {
@@ -378,22 +289,7 @@ function SearchContent() {
     }
 
     return results;
-  }, [
-    allProperties,
-    listingCategory,
-    query,
-    province,
-    city,
-    selectedType,
-    minBeds,
-    minBaths,
-    minParking,
-    furnished,
-    minPrice,
-    maxPrice,
-    urlFeatures,
-    sortBy,
-  ]);
+  }, [allProperties, criteria, sortBy]);
 
   /**
    * Whether the visitor has actually narrowed the catalogue.
@@ -421,13 +317,14 @@ function SearchContent() {
     urlFeatures.length > 0;
 
   // Extract initial location chips from query if any
-  const locationChips = useMemo(() => {
-    if (!query.trim()) return [];
-    return query
-      .split(",")
-      .map((s) => s.trim())
-      .filter(Boolean);
-  }, [query]);
+  // Plain derivation: the React Compiler memoizes it (a manual useMemo here
+  // could not be preserved once `criteria` also read the same params).
+  const locationChips = query.trim()
+    ? query
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean)
+    : [];
 
   /**
    * Every narrowing the visitor has applied, as removable chips. Shown above
@@ -723,6 +620,8 @@ function SearchContent() {
               Clear all
             </button>
           )}
+          {/* Saved searches e-mail new matches (lib/server/saved-searches.ts). */}
+          {hasActiveFilters ? <SaveSearchButton key={savedQuery} query={savedQuery} /> : null}
         </div>
       )}
 

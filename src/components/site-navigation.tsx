@@ -412,27 +412,20 @@ export default function SiteNavigation() {
               </div>
             </Link>
 
-            {/* Not a link. This pointed at /saved, which is the Saved
-                Properties shortlist - it has no alerts, no notifications and
-                no saved searches. Saved searches need the `saved_searches`
-                collection, which is waiting on the Firestore rules deploy, so
-                until then the entry says so rather than sending people to a
-                page that does not do what the label promises. */}
-            <div
-              aria-disabled="true"
-              className="flex items-center gap-3 rounded-xl p-2 opacity-60"
+            {/* Saved searches and their e-mail alerts (/alerts). Price-drop
+                alerts are not built yet, so the line doesn't promise them. */}
+            <Link
+              href="/alerts"
+              className="flex items-center gap-3 rounded-xl p-2 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group"
             >
-              <TagIcon className="h-4 w-4 text-slate-600 dark:text-slate-500 shrink-0" />
+              <TagIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
               <div className="min-w-0">
-                <p className="flex items-center gap-2 text-xs font-bold text-slate-600 dark:text-slate-400">
-                  Alerts &amp; Notifications
-                  <span className="rounded-full border border-slate-300 dark:border-white/20 px-1.5 py-px text-[10px] font-semibold uppercase tracking-wide">
-                    Soon
-                  </span>
+                <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
+                  Alerts &amp; E-mails
                 </p>
-                <p className="text-xs text-slate-600 dark:text-slate-500 truncate">Saved searches &amp; price drop alerts</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 truncate">Saved searches &amp; new-home alerts</p>
               </div>
-            </div>
+            </Link>
 
             <Link
               href="/agents"

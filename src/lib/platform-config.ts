@@ -89,6 +89,16 @@ export const FEATURE_FLAGS = {
     label: "Agency invitation e-mails",
     description: "E-mails the agent an agency principal invites to join their team.",
   },
+  emailWeeklyReports: {
+    group: "email",
+    label: "Weekly listing reports",
+    description: "Mondays: e-mails each agent and seller their live listings' views, saves and enquiries for the past week.",
+  },
+  emailSavedSearchAlerts: {
+    group: "email",
+    label: "Saved-search alerts",
+    description: "Each night: e-mails buyers and renters new homes that match a search they saved.",
+  },
   emailOpsAlerts: {
     group: "email",
     label: "Nightly job alerts",
@@ -111,6 +121,8 @@ export const DEFAULT_PLATFORM_CONFIG: PlatformConfig = {
     phoneSignIn: true,
     emailEnquiryAlerts: true,
     emailAgencyInvites: true,
+    emailWeeklyReports: true,
+    emailSavedSearchAlerts: true,
     emailOpsAlerts: true,
   },
   updatedAt: null,

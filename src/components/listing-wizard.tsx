@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useId, useState, useSyncExternalStore } from "react";
+import { useEffect, useId, useState, useSyncExternalStore } from "react";
 
 import { useAuth } from "@/components/auth-provider";
 import CustomSelect from "@/components/custom-select";
@@ -27,6 +27,7 @@ import {
   type ListingFormData,
   type ListingLifecycleStatus,
 } from "@/lib/seller-listings";
+import { HEALTH_FIX, type HealthKey } from "@/lib/listing-insights";
 import { PUBLIC_LISTING_STATUSES } from "@/lib/types/domain";
 import type { ListingPhoto } from "@/lib/photo-intake";
 
@@ -122,6 +123,8 @@ export type ListingWizardEdit = {
   canPublish: boolean;
   /** Where to go after saving or on "Back". */
   returnTo: string;
+  /** A listing-checklist item to fix: opens its step and scrolls to `#fix-<key>`. */
+  fix?: HealthKey;
 };
 
 /**
@@ -136,7 +139,19 @@ export default function ListingWizard({ edit }: { edit?: ListingWizardEdit }) {
   // Firebase is unconfigured.
   const { user: firebaseUser, demoUser, loading: authLoading } = useAuth();
   const user = firebaseUser ?? demoUser;
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState<number>(edit?.fix ? HEALTH_FIX[edit.fix].step : 1);
+
+  // Opened from the listing checklist: bring the field into view and focus it.
+  useEffect(() => {
+    if (!edit?.fix) return;
+    const target = document.getElementById(`fix-${edit.fix}`);
+    if (!target) return;
+    target.scrollIntoView({ block: "center", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    const field = target.querySelector<HTMLElement>("input:not([type=hidden]), textarea, button, [tabindex]");
+    field?.focus({ preventScroll: true });
+    // Only on arrival.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Form State initialized cleanly to defaultFormData to match SSR
   const [formData, setFormData] = useState<ListingFormData>(edit ? edit.loaded.form : defaultFormData);
@@ -545,7 +560,7 @@ export default function ListingWizard({ edit }: { edit?: ListingWizardEdit }) {
                     className={inputClass}
                   />
                 </div>
-                <div>
+                <div id="fix-size" className="scroll-mt-24">
                   <label htmlFor={floorId} className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300">
                     Floor Area (m²)
                   </label>
@@ -766,7 +781,7 @@ export default function ListingWizard({ edit }: { edit?: ListingWizardEdit }) {
               </div>
 
               <div className="space-y-4 pt-2">
-                <div>
+                <div id="fix-photos" className="scroll-mt-24">
                   <p className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300">
                     Photos * <span className="normal-case tracking-normal font-normal text-slate-600 dark:text-slate-400">(the first is the cover)</span>
                   </p>
@@ -777,21 +792,27 @@ export default function ListingWizard({ edit }: { edit?: ListingWizardEdit }) {
                     onPhotosChange={updatePhotos}
                   />
                 </div>
-                <ShowDayField
-                  value={formData.onShow}
-                  onChange={(onShow) => updateField("onShow", onShow)}
-                />
-                <ListingFloorPlanField
-                  ownerId={user?.uid ?? null}
-                  authLoading={authLoading}
-                  floorPlan={formData.floorPlan}
-                  onChange={(floorPlan) => updateField("floorPlan", floorPlan)}
-                />
-                <ListingTourField
-                  value={formData.virtualTourUrl}
-                  onChange={(url) => updateField("virtualTourUrl", url)}
-                />
-                <div>
+                <div id="fix-showday" className="scroll-mt-24">
+                  <ShowDayField
+                    value={formData.onShow}
+                    onChange={(onShow) => updateField("onShow", onShow)}
+                  />
+                </div>
+                <div id="fix-floorplan" className="scroll-mt-24">
+                  <ListingFloorPlanField
+                    ownerId={user?.uid ?? null}
+                    authLoading={authLoading}
+                    floorPlan={formData.floorPlan}
+                    onChange={(floorPlan) => updateField("floorPlan", floorPlan)}
+                  />
+                </div>
+                <div id="fix-tour" className="scroll-mt-24">
+                  <ListingTourField
+                    value={formData.virtualTourUrl}
+                    onChange={(url) => updateField("virtualTourUrl", url)}
+                  />
+                </div>
+                <div id="fix-description" className="scroll-mt-24">
                   <label htmlFor={descId} className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300">
                     Property Description *
                   </label>

@@ -10,6 +10,9 @@ import { deleteOldStats, retentionCutoff } from "@/lib/server/listing-stats";
 import { alertRecipients, sendMail } from "@/lib/server/mail";
 import { opsAlertEmail } from "@/lib/server/mail-templates";
 import { NIGHTLY_DOC } from "@/lib/server/platform-checks";
+import { runSavedSearchAlerts } from "@/lib/server/saved-searches";
+import { cleanUpListingFiles, GRACE_DAYS } from "@/lib/server/storage-cleanup";
+import { runWeeklyReports, sastWeekday } from "@/lib/server/weekly-report";
 import { SITE_URL } from "@/lib/site-url";
 
 export const dynamic = "force-dynamic";
@@ -20,7 +23,12 @@ export const maxDuration = 60;
  * (vercel.json) at 00:00 UTC = 02:00 SAST:
  *   1. health probes against the production site,
  *   2. the read-only data integrity scan,
- *   3. listing_stats retention (days older than 13 months are deleted).
+ *   3. listing_stats retention (days older than 13 months are deleted),
+ *   4. listing files nothing refers to any more (storage-cleanup.ts),
+ *   5. saved-search alert e-mails,
+ *   6. on Mondays (SAST), the weekly listing report e-mails.
+ * The e-mail jobs cap how many they send per run (the function has 60 s);
+ * whatever is left over goes out the next night.
  * Each result goes to console_events as actor "system", so it shows in the
  * console's event log and the go-live list reads the last run from there.
  *
@@ -86,6 +94,41 @@ export async function GET(request: Request) {
     });
   } catch (error) {
     failures.push(`retention: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  try {
+    const files = await cleanUpListingFiles();
+    report.files = files;
+    await recordConsoleEvent(
+      null,
+      "nightly.files",
+      `Nightly file clean-up: ${files.deleted} unused file(s) and ${files.fingerprintsDeleted} stale photo fingerprint(s) deleted, ${files.waiting} newer than ${GRACE_DAYS} days kept${files.more ? ", more left for tomorrow" : ""}`,
+      { ...files },
+    );
+  } catch (error) {
+    failures.push(`files: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  try {
+    const alerts = await runSavedSearchAlerts({ maxEmails: 60 });
+    report.savedSearches = alerts;
+    if (alerts.failed) failures.push(`saved-search alerts: ${alerts.failed} e-mail(s) failed`);
+    await recordConsoleEvent(null, "nightly.saved_searches", `Saved-search alerts: ${alerts.emailed} e-mailed, ${alerts.skipped} skipped, ${alerts.failed} failed (${alerts.searches} searches)${alerts.more ? ", more left for tomorrow" : ""}`, { ...alerts });
+  } catch (error) {
+    failures.push(`saved-search alerts: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  if (sastWeekday() === 1) {
+    try {
+      const weekly = await runWeeklyReports();
+      report.weeklyReports = weekly;
+      if (weekly.failed) failures.push(`weekly reports: ${weekly.failed} e-mail(s) failed`);
+      if (!weekly.alreadySent) {
+        await recordConsoleEvent(null, "nightly.weekly_reports", `Weekly listing reports for the week of ${weekly.weekOf}: ${weekly.emailed} e-mailed, ${weekly.skipped} skipped, ${weekly.failed} failed`, { ...weekly });
+      }
+    } catch (error) {
+      failures.push(`weekly reports: ${error instanceof Error ? error.message : String(error)}`);
+    }
   }
 
   const summary = failures.length ? `Nightly jobs finished with problems: ${failures.join("; ")}` : "Nightly jobs finished";

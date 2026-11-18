@@ -10,7 +10,16 @@ type LogRow = { id: string; kind: string; to: string; subject: string; ref: stri
 type EmailResponse = { setup: Setup; log: LogRow[] };
 type TestResult = { result: { status: string; reason?: string; error?: string; messageId?: string | null } };
 
-const KIND: Record<string, string> = { enquiry: "New enquiry", agency_invite: "Agency invitation", ops_alert: "Nightly alert", test: "Test" };
+const KIND: Record<string, string> = {
+  enquiry: "New enquiry",
+  agency_invite: "Agency invitation",
+  ops_alert: "Nightly alert",
+  weekly_report: "Weekly report",
+  saved_search: "Saved-search alert",
+  test: "Test",
+};
+
+type RunResult = { run: { emailed: number; skipped: number; failed: number; owners?: number; searches?: number } };
 
 export default function EmailPage() {
   const { user, caller } = useConsole();
@@ -41,13 +50,36 @@ export default function EmailPage() {
     }
   }
 
+  async function runMine(action: "weekly_report" | "saved_search_alerts") {
+    setSending(true);
+    setTestError(null);
+    setTestOutcome(null);
+    try {
+      const { run } = await consoleJson<RunResult>(user, "/api/console/email", { method: "POST", body: JSON.stringify({ action }) });
+      const none =
+        action === "weekly_report"
+          ? "Nothing to send: this account has no live listings."
+          : "Nothing to send: none of this account's saved searches (with alerts on) has a new match since it was last checked.";
+      setTestOutcome(
+        run.emailed + run.skipped + run.failed === 0
+          ? none
+          : `${run.emailed} sent, ${run.skipped} skipped, ${run.failed} failed. The row below says why anything was skipped.`,
+      );
+      refresh();
+    } catch (err) {
+      setTestError(err as ConsoleRequestError);
+    } finally {
+      setSending(false);
+    }
+  }
+
   const setup = data?.setup;
 
   return (
     <>
       <PageHeader
         title="E-mail"
-        description="E-mails the site sends: new-enquiry alerts to the agent or seller, agency invitations, and nightly-job failure alerts. Each kind has a switch under Site switches."
+        description="E-mails the site sends: new-enquiry alerts and Monday listing reports to agents and sellers, saved-search alerts to buyers, agency invitations, and nightly-job failure alerts. Each kind has a switch under Site switches; people turn off their own on /alerts."
         actions={<RefreshButton onClick={refresh} loading={loading} loadedAt={loadedAt} />}
       />
       {error ? <ErrorNotice error={error} onRetry={refresh} /> : null}
@@ -80,6 +112,15 @@ export default function EmailPage() {
                 Send to the alerts address
               </Button>
             ) : null}
+          </div>
+          <p className="mt-4 text-xs text-[var(--ink-muted)]">The scheduled e-mails, for your own account only:</p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            <Button onClick={() => void runMine("weekly_report")} disabled={sending}>
+              Send me my weekly report
+            </Button>
+            <Button onClick={() => void runMine("saved_search_alerts")} disabled={sending}>
+              Run my saved-search alerts
+            </Button>
           </div>
           {testOutcome ? (
             <p role="status" className="mt-3 text-xs text-[var(--ink)]">

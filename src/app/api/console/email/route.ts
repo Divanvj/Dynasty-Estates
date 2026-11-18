@@ -4,6 +4,8 @@ import { consoleRoute, recordConsoleEvent } from "@/lib/server/console-auth";
 import { adminDb } from "@/lib/server/firebase-admin";
 import { MAIL_LOG, mailSetup, sendMail } from "@/lib/server/mail";
 import { testEmail } from "@/lib/server/mail-templates";
+import { runSavedSearchAlerts } from "@/lib/server/saved-searches";
+import { runWeeklyReports } from "@/lib/server/weekly-report";
 
 export const dynamic = "force-dynamic";
 
@@ -22,7 +24,21 @@ export const GET = consoleRoute(async () => {
  * address is not a real inbox).
  */
 export const POST = consoleRoute(async (request, caller) => {
-  const body = (await request.json().catch(() => ({}))) as { to?: unknown };
+  const body = (await request.json().catch(() => ({}))) as { to?: unknown; action?: unknown };
+
+  // The scheduled e-mails, run now for the console user's own account only:
+  // their weekly report (their live listings) and their saved-search alerts.
+  if (body.action === "weekly_report") {
+    const run = await runWeeklyReports({ onlyUid: caller.uid });
+    await recordConsoleEvent(caller, "email.weekly_report", `Weekly report for own listings: ${run.emailed} sent, ${run.skipped} skipped, ${run.failed} failed`, { ...run });
+    return NextResponse.json({ run });
+  }
+  if (body.action === "saved_search_alerts") {
+    const run = await runSavedSearchAlerts({ onlyUid: caller.uid, maxEmails: 1 });
+    await recordConsoleEvent(caller, "email.saved_search_alerts", `Saved-search alerts for own searches: ${run.emailed} sent, ${run.skipped} skipped, ${run.failed} failed`, { ...run });
+    return NextResponse.json({ run });
+  }
+
   const setup = mailSetup();
   const recipients = body.to === "alerts" ? setup.alertsTo : caller.email ? [caller.email] : [];
   if (!recipients.length) {

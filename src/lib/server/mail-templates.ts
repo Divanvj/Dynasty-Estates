@@ -16,7 +16,23 @@ function line(value: string, max = 140): string {
   return value.replace(/\s+/g, " ").trim().slice(0, max);
 }
 
-function layout(heading: string, bodyHtml: string, button?: { label: string; href: string }): string {
+/** The footer line on an e-mail the recipient can turn off. */
+export type OptOutLink = { url: string | null; what: string };
+
+function optOutHtml(optOut?: OptOutLink): string {
+  if (!optOut) return "";
+  const manage = `${SITE_URL}/alerts`;
+  return `<br>You get this because ${escape(optOut.what)} is on. ${
+    optOut.url ? `<a href="${escape(optOut.url)}" style="color:#0f4c4a">Stop these e-mails</a> or ` : ""
+  }<a href="${escape(manage)}" style="color:#0f4c4a">choose which e-mails you get</a>.`;
+}
+
+function optOutText(optOut?: OptOutLink): string[] {
+  if (!optOut) return [];
+  return ["", "--", `You get this because ${optOut.what} is on.`, optOut.url ? `Stop these e-mails: ${optOut.url}` : "", `Choose which e-mails you get: ${SITE_URL}/alerts`].filter(Boolean);
+}
+
+function layout(heading: string, bodyHtml: string, button?: { label: string; href: string }, optOut?: OptOutLink): string {
   return `<!doctype html>
 <html><body style="margin:0;background:#f2f5f5;font-family:Arial,Helvetica,sans-serif;color:#1d2a2c">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="padding:24px 12px"><tr><td align="center">
@@ -27,7 +43,7 @@ function layout(heading: string, bodyHtml: string, button?: { label: string; hre
 ${bodyHtml}
 ${button ? `<p style="margin:24px 0 0"><a href="${escape(button.href)}" style="display:inline-block;background:#0f4c4a;color:#ffffff;text-decoration:none;padding:12px 20px;border-radius:8px;font-weight:bold;font-size:14px">${escape(button.label)}</a></p>` : ""}
 </td></tr>
-<tr><td style="padding:16px 24px;border-top:1px solid #e7eded;font-size:12px;color:#5b6b6c">Sent by Dynasty Estates · <a href="${escape(SITE_URL)}" style="color:#0f4c4a">${escape(SITE_URL.replace(/^https?:\/\//, ""))}</a></td></tr>
+<tr><td style="padding:16px 24px;border-top:1px solid #e7eded;font-size:12px;color:#5b6b6c">Sent by Dynasty Estates · <a href="${escape(SITE_URL)}" style="color:#0f4c4a">${escape(SITE_URL.replace(/^https?:\/\//, ""))}</a>${optOutHtml(optOut)}</td></tr>
 </table></td></tr></table></body></html>`;
 }
 
@@ -62,6 +78,7 @@ export function enquiryEmail(input: {
   notes: string;
   /** Where the owner reads their enquiries. */
   inboxPath: string;
+  optOut?: OptOutLink;
 }) {
   const kind = KIND_LABEL[input.kind] ?? "Enquiry";
   const title = line(input.listingTitle || "your listing", 100);
@@ -85,6 +102,7 @@ export function enquiryEmail(input: {
       "",
       `Reply to this e-mail to answer them directly, or open your enquiries: ${inbox}`,
       `Listing: ${listing}`,
+      ...optOutText(input.optOut),
     ].join("\n"),
     html: layout(
       `New enquiry on ${title}`,
@@ -93,6 +111,7 @@ export function enquiryEmail(input: {
         (notes ? quote(notes) : "") +
         paragraph("Reply to this e-mail to answer them directly."),
       { label: "Open your enquiries", href: inbox },
+      input.optOut,
     ),
   };
 }
@@ -144,6 +163,98 @@ export function testEmail(input: { requestedBy: string; provider: string }) {
     html: layout(
       "E-mail sending works",
       paragraph(`This is a test e-mail from the developer console, sent through ${input.provider} at the request of ${input.requestedBy}.`),
+    ),
+  };
+}
+
+export type ReportListing = {
+  title: string;
+  /** The listing's page in the owner's portal. */
+  path: string;
+  views: number;
+  saves: number;
+  contactClicks: number;
+  enquiries: number;
+};
+
+/** The Monday report: last week's numbers for each live listing. */
+export function weeklyReportEmail(input: { name: string | null; weekLabel: string; listings: ReportListing[]; portalPath: string; optOut?: OptOutLink }) {
+  const total = input.listings.reduce(
+    (t, l) => ({ views: t.views + l.views, saves: t.saves + l.saves, contactClicks: t.contactClicks + l.contactClicks, enquiries: t.enquiries + l.enquiries }),
+    { views: 0, saves: 0, contactClicks: 0, enquiries: 0 },
+  );
+  const n = input.listings.length;
+  const hello = input.name ? `Hi ${line(input.name, 60)},` : "Hi,";
+  const summary = `${total.views} views, ${total.saves} saves, ${total.contactClicks} contact clicks and ${total.enquiries} enquiries across your ${n} live listing${n === 1 ? "" : "s"}.`;
+  const cell = "padding:8px 6px;font-size:14px;border-top:1px solid #e7eded;text-align:right";
+  const head = "padding:0 6px 6px;font-size:12px;color:#5b6b6c;text-align:right;font-weight:normal";
+  const rows = input.listings
+    .map(
+      (l) =>
+        `<tr><td style="padding:8px 6px 8px 0;font-size:14px;border-top:1px solid #e7eded"><a href="${escape(SITE_URL + l.path)}" style="color:#0f4c4a">${escape(line(l.title || "Untitled listing", 70))}</a></td><td style="${cell}">${l.views}</td><td style="${cell}">${l.saves}</td><td style="${cell}">${l.contactClicks}</td><td style="${cell}">${l.enquiries}</td></tr>`,
+    )
+    .join("");
+  const table = `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0 12px;border-collapse:collapse"><tr><th style="padding:0 6px 6px 0;font-size:12px;color:#5b6b6c;text-align:left;font-weight:normal">Listing</th><th style="${head}">Views</th><th style="${head}">Saves</th><th style="${head}">Contact clicks</th><th style="${head}">Enquiries</th></tr>${rows}</table>`;
+  const portal = `${SITE_URL}${input.portalPath}`;
+  return {
+    subject: `Your listings last week: ${total.views} views, ${total.enquiries} enquiries`,
+    text: [
+      hello,
+      "",
+      `Your listings, ${input.weekLabel}: ${summary}`,
+      "",
+      ...input.listings.map(
+        (l) => `- ${line(l.title || "Untitled listing", 70)}: ${l.views} views, ${l.saves} saves, ${l.contactClicks} contact clicks, ${l.enquiries} enquiries. ${SITE_URL}${l.path}`,
+      ),
+      "",
+      `Open your listings: ${portal}`,
+      ...optOutText(input.optOut),
+    ].join("\n"),
+    html: layout(
+      `Your listings, ${input.weekLabel}`,
+      paragraph(hello) + paragraph(summary) + table + paragraph("Views and saves are counted on the listing pages; enquiries are the messages and viewing requests buyers sent."),
+      { label: "Open your listings", href: portal },
+      input.optOut,
+    ),
+  };
+}
+
+export type AlertListing = { title: string; slug: string; price: string; location: string; beds: number; baths: number };
+
+/** New listings for one person's saved searches. */
+export function savedSearchEmail(input: { searches: Array<{ label: string; url: string; listings: AlertListing[]; more: number }>; optOut?: OptOutLink }) {
+  const count = input.searches.reduce((n, s) => n + s.listings.length + s.more, 0);
+  const one = input.searches.length === 1 ? input.searches[0] : null;
+  const subject = one ? `${count} new home${count === 1 ? "" : "s"} for "${line(one.label, 70)}"` : `${count} new homes for your saved searches`;
+  const home = (h: AlertListing) => `${SITE_URL}/property/${encodeURIComponent(h.slug)}`;
+  const facts = (h: AlertListing) => line([h.location, h.beds ? `${h.beds} bed` : "", h.baths ? `${h.baths} bath` : ""].filter(Boolean).join(" · "), 120);
+  const homeHtml = (h: AlertListing) =>
+    `<tr><td style="padding:10px 0;border-top:1px solid #e7eded"><a href="${escape(home(h))}" style="color:#0f4c4a;font-weight:bold;font-size:15px">${escape(line(h.title, 90))}</a><div style="font-size:14px;margin-top:2px">${escape(line(h.price, 40))}</div><div style="font-size:13px;color:#5b6b6c;margin-top:2px">${escape(facts(h))}</div></td></tr>`;
+  const blocks = input.searches
+    .map(
+      (s) =>
+        `<h2 style="margin:20px 0 4px;font-size:16px;color:#10201f">${escape(line(s.label, 100))}</h2><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${s.listings.map(homeHtml).join("")}</table>${
+          s.more ? `<p style="margin:6px 0 0;font-size:14px"><a href="${escape(s.url)}" style="color:#0f4c4a">See ${s.more} more</a></p>` : ""
+        }`,
+    )
+    .join("");
+  return {
+    subject,
+    text: [
+      `New homes for your saved search${input.searches.length === 1 ? "" : "es"}:`,
+      ...input.searches.flatMap((s) => [
+        "",
+        line(s.label, 100),
+        ...s.listings.map((h) => `- ${line(h.title, 90)}, ${line(h.price, 40)}, ${facts(h)}: ${home(h)}`),
+        ...(s.more ? [`See ${s.more} more: ${s.url}`] : []),
+      ]),
+      ...optOutText(input.optOut),
+    ].join("\n"),
+    html: layout(
+      one ? "New homes for your saved search" : "New homes for your saved searches",
+      paragraph(`Listed since we last wrote, and ${count === 1 ? "it matches" : "they match"} what you saved.`) + blocks,
+      one ? { label: "See the search", href: one.url } : { label: "Your saved searches", href: `${SITE_URL}/alerts` },
+      input.optOut,
     ),
   };
 }

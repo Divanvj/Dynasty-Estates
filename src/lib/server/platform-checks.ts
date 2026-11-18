@@ -209,6 +209,8 @@ export const KNOWN_COLLECTIONS = [
   "agencies",
   "agency_members",
   "agency_invites",
+  "saved_searches",
+  "email_prefs",
   "app_errors",
   "app_error_groups",
   "web_vitals",

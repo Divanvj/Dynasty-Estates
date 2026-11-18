@@ -13,6 +13,7 @@ import {
   compareWithArea,
   daysOnMarket,
   getLiveComparables,
+  HEALTH_FIX,
   listingHealth,
   type AreaComparison,
 } from "@/lib/listing-insights";
@@ -145,7 +146,7 @@ export default function ListingDetail({
             <Overview listing={listing} />
           </>
         ) : null}
-        {tab === "performance" ? <Performance listing={listing} uid={uid ?? null} enquiryDates={enquiries.map((e) => e.createdAt)} enquiriesReady={inbox.state === "ready"} /> : null}
+        {tab === "performance" ? <Performance listing={listing} from={pipeline ? "agent" : "seller"} uid={uid ?? null} enquiryDates={enquiries.map((e) => e.createdAt)} enquiriesReady={inbox.state === "ready"} /> : null}
         {tab === "enquiries" ? (
           <>
             {pipeline && inbox.state === "ready" && enquiries.length > 0 ? <Funnel enquiries={enquiries} /> : null}
@@ -243,18 +244,20 @@ function Overview({ listing }: { listing: SellerListing }) {
           </div>
         ))}
       </dl>
-      <p className="mt-4 text-sm text-slate-600 dark:text-slate-400">There is no edit screen yet. To change a detail, contact Dynasty through Support &amp; Guidance in the account menu.</p>
     </section>
   );
 }
 
 function Performance({
   listing,
+  from,
   uid,
   enquiryDates,
   enquiriesReady,
 }: {
   listing: SellerListing;
+  /** Which portal the editor returns to. */
+  from: "agent" | "seller";
   uid: string | null;
   enquiryDates: (Date | null)[];
   enquiriesReady: boolean;
@@ -297,6 +300,7 @@ function Performance({
   const totals = series ? sumStats(series) : null;
   const enquiries30 = days.reduce((sum, d) => sum + (enquiriesByDay.get(d) ?? 0), 0);
   const health = listingHealth(listing);
+  const canEdit = !CLOSED_LISTING_STATUSES.includes(listing.status);
   const countingNote = days[0] < COUNTING_SINCE ? `Views, saves and contact clicks are counted from ${formatDate(`${COUNTING_SINCE}T12:00:00Z`)}.` : null;
 
   const tiles: { label: string; total: number | null; points: { day: string; value: number }[] | null }[] = [
@@ -402,6 +406,11 @@ function Performance({
                   <span className="font-semibold text-slate-900 dark:text-white">{item.label}</span>
                   <span className="sr-only">{item.done ? " (done)" : " (to do)"}</span>
                   {!item.done ? <span className="block text-slate-600 dark:text-slate-400">{item.tip}</span> : null}
+                  {!item.done && canEdit ? (
+                    <Link href={`/seller/listings/${listing.id}/edit?from=${from}&fix=${item.key}`} className={`${linkClass} mt-1 inline-block`}>
+                      {HEALTH_FIX[item.key].label}
+                    </Link>
+                  ) : null}
                 </span>
               </li>
             ))}

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/components/auth-provider";
 import ListingWizard from "@/components/listing-wizard";
 import RoleGuard from "@/components/role-guard";
+import { isHealthKey } from "@/lib/listing-insights";
 import { CLOSED_LISTING_STATUSES, loadListingForEdit, type ListingForEdit } from "@/lib/seller-listings";
 
 // Pattern: Form (the listing wizard, opened on an existing listing). Any
@@ -29,7 +30,11 @@ type State =
 
 function EditListing() {
   const params = useParams<{ id: string }>();
-  const from = useSearchParams()?.get("from") ?? null;
+  const search = useSearchParams();
+  const from = search?.get("from") ?? null;
+  // ?fix=<checklist key> opens the wizard at the field that fixes it.
+  const fixParam = search?.get("fix") ?? null;
+  const fix = isHealthKey(fixParam) ? fixParam : undefined;
   const returnTo = returnPath(from, params.id);
   const { user, loading: authLoading } = useAuth();
   const [state, setState] = useState<State>({ kind: "loading" });
@@ -84,7 +89,7 @@ function EditListing() {
   return (
     <ListingWizard
       key={params.id}
-      edit={{ listingId: params.id, loaded: state.loaded, canPublish: state.canPublish, returnTo }}
+      edit={{ listingId: params.id, loaded: state.loaded, canPublish: state.canPublish, returnTo, fix }}
     />
   );
 }

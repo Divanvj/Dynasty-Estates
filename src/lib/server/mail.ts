@@ -1,5 +1,7 @@
 import { readPlatformConfig } from "./platform-config";
 import { adminApp, adminDb } from "./firebase-admin";
+import { oneClickUnsubscribeUrl, readEmailPrefs } from "./email-prefs";
+import type { EmailPref } from "@/lib/email-prefs";
 import type { FeatureFlag } from "@/lib/platform-config";
 
 /**
@@ -17,13 +19,15 @@ import type { FeatureFlag } from "@/lib/platform-config";
  * by the developer console through the Admin SDK (no client rule allows it).
  */
 
-export type MailKind = "enquiry" | "agency_invite" | "ops_alert" | "test";
+export type MailKind = "enquiry" | "agency_invite" | "ops_alert" | "weekly_report" | "saved_search" | "test";
 
 /** Which /console/flags switch governs each kind of e-mail. Test e-mails always go. */
 export const MAIL_SWITCH: Record<MailKind, FeatureFlag | null> = {
   enquiry: "emailEnquiryAlerts",
   agency_invite: "emailAgencyInvites",
   ops_alert: "emailOpsAlerts",
+  weekly_report: "emailWeeklyReports",
+  saved_search: "emailSavedSearchAlerts",
   test: null,
 };
 
@@ -37,6 +41,12 @@ export type MailMessage = {
   replyTo?: { email: string; name?: string };
   /** What the e-mail is about, for the log (listing id, invite id…). */
   ref?: string;
+  /**
+   * An e-mail the recipient can turn off (lib/email-prefs.ts): not sent when
+   * they have, and sent with a one-click List-Unsubscribe header when it is.
+   * The template carries the visible "stop these e-mails" link itself.
+   */
+  optOut?: { uid: string; pref: EmailPref };
 };
 
 export type MailResult =
@@ -55,6 +65,7 @@ function brevo(apiKey: string): Provider {
   return {
     name: "brevo",
     async send(message, from) {
+      const headers = unsubscribeHeaders(message);
       const response = await fetch("https://api.brevo.com/v3/smtp/email", {
         method: "POST",
         headers: { "api-key": apiKey, "Content-Type": "application/json", Accept: "application/json" },
@@ -65,6 +76,7 @@ function brevo(apiKey: string): Provider {
           htmlContent: message.html,
           textContent: message.text,
           ...(message.replyTo ? { replyTo: message.replyTo } : {}),
+          ...(headers ? { headers } : {}),
           tags: [message.kind],
         }),
         signal: AbortSignal.timeout(15000),
@@ -81,6 +93,7 @@ function resend(apiKey: string): Provider {
   return {
     name: "resend",
     async send(message, from) {
+      const headers = unsubscribeHeaders(message);
       const response = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
@@ -91,6 +104,7 @@ function resend(apiKey: string): Provider {
           html: message.html,
           text: message.text,
           ...(message.replyTo ? { reply_to: address(message.replyTo) } : {}),
+          ...(headers ? { headers } : {}),
           tags: [{ name: "kind", value: message.kind }],
         }),
         signal: AbortSignal.timeout(15000),
@@ -100,6 +114,12 @@ function resend(apiKey: string): Provider {
       return body.id ?? null;
     },
   };
+}
+
+/** One-click unsubscribe (RFC 8058); Gmail and Yahoo expect it on bulk e-mail. */
+function unsubscribeHeaders(message: MailMessage): Record<string, string> | null {
+  const url = message.optOut ? oneClickUnsubscribeUrl(message.optOut.uid, message.optOut.pref) : null;
+  return url ? { "List-Unsubscribe": `<${url}>`, "List-Unsubscribe-Post": "List-Unsubscribe=One-Click" } : null;
 }
 
 function env(name: string): string {
@@ -169,8 +189,13 @@ export async function sendMail(message: MailMessage): Promise<MailResult> {
   const flag = MAIL_SWITCH[message.kind];
   // If the switches can't be read, the defaults (on) apply, as on the site.
   const switchedOn = flag ? ((await readPlatformConfig().catch(() => null))?.config.flags[flag] ?? true) : true;
+  // If the preference can't be read, don't send: they may have turned it off.
+  const wanted = message.optOut ? await readEmailPrefs(message.optOut.uid).then((p) => p[message.optOut!.pref]).catch(() => false) : true;
 
-  if (!p) {
+  // The recipient's own choice first, so the log says why plainly.
+  if (!wanted) {
+    result = { status: "skipped", reason: `Turned off by the recipient (${message.optOut!.pref}).` };
+  } else if (!p) {
     result = { status: "skipped", reason: "No e-mail provider key is set (BREVO_API_KEY or RESEND_API_KEY)." };
   } else if (!fromEmail) {
     result = { status: "skipped", reason: "MAIL_FROM_EMAIL is not set." };

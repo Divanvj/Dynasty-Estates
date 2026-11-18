@@ -1,6 +1,7 @@
 import { FieldValue } from "firebase-admin/firestore";
 
 import { AdminUnavailableError, adminApp, adminAuth, adminDb } from "./firebase-admin";
+import { optOutLink } from "./email-prefs";
 import { sendMail, type MailResult } from "./mail";
 import { agencyInviteEmail, enquiryEmail } from "./mail-templates";
 
@@ -95,9 +96,12 @@ export async function notifyEnquiry(caller: { uid: string; email: string | null 
     buyerPhone: String(data.contactPhone ?? ""),
     notes: String(data.notes ?? ""),
     inboxPath,
+    optOut: optOutLink(ownerId, "enquiryEmails"),
   });
   const result = await sendMail({
     kind: "enquiry",
+    // The owner may have turned these off (/alerts, or the link in the e-mail).
+    optOut: { uid: ownerId, pref: "enquiryEmails" },
     to: { email: owner.email, name: owner.displayName ?? undefined },
     replyTo: caller.email ? { email: caller.email, name: String(data.contactName ?? "") || undefined } : undefined,
     ref: `inquiries/${inquiryId}`,

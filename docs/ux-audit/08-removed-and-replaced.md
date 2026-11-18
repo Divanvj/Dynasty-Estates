@@ -347,3 +347,17 @@ Added, nothing removed.
 
 - Removed: the Account/profile button in the phone top bar (MobileAppBar). Replaced by the bottom tab bar's Account tab, which now shows the signed-in initial.
 - Changed: the phone logo is centred and larger (44px mark, was 36px) and shows the wordmark at every width. Desktop unchanged.
+
+## Alerts, weekly reports and tidy-ups (18–19 Nov)
+
+- **Removed**: the greyed-out "Alerts & Notifications – Soon" entry in the site menu. **Replaced by** a working "Alerts & E-mails" link to the new `/alerts` page (also in the account menu). Its line no longer promises price-drop alerts, which aren't built.
+- **Removed**: the note on a listing's Overview tab saying "There is no edit screen yet … contact Dynasty through Support". The Edit listing button replaced it in the listing-edit work; the note was stale.
+- **Added – saved searches**: "Save this search" beside the result count on `/search` once a filter is set (signed out: "Sign in to save this search"). Up to 10 per account; saving the same search twice keeps one.
+- **Added – `/alerts`** (Alerts & e-mails): the saved searches, each with an alerts switch and Delete (named confirmation); and three e-mail switches — new enquiries on my listings, weekly listing report, saved-search alerts.
+- **Added – saved-search alert e-mails**: each night, homes published since the search was last checked; one e-mail per person, five homes per search, "See N more".
+- **Added – weekly listing report e-mail**: Mondays, to each agent and private seller with live listings — views, saves, contact clicks and enquiries per listing for the past seven days.
+- **Added – "Stop these e-mails"** at the foot of enquiry, weekly-report and alert e-mails, opening `/email/unsubscribe` (asks before turning anything off), plus one-click List-Unsubscribe headers for mail apps. Agency invitations and nightly alerts have none (account and operations e-mails).
+- **Added – listing checklist links**: each unfinished item on a listing's Performance tab links to the editor at the field that fixes it (`?fix=photos|size|description|floorplan|tour|showday`).
+- **Added – photo clean-up**: photos and a floor plan removed in an edit are deleted from storage when it is saved; each night, listing files no listing uses and older than 30 days are deleted, and photo fingerprints for removed photos are dropped (so the duplicate check stops refusing a photo that was taken off).
+- **Console**: two new switches under Site switches → E-mails (weekly reports, saved-search alerts); `/console/email` gains "Send me my weekly report" and "Run my saved-search alerts" (own account only).
+- **Not done**: price-drop alerts; FFC expiry reminders; signing in from `/alerts` doesn't return there afterwards (the login page always goes home); a per-search "stop" link (the e-mail link turns off all saved-search alerts; each search has its own switch on `/alerts`).

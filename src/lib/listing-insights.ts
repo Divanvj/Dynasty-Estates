@@ -111,13 +111,29 @@ export function compareWithArea(listing: SellerListing, all: Comparable[]): Area
   };
 }
 
-export type HealthItem = { key: string; label: string; done: boolean; tip: string };
-
 /**
- * What makes a listing stronger, from what it already has. There is no edit
- * screen yet, so each tip says what is missing rather than linking somewhere
- * that cannot fix it.
+ * The wizard field that fixes each checklist item: the checklist links to
+ * /seller/listings/[id]/edit?fix=<key>, which opens the wizard on `step` and
+ * scrolls to the element with id `fix-<key>`.
  */
+export const HEALTH_FIX = {
+  photos: { step: 5, label: "Add photos" },
+  size: { step: 2, label: "Add the floor size" },
+  description: { step: 5, label: "Edit the description" },
+  floorplan: { step: 5, label: "Add a floor plan" },
+  tour: { step: 5, label: "Add a tour link" },
+  showday: { step: 5, label: "Set a show day" },
+} as const;
+
+export type HealthKey = keyof typeof HEALTH_FIX;
+
+export function isHealthKey(value: string | null | undefined): value is HealthKey {
+  return Boolean(value) && Object.prototype.hasOwnProperty.call(HEALTH_FIX, value as string);
+}
+
+export type HealthItem = { key: HealthKey; label: string; done: boolean; tip: string };
+
+/** What makes a listing stronger, from what it already has. */
 export function listingHealth(listing: SellerListing): HealthItem[] {
   const photos = listing.photoCount ?? 0;
   return [
