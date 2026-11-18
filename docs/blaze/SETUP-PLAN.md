@@ -71,7 +71,7 @@ Authorized domains.
 
 | Item | Decision needed |
 | --- | --- |
-| E-mail sending (new-enquiry alerts, weekly seller report, FFC expiry reminders, alert e-mails from the checks) | Which provider (e.g. Resend, SendGrid, Amazon SES) and which sender address/domain. Not a Blaze feature in itself, but every alert depends on it. |
+| E-mail sending | Decided 2026-11-18 (owner: "any free provider for now, paid before launch"): **Brevo free plan** (300 a day, sends from one verified sender address without a domain; Resend's free plan can only mail its own account until a domain is verified). Built: new-enquiry alerts, agency invitations, nightly-failure alerts, console test send (`lib/server/mail.ts`, `/console/email`). Swapping provider = set its key (RESEND_API_KEY adapter exists). Still to build on it: weekly seller report, FFC expiry reminders, saved-search alerts. **Before launch:** paid provider + a verified Dynasty Estates domain. |
 | SMS / WhatsApp alerts to agents | Provider (e.g. Twilio, Clickatell, WhatsApp Business API) and budget. |
 | Approving a test listing in moderation during the photo test | It writes a **permanent** audit-trail entry (entries cannot be deleted). Approve, or test up to "Submitted" only. |
 | Stats retention | Decided: 13 months (2026-11-12). |

@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 
 import { db, isFirebaseConfigured } from "./firebase";
+import { requestNotification } from "./notify-client";
 
 /**
  * Agencies (docs/dashboards/PLAN.md, F4, Phase G).
@@ -123,12 +124,15 @@ export async function getMyInvites(email: string | null | undefined): Promise<Ag
 
 export async function inviteAgent(principalUid: string, agencyName: string, email: string): Promise<void> {
   const lower = email.trim().toLowerCase();
-  await setDoc(doc(requireDb(), "agency_invites", `${principalUid}_${lower}`), {
+  const inviteId = `${principalUid}_${lower}`;
+  await setDoc(doc(requireDb(), "agency_invites", inviteId), {
     principalUid,
     agencyName,
     email: lower,
     invitedAt: serverTimestamp(),
   });
+  // Inviting the same address again replaces the record, so it is e-mailed again.
+  requestNotification("/api/notify/agency-invite", { inviteId });
 }
 
 export async function deleteInvite(inviteId: string): Promise<void> {

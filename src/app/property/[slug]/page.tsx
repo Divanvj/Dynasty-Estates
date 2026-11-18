@@ -320,6 +320,7 @@ export default async function PropertyPage({
             <OnShowBanner
               propertyId={property.id}
               propertyTitle={property.title}
+              ownerId={property.ownerId}
               location={property.location}
               onShow={property.onShow}
             />

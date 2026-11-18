@@ -31,6 +31,7 @@ import {
   RocketIcon,
   ScanIcon,
   ToggleIcon,
+  MailIcon,
   UsersGearIcon,
   WrenchIcon,
 } from "./console-icons";
@@ -67,6 +68,7 @@ const NAV: Array<{ group: string; items: NavItem[] }> = [
     items: [
       { href: "/console/users", label: "Users & roles", icon: UsersGearIcon },
       { href: "/console/flags", label: "Site switches", icon: ToggleIcon },
+      { href: "/console/email", label: "E-mail", icon: MailIcon },
       { href: "/console/tools", label: "Tools", icon: WrenchIcon },
     ],
   },

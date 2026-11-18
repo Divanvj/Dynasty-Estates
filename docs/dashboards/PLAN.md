@@ -203,6 +203,6 @@ the principal's own view and needs the agency schema, so it follows once the ind
 
 ## Unbuilt (keep listed until done)
 
-Built: view tracking · listing performance · seller report + template · enquiry stages & response time · price snapshot · compliance card · agent verification queue · listing mandate · Register Agency · principal view + leaderboard · invitations · enquiry hand-out · listing edit (18 Nov).
-Still unbuilt: invitation e-mails · admin
+Built: view tracking · listing performance · seller report + template · enquiry stages & response time · price snapshot · compliance card · agent verification queue · listing mandate · Register Agency · principal view + leaderboard · invitations · enquiry hand-out · listing edit (18 Nov) · invitation + new-enquiry e-mails (18 Nov, Brevo free plan).
+Still unbuilt: admin
 pulse & sub-pages · revenue list · demand vs supply · e-mail/SMS/WhatsApp alerts · Saved Searches · online payment · package expiry · tenancy applications screen for agents/landlords.

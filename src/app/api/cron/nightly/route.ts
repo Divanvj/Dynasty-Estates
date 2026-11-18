@@ -7,6 +7,8 @@ import { runIntegrityScan } from "@/lib/server/console-data";
 import { adminApp, adminDb } from "@/lib/server/firebase-admin";
 import { runHealthProbes } from "@/lib/server/health";
 import { deleteOldStats, retentionCutoff } from "@/lib/server/listing-stats";
+import { alertRecipients, sendMail } from "@/lib/server/mail";
+import { opsAlertEmail } from "@/lib/server/mail-templates";
 import { NIGHTLY_DOC } from "@/lib/server/platform-checks";
 import { SITE_URL } from "@/lib/site-url";
 
@@ -93,6 +95,14 @@ export async function GET(request: Request) {
     await adminDb().doc(NIGHTLY_DOC).set({ lastRunAt: new Date().toISOString(), ok: failures.length === 0, failures, summary });
   } catch (error) {
     console.error("[cron] could not record the run:", error);
+  }
+
+  // Tell a person when something failed (MAIL_ALERTS_TO; switch "Nightly job alerts").
+  if (failures.length) {
+    const mail = opsAlertEmail({ summary, failures, ranAt: new Date().toISOString() });
+    for (const to of alertRecipients()) {
+      await sendMail({ kind: "ops_alert", to: { email: to }, ref: NIGHTLY_DOC, ...mail });
+    }
   }
   return NextResponse.json({ ok: failures.length === 0, ms: Date.now() - started, failures, ...report }, { status: failures.length ? 500 : 200 });
 }

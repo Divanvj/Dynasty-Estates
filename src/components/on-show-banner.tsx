@@ -7,6 +7,8 @@ import { describeShow, type OnShow } from "@/lib/on-show";
 interface OnShowBannerProps {
   propertyId: string;
   propertyTitle: string;
+  /** The listing's owner, so a viewing booked here reaches them (and is e-mailed to them). */
+  ownerId?: string;
   location: string;
   onShow: OnShow;
 }
@@ -18,7 +20,7 @@ interface OnShowBannerProps {
  * how to get there, and offers a private viewing to anyone who can't make it.
  * Renders only when the show day is known and still ahead.
  */
-export default function OnShowBanner({ propertyId, propertyTitle, location, onShow }: OnShowBannerProps) {
+export default function OnShowBanner({ propertyId, propertyTitle, ownerId, location, onShow }: OnShowBannerProps) {
   const show = describeShow(onShow);
   if (!show) return null;
 
@@ -76,6 +78,7 @@ export default function OnShowBanner({ propertyId, propertyTitle, location, onSh
           <PropertyInquiryButton
             propertyId={propertyId}
             propertyTitle={propertyTitle}
+            ownerId={ownerId}
             kind="viewing"
             className="pill border border-slate-300 bg-white font-bold text-slate-800 hover:bg-slate-50 transition-colors cursor-pointer dark:border-white/10 dark:bg-surface-ink dark:text-slate-200"
           >

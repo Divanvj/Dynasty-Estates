@@ -1,6 +1,7 @@
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 import { db, isFirebaseConfigured } from "./firebase";
+import { requestNotification } from "./notify-client";
 
 export type InquiryKind = "tour" | "viewing" | "message";
 
@@ -52,6 +53,9 @@ export async function createPropertyInquiry({
     status: "new",
     createdAt: serverTimestamp(),
   });
+
+  // E-mail the listing's owner. Only when there is one to tell.
+  if (ownerId) requestNotification("/api/notify/enquiry", { inquiryId: inquiry.id });
 
   return inquiry.id;
 }

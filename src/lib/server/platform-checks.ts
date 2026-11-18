@@ -2,6 +2,7 @@ import { SITE_URL } from "@/lib/site-url";
 
 import { RETIRED_TEST_ACCOUNTS } from "./console-data";
 import { adminApp, adminAuth, adminConfigError, adminDb, adminRules, googleApi, PROJECT_ID } from "./firebase-admin";
+import { mailSetup } from "./mail";
 
 /*
   Infrastructure checks for the console's Platform, Firebase, Deploys and
@@ -213,6 +214,7 @@ export const KNOWN_COLLECTIONS = [
   "web_vitals",
   "console_events",
   "platform_config",
+  "mail_log",
 ] as const;
 
 export async function getFirebaseStatus() {
@@ -529,9 +531,24 @@ export async function getGoLiveChecks(): Promise<Check[]> {
         ? "Could not read the last nightly run."
         : !nightly
           ? "The nightly jobs (health check, integrity scan, stats clean-up) have never run. Vercel Cron calls /api/cron/nightly at 02:00 SAST, and the route refuses every call until CRON_SECRET is set."
-          : `Last run ${nightly.lastRunAt}: ${nightly.summary}.${Date.now() - Date.parse(nightly.lastRunAt) > staleMs ? " That is more than a day ago." : ""} Results are in the event log. No alert e-mails yet: that needs an e-mail provider.`,
+          : `Last run ${nightly.lastRunAt}: ${nightly.summary}.${Date.now() - Date.parse(nightly.lastRunAt) > staleMs ? " That is more than a day ago." : ""} Results are in the event log; failures are e-mailed to MAIL_ALERTS_TO.`,
     fix: "In Vercel → dynasty-estates → Settings → Environment Variables, add CRON_SECRET (a random value of 16+ characters) for Production, then redeploy. Check Vercel → Cron Jobs for failed runs.",
     href: "/console/events",
+  });
+
+  const mail = mailSetup();
+  const noAlerts = mail.alertsTo.length ? "" : " MAIL_ALERTS_TO is not set, so nightly failures are not e-mailed.";
+  checks.push({
+    id: "email",
+    label: "E-mail sending",
+    state: !mail.ready ? "error" : mail.provider === "brevo" || !mail.alertsTo.length ? "warning" : "ok",
+    summary: !mail.ready
+      ? "No e-mail provider is set up, so new-enquiry alerts, agency invitations and nightly alerts are not sent (each attempt is logged as skipped)."
+      : mail.provider === "brevo"
+        ? `Sending through the Brevo free plan (300 a day) from ${mail.fromEmail}. Fine for testing; before launch move to a paid provider sending from a verified Dynasty Estates domain.${noAlerts}`
+        : `Sending through ${mail.provider} from ${mail.fromEmail}.${noAlerts}`,
+    fix: "Set the provider key (BREVO_API_KEY or RESEND_API_KEY), MAIL_FROM_EMAIL, MAIL_FROM_NAME and MAIL_ALERTS_TO in Vercel (Production) and .env.local, redeploy, then use Send me a test e-mail on the E-mail page.",
+    href: "/console/email",
   });
 
   return checks;

@@ -331,3 +331,14 @@ Added, nothing removed. The seller portal's "Manage" button (removed earlier bec
 - **Wizard moved** from `app/seller/listings/new/page.tsx` to `components/listing-wizard.tsx` (the new-listing page now only wraps it). Photos added during an edit get duplicate-check fingerprints; existing ones keep theirs. Edits are not autosaved in the browser, so they can't overwrite an unfinished new-listing draft.
 - **Fixed on the way**: an untouched province picker showed Gauteng but saved an empty province (the location read "Pretoria, "). On phones the six step tabs squashed their labels into each other; they now show numbers only below 640 px (names kept for screen readers).
 - **Not done**: photos removed in an edit stay in storage (and their fingerprints stay, so the same photo can't be re-used on another listing); the health checklist doesn't jump to a wizard step.
+
+## E-mail sending (18 Nov)
+
+Added, nothing removed.
+
+- **New-enquiry e-mail** to the agent or seller who listed the home (buyer's name, phone, e-mail and message; Reply goes to the buyer; button to their enquiries). Sent once per enquiry, after it is saved; a failed e-mail never fails the enquiry.
+- **Agency invitation e-mail** to the invited agent (how to accept; how to register as an agent first).
+- **Nightly job alert** to MAIL_ALERTS_TO when a nightly job fails.
+- **Developer console → E-mail** (`/console/email`): set-up (provider, sender, alerts address; never the key), test send to yourself or the alerts address, last 50 attempts with sent / skipped / failed and why. Three new switches under Site switches → E-mails. Go-live list: "E-mail sending".
+- **Fixed on the way**: a viewing booked from the show-day banner on a listing didn't carry the listing's owner, so the agent never saw it in their inbox (and would have had no e-mail).
+- **Not done**: weekly seller report, FFC expiry reminders, saved-search alerts (saved searches don't exist yet); an owner can't yet turn off their own enquiry e-mails; no per-sender limit beyond one e-mail per enquiry.

@@ -31,6 +31,11 @@ export const FLAG_GROUPS = {
       "Checks every photo goes through in the listing wizard before upload. Turning one off lets those photos through for everyone, so switch it back on after testing. File type and the 10 MB limit are always enforced by storage.rules.",
   },
   accounts: { title: "Sign-in", description: "Ways to sign in on /auth/login." },
+  email: {
+    title: "E-mails",
+    description:
+      "E-mails the site sends. They also need a provider key and sender address on the server; /console/email shows the set-up and every e-mail attempted.",
+  },
 } as const;
 
 export const FEATURE_FLAGS = {
@@ -74,6 +79,21 @@ export const FEATURE_FLAGS = {
     label: "Phone sign-in",
     description: "Signing in with an SMS code. Each real SMS is billed on the Blaze plan; test numbers are free.",
   },
+  emailEnquiryAlerts: {
+    group: "email",
+    label: "New-enquiry e-mails",
+    description: "E-mails the agent or seller who listed a home when a buyer sends an enquiry about it.",
+  },
+  emailAgencyInvites: {
+    group: "email",
+    label: "Agency invitation e-mails",
+    description: "E-mails the agent an agency principal invites to join their team.",
+  },
+  emailOpsAlerts: {
+    group: "email",
+    label: "Nightly job alerts",
+    description: "E-mails MAIL_ALERTS_TO when a nightly job (health check, data scan, clean-up) fails.",
+  },
 } as const satisfies Record<string, { group: keyof typeof FLAG_GROUPS; label: string; description: string }>;
 
 export type FeatureFlag = keyof typeof FEATURE_FLAGS;
@@ -89,6 +109,9 @@ export const DEFAULT_PLATFORM_CONFIG: PlatformConfig = {
     photoBlurCheck: true,
     photoResolutionCheck: true,
     phoneSignIn: true,
+    emailEnquiryAlerts: true,
+    emailAgencyInvites: true,
+    emailOpsAlerts: true,
   },
   updatedAt: null,
   updatedBy: null,
