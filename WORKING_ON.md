@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/email-features | e-mail opt-out, saved searches + alerts, weekly seller report, photo clean-up, checklist links (mail*, notify, cron, seller-listings, listing-wizard, listing-detail, search, saved, firestore.rules) | 2026-11-18 |
 
 ## Recently merged
 
