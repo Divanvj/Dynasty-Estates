@@ -9,12 +9,15 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/example-listings | "Example listing" label: property-data.ts, property cards, property page (small) | 2026-11-19 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-19 — **Example listings.** 6 labelled example homes live in Firestore (`properties/claude-example-1..6`, `example: true`,
+  tag "Example listing"; seeded from outside the repo). `PropertyRecord.example` → the property page shows a notice instead of the
+  agent card and no enquiry buttons. Keep that behaviour if you restyle the page.
 
 - 2026-11-19 — **Read `docs/TO-DO.md` before starting.** It is the working to-do list (mirrored in XCORE). Two lanes: the **UI lane**
   (mobile-first UI/UX: items U1–U7) and the **build lane** (data, API, e-mail, security, payments). It lists the shared files to claim
