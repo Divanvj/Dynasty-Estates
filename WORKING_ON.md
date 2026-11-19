@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/stand-ins | S1-3: save-property-button, /saved, /collections, lib/collections.ts, lib/saved-properties.ts | 2026-11-19 |
 
 ## Recently merged
 
