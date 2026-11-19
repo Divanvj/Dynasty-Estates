@@ -5,6 +5,12 @@ import Link from "next/link";
 import { getPropertyList, southAfricanProvinces } from "@/lib/property-data";
 import { absoluteUrl, SITE_URL } from "@/lib/site-url";
 
+// The catalogue changes without a deploy (listings published, sold, removed),
+// so this page is rebuilt at most every 5 minutes. Without it the build-time
+// copy was served until the next deploy (found in S1-5: deleted listings
+// still showed on the live home page).
+export const revalidate = 300;
+
 export const metadata: Metadata = {
   title: "Properties & Apartments To Rent in South Africa",
   description:

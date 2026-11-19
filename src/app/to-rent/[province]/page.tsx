@@ -6,6 +6,12 @@ import { getPropertyList, matchProvinceName, southAfricanCitiesByProvince } from
 import { getListingsByLocation, enrichedListingToPropertyRecord } from "@/lib/server/property-service";
 import { absoluteUrl, SITE_URL } from "@/lib/site-url";
 
+// The catalogue changes without a deploy (listings published, sold, removed),
+// so this page is rebuilt at most every 5 minutes. Without it the build-time
+// copy was served until the next deploy (found in S1-5: deleted listings
+// still showed on the live home page).
+export const revalidate = 300;
+
 function capitalize(str: string): string {
   return str
     .split(/[-_ ]+/)

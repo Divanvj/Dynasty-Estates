@@ -9,6 +9,12 @@ import { getAgentByIdOrSlug, verifiedPractitioners } from "@/lib/agents-data";
 import { getPropertyList } from "@/lib/property-data";
 import { absoluteUrl } from "@/lib/site-url";
 
+// The catalogue changes without a deploy (listings published, sold, removed),
+// so this page is rebuilt at most every 5 minutes. Without it the build-time
+// copy was served until the next deploy (found in S1-5: deleted listings
+// still showed on the live home page).
+export const revalidate = 300;
+
 export async function generateMetadata({
   params,
 }: {

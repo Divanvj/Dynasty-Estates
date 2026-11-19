@@ -7,6 +7,12 @@ import HomeTrendingListings from "@/components/home-trending-listings";
 import { SparklesIcon } from "@/components/icons";
 import HomeSpotlight from "@/components/home-spotlight";
 import { getPropertyList } from "@/lib/property-data";
+
+// The catalogue changes without a deploy (listings published, sold, removed),
+// so this page is rebuilt at most every 5 minutes. Without it the build-time
+// copy was served until the next deploy (found in S1-5: deleted listings
+// still showed on the live home page).
+export const revalidate = 300;
 export default async function Home() {
   // A catalogue failure must not 500 the landing page: it renders without
   // listings and the error is logged. There is no sample catalogue to fall
