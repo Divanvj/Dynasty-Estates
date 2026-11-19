@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/example-listings | "Example listing" label: property-data.ts, property cards, property page (small) | 2026-11-19 |
 
 ## Recently merged
 
