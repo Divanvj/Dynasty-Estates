@@ -9,12 +9,15 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/rules-tests | S1-4: tests/firestore-rules.test.mjs, package.json scripts, .github/workflows/ci.yml, maybe firestore.rules | 2026-11-19 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-19 — `DESKTOP-1R37EBU/rules-tests` merged (S1-4). **`npm run test:rules`** runs `tests/firestore-rules.test.mjs` against the
+  Firestore emulator (Java 21; also in CI). Add a check there whenever you change `firestore.rules`. Rules tightened: listing owners
+  can't set `example` / `sale` / `agentId`; applications are applicant + admin only; enquiries are created as `new` and unassigned.
 
 - 2026-11-19 — `DESKTOP-1R37EBU/stand-ins` merged (S1-3). **Saves and collections are account-only.** `SavePropertyButton` no longer
   uses localStorage; signed out it sends to /auth/login. `/saved` and `/collections` show a sign-in state when signed out
