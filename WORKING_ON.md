@@ -15,6 +15,10 @@ lines keep its own merges trivial.
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
 
+- 2026-11-19 — **Read `docs/TO-DO.md` before starting.** It is the working to-do list (mirrored in XCORE). Two lanes: the **UI lane**
+  (mobile-first UI/UX: items U1–U7) and the **build lane** (data, API, e-mail, security, payments). It lists the shared files to claim
+  first. The build lane starts with S1-1 (built-in sample listings) once the owner decides D1.
+
 - 2026-11-19 — `DESKTOP-1R37EBU/sold-prices` merged. **Sold prices recorded on Dynasty.** New server-only collection `sales/{listingId}`
   (via `/api/listings/[id]/sale`, owner or admin); listings gain `sale: { soldOn, price? }` (price only if the seller agreed) — read it as
   `PropertyRecord.sale`. Area figures: `/api/market/sales` + `<RecentSales>`. `useOwnerListings()` now returns `reload()`. No rules change.
