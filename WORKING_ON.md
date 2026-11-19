@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/data-integrity | S1-5: src/lib/seller-listings.ts (createSellerListing), live data clean-up | 2026-11-19 |
 
 ## Recently merged
 
