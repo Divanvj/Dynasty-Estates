@@ -320,6 +320,20 @@ await check("owner files a fingerprint with their new listing (batch)", true, as
   b.set(doc(seller, "photo_fingerprints/fp2"), { hash: "fedcba9876543210", bands: ["a", "b", "c", "d"], ownerId: "seller1", listingId: "withPhoto", createdAt: now() });
   await b.commit();
 });
+await check("new listing as the app writes it: physical record + listing + fingerprint in one batch", true, async () => {
+  const b = writeBatch(seller);
+  b.set(doc(seller, "physical_properties/physNew"), { ownerId: "seller1", bedrooms: 3, bathrooms: 2, createdAt: now() });
+  b.set(doc(seller, "properties/withPhys"), { propertyId: "physNew", ownerId: "seller1", ownerEmail: "seller1@example.test", agentId: "seller1", status: "Submitted", title: "Batch", createdAt: now() });
+  b.set(doc(seller, "photo_fingerprints/fp4"), { hash: "fedcba9876543212", bands: ["a", "b", "c", "d"], ownerId: "seller1", listingId: "withPhys", createdAt: now() });
+  await b.commit();
+});
+await check("a batch whose physical record names someone else writes nothing", false, async () => {
+  const b = writeBatch(seller);
+  b.set(doc(seller, "physical_properties/physBad"), { ownerId: "seller2", bedrooms: 3 });
+  b.set(doc(seller, "properties/withPhysBad"), { propertyId: "physBad", ownerId: "seller1", status: "Submitted" });
+  await b.commit();
+});
+await check("…and the listing from that failed batch does not exist", false, () => getDoc(doc(admin, "properties/withPhysBad")).then((s) => { if (!s.exists()) throw Object.assign(new Error("missing"), { code: "permission-denied" }); }));
 await check("fingerprint filed against someone else's listing", false, () => setDoc(doc(seller2, "photo_fingerprints/fp3"), { hash: "fedcba9876543211", bands: ["a", "b", "c", "d"], ownerId: "seller2", listingId: "pub1", createdAt: now() }));
 await check("fingerprint edited after filing", false, () => updateDoc(doc(seller, "photo_fingerprints/fp1"), { hash: "0000000000000000" }));
 

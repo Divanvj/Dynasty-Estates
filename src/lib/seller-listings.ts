@@ -1,5 +1,4 @@
 import {
-  addDoc,
   collection,
   deleteField,
   doc,
@@ -270,8 +269,13 @@ export async function createSellerListing(formData: ListingFormData): Promise<st
     throw new Error("Add at least one photo before submitting for moderation.");
   }
 
-  // Create or associate Physical Property entity reference
-  const physicalPropertyRef = await addDoc(collection(db, "physical_properties"), {
+  // The physical property (size, rooms, location) and the listing that points
+  // at it are written in one batch. The physical record used to be saved on
+  // its own first, so a listing write that then failed left it behind with
+  // nothing referencing it (the "physical properties with no listing" finding).
+  const physicalPropertyRef = doc(collection(db, "physical_properties"));
+  const batch = writeBatch(db);
+  batch.set(physicalPropertyRef, {
     // Carry ownership onto the physical entity too, so security rules can scope
     // it to the person who created it rather than leaving it world-writable.
     ownerId: formData.ownerId,
@@ -287,11 +291,10 @@ export async function createSellerListing(formData: ListingFormData): Promise<st
     createdAt: serverTimestamp(),
   });
 
-  // Create commercial Listing entity referencing Physical Property. Written in
-  // one batch with its photo fingerprints, so a listing can never exist without
-  // them (its photos would then escape duplicate detection) or vice versa.
+  // The listing, in the same batch with its photo fingerprints, so a listing
+  // can never exist without them (its photos would then escape duplicate
+  // detection) or vice versa.
   const listing = doc(collection(db, "properties"));
-  const batch = writeBatch(db);
   batch.set(listing, {
     propertyId: physicalPropertyRef.id,
     ownerId: formData.ownerId,
