@@ -61,6 +61,12 @@ export type PropertyRecord = {
    * `price` only when the seller agreed to show it.
    */
   sale?: { soldOn: string; price?: number };
+  /**
+   * A made-up home shown so the catalogue is not empty before real listings
+   * arrive. Set only in Firestore (`example: true`); the page labels it and
+   * offers no way to enquire, since there is nobody to reach.
+   */
+  example?: boolean;
   gallery: string[];
   features: string[];
   onShow?: {
@@ -1101,6 +1107,7 @@ export async function getPropertyList(): Promise<PropertyRecord[]> {
           data.sale && typeof data.sale.soldOn === "string"
             ? { soldOn: data.sale.soldOn, ...(typeof data.sale.price === "number" ? { price: data.sale.price } : {}) }
             : undefined,
+        example: data.example === true ? true : undefined,
         gallery: Array.isArray(data.gallery) && data.gallery.length > 0
           ? data.gallery
           : [data.image ?? fallbackProperties[0].image],

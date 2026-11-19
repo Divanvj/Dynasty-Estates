@@ -221,6 +221,11 @@ export default async function PropertyPage({
                   <div className="flex items-center gap-2 flex-wrap mb-1">
                     {/* No For Sale / To Rent pill: the visitor chose sale or rent
                         to get here, and the page title and price say it again. */}
+                    {property.example && (
+                      <span className="rounded-full border border-amber-300 bg-amber-950/85 px-3 py-1 text-xs uppercase tracking-widest font-extrabold text-amber-100 backdrop-blur-md">
+                        Example listing
+                      </span>
+                    )}
                     {property.status === "Sold" && (
                       <span className="rounded-full border border-red-400 bg-red-950/90 px-3 py-1 text-xs uppercase tracking-widest font-extrabold text-red-200 backdrop-blur-md">
                         Sold
@@ -490,7 +495,22 @@ export default async function PropertyPage({
             {/* Contact first (UX Phase 4). The practitioner card used to sit below
                 the whole calculator, so on desktop the one thing that wins an
                 enquiry was off-screen while a cost estimate took the column. */}
-            {/* Agent / Practitioner Card */}
+            {/* Agent / Practitioner Card. An example listing has nobody behind
+                it, so it says so instead of offering a viewing. */}
+            {property.example ? (
+              <div className="rounded-panel border border-amber-300/70 bg-amber-50/80 p-6 dark:border-amber-400/30 dark:bg-amber-950/30">
+                <p className="text-xs uppercase tracking-[0.22em] font-bold text-amber-800 dark:text-amber-300">Example listing</p>
+                <p className="mt-3 text-sm leading-relaxed text-slate-800 dark:text-slate-200">
+                  This home is not for sale. It shows how a listing looks on Dynasty Estates while the first real listings come in.
+                </p>
+                <Link
+                  href="/search"
+                  className="no-print pill-lg mt-4 w-full bg-slate-950 font-bold text-white hover:bg-slate-800 transition-all dark:bg-emerald-700 dark:hover:bg-emerald-800"
+                >
+                  Browse listings
+                </Link>
+              </div>
+            ) : (
             <div className="rounded-panel border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <p className="text-xs uppercase tracking-[0.22em] text-slate-600 font-bold dark:text-slate-400">Listing agent</p>
               {/* Was hardcoded to one practitioner ("SG / Sherry Gallagher") on
@@ -593,6 +613,7 @@ export default async function PropertyPage({
                 ) : null}
               </div>
             </div>
+            )}
             {/* Interactive True Cost Calculator */}
             <TrueCostCalculator
               listingType={property.listingType ?? "sale"}
@@ -683,6 +704,11 @@ export default async function PropertyPage({
             tenant-application button that used to sit here is a duplicate of the
             one in the practitioner card below, so the space goes to the two
             channels that did not exist at all. */}
+        {property.example ? (
+          <span className="shrink-0 rounded-full border border-amber-300 bg-amber-50 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-amber-800 dark:border-amber-400/30 dark:bg-amber-950/40 dark:text-amber-300">
+            Example listing
+          </span>
+        ) : (
         <div className="flex shrink-0 items-center gap-2">
           {contact && (
             <>
@@ -722,6 +748,7 @@ export default async function PropertyPage({
             <span>Viewing</span>
           </PropertyInquiryButton>
         </div>
+        )}
       </div>
     </main>
   );
