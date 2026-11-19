@@ -9,12 +9,16 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/stand-ins | S1-3: save-property-button, /saved, /collections, lib/collections.ts, lib/saved-properties.ts | 2026-11-19 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-19 — `DESKTOP-1R37EBU/stand-ins` merged (S1-3). **Saves and collections are account-only.** `SavePropertyButton` no longer
+  uses localStorage; signed out it sends to /auth/login. `/saved` and `/collections` show a sign-in state when signed out
+  (`importBrowserSaves()` moves old browser lists into the account). The demo collection, `demo-user-1` and the fake
+  "+ Invite Partner" dialog are gone; `addPropertyToCollection` / comments use `arrayUnion` (they used to overwrite).
 
 - 2026-11-19 — `DESKTOP-1R37EBU/remove-samples` merged. **The 20 built-in sample listings are gone** (`fallbackProperties` deleted).
   `getPropertyList()` returns stored listings only (empty array when Firebase is off). A listing without a photo uses `NO_PHOTO_IMAGE`.
