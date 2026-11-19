@@ -9,12 +9,17 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/remove-samples | S1-1/S1-2 built-in samples out: property-data.ts, home, search, compare, saved, ai-concierge, visual-search, property-service, collections; hero pills on property page | 2026-11-19 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-19 — `DESKTOP-1R37EBU/remove-samples` merged. **The 20 built-in sample listings are gone** (`fallbackProperties` deleted).
+  `getPropertyList()` returns stored listings only (empty array when Firebase is off). A listing without a photo uses `NO_PHOTO_IMAGE`.
+  `generateGroundedRecommendations`, `findHomesLikeThis`, `getPropertiesForCollection`, `getEnrichedListings` and
+  `checkListingForDuplicates` now take the catalogue as an argument. `/compare` loads the real catalogue. The category and
+  example pills on the listing-page photo were removed at the owner's request; please don't bring them back.
 
 - 2026-11-19 — **Example listings.** 6 labelled example homes live in Firestore (`properties/claude-example-1..6`, `example: true`,
   tag "Example listing"; seeded from outside the repo). `PropertyRecord.example` → the property page shows a notice instead of the
