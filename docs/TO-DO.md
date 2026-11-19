@@ -35,7 +35,7 @@ Status keys: **[ ]** to do · **[~]** in progress · **[!]** blocked · **[?]** 
 
 Order matters: S1-1 changes what every page shows, so it goes first.
 
-- [?] **S1-1** **Stop mixing built-in sample listings into the live site.** `getPropertyList()` adds ~20 hard-coded listings from `property-data.ts` to every search, the home page falls back to them, `/compare` can *only* compare them, `/saved` shows two of them to new visitors, and the AI concierge ranks them. Live Firestore has 6 published listings, all TEST. *Decision D1 first.*
+- [ ] **S1-1** **Stop mixing built-in sample listings into the live site.** `getPropertyList()` adds ~20 hard-coded listings from `property-data.ts` to every search, the home page falls back to them, `/compare` can *only* compare them, `/saved` shows two of them to new visitors, and the AI concierge ranks them. Live Firestore has 6 published TEST listings plus 6 labelled example homes (below). *D1 decided 19 Nov: remove the built-in samples.*
 - [ ] **S1-2** `/compare` works with real listings (it reads `fallbackProperties` only today).
 - [ ] **S1-3** Remove the remaining stand-ins: `/saved` sample homes and localStorage fallback, the demo member in Collections.
 - [ ] **S1-4** Security-rule tests in the repo and CI (Firestore emulator): owner-only reads, role checks, agency access, enquiry stages. Must exist before payments.
@@ -47,6 +47,8 @@ Order matters: S1-1 changes what every page shows, so it goes first.
 - [ ] **S1-10** Price-drop alerts: e-mail when a saved home or a saved-search match drops its asking price.
 - [ ] **S1-11** "Stop alerts for this search" link per saved search (today the link stops all).
 - [ ] **S1-12** Fix the broken `npm run firebase:*` deploy scripts.
+
+Done 19 Nov: **6 labelled example listings** in Firestore (`properties/claude-example-1..6`, `example: true`, 3 Unsplash photos each, TEST agency). The property page shows a notice instead of the agent card and no enquiry buttons. Seeded from outside the repo.
 
 ## Mobile UI/UX (UI lane, runs alongside Sprint 1)
 
@@ -74,7 +76,7 @@ Order matters: S1-1 changes what every page shows, so it goes first.
 - [ ] **L4** Rate limits and abuse protection on public endpoints (enquiries, saved searches, unsubscribe, tracking).
 - [ ] **L5** Backups: scheduled Firestore export; uptime monitoring with alerts.
 - [ ] **L6** End-to-end journey tests (search → enquiry → agent reply; list → moderate → publish → sell) and a cross-browser check.
-- [ ] **L7** Remove live TEST data (8 TEST listings, TEST agency, test practitioner record and enquiries). Needs owner OK in chat.
+- [ ] **L7** Remove live TEST data (6 example listings once real ones exist, 8 TEST listings, TEST agency, test practitioner record and enquiries). Needs owner OK in chat.
 - [?] **L8** Support e-mail inbox for Support & Guidance (D5).
 - [ ] **L9** Threat-model review against what is built now.
 
@@ -90,7 +92,7 @@ Order matters: S1-1 changes what every page shows, so it goes first.
 
 ## Owner decisions
 
-- **D1** Go live with real listings only (remove the ~20 built-in samples), or keep them clearly labelled "Example listing" until enough real ones exist? *Blocks S1-1.*
+- **D1** ~~Built-in samples~~ **Decided 19 Nov:** remove the ~20 built-in samples; 6 labelled example homes in Firestore cover the gap until real listings arrive.
 - **D2** Payments: gateway (Ozow / Paystack), prices, VAT, refunds, invoicing, free tier. *Blocks Sprint 2.*
 - **D3** Market data: keep `/insights` illustrative, build on Dynasty's own recorded sales, or buy a feed.
 - **D4** Paid e-mail provider and the sending domain.
