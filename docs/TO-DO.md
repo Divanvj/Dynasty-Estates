@@ -35,9 +35,9 @@ Status keys: **[ ]** to do · **[~]** in progress · **[!]** blocked · **[?]** 
 
 Order matters: S1-1 changes what every page shows, so it goes first.
 
-- [ ] **S1-1** **Stop mixing built-in sample listings into the live site.** `getPropertyList()` adds ~20 hard-coded listings from `property-data.ts` to every search, the home page falls back to them, `/compare` can *only* compare them, `/saved` shows two of them to new visitors, and the AI concierge ranks them. Live Firestore has 6 published TEST listings plus 6 labelled example homes (below). *D1 decided 19 Nov: remove the built-in samples.*
-- [ ] **S1-2** `/compare` works with real listings (it reads `fallbackProperties` only today).
-- [ ] **S1-3** Remove the remaining stand-ins: `/saved` sample homes and localStorage fallback, the demo member in Collections.
+- [x] **S1-1** **Stop mixing built-in sample listings into the live site.** *Done 19 Nov: the 20 samples are deleted from the code.* `getPropertyList()` adds ~20 hard-coded listings from `property-data.ts` to every search, the home page falls back to them, `/compare` can *only* compare them, `/saved` shows two of them to new visitors, and the AI concierge ranks them. Live Firestore has 6 published TEST listings plus 6 labelled example homes (below). *D1 decided 19 Nov: remove the built-in samples.*
+- [x] **S1-2** `/compare` works with real listings. *Done 19 Nov.*
+- [ ] **S1-3** Remove the remaining stand-ins: `/saved` localStorage fallback (the sample homes are gone), the `demo-user-1` member in Collections, and the Collections invite that only shows "Invite dispatched" without sending.
 - [ ] **S1-4** Security-rule tests in the repo and CI (Firestore emulator): owner-only reads, role checks, agency access, enquiry stages. Must exist before payments.
 - [ ] **S1-5** Fix the data-integrity findings from the nightly scan: listings without a valid owner (5), unused physical records (4), sample enquiries (4), accounts without a role claim (2).
 - [ ] **S1-6** E-mail verification for new accounts (send on sign-up, nudge until verified).
@@ -48,11 +48,11 @@ Order matters: S1-1 changes what every page shows, so it goes first.
 - [ ] **S1-11** "Stop alerts for this search" link per saved search (today the link stops all).
 - [ ] **S1-12** Fix the broken `npm run firebase:*` deploy scripts.
 
-Done 19 Nov: **6 labelled example listings** in Firestore (`properties/claude-example-1..6`, `example: true`, 3 Unsplash photos each, TEST agency). The property page shows a notice instead of the agent card and no enquiry buttons. Seeded from outside the repo.
+Done 19 Nov: **6 labelled example listings** in Firestore (`properties/claude-example-1..6`, `example: true`, 3 Unsplash photos each, TEST agency). No tag on their photos (owner asked); the property page shows a notice instead of the agent card and no enquiry buttons. Seeded from outside the repo.
 
 ## Mobile UI/UX (UI lane, runs alongside Sprint 1)
 
-- [ ] **U1** Phone pass over everything built since 9 Nov: agent/agency/admin dashboards, listing page in the portals (incl. the new Mark as sold panel), listing editor, `/agent/market`, seller report, `/alerts`, `/email/unsubscribe`, `/pricing`, `/sell`. Check 375 px, no sideways scroll, 44 px targets.
+- [ ] **U1** Phone pass over everything built since 9 Nov: agent/agency/admin dashboards, listing page in the portals (incl. the new Mark as sold panel), listing editor, `/agent/market`, seller report, `/alerts`, `/email/unsubscribe`, `/pricing`, `/sell`. Check 375 px, no sideways scroll, 44 px targets. Seen 19 Nov: on a phone the price on a search card runs into the photo dots.
 - [ ] **U2** Mobile speed (old S15): home LCP ≤ 4 s, search TBT ≤ 1,200 ms, Lighthouse mobile ≥ 70.
 - [ ] **U3** Targets the UX plan didn't fully meet: home ≤ ~3,500 px tall at 1280 (now 4,772); first search card in the top half at 375×812 (now 514 px); agent card above the fold on the listing page at 1280×800.
 - [ ] **U4** Sign-in: real Google logo instead of the plain "G".

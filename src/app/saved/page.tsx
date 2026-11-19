@@ -14,7 +14,7 @@ import {
   XMarkIcon,
 } from "@/components/icons";
 import { auth } from "@/lib/firebase";
-import { fallbackProperties, getPropertyList, type PropertyRecord } from "@/lib/property-data";
+import { getPropertyList, type PropertyRecord } from "@/lib/property-data";
 import { getSavedPropertyIds, setPropertySaved } from "@/lib/saved-properties";
 
 export default function SavedPropertiesPage() {
@@ -50,13 +50,9 @@ export default function SavedPropertiesPage() {
           }
         }
 
-        const matched = allProperties.filter((p) => savedIds.includes(p.id));
-        // If empty on first visit, seed with first 2 properties for easy testing
-        if (matched.length === 0 && savedIds.length === 0) {
-          setProperties(fallbackProperties.slice(0, 2));
-        } else {
-          setProperties(matched);
-        }
+        // A new visitor has saved nothing, so the list is empty. It used to be
+        // seeded with two sample homes they never saved.
+        setProperties(allProperties.filter((p) => savedIds.includes(p.id)));
       } catch (err) {
         // Showing two demo homes here made a failed catalogue load look like a
         // saved list. Report it instead.

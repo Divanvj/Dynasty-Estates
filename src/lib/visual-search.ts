@@ -1,4 +1,4 @@
-import { fallbackProperties, type PropertyRecord } from "./property-data";
+import { type PropertyRecord } from "./property-data";
 
 export type VisualFeatureExtraction = {
   roomType: string;
@@ -38,13 +38,14 @@ export function analyzeImageFeatures(imageUrl: string): VisualFeatureExtraction 
 
 export async function findHomesLikeThis(
   _queryImageUrlOrEmbedding: string,
+  catalogue: PropertyRecord[],
   constraints?: {
     maxPriceZAR?: number;
     propertyType?: string;
   }
 ): Promise<VisualSimilarityResult[]> {
   // Multimodal vector similarity matching against properties
-  return fallbackProperties
+  return catalogue
     .filter((prop) => {
       if (constraints?.propertyType && prop.type !== constraints.propertyType) return false;
       return true;

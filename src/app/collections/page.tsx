@@ -19,6 +19,7 @@ import {
   XMarkIcon,
 } from "@/components/icons";
 import { auth } from "@/lib/firebase";
+import { getPropertyList, type PropertyRecord } from "@/lib/property-data";
 import {
   addCollectionComment,
   castVote,
@@ -41,6 +42,22 @@ export default function CollectionsPage() {
   const [inviteNotice, setInviteNotice] = useState("");
   const [commentInputs, setCommentInputs] = useState<Record<string, string>>({});
   const [loadError, setLoadError] = useState("");
+  // Homes in a collection are looked up in the live catalogue. They used to be
+  // looked up in the built-in sample homes only, so a real listing added to a
+  // collection never showed.
+  const [catalogue, setCatalogue] = useState<PropertyRecord[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    getPropertyList()
+      .then((list) => {
+        if (!cancelled) setCatalogue(list);
+      })
+      .catch((error) => console.error("Collections could not load the catalogue:", error));
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   function handleSendInvite(e: React.FormEvent) {
     e.preventDefault();
@@ -82,7 +99,7 @@ export default function CollectionsPage() {
   }, [selectedColId]);
 
   const activeCollection = collections.find((c) => c.id === selectedColId) ?? collections[0];
-  const activeProperties = activeCollection ? getPropertiesForCollection(activeCollection.propertyIds) : [];
+  const activeProperties = activeCollection ? getPropertiesForCollection(activeCollection.propertyIds, catalogue) : [];
 
   async function handleCreateCollection(e: React.FormEvent) {
     e.preventDefault();

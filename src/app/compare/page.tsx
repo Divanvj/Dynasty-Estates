@@ -2,25 +2,19 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { ArrowLeftIcon, PrinterIcon, XMarkIcon } from "@/components/icons";
 
-import { fallbackProperties, type PropertyRecord } from "@/lib/property-data";
+import { getPropertyList, type PropertyRecord } from "@/lib/property-data";
 
 /**
  * `?ids=a,b` opens Compare with those homes, which is what a card's Compare
- * link now sends. It used to link to plain /compare, which always opened on
- * the first three catalogue listings — so "Add to Compare" never added the
- * home it was on. Without ids the old starting trio is kept.
+ * link sends. Homes come from the same catalogue as /search (S1-2); this page
+ * used to read only the built-in sample homes, so a real listing could never
+ * be compared. Without ids it starts empty and offers homes to add.
  */
-function initialCompared(idsParam: string | null): PropertyRecord[] {
-  const ids = (idsParam ?? "").split(",").map((id) => id.trim()).filter(Boolean);
-  const picked = ids
-    .map((id) => fallbackProperties.find((p) => p.id === id || p.slug === id))
-    .filter((p): p is PropertyRecord => Boolean(p))
-    .slice(0, 4);
-  if (picked.length > 0) return picked;
-  return [fallbackProperties[0], fallbackProperties[1], fallbackProperties[2] ?? fallbackProperties[0]];
+function idsFromParam(idsParam: string | null): string[] {
+  return (idsParam ?? "").split(",").map((id) => id.trim()).filter(Boolean).slice(0, 4);
 }
 
 export default function ComparePage() {
@@ -34,21 +28,44 @@ export default function ComparePage() {
 
 function CompareContent() {
   const searchParams = useSearchParams();
-  const [comparedProperties, setComparedProperties] = useState<PropertyRecord[]>(() =>
-    initialCompared(searchParams.get("ids")),
-  );
+  const [comparedIds, setComparedIds] = useState<string[]>(() => idsFromParam(searchParams.get("ids")));
+  const [catalogue, setCatalogue] = useState<PropertyRecord[]>([]);
+  const [catalogueState, setCatalogueState] = useState<"loading" | "ready" | "failed">("loading");
+
+  useEffect(() => {
+    let cancelled = false;
+    getPropertyList()
+      .then((list) => {
+        if (cancelled) return;
+        setCatalogue(list);
+        setCatalogueState("ready");
+      })
+      .catch((error) => {
+        console.error("Compare could not load the catalogue:", error);
+        if (!cancelled) setCatalogueState("failed");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Derived from the ids, so homes named in the link appear as soon as the
+  // catalogue lands, and an id that no longer exists simply drops out.
+  const comparedProperties = comparedIds
+    .map((id) => catalogue.find((p) => p.id === id || p.slug === id))
+    .filter((p): p is PropertyRecord => Boolean(p));
 
   function removeProperty(id: string) {
-    setComparedProperties((prev) => prev.filter((p) => p.id !== id));
+    setComparedIds((prev) => prev.filter((existing) => existing !== id && comparedProperties.find((p) => p.id === id)?.slug !== existing));
   }
 
   function addProperty(prop: PropertyRecord) {
     if (comparedProperties.length >= 4) return;
     if (comparedProperties.some((p) => p.id === prop.id)) return;
-    setComparedProperties((prev) => [...prev, prop]);
+    setComparedIds((prev) => [...prev, prop.id]);
   }
 
-  const unselectedProperties = fallbackProperties.filter(
+  const unselectedProperties = catalogue.filter(
     (p) => !comparedProperties.some((cp) => cp.id === p.id)
   );
 
@@ -126,7 +143,31 @@ function CompareContent() {
           </div>
         )}
 
-        {/* Comparison Table / Matrix */}
+        {catalogueState !== "ready" || comparedProperties.length === 0 ? (
+          <div className="rounded-panel border border-white/80 bg-white/50 p-8 text-center shadow-[0_20px_45px_rgba(36,48,50,0.1)] backdrop-blur-xl dark:bg-surface-panel/75 dark:border-white/10">
+            {catalogueState === "loading" ? (
+              <p className="text-sm text-slate-600 dark:text-slate-300">Loading homes…</p>
+            ) : catalogueState === "failed" ? (
+              <p className="text-sm text-slate-700 dark:text-slate-200">We couldn&apos;t load the listings. Reload the page to try again.</p>
+            ) : (
+              <>
+                <p className="text-base font-semibold text-slate-900 dark:text-white">No homes to compare yet</p>
+                <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
+                  {catalogue.length > 0
+                    ? "Add up to four homes above, or use Compare on any listing."
+                    : "There are no listings to compare yet."}
+                </p>
+                <Link
+                  href="/search"
+                  className="no-print pill-lg mt-5 inline-flex bg-slate-950 px-6 font-bold text-white hover:bg-slate-800 dark:bg-emerald-700 dark:hover:bg-emerald-800"
+                >
+                  Browse listings
+                </Link>
+              </>
+            )}
+          </div>
+        ) : (
+        /* Comparison Table / Matrix */
         <div className="overflow-x-auto rounded-panel border border-white/80 bg-white/50 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.1)] backdrop-blur-xl dark:bg-surface-panel/75 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <table className="w-full border-collapse text-left">
             <thead>
@@ -231,6 +272,7 @@ function CompareContent() {
             </tbody>
           </table>
         </div>
+        )}
       </div>
     </main>
   );

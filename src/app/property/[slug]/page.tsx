@@ -221,11 +221,6 @@ export default async function PropertyPage({
                   <div className="flex items-center gap-2 flex-wrap mb-1">
                     {/* No For Sale / To Rent pill: the visitor chose sale or rent
                         to get here, and the page title and price say it again. */}
-                    {property.example && (
-                      <span className="rounded-full border border-amber-300 bg-amber-950/85 px-3 py-1 text-xs uppercase tracking-widest font-extrabold text-amber-100 backdrop-blur-md">
-                        Example listing
-                      </span>
-                    )}
                     {property.status === "Sold" && (
                       <span className="rounded-full border border-red-400 bg-red-950/90 px-3 py-1 text-xs uppercase tracking-widest font-extrabold text-red-200 backdrop-blur-md">
                         Sold
@@ -239,20 +234,16 @@ export default async function PropertyPage({
                     {/* No "On Show Sunday" pill: it gave no date or time and
                         stayed up after the show. The show-day section under
                         the photo carries the real details. */}
-                    {/* Both of these are said again within a screen of here —
-                        the transfer-duty exemption by the off-plan banner
-                        directly below the hero, the category by the "Category"
-                        row in the specs. At 375px they were what tipped this
-                        row to three lines and 87px of the photograph. They
-                        come back at `sm`, where the row fits on one line. */}
+                    {/* Said again within a screen of here, by the off-plan
+                        banner directly below the hero, so it is hidden at 375px
+                        where it pushed the title down. No category or "Example
+                        listing" pill on the photo (owner, 19 Nov): the category
+                        is in the specs and the example notice is in the sidebar. */}
                     {property.developmentInfo?.noTransferDuty && (
                       <span className="hidden rounded-full border border-sky-300/80 bg-sky-950/85 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-sky-200 backdrop-blur-md sm:inline">
                         0% Transfer Duty
                       </span>
                     )}
-                    <span className="hidden rounded-full bg-black/40 border border-white/30 px-3 py-1 text-xs uppercase tracking-[0.2em] font-bold text-white backdrop-blur-md sm:inline dark:border-white/10">
-                      {property.category}
-                    </span>
                   </div>
                   <h1 className="mt-1 text-2xl font-light tracking-[-0.04em] text-slate-950 dark:text-white sm:text-4xl sm:text-white md:text-5xl lg:text-6xl">
                     {property.title}

@@ -284,9 +284,9 @@ export async function getAuditLogs(max = 25): Promise<AuditLogEntry[]> {
 /**
  * Runs duplicate-property detection across the catalog for an incoming property record
  */
-export function checkListingForDuplicates(candidateRecord: PropertyRecord): DuplicateMatchResult[] {
+export function checkListingForDuplicates(candidateRecord: PropertyRecord, catalogue: PropertyRecord[]): DuplicateMatchResult[] {
   const { property: candidateProperty } = decomposePropertyRecord(candidateRecord);
-  const enrichedCatalog = getEnrichedListings();
+  const enrichedCatalog = getEnrichedListings(catalogue);
   const physicalCatalog = enrichedCatalog.map((item) => item.property);
   return findDuplicatesInCatalog(candidateProperty, physicalCatalog);
 }

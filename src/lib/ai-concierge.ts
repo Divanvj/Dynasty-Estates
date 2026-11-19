@@ -1,5 +1,5 @@
 import { featureLabel } from "./feature-labels";
-import { fallbackProperties, type PropertyRecord } from "./property-data";
+import { type PropertyRecord } from "./property-data";
 
 export type ParsedSearchIntent = {
   rawQuery: string;
@@ -245,7 +245,7 @@ const amenityLabel = featureLabel;
  */
 export function generateGroundedRecommendations(
   intent: ParsedSearchIntent,
-  catalogue: PropertyRecord[] = fallbackProperties
+  catalogue: PropertyRecord[]
 ): GroundedRecommendation[] {
   return catalogue
     .filter((prop) => {

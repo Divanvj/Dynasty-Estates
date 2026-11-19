@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 
 import { db, isFirebaseConfigured } from "./firebase";
-import { fallbackProperties, type PropertyRecord } from "./property-data";
+import { type PropertyRecord } from "./property-data";
 
 export type VoteType = "like" | "love" | "reject";
 
@@ -257,7 +257,7 @@ export async function addCollectionComment(
   return newComment;
 }
 
-export function getPropertiesForCollection(propertyIds: string[]): PropertyRecord[] {
-  return fallbackProperties.filter((p) => propertyIds.includes(p.id) || propertyIds.includes(p.slug));
+export function getPropertiesForCollection(propertyIds: string[], catalogue: PropertyRecord[]): PropertyRecord[] {
+  return catalogue.filter((p) => propertyIds.includes(p.id) || propertyIds.includes(p.slug));
 }
 

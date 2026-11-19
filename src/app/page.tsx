@@ -6,19 +6,17 @@ import HomeHeroSearch from "@/components/home-hero-search";
 import HomeTrendingListings from "@/components/home-trending-listings";
 import { SparklesIcon } from "@/components/icons";
 import HomeSpotlight from "@/components/home-spotlight";
-import { fallbackProperties, getPropertyList } from "@/lib/property-data";
+import { getPropertyList } from "@/lib/property-data";
 export default async function Home() {
-  // The one place a catalogue failure still renders demo data. The homepage
-  // already shows the demo catalogue whenever Firestore is empty, so a thrown
-  // error here would 500 the landing page for a condition that looks identical
-  // to the viewer. The error is logged loudly instead. Remove this fallback
-  // together with the rest of the demo data at the launch gate (prompt D1).
+  // A catalogue failure must not 500 the landing page: it renders without
+  // listings and the error is logged. There is no sample catalogue to fall
+  // back to any more (S1-1).
   let properties: Awaited<ReturnType<typeof getPropertyList>>;
   try {
     properties = await getPropertyList();
   } catch (error) {
-    console.error("[DEMO FALLBACK] Homepage catalogue query failed:", error);
-    properties = fallbackProperties;
+    console.error("Homepage catalogue query failed:", error);
+    properties = [];
   }
 
   return (

@@ -370,3 +370,15 @@ Added, nothing removed.
 - **Added – Recorded sales** on `/agent/market` (same filters): median sold price, sold vs asking, days to sell, per m², and the sales whose price may be shown. Figures need 3 or more sales.
 - **Added – Recent sales in <city>** in the printable seller report.
 - **Not done**: Deeds Office / Lightstone data (paid feed, not bought); "Under offer" still can't be set from the portals; a home's earlier sale isn't shown when it is listed again (each listing is its own record); sold prices on the public area pages (`/for-sale/...`, `/insights`).
+
+## Built-in sample listings removed (19 Nov, S1-1 / S1-2)
+
+- **Removed – the 20 built-in sample homes** (`fallbackProperties` in `property-data.ts`). They were mixed into every catalogue, filled the home page when Firestore was empty or failed, and were the only homes `/compare` and Collections could show. The catalogue is now stored listings only; old sample URLs (e.g. `/property/rosebank-vantage`) return 404.
+- **Replaced – sample photo on photo-less listings** with a neutral "No photos yet" image (`/listing-no-photo.png`). It used to borrow the first sample home's photo.
+- **Changed – `/compare`** reads the real catalogue. With `?ids=` it opens those homes; without, it starts empty ("No homes to compare yet" + Browse listings) instead of three sample homes.
+- **Removed – `/saved` seeding**: a new visitor no longer sees two sample homes they never saved.
+- **Changed – Collections** look homes up in the real catalogue (real listings in a collection now show).
+- **Changed – AI Search ranking and "homes like this"** take the catalogue they are given; there is no sample default.
+- **Removed – the category pill and the "Example listing" pill** on the listing page's photo (owner, 19 Nov). The category is in the specs; example homes keep the sidebar notice and have no tag on their card photo.
+- **Kept**: the data-integrity scan still reports old enquiries that point at sample homes (`RETIRED_SAMPLE_LISTING_IDS`).
+- **Not done (S1-3)**: `/saved` still falls back to a localStorage list for signed-out visitors; Collections still use a `demo-user-1` owner when signed out and the invite button only shows "Invite dispatched" without sending anything.

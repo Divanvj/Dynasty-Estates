@@ -7,7 +7,6 @@ import {
   PropertyListing,
 } from "@/lib/types/domain";
 import {
-  fallbackProperties,
   PropertyRecord,
   PropertyType,
 } from "@/lib/property-data";
@@ -274,25 +273,19 @@ export function enrichedListingToPropertyRecord(enriched: EnrichedListing): Prop
   };
 }
 
-// In-memory cache of enriched listings derived from fallback data
-let cachedEnrichedListings: EnrichedListing[] | null = null;
-
-export function getEnrichedListings(): EnrichedListing[] {
-  if (cachedEnrichedListings) return cachedEnrichedListings;
-
-  cachedEnrichedListings = fallbackProperties.map((p) => {
+/** Enriched views of the given catalogue (from getPropertyList). */
+export function getEnrichedListings(catalogue: PropertyRecord[]): EnrichedListing[] {
+  return catalogue.map((p) => {
     const { property, listing } = decomposePropertyRecord(p);
     return assembleEnrichedListing(listing, property);
   });
-
-  return cachedEnrichedListings;
 }
 
 /**
  * Query listings by slug
  */
-export async function getEnrichedListingBySlug(slug: string): Promise<EnrichedListing | null> {
-  const listings = getEnrichedListings();
+export async function getEnrichedListingBySlug(slug: string, catalogue: PropertyRecord[]): Promise<EnrichedListing | null> {
+  const listings = getEnrichedListings(catalogue);
   return (
     listings.find(
       (item) => item.slug.toLowerCase() === slug.toLowerCase() || item.id.toLowerCase() === slug.toLowerCase()
@@ -304,8 +297,8 @@ export async function getEnrichedListingBySlug(slug: string): Promise<EnrichedLi
  * Returns all listings for a physical property
  * Supports multiple agencies advertising the same property!
  */
-export function getMultiAgencyListingsForProperty(propertyId: string): EnrichedListing[] {
-  const listings = getEnrichedListings();
+export function getMultiAgencyListingsForProperty(propertyId: string, catalogue: PropertyRecord[]): EnrichedListing[] {
+  const listings = getEnrichedListings(catalogue);
   return listings.filter((l) => l.propertyId === propertyId);
 }
 
@@ -324,8 +317,7 @@ export function getListingsByLocation({
   transactionType?: "sale" | "rent";
   properties?: PropertyRecord[];
 }): EnrichedListing[] {
-  const source = properties && properties.length > 0 ? properties : fallbackProperties;
-  const listings = source.map((p) => {
+  const listings = (properties ?? []).map((p) => {
     const { property, listing } = decomposePropertyRecord(p);
     return assembleEnrichedListing(listing, property);
   });
