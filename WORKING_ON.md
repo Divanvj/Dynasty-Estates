@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/remove-samples | S1-1/S1-2 built-in samples out: property-data.ts, home, search, compare, saved, ai-concierge, visual-search, property-service, collections; hero pills on property page | 2026-11-19 |
 
 ## Recently merged
 
