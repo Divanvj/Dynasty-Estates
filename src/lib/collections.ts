@@ -1,5 +1,6 @@
 import {
   addDoc,
+  arrayUnion,
   collection,
   doc,
   getDocs,
@@ -49,59 +50,17 @@ export type PropertyCollection = {
   createdAt: string;
 };
 
-const fallbackCollections: PropertyCollection[] = [
-  {
-    id: "col-family-shortlist",
-    title: "Our Pretoria East Shortlist",
-    description: "Homes with solar resilience, large gardens for dogs, and secure estate perimeter.",
-    ownerId: "demo-user-1",
-    isPrivate: false,
-    propertyIds: ["juniper-ridge", "silver-lakes"],
-    members: [
-      { userId: "demo-user-1", email: "sarah@dynastyestates.co.za", role: "owner" },
-      { userId: "demo-user-2", email: "david@dynastyestates.co.za", role: "collaborator" },
-    ],
-    votes: {
-      "juniper-ridge": {
-        "demo-user-1": "love",
-        "demo-user-2": "like",
-      },
-      "silver-lakes": {
-        "demo-user-1": "like",
-        "demo-user-2": "love",
-      },
-    },
-    comments: [
-      {
-        id: "c1",
-        userId: "demo-user-1",
-        userName: "Sarah",
-        propertyId: "juniper-ridge",
-        text: "The kitchen island and natural light on the patio are perfect for weekends.",
-        createdAt: "2026-09-02T10:15:00Z",
-      },
-      {
-        id: "c2",
-        userId: "demo-user-2",
-        userName: "David",
-        propertyId: "juniper-ridge",
-        text: "Confirmed 8kW inverter and battery is included in the asking price!",
-        createdAt: "2026-09-02T11:42:00Z",
-      },
-    ],
-    createdAt: "2026-09-01T08:00:00Z",
-  },
-];
-
 export async function getUserCollections(userId: string): Promise<PropertyCollection[]> {
+  // A made-up "Pretoria East Shortlist" (with comments from "Sarah" and
+  // "David") used to be returned when Firebase was off or the account had no
+  // collections. An account with none now has none.
   if (!isFirebaseConfigured || !db) {
-    return fallbackCollections;
+    return [];
   }
 
   try {
     const q = query(collection(db, "collections"), where("ownerId", "==", userId));
     const snapshot = await getDocs(q);
-    if (snapshot.empty) return fallbackCollections;
 
     return snapshot.docs.map((docSnap) => {
       const data = docSnap.data();
@@ -141,20 +100,7 @@ export async function createCollection({
   isPrivate?: boolean;
 }): Promise<string> {
   if (!isFirebaseConfigured || !db) {
-    const newCol: PropertyCollection = {
-      id: `col-${Date.now()}`,
-      title,
-      description,
-      ownerId,
-      isPrivate,
-      propertyIds: [],
-      members: [{ userId: ownerId, email: ownerEmail, role: "owner" }],
-      votes: {},
-      comments: [],
-      createdAt: new Date().toISOString(),
-    };
-    fallbackCollections.unshift(newCol);
-    return newCol.id;
+    throw new Error("Firebase database is not configured.");
   }
 
   const docRef = await addDoc(collection(db, "collections"), {
@@ -173,16 +119,13 @@ export async function createCollection({
 }
 
 export async function addPropertyToCollection(collectionId: string, propertyId: string): Promise<void> {
-  const local = fallbackCollections.find((c) => c.id === collectionId);
-  if (local && !local.propertyIds.includes(propertyId)) {
-    local.propertyIds.push(propertyId);
-  }
-
   if (isFirebaseConfigured && db) {
     try {
       const docRef = doc(db, "collections", collectionId);
+      // arrayUnion, not a rebuilt array: this used to write `[propertyId]` for
+      // every stored collection, replacing the homes already in it.
       await updateDoc(docRef, {
-        propertyIds: local?.propertyIds ?? [propertyId],
+        propertyIds: arrayUnion(propertyId),
         updatedAt: serverTimestamp(),
       });
     } catch (error) {
@@ -200,12 +143,6 @@ export async function castVote(
   userId: string,
   vote: VoteType,
 ): Promise<void> {
-  const local = fallbackCollections.find((c) => c.id === collectionId);
-  if (local) {
-    if (!local.votes[propertyId]) local.votes[propertyId] = {};
-    local.votes[propertyId][userId] = vote;
-  }
-
   if (isFirebaseConfigured && db) {
     try {
       const docRef = doc(db, "collections", collectionId);
@@ -236,16 +173,12 @@ export async function addCollectionComment(
     createdAt: new Date().toISOString(),
   };
 
-  const local = fallbackCollections.find((c) => c.id === collectionId);
-  if (local) {
-    local.comments.push(newComment);
-  }
-
   if (isFirebaseConfigured && db) {
     try {
       const docRef = doc(db, "collections", collectionId);
+      // arrayUnion: writing `[newComment]` here replaced every earlier comment.
       await updateDoc(docRef, {
-        comments: local?.comments ?? [newComment],
+        comments: arrayUnion(newComment),
         updatedAt: serverTimestamp(),
       });
     } catch (error) {

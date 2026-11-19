@@ -15,7 +15,7 @@ import {
 } from "@/components/icons";
 import { auth } from "@/lib/firebase";
 import { getPropertyList, type PropertyRecord } from "@/lib/property-data";
-import { getSavedPropertyIds, setPropertySaved } from "@/lib/saved-properties";
+import { getSavedPropertyIds, importBrowserSaves, setPropertySaved } from "@/lib/saved-properties";
 
 export default function SavedPropertiesPage() {
   const [user, setUser] = useState<User | null>(null);
@@ -28,27 +28,16 @@ export default function SavedPropertiesPage() {
       setLoading(true);
       try {
         const allProperties = await getPropertyList();
-        let savedIds: string[] = [];
-
-        if (currentUser) {
-          try {
-            savedIds = await getSavedPropertyIds(currentUser.uid);
-          } catch (savedIdsError) {
-            // Non-fatal: fall through to the localStorage copy below, but do not
-            // hide the failure — a denied read here is a rules problem.
-            console.error("Could not read saved property ids from Firestore:", savedIdsError);
-          }
+        // Saves belong to an account. Signed out there is nothing to show; the
+        // page asks the visitor to sign in instead of reading a browser-only list.
+        if (!currentUser) {
+          setProperties([]);
+          return;
         }
-
-        // Check local storage if no user or no db saved
-        if (savedIds.length === 0 && typeof window !== "undefined") {
-          try {
-            const stored = localStorage.getItem("dynasty_saved_properties");
-            if (stored) savedIds = JSON.parse(stored);
-          } catch {
-            // ignore
-          }
-        }
+        // Homes saved in this browser by the old signed-out list move into the
+        // account once, so nobody loses a shortlist they made before.
+        await importBrowserSaves(currentUser.uid);
+        const savedIds = await getSavedPropertyIds(currentUser.uid);
 
         // A new visitor has saved nothing, so the list is empty. It used to be
         // seeded with two sample homes they never saved.
@@ -80,35 +69,15 @@ export default function SavedPropertiesPage() {
   }, []);
 
   async function removeProperty(id: string) {
+    if (!user) return;
     try {
-      if (typeof window !== "undefined") {
-        try {
-          const stored = localStorage.getItem("dynasty_saved_properties");
-          if (stored) {
-            const ids: string[] = JSON.parse(stored);
-            localStorage.setItem(
-              "dynasty_saved_properties",
-              JSON.stringify(ids.filter((item) => item !== id))
-            );
-          }
-        } catch {
-          // ignore
-        }
-      }
-
-      if (user) {
-        try {
-          await setPropertySaved(user.uid, id, false);
-        } catch {
-          // ignore
-        }
-      }
-
+      await setPropertySaved(user.uid, id, false);
       setProperties((prev) => prev.filter((p) => p.id !== id));
       setMessage("Property removed from your shortlist.");
       setTimeout(() => setMessage(""), 3000);
-    } catch {
-      setMessage("Failed to remove property.");
+    } catch (error) {
+      console.error("Could not remove the saved home:", error);
+      setMessage("Couldn't remove that home. Try again.");
     }
   }
 
@@ -164,6 +133,22 @@ export default function SavedPropertiesPage() {
             {[1, 2, 3].map((n) => (
               <div key={n} className="h-80 rounded-panel border border-white/60 bg-white/40 animate-pulse dark:bg-surface-panel/60 dark:border-white/10" />
             ))}
+          </div>
+        ) : !user ? (
+          <div className="rounded-panel border border-white/80 bg-white/50 p-12 text-center shadow-sm backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white/80 dark:bg-surface-ink/80 shadow-md mb-3 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-white/10">
+              <HeartIcon className="h-8 w-8 text-slate-600 dark:text-emerald-400" />
+            </div>
+            <h3 className="mt-3 text-xl font-bold text-slate-900 dark:text-white">Sign in to see your saved homes</h3>
+            <p className="mt-1 text-xs text-slate-600 max-w-md mx-auto dark:text-slate-300">
+              Saved homes are kept with your account, so they are there on every device.
+            </p>
+            <Link
+              href="/auth/login"
+              className="pill-lg mt-5 bg-slate-950 dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] font-bold text-white shadow-md hover:bg-slate-800"
+            >
+              Sign in
+            </Link>
           </div>
         ) : properties.length === 0 ? (
           <div className="rounded-panel border border-white/80 bg-white/50 p-12 text-center shadow-sm backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">

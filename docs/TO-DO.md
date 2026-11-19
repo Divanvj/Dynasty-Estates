@@ -37,7 +37,7 @@ Order matters: S1-1 changes what every page shows, so it goes first.
 
 - [x] **S1-1** **Stop mixing built-in sample listings into the live site.** *Done 19 Nov: the 20 samples are deleted from the code.* `getPropertyList()` adds ~20 hard-coded listings from `property-data.ts` to every search, the home page falls back to them, `/compare` can *only* compare them, `/saved` shows two of them to new visitors, and the AI concierge ranks them. Live Firestore has 6 published TEST listings plus 6 labelled example homes (below). *D1 decided 19 Nov: remove the built-in samples.*
 - [x] **S1-2** `/compare` works with real listings. *Done 19 Nov.*
-- [ ] **S1-3** Remove the remaining stand-ins: `/saved` localStorage fallback (the sample homes are gone), the `demo-user-1` member in Collections, and the Collections invite that only shows "Invite dispatched" without sending.
+- [x] **S1-3** *Done 19 Nov.* Remove the remaining stand-ins: `/saved` localStorage fallback (the sample homes are gone), the `demo-user-1` member in Collections, and the Collections invite that only shows "Invite dispatched" without sending.
 - [ ] **S1-4** Security-rule tests in the repo and CI (Firestore emulator): owner-only reads, role checks, agency access, enquiry stages. Must exist before payments.
 - [ ] **S1-5** Fix the data-integrity findings from the nightly scan: listings without a valid owner (5), unused physical records (4), sample enquiries (4), accounts without a role claim (2).
 - [ ] **S1-6** E-mail verification for new accounts (send on sign-up, nudge until verified).
@@ -85,6 +85,7 @@ Done 19 Nov: **6 labelled example listings** in Firestore (`properties/claude-ex
 - Sold prices on the public area pages (`/for-sale/…`, `/insights`); show a home's earlier sale when it is listed again.
 - `/insights` on real data, or a licensed Deeds Office / Lightstone feed (paid, D3).
 - Viewing scheduling (calendar), in-app messaging.
+- Shared collections: invite a partner to a collection (rules for members, invite + accept, e-mail). The fake invite was removed in S1-3.
 - Auctions and distressed / bank-mandated sales (archived XCORE phase 4.3).
 - Suburb CMA report; municipal valuation rolls.
 - AI concierge on a real model; visual "homes like this" on real embeddings (today both are heuristic or prototype).

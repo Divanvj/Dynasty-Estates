@@ -382,3 +382,13 @@ Added, nothing removed.
 - **Removed – the category pill and the "Example listing" pill** on the listing page's photo (owner, 19 Nov). The category is in the specs; example homes keep the sidebar notice and have no tag on their card photo.
 - **Kept**: the data-integrity scan still reports old enquiries that point at sample homes (`RETIRED_SAMPLE_LISTING_IDS`).
 - **Not done (S1-3)**: `/saved` still falls back to a localStorage list for signed-out visitors; Collections still use a `demo-user-1` owner when signed out and the invite button only shows "Invite dispatched" without sending anything.
+
+## Saved homes and Collections: stand-ins removed (19 Nov, S1-3)
+
+- **Removed – browser-only saved list.** The heart kept a localStorage list for signed-out visitors and as a silent fallback when a save failed. Saves now go to the account only; a signed-out visitor who taps the heart goes to sign in. A save that fails says "Couldn't save. Try again." instead of looking saved.
+- **Changed – `/saved` signed out** shows "Sign in to see your saved homes" instead of reading the browser list. Homes left in a browser by the old list move into the account the first time that person opens `/saved` signed in.
+- **Removed – the made-up "Our Pretoria East Shortlist"** (comments from "Sarah" and "David"), shown to any account with no collections and whenever Firebase was off. An account with none sees "No collections yet" + Create a collection.
+- **Removed – `demo-user-1`**: signed-out visitors see "Sign in to see your collections" instead of a demo owner's collections.
+- **Removed – "+ Invite Partner"**, its "Invite dispatched" message and "Direct invite link copied". Nothing was sent or shared, and the rules only let the owner read a collection. Replaced by "Only you can see this collection." The "Collaborative" labels became "Your shortlists" / "Shortlist".
+- **Fixed – adding a home to a stored collection replaced the homes already in it**, and **posting a comment replaced the earlier comments** (both wrote a one-item array). Both now append.
+- **Not done**: sharing a collection with someone else (needs rules for members, an invite and accept flow, and e-mail). Kept on the plan under Later.

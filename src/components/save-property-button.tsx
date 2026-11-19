@@ -1,49 +1,25 @@
 "use client";
 
 import { onAuthStateChanged, type User } from "firebase/auth";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { auth } from "@/lib/firebase";
 import { HeartIcon } from "@/components/icons";
 import { isPropertySaved, setPropertySaved } from "@/lib/saved-properties";
 import { trackListing } from "@/lib/track-client";
 
-const SAVED_STORAGE_KEY = "dynasty_saved_properties";
-const SAVED_EVENT_NAME = "dynasty_saved_change";
-
-function subscribeSaved(callback: () => void): () => void {
-  if (typeof window === "undefined") return () => {};
-  window.addEventListener("storage", callback);
-  window.addEventListener(SAVED_EVENT_NAME, callback);
-  return () => {
-    window.removeEventListener("storage", callback);
-    window.removeEventListener(SAVED_EVENT_NAME, callback);
-  };
-}
-
-function isLocalSaved(propertyId: string): boolean {
-  if (typeof window === "undefined") return false;
-  try {
-    const stored = localStorage.getItem(SAVED_STORAGE_KEY);
-    if (stored) {
-      const ids: unknown = JSON.parse(stored);
-      return Array.isArray(ids) && ids.includes(propertyId);
-    }
-  } catch {
-    return false;
-  }
-  return false;
-}
-
+/**
+ * Saves live in Firestore under the signed-in account, nowhere else. A signed-out
+ * visitor is sent to sign in. This used to keep a browser-only list for
+ * signed-out visitors (and as a silent fallback when a write failed), so a
+ * "saved" home could vanish on another device or after clearing the browser.
+ * Lists left in browsers by that version are moved into the account by /saved.
+ */
 export default function SavePropertyButton({ propertyId }: { propertyId: string }) {
+  const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
-  const [dbSaved, setDbSaved] = useState<boolean | null>(null);
-  const localSaved = useSyncExternalStore(
-    subscribeSaved,
-    () => isLocalSaved(propertyId),
-    () => false
-  );
-  const saved = dbSaved !== null ? dbSaved : localSaved;
+  const [saved, setSaved] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState("");
@@ -53,53 +29,35 @@ export default function SavePropertyButton({ propertyId }: { propertyId: string 
 
     return onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
-      if (currentUser) {
-        try {
-          const isDb = await isPropertySaved(currentUser.uid, propertyId);
-          setDbSaved(isDb);
-        } catch {
-          // fallback to local
-        }
-      } else {
-        setDbSaved(null);
+      if (!currentUser) {
+        setSaved(false);
+        return;
+      }
+      try {
+        setSaved(await isPropertySaved(currentUser.uid, propertyId));
+      } catch (error) {
+        console.error("Could not read whether this home is saved:", error);
       }
     });
   }, [propertyId]);
 
   async function handleSave() {
+    if (!user) {
+      router.push("/auth/login");
+      return;
+    }
     setLoading(true);
     const nextSaved = !saved;
 
-    // Save to localStorage for instant client experience
     try {
-      const stored = localStorage.getItem(SAVED_STORAGE_KEY);
-      let ids: string[] = [];
-      if (stored) {
-        const parsed: unknown = JSON.parse(stored);
-        if (Array.isArray(parsed)) {
-          ids = parsed.filter((id): id is string => typeof id === "string");
-        }
-      }
-      if (nextSaved) {
-        if (!ids.includes(propertyId)) ids.push(propertyId);
-      } else {
-        ids = ids.filter((id) => id !== propertyId);
-      }
-      localStorage.setItem(SAVED_STORAGE_KEY, JSON.stringify(ids));
-      window.dispatchEvent(new Event(SAVED_EVENT_NAME));
-      window.dispatchEvent(new Event("storage"));
-    } catch {
-      // Continue
-    }
-
-    // Sync to Firestore if authenticated
-    if (user) {
-      try {
-        await setPropertySaved(user.uid, propertyId, nextSaved);
-        setDbSaved(nextSaved);
-      } catch {
-        // Fallback already in localStorage
-      }
+      await setPropertySaved(user.uid, propertyId, nextSaved);
+      setSaved(nextSaved);
+    } catch (error) {
+      console.error("Could not update the saved home:", error);
+      setToast("Couldn't save. Try again.");
+      setTimeout(() => setToast(""), 2500);
+      setLoading(false);
+      return;
     }
 
     // One anonymous "save" on the listing owner's statistics. Removing a save
@@ -117,7 +75,7 @@ export default function SavePropertyButton({ propertyId }: { propertyId: string 
         type="button"
         onClick={() => void handleSave()}
         disabled={loading}
-        title={saved ? "Remove from saved" : "Save property"}
+        title={!user ? "Sign in to save homes" : saved ? "Remove from saved" : "Save property"}
         aria-label={saved ? "Saved property" : "Save property"}
         // `.pill` owns the geometry. Hand-rolled, this rendered 32px below sm
         // and 38px above it, so in the listing header it sat 2px short of the

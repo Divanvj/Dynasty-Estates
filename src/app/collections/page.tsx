@@ -11,8 +11,6 @@ import {
   BathIcon,
   BedIcon,
   CarIcon,
-  CheckIcon,
-  CopyIcon,
   FolderIcon,
   HeartIcon,
   ThumbsUpIcon,
@@ -37,9 +35,8 @@ export default function CollectionsPage() {
   const [newTitle, setNewTitle] = useState("");
   const [newDesc, setNewDesc] = useState("");
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [showInviteModal, setShowInviteModal] = useState(false);
-  const [inviteEmail, setInviteEmail] = useState("");
-  const [inviteNotice, setInviteNotice] = useState("");
+  // With Firebase off there is no sign-in to wait for.
+  const [authReady, setAuthReady] = useState(!auth);
   const [commentInputs, setCommentInputs] = useState<Record<string, string>>({});
   const [loadError, setLoadError] = useState("");
   // Homes in a collection are looked up in the live catalogue. They used to be
@@ -59,17 +56,6 @@ export default function CollectionsPage() {
     };
   }, []);
 
-  function handleSendInvite(e: React.FormEvent) {
-    e.preventDefault();
-    if (!inviteEmail) return;
-    setInviteNotice(`Invite dispatched to ${inviteEmail}!`);
-    setTimeout(() => {
-      setInviteNotice("");
-      setInviteEmail("");
-      setShowInviteModal(false);
-    }, 2000);
-  }
-
   useEffect(() => {
     async function load(userId: string) {
       try {
@@ -87,14 +73,15 @@ export default function CollectionsPage() {
       }
     }
 
-    if (!auth) {
-      void load("demo-user-1");
-      return;
-    }
+    // Collections belong to an account. Signed out (or with Firebase off) the
+    // page asks the visitor to sign in; it used to load a "demo-user-1" owner.
+    if (!auth) return;
 
     return onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      void load(currentUser?.uid ?? "demo-user-1");
+      setAuthReady(true);
+      if (currentUser) void load(currentUser.uid);
+      else setCollections([]);
     });
   }, [selectedColId]);
 
@@ -103,18 +90,18 @@ export default function CollectionsPage() {
 
   async function handleCreateCollection(e: React.FormEvent) {
     e.preventDefault();
-    if (!newTitle) return;
+    if (!newTitle || !user) return;
 
     try {
       const newId = await createCollection({
-        ownerId: user?.uid ?? "demo-user-1",
-        ownerEmail: user?.email ?? "buyer@dynastyestates.co.za",
+        ownerId: user.uid,
+        ownerEmail: user.email ?? "",
         title: newTitle,
         description: newDesc,
         isPrivate: true,
       });
 
-      setCollections(await getUserCollections(user?.uid ?? "demo-user-1"));
+      setCollections(await getUserCollections(user.uid));
       setSelectedColId(newId);
       setNewTitle("");
       setNewDesc("");
@@ -128,8 +115,8 @@ export default function CollectionsPage() {
   }
 
   async function handleVote(propertyId: string, vote: VoteType) {
-    if (!activeCollection) return;
-    const currentUid = user?.uid ?? "demo-user-1";
+    if (!activeCollection || !user) return;
+    const currentUid = user.uid;
 
     // The optimistic update below used to run even when the write was denied, so
     // a vote appeared to stick and vanished on reload.
@@ -164,8 +151,9 @@ export default function CollectionsPage() {
     const text = commentInputs[propertyId]?.trim();
     if (!text) return;
 
-    const currentUid = user?.uid ?? "demo-user-1";
-    const authorName = user?.displayName ?? "Me";
+    if (!user) return;
+    const currentUid = user.uid;
+    const authorName = user.displayName ?? "Me";
 
     let added;
     try {
@@ -196,7 +184,7 @@ export default function CollectionsPage() {
         <div className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <div className="flex items-center gap-2.5 sm:gap-3">
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-600 hidden sm:block dark:text-slate-400">Collaborative Discovery</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-600 hidden sm:block dark:text-slate-400">Your shortlists</p>
               <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">Collections</h1>
             </div>
           </div>
@@ -207,6 +195,7 @@ export default function CollectionsPage() {
             >
               Compare
             </Link>
+            {user && (
             <button
               onClick={() => setShowCreateModal(true)}
               className="pill border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all cursor-pointer dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
@@ -214,6 +203,7 @@ export default function CollectionsPage() {
               <span className="hidden sm:inline">+ New Collection</span>
               <span className="sm:hidden">+ New</span>
             </button>
+            )}
           </div>
         </div>
 
@@ -310,112 +300,22 @@ export default function CollectionsPage() {
             <div className="rounded-panel border border-white/80 bg-white/50 p-6 shadow-[0_16px_36px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
                 <div>
-                  <span className="text-xs uppercase tracking-[0.24em] text-emerald-700 dark:text-emerald-400">Collaborative Shortlist</span>
+                  <span className="text-xs uppercase tracking-[0.24em] text-emerald-700 dark:text-emerald-400">Shortlist</span>
                   <h2 className="mt-1 text-2xl font-semibold text-slate-950 md:text-3xl dark:text-white">{activeCollection.title}</h2>
                   <p className="mt-1 text-xs text-slate-600 md:text-sm dark:text-slate-300">{activeCollection.description}</p>
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="flex -space-x-2">
-                    {activeCollection.members.map((m, idx) => (
-                      <span
-                        key={idx}
-                        title={`${m.email} (${m.role})`}
-                        className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-slate-800 text-xs font-bold text-white shadow-sm dark:border-white/10"
-                      >
-                        {m.email.substring(0, 2).toUpperCase()}
-                      </span>
-                    ))}
-                  </div>
-                  <span className="text-xs text-slate-600 dark:text-slate-400">{activeCollection.members.length} Collaborators</span>
-                  <button
-                    type="button"
-                    onClick={() => setShowInviteModal(true)}
-                    className="rounded-full border border-emerald-300 bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800 hover:bg-emerald-100 cursor-pointer dark:bg-emerald-950/60 dark:border-emerald-500/30 dark:text-emerald-300 dark:hover:bg-emerald-950/80"
-                  >
-                    + Invite Partner
-                  </button>
-                </div>
+                {/* Sharing is not built: the rules let only the owner read a
+                    collection. The "+ Invite Partner" dialog here showed
+                    "Invite dispatched" and "Direct invite link copied" without
+                    sending or sharing anything, so it is gone until sharing is. */}
+                <p className="text-xs text-slate-600 dark:text-slate-400">Only you can see this collection.</p>
               </div>
             </div>
 
-            {/* Invite Partner Modal */}
-            {showInviteModal && createPortal(
-              <div
-                role="dialog"
-                aria-modal="true"
-                className="fixed inset-0 z-[80] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
-                onClick={() => setShowInviteModal(false)}
-              >
-                <div
-                  className="w-full max-w-md rounded-3xl border border-white/80 bg-white/95 p-6 shadow-2xl backdrop-blur-2xl text-slate-900 dark:bg-surface-panel dark:border-white/10 dark:shadow-[0_25px_60px_rgba(0,0,0,0.8)] dark:text-white"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <div className="flex items-start justify-between border-b border-slate-200 pb-3 dark:border-white/10">
-                    <div>
-                      <span className="text-xs uppercase font-bold text-emerald-800 tracking-wider dark:text-emerald-400">
-                        Shared Collaboration
-                      </span>
-                      <h3 className="text-base font-bold text-slate-950 dark:text-white">Invite to {activeCollection.title}</h3>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => setShowInviteModal(false)}
-                      className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-600 hover:bg-slate-200 cursor-pointer dark:bg-surface-ink/80 dark:border dark:border-white/10 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-white"
-                    >
-                      <XMarkIcon className="h-4 w-4" />
-                    </button>
-                  </div>
-
-                  {inviteNotice ? (
-                    <div className="py-6 text-center">
-                      <CheckIcon className="h-8 w-8 text-emerald-600 mx-auto" />
-                      <p className="mt-2 text-xs font-bold text-emerald-800">{inviteNotice}</p>
-                    </div>
-                  ) : (
-                    <form onSubmit={handleSendInvite} className="mt-4 space-y-3 text-xs">
-                      <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1 dark:text-slate-400">
-                          Partner / Collaborator Email
-                        </label>
-                        <input
-                          type="email"
-                          required
-                          value={inviteEmail}
-                          onChange={(e) => setInviteEmail(e.target.value)}
-                          placeholder="partner@family.co.za"
-                          className="w-full rounded-xl border border-slate-300 bg-white p-2.5 font-medium text-slate-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 dark:border-white/10 dark:bg-surface-ink/60 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-emerald-500"
-                        />
-                      </div>
-                      <div className="flex gap-2 pt-2">
-                        <button
-                          type="button"
-                          onClick={() => {
-                            if (typeof window !== "undefined") {
-                              void navigator.clipboard?.writeText(window.location.href);
-                              setInviteNotice("Direct invite link copied to clipboard!");
-                              setTimeout(() => {
-                                setInviteNotice("");
-                                setShowInviteModal(false);
-                              }, 2000);
-                            }
-                          }}
-                          className="pill flex-1 border border-slate-300 bg-white font-bold text-slate-700 hover:bg-slate-50 cursor-pointer dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10"
-                        >
-                          <CopyIcon className="h-3.5 w-3.5" />
-                          <span>Copy Link</span>
-                        </button>
-                        <button
-                          type="submit"
-                          className="pill flex-1 bg-slate-950 font-bold text-white shadow-md hover:bg-slate-800 cursor-pointer dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
-                        >
-                          Send Invite →
-                        </button>
-                      </div>
-                    </form>
-                  )}
-                </div>
-              </div>,
-              document.body,
+            {activeProperties.length === 0 && (
+              <p className="rounded-card border border-white/70 bg-white/45 p-6 text-center text-sm text-slate-600 dark:border-white/10 dark:bg-surface-panel/60 dark:text-slate-300">
+                No homes here yet. Use <span className="font-semibold">Collection</span> on any listing to add one.
+              </p>
             )}
 
             {/* Property Cards in Collection */}
@@ -553,6 +453,34 @@ export default function CollectionsPage() {
                 );
               })}
             </div>
+          </div>
+        ) : authReady ? (
+          <div className="rounded-panel border border-white/80 bg-white/50 p-12 text-center shadow-sm backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10">
+            <FolderIcon className="mx-auto h-8 w-8 text-slate-600 dark:text-emerald-400" />
+            <h2 className="mt-3 text-xl font-bold text-slate-900 dark:text-white">
+              {user ? "No collections yet" : "Sign in to see your collections"}
+            </h2>
+            <p className="mx-auto mt-1 max-w-md text-xs text-slate-600 dark:text-slate-300">
+              {user
+                ? "Group homes you are weighing up, vote on them and keep notes."
+                : "Collections are kept with your account, so they are there on every device."}
+            </p>
+            {user ? (
+              <button
+                type="button"
+                onClick={() => setShowCreateModal(true)}
+                className="pill-lg mt-5 cursor-pointer bg-slate-950 px-6 font-bold text-white shadow-md hover:bg-slate-800 dark:bg-emerald-700 dark:hover:bg-emerald-800"
+              >
+                Create a collection
+              </button>
+            ) : (
+              <Link
+                href="/auth/login"
+                className="pill-lg mt-5 inline-flex bg-slate-950 px-6 font-bold text-white shadow-md hover:bg-slate-800 dark:bg-emerald-700 dark:hover:bg-emerald-800"
+              >
+                Sign in
+              </Link>
+            )}
           </div>
         ) : null}
       </div>
