@@ -39,6 +39,7 @@ service-account*.json
 *-firebase-adminsdk-*.json
 .firebase/
 firebase-debug.log*
+firestore-debug.log*
 
 # Shared test logins. These are real accounts on the live Firebase project and
 # this repository is public, so the credentials stay out of it.

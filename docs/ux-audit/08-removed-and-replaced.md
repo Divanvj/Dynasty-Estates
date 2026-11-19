@@ -392,3 +392,11 @@ Added, nothing removed.
 - **Removed – "+ Invite Partner"**, its "Invite dispatched" message and "Direct invite link copied". Nothing was sent or shared, and the rules only let the owner read a collection. Replaced by "Only you can see this collection." The "Collaborative" labels became "Your shortlists" / "Shortlist".
 - **Fixed – adding a home to a stored collection replaced the homes already in it**, and **posting a comment replaced the earlier comments** (both wrote a one-item array). Both now append.
 - **Not done**: sharing a collection with someone else (needs rules for members, an invite and accept flow, and e-mail). Kept on the plan under Later.
+
+## Firestore rules tightened by the new rule tests (19 Nov, S1-4)
+
+- **Added – `npm run test:rules`**: 129 checks of `firestore.rules` against the local emulator (every collection; signed out, buyer, seller, agent, principal, member, admin, and a made-up role). Runs in CI.
+- **Removed – agents' access to tenancy applications.** Any agent could read every application on the platform (ID numbers, income). Now only the applicant and admins; no agent screen used it.
+- **Changed – a listing's own (non-practitioner) owner can no longer set `example`, `sale` or `agentId`**, on create or edit. The listing editor never sent them; the sale is recorded by the server.
+- **Changed – a new enquiry must be `new`, unassigned and without a first reply.** The app already sent exactly that.
+- **Not done (D7)**: any agent can still edit or delete any other agent's listing.

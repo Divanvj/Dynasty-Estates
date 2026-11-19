@@ -11,6 +11,7 @@
     "build": "next build",
     "start": "next start -p 3000 -H 0.0.0.0",
     "lint": "eslint",
+    "test:rules": "npx --yes firebase-tools@15.37.0 emulators:exec --only firestore --project demo-dynasty-rules \"node tests/firestore-rules.test.mjs\"",
     "firebase:config": "firebase-tools apps:sdkconfig WEB --project dynasty-estates",
     "firebase:deploy:auth": "firebase-tools deploy --only auth --project dynasty-estates",
     "firebase:deploy:rules": "firebase-tools deploy --only firestore:rules --project dynasty-estates",
