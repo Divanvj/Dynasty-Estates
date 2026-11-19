@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/rules-tests | S1-4: tests/firestore-rules.test.mjs, package.json scripts, .github/workflows/ci.yml, maybe firestore.rules | 2026-11-19 |
 
 ## Recently merged
 
