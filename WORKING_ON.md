@@ -9,12 +9,14 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/return-after-signin | S1-7: auth/login + signup pages, sign-in links in ~10 components (one href each), property-inquiry-button | 2026-11-20 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-20 — `DESKTOP-1R37EBU/return-after-signin` merged (S1-7). For any new "Sign in" link use `const signInHref = useAuthHref()`
+  (`lib/use-return-path.ts`) instead of a bare "/auth/login"; it adds `?next=<this page>`. `safeReturnPath()` in `lib/return-path.ts`.
 
 - 2026-11-20 — `DESKTOP-1R37EBU/verify-email` merged (S1-6). **E-mail verification.** `<VerifyEmailBanner />` sits in layout.tsx under
   `<MaintenanceBanner />` (please keep it if you restyle the header area); page `/auth/verified`. Server: `lib/server/email-verification.ts`,
