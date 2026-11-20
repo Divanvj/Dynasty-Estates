@@ -400,3 +400,11 @@ Added, nothing removed.
 - **Changed – a listing's own (non-practitioner) owner can no longer set `example`, `sale` or `agentId`**, on create or edit. The listing editor never sent them; the sale is recorded by the server.
 - **Changed – a new enquiry must be `new`, unassigned and without a first reply.** The app already sent exactly that.
 - **Not done (D7)**: any agent can still edit or delete any other agent's listing.
+
+## E-mail verification (20 Nov, S1-6)
+
+- **Added – "Confirm your e-mail address" e-mail** on sign-up (Dynasty template, sent through the site's mail provider, logged on /console/email as "Confirm e-mail address").
+- **Added – banner** under the header for signed-in e-mail-and-password accounts that haven't confirmed: "Confirm your e-mail address: we sent a link to …" + **Send the link again** (one a minute, five a day). It disappears once the account is confirmed (re-checked when the tab regains focus). Not shown on /auth, /console, for Google accounts or developer accounts.
+- **Added – /auth/verified**, where Firebase's confirmation page returns people.
+- **Added – one reminder e-mail** from the nightly job to accounts 3–30 days old that still haven't confirmed.
+- **Not done**: nothing is blocked for unconfirmed accounts (they can still enquire); the old `isVerified` field on users/{uid} is still written as false and not updated.

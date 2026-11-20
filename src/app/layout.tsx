@@ -7,6 +7,7 @@ import MobileNav from "@/components/mobile-nav";
 import { MaintenanceBanner } from "@/components/platform-status";
 import SiteChrome from "@/components/site-chrome";
 import SiteHeader from "@/components/site-header";
+import VerifyEmailBanner from "@/components/verify-email-banner";
 import TelemetryReporter from "@/components/telemetry-reporter";
 import TestRoleDock from "@/components/test-role-switcher";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -127,6 +128,8 @@ export default function RootLayout({
                 on every page (UX Phase 3). */}
             <TelemetryReporter />
             <MaintenanceBanner />
+            {/* Signed-in accounts that haven't confirmed their e-mail (S1-6). */}
+            <VerifyEmailBanner />
             <MobileAppBar />
             {/* SiteChrome hides the desktop header on /console, which draws
                 its own sidebar shell. */}

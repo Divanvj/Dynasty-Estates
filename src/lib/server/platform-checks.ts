@@ -218,6 +218,7 @@ export const KNOWN_COLLECTIONS = [
   "console_events",
   "platform_config",
   "mail_log",
+  "email_verification",
 ] as const;
 
 export async function getFirebaseStatus() {

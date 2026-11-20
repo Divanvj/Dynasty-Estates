@@ -16,6 +16,7 @@ const KIND: Record<string, string> = {
   ops_alert: "Nightly alert",
   weekly_report: "Weekly report",
   saved_search: "Saved-search alert",
+  verify_email: "Confirm e-mail address",
   test: "Test",
 };
 

@@ -177,7 +177,7 @@ await seed("listing_stats/pub1_20261119", { listingId: "pub1", ownerId: "seller1
 await seed("listing_stats/memberPub_20261119", { listingId: "memberPub", ownerId: "member1", date: "2026-11-19", views: 5 });
 await seed("audit_logs/log1", { actorId: "agentA", actorEmail: "agenta@example.test", action: "approve", resource: "pub1", details: "", createdAt: new Date() });
 
-for (const c of ["saved_searches", "email_prefs", "sales", "mail_log", "platform_config"]) {
+for (const c of ["saved_searches", "email_prefs", "sales", "mail_log", "platform_config", "email_verification"]) {
   await seed(`${c}/x1`, { ownerId: "buyer1", uid: "buyer1", note: "server only" });
 }
 
@@ -359,7 +359,7 @@ await check("seller reads the audit trail", false, () => getDoc(doc(seller, "aud
 
 // ================================================================= server-only collections
 
-for (const c of ["saved_searches", "email_prefs", "sales", "mail_log", "platform_config"]) {
+for (const c of ["saved_searches", "email_prefs", "sales", "mail_log", "platform_config", "email_verification"]) {
   await check(`client reads ${c} (server only)`, false, () => getDoc(doc(buyer, `${c}/x1`)));
   await check(`admin client writes ${c} (server only)`, false, () => setDoc(doc(admin, `${c}/y1`), { uid: "admin1" }));
 }

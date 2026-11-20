@@ -258,3 +258,32 @@ export function savedSearchEmail(input: { searches: Array<{ label: string; url: 
     ),
   };
 }
+
+export function verifyEmailEmail(input: { name: string | null; link: string; reminder: boolean }) {
+  const hello = input.name ? `Hi ${line(input.name, 80)},` : "Hi,";
+  const intro = input.reminder
+    ? "You created a Dynasty Estates account a few days ago but haven't confirmed your e-mail address yet."
+    : "Thanks for creating a Dynasty Estates account.";
+  return {
+    subject: input.reminder ? "Reminder: confirm your e-mail address for Dynasty Estates" : "Confirm your e-mail address for Dynasty Estates",
+    text: [
+      hello,
+      "",
+      intro,
+      "Confirm your e-mail address so agents and sellers can reach you and so you get your alerts:",
+      input.link,
+      "",
+      "The link works once and expires after a while. If it has expired, sign in and choose \"Send the link again\".",
+      "If you didn't create this account, you can ignore this e-mail.",
+    ].join("\n"),
+    html: layout(
+      "Confirm your e-mail address",
+      paragraph(hello) +
+        paragraph(intro) +
+        paragraph("Confirm your e-mail address so agents and sellers can reach you and so you get your alerts.") +
+        paragraph('The link works once and expires after a while. If it has expired, sign in and choose "Send the link again".') +
+        paragraph("If you didn't create this account, you can ignore this e-mail."),
+      { label: "Confirm my e-mail address", href: input.link },
+    ),
+  };
+}

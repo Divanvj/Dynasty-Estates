@@ -14,6 +14,7 @@ import {
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
 import { auth, db, isFirebaseConfigured } from "./firebase";
+import { requestVerificationEmail } from "./email-verification-client";
 import { setActiveUserRole, setDeveloperAccount, type UserRole as PersonaRole } from "./use-user-role";
 
 import { useSyncExternalStore } from "react";
@@ -270,6 +271,11 @@ export async function signUpWithEmail(
       { merge: true },
     );
   }
+
+  // Ask the server to e-mail a link to confirm the address (S1-6). Not
+  // awaited: the account exists either way, and the banner on every page
+  // offers to send it again.
+  void requestVerificationEmail("signup");
 
   return userCredential.user;
 }
