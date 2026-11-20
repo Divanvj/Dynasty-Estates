@@ -414,3 +414,15 @@ Added, nothing removed.
 - **Changed – sign-in links** (save heart, Saved, Collections, alerts, saved search, enquiries, agents, role-guarded pages, the account menu, package requests) now return to the page you were on, via `?next=`. Sign-in, sign-up, Google and phone sign-in all honour it; only paths on this site are followed.
 - **Changed – the enquiry form for signed-out visitors** shows "Sign in to send this request" with a link back to the listing, instead of a Send button that always failed with "check your connection" (it submitted as `guest-…`, which the rules refuse). The made-up `anonymous@buyer.co.za` fallback is gone.
 - **Not done**: guest enquiries without an account (decision D8); /console sign-in links are unchanged.
+
+## Phone review: controls next to what they change (20 Nov, U8)
+
+- **Moved – /search view switch and sort** from the search card to one line directly above the results: switch left, sort right ("Newest", "Lowest price", "Highest price", "Most bedrooms"; "Sort by" label from `sm`). The result count is screen-reader-only on phones (it showed as "7 hom…"), visible from `sm`.
+- **Removed – "Reset All"** in the search card; the removable filter chips and "Clear all" under the results line do the same.
+- **Moved – area pages** (/for-sale, /to-rent, province and city): the listings come straight after the title; the province/city directory and the related links come after the listings.
+- **Renamed – "Related Nodes" / "Related Hubs"** to "Also see".
+- **Removed – "← Back to Map" and "Exit Street View & Return to Map"** on the listing page; the Street View / Map switch does that.
+- **Changed – /compare** "← Back to Collections" (right) is now "Back" (left), returning to the previous page (search if opened directly).
+- **Changed – card photo dots** bottom-right instead of centred, clear of the price.
+- **Changed – /map-search**: fade on the right edge of the chip rows; the layer buttons say "Solar" and "Water" on phones too, and stay clear of the zoom buttons.
+- **Changed – True Cost calculator**: the offer price never wraps; "Custom Offer" wraps under its label.

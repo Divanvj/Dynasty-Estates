@@ -16,6 +16,11 @@ lines keep its own merges trivial.
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
 
+- 2026-11-20 — `DESKTOP-1R37EBU/mobile-placement` merged (U8, owner's phone review). **Controls sit with what they change.**
+  /search: view switch + sort moved from the search card to the results line (`aria-label="Sort listings"` kept). Area pages:
+  listings first, directory + "Also see" after. `PropertyCardPhotos` dots are bottom-right (keep card prices bottom-left).
+  `property-media-tabs`: one Street View / Map switch. Please keep this order when adding the "Under offer" badge.
+
 - 2026-11-20 — **Build-lane handover: read `docs/HANDOVER.md` first.** DESKTOP-1R37EBU stopped before S1-8 ("Under offer"),
   nothing started. The note has the state, open decisions, the working routine and XCORE.
 
