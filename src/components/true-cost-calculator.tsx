@@ -640,16 +640,19 @@ export default function TrueCostCalculator({
       >
         {/* Purchase Price / Offer Slider */}
         <div>
-          <div className="flex items-center justify-between font-semibold mb-1">
-            <label htmlFor={priceId} className="flex items-center gap-1.5">
+          {/* The price never wraps and the "Custom Offer" tag wraps under the
+              label instead: on a phone the tag squeezed in between and pushed
+              "R" and "1,925,000" onto separate lines (owner's review, 20 Nov). */}
+          <div className="flex items-center justify-between gap-3 font-semibold mb-1">
+            <label htmlFor={priceId} className="flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1">
               <span>Purchase / Offer Price</span>
               {purchasePrice !== askingPriceZAR && (
-                <span className="rounded bg-amber-100 px-1.5 py-0.5 text-xs font-bold text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 dark:border dark:border-amber-500/30">
+                <span className="whitespace-nowrap rounded bg-amber-100 px-1.5 py-0.5 text-xs font-bold text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 dark:border dark:border-amber-500/30">
                   Custom Offer
                 </span>
               )}
             </label>
-            <span className="text-slate-950 font-bold text-sm dark:text-white">
+            <span className="shrink-0 whitespace-nowrap text-slate-950 font-bold text-sm tabular-nums dark:text-white">
               R {formatNumber(purchasePrice)}
             </span>
           </div>

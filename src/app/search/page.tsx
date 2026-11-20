@@ -559,16 +559,16 @@ function SearchContent() {
           </button>
         </div>
 
-        <p aria-live="polite" className="min-w-0 flex-1 truncate text-sm font-semibold text-slate-800 tabular-nums dark:text-slate-200">
-          {loading || loadError ? null : (
-            <>
-              {filteredProperties.length} {filteredProperties.length === 1 ? "home" : "homes"}
-              {/* "for sale" / "to rent" repeats the switch above the title; on a
-                  phone it is left to screen readers so the line fits. */}
-              <span className="sr-only sm:not-sr-only"> {resultNoun}</span>
-            </>
-          )}
+        {/* The count is for screen readers on a phone: squeezed between the
+            switch and sort it showed as "7 hom…", and the owner crossed it out
+            (review, 20 Nov). From `sm` up there is room, so it shows. The
+            spacer keeps sort on the right either way. */}
+        <p aria-live="polite" className="sr-only text-sm font-semibold text-slate-800 tabular-nums sm:not-sr-only sm:min-w-0 sm:truncate dark:text-slate-200">
+          {loading || loadError
+            ? null
+            : `${filteredProperties.length} ${filteredProperties.length === 1 ? "home" : "homes"} ${resultNoun}`}
         </p>
+        <span aria-hidden="true" className="flex-1" />
         <div className="flex shrink-0 items-center gap-2">
           <span aria-hidden="true" className="hidden text-xs font-semibold text-slate-600 sm:inline dark:text-slate-400">
             Sort by
