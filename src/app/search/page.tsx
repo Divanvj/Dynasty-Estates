@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState, useSyncExternalStore } from "react";
 
 import SavePropertyButton from "@/components/save-property-button";
 import SaveSearchButton from "@/components/save-search-button";
@@ -36,6 +36,38 @@ import {
 } from "@/lib/property-data";
 
 export type ViewMode = "grid" | "list" | "map" | "compact";
+
+/** The visitor's last chosen view, kept in localStorage (a per-browser convenience). */
+const VIEW_STORAGE_KEY = "dynasty_search_view_mode";
+const VIEW_EVENT = "dynasty-search-view";
+
+function readStoredView(): ViewMode {
+  try {
+    const stored = localStorage.getItem(VIEW_STORAGE_KEY);
+    if (stored === "list" || stored === "grid" || stored === "map" || stored === "compact") return stored;
+  } catch {
+    // Storage blocked (private mode, site data cleared): the default view.
+  }
+  return "list";
+}
+
+function writeStoredView(mode: ViewMode): void {
+  try {
+    localStorage.setItem(VIEW_STORAGE_KEY, mode);
+  } catch {
+    // Not remembered next time; the view still changes via the URL.
+  }
+  window.dispatchEvent(new Event(VIEW_EVENT));
+}
+
+function subscribeStoredView(onChange: () => void): () => void {
+  window.addEventListener(VIEW_EVENT, onChange);
+  window.addEventListener("storage", onChange);
+  return () => {
+    window.removeEventListener(VIEW_EVENT, onChange);
+    window.removeEventListener("storage", onChange);
+  };
+}
 
 /** "All" plus every value the filter panel's type options can set. */
 const KNOWN_PROPERTY_TYPES = [
@@ -92,16 +124,12 @@ function SearchContent() {
   const savedQuery = useMemo(() => criteriaToParams(criteria).toString(), [criteria]);
 
   const urlView = searchParams.get("view");
-  const [localView, setLocalView] = useState<ViewMode>(() => {
-    if (typeof window === "undefined") return "list";
-    try {
-      const stored = localStorage.getItem("dynasty_search_view_mode");
-      if (stored === "list" || stored === "grid" || stored === "map" || stored === "compact") {
-        return stored;
-      }
-    } catch {}
-    return "list";
-  });
+  // The last view the visitor chose, from localStorage. Read through
+  // useSyncExternalStore with "list" as the server value: reading it in a
+  // useState initialiser rendered "map" in the browser's first pass against
+  // the server's "list", and React reported a hydration mismatch on the view
+  // buttons.
+  const localView = useSyncExternalStore(subscribeStoredView, readStoredView, () => "list" as ViewMode);
 
   const requestedView: ViewMode =
     urlView === "list" || urlView === "grid" || urlView === "map" || urlView === "compact"
@@ -130,10 +158,7 @@ function SearchContent() {
     isDesktop || requestedView === "map" ? requestedView : "list";
 
   function handleViewChange(mode: ViewMode) {
-    setLocalView(mode);
-    try {
-      localStorage.setItem("dynasty_search_view_mode", mode);
-    } catch {}
+    writeStoredView(mode);
     const params = new URLSearchParams(searchParams.toString());
     if (mode === "list") {
       params.delete("view");
