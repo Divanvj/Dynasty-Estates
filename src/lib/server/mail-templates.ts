@@ -259,6 +259,54 @@ export function savedSearchEmail(input: { searches: Array<{ label: string; url: 
   };
 }
 
+export type DropListing = {
+  title: string;
+  slug: string;
+  location: string;
+  listingType: string;
+  /** Rand figures, not the formatted strings: the e-mail prints both. */
+  from: number;
+  to: number;
+  percent: number;
+  why: string;
+};
+
+/**
+ * S1-10 — homes that cut their asking price, for someone who saved the home or
+ * saved a search it matches. One e-mail covers every drop that person should
+ * hear about, each saying which it is.
+ */
+export function priceDropEmail(input: { drops: DropListing[]; optOut?: OptOutLink }) {
+  const rands = (value: number) => `R ${value.toLocaleString("en-ZA").replace(/,/g, " ")}`;
+  const per = (d: DropListing) => (d.listingType === "rent" ? " a month" : "");
+  const count = input.drops.length;
+  const first = input.drops[0];
+  const subject =
+    count === 1 ? `${line(first.title, 60)} is down ${first.percent}% to ${rands(first.to)}` : `${count} homes you follow cut their price`;
+  const url = (d: DropListing) => `${SITE_URL}/property/${encodeURIComponent(d.slug)}`;
+  const dropHtml = (d: DropListing) =>
+    `<tr><td style="padding:10px 0;border-top:1px solid #e7eded"><a href="${escape(url(d))}" style="color:#0f4c4a;font-weight:bold;font-size:15px">${escape(line(d.title, 90))}</a><div style="font-size:15px;margin-top:2px"><span style="font-weight:bold">${escape(rands(d.to))}${escape(per(d))}</span> <span style="color:#5b6b6c;text-decoration:line-through">${escape(rands(d.from))}</span> <span style="color:#0f4c4a;font-weight:bold">−${d.percent}%</span></div><div style="font-size:13px;color:#5b6b6c;margin-top:2px">${escape(line([d.location, d.why].filter(Boolean).join(" · "), 120))}</div></td></tr>`;
+  return {
+    subject,
+    text: [
+      count === 1 ? "A home you follow has cut its asking price:" : "Homes you follow have cut their asking price:",
+      "",
+      ...input.drops.map((d) => `- ${line(d.title, 90)}: ${rands(d.to)}${per(d)}, was ${rands(d.from)} (${d.percent}% off). ${d.why}. ${url(d)}`),
+      "",
+      "A lower asking price is not an offer and the home may still sell at any figure.",
+      ...optOutText(input.optOut),
+    ].join("\n"),
+    html: layout(
+      count === 1 ? "A home you follow has cut its price" : "Homes you follow have cut their price",
+      paragraph(count === 1 ? "The asking price came down since we last looked." : "These asking prices came down since we last looked.") +
+        `<table role="presentation" width="100%" cellpadding="0" cellspacing="0">${input.drops.map(dropHtml).join("")}</table>` +
+        paragraph("A lower asking price is not an offer, and the home may still sell at any figure."),
+      count === 1 ? { label: "See the home", href: url(first) } : { label: "Your saved homes", href: `${SITE_URL}/saved` },
+      input.optOut,
+    ),
+  };
+}
+
 /**
  * S1-9 — an agent's Fidelity Fund Certificate is running out (60 days, 30 days
  * or a week). Dynasty does not renew it: the e-mail says what to do and where,

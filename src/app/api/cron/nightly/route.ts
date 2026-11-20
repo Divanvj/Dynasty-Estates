@@ -12,6 +12,7 @@ import { opsAlertEmail } from "@/lib/server/mail-templates";
 import { NIGHTLY_DOC } from "@/lib/server/platform-checks";
 import { runVerificationReminders } from "@/lib/server/email-verification";
 import { runFfcReminders } from "@/lib/server/practitioner-reminders";
+import { runPriceDropAlerts } from "@/lib/server/price-drops";
 import { runSavedSearchAlerts } from "@/lib/server/saved-searches";
 import { cleanUpListingFiles, GRACE_DAYS } from "@/lib/server/storage-cleanup";
 import { runWeeklyReports, sastWeekday } from "@/lib/server/weekly-report";
@@ -29,7 +30,8 @@ export const maxDuration = 60;
  *   4. listing files nothing refers to any more (storage-cleanup.ts),
  *   5. saved-search alert e-mails,
  *   5b. one reminder to new accounts that haven't confirmed their e-mail (S1-6),
- *   5c. certificate expiry reminders to agents at 60 / 30 / 7 days (S1-9),
+ *   5c. price-drop alerts on saved homes and saved-search matches (S1-10),
+ *   5d. certificate expiry reminders to agents at 60 / 30 / 7 days (S1-9),
  *   6. on Mondays (SAST), the weekly listing report e-mails.
  * The e-mail jobs cap how many they send per run (the function has 60 s);
  * whatever is left over goes out the next night.
@@ -129,6 +131,15 @@ export async function GET(request: Request) {
     await recordConsoleEvent(null, "nightly.verify_email", `Verification reminders: ${reminders.emailed} e-mailed, ${reminders.skipped} skipped, ${reminders.failed} failed (${reminders.candidates} unconfirmed)${reminders.more ? ", more left for tomorrow" : ""}`, { ...reminders });
   } catch (error) {
     failures.push(`verification reminders: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  try {
+    const priceDrops = await runPriceDropAlerts({ maxEmails: 100 });
+    report.priceDrops = priceDrops;
+    if (priceDrops.failed) failures.push(`price-drop alerts: ${priceDrops.failed} e-mail(s) failed`);
+    await recordConsoleEvent(null, "nightly.price_drops", `Price-drop alerts: ${priceDrops.emailed} e-mailed, ${priceDrops.skipped} skipped, ${priceDrops.failed} failed (${priceDrops.drops} drop(s) across ${priceDrops.listings} live listings)`, { ...priceDrops });
+  } catch (error) {
+    failures.push(`price-drop alerts: ${error instanceof Error ? error.message : String(error)}`);
   }
 
   try {
