@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { useAuth } from "@/components/auth-provider";
 import { accountApi, type SavedSearchRow } from "@/lib/account-api";
+import { useAuthHref } from "@/lib/use-return-path";
 
 /**
  * "Save this search" on /search: stores the current filters for the
@@ -12,6 +13,8 @@ import { accountApi, type SavedSearchRow } from "@/lib/account-api";
  * keys it by the query, so changing a filter offers to save the new search.
  */
 export default function SaveSearchButton({ query }: { query: string }) {
+  // Sign-in returns to this page (S1-7).
+  const signInHref = useAuthHref();
   const { user, loading } = useAuth();
   const [state, setState] = useState<{ kind: "idle" | "busy" } | { kind: "saved"; search: SavedSearchRow } | { kind: "error"; message: string }>({ kind: "idle" });
 
@@ -21,7 +24,7 @@ export default function SaveSearchButton({ query }: { query: string }) {
   if (loading) return null;
   if (!user) {
     return (
-      <Link href="/auth/login" className={chip}>
+      <Link href={signInHref} className={chip}>
         Sign in to save this search
       </Link>
     );

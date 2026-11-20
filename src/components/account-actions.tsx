@@ -20,6 +20,7 @@ import ThemeToggle from "@/components/theme-toggle";
 import { useAuth } from "@/components/auth-provider";
 import { accountCan, useIsDeveloperAccount, useUserRole, type UserRole } from "@/lib/use-user-role";
 import { createSupportRequest } from "@/lib/support-requests";
+import { useAuthHref } from "@/lib/use-return-path";
 
 const ROLE_BADGES: Record<UserRole, { label: string; icon: typeof UserIcon; tone: string }> = {
   Buyer: { label: "Buyer / Renter", icon: UserIcon, tone: "text-slate-600" },
@@ -45,6 +46,8 @@ export default function AccountActions({
    */
   hideTrigger?: boolean;
 } = {}) {
+  // Sign-in returns to this page (S1-7).
+  const signInHref = useAuthHref();
   const { user: firebaseUser, demoUser, profile, signOut } = useAuth();
   const { role: activeRole } = useUserRole();
   const developerAccount = useIsDeveloperAccount();
@@ -476,7 +479,7 @@ export default function AccountActions({
                 </button>
               ) : (
                 <Link
-                  href="/auth/login"
+                  href={signInHref}
                   onClick={() => setIsOpen(false)}
                   className="w-full text-center rounded-xl py-2 text-xs font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-colors"
                 >

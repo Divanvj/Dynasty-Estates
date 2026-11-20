@@ -6,6 +6,8 @@ import { FormEvent, useRef, useState } from "react";
 import type { ConfirmationResult, RecaptchaVerifier } from "firebase/auth";
 import BrandLogo from "@/components/brand-logo";
 import { usePlatformStatus } from "@/components/platform-status";
+import { authHref } from "@/lib/return-path";
+import { readNextPath, useNextPath } from "@/lib/use-return-path";
 
 import {
   confirmPhoneSignIn,
@@ -19,6 +21,8 @@ import {
 
 export default function LoginPage() {
   const router = useRouter();
+  // The page that sent them here (?next=, S1-7). Only paths on this site.
+  const next = useNextPath();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -74,7 +78,7 @@ export default function LoginPage() {
     try {
       await confirmPhoneSignIn(confirmation, smsCode);
       resetRecaptcha();
-      router.push("/");
+      router.push(readNextPath() ?? "/");
       router.refresh();
     } catch (submitError) {
       setError(getFirebaseAuthErrorMessage(submitError));
@@ -89,7 +93,7 @@ export default function LoginPage() {
 
     try {
       await signInWithGoogle();
-      router.push("/");
+      router.push(readNextPath() ?? "/");
       router.refresh();
     } catch (submitError) {
       setError(getFirebaseAuthErrorMessage(submitError));
@@ -109,7 +113,8 @@ export default function LoginPage() {
         result && typeof result === "object" && "initialPath" in result && typeof result.initialPath === "string"
           ? result.initialPath
           : "/";
-      router.push(targetPath);
+      // Back to the page they came from; otherwise their role's home page.
+      router.push(readNextPath() ?? targetPath);
       router.refresh();
     } catch (submitError) {
       setError(getFirebaseAuthErrorMessage(submitError));
@@ -359,7 +364,7 @@ export default function LoginPage() {
             )}
 
             <p className="mt-6 text-center text-sm text-slate-600 dark:text-slate-300">
-              No account yet? <Link href="/auth/signup" className="font-semibold text-slate-900 hover:underline dark:text-emerald-400">Create one</Link>
+              No account yet? <Link href={authHref(next, "/auth/signup")} className="font-semibold text-slate-900 hover:underline dark:text-emerald-400">Create one</Link>
             </p>
           </div>
         </div>

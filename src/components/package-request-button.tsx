@@ -5,6 +5,7 @@ import { useId, useState } from "react";
 
 import { useAuth } from "@/components/auth-provider";
 import { createSupportRequest } from "@/lib/support-requests";
+import { useAuthHref } from "@/lib/use-return-path";
 
 /**
  * "Request this package / plan".
@@ -29,6 +30,8 @@ export default function PackageRequestButton({
   label?: string;
   primary?: boolean;
 }) {
+  // Sign-in returns to this page (S1-7).
+  const signInHref = useAuthHref();
   const { user, loading } = useAuth();
   const [open, setOpen] = useState(false);
   const [note, setNote] = useState("");
@@ -50,7 +53,7 @@ export default function PackageRequestButton({
 
   if (!loading && !user) {
     return (
-      <Link href="/auth/login" className={buttonClass}>
+      <Link href={signInHref} className={buttonClass}>
         Sign in to request
       </Link>
     );

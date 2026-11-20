@@ -8,6 +8,7 @@ import { auth } from "@/lib/firebase";
 import { HeartIcon } from "@/components/icons";
 import { isPropertySaved, setPropertySaved } from "@/lib/saved-properties";
 import { trackListing } from "@/lib/track-client";
+import { authHref } from "@/lib/return-path";
 
 /**
  * Saves live in Firestore under the signed-in account, nowhere else. A signed-out
@@ -43,7 +44,8 @@ export default function SavePropertyButton({ propertyId }: { propertyId: string 
 
   async function handleSave() {
     if (!user) {
-      router.push("/auth/login");
+      // Back to this page after signing in (S1-7).
+      router.push(authHref(`${window.location.pathname}${window.location.search}`));
       return;
     }
     setLoading(true);

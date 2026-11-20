@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { auth } from "@/lib/firebase";
 import { formatDate } from "@/lib/formatters";
 import { getUserInquiries, type UserInquiry } from "@/lib/user-inquiries";
+import { useAuthHref } from "@/lib/use-return-path";
 
 const labels: Record<string, string> = {
   tour: "Private Tour Appointment",
@@ -25,6 +26,8 @@ function propertyHref(propertyId: string): string | null {
 }
 
 export default function InquiriesPage() {
+  // Sign-in returns to this page (S1-7).
+  const signInHref = useAuthHref();
   const [user, setUser] = useState<User | null>(null);
   const [inquiries, setInquiries] = useState<UserInquiry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -136,7 +139,7 @@ export default function InquiriesPage() {
                     : "No requests under this category"}
             </p>
             <Link
-              href={!user && !loadError ? "/auth/login" : "/search"}
+              href={!user && !loadError ? signInHref : "/search"}
               className="pill-lg mt-4 bg-slate-950 font-bold text-white transition-all dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
             >
               {!user && !loadError ? "Sign in →" : "Browse Properties →"}

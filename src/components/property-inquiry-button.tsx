@@ -8,6 +8,7 @@ import { CheckIcon, XMarkIcon } from "@/components/icons";
 import CustomSelect from "@/components/custom-select";
 import { auth } from "@/lib/firebase";
 import { createPropertyInquiry, type InquiryKind } from "@/lib/inquiries";
+import { useAuthHref } from "@/lib/use-return-path";
 
 export default function PropertyInquiryButton({
   propertyId,
@@ -26,6 +27,8 @@ export default function PropertyInquiryButton({
   className: string;
 }) {
   const [user, setUser] = useState<User | null>(null);
+  // Sign-in returns to this listing (S1-7).
+  const signInHref = useAuthHref();
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [successNotice, setSuccessNotice] = useState(false);
@@ -56,6 +59,13 @@ export default function PropertyInquiryButton({
   }, []);
 
   async function handleSubmit(e: React.FormEvent) {
+    // Enquiries are filed under the sender's account (firestore.rules). A
+    // signed-out visitor used to be sent through as "guest-…", which the rules
+    // refuse, and was then told to check their connection.
+    if (!user) {
+      e.preventDefault();
+      return;
+    }
     e.preventDefault();
     setLoading(true);
     setSubmitError(null);
@@ -67,8 +77,8 @@ export default function PropertyInquiryButton({
           : `Viewing on ${date} (${timeSlot}). Status: ${buyerStatus}. Notes: ${notes || "None"}`;
 
       await createPropertyInquiry({
-        userId: user?.uid ?? `guest-${Date.now()}`,
-        userEmail: email || user?.email || "anonymous@buyer.co.za",
+        userId: user.uid,
+        userEmail: email || user.email || "",
         propertyId,
         propertyTitle,
         ownerId,
@@ -282,6 +292,18 @@ export default function PropertyInquiryButton({
                       Your name, phone number and email go to the person who listed this home.
                     </p>
                   ) : null}
+                  {!user ? (
+                    <div className="rounded-xl border border-amber-300/70 bg-amber-50 p-3 text-xs text-amber-950 dark:border-amber-400/30 dark:bg-amber-950/40 dark:text-amber-100">
+                      <p className="font-semibold">Sign in to send this request.</p>
+                      <p className="mt-1">You need a free Dynasty Estates account so the seller can reply. We&apos;ll bring you back to this listing.</p>
+                      <a
+                        href={signInHref}
+                        className="mt-2.5 inline-flex w-full items-center justify-center rounded-full bg-slate-950 py-3 font-bold text-white hover:bg-slate-800 dark:bg-emerald-700 dark:hover:bg-emerald-800"
+                      >
+                        Sign in or create an account
+                      </a>
+                    </div>
+                  ) : (
                   <button
                     type="submit"
                     disabled={loading}
@@ -289,6 +311,7 @@ export default function PropertyInquiryButton({
                   >
                     {loading ? "Submitting..." : kind === "message" ? "Send message" : "Confirm Viewing Request"}
                   </button>
+                  )}
                 </div>
               </form>
             )}

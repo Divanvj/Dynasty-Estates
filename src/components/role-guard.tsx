@@ -4,6 +4,7 @@ import Link from "next/link";
 import { LockIcon } from "@/components/icons";
 import { useAuth } from "@/components/auth-provider";
 import { useUserRole, type UserRole } from "@/lib/use-user-role";
+import { useAuthHref } from "@/lib/use-return-path";
 
 function formatRoleList(roles: UserRole[]): string {
   if (roles.length <= 1) return roles.join("");
@@ -31,6 +32,8 @@ export default function RoleGuard({
   allowAnySignedIn?: boolean;
   children: React.ReactNode;
 }) {
+  // Sign-in returns to this page (S1-7).
+  const signInHref = useAuthHref();
   const { role, isMounted } = useUserRole();
   const { user, demoUser } = useAuth();
   const signedIn = Boolean(user || demoUser);
@@ -109,7 +112,7 @@ export default function RoleGuard({
 
         <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:justify-center">
           <Link
-            href="/auth/login"
+            href={signInHref}
             className="rounded-xl bg-slate-950 px-5 py-2.5 text-xs font-bold text-white shadow-md hover:bg-slate-800 transition-all dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
           >
             {isSignedIn ? "Sign in as another account →" : "Sign in →"}

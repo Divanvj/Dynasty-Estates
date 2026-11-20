@@ -41,7 +41,7 @@ Order matters: S1-1 changes what every page shows, so it goes first.
 - [x] **S1-4** Security-rule tests in the repo and CI (Firestore emulator). *Done 19 Nov:* `npm run test:rules` (129 checks, every collection and role) runs in CI. It closed 5 gaps in `firestore.rules` (seller-set `example` / `sale` / `agentId`; any agent reading every tenant application; enquiries filed as won or pre-assigned). Deployed to live 19 Nov (14:53 UTC, owner OK); live rules match `main`. Two gaps left for D7.
 - [x] **S1-5** Fix the data-integrity findings from the nightly scan. *Done 19 Nov:* cause fixed (a new listing's physical record is now written in the same batch); owner-approved deletion of the 5 TEST comparables (+4 view counts) and 4 orphan physical records. Kept on purpose: 4 test applications from the old demo buyer (on a removed sample home) and 2 accounts with no role (Quintus and a phone sign-in; they are buyers). Also found and fixed: home, area, agent and sitemap pages only refreshed on deploy; now every 5 minutes.
 - [x] **S1-6** E-mail verification for new accounts. *Done 20 Nov:* a Dynasty e-mail with a Firebase verification link on sign-up (via Brevo, logged in mail_log), a banner on every page until confirmed ("Send the link again", max 1 a minute, 5 a day), `/auth/verified`, and one nightly reminder after 3 days. Google accounts, developer accounts and .test addresses are skipped. Deliverability still depends on O1 (Brevo DNS).
-- [ ] **S1-7** After signing in, return to the page you came from (`/alerts`, a listing, …) instead of the home page.
+- [x] **S1-7** After signing in, return to the page you came from. *Done 20 Nov:* every sign-in link outside /console carries `?next=` (same-site paths only, tested in CI); sign-in, sign-up, Google and phone all return there. The enquiry form now asks signed-out visitors to sign in instead of failing with "check your connection".
 - [ ] **S1-8** Set "Under offer" from the agent and seller portals (and back to live).
 - [ ] **S1-9** FFC expiry reminder e-mails (nightly; 60, 30 and 7 days before), with opt-out.
 - [ ] **S1-10** Price-drop alerts: e-mail when a saved home or a saved-search match drops its asking price.
@@ -99,4 +99,5 @@ Done 19 Nov: **6 labelled example listings** in Firestore (`properties/claude-ex
 - **D4** Paid e-mail provider and the sending domain.
 - **D5** Support inbox address.
 - **D6** Real listing photography; "Dynasty True Cost" trademark; final logo.
+- **D8** Enquiries without an account? Today a buyer must sign in to send an enquiry or book a viewing (the form now says so up front). Allowing guest enquiries needs a server route with spam protection.
 - **D7** Any agent can edit or delete any other agent's listing today (the rules let every practitioner change every listing so they can moderate). Limit that to admins plus the listing's own agent, or keep it? The rule tests report it as a gap until decided.

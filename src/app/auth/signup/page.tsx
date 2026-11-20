@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import BrandLogo from "@/components/brand-logo";
+import { authHref } from "@/lib/return-path";
+import { readNextPath, useNextPath } from "@/lib/use-return-path";
 
 import {
   getFirebaseAuthErrorMessage,
@@ -13,6 +15,8 @@ import {
 
 export default function SignupPage() {
   const router = useRouter();
+  // The page that sent them here (?next=, S1-7). Only paths on this site.
+  const next = useNextPath();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +29,7 @@ export default function SignupPage() {
 
     try {
       await signInWithGoogle();
-      router.push("/");
+      router.push(readNextPath() ?? "/");
       router.refresh();
     } catch (submitError) {
       setError(getFirebaseAuthErrorMessage(submitError));
@@ -41,7 +45,7 @@ export default function SignupPage() {
 
     try {
       await signUpWithEmail(email, password, fullName);
-      router.push("/");
+      router.push(readNextPath() ?? "/");
       router.refresh();
     } catch (submitError) {
       setError(getFirebaseAuthErrorMessage(submitError));
@@ -169,7 +173,7 @@ export default function SignupPage() {
             </form>
 
             <p className="mt-6 text-center text-sm text-slate-600 dark:text-slate-300">
-              Already have an account? <Link href="/auth/login" className="font-semibold text-slate-900 hover:underline dark:text-emerald-400">Sign in</Link>
+              Already have an account? <Link href={authHref(next, "/auth/login")} className="font-semibold text-slate-900 hover:underline dark:text-emerald-400">Sign in</Link>
             </p>
           </div>
         </div>

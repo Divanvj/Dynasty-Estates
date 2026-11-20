@@ -39,6 +39,9 @@ jobs:
       - name: Run automated duplicate detection test suite
         run: node tests/duplicate-detector.test.mjs
 
+      - name: Run sign-in return-path tests
+        run: node tests/return-path.test.mjs
+
       # Firestore security rules (S1-4): every role and collection against the
       # local emulator, which needs Java. No secrets: the demo- project id keeps
       # the emulator offline.

@@ -8,6 +8,7 @@ import { ConfirmDialog, emptyBoxClass, errorBoxClass, linkClass, PageHeading, pa
 import { accountApi, type SavedSearchRow } from "@/lib/account-api";
 import { EMAIL_PREFS, type EmailPref, type EmailPrefs } from "@/lib/email-prefs";
 import { formatDate } from "@/lib/formatters";
+import { useAuthHref } from "@/lib/use-return-path";
 
 // Pattern: Settings. Two sections on one page: the searches a person saved
 // (each with its own alert switch) and which e-mails the site may send them.
@@ -42,6 +43,8 @@ function Switch({ checked, onChange, label, disabled }: { checked: boolean; onCh
 type Load<T> = { kind: "loading" } | { kind: "error"; message: string } | { kind: "ready"; value: T };
 
 export default function AlertsPage() {
+  // Sign-in returns to this page (S1-7).
+  const signInHref = useAuthHref();
   const { user, loading } = useAuth();
   const [searches, setSearches] = useState<Load<SavedSearchRow[]>>({ kind: "loading" });
   const [prefs, setPrefs] = useState<Load<EmailPrefs>>({ kind: "loading" });
@@ -121,7 +124,7 @@ export default function AlertsPage() {
     return shell(
       <div className={emptyBoxClass}>
         <p>Sign in to save searches and choose your e-mails.</p>
-        <Link href="/auth/login" className={`${primaryButtonClass} mt-4 inline-flex`}>
+        <Link href={signInHref} className={`${primaryButtonClass} mt-4 inline-flex`}>
           Sign in
         </Link>
       </div>,

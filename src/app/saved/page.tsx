@@ -16,8 +16,11 @@ import {
 import { auth } from "@/lib/firebase";
 import { getPropertyList, type PropertyRecord } from "@/lib/property-data";
 import { getSavedPropertyIds, importBrowserSaves, setPropertySaved } from "@/lib/saved-properties";
+import { useAuthHref } from "@/lib/use-return-path";
 
 export default function SavedPropertiesPage() {
+  // Sign-in returns to this page (S1-7).
+  const signInHref = useAuthHref();
   const [user, setUser] = useState<User | null>(null);
   const [properties, setProperties] = useState<PropertyRecord[]>([]);
   const [loading, setLoading] = useState(true);
@@ -144,7 +147,7 @@ export default function SavedPropertiesPage() {
               Saved homes are kept with your account, so they are there on every device.
             </p>
             <Link
-              href="/auth/login"
+              href={signInHref}
               className="pill-lg mt-5 bg-slate-950 dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.3)] font-bold text-white shadow-md hover:bg-slate-800"
             >
               Sign in

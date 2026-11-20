@@ -11,6 +11,7 @@ import {
   getUserCollections,
   type PropertyCollection,
 } from "@/lib/collections";
+import { useAuthHref } from "@/lib/use-return-path";
 
 /**
  * Add this listing to one of the viewer's collections.
@@ -33,6 +34,8 @@ export default function AddToCollectionButton({
   propertyId: string;
   propertyTitle: string;
 }) {
+  // Sign-in returns to this page (S1-7).
+  const signInHref = useAuthHref();
   const [user, setUser] = useState<User | null>(null);
   const [open, setOpen] = useState(false);
   const [collections, setCollections] = useState<PropertyCollection[] | null>(null);
@@ -144,7 +147,7 @@ export default function AddToCollectionButton({
                 Collections are tied to your account.
               </p>
               <Link
-                href="/auth/login"
+                href={signInHref}
                 className="pill-sm mt-2.5 w-full bg-slate-950 font-bold text-white hover:bg-slate-800 dark:bg-emerald-700 dark:hover:bg-emerald-800"
               >
                 Sign in

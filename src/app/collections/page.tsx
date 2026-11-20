@@ -27,8 +27,11 @@ import {
   type PropertyCollection,
   type VoteType,
 } from "@/lib/collections";
+import { useAuthHref } from "@/lib/use-return-path";
 
 export default function CollectionsPage() {
+  // Sign-in returns to this page (S1-7).
+  const signInHref = useAuthHref();
   const [user, setUser] = useState<User | null>(null);
   const [collections, setCollections] = useState<PropertyCollection[]>([]);
   const [selectedColId, setSelectedColId] = useState<string>("");
@@ -475,7 +478,7 @@ export default function CollectionsPage() {
               </button>
             ) : (
               <Link
-                href="/auth/login"
+                href={signInHref}
                 className="pill-lg mt-5 inline-flex bg-slate-950 px-6 font-bold text-white shadow-md hover:bg-slate-800 dark:bg-emerald-700 dark:hover:bg-emerald-800"
               >
                 Sign in

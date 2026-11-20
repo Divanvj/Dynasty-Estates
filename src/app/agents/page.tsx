@@ -15,8 +15,11 @@ import {
 import { verifiedPractitioners as agentsList, type AgentProfile as AgentRecord } from "@/lib/agents-data";
 import { auth } from "@/lib/firebase";
 import { createPropertyInquiry } from "@/lib/inquiries";
+import { useAuthHref } from "@/lib/use-return-path";
 
 export default function AgentsPage() {
+  // Sign-in returns to this page (S1-7).
+  const signInHref = useAuthHref();
   const [selectedAgent, setSelectedAgent] = useState<AgentRecord | null>(null);
   const [contactMessage, setContactMessage] = useState("");
   const [sentNotice, setSentNotice] = useState(false);
@@ -217,7 +220,7 @@ export default function AgentsPage() {
                     <p role="alert" className="rounded-xl border border-rose-300 bg-rose-50 p-2.5 font-medium text-rose-800 dark:border-rose-500/30 dark:bg-rose-950/30 dark:text-rose-300">
                       {sendError}{" "}
                       {!auth?.currentUser && (
-                        <Link href="/auth/login" className="font-bold underline">Sign in</Link>
+                        <Link href={signInHref} className="font-bold underline">Sign in</Link>
                       )}
                     </p>
                   )}

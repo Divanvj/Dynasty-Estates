@@ -408,3 +408,9 @@ Added, nothing removed.
 - **Added – /auth/verified**, where Firebase's confirmation page returns people.
 - **Added – one reminder e-mail** from the nightly job to accounts 3–30 days old that still haven't confirmed.
 - **Not done**: nothing is blocked for unconfirmed accounts (they can still enquire); the old `isVerified` field on users/{uid} is still written as false and not updated.
+
+## Back to your page after signing in (20 Nov, S1-7)
+
+- **Changed – sign-in links** (save heart, Saved, Collections, alerts, saved search, enquiries, agents, role-guarded pages, the account menu, package requests) now return to the page you were on, via `?next=`. Sign-in, sign-up, Google and phone sign-in all honour it; only paths on this site are followed.
+- **Changed – the enquiry form for signed-out visitors** shows "Sign in to send this request" with a link back to the listing, instead of a Send button that always failed with "check your connection" (it submitted as `guest-…`, which the rules refuse). The made-up `anonymous@buyer.co.za` fallback is gone.
+- **Not done**: guest enquiries without an account (decision D8); /console sign-in links are unchanged.
