@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| ALET-ELIZE | ALET-ELIZE/ffc-reminders | S1-9 FFC expiry reminder e-mails: `lib/server/practitioner-reminders.ts`, a nightly step, new mail kind + template, new e-mail preference and `/console/flags` switch | 2026-11-20 |
 
 ## Recently merged
 
