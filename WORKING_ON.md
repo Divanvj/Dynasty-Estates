@@ -9,12 +9,15 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | DESKTOP-1R37EBU/verify-email | S1-6: lib/auth.ts (sign-up), new verify-email banner in layout.tsx (one line), /auth/verified, mail + cron | 2026-11-20 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-20 — `DESKTOP-1R37EBU/verify-email` merged (S1-6). **E-mail verification.** `<VerifyEmailBanner />` sits in layout.tsx under
+  `<MaintenanceBanner />` (please keep it if you restyle the header area); page `/auth/verified`. Server: `lib/server/email-verification.ts`,
+  `POST /api/auth/verify-email`, nightly reminder; new server-only collection `email_verification`, mail kind `verify_email`.
 
 - 2026-11-19 — `DESKTOP-1R37EBU/data-integrity` merged (S1-5). `createSellerListing` writes the physical record in the listing batch.
   Server pages that read the catalogue (home, /for-sale, /to-rent, /agents/[slug], sitemap) now `export const revalidate = 300`;
