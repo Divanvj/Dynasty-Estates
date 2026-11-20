@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| ALET-ELIZE | ALET-ELIZE/under-offer | S1-8 Under offer / back to live: new `/api/listings/[id]/status`, `lib/server/listing-status.ts`, a panel in `components/listing-detail.tsx`, and an "Under offer" badge on the public listing page + cards | 2026-11-20 |
 
 ## Recently merged
 
