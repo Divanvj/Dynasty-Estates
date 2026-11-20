@@ -442,3 +442,12 @@ Added, nothing removed.
 - **Added - "Certificate expiry reminders"** on `/alerts` (and the "stop these e-mails" link at the foot of the e-mail), plus a switch under Site switches - E-mails in `/console/flags`. An agent who turns it off is not e-mailed and no attempt is written to `mail_log`; if they turn it back on while the certificate is still running out, the step is still owed.
 - **Added - `compliance_reminders/{uid}`**, server-only like `email_verification`: which steps have gone out, held **against one expiry date**. Filing a renewed certificate starts the run again, so an agent is reminded next year too.
 - **Not done**: nothing is reminded after a certificate has expired (the portal and "Needs you today" carry that); the admin is not told; a pending or rejected practitioner record is not reminded; delivery still depends on the Brevo DNS records (O1).
+
+## Price-drop alerts (20 Nov, S1-10)
+
+Added, nothing removed.
+
+- **Added - a "the price came down" e-mail** to anyone who saved a home, or saved a search it matches, when its asking price is cut. Each home shows the new price, the old one struck through, the percentage off, and why that person is hearing about it ("You saved this home" / "Matches your search: ..."). One e-mail per person, biggest cut first, up to 8 homes. The listing's own owner is never e-mailed about their own price.
+- **Added - "Price drops"** on `/alerts` and in the e-mail footer, plus a switch under Site switches - E-mails in `/console/flags`. As with the certificate reminders, the preference is read before sending, so someone who has turned it off adds no nightly row to `mail_log`.
+- **Added - `price_watch/{listingId}`**, server-only: the asking price the nightly job last saw. Nothing on a listing records what it used to cost, and a price history on `properties` would have meant a rules change on a path the UI lane also edits.
+- **Not done**: the first night a listing is seen only records its price (no alert); a cut and an undo between two runs is never noticed; a cut smaller than 1% of the asking price is recorded but not sent; a failed e-mail is not retried, because re-alerting everyone the next night is worse than missing one cut; nothing is shown on the listing page or the card about a recent drop; rent and sale are treated the same way.

@@ -9,7 +9,6 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| ALET-ELIZE | ALET-ELIZE/price-drops | S1-10 price-drop alerts: `lib/price-drops.ts`, `lib/server/price-drops.ts` (new server-only `price_watch`), a nightly step, new mail kind + template, new e-mail preference and `/console/flags` switch | 2026-11-20 |
 
 ## Recently merged
 
@@ -21,6 +20,12 @@ before they start, then delete it after a few days.
   listings first, directory + "Also see" after. `PropertyCardPhotos` dots are bottom-right (keep card prices bottom-left).
   `property-media-tabs`: one Street View / Map switch. Please keep this order when adding the "Under offer" badge.
   (Order kept: the badge sits top-left on the card, clear of the dots and the price.)
+
+- 2026-11-20 — `ALET-ELIZE/price-drops` merged (S1-10). **New server-only `price_watch/{listingId}`** (the asking price the nightly
+  job last saw) and a `price_drop` mail kind with the `priceDropAlerts` preference / `emailPriceDropAlerts` switch. If you change how a
+  listing's price is stored or formatted, `priceNumber()` in `lib/price-drops.ts` is what reads it; a cut under 1% is recorded but not
+  e-mailed. Saved homes are read with a collection-group query over `savedProperties` with no filter — fine at this size, needs an
+  index on `propertyId` if saved homes ever run to five figures.
 
 - 2026-11-20 — `ALET-ELIZE/ffc-reminders` merged (S1-9). **A new e-mail preference and a new mail kind.** `EMAIL_PREFS` gains
   `complianceReminders` and `MailKind` gains `ffc_reminder` (switch `emailComplianceReminders` in `/console/flags`) — if you add a

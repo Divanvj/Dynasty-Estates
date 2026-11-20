@@ -21,6 +21,10 @@ export const EMAIL_PREFS = {
     label: "Saved-search alerts",
     description: "New homes that match a search you saved, at most once a day.",
   },
+  priceDropAlerts: {
+    label: "Price drops",
+    description: "When a home you saved, or one that matches a search you saved, drops its asking price.",
+  },
   complianceReminders: {
     label: "Certificate expiry reminders",
     description: "For agents: a reminder 60 days, 30 days and a week before your Fidelity Fund Certificate expires.",
@@ -30,7 +34,13 @@ export const EMAIL_PREFS = {
 export type EmailPref = keyof typeof EMAIL_PREFS;
 export type EmailPrefs = Record<EmailPref, boolean>;
 
-export const DEFAULT_EMAIL_PREFS: EmailPrefs = { enquiryEmails: true, weeklyReports: true, savedSearchAlerts: true, complianceReminders: true };
+export const DEFAULT_EMAIL_PREFS: EmailPrefs = {
+  enquiryEmails: true,
+  weeklyReports: true,
+  savedSearchAlerts: true,
+  priceDropAlerts: true,
+  complianceReminders: true,
+};
 
 export function isEmailPref(value: unknown): value is EmailPref {
   return typeof value === "string" && Object.prototype.hasOwnProperty.call(EMAIL_PREFS, value);

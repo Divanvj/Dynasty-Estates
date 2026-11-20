@@ -19,7 +19,7 @@ import type { FeatureFlag } from "@/lib/platform-config";
  * by the developer console through the Admin SDK (no client rule allows it).
  */
 
-export type MailKind = "enquiry" | "agency_invite" | "ops_alert" | "weekly_report" | "saved_search" | "verify_email" | "ffc_reminder" | "test";
+export type MailKind = "enquiry" | "agency_invite" | "ops_alert" | "weekly_report" | "saved_search" | "price_drop" | "verify_email" | "ffc_reminder" | "test";
 
 /** Which /console/flags switch governs each kind of e-mail. Test e-mails always go. */
 export const MAIL_SWITCH: Record<MailKind, FeatureFlag | null> = {
@@ -28,6 +28,7 @@ export const MAIL_SWITCH: Record<MailKind, FeatureFlag | null> = {
   ops_alert: "emailOpsAlerts",
   weekly_report: "emailWeeklyReports",
   saved_search: "emailSavedSearchAlerts",
+  price_drop: "emailPriceDropAlerts",
   ffc_reminder: "emailComplianceReminders",
   // Account e-mails always go: without one a new account cannot be confirmed.
   verify_email: null,

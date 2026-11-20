@@ -104,6 +104,11 @@ export const FEATURE_FLAGS = {
     label: "Nightly job alerts",
     description: "E-mails MAIL_ALERTS_TO when a nightly job (health check, data scan, clean-up) fails.",
   },
+  emailPriceDropAlerts: {
+    group: "email",
+    label: "Price-drop alerts",
+    description: "Each night: e-mails buyers and renters when a home they saved, or one matching a saved search, cuts its asking price.",
+  },
   emailComplianceReminders: {
     group: "email",
     label: "Certificate expiry reminders",
@@ -129,6 +134,7 @@ export const DEFAULT_PLATFORM_CONFIG: PlatformConfig = {
     emailWeeklyReports: true,
     emailSavedSearchAlerts: true,
     emailOpsAlerts: true,
+    emailPriceDropAlerts: true,
     emailComplianceReminders: true,
   },
   updatedAt: null,
