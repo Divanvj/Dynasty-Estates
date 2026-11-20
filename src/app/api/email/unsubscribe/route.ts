@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { EMAIL_PREFS } from "@/lib/email-prefs";
 import { adminApp } from "@/lib/server/firebase-admin";
 import { verifyUnsubscribeToken, writeEmailPrefs } from "@/lib/server/email-prefs";
+import { SavedSearchError, stopSavedSearchAlerts } from "@/lib/server/saved-searches";
 
 export const dynamic = "force-dynamic";
 
@@ -21,9 +22,19 @@ export async function POST(request: Request) {
   if (!target) return NextResponse.json({ error: "This link isn't valid. Choose your e-mails on the Alerts page instead." }, { status: 400 });
   if (!adminApp()) return NextResponse.json({ error: "The server isn't connected right now. Try again in a moment." }, { status: 503 });
   try {
+    // S1-11: a per-search link stops that one search, not every alert.
+    if ("searchId" in target) {
+      const label = await stopSavedSearchAlerts(target.uid, target.searchId);
+      return NextResponse.json({ ok: true, searchId: target.searchId, label });
+    }
     await writeEmailPrefs(target.uid, { [target.pref]: false }, "link");
     return NextResponse.json({ ok: true, pref: target.pref, label: EMAIL_PREFS[target.pref].label });
   } catch (error) {
+    if (error instanceof SavedSearchError) {
+      // A deleted search is already not alerting anyone: say it is done.
+      if (error.status === 404) return NextResponse.json({ ok: true, label: "this search" });
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
     console.error("[email/unsubscribe]", error);
     return NextResponse.json({ error: "That didn't save. Try again in a moment." }, { status: 500 });
   }

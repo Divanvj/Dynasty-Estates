@@ -1,5 +1,5 @@
 import { adminAuth, adminDb } from "./firebase-admin";
-import { optOutLink } from "./email-prefs";
+import { optOutLink, searchStopPageUrl } from "./email-prefs";
 import { sendMail, type MailResult } from "./mail";
 import { savedSearchEmail, type AlertListing } from "./mail-templates";
 import { criteriaFromParams, criteriaToParams, describeCriteria, hasNarrowingCriteria, matchesCriteria, type SearchableListing } from "@/lib/search-criteria";
@@ -85,6 +85,18 @@ export async function setSavedSearchAlerts(uid: string, id: string, alerts: bool
   await ref.update(alerts ? { alerts, lastCheckedAt: new Date().toISOString() } : { alerts });
 }
 
+/**
+ * S1-11 — "Stop alerts for this search", from the link in the e-mail. The
+ * search is not deleted: it stays on /alerts with its switch off, so turning
+ * it back on is one tap and nothing the person saved is thrown away.
+ * Returns the search's label, for the page to say what it stopped.
+ */
+export async function stopSavedSearchAlerts(uid: string, id: string): Promise<string> {
+  const ref = await ownRef(uid, id);
+  await ref.update({ alerts: false });
+  return String((await ref.get()).data()?.label ?? "this search");
+}
+
 export async function deleteSavedSearch(uid: string, id: string): Promise<void> {
   await (await ownRef(uid, id)).delete();
 }
@@ -166,7 +178,15 @@ export async function runSavedSearchAlerts(options: { onlyUid?: string; maxEmail
       .map((s) => {
         const criteria = criteriaFromParams(new URLSearchParams(s.query));
         const matches = fresh.filter((l) => l.publishedAt > s.lastCheckedAt && matchesCriteria(l, criteria));
-        return { search: s, label: s.label, url: `${SITE_URL}/search?${s.query}`, listings: matches.slice(0, PER_SEARCH), more: Math.max(0, matches.length - PER_SEARCH) };
+        return {
+          search: s,
+          label: s.label,
+          url: `${SITE_URL}/search?${s.query}`,
+          listings: matches.slice(0, PER_SEARCH),
+          more: Math.max(0, matches.length - PER_SEARCH),
+          // S1-11: stops this search only; the footer link still stops them all.
+          stopUrl: searchStopPageUrl(uid, s.id),
+        };
       })
       .filter((b) => b.listings.length > 0);
 

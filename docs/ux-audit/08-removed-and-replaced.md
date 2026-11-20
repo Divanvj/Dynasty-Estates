@@ -451,3 +451,10 @@ Added, nothing removed.
 - **Added - "Price drops"** on `/alerts` and in the e-mail footer, plus a switch under Site switches - E-mails in `/console/flags`. As with the certificate reminders, the preference is read before sending, so someone who has turned it off adds no nightly row to `mail_log`.
 - **Added - `price_watch/{listingId}`**, server-only: the asking price the nightly job last saw. Nothing on a listing records what it used to cost, and a price history on `properties` would have meant a rules change on a path the UI lane also edits.
 - **Not done**: the first night a listing is seen only records its price (no alert); a cut and an undo between two runs is never noticed; a cut smaller than 1% of the asking price is recorded but not sent; a failed e-mail is not retried, because re-alerting everyone the next night is worse than missing one cut; nothing is shown on the listing page or the card about a recent drop; rent and sale are treated the same way.
+
+## Stop alerts for one saved search (20 Nov, S1-11)
+
+- **Changed - the saved-search alert e-mail** now carries a "Stop alerts for this search" link under each search, as well as the "Stop these e-mails" link in the footer. The footer link still stops every saved-search alert; the new one stops that single search and leaves the others running.
+- **Changed - `/email/unsubscribe`** understands both links. For a search it asks "Stop alerts for this saved search?", says the others are not affected, and afterwards says the search stays on the Alerts page to turn back on. The search is never deleted.
+- **Changed - the token** behind both links moved to `lib/unsubscribe-token.ts` and is now `uid.target.signature`, where target is a preference key or `search-<id>`. Links already in people's inboxes are signed exactly as before and keep working.
+- **Not done**: no "stop alerts for this search" control inside the e-mail's one-click List-Unsubscribe header (that still stops all saved-search alerts, which is what a mail app's button should do); the price-drop e-mail has no per-search link yet, because a drop can reach someone through a saved home instead.

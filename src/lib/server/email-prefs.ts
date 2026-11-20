@@ -1,15 +1,15 @@
-import { createHmac, timingSafeEqual } from "node:crypto";
-
 import { DEFAULT_EMAIL_PREFS, EMAIL_PREFS, isEmailPref, normaliseEmailPrefs, type EmailPref, type EmailPrefs } from "@/lib/email-prefs";
 import { SITE_URL } from "@/lib/site-url";
+import { buildUnsubscribeToken, readUnsubscribeToken, searchIdFromTarget, searchTarget } from "@/lib/unsubscribe-token";
 
 import { adminApp, adminDb } from "./firebase-admin";
 
 /**
  * Per-person e-mail preferences (`email_prefs/{uid}`, server only) and the
  * signed "stop these e-mails" links. A link works without signing in, so it is
- * an HMAC of the uid and the preference: it can turn off that one kind of
- * e-mail for that one person and nothing else.
+ * an HMAC of the uid and what it turns off (lib/unsubscribe-token.ts): it can
+ * stop that one kind of e-mail, or that one saved search, for that one person
+ * and nothing else.
  *
  * The signing secret is MAIL_LINK_SECRET, or CRON_SECRET when that is not set
  * (both are server-only and already in Vercel). Without either, e-mails go out
@@ -41,15 +41,23 @@ function secret(): string {
   return value.length >= 16 ? value : "";
 }
 
-function signature(uid: string, pref: EmailPref, key: string): string {
-  return createHmac("sha256", key).update(`unsubscribe:${uid}:${pref}`).digest("base64url").slice(0, 32);
-}
-
 /** The token in a "stop these e-mails" link, or null when no secret is set. */
 export function unsubscribeToken(uid: string, pref: EmailPref): string | null {
-  const key = secret();
-  if (!key) return null;
-  return `${uid}.${pref}.${signature(uid, pref, key)}`;
+  return buildUnsubscribeToken(uid, pref, secret());
+}
+
+/** The token behind "Stop alerts for this search" (S1-11). */
+export function searchStopToken(uid: string, searchId: string): string | null {
+  return buildUnsubscribeToken(uid, searchTarget(searchId), secret());
+}
+
+/**
+ * The page that link opens. It asks before stopping anything, as the
+ * preference link does: mail scanners follow links.
+ */
+export function searchStopPageUrl(uid: string, searchId: string): string | null {
+  const token = searchStopToken(uid, searchId);
+  return token ? `${SITE_URL}/email/unsubscribe?t=${encodeURIComponent(token)}` : null;
 }
 
 /** The page the footer link opens (it asks before turning anything off). */
@@ -64,13 +72,15 @@ export function oneClickUnsubscribeUrl(uid: string, pref: EmailPref): string | n
   return token ? `${SITE_URL}/api/email/unsubscribe?t=${encodeURIComponent(token)}` : null;
 }
 
-export function verifyUnsubscribeToken(token: string): { uid: string; pref: EmailPref } | null {
-  const key = secret();
-  const [uid, pref, sig] = token.split(".");
-  if (!key || !uid || !sig || !isEmailPref(pref) || !/^[A-Za-z0-9]{1,128}$/.test(uid)) return null;
-  const expected = Buffer.from(signature(uid, pref, key));
-  const given = Buffer.from(sig);
-  return expected.length === given.length && timingSafeEqual(expected, given) ? { uid, pref } : null;
+export type UnsubscribeTarget = { uid: string; pref: EmailPref } | { uid: string; searchId: string };
+
+/** What a valid link is allowed to turn off: one preference, or one saved search. */
+export function verifyUnsubscribeToken(token: string): UnsubscribeTarget | null {
+  const read = readUnsubscribeToken(token, secret());
+  if (!read) return null;
+  if (isEmailPref(read.target)) return { uid: read.uid, pref: read.target };
+  const searchId = searchIdFromTarget(read.target);
+  return searchId ? { uid: read.uid, searchId } : null;
 }
 
 /** The footer link for an e-mail of this kind (see mail-templates OptOutLink). */

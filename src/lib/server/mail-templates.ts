@@ -222,7 +222,11 @@ export function weeklyReportEmail(input: { name: string | null; weekLabel: strin
 export type AlertListing = { title: string; slug: string; price: string; location: string; beds: number; baths: number };
 
 /** New listings for one person's saved searches. */
-export function savedSearchEmail(input: { searches: Array<{ label: string; url: string; listings: AlertListing[]; more: number }>; optOut?: OptOutLink }) {
+export function savedSearchEmail(input: {
+  /** `stopUrl` (S1-11) stops this one search; the footer link stops them all. */
+  searches: Array<{ label: string; url: string; listings: AlertListing[]; more: number; stopUrl?: string | null }>;
+  optOut?: OptOutLink;
+}) {
   const count = input.searches.reduce((n, s) => n + s.listings.length + s.more, 0);
   const one = input.searches.length === 1 ? input.searches[0] : null;
   const subject = one ? `${count} new home${count === 1 ? "" : "s"} for "${line(one.label, 70)}"` : `${count} new homes for your saved searches`;
@@ -235,6 +239,10 @@ export function savedSearchEmail(input: { searches: Array<{ label: string; url: 
       (s) =>
         `<h2 style="margin:20px 0 4px;font-size:16px;color:#10201f">${escape(line(s.label, 100))}</h2><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${s.listings.map(homeHtml).join("")}</table>${
           s.more ? `<p style="margin:6px 0 0;font-size:14px"><a href="${escape(s.url)}" style="color:#0f4c4a">See ${s.more} more</a></p>` : ""
+        }${
+          s.stopUrl
+            ? `<p style="margin:6px 0 0;font-size:12px;color:#5b6b6c"><a href="${escape(s.stopUrl)}" style="color:#5b6b6c">Stop alerts for this search</a></p>`
+            : ""
         }`,
     )
     .join("");
@@ -247,6 +255,7 @@ export function savedSearchEmail(input: { searches: Array<{ label: string; url: 
         line(s.label, 100),
         ...s.listings.map((h) => `- ${line(h.title, 90)}, ${line(h.price, 40)}, ${facts(h)}: ${home(h)}`),
         ...(s.more ? [`See ${s.more} more: ${s.url}`] : []),
+        ...(s.stopUrl ? [`Stop alerts for this search: ${s.stopUrl}`] : []),
       ]),
       ...optOutText(input.optOut),
     ].join("\n"),

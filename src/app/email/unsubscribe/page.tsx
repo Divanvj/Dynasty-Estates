@@ -14,8 +14,15 @@ import { EMAIL_PREFS, isEmailPref } from "@/lib/email-prefs";
 
 function Unsubscribe() {
   const token = useSearchParams()?.get("t") ?? "";
-  const pref = token.split(".")[1];
-  const label = isEmailPref(pref) ? EMAIL_PREFS[pref].label : null;
+  // The middle field is either a preference key or search-<id> (S1-11). The
+  // server checks the signature; this only decides what to call it.
+  const target = token.split(".")[1] ?? "";
+  const perSearch = target.startsWith("search-");
+  const pref = isEmailPref(target) ? target : null;
+  const label = pref ? EMAIL_PREFS[pref].label : perSearch ? "alerts for this saved search" : null;
+  const description = pref
+    ? EMAIL_PREFS[pref].description
+    : "New homes that match this one search. Your other saved searches and e-mails are not affected, and the search stays on your Alerts page so you can turn it back on.";
   const [state, setState] = useState<{ kind: "idle" | "busy" | "done" } | { kind: "error"; message: string }>({ kind: "idle" });
 
   async function stop() {
@@ -48,7 +55,8 @@ function Unsubscribe() {
           <>
             <h1 className="text-2xl font-semibold tracking-tight">Stopped</h1>
             <p role="status" className="mt-2 text-sm text-slate-600 dark:text-slate-300">
-              You won&apos;t get “{label}” e-mails any more. To turn them back on, or change others, sign in and open{" "}
+              {perSearch ? "That search won’t e-mail you any more. Your other saved searches are unchanged." : `You won’t get “${label}” e-mails any more.`} To turn{" "}
+              {perSearch ? "it" : "them"} back on, or change others, sign in and open{" "}
               <Link href="/alerts" className={linkClass}>
                 Alerts &amp; e-mails
               </Link>
@@ -57,15 +65,15 @@ function Unsubscribe() {
           </>
         ) : (
           <>
-            <h1 className="text-2xl font-semibold tracking-tight">Stop “{label}” e-mails?</h1>
-            <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{EMAIL_PREFS[pref as keyof typeof EMAIL_PREFS].description}</p>
+            <h1 className="text-2xl font-semibold tracking-tight">{perSearch ? "Stop alerts for this saved search?" : `Stop “${label}” e-mails?`}</h1>
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{description}</p>
             {state.kind === "error" ? (
               <p role="alert" className={`${errorBoxClass} mt-4`}>
                 {state.message}
               </p>
             ) : null}
             <button type="button" onClick={() => void stop()} disabled={state.kind === "busy"} className={`${primaryButtonClass} mt-5`}>
-              {state.kind === "busy" ? "Stopping…" : "Stop these e-mails"}
+              {state.kind === "busy" ? "Stopping…" : perSearch ? "Stop alerts for this search" : "Stop these e-mails"}
             </button>
           </>
         )}

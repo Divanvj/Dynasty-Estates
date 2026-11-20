@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| ALET-ELIZE | `ALET-ELIZE/dark-hero-text` | `globals.css` hero headline block (`.hh-*`) — dark-mode hero text | 2026-11-20 |
 
 ## Recently merged
 
@@ -20,6 +21,11 @@ before they start, then delete it after a few days.
   listings first, directory + "Also see" after. `PropertyCardPhotos` dots are bottom-right (keep card prices bottom-left).
   `property-media-tabs`: one Street View / Map switch. Please keep this order when adding the "Under offer" badge.
   (Order kept: the badge sits top-left on the card, clear of the dots and the price.)
+
+- 2026-11-20 — `ALET-ELIZE/per-search-stop` merged (S1-11). **Unsubscribe tokens moved to `lib/unsubscribe-token.ts`** (pure, no Firebase,
+  tested in CI): `uid.target.signature`, target being a preference key or `search-<id>`. Preference links already sent are signed
+  exactly as before. `verifyUnsubscribeToken()` now returns either `{uid, pref}` or `{uid, searchId}`, so anything reading it must handle
+  both. A per-search link sets `alerts: false` on that search only — it does not delete it and does not touch `email_prefs`.
 
 - 2026-11-20 — `ALET-ELIZE/price-drops` merged (S1-10). **New server-only `price_watch/{listingId}`** (the asking price the nightly
   job last saw) and a `price_drop` mail kind with the `priceDropAlerts` preference / `emailPriceDropAlerts` switch. If you change how a

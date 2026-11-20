@@ -51,6 +51,9 @@ jobs:
       - name: Run price-drop tests
         run: node tests/price-drops.test.mjs
 
+      - name: Run unsubscribe-token tests
+        run: node tests/unsubscribe-token.test.mjs
+
       # Firestore security rules (S1-4): every role and collection against the
       # local emulator, which needs Java. No secrets: the demo- project id keeps
       # the emulator offline.
