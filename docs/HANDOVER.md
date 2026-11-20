@@ -83,7 +83,7 @@ https://xcore-777.web.app — the owner signs in; never type their password.
 - **Nightly cron** (`/api/cron/nightly`, 00:00 UTC): health, integrity scan, stats
   retention, file clean-up, saved-search alerts, verification reminders, Monday reports.
 - Server-only collections (Admin SDK via API routes, no client rules): saved_searches,
-  email_prefs, sales, mail_log, platform_config, email_verification.
+  email_prefs, sales, mail_log, platform_config, email_verification, compliance_reminders.
 - Catalogue pages (home, /for-sale, /to-rent, /agents/[slug], sitemap) rebuild every
   5 minutes (`export const revalidate = 300`).
 

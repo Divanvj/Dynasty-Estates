@@ -104,6 +104,11 @@ export const FEATURE_FLAGS = {
     label: "Nightly job alerts",
     description: "E-mails MAIL_ALERTS_TO when a nightly job (health check, data scan, clean-up) fails.",
   },
+  emailComplianceReminders: {
+    group: "email",
+    label: "Certificate expiry reminders",
+    description: "Each night: reminds an agent 60 days, 30 days and a week before their Fidelity Fund Certificate expires.",
+  },
 } as const satisfies Record<string, { group: keyof typeof FLAG_GROUPS; label: string; description: string }>;
 
 export type FeatureFlag = keyof typeof FEATURE_FLAGS;
@@ -124,6 +129,7 @@ export const DEFAULT_PLATFORM_CONFIG: PlatformConfig = {
     emailWeeklyReports: true,
     emailSavedSearchAlerts: true,
     emailOpsAlerts: true,
+    emailComplianceReminders: true,
   },
   updatedAt: null,
   updatedBy: null,
