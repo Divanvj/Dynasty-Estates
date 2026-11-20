@@ -5,9 +5,10 @@ import { CheckIcon, ChevronDownIcon } from "@/components/icons";
 import PackageRequestButton from "@/components/package-request-button";
 import { formatZAR } from "@/lib/formatters";
 import {
+  RELIST_GRACE_DAYS,
   VAT_REGISTERED,
   agentPlans,
-  extensionFor,
+  extensionsFor,
   inclVat,
   packageInclusions,
   packagesFor,
@@ -99,7 +100,7 @@ export default async function PricingPage({
 
 function PrivatePackages({ audience }: { audience: PackageAudience }) {
   const pkgs = packagesFor(audience);
-  const ext = extensionFor(audience);
+  const exts = extensionsFor(audience);
 
   return (
     <section aria-labelledby="packages-heading" className="mt-8">
@@ -146,12 +147,33 @@ function PrivatePackages({ audience }: { audience: PackageAudience }) {
         ))}
       </ul>
 
-      {ext && (
-        <p className="mt-4 text-base text-slate-700 dark:text-slate-300">
-          Need longer? Extend a live listing by {ext.durationDays} days for{" "}
-          <span className="font-semibold tabular-nums text-slate-950 dark:text-white">{formatZAR(ext.priceZAR)}</span>
-          {VAT_INCL}.
-        </p>
+      {exts.length > 0 && (
+        <section aria-labelledby="extensions-heading" className={`mt-8 p-6 md:p-8 ${panel}`}>
+          <h2 id="extensions-heading" className="text-xl font-semibold text-slate-950 dark:text-white">
+            Need longer?
+          </h2>
+          <p className="mt-2 text-base text-slate-700 dark:text-slate-300">
+            Add days to a listing that is live — or to one that ran out in the last {RELIST_GRACE_DAYS} days, which
+            goes straight back up with its photos and checks as they were. After that it is a new listing, at the
+            package prices above.
+          </p>
+          <ul className="mt-4 grid gap-3 sm:grid-cols-3">
+            {exts.map((ext) => (
+              <li
+                key={ext.id}
+                className="flex items-baseline justify-between gap-3 rounded-xl border border-slate-200 px-4 py-3 dark:border-white/10"
+              >
+                <span className="text-base text-slate-700 dark:text-slate-300">+{ext.durationDays} days</span>
+                <span className="whitespace-nowrap text-lg font-semibold tabular-nums text-slate-950 dark:text-white">
+                  {formatZAR(ext.priceZAR)}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
+            Once-off{VAT_INCL}. A longer extension costs less per day than a shorter one.
+          </p>
+        </section>
       )}
 
       <div className={`mt-8 p-6 md:p-8 ${panel}`}>

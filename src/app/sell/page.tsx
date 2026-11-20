@@ -195,7 +195,7 @@ export default function SellPage() {
           </ul>
 
           <ul className="mt-8 grid gap-3 text-base text-slate-700 sm:grid-cols-2 dark:text-slate-300">
-            {["No commission when it sells", "Your own seller portal", "Checked before it goes live", "Extend while it's live"].map((item) => (
+            {["No commission when it sells", "Your own seller portal", "Checked before it goes live", "Extend while it's live, or just after"].map((item) => (
               <li key={item} className="flex gap-3">
                 <CheckIcon className="mt-1 h-4 w-4 shrink-0 text-emerald-700 dark:text-emerald-400" />
                 {item}

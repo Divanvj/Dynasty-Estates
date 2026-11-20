@@ -45,9 +45,12 @@ export type ListingPackage = {
 };
 
 export type ListingExtension = {
+  id: string;
   audience: PackageAudience;
   durationDays: number;
+  /** Rand, including VAT. */
   priceZAR: number;
+  popular?: boolean;
 };
 
 export type AgentPlan = {
@@ -72,11 +75,49 @@ export const listingPackages: ListingPackage[] = [
   { id: "rent-90", audience: "rent", name: "Rent 90", durationDays: 90, priceZAR: 449, note: "A larger home, or a let further in advance." },
 ];
 
-/** Only while the listing is live. */
+/**
+ * More time on a listing that is already live, or on one that has just run
+ * out. There used to be exactly one length per audience and it was offered
+ * "only while the listing is live", which left the commonest moment of all
+ * unpriced: the seller who comes back the week after their package ended and
+ * wants the same listing up again (owner, 20 Nov: "Extension Price Options
+ * (When Subscription Expires)").
+ *
+ * Two things changed. There is now a choice of lengths, so somebody who knows
+ * they need three more months is not buying six separate extensions; and an
+ * extension stays buyable for `RELIST_GRACE_DAYS` after the package ends, so
+ * a lapsed listing comes back at the extension price rather than at the price
+ * of a new package.
+ *
+ * The per-day price still falls as the extension gets longer, and every
+ * package plus any run of extensions still costs at least what the next
+ * package up costs for the same days — scripts/check-pricing.mjs checks both
+ * for each length, not just the shortest.
+ */
 export const listingExtensions: ListingExtension[] = [
-  { audience: "sale", durationDays: 30, priceZAR: 299 },
-  { audience: "rent", durationDays: 14, priceZAR: 129 },
+  { id: "sale-ext-30", audience: "sale", durationDays: 30, priceZAR: 299, popular: true },
+  { id: "sale-ext-60", audience: "sale", durationDays: 60, priceZAR: 549 },
+  { id: "sale-ext-90", audience: "sale", durationDays: 90, priceZAR: 749 },
+  { id: "rent-ext-14", audience: "rent", durationDays: 14, priceZAR: 129, popular: true },
+  { id: "rent-ext-30", audience: "rent", durationDays: 30, priceZAR: 229 },
+  { id: "rent-ext-90", audience: "rent", durationDays: 90, priceZAR: 399 },
 ];
+
+/**
+ * How long after a package ends an extension may still be bought.
+ *
+ * Two weeks is deliberately short. The listing's photos, checks and enquiry
+ * history are all still on file in that window, so bringing it back is the
+ * same work as extending it; past that we would be reviving a listing whose
+ * price and availability nobody has confirmed, which is a new listing and is
+ * priced as one.
+ *
+ * Nothing in the app enforces this yet: no listing carries a paid-until date,
+ * because nothing is paid online (see the note at the top of this file). It
+ * is published so the team quoting by hand quotes one number, and so the
+ * expiry work has a rule to build against.
+ */
+export const RELIST_GRACE_DAYS = 14;
 
 /** Only live listings count towards a plan: drafts, paused, sold and let do not. */
 export const agentPlans: AgentPlan[] = [
@@ -135,8 +176,24 @@ export function packagesFor(audience: PackageAudience): ListingPackage[] {
   return listingPackages.filter((pkg) => pkg.audience === audience);
 }
 
+/** Every extension length for an audience, shortest first. */
+export function extensionsFor(audience: PackageAudience): ListingExtension[] {
+  return listingExtensions
+    .filter((ext) => ext.audience === audience)
+    .sort((a, b) => a.durationDays - b.durationDays);
+}
+
+/** The shortest extension — the "from" price, and what a single tap buys. */
 export function extensionFor(audience: PackageAudience): ListingExtension | undefined {
-  return listingExtensions.find((ext) => ext.audience === audience);
+  return extensionsFor(audience)[0];
+}
+
+/**
+ * Whether a listing whose package ended `daysSinceExpiry` ago can still be
+ * extended, or has to be bought as a new package. Day 0 is the day it ended.
+ */
+export function canExtendAfterExpiry(daysSinceExpiry: number): boolean {
+  return daysSinceExpiry >= 0 && daysSinceExpiry <= RELIST_GRACE_DAYS;
 }
 
 export function durationLabel(days: number): string {

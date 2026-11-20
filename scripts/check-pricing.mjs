@@ -17,7 +17,9 @@ for (const audience of ["sale", "rent"]) {
   const pkgs = listingPackages
     .filter((p) => p.audience === audience)
     .sort((a, b) => a.durationDays - b.durationDays);
-  const ext = listingExtensions.find((e) => e.audience === audience);
+  const exts = listingExtensions
+    .filter((e) => e.audience === audience)
+    .sort((a, b) => a.durationDays - b.durationDays);
 
   if (pkgs.length === 0) problems.push(`${audience}: no packages`);
   if (pkgs.filter((p) => p.popular).length > 1) problems.push(`${audience}: more than one "popular" package`);
@@ -33,23 +35,43 @@ for (const audience of ["sale", "rent"]) {
     }
   }
 
-  if (!ext) {
+  if (exts.length === 0) {
     problems.push(`${audience}: no extension`);
     continue;
   }
 
+  if (exts.filter((e) => e.popular).length > 1) problems.push(`${audience}: more than one "popular" extension`);
+
+  // A longer extension must be cheaper per day than a shorter one, for the
+  // same reason a longer package is: otherwise buying the long one is a
+  // penalty for committing.
+  for (let i = 1; i < exts.length; i++) {
+    const shorter = exts[i - 1];
+    const longer = exts[i];
+    if (longer.priceZAR <= shorter.priceZAR) {
+      problems.push(`${longer.id} (R${longer.priceZAR}) should cost more than ${shorter.id} (R${shorter.priceZAR})`);
+    }
+    if (longer.priceZAR / longer.durationDays >= shorter.priceZAR / shorter.durationDays) {
+      problems.push(`${longer.id} is not cheaper per day than ${shorter.id}`);
+    }
+  }
+
   // Any package + n extensions must cost at least as much as every package
   // that gives the same or more days, or that bigger package is pointless.
-  for (const start of pkgs) {
-    for (let n = 1; n <= 12; n++) {
-      const days = start.durationDays + n * ext.durationDays;
-      const cost = start.priceZAR + n * ext.priceZAR;
-      for (const rival of pkgs) {
-        if (rival === start || rival.durationDays > days) continue;
-        if (cost < rival.priceZAR) {
-          problems.push(
-            `${start.name} + ${n} x ${ext.durationDays}-day extension = R${cost} for ${days} days, cheaper than ${rival.name} (R${rival.priceZAR}, ${rival.durationDays} days)`,
-          );
+  // Checked for every extension length, not only the shortest: a long
+  // extension is the easiest way to undercut a package by accident.
+  for (const ext of exts) {
+    for (const start of pkgs) {
+      for (let n = 1; n <= 12; n++) {
+        const days = start.durationDays + n * ext.durationDays;
+        const cost = start.priceZAR + n * ext.priceZAR;
+        for (const rival of pkgs) {
+          if (rival === start || rival.durationDays > days) continue;
+          if (cost < rival.priceZAR) {
+            problems.push(
+              `${start.name} + ${n} x ${ext.durationDays}-day extension = R${cost} for ${days} days, cheaper than ${rival.name} (R${rival.priceZAR}, ${rival.durationDays} days)`,
+            );
+          }
         }
       }
     }

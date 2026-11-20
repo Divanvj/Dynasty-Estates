@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { linkClass, PageHeading, panelClass } from "@/components/dashboard-ui";
 import { formatNumber } from "@/lib/formatters";
-import { agentPlans, listingExtensions, listingPackages } from "@/lib/pricing";
+import { RELIST_GRACE_DAYS, agentPlans, extensionsFor, listingPackages } from "@/lib/pricing";
 
 // The published price list, moved unchanged from the old "Commercial Packages"
 // tab. Read from src/lib/pricing.ts, the same list /pricing shows. Requests
@@ -21,9 +21,9 @@ export default function AdminPackagesPage() {
       />
       <div className="grid gap-4 lg:grid-cols-3">
         {([
-          ["Private sale (incl. VAT)", listingPackages.filter((pkg) => pkg.audience === "sale"), listingExtensions.find((ext) => ext.audience === "sale")],
-          ["Private rental (incl. VAT)", listingPackages.filter((pkg) => pkg.audience === "rent"), listingExtensions.find((ext) => ext.audience === "rent")],
-        ] as const).map(([title, pkgs, ext]) => (
+          ["Private sale (incl. VAT)", listingPackages.filter((pkg) => pkg.audience === "sale"), extensionsFor("sale")],
+          ["Private rental (incl. VAT)", listingPackages.filter((pkg) => pkg.audience === "rent"), extensionsFor("rent")],
+        ] as const).map(([title, pkgs, exts]) => (
           <div key={title} className={panelClass}>
             <h2 className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">{title}</h2>
             <ul className="mt-3 divide-y divide-[var(--dash-line)] text-sm text-slate-700 dark:text-slate-300">
@@ -33,13 +33,19 @@ export default function AdminPackagesPage() {
                   <span className="font-semibold tabular-nums text-slate-900 dark:text-white">R {formatNumber(pkg.priceZAR)}</span>
                 </li>
               ))}
-              {ext && (
-                <li className="flex justify-between gap-3 py-2.5 text-slate-600 dark:text-slate-400">
+              {exts.map((ext) => (
+                <li key={ext.id} className="flex justify-between gap-3 py-2.5 text-slate-600 dark:text-slate-400">
                   <span>Extend · +{ext.durationDays} days</span>
                   <span className="font-semibold tabular-nums">R {formatNumber(ext.priceZAR)}</span>
                 </li>
-              )}
+              ))}
             </ul>
+            {exts.length > 0 && (
+              <p className="mt-3 text-xs text-slate-600 dark:text-slate-400">
+                Extension prices also apply for {RELIST_GRACE_DAYS} days after a package ends; after that, quote a new
+                package.
+              </p>
+            )}
           </div>
         ))}
         <div className={panelClass}>

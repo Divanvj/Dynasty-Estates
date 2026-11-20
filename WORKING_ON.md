@@ -9,6 +9,8 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| ALET-ELIZE | `alet-elize/dark-hero-text` | `globals.css` hero headline block (`.hh-*`) | 2026-11-20 |
+| ALET-ELIZE | `alet-elize/extension-pricing` | `lib/pricing.ts`, `check-pricing.mjs`, `/pricing`, `/sell`, `/admin/packages` | 2026-11-20 |
 
 ## Recently merged
 
