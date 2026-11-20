@@ -132,28 +132,6 @@ export default async function ToRentLocationPage({
           <p className="mt-2 text-sm text-slate-600 max-w-3xl leading-relaxed dark:text-slate-300">
             Browse premium rental homes in {cityName}. Benefit from transparent move-in fee schedules, 1-click digital tenancy applications with TPN vetting, and solar energy backup.
           </p>
-
-          <div className="mt-4 flex flex-wrap items-center gap-2 pt-2 border-t border-slate-200/60 dark:border-white/10 text-xs font-semibold">
-            <span className="text-slate-600 dark:text-slate-400">Related Nodes:</span>
-            <Link
-              href={`/for-sale/${province.toLowerCase()}/${city.toLowerCase()}`}
-              className="pill-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
-            >
-              Properties For Sale in {cityName} →
-            </Link>
-            <Link
-              href="/calculators/bond-repayment"
-              className="pill-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
-            >
-              Bond Repayment Calculator →
-            </Link>
-            <Link
-              href="/insights"
-              className="pill-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
-            >
-              Market Rental Trends →
-            </Link>
-          </div>
         </div>
 
         {/* Listings Grid */}
@@ -177,6 +155,34 @@ export default async function ToRentLocationPage({
             </Link>
           </div>
         )}
+        {/* Homes first (owner's mobile review, 20 Nov). The area directory and
+            the related links used to sit above the listings, pushing the first
+            home 700-1,600px down a phone screen. */}
+        <div className="mt-10 space-y-6">
+          <nav aria-label="Related pages" className="rounded-3xl border border-white/80 bg-white/50 p-6 backdrop-blur-xl dark:bg-surface-panel/70 dark:border-white/10">
+            <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
+              <span className="text-slate-600 dark:text-slate-400">Also see:</span>
+              <Link
+                href={`/for-sale/${province.toLowerCase()}/${city.toLowerCase()}`}
+                className="pill-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
+              >
+                Properties For Sale in {cityName} →
+              </Link>
+              <Link
+                href="/calculators/bond-repayment"
+                className="pill-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
+              >
+                Bond Repayment Calculator →
+              </Link>
+              <Link
+                href="/insights"
+                className="pill-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
+              >
+                Market Rental Trends →
+              </Link>
+            </div>
+          </nav>
+        </div>
       </main>
     </div>
   );

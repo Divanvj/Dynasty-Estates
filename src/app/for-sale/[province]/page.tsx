@@ -118,44 +118,7 @@ export default async function ForSaleProvincePage({
                 listing. SARS transfer duty is genuinely calculated, so it stays. */}
             Browse residential estates, freehold homes and off-plan developments across {provName}, with solar and energy-resilience details and SARS transfer duty estimates.
           </p>
-
-          <div className="mt-4 flex flex-wrap items-center gap-2 pt-2 border-t border-slate-200/60 dark:border-white/10 text-xs font-semibold">
-            <span className="text-slate-600 dark:text-slate-400">Related Nodes:</span>
-            <Link
-              href={`/to-rent/${provSlug}`}
-              className="pill-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
-            >
-              Rentals in {provName} →
-            </Link>
-            <Link
-              href="/calculators/transfer-duty"
-              className="pill-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
-            >
-              SARS Transfer Duty Guide →
-            </Link>
-          </div>
         </div>
-
-        {/* Cities Directory in this Province */}
-        <section className="mb-10 rounded-3xl border border-white/80 bg-white/50 p-6 backdrop-blur-xl dark:bg-surface-panel/70 dark:border-white/10">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-4">
-            Browse {provName} by City & Metro
-          </h2>
-          <div className="flex flex-wrap gap-2">
-            {(citiesWithListings.length > 0 ? citiesWithListings : knownCities.slice(0, 12)).map((city) => {
-              const citySlug = city.toLowerCase().replace(/\s+/g, "-");
-              return (
-                <Link
-                  key={city}
-                  href={`/for-sale/${provSlug}/${citySlug}`}
-                  className="rounded-xl border border-white/80 bg-white/80 px-4 py-2 text-xs font-semibold text-slate-800 shadow-xs hover:border-emerald-400 hover:bg-white transition-all dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-200 dark:hover:border-emerald-500/40 dark:hover:bg-surface-panel"
-                >
-                  {city} For Sale →
-                </Link>
-              );
-            })}
-          </div>
-        </section>
 
         {/* Listings Grid */}
         {properties.length > 0 ? (
@@ -183,6 +146,48 @@ export default async function ForSaleProvincePage({
             </Link>
           </div>
         )}
+        {/* Homes first (owner's mobile review, 20 Nov). The area directory and
+            the related links used to sit above the listings, pushing the first
+            home 700-1,600px down a phone screen. */}
+        <div className="mt-10 space-y-6">
+          {/* Cities Directory in this Province */}
+          <section className="rounded-3xl border border-white/80 bg-white/50 p-6 backdrop-blur-xl dark:bg-surface-panel/70 dark:border-white/10">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-4">
+              Browse {provName} by City & Metro
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {(citiesWithListings.length > 0 ? citiesWithListings : knownCities.slice(0, 12)).map((city) => {
+                const citySlug = city.toLowerCase().replace(/\s+/g, "-");
+                return (
+                  <Link
+                    key={city}
+                    href={`/for-sale/${provSlug}/${citySlug}`}
+                    className="rounded-xl border border-white/80 bg-white/80 px-4 py-2 text-xs font-semibold text-slate-800 shadow-xs hover:border-emerald-400 hover:bg-white transition-all dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-200 dark:hover:border-emerald-500/40 dark:hover:bg-surface-panel"
+                  >
+                    {city} For Sale →
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+          <nav aria-label="Related pages" className="rounded-3xl border border-white/80 bg-white/50 p-6 backdrop-blur-xl dark:bg-surface-panel/70 dark:border-white/10">
+            <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
+              <span className="text-slate-600 dark:text-slate-400">Also see:</span>
+              <Link
+                href={`/to-rent/${provSlug}`}
+                className="pill-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
+              >
+                Rentals in {provName} →
+              </Link>
+              <Link
+                href="/calculators/transfer-duty"
+                className="pill-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
+              >
+                SARS Transfer Duty Guide →
+              </Link>
+            </div>
+          </nav>
+        </div>
       </main>
     </div>
   );

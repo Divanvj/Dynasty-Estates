@@ -430,107 +430,6 @@ function SearchContent() {
                 : "South African Homes For Sale"}
             </h1>
           </div>
-
-          {/* View Switcher & Sort. On a phone these share one row (sort takes
-              the remaining width) instead of stacking into three, which with
-              Reset All pushed the first listing two-thirds of the way down the
-              screen. The result count now sits directly above the results. */}
-          <div className="flex w-full flex-nowrap items-center gap-2.5 sm:w-auto sm:flex-wrap sm:gap-3">
-            {/* View Mode Switcher Segmented Control.
-
-                The unselected states carry `border border-transparent` so all
-                four buttons are the same height. Only the selected one had a
-                border, and with `box-sizing: border-box` on a padding-derived
-                box that made it 34px against the others' 32px — so the control
-                shifted by 2px every time you switched view. */}
-            <div className="inline-flex items-center rounded-2xl border border-slate-200/90 bg-white/80 dark:border-white/10 dark:bg-surface-ink/60 p-1 shadow-2xs backdrop-blur-md">
-              <button
-                type="button"
-                onClick={() => handleViewChange("grid")}
-                // `hidden lg:flex`: Grid is desktop-only. On a phone it is one
-                // tall card per screen, and the mode is coerced to List above
-                // anyway, so leaving the control on screen would just be a
-                // button that appears to do nothing.
-                className={`hidden min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:flex lg:min-h-0 lg:min-w-0 ${
-                  viewMode === "grid"
-                    ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "border border-transparent text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
-                }`}
-                title="Grid View (3 Columns)"
-              >
-                <GridIcon className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">Grid</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleViewChange("list")}
-                className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
-                  viewMode === "list"
-                    ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "border border-transparent text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
-                }`}
-                title="List View (Detailed Horizontal Cards)"
-              >
-                <ListIcon className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">List</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleViewChange("map")}
-                className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
-                  viewMode === "map"
-                    ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "border border-transparent text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
-                }`}
-                title="Split Map View (Interactive Map + Listings)"
-              >
-                <MapSplitIcon className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">Map</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleViewChange("compact")}
-                // `hidden lg:flex`: the seven-column investor table is a
-                // horizontal scroll inside a vertical one on a phone. Same
-                // reasoning as Grid above.
-                className={`hidden min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:flex lg:min-h-0 lg:min-w-0 ${
-                  viewMode === "compact"
-                    ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "border border-transparent text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
-                }`}
-                title="Compact Table View (Investor & Yield Matrix)"
-              >
-                <TableIcon className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">Table</span>
-              </button>
-            </div>
-
-            {/* Sort Dropdown */}
-            <div className="relative min-w-0 flex-1 sm:min-w-[170px] sm:flex-none">
-              <CustomSelect
-                value={sortBy}
-                onChange={(val) => handleSortChange(val)}
-                options={[
-                  { value: "newest", label: "Sort: Newest First" },
-                  { value: "price_asc", label: "Sort: Price: Low to High" },
-                  { value: "price_desc", label: "Sort: Price: High to Low" },
-                  { value: "beds_desc", label: "Sort: Bedrooms: Most First" },
-                ]}
-                ariaLabel="Sort listings"
-              />
-            </div>
-
-            {/* Only when there is something to reset; the active-filter chips
-                above the results carry it on phones too. */}
-            {hasActiveFilters && (
-              <button
-                onClick={handleResetFilters}
-                className="hidden text-xs font-medium text-slate-600 underline cursor-pointer hover:text-emerald-800 sm:inline dark:text-slate-400 dark:hover:text-emerald-300"
-              >
-                Reset All
-              </button>
-            )}
-          </div>
         </div>
 
         {/* Private Property-Style Expandable Single Search Bar & Modal Panel */}
@@ -593,12 +492,106 @@ function SearchContent() {
         </div>
       </section>
 
-      {/* Results count and active filters, directly above the first card. */}
-      {!loading && !loadError && (
-        <div className="mt-6 flex flex-wrap items-center gap-2">
-          <p aria-live="polite" className="mr-1 text-sm font-semibold text-slate-800 tabular-nums dark:text-slate-200">
-            {filteredProperties.length} {filteredProperties.length === 1 ? "home" : "homes"} {resultNoun}
-          </p>
+      {/* Results line (owner's mobile review, 20 Nov): the controls that act
+          on the results sit with the results — view switch on the left, then
+          the count, sort on the right — instead of inside the search card,
+          250px above the list they change. Same order at every width. */}
+      <div className="mt-6 flex items-center gap-2.5">
+        <div className="inline-flex items-center rounded-2xl border border-slate-200/90 bg-white/80 dark:border-white/10 dark:bg-surface-ink/60 p-1 shadow-2xs backdrop-blur-md">
+          <button
+            type="button"
+            onClick={() => handleViewChange("grid")}
+            // `hidden lg:flex`: Grid is desktop-only. On a phone it is one
+            // tall card per screen, and the mode is coerced to List above
+            // anyway, so leaving the control on screen would just be a
+            // button that appears to do nothing.
+            className={`hidden min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:flex lg:min-h-0 lg:min-w-0 ${
+              viewMode === "grid"
+                ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                : "border border-transparent text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
+            }`}
+            title="Grid View (3 Columns)"
+          >
+            <GridIcon className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">Grid</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => handleViewChange("list")}
+            className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
+              viewMode === "list"
+                ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                : "border border-transparent text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
+            }`}
+            title="List View (Detailed Horizontal Cards)"
+          >
+            <ListIcon className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">List</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => handleViewChange("map")}
+            className={`flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:min-h-0 lg:min-w-0 ${
+              viewMode === "map"
+                ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                : "border border-transparent text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
+            }`}
+            title="Split Map View (Interactive Map + Listings)"
+          >
+            <MapSplitIcon className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">Map</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => handleViewChange("compact")}
+            // `hidden lg:flex`: the seven-column investor table is a
+            // horizontal scroll inside a vertical one on a phone. Same
+            // reasoning as Grid above.
+            className={`hidden min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:flex lg:min-h-0 lg:min-w-0 ${
+              viewMode === "compact"
+                ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-500/50 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                : "border border-transparent text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
+            }`}
+            title="Compact Table View (Investor & Yield Matrix)"
+          >
+            <TableIcon className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">Table</span>
+          </button>
+        </div>
+
+        <p aria-live="polite" className="min-w-0 flex-1 truncate text-sm font-semibold text-slate-800 tabular-nums dark:text-slate-200">
+          {loading || loadError ? null : (
+            <>
+              {filteredProperties.length} {filteredProperties.length === 1 ? "home" : "homes"}
+              {/* "for sale" / "to rent" repeats the switch above the title; on a
+                  phone it is left to screen readers so the line fits. */}
+              <span className="sr-only sm:not-sr-only"> {resultNoun}</span>
+            </>
+          )}
+        </p>
+        <div className="flex shrink-0 items-center gap-2">
+          <span aria-hidden="true" className="hidden text-xs font-semibold text-slate-600 sm:inline dark:text-slate-400">
+            Sort by
+          </span>
+          <CustomSelect
+            value={sortBy}
+            onChange={(val) => handleSortChange(val)}
+            options={[
+              { value: "newest", label: "Newest" },
+              { value: "price_asc", label: "Lowest price" },
+              { value: "price_desc", label: "Highest price" },
+              { value: "beds_desc", label: "Most bedrooms" },
+            ]}
+            ariaLabel="Sort listings"
+            className="w-[9.25rem] sm:w-[11rem]"
+          />
+        </div>
+      </div>
+
+      {/* Active filters, removable one by one, on their own line under the
+          results line and only when there are any. */}
+      {!loading && !loadError && hasActiveFilters && (
+        <div className="mt-2 flex flex-wrap items-center gap-2">
           {activeFilters.map((filter) => (
             <button
               key={filter.id}

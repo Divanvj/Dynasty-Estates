@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { ArrowLeftIcon, PrinterIcon, XMarkIcon } from "@/components/icons";
 
@@ -28,6 +28,18 @@ export default function ComparePage() {
 
 function CompareContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
+
+  function goBack() {
+    let fromHere = false;
+    try {
+      fromHere = document.referrer !== "" && new URL(document.referrer).origin === window.location.origin;
+    } catch {
+      fromHere = false;
+    }
+    if (fromHere && window.history.length > 1) router.back();
+    else router.push("/search");
+  }
   const [comparedIds, setComparedIds] = useState<string[]>(() => idsFromParam(searchParams.get("ids")));
   const [catalogue, setCatalogue] = useState<PropertyRecord[]>([]);
   const [catalogueState, setCatalogueState] = useState<"loading" | "ready" | "failed">("loading");
@@ -79,6 +91,18 @@ function CompareContent() {
             painted over the Profile dropdown. See src/app/page.tsx. */}
         <div className="no-print relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl sm:px-5 dark:bg-surface-panel/70 dark:border-white/10 dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
           <div className="flex items-center gap-2.5 sm:gap-3">
+            {/* Back to wherever Compare was opened from — a listing, search or a
+                collection — rather than always to /collections. Opened
+                directly (no page of ours behind it), it goes to search. */}
+            <button
+              type="button"
+              onClick={goBack}
+              aria-label="Back"
+              className="pill cursor-pointer gap-1 border border-slate-300/80 bg-white/60 font-semibold text-slate-700 transition-all hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10"
+            >
+              <ArrowLeftIcon className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">Back</span>
+            </button>
             <div>
               <p className="hidden text-xs uppercase tracking-[0.2em] text-slate-600 sm:block sm:text-xs dark:text-slate-400">Buyer Decision Support</p>
               <h1 className="text-xs font-semibold tracking-wide text-slate-900 sm:text-sm dark:text-white">
@@ -96,14 +120,6 @@ function CompareContent() {
               <PrinterIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-300" />
               <span className="hidden sm:inline">Print / Export PDF</span>
             </button>
-            <Link
-              href="/collections"
-              className="pill gap-1 border border-slate-300/80 bg-white/60 font-semibold text-slate-700 transition-all hover:bg-white dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-white/10"
-              title="Back to Collections"
-            >
-              <ArrowLeftIcon className="h-3.5 w-3.5 sm:hidden" />
-              <span className="hidden sm:inline">← Back to Collections</span>
-            </Link>
           </div>
         </div>
 

@@ -155,7 +155,11 @@ export default function PropertyCardPhotos({ images, title, frameClassName = "" 
               of the card, in a band along the bottom of the photograph, where
               nothing happened. Letting the gaps fall through costs the dots
               nothing: each dot re-enables pointer events for itself. */}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex items-center justify-center gap-0.5 pb-1">
+          {/* Bottom-right, not centred: every card that uses this draws its price
+              bottom-left over the photo, and a long price ("R 18,950,000")
+              reached the centre and ran into the dots (owner's mobile review,
+              20 Nov). */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex items-center justify-end gap-0.5 pb-1 pr-1">
             {frames.map((_, i) => (
               <button
                 key={`dot-${i}`}

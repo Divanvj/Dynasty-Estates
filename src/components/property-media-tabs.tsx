@@ -184,7 +184,10 @@ export default function PropertyMediaTabs({
       {/* Tab 3: Google Street View & Map */}
       {activeTab === "street-view" && (
         <div className="space-y-4 animate-in fade-in duration-200">
-          {/* Sub-toolbar: Switch between Street View and Satellite/Map, with clear Back buttons */}
+          {/* Sub-toolbar: one Street View / Map switch. There used to be two
+              more buttons that did the same as "Map" — "← Back to Map" beside
+              the switch and "Exit Street View & Return to Map" over the view —
+              three controls for one action (owner's mobile review, 20 Nov). */}
           <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-slate-50 p-3 border border-slate-200/80 dark:bg-surface-ink/60 dark:border-white/10">
             <div className="flex flex-wrap items-center gap-2">
               <div className="inline-flex rounded-xl border border-slate-200 bg-white p-1 shadow-2xs dark:border-white/10 dark:bg-surface-ink/80">
@@ -211,16 +214,6 @@ export default function PropertyMediaTabs({
                   Map
                 </button>
               </div>
-
-              {mapMode === "street" && (
-                <button
-                  type="button"
-                  onClick={() => setMapMode("map")}
-                  className="rounded-xl bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-500/50 px-3 py-1 text-xs font-bold shadow-xs hover:bg-[#093e3f] dark:hover:bg-emerald-800 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] transition-all cursor-pointer inline-flex items-center gap-1"
-                >
-                  <span>← Back to Map</span>
-                </button>
-              )}
             </div>
 
             <div className="flex items-center gap-2">
@@ -251,16 +244,6 @@ export default function PropertyMediaTabs({
                   referrerPolicy="no-referrer-when-downgrade"
                   className="h-full w-full"
                 />
-                <div className="absolute bottom-4 left-4 z-20">
-                  <button
-                    type="button"
-                    onClick={() => setMapMode("map")}
-                    className="pill gap-1.5 bg-emerald-950/95 text-emerald-200 border border-emerald-500/60 font-bold shadow-2xl backdrop-blur-xl hover:bg-emerald-900 transition-all cursor-pointer"
-                  >
-                    <span>←</span>
-                    <span>Exit Street View & Return to Map</span>
-                  </button>
-                </div>
               </div>
             ) : (
               <iframe

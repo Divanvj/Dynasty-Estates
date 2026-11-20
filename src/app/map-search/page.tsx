@@ -166,7 +166,9 @@ export default function MapSearchPage() {
       {/* One slim bar: title, type, Near me, List view. */}
       <div className="relative z-30 flex shrink-0 items-center gap-2 rounded-card border border-white/80 bg-white/70 p-1.5 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-surface-panel/80">
         <h1 className="sr-only">Homes on the map</h1>
-        <div className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {/* The fade on the right edge says the row scrolls; at 375px it cut
+            "Estate Home" off mid-word with nothing to show there was more. */}
+        <div className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [mask-image:linear-gradient(to_right,#000_calc(100%-1.5rem),transparent)] lg:[mask-image:none]">
           {TYPES.map((t) => (
             <button
               key={t}

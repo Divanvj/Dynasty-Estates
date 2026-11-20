@@ -76,52 +76,7 @@ export default async function ToRentNationalPage() {
           <p className="mt-2 text-sm text-slate-600 max-w-3xl leading-relaxed dark:text-slate-300">
             Browse verified luxury rentals across all 9 provinces. Transparent upfront fee schedules, 1-click digital tenancy applications with TPN vetting, and solar energy backup.
           </p>
-
-          <div className="mt-4 flex flex-wrap items-center gap-2 pt-2 border-t border-slate-200/60 dark:border-white/10 text-xs font-semibold">
-            <span className="text-slate-600 dark:text-slate-400">Related Hubs:</span>
-            <Link
-              href="/for-sale"
-              className="pill-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
-            >
-              Browse Homes For Sale →
-            </Link>
-            <Link
-              href="/calculators/bond-repayment"
-              className="pill-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
-            >
-              Bond Repayment Calculator →
-            </Link>
-          </div>
         </div>
-
-        {/* Provincial Grid */}
-        <section className="mb-10">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-4">
-            Browse Rentals by Province
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {provincesWithCounts.map((prov) => (
-              <Link
-                key={prov.slug}
-                href={`/to-rent/${prov.slug}`}
-                className="group rounded-2xl border border-white/80 bg-white/70 p-4 backdrop-blur-md shadow-xs hover:border-emerald-400 hover:bg-white hover:shadow-md transition-all dark:bg-surface-panel/70 dark:border-white/10 dark:hover:border-emerald-500/40"
-              >
-                <div className="flex items-center justify-between">
-                  <p className="font-bold text-sm text-slate-900 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors dark:text-white">
-                    {prov.name}
-                  </p>
-                  {/* Matches /for-sale: "N active" is seller-portal jargon. */}
-                  <span className="badge border border-slate-200 bg-slate-100 text-slate-600 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300">
-                    {prov.count} {prov.count === 1 ? "listing" : "listings"}
-                  </span>
-                </div>
-                <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
-                  Explore {prov.name} rentals →
-                </p>
-              </Link>
-            ))}
-          </div>
-        </section>
 
         {/* Recent Rentals */}
         <div>
@@ -133,6 +88,56 @@ export default async function ToRentNationalPage() {
               <PropertyGridCard key={prop.id} property={prop} headingLevel="h3" />
             ))}
           </div>
+        </div>
+        {/* Homes first (owner's mobile review, 20 Nov). The area directory and
+            the related links used to sit above the listings, pushing the first
+            home 700-1,600px down a phone screen. */}
+        <div className="mt-10 space-y-6">
+          {/* Provincial Grid */}
+          <section>
+            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-4">
+              Browse Rentals by Province
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {provincesWithCounts.map((prov) => (
+                <Link
+                  key={prov.slug}
+                  href={`/to-rent/${prov.slug}`}
+                  className="group rounded-2xl border border-white/80 bg-white/70 p-4 backdrop-blur-md shadow-xs hover:border-emerald-400 hover:bg-white hover:shadow-md transition-all dark:bg-surface-panel/70 dark:border-white/10 dark:hover:border-emerald-500/40"
+                >
+                  <div className="flex items-center justify-between">
+                    <p className="font-bold text-sm text-slate-900 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors dark:text-white">
+                      {prov.name}
+                    </p>
+                    {/* Matches /for-sale: "N active" is seller-portal jargon. */}
+                    <span className="badge border border-slate-200 bg-slate-100 text-slate-600 dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300">
+                      {prov.count} {prov.count === 1 ? "listing" : "listings"}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
+                    Explore {prov.name} rentals →
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </section>
+          <nav aria-label="Related pages" className="rounded-3xl border border-white/80 bg-white/50 p-6 backdrop-blur-xl dark:bg-surface-panel/70 dark:border-white/10">
+            <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
+              <span className="text-slate-600 dark:text-slate-400">Also see:</span>
+              <Link
+                href="/for-sale"
+                className="pill-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
+              >
+                Browse Homes For Sale →
+              </Link>
+              <Link
+                href="/calculators/bond-repayment"
+                className="pill-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors dark:border dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:border-emerald-500/40 dark:hover:text-white"
+              >
+                Bond Repayment Calculator →
+              </Link>
+            </div>
+          </nav>
         </div>
       </main>
     </div>

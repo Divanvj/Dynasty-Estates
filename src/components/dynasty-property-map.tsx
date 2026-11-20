@@ -687,7 +687,7 @@ export default function DynastyPropertyMap({
           the two overlapped by 30-96px. The tools come later in the DOM and
           therefore took the taps, which left the metro chips under them dead
           with nothing on screen to explain why. */}
-      <div className="pointer-events-auto absolute left-3 top-3 z-[500] flex max-w-[calc(100%-15rem)] items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden rounded-full border border-white/70 bg-white/90 dark:border-white/10 dark:bg-surface-panel/90 p-1 shadow-lg backdrop-blur-xl">
+      <div className="pointer-events-auto absolute left-3 top-3 z-[500] flex max-w-[calc(100%-15rem)] items-center gap-1 overflow-x-auto pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [mask-image:linear-gradient(to_right,#000_calc(100%-1.5rem),transparent)] rounded-full border border-white/70 bg-white/90 dark:border-white/10 dark:bg-surface-panel/90 p-1 shadow-lg backdrop-blur-xl">
         {METRO_VIEWS.map((v) => (
           <button
             key={v.label}
@@ -745,9 +745,11 @@ export default function DynastyPropertyMap({
         </div>
       )}
 
-      {/* Layers: resilience, plus Dynasty's price-against-suburb view. */}
-      <div className="pointer-events-auto absolute bottom-3 left-3 z-[500] rounded-2xl border border-white/70 bg-white/90 dark:border-white/10 dark:bg-surface-panel/90 p-1.5 shadow-lg backdrop-blur-xl">
-        <div className="flex items-center gap-1">
+      {/* Layers: resilience, plus Dynasty's price-against-suburb view.
+          Narrower than the map by the zoom buttons' width, so when the
+          labelled buttons wrap on a phone they never slide under + / −. */}
+      <div className="pointer-events-auto absolute bottom-3 left-3 z-[500] max-w-[calc(100%-5rem)] rounded-2xl border border-white/70 bg-white/90 dark:border-white/10 dark:bg-surface-panel/90 p-1.5 shadow-lg backdrop-blur-xl">
+        <div className="flex flex-wrap items-center gap-1">
           {/* Same rail language as the markers, so the legend teaches the map.
               Emoji were doing this job before and rendered differently on every
               platform. */}
@@ -772,7 +774,9 @@ export default function DynastyPropertyMap({
               }`}
             >
               {rail ? <i className={`h-4 w-[3px] shrink-0 ${rail}`} /> : null}
-              <span className={id === "all" ? "" : "hidden sm:inline"}>{label}</span>
+              {/* Labelled at every width: on a phone the row read
+                  "All 7 | 6 | 2" — numbers with a coloured line and no word. */}
+              <span>{label}</span>
               <span className="opacity-70">{n}</span>
             </button>
           ))}
