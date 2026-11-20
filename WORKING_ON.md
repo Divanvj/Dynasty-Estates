@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/verify-email | S1-6: lib/auth.ts (sign-up), new verify-email banner in layout.tsx (one line), /auth/verified, mail + cron | 2026-11-20 |
 
 ## Recently merged
 
