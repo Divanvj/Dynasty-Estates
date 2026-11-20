@@ -11,6 +11,7 @@ import { alertRecipients, sendMail } from "@/lib/server/mail";
 import { opsAlertEmail } from "@/lib/server/mail-templates";
 import { NIGHTLY_DOC } from "@/lib/server/platform-checks";
 import { runVerificationReminders } from "@/lib/server/email-verification";
+import { runFfcReminders } from "@/lib/server/practitioner-reminders";
 import { runSavedSearchAlerts } from "@/lib/server/saved-searches";
 import { cleanUpListingFiles, GRACE_DAYS } from "@/lib/server/storage-cleanup";
 import { runWeeklyReports, sastWeekday } from "@/lib/server/weekly-report";
@@ -28,6 +29,7 @@ export const maxDuration = 60;
  *   4. listing files nothing refers to any more (storage-cleanup.ts),
  *   5. saved-search alert e-mails,
  *   5b. one reminder to new accounts that haven't confirmed their e-mail (S1-6),
+ *   5c. certificate expiry reminders to agents at 60 / 30 / 7 days (S1-9),
  *   6. on Mondays (SAST), the weekly listing report e-mails.
  * The e-mail jobs cap how many they send per run (the function has 60 s);
  * whatever is left over goes out the next night.
@@ -127,6 +129,15 @@ export async function GET(request: Request) {
     await recordConsoleEvent(null, "nightly.verify_email", `Verification reminders: ${reminders.emailed} e-mailed, ${reminders.skipped} skipped, ${reminders.failed} failed (${reminders.candidates} unconfirmed)${reminders.more ? ", more left for tomorrow" : ""}`, { ...reminders });
   } catch (error) {
     failures.push(`verification reminders: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  try {
+    const ffc = await runFfcReminders({ maxEmails: 40 });
+    report.ffcReminders = ffc;
+    if (ffc.failed) failures.push(`certificate reminders: ${ffc.failed} e-mail(s) failed`);
+    await recordConsoleEvent(null, "nightly.ffc_reminders", `Certificate expiry reminders: ${ffc.emailed} e-mailed, ${ffc.skipped} skipped, ${ffc.failed} failed (${ffc.candidates} due of ${ffc.practitioners} verified)${ffc.more ? ", more left for tomorrow" : ""}`, { ...ffc });
+  } catch (error) {
+    failures.push(`certificate reminders: ${error instanceof Error ? error.message : String(error)}`);
   }
 
   if (sastWeekday() === 1) {

@@ -433,3 +433,12 @@ Added, nothing removed.
 - **Added - the status now shows publicly**, which it never did: an "Under offer" pill on the listing hero (beside where Sold and Rented already sit), a badge on the list and grid card, and `LimitedAvailability` instead of `InStock` in the listing's structured data. The listing stays in search and still takes enquiries.
 - **Changed - who makes the move**: `PUT /api/listings/[id]/status` (Admin SDK) rather than a client write. `firestore.rules` is unchanged on purpose - letting an owner write "Under offer" would also let them push an unmoderated Draft into a publicly readable status. The route allows Published <-> Under offer only; a draft, paused or sold listing is refused (409), a repeat is a no-op, and each real move files an `audit_logs` entry.
 - **Not done**: no e-mail to the people who enquired when a home goes under offer; "Under offer" is not a search filter; the sticky price bar at the foot of the listing page doesn't repeat the label.
+
+## Certificate expiry reminders (20 Nov, S1-9)
+
+Added, nothing removed.
+
+- **Added - a reminder e-mail to agents** 60 days, 30 days and a week before the Fidelity Fund Certificate on their profile expires: what the certificate is, when it goes, a link to renew with the PPRA and a button to file the new date on `/agent/profile`. One e-mail per step, and the step is the smallest one the certificate has reached rather than an exact day, so a night the job does not run cannot lose it.
+- **Added - "Certificate expiry reminders"** on `/alerts` (and the "stop these e-mails" link at the foot of the e-mail), plus a switch under Site switches - E-mails in `/console/flags`. An agent who turns it off is not e-mailed and no attempt is written to `mail_log`; if they turn it back on while the certificate is still running out, the step is still owed.
+- **Added - `compliance_reminders/{uid}`**, server-only like `email_verification`: which steps have gone out, held **against one expiry date**. Filing a renewed certificate starts the run again, so an agent is reminded next year too.
+- **Not done**: nothing is reminded after a certificate has expired (the portal and "Needs you today" carry that); the admin is not told; a pending or rejected practitioner record is not reminded; delivery still depends on the Brevo DNS records (O1).

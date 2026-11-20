@@ -259,6 +259,56 @@ export function savedSearchEmail(input: { searches: Array<{ label: string; url: 
   };
 }
 
+/**
+ * S1-9 — an agent's Fidelity Fund Certificate is running out (60 days, 30 days
+ * or a week). Dynasty does not renew it: the e-mail says what to do and where,
+ * and sends them to their profile to file the new date.
+ */
+export function ffcReminderEmail(input: {
+  name: string | null;
+  ffcNumber: string;
+  ffcExpiry: string;
+  expiryLabel: string;
+  daysLeft: number;
+  ppraUrl: string;
+  optOut?: OptOutLink;
+}) {
+  const hello = input.name ? `Hi ${line(input.name, 80)},` : "Hi,";
+  const left = input.daysLeft === 1 ? "tomorrow" : input.daysLeft === 0 ? "today" : `in ${input.daysLeft} days`;
+  const profile = `${SITE_URL}/agent/profile`;
+  const subject = `Your Fidelity Fund Certificate expires ${left} (${input.expiryLabel})`;
+  return {
+    subject,
+    text: [
+      hello,
+      "",
+      `The Fidelity Fund Certificate on your Dynasty Estates profile expires ${left}, on ${input.expiryLabel}.`,
+      "Without a valid FFC you may not trade as a property practitioner, and your listings cannot stay live.",
+      "",
+      `Certificate: ${line(input.ffcNumber, 40)}`,
+      `Expires: ${input.expiryLabel}`,
+      "",
+      `Renew with the PPRA: ${input.ppraUrl}`,
+      `Then file the new date on your profile: ${profile}`,
+      "",
+      "If you have already renewed, file the new expiry date and this reminder stops.",
+    ].join("\n"),
+    html: layout(
+      "Your Fidelity Fund Certificate is running out",
+      paragraph(hello) +
+        paragraph(`The Fidelity Fund Certificate on your Dynasty Estates profile expires ${left}, on ${input.expiryLabel}.`) +
+        paragraph("Without a valid FFC you may not trade as a property practitioner, and your listings cannot stay live.") +
+        facts([
+          ["Certificate", line(input.ffcNumber, 40)],
+          ["Expires", input.expiryLabel],
+        ]) +
+        paragraph(`Renew with the PPRA at ${input.ppraUrl}, then file the new date on your profile. If you have already renewed, file the new expiry date and this reminder stops.`),
+      { label: "Update my certificate", href: profile },
+      input.optOut,
+    ),
+  };
+}
+
 export function verifyEmailEmail(input: { name: string | null; link: string; reminder: boolean }) {
   const hello = input.name ? `Hi ${line(input.name, 80)},` : "Hi,";
   const intro = input.reminder

@@ -9,7 +9,6 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| ALET-ELIZE | ALET-ELIZE/ffc-reminders | S1-9 FFC expiry reminder e-mails: `lib/server/practitioner-reminders.ts`, a nightly step, new mail kind + template, new e-mail preference and `/console/flags` switch | 2026-11-20 |
 
 ## Recently merged
 
@@ -21,6 +20,12 @@ before they start, then delete it after a few days.
   listings first, directory + "Also see" after. `PropertyCardPhotos` dots are bottom-right (keep card prices bottom-left).
   `property-media-tabs`: one Street View / Map switch. Please keep this order when adding the "Under offer" badge.
   (Order kept: the badge sits top-left on the card, clear of the dots and the price.)
+
+- 2026-11-20 — `ALET-ELIZE/ffc-reminders` merged (S1-9). **A new e-mail preference and a new mail kind.** `EMAIL_PREFS` gains
+  `complianceReminders` and `MailKind` gains `ffc_reminder` (switch `emailComplianceReminders` in `/console/flags`) — if you add a
+  preference, both lists and `DEFAULT_EMAIL_PREFS` need the key or `tsc` will say so. New server-only collection
+  `compliance_reminders/{uid}`, keyed to one expiry date so a renewed certificate starts the 60/30/7 run again. The nightly job has
+  one more step (`runFfcReminders`); `lib/ffc-reminders.ts` holds the pure logic and `tests/ffc-reminders.test.mjs` covers it in CI.
 
 - 2026-11-20 — `ALET-ELIZE/under-offer` merged (S1-8). **The build lane is now on ALET-ELIZE** (the owner moved it here; `docs/HANDOVER.md` says so at the top and is kept for its reference sections).
   A live listing moves between Published and Under offer through **`PUT /api/listings/[id]/status`**, never a client write — `firestore.rules`
