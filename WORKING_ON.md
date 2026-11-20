@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| ALET-ELIZE | ALET-ELIZE/price-drops | S1-10 price-drop alerts: `lib/price-drops.ts`, `lib/server/price-drops.ts` (new server-only `price_watch`), a nightly step, new mail kind + template, new e-mail preference and `/console/flags` switch | 2026-11-20 |
 
 ## Recently merged
 
