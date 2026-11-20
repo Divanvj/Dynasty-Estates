@@ -77,6 +77,14 @@ export default function PropertyListCard({
             every card in the list. The listing tag, which does say something
             the card does not ("New Listing", "Price Reduced"), stays. */}
         <div className="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap z-[12]">
+          {/* S1-8: the home is still listed and still takes enquiries, so this
+              is the one lifecycle status worth saying on a card — it changes
+              whether a buyer hurries, and it comes off again from the portal. */}
+          {property.status === "Under offer" && (
+            <span className="badge border border-amber-300/70 bg-amber-950/80 text-amber-100 backdrop-blur-md">
+              Under offer
+            </span>
+          )}
           {getDisplayTag(property) && (
             <span className="badge border border-white/30 bg-black/50 text-white backdrop-blur-md dark:border-white/10">
               {getDisplayTag(property)}

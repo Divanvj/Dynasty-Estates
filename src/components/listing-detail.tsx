@@ -6,6 +6,7 @@ import { useEffect, useId, useState } from "react";
 
 import { AgeChip, emptyBoxClass, errorBoxClass, linkClass, listingStatusTone, panelClass, primaryButtonClass, secondaryButtonClass } from "@/components/dashboard-ui";
 import { EnquiryList, useOwnerInquiries } from "@/components/enquiry-inbox";
+import { ListingMarketStatus } from "@/components/listing-market-status";
 import { ListingSale } from "@/components/listing-sale";
 import { ArrowLeftIcon, CheckIcon } from "@/components/icons";
 import Sparkline from "@/components/sparkline";
@@ -118,6 +119,9 @@ export default function ListingDetail({
           ) : null}
         </div>
       </div>
+
+      {/* Under offer ↔ back on the market (S1-8, lib/listing-status.ts). */}
+      <ListingMarketStatus listing={listing} onChanged={listings.reload} />
 
       {/* Mark as sold / rented, or the recorded sale (lib/sales.ts). */}
       <ListingSale listing={listing} onChanged={listings.reload} />

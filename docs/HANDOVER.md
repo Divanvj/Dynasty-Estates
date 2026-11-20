@@ -1,15 +1,21 @@
 # Handover — build lane (written 20 Nov 2026, DESKTOP-1R37EBU)
 
+**Taken over 20 Nov 2026 by ALET-ELIZE, which now runs the build lane.** S1-8 is
+done and merged; the next item is S1-9. The sections below are kept because the
+routine, the XCORE ids and the live-state notes are the reference for this lane —
+they are not a to-do list any more. The plan is `docs/TO-DO.md`.
+
 For the agent on the owner's other device, picking up the **build lane** exactly
 where it stopped. Read this, then `docs/TO-DO.md` (the plan) and `COLLABORATION.md`.
-Delete or update this file when you have taken over.
 
 ## Where it stopped
 
-- **Next item: S1-8 — set "Under offer" from the agent and seller portals, and back to live.**
-  The owner said "Yes, start S1-8"; nothing was started: no claim, no branch, no code.
-- Sprint 1 done so far: S1-1 … S1-7 (see `docs/TO-DO.md`, each has a *Done* note).
-  Left: S1-8, S1-9 (FFC expiry reminders), S1-10 (price-drop alerts),
+- ~~**Next item: S1-8 — set "Under offer" from the agent and seller portals, and back to live.**~~
+  Done 20 Nov on ALET-ELIZE (`ALET-ELIZE/under-offer`): `PUT /api/listings/[id]/status`,
+  `lib/listing-status.ts`, `components/listing-market-status.tsx`, and the public
+  "Under offer" pill and card badge. No rules change — see the note in `WORKING_ON.md`.
+- Sprint 1 done so far: S1-1 … S1-8 (see `docs/TO-DO.md`, each has a *Done* note).
+  Left: S1-9 (FFC expiry reminders), S1-10 (price-drop alerts),
   S1-11 (stop alerts per saved search), S1-12 (fix `npm run firebase:*` scripts).
 - Working tree on `main` was clean and pushed. `WORKING_ON.md` has no open claims.
 - The UI agent works in its own worktree (`DESKTOP-1R37EBU/mobile-placement`,

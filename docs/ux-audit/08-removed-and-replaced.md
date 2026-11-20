@@ -414,3 +414,10 @@ Added, nothing removed.
 - **Changed – sign-in links** (save heart, Saved, Collections, alerts, saved search, enquiries, agents, role-guarded pages, the account menu, package requests) now return to the page you were on, via `?next=`. Sign-in, sign-up, Google and phone sign-in all honour it; only paths on this site are followed.
 - **Changed – the enquiry form for signed-out visitors** shows "Sign in to send this request" with a link back to the listing, instead of a Send button that always failed with "check your connection" (it submitted as `guest-…`, which the rules refuse). The made-up `anonymous@buyer.co.za` fallback is gone.
 - **Not done**: guest enquiries without an account (decision D8); /console sign-in links are unchanged.
+
+## Under offer, and back on the market (20 Nov, S1-8)
+
+- **Added - "Mark as under offer" / "Back on the market"** on a listing's page in both portals (agent and seller), next to Mark as sold. Each move asks first and says what buyers will see.
+- **Added - the status now shows publicly**, which it never did: an "Under offer" pill on the listing hero (beside where Sold and Rented already sit), a badge on the list and grid card, and `LimitedAvailability` instead of `InStock` in the listing's structured data. The listing stays in search and still takes enquiries.
+- **Changed - who makes the move**: `PUT /api/listings/[id]/status` (Admin SDK) rather than a client write. `firestore.rules` is unchanged on purpose - letting an owner write "Under offer" would also let them push an unmoderated Draft into a publicly readable status. The route allows Published <-> Under offer only; a draft, paused or sold listing is refused (409), a repeat is a no-op, and each real move files an `audit_logs` entry.
+- **Not done**: no e-mail to the people who enquired when a home goes under offer; "Under offer" is not a search filter; the sticky price bar at the foot of the listing page doesn't repeat the label.

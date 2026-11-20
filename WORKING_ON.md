@@ -9,12 +9,18 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| ALET-ELIZE | ALET-ELIZE/under-offer | S1-8 Under offer / back to live: new `/api/listings/[id]/status`, `lib/server/listing-status.ts`, a panel in `components/listing-detail.tsx`, and an "Under offer" badge on the public listing page + cards | 2026-11-20 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-20 — `ALET-ELIZE/under-offer` merged (S1-8). **The build lane is now on ALET-ELIZE** (the owner moved it here; `docs/HANDOVER.md` says so at the top and is kept for its reference sections).
+  A live listing moves between Published and Under offer through **`PUT /api/listings/[id]/status`**, never a client write — `firestore.rules`
+  is unchanged, because letting an owner write a public status would also let a Draft reach the catalogue. Use `nextMarketStatus()`
+  (`lib/listing-status.ts`) for anything that offers the move; the route refuses anything else with 409 and files an `audit_logs` entry.
+  "Under offer" is now visible to buyers for the first time: a pill on the listing hero, a badge on `property-list-card.tsx`, and
+  `LimitedAvailability` in the structured data. New `tests/listing-status.test.mjs` runs in CI.
 
 - 2026-11-20 — **Build-lane handover: read `docs/HANDOVER.md` first.** DESKTOP-1R37EBU stopped before S1-8 ("Under offer"),
   nothing started. The note has the state, open decisions, the working routine and XCORE.
