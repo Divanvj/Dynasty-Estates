@@ -52,6 +52,8 @@ Done 19 Nov: **6 labelled example listings** in Firestore (`properties/claude-ex
 
 ## Mobile UI/UX (UI lane, runs alongside Sprint 1)
 
+In XCORE these items (and all phone work done since 2 Nov) are tracked in the **Dynasty Estates Mobile App** project, not the Website project (owner, 20 Nov). The UI agent's current placement pass is there as "in progress".
+
 - [ ] **U1** Phone pass over everything built since 9 Nov: agent/agency/admin dashboards, listing page in the portals (incl. the new Mark as sold panel), listing editor, `/agent/market`, seller report, `/alerts`, `/email/unsubscribe`, `/pricing`, `/sell`. Check 375 px, no sideways scroll, 44 px targets. Seen 19 Nov: on a phone the price on a search card runs into the photo dots.
 - [ ] **U2** Mobile speed (old S15): home LCP ≤ 4 s, search TBT ≤ 1,200 ms, Lighthouse mobile ≥ 70.
 - [ ] **U3** Targets the UX plan didn't fully meet: home ≤ ~3,500 px tall at 1280 (now 4,772); first search card in the top half at 375×812 (now 514 px); agent card above the fold on the listing page at 1280×800.
