@@ -15,6 +15,9 @@ lines keep its own merges trivial.
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
 
+- 2026-11-20 — **Build-lane handover: read `docs/HANDOVER.md` first.** DESKTOP-1R37EBU stopped before S1-8 ("Under offer"),
+  nothing started. The note has the state, open decisions, the working routine and XCORE.
+
 - 2026-11-20 — `DESKTOP-1R37EBU/return-after-signin` merged (S1-7). For any new "Sign in" link use `const signInHref = useAuthHref()`
   (`lib/use-return-path.ts`) instead of a bare "/auth/login"; it adds `?next=<this page>`. `safeReturnPath()` in `lib/return-path.ts`.
 

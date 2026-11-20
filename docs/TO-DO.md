@@ -4,6 +4,8 @@ Written 19 Nov 2026 from the code, git, the delivery tracker and the XCORE board
 (project "Dynasty Estates Website"). This is the working order. Update it when an
 item ships or the plan changes, and tick the same task in XCORE.
 
+**Picking up the build lane on another device? Read `docs/HANDOVER.md` first.**
+
 **Two agents, one owner.** Follow `COLLABORATION.md` and claim in `WORKING_ON.md`
 before starting any item.
 
