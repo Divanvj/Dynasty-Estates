@@ -29,7 +29,8 @@ export class SaleError extends Error {
   }
 }
 
-type Caller = { uid: string; admin: boolean };
+/** Also used by lib/server/listing-status.ts (S1-8), which shares these checks. */
+export type Caller = { uid: string; admin: boolean; email: string | null };
 
 export async function saleCaller(request: Request): Promise<Caller> {
   if (!adminApp()) throw new SaleError("The server isn't connected right now. Try again in a moment.", 503);
@@ -38,7 +39,7 @@ export async function saleCaller(request: Request): Promise<Caller> {
   if (!token) throw new SaleError("Sign in first.", 401);
   try {
     const decoded = await adminAuth().verifyIdToken(token);
-    return { uid: decoded.uid, admin: decoded.role === "admin" };
+    return { uid: decoded.uid, admin: decoded.role === "admin", email: typeof decoded.email === "string" ? decoded.email : null };
   } catch (error) {
     if (error instanceof AdminUnavailableError) throw new SaleError("The server isn't connected right now. Try again in a moment.", 503);
     throw new SaleError("Your session has expired. Sign in again.", 401);
@@ -79,13 +80,17 @@ function validate(input: unknown): SaleInput {
   return { price, soldOn, pricePublic: body.pricePublic === true };
 }
 
-async function ownListing(caller: Caller, listingId: string) {
+export async function ownListing(
+  caller: Caller,
+  listingId: string,
+  forbidden = "Only the listing's agent or seller can record its sale.",
+) {
   if (!/^[A-Za-z0-9_-]{1,128}$/.test(listingId)) throw new SaleError("Not found.", 404);
   const ref = adminDb().collection("properties").doc(listingId);
   const snap = await ref.get();
   if (!snap.exists) throw new SaleError("This listing no longer exists.", 404);
   const data = snap.data()!;
-  if (data.ownerId !== caller.uid && !caller.admin) throw new SaleError("Only the listing's agent or seller can record its sale.", 403);
+  if (data.ownerId !== caller.uid && !caller.admin) throw new SaleError(forbidden, 403);
   return { ref, data };
 }
 

@@ -426,3 +426,10 @@ Added, nothing removed.
 - **Changed – card photo dots** bottom-right instead of centred, clear of the price.
 - **Changed – /map-search**: fade on the right edge of the chip rows; the layer buttons say "Solar" and "Water" on phones too, and stay clear of the zoom buttons.
 - **Changed – True Cost calculator**: the offer price never wraps; "Custom Offer" wraps under its label.
+
+## Under offer, and back on the market (20 Nov, S1-8)
+
+- **Added - "Mark as under offer" / "Back on the market"** on a listing's page in both portals (agent and seller), next to Mark as sold. Each move asks first and says what buyers will see.
+- **Added - the status now shows publicly**, which it never did: an "Under offer" pill on the listing hero (beside where Sold and Rented already sit), a badge on the list and grid card, and `LimitedAvailability` instead of `InStock` in the listing's structured data. The listing stays in search and still takes enquiries.
+- **Changed - who makes the move**: `PUT /api/listings/[id]/status` (Admin SDK) rather than a client write. `firestore.rules` is unchanged on purpose - letting an owner write "Under offer" would also let them push an unmoderated Draft into a publicly readable status. The route allows Published <-> Under offer only; a draft, paused or sold listing is refused (409), a repeat is a no-op, and each real move files an `audit_logs` entry.
+- **Not done**: no e-mail to the people who enquired when a home goes under offer; "Under offer" is not a search filter; the sticky price bar at the foot of the listing page doesn't repeat the label.

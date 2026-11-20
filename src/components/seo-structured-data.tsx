@@ -71,9 +71,14 @@ export default function SeoStructuredData({
       "@type": "Offer",
       price: property.numericPrice,
       priceCurrency: "ZAR",
-      availability: property.status === "Sold" || property.status === "Rented"
-        ? "https://schema.org/Discontinued"
-        : "https://schema.org/InStock",
+      availability:
+        property.status === "Sold" || property.status === "Rented"
+          ? "https://schema.org/Discontinued"
+          : // S1-8: an offer is in and the listing is still live, which is what
+            // LimitedAvailability says; it is not off the market yet.
+            property.status === "Under offer"
+            ? "https://schema.org/LimitedAvailability"
+            : "https://schema.org/InStock",
       validFrom: "2026-01-20T08:00:00+02:00",
       businessFunction: isRental
         ? "http://purl.org/goodrelations/v1#LeaseOut"

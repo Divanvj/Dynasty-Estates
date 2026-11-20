@@ -231,6 +231,14 @@ export default async function PropertyPage({
                         Let Agreed / Rented
                       </span>
                     )}
+                    {/* S1-8: an offer is in, but the home is still listed and
+                        still takes enquiries, so the pill is a state, not a
+                        closing notice. Set from the agent or seller portal. */}
+                    {property.status === "Under offer" && (
+                      <span className="rounded-full border border-amber-300 bg-amber-950/90 px-3 py-1 text-xs uppercase tracking-widest font-extrabold text-amber-100 backdrop-blur-md">
+                        Under offer
+                      </span>
+                    )}
                     {/* No "On Show Sunday" pill: it gave no date or time and
                         stayed up after the show. The show-day section under
                         the photo carries the real details. */}
