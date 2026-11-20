@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | DESKTOP-1R37EBU/return-after-signin | S1-7: auth/login + signup pages, sign-in links in ~10 components (one href each), property-inquiry-button | 2026-11-20 |
 
 ## Recently merged
 
