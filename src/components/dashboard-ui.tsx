@@ -20,7 +20,7 @@ export const rowClass =
   "rounded-2xl border border-[var(--dash-line)] bg-[var(--dash-card-2)] p-3.5";
 
 export const linkClass =
-  "font-semibold text-emerald-800 underline-offset-2 hover:underline dark:text-emerald-300";
+  "tap-44 font-semibold text-emerald-800 underline-offset-2 hover:underline dark:text-emerald-300";
 
 export const secondaryButtonClass =
   "pill max-lg:min-h-11 border border-[var(--dash-line-2)] bg-[var(--dash-card)] font-semibold text-slate-800 hover:bg-[var(--dash-card-2)] disabled:opacity-60 dark:text-slate-200";

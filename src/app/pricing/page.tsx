@@ -75,7 +75,7 @@ export default async function PricingPage({
                 href={item.id === "sale" ? "/pricing" : `/pricing?for=${item.id}`}
                 aria-current={active ? "page" : undefined}
                 scroll={false}
-                className={`pill-sm whitespace-nowrap px-4 font-semibold transition-colors ${
+                className={`pill-sm max-lg:h-11 whitespace-nowrap px-4 font-semibold transition-colors ${
                   active
                     ? "bg-slate-900 text-white dark:bg-emerald-700"
                     : "text-slate-700 hover:bg-white dark:text-slate-300 dark:hover:bg-white/10"
