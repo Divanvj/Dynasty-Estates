@@ -66,12 +66,10 @@ https://xcore-777.web.app — the owner signs in; never type their password.
 
 ## Live state worth knowing
 
-- **Firestore rules** deployed to live 19 Nov 14:53 UTC; live = `main`. To deploy:
-  copy `firestore.rules` from `origin/main` into an empty folder with a minimal
-  `firebase.json` (`{"firestore":{"rules":"firestore.rules"}}`), back up the live
-  ruleset first (firebase-admin `getSecurityRules().getFirestoreRuleset()`), then
-  `npx firebase-tools@15.37.0 deploy --only firestore:rules --project dynasty-estates`
-  (owner's OK first). `npm run firebase:*` scripts are broken (S1-12).
+- **Firestore rules** deployed to live 19 Nov 14:53 UTC; live = `main`. To deploy (owner's OK first):
+  `npm run firebase:deploy:rules` (also `:indexes`, `:storage`; `-- --dry-run` checks only). Fixed in S1-12:
+  it copies the file from `origin/main` into a temporary folder with a one-section `firebase.json`,
+  refuses if your copy differs from main, and runs `npm run test:rules` first.
 - **Catalogue**: the 20 built-in sample homes are gone. Live has 6 labelled example
   homes (`properties/claude-example-1..6`, `example: true`, 3 Unsplash photos each,
   owned by the TEST agency principal = the DESKTOP-1R37EBU dev account) and the TEST

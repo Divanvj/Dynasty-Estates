@@ -12,11 +12,10 @@
     "start": "next start -p 3000 -H 0.0.0.0",
     "lint": "eslint",
     "test:rules": "npx --yes firebase-tools@15.37.0 emulators:exec --only firestore --project demo-dynasty-rules \"node tests/firestore-rules.test.mjs\"",
-    "firebase:config": "firebase-tools apps:sdkconfig WEB --project dynasty-estates",
-    "firebase:deploy:auth": "firebase-tools deploy --only auth --project dynasty-estates",
-    "firebase:deploy:rules": "firebase-tools deploy --only firestore:rules --project dynasty-estates",
-    "firebase:deploy:indexes": "firebase-tools deploy --only firestore:indexes --project dynasty-estates",
-    "firebase:deploy:storage": "firebase-tools deploy --only storage --project dynasty-estates"
+    "firebase:config": "npx --yes firebase-tools@15.37.0 apps:sdkconfig WEB --project dynasty-estates",
+    "firebase:deploy:rules": "node scripts/firebase-deploy.mjs rules",
+    "firebase:deploy:indexes": "node scripts/firebase-deploy.mjs indexes",
+    "firebase:deploy:storage": "node scripts/firebase-deploy.mjs storage"
   },
   "dependencies": {
     "firebase": "^12.18.0",
