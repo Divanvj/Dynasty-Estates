@@ -32,6 +32,14 @@ export const primaryButtonClass =
 export const errorBoxClass =
   "rounded-control border border-rose-200 bg-rose-50 p-3.5 text-sm text-rose-800 dark:border-rose-500/30 dark:bg-rose-950/40 dark:text-rose-200";
 
+/** Needs attention soon (a certificate running out): the Petrol champagne, its one highlight. */
+export const attentionBoxClass =
+  "rounded-control border border-[var(--dash-accent)]/40 bg-[var(--dash-accent-soft)] p-3.5 text-sm text-slate-800 dark:text-slate-100";
+
+/** Must be dealt with now (a certificate that has expired). */
+export const urgentBoxClass =
+  "rounded-control border border-[var(--dash-down)]/30 bg-[var(--dash-down-soft)] p-3.5 text-sm text-[var(--dash-down)]";
+
 export const emptyBoxClass =
   "rounded-control border border-dashed border-[var(--dash-line-2)] bg-[var(--dash-card-2)] p-6 text-center text-sm text-slate-600 dark:text-slate-300";
 

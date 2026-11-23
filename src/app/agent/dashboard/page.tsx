@@ -15,6 +15,7 @@ import {
   DashCard,
   Delta,
   emptyBoxClass,
+  attentionBoxClass,
   errorBoxClass,
   formatAge,
   heroPrimaryClass,
@@ -24,6 +25,7 @@ import {
   RingCard,
   rowClass,
   StatementCard,
+  urgentBoxClass,
 } from "@/components/dashboard-ui";
 import { useOwnerInquiries } from "@/components/enquiry-inbox";
 import { complianceMessage, usePractitioner } from "@/components/practitioner-profile";
@@ -189,7 +191,7 @@ export default function AgentDashboard() {
   return (
     <>
       {uid === null ? (
-        <p className="mb-4 rounded-2xl border border-amber-300/30 bg-amber-400/10 p-3 text-sm text-amber-900 dark:text-amber-200">
+        <p className={`mb-4 ${attentionBoxClass}`}>
           Sign in as an agent to see your listings and enquiries.
         </p>
       ) : null}
@@ -197,11 +199,7 @@ export default function AgentDashboard() {
       {compliance && (compliance.kind === "expiring" || compliance.kind === "expired") ? (
         <p
           role="status"
-          className={`mb-4 rounded-control border p-3.5 text-sm ${
-            compliance.kind === "expired"
-              ? "border-rose-300 bg-rose-50 text-rose-800 dark:border-rose-500/30 dark:bg-rose-950/40 dark:text-rose-200"
-              : "border-amber-300/50 bg-amber-50 text-amber-900 dark:border-amber-500/30 dark:bg-amber-950/30 dark:text-amber-200"
-          }`}
+          className={`mb-4 ${compliance.kind === "expired" ? urgentBoxClass : attentionBoxClass}`}
         >
           {complianceMessage(compliance, record)}{" "}
           <Link href="/agent/profile" className={linkClass}>Update your certificate</Link>
