@@ -61,7 +61,7 @@ function EditListing() {
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-slate-900 dark:text-white">
       <div className="mx-auto max-w-4xl space-y-4">
         {children}
-        <Link href={returnTo} className="tap-44 inline-block text-sm font-semibold text-emerald-800 underline underline-offset-2 dark:text-emerald-300">
+        <Link href={returnTo} className="tap-44 relative inline-block text-sm font-semibold text-emerald-800 underline underline-offset-2 dark:text-emerald-300">
           Back to the listing
         </Link>
       </div>
