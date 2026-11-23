@@ -1,5 +1,6 @@
 "use client";
 
+import GoogleLogo from "@/components/google-logo";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useRef, useState } from "react";
@@ -179,7 +180,7 @@ export default function LoginPage() {
                 disabled={loading}
                 className="pill-lg w-full gap-2 border border-slate-300 bg-white/80 sm:text-sm font-medium text-slate-700 disabled:cursor-not-allowed disabled:opacity-70 hover:bg-white transition-all cursor-pointer dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/10 dark:hover:border-white/20"
               >
-                <span>G</span>
+                <GoogleLogo />
                 Continue with Google
               </button>
 

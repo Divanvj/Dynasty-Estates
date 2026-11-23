@@ -60,9 +60,9 @@ In XCORE these items (and all phone work done since 2 Nov) are tracked in the **
 - [x] **U8** *Done 20 Nov (owner's phone review, CoreFlow notes):* controls sit with what they change. Search: view switch and sort on the results line, not in the search card (count is screen-reader-only on phones). Area pages (/for-sale, /to-rent, province, city): homes first, directory and "Also see" below. Listing page: one Street View / Map switch; True Cost offer price on one line. Compare: Back on the left, to where you came from. Card photo dots bottom-right, clear of the price. Map: scroll fade on chip rows, labelled layer buttons. Owner score 90 → 92.
 - [ ] **U2** Mobile speed (old S15): home LCP ≤ 4 s, search TBT ≤ 1,200 ms, Lighthouse mobile ≥ 70.
 - [ ] **U3** Targets the UX plan didn't fully meet: home ≤ ~3,500 px tall at 1280 (now 4,772); first search card in the top half at 375×812 (now 514 px); agent card above the fold on the listing page at 1280×800.
-- [ ] **U4** Sign-in: real Google logo instead of the plain "G".
-- [ ] **U5** Sold listing page: the hero still says "Asking price" — show the sale (or "Sold") clearly.
-- [ ] **U6** The yellow FFC banner on the agent dashboard isn't in the Petrol style yet.
+- [x] **U4** Sign-in: real Google logo instead of the plain "G". *Done 23 Nov:* Google's four-colour mark (`components/google-logo.tsx`) on "Continue with Google" on `/auth/login` and `/auth/signup`.
+- [x] **U5** Sold listing page: the hero still says "Asking price" — show the sale (or "Sold") clearly. *Done 23 Nov:* the hero and the phone price bar say "Sold for R …" / "Rented for, per month R …" when the seller agreed to show the price, and "Sold" / "Rented · Price not disclosed" when not; the page description says "Sold." instead of "Asking R …". Checked at 1280 and 375 px with two throwaway listings (since deleted).
+- [x] **U6** The yellow FFC banner on the agent dashboard isn't in the Petrol style yet. *Done 23 Nov:* `attentionBoxClass` (champagne, for "expires in N days") and `urgentBoxClass` (`--dash-down`, for "expired") in `dashboard-ui.tsx`; the signed-out notice on the same page uses the champagne one too. Checked light and dark, 1280 and 375 px, on the dev account (43 days left).
 - [ ] **U7** Keyboard-only and screen-reader pass (tracker 12.6).
 
 ## Sprint 2 — payments (Build lane, after decisions D2)

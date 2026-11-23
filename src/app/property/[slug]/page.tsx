@@ -75,7 +75,7 @@ export async function generateMetadata({
   const isConcluded = property.status === "Sold" || property.status === "Rented";
   const statusPrefix = isConcluded ? `[${property.status}] ` : "";
   const title = `${statusPrefix}${property.title} | ${isRental ? "To Rent" : "For Sale"} in ${property.suburb || property.city || "South Africa"}`;
-  const description = `${property.beds} Bed, ${property.baths} Bath ${property.type} for ${isRental ? "rent" : "sale"} in ${property.location}. Asking ${property.price}. ${property.description.slice(0, 150)}...`;
+  const description = `${property.beds} Bed, ${property.baths} Bath ${property.type} for ${isRental ? "rent" : "sale"} in ${property.location}. ${isConcluded ? `${property.status}.` : `Asking ${property.price}.`} ${property.description.slice(0, 150)}...`;
   const canonicalUrl = absoluteUrl(`/property/${property.slug}`);
   const primaryImage = property.gallery && property.gallery.length > 0 ? property.gallery[0] : property.image;
 
@@ -120,6 +120,18 @@ export default async function PropertyPage({
   if (!property) {
     notFound();
   }
+
+  // U5: a sold or let home shows what it went for, not its old asking price.
+  // The figure shows only when the seller agreed (lib/sales.ts); otherwise the
+  // price box says so in words.
+  const concluded = property.status === "Sold" || property.status === "Rented";
+  const rent = property.listingType === "rent";
+  const concludedPrice = concluded && property.sale?.price ? `R ${formatNumber(property.sale.price)}` : null;
+  const priceLabel = concluded
+    ? concludedPrice ? `${property.status} for${rent ? ", per month" : ""}` : property.status
+    : rent ? "Per month" : "Asking price";
+  const priceText = concluded ? concludedPrice ?? "Price not disclosed" : property.price;
+  const priceIsWords = concluded && !concludedPrice;
 
   const contact = getListingContact(property);
   const agentProfile = property.agentId ? getAgentByIdOrSlug(property.agentId) : null;
@@ -275,10 +287,10 @@ export default async function PropertyPage({
                 */}
                 <div className="hidden text-left lg:block lg:text-right">
                   <span className="text-xs uppercase tracking-widest text-slate-300 block">
-                    {property.listingType === "rent" ? "Monthly Rental" : "Asking Price"}
+                    {concluded ? priceLabel : rent ? "Monthly Rental" : "Asking Price"}
                   </span>
                   {/* nowrap: at 1280px "R 2,950,000" broke after the "R". */}
-                  <span className="whitespace-nowrap tabular-nums text-2xl sm:text-3xl font-extrabold text-white md:text-4xl">{property.price}</span>
+                  <span className={`whitespace-nowrap tabular-nums font-extrabold text-white ${priceIsWords ? "text-xl md:text-2xl" : "text-2xl sm:text-3xl md:text-4xl"}`}>{priceText}</span>
                 </div>
               </div>
         </PropertyHeroGallery>
@@ -692,10 +704,10 @@ export default async function PropertyPage({
           {/* "MONTHLY RENTAL / R 13,500 / mo…" was cut off at 375px. The label
               carries the period, so the figure can drop its "/ month". */}
           <span className="text-xs uppercase tracking-wider text-slate-600 font-bold block whitespace-nowrap dark:text-slate-400">
-            {property.listingType === "rent" ? "Per month" : "Asking price"}
+            {priceLabel}
           </span>
           <span className="block truncate text-base font-extrabold tabular-nums text-slate-950 dark:text-white">
-            {property.listingType === "rent" ? property.price.replace(/\s*\/\s*month$/i, "") : property.price}
+            {!concluded && rent ? property.price.replace(/\s*\/\s*month$/i, "") : priceText}
           </span>
         </div>
         {/* Contact first. A buyer on a phone wants to reach the agent, and in

@@ -465,3 +465,10 @@ Added, nothing removed.
 - **Changed - `npm run firebase:config`** uses the pinned Firebase CLI (15.37.0), like `test:rules`.
 - **Removed - `npm run firebase:deploy:auth`.** Deploying the `auth` block in `firebase.json` would set the live authorised sign-in domains to only localhost and the two Firebase domains, dropping `dynasty-estates.vercel.app`, so Google sign-in on the live site would break. Authorised domains are changed in the Firebase console (or with `scratch/add-domain.mjs`) until someone makes that block match live.
 - **Not done**: no automatic backup of the live ruleset before a deploy (Firebase keeps the release history in the console, where a ruleset can be rolled back); the `auth` and `apphosting` blocks in `firebase.json` were left as they are; no CI deploy (deploys still need the owner's OK and the CLI login).
+
+## Phone fixes U4–U6 (23 Nov)
+
+- **Replaced - the plain "G"** on "Continue with Google" (sign-in and sign-up) with Google's four-colour mark.
+- **Replaced - "Asking price" on a sold or let home.** The hero (desktop) and the price bar (phones) now say what it went for: "Sold for R …" or "Rented for, per month R …" when the seller agreed to show it, otherwise "Sold" / "Rented" with "Price not disclosed". The old asking price no longer shows on a concluded listing; the search-result description says "Sold." instead of "Asking R …".
+- **Replaced - the yellow (amber) certificate banner** on the agent dashboard with the Petrol champagne notice, and the red "expired" one with the Petrol `--dash-down` colours. Same words, same link. New shared classes `attentionBoxClass` and `urgentBoxClass` in `dashboard-ui.tsx`.
+- **Not done**: the sold listing still shows the agent's WhatsApp/Call buttons on phones (a separate question: should a sold home still take enquiries?); the cards in search and on area pages were not changed, and they have no Sold badge (only Under offer has one); whether search lists sold homes at all was not checked.
