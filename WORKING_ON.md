@@ -10,12 +10,15 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | ALET-ELIZE | `ALET-ELIZE/dark-hero-text` | `globals.css` hero headline block (`.hh-*`) — dark-mode hero text | 2026-11-20 |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/phone-fixes` | U4–U6: Google logo on `auth/login` + `auth/signup`, sold price on `property/[slug]/page.tsx` (hero + phone bar), certificate banner in `agent/dashboard/page.tsx` | 2026-11-23 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-23 — `DESKTOP-1R37EBU/phone-fixes` merged (U4–U6). New `components/google-logo.tsx` on the Google buttons. The listing page works out its price box once
+  (`priceLabel` / `priceText` in `property/[slug]/page.tsx`): a Sold/Rented home shows the recorded sale, never the asking price. `dashboard-ui.tsx` gains
+  `attentionBoxClass` (champagne) and `urgentBoxClass` (`--dash-down`) — use them for dashboard notices instead of amber/rose.
 
 - 2026-11-23 — `DESKTOP-1R37EBU/firebase-scripts` merged (S1-12). **`npm run firebase:deploy:rules` / `:indexes` / `:storage` work now** and always deploy the file from `origin/main`
   (refused if your copy differs; rules run `test:rules` first; `-- --dry-run` checks only). **`firebase:deploy:auth` is gone** on purpose: the `auth` block in
