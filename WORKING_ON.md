@@ -10,6 +10,7 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | ALET-ELIZE | `ALET-ELIZE/dark-hero-text` | `globals.css` hero headline block (`.hh-*`) — dark-mode hero text | 2026-11-20 |
+| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/phone-fixes` | U4–U6: Google logo on `auth/login` + `auth/signup`, sold price on `property/[slug]/page.tsx` (hero + phone bar), certificate banner in `agent/dashboard/page.tsx` | 2026-11-23 |
 
 ## Recently merged
 
