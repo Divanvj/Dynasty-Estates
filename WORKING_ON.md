@@ -10,12 +10,15 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | ALET-ELIZE | `ALET-ELIZE/dark-hero-text` | `globals.css` hero headline block (`.hh-*`) — dark-mode hero text | 2026-11-20 |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/phone-pass-u1` | U1 phone pass: `/agent/*`, `/agency/*`, `/admin/*`, `/seller/*`, `/alerts`, `/email/unsubscribe`, `/pricing`, `/sell` (small layout fixes as found) | 2026-11-23 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-24 — `DESKTOP-1R37EBU/phone-pass-u1` merged (U1). **New `tap-44` class** (end of `globals.css`, below 1024px only): an invisible 44px tap layer on a
+  small standalone link or button, without moving anything; it is part of `linkClass`. Add `tap-44` to any new small text link that is not inside a
+  sentence (it skips links inside a <p>). Print, `/pricing` tabs and package buttons are 44px tall below lg.
 
 - 2026-11-23 — `DESKTOP-1R37EBU/phone-fixes` merged (U4–U6). New `components/google-logo.tsx` on the Google buttons. The listing page works out its price box once
   (`priceLabel` / `priceText` in `property/[slug]/page.tsx`): a Sold/Rented home shows the recorded sale, never the asking price. `dashboard-ui.tsx` gains
