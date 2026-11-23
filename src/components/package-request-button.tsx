@@ -40,8 +40,8 @@ export default function PackageRequestButton({
   const noteId = useId();
 
   const buttonClass = primary
-    ? "pill w-full bg-slate-900 font-semibold text-white hover:bg-slate-800 dark:bg-emerald-700 dark:hover:bg-emerald-800"
-    : "pill w-full border border-slate-300 bg-white/70 font-semibold text-slate-900 hover:bg-white dark:border-white/15 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-white/10";
+    ? "pill max-lg:min-h-11 w-full bg-slate-900 font-semibold text-white hover:bg-slate-800 dark:bg-emerald-700 dark:hover:bg-emerald-800"
+    : "pill max-lg:min-h-11 w-full border border-slate-300 bg-white/70 font-semibold text-slate-900 hover:bg-white dark:border-white/15 dark:bg-surface-ink/60 dark:text-white dark:hover:bg-white/10";
 
   if (state === "sent") {
     return (
@@ -114,7 +114,7 @@ export default function PackageRequestButton({
           <button
             type="submit"
             disabled={state === "sending"}
-            className="pill w-full bg-slate-900 font-semibold text-white hover:bg-slate-800 disabled:opacity-60 dark:bg-emerald-700 dark:hover:bg-emerald-800"
+            className="pill max-lg:min-h-11 w-full bg-slate-900 font-semibold text-white hover:bg-slate-800 disabled:opacity-60 dark:bg-emerald-700 dark:hover:bg-emerald-800"
           >
             {state === "sending" ? "Sending…" : "Send request"}
           </button>

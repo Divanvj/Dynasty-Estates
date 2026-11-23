@@ -1850,3 +1850,21 @@ input[type="range"]::-moz-range-progress {
 */
 @layer base { .overflow-auto, .overflow-x-auto, .overflow-x-scroll, .overflow-scroll { position: relative; } }
 html, body { overflow-x: clip; }
+
+/* U1: a 44px tap area on phones and tablets for a small link or button that
+   stands on its own ("Edit", "See all 8", "Back to the listing"), without
+   moving anything: an invisible layer centred on it. Not inside a sentence,
+   where it would reach over the lines above and below. */
+@media (max-width: 1023.98px) {
+  .tap-44:not(p *) {
+    position: relative;
+  }
+  .tap-44:not(p *)::after {
+    content: "";
+    position: absolute;
+    inset-inline: -4px;
+    top: 50%;
+    height: 44px;
+    transform: translateY(-50%);
+  }
+}

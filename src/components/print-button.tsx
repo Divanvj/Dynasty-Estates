@@ -30,7 +30,7 @@ export default function PrintButton({
       // Share, Save and a back link, and the four of them were rendering at
       // 38px, 38px, 38px and 34px with two different type sizes. The class owns
       // the geometry so the row cannot drift again; colour stays here.
-      className={`pill no-print border border-slate-300/80 bg-white/60 font-semibold text-slate-700 transition-all hover:border-slate-400 hover:bg-white cursor-pointer dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:border-emerald-500/40 dark:hover:bg-surface-panel dark:hover:text-emerald-300 ${className}`}
+      className={`pill no-print max-lg:min-h-11 max-lg:min-w-11 border border-slate-300/80 bg-white/60 font-semibold text-slate-700 transition-all hover:border-slate-400 hover:bg-white cursor-pointer dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-300 dark:hover:border-emerald-500/40 dark:hover:bg-surface-panel dark:hover:text-emerald-300 ${className}`}
     >
       <PrinterIcon className="h-4 w-4 text-slate-700 dark:text-slate-300" />
       <span className="hidden sm:inline">{label}</span>

@@ -174,14 +174,14 @@ export default function SellerPortal() {
                       </span>
                       <Link
                         href={`/seller/listings/${item.id}`}
-                        className="text-sm font-semibold text-emerald-800 underline-offset-2 hover:underline dark:text-emerald-300"
+                        className="tap-44 text-sm font-semibold text-emerald-800 underline-offset-2 hover:underline dark:text-emerald-300"
                       >
                         Performance<span className="sr-only"> of {item.title}</span>
                       </Link>
                       {!CLOSED_LISTING_STATUSES.includes(item.status) && (
                         <Link
                           href={`/seller/listings/${item.id}/edit?from=portal`}
-                          className="text-sm font-semibold text-emerald-800 underline-offset-2 hover:underline dark:text-emerald-300"
+                          className="tap-44 text-sm font-semibold text-emerald-800 underline-offset-2 hover:underline dark:text-emerald-300"
                         >
                           Edit<span className="sr-only"> {item.title}</span>
                         </Link>
@@ -189,7 +189,7 @@ export default function SellerPortal() {
                       {isPublic && (
                         <Link
                           href={`/property/${item.id}`}
-                          className="text-sm font-semibold text-emerald-800 underline-offset-2 hover:underline dark:text-emerald-300"
+                          className="tap-44 text-sm font-semibold text-emerald-800 underline-offset-2 hover:underline dark:text-emerald-300"
                         >
                           Public page<span className="sr-only"> of {item.title}</span>
                         </Link>

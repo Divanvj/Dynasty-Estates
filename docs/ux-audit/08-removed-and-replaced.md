@@ -472,3 +472,12 @@ Added, nothing removed.
 - **Replaced - "Asking price" on a sold or let home.** The hero (desktop) and the price bar (phones) now say what it went for: "Sold for R …" or "Rented for, per month R …" when the seller agreed to show it, otherwise "Sold" / "Rented" with "Price not disclosed". The old asking price no longer shows on a concluded listing; the search-result description says "Sold." instead of "Asking R …".
 - **Replaced - the yellow (amber) certificate banner** on the agent dashboard with the Petrol champagne notice, and the red "expired" one with the Petrol `--dash-down` colours. Same words, same link. New shared classes `attentionBoxClass` and `urgentBoxClass` in `dashboard-ui.tsx`.
 - **Not done**: the sold listing still shows the agent's WhatsApp/Call buttons on phones (a separate question: should a sold home still take enquiries?); the cards in search and on area pages were not changed, and they have no Sold badge (only Under offer has one); whether search lists sold homes at all was not checked.
+
+## Phone pass U1 (24 Nov)
+
+Nothing removed and nothing moves on screen; only what a finger can hit changed.
+
+- **Added - `tap-44`** (globals.css, phones and tablets only): an invisible 44 px tall layer centred on a small link or button that stands on its own. It is part of `linkClass`, so every dashboard text link has it ("See all", "Manage listings", "Edit", "Public page", "Add photos" and the other checklist fixes, "Show daily figures", "Back to the listing", e-mail / phone / WhatsApp in enquiries). Also on the seller portal's Performance / Edit / Public page links, the listing title in the agent's table, `/sell`'s "What's included", the listing wizard's back link, and the location box's clear and open buttons. Links inside a sentence are left alone, so the layer never reaches over the lines above and below.
+- **Changed - 44 px on phones**: the Print button (was 40), the `/pricing` tabs (were 32) and "Request this package" (was 40).
+- **Checked, no change needed**: none of the 25 pages scrolls sideways at 375 px; the six `/admin` pages, the three `/agency` pages, `/alerts` and `/email/unsubscribe` had no small targets.
+- **Not done**: the WhatsApp link in an enquiry gets 40 px, not 44, because the Stage control sits right under it (growing it would take taps from the Stage control); the 36 px logo link on the seller report header; `/email/unsubscribe` with a real token was not opened.

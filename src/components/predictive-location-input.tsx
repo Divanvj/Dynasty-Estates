@@ -304,7 +304,7 @@ export default function PredictiveLocationInput({
             <button
               type="button"
               onClick={handleClear}
-              className="flex h-7 w-7 items-center justify-center rounded-full text-slate-600 hover:bg-slate-200/60 hover:text-slate-700 transition-colors cursor-pointer dark:text-slate-300"
+              className="tap-44 flex h-7 w-7 items-center justify-center rounded-full text-slate-600 hover:bg-slate-200/60 hover:text-slate-700 transition-colors cursor-pointer dark:text-slate-300"
               title="Clear selection"
             >
               <XMarkIcon className="h-3.5 w-3.5" />
@@ -324,7 +324,7 @@ export default function PredictiveLocationInput({
                 return next;
               });
             }}
-            className="flex h-7 w-7 items-center justify-center rounded-full text-slate-600 hover:text-slate-700 transition-colors cursor-pointer dark:text-slate-300"
+            className="tap-44 flex h-7 w-7 items-center justify-center rounded-full text-slate-600 hover:text-slate-700 transition-colors cursor-pointer dark:text-slate-300"
             title={isOpen ? "Close suggestions" : "Open suggestions"}
           >
             <span className="text-xs select-none text-slate-600 font-bold dark:text-slate-400">
