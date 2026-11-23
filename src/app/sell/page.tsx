@@ -166,7 +166,7 @@ export default function SellPage() {
                 {VAT_REGISTERED ? " Prices include VAT." : ""}
               </p>
             </div>
-            <Link href="/pricing" className="tap-44 font-semibold text-emerald-800 underline underline-offset-4 dark:text-emerald-300">
+            <Link href="/pricing" className="tap-44 relative font-semibold text-emerald-800 underline underline-offset-4 dark:text-emerald-300">
               What&rsquo;s included
             </Link>
           </div>

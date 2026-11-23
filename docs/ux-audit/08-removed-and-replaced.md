@@ -481,3 +481,7 @@ Nothing removed and nothing moves on screen; only what a finger can hit changed.
 - **Changed - 44 px on phones**: the Print button (was 40), the `/pricing` tabs (were 32) and "Request this package" (was 40).
 - **Checked, no change needed**: none of the 25 pages scrolls sideways at 375 px; the six `/admin` pages, the three `/agency` pages, `/alerts` and `/email/unsubscribe` had no small targets.
 - **Not done**: the WhatsApp link in an enquiry gets 40 px, not 44, because the Stage control sits right under it (growing it would take taps from the Stage control); the 36 px logo link on the seller report header; `/email/unsubscribe` with a real token was not opened.
+
+## Fix to U1: carousel arrows (24 Nov)
+
+- **Fixed** - U1 added a second `.tap-44` rule that set `position: relative` outside Tailwind's layers, which beat `absolute` on the photo arrows of every card, the home spotlight, the gallery lightbox and the listing photo header on phones and tablets (both arrows dropped to the left edge). The existing `.tap-44` note warned against exactly this. The duplicate rule is gone; the U1 links carry Tailwind's `relative` instead, and one rule switches the layer off for links inside a paragraph. Live for about an hour on 24 Nov.
