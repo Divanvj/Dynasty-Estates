@@ -144,7 +144,7 @@ function ListingsIndex() {
                         <div className="flex min-w-[240px] items-center gap-3">
                           <ListingThumb src={item.image} className="h-12 w-[4.5rem]" />
                           <div className="min-w-0">
-                            <Link href={`/agent/listings/${item.id}`} className="tap-44 font-semibold text-slate-900 underline decoration-[var(--dash-line-2)] underline-offset-4 hover:decoration-[var(--dash-d1)] dark:text-white">
+                            <Link href={`/agent/listings/${item.id}`} className="tap-44 relative font-semibold text-slate-900 underline decoration-[var(--dash-line-2)] underline-offset-4 hover:decoration-[var(--dash-d1)] dark:text-white">
                               {item.title}
                             </Link>
                             <p className="text-xs text-slate-600 dark:text-slate-400">{item.location}</p>
