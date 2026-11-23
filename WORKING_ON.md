@@ -10,12 +10,15 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | ALET-ELIZE | `ALET-ELIZE/dark-hero-text` | `globals.css` hero headline block (`.hh-*`) — dark-mode hero text | 2026-11-20 |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/firebase-scripts` | `package.json` firebase:* scripts, `scripts/firebase-deploy.mjs` (S1-12) | 2026-11-23 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-23 — `DESKTOP-1R37EBU/firebase-scripts` merged (S1-12). **`npm run firebase:deploy:rules` / `:indexes` / `:storage` work now** and always deploy the file from `origin/main`
+  (refused if your copy differs; rules run `test:rules` first; `-- --dry-run` checks only). **`firebase:deploy:auth` is gone** on purpose: the `auth` block in
+  `firebase.json` leaves out `dynasty-estates.vercel.app`, so deploying it would break live sign-in. Still ask the owner before any deploy.
 
 - 2026-11-20 — `DESKTOP-1R37EBU/mobile-placement` merged (U8, owner's phone review). **Controls sit with what they change.**
   /search: view switch + sort moved from the search card to the results line (`aria-label="Sort listings"` kept). Area pages:
