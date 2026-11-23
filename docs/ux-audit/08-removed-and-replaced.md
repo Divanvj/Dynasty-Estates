@@ -458,3 +458,10 @@ Added, nothing removed.
 - **Changed - `/email/unsubscribe`** understands both links. For a search it asks "Stop alerts for this saved search?", says the others are not affected, and afterwards says the search stays on the Alerts page to turn back on. The search is never deleted.
 - **Changed - the token** behind both links moved to `lib/unsubscribe-token.ts` and is now `uid.target.signature`, where target is a preference key or `search-<id>`. Links already in people's inboxes are signed exactly as before and keep working.
 - **Not done**: no "stop alerts for this search" control inside the e-mail's one-click List-Unsubscribe header (that still stops all saved-search alerts, which is what a mail app's button should do); the price-drop e-mail has no per-search link yet, because a drop can reach someone through a saved home instead.
+
+## Firebase deploy scripts (23 Nov, S1-12)
+
+- **Changed - `npm run firebase:deploy:rules` / `:indexes` / `:storage`** now work. They run `scripts/firebase-deploy.mjs`, which deploys the file from `origin/main` only (never the shared working copy), refuses if your copy differs, and runs the rule tests before Firestore rules. `-- --dry-run` checks without deploying.
+- **Changed - `npm run firebase:config`** uses the pinned Firebase CLI (15.37.0), like `test:rules`.
+- **Removed - `npm run firebase:deploy:auth`.** Deploying the `auth` block in `firebase.json` would set the live authorised sign-in domains to only localhost and the two Firebase domains, dropping `dynasty-estates.vercel.app`, so Google sign-in on the live site would break. Authorised domains are changed in the Firebase console (or with `scratch/add-domain.mjs`) until someone makes that block match live.
+- **Not done**: no automatic backup of the live ruleset before a deploy (Firebase keeps the release history in the console, where a ruleset can be rolled back); the `auth` and `apphosting` blocks in `firebase.json` were left as they are; no CI deploy (deploys still need the owner's OK and the CLI login).
