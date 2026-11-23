@@ -10,6 +10,7 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | ALET-ELIZE | `ALET-ELIZE/dark-hero-text` | `globals.css` hero headline block (`.hh-*`) — dark-mode hero text | 2026-11-20 |
+| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/firebase-scripts` | `package.json` firebase:* scripts, `scripts/firebase-deploy.mjs` (S1-12) | 2026-11-23 |
 
 ## Recently merged
 
