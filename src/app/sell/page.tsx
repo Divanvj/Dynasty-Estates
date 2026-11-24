@@ -219,7 +219,7 @@ export default function SellPage() {
               Are you an agent?
             </h2>
             <p className="mt-2 max-w-xl text-base text-slate-700 dark:text-slate-300">
-              Monthly plans by the number of live listings, starting with three free. Every price is published.
+              Monthly plans by the number of live listings, from R 99 a month for two. Every price is published.
             </p>
             <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
               Registered practitioner?{" "}

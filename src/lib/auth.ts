@@ -16,6 +16,7 @@ import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
 import { auth, db, isFirebaseConfigured } from "./firebase";
 import { requestVerificationEmail } from "./email-verification-client";
+import { clearRecentlyViewed } from "./recently-viewed";
 import { setActiveUserRole, setDeveloperAccount, type UserRole as PersonaRole } from "./use-user-role";
 
 import { useSyncExternalStore } from "react";
@@ -318,6 +319,9 @@ export async function signInWithEmail(email: string, password: string) {
 
 export async function signOutUser(): Promise<void> {
   setDemoSession(null);
+  // The spotlight's "Recently viewed" is kept in this browser; on a shared
+  // device the next person to sign in should not see what this one looked at.
+  clearRecentlyViewed();
   setActiveUserRole("Buyer");
   setDeveloperAccount(false);
 

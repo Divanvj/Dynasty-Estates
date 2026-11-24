@@ -65,7 +65,17 @@ const provinces = [
   "Northern Cape",
 ];
 
-const AUTOSAVE_STORAGE_KEY = "dynasty_seller_wizard_autosave";
+/**
+ * The unfinished new listing is kept in this browser per account:
+ * "dynasty_seller_wizard_autosave:<uid>". It used to be one key for the whole
+ * browser, so whoever signed in next on the same device was offered the
+ * previous person's draft (owner, 24 Nov 2026). That shared copy can't be
+ * traced to its owner, so it is deleted unread.
+ */
+const LEGACY_AUTOSAVE_KEY = "dynasty_seller_wizard_autosave";
+function autosaveKey(uid: string | null | undefined): string | null {
+  return uid ? `${LEGACY_AUTOSAVE_KEY}:${uid}` : null;
+}
 
 const defaultFormData: ListingFormData = {
   ownerId: "",
@@ -103,9 +113,13 @@ function subscribeDraft(callback: () => void) {
   return () => window.removeEventListener("storage", callback);
 }
 
-function getDraftSnapshot(): string | null {
-  if (typeof window === "undefined") return null;
-  return localStorage.getItem(AUTOSAVE_STORAGE_KEY);
+function readDraft(key: string | null): string | null {
+  if (typeof window === "undefined" || !key) return null;
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
 }
 
 function getServerDraftSnapshot(): string | null {
@@ -140,6 +154,16 @@ export default function ListingWizard({ edit }: { edit?: ListingWizardEdit }) {
   // Firebase is unconfigured.
   const { user: firebaseUser, demoUser, loading: authLoading } = useAuth();
   const user = firebaseUser ?? demoUser;
+  const draftKey = autosaveKey(user?.uid);
+
+  // The old browser-wide draft belonged to whoever used this device last.
+  useEffect(() => {
+    try {
+      localStorage.removeItem(LEGACY_AUTOSAVE_KEY);
+    } catch {
+      // Storage blocked
+    }
+  }, []);
   const [currentStep, setCurrentStep] = useState<number>(edit?.fix ? HEALTH_FIX[edit.fix].step : 1);
 
   // Opened from the listing checklist: bring the field into view and focus it.
@@ -167,15 +191,15 @@ export default function ListingWizard({ edit }: { edit?: ListingWizardEdit }) {
   // A new listing's form is autosaved in this browser; an edit is not, so it
   // can never overwrite the draft of a listing still being written.
   function persist(updated: ListingFormData) {
-    if (edit) return;
+    if (edit || !draftKey) return;
     try {
-      localStorage.setItem(AUTOSAVE_STORAGE_KEY, JSON.stringify(updated));
+      localStorage.setItem(draftKey, JSON.stringify(updated));
     } catch {
       // Storage full or unavailable
     }
   }
 
-  const savedDraftRaw = useSyncExternalStore(subscribeDraft, getDraftSnapshot, getServerDraftSnapshot);
+  const savedDraftRaw = useSyncExternalStore(subscribeDraft, () => readDraft(draftKey), getServerDraftSnapshot);
   const [draftDismissed, setDraftDismissed] = useState(false);
 
   function handleRestoreDraft() {
@@ -192,7 +216,7 @@ export default function ListingWizard({ edit }: { edit?: ListingWizardEdit }) {
 
   function handleDiscardDraft() {
     try {
-      localStorage.removeItem(AUTOSAVE_STORAGE_KEY);
+      if (draftKey) localStorage.removeItem(draftKey);
     } catch {
       // ignore
     }
@@ -298,7 +322,7 @@ export default function ListingWizard({ edit }: { edit?: ListingWizardEdit }) {
         router.push(edit.returnTo);
       } else {
         await createSellerListing(listing);
-        localStorage.removeItem(AUTOSAVE_STORAGE_KEY);
+        if (draftKey) localStorage.removeItem(draftKey);
         router.push("/seller/portal");
       }
       router.refresh();

@@ -120,6 +120,10 @@ const buyer = as("buyer1", { email: "buyer1@example.test" });
 const buyer2 = as("buyer2", { email: "buyer2@example.test" });
 const seller = as("seller1", { role: "seller", email: "seller1@example.test" });
 const seller2 = as("seller2", { role: "seller", email: "seller2@example.test" });
+// seller1 on a developer account: the only accounts that may start a listing
+// until online payment exists. Used wherever a check is about what a listing
+// may contain rather than about who may start one.
+const devSeller = as("seller1", { role: "seller", developer: true, email: "seller1@example.test" });
 const agent = as("agentA", { role: "agent", email: "agenta@example.test" });
 const agentB = as("agentB", { role: "agent", email: "agentb@example.test" });
 const principal = as("principal1", { role: "agent", email: "principal1@example.test" });
@@ -192,9 +196,13 @@ await check("made-up role reads a draft", false, () => getDoc(doc(fakeRole, "pro
 await check("catalogue query on Published", true, () => getDocs(query(collection(stranger, "properties"), where("status", "==", "Published"))));
 await check("signed-out query over every listing", false, () => getDocs(collection(stranger, "properties")));
 
-await check("seller files a listing for review", true, () => setDoc(doc(seller, "properties/new1"), { ownerId: "seller1", status: "Submitted", title: "New" }));
-await check("seller publishes their own listing directly", false, () => setDoc(doc(seller, "properties/new2"), { ownerId: "seller1", status: "Published", title: "Sneaky" }));
-await check("seller files a listing under someone else", false, () => setDoc(doc(seller, "properties/new3"), { ownerId: "seller2", status: "Submitted" }));
+await check("seller files a listing for review", true, () => setDoc(doc(devSeller, "properties/new1"), { ownerId: "seller1", status: "Submitted", title: "New" }));
+await check("seller publishes their own listing directly", false, () => setDoc(doc(devSeller, "properties/new2"), { ownerId: "seller1", status: "Published", title: "Sneaky" }));
+await check("seller files a listing under someone else", false, () => setDoc(doc(devSeller, "properties/new3"), { ownerId: "seller2", status: "Submitted" }));
+await check("buyer starts a listing without a paid package", false, () => setDoc(doc(buyer, "properties/paywall1"), { ownerId: "buyer1", status: "Submitted", agentId: "buyer1" }));
+await check("seller starts a listing without a paid package", false, () => setDoc(doc(seller, "properties/paywall2"), { ownerId: "seller1", status: "Submitted", agentId: "seller1" }));
+await check("agent starts a listing without a paid package", false, () => setDoc(doc(agent, "properties/paywall3"), { ownerId: "agentA", status: "Submitted" }));
+await check("admin starts a listing without a paid package", false, () => setDoc(doc(admin, "properties/paywall4"), { ownerId: "admin1", status: "Submitted" }));
 await check("signed-out visitor creates a listing", false, () => setDoc(doc(stranger, "properties/new4"), { ownerId: "x", status: "Submitted" }));
 await check("seller publishes their own draft", false, () => updateDoc(doc(seller, "properties/draft1"), { status: "Published" }));
 await check("seller pauses their own listing", true, () => updateDoc(doc(seller, "properties/pub1"), { status: "Paused" }));
@@ -206,9 +214,9 @@ await check("made-up role publishes a listing", false, () => updateDoc(doc(fakeR
 await check("seller marks their own listing as a Dynasty example (example: true)", false, () => updateDoc(doc(seller, "properties/draft1"), { example: true }));
 await check("seller points their listing's contact at another agent (agentId)", false, () => updateDoc(doc(seller, "properties/draft1"), { agentId: "agentA" }));
 await check("seller writes their own recorded sale onto the listing (sale)", false, () => updateDoc(doc(seller, "properties/draft1"), { sale: { soldOn: "2026-11-01", price: 1 } }));
-await check("seller files a new listing as an example", false, () => setDoc(doc(seller, "properties/new5"), { ownerId: "seller1", status: "Submitted", example: true }));
-await check("seller files a new listing with another agent as contact", false, () => setDoc(doc(seller, "properties/new6"), { ownerId: "seller1", status: "Submitted", agentId: "agentA" }));
-await check("seller files a listing with themselves as contact (what the app sends)", true, () => setDoc(doc(seller, "properties/new7"), { ownerId: "seller1", status: "Submitted", agentId: "seller1" }));
+await check("seller files a new listing as an example", false, () => setDoc(doc(devSeller, "properties/new5"), { ownerId: "seller1", status: "Submitted", example: true }));
+await check("seller files a new listing with another agent as contact", false, () => setDoc(doc(devSeller, "properties/new6"), { ownerId: "seller1", status: "Submitted", agentId: "agentA" }));
+await check("seller files a listing with themselves as contact (what the app sends)", true, () => setDoc(doc(devSeller, "properties/new7"), { ownerId: "seller1", status: "Submitted", agentId: "seller1" }));
 await check("seller edits their listing's title and price", true, () => updateDoc(doc(seller, "properties/draft1"), { title: "Renamed", price: "R 2 000 000" }));
 await check("agent marks a listing as an example", true, () => updateDoc(doc(agent, "properties/agentPub"), { example: true }));
 await gap("any agent edits another agent's listing (price, title)", () => updateDoc(doc(agentB, "properties/agentPub"), { price: "R 1" }));
@@ -315,22 +323,22 @@ await check("admin reads a practitioner record", true, () => getDoc(doc(admin, "
 // ================================================================= photos, collections, support, stats, audit
 
 await check("owner files a fingerprint with their new listing (batch)", true, async () => {
-  const b = writeBatch(seller);
-  b.set(doc(seller, "properties/withPhoto"), { ownerId: "seller1", status: "Submitted", title: "With photo" });
-  b.set(doc(seller, "photo_fingerprints/fp2"), { hash: "fedcba9876543210", bands: ["a", "b", "c", "d"], ownerId: "seller1", listingId: "withPhoto", createdAt: now() });
+  const b = writeBatch(devSeller);
+  b.set(doc(devSeller, "properties/withPhoto"), { ownerId: "seller1", status: "Submitted", title: "With photo" });
+  b.set(doc(devSeller, "photo_fingerprints/fp2"), { hash: "fedcba9876543210", bands: ["a", "b", "c", "d"], ownerId: "seller1", listingId: "withPhoto", createdAt: now() });
   await b.commit();
 });
 await check("new listing as the app writes it: physical record + listing + fingerprint in one batch", true, async () => {
-  const b = writeBatch(seller);
-  b.set(doc(seller, "physical_properties/physNew"), { ownerId: "seller1", bedrooms: 3, bathrooms: 2, createdAt: now() });
-  b.set(doc(seller, "properties/withPhys"), { propertyId: "physNew", ownerId: "seller1", ownerEmail: "seller1@example.test", agentId: "seller1", status: "Submitted", title: "Batch", createdAt: now() });
-  b.set(doc(seller, "photo_fingerprints/fp4"), { hash: "fedcba9876543212", bands: ["a", "b", "c", "d"], ownerId: "seller1", listingId: "withPhys", createdAt: now() });
+  const b = writeBatch(devSeller);
+  b.set(doc(devSeller, "physical_properties/physNew"), { ownerId: "seller1", bedrooms: 3, bathrooms: 2, createdAt: now() });
+  b.set(doc(devSeller, "properties/withPhys"), { propertyId: "physNew", ownerId: "seller1", ownerEmail: "seller1@example.test", agentId: "seller1", status: "Submitted", title: "Batch", createdAt: now() });
+  b.set(doc(devSeller, "photo_fingerprints/fp4"), { hash: "fedcba9876543212", bands: ["a", "b", "c", "d"], ownerId: "seller1", listingId: "withPhys", createdAt: now() });
   await b.commit();
 });
 await check("a batch whose physical record names someone else writes nothing", false, async () => {
-  const b = writeBatch(seller);
-  b.set(doc(seller, "physical_properties/physBad"), { ownerId: "seller2", bedrooms: 3 });
-  b.set(doc(seller, "properties/withPhysBad"), { propertyId: "physBad", ownerId: "seller1", status: "Submitted" });
+  const b = writeBatch(devSeller);
+  b.set(doc(devSeller, "physical_properties/physBad"), { ownerId: "seller2", bedrooms: 3 });
+  b.set(doc(devSeller, "properties/withPhysBad"), { propertyId: "physBad", ownerId: "seller1", status: "Submitted" });
   await b.commit();
 });
 await check("…and the listing from that failed batch does not exist", false, () => getDoc(doc(admin, "properties/withPhysBad")).then((s) => { if (!s.exists()) throw Object.assign(new Error("missing"), { code: "permission-denied" }); }));
