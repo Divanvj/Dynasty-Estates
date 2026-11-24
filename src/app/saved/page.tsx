@@ -171,7 +171,7 @@ export default function SavedPropertiesPage() {
           </div>
         ) : (
           <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {properties.map((property) => (
+            {properties.map((property, i) => (
               <article
                 key={property.id}
                 // `relative` anchors the .card-link overlay on the title below;
@@ -183,6 +183,7 @@ export default function SavedPropertiesPage() {
                   <PropertyCardPhotos
                     images={property.gallery?.length ? property.gallery : [property.image]}
                     title={property.title}
+                    preload={i === 0}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   {/* z-30: removing is a different action from opening the

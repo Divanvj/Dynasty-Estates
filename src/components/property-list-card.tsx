@@ -19,12 +19,15 @@ export interface PropertyListCardProps {
   property: PropertyRecord;
   isHighlighted?: boolean;
   onHover?: (propertyId: string | null) => void;
+  /** Preload the first photo: only for the first card on a results page. */
+  preloadPhoto?: boolean;
 }
 
 export default function PropertyListCard({
   property,
   isHighlighted = false,
   onHover,
+  preloadPhoto = false,
 }: PropertyListCardProps) {
   // Calculate price per m² if area is available
   const areaNumber = parseInt(property.area.replace(/\D/g, ""), 10);
@@ -60,6 +63,7 @@ export default function PropertyListCard({
           images={property.gallery?.length ? property.gallery : [property.image]}
           title={property.title}
           frameClassName="transition-transform duration-500 group-hover:scale-105"
+          preload={preloadPhoto}
         />
         {/* Layers, low to high: photo frames z-10 (PropertyCardPhotos), this
             scrim z-[11], badges and price z-[12], the card's stretched link

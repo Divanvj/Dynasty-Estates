@@ -28,6 +28,12 @@ type Props = {
   title: string;
   /** Applied to every frame — lets a card keep its own hover zoom. */
   frameClassName?: string;
+  /**
+   * Load the first photo straight away, at high priority. Only for the card
+   * at the top of a results page, where that photo is the largest thing on a
+   * phone screen. Every other card loads lazily (U2).
+   */
+  preload?: boolean;
 };
 
 /**
@@ -39,7 +45,7 @@ type Props = {
  * so the motion is tied to the one card the viewer is actually looking at. On
  * touch, where there is no hover, the frames are swiped.
  */
-export default function PropertyCardPhotos({ images, title, frameClassName = "" }: Props) {
+export default function PropertyCardPhotos({ images, title, frameClassName = "", preload = false }: Props) {
   const frames = images.filter(Boolean);
   const many = frames.length > 1;
 
@@ -104,7 +110,7 @@ export default function PropertyCardPhotos({ images, title, frameClassName = "" 
               src={src}
               alt={`${title} - Photo ${i + 1}`}
               fill
-              priority={i === 0}
+              preload={preload && i === 0}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="object-cover object-center"
             />
