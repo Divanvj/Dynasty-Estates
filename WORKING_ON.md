@@ -10,6 +10,7 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | ALET-ELIZE | `ALET-ELIZE/dark-hero-text` | `globals.css` hero headline block (`.hh-*`) — dark-mode hero text | 2026-11-20 |
+| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/search-ssr` | `src/app/search/` (page.tsx split into server page + client search-content.tsx) — /search first results server-rendered | 2026-11-24 |
 
 ## Recently merged
 
