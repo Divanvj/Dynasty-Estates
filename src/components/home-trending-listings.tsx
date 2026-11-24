@@ -32,7 +32,9 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
   // hero on For Sale and this feed listing rentals underneath it.
   const [intent, setIntent] = useState<"rent" | "buy">("buy");
   const [activeFilter, setActiveFilter] = useState("All");
-  const [selectedView, setViewMode] = useState<ViewMode>("list");
+  // Grid on desktop (U3, owner 24 Nov): six full-width list cards made the home
+  // page ~4,500px tall at 1280. Phones still get the list (see below).
+  const [selectedView, setViewMode] = useState<ViewMode>("grid");
 
   /**
    * Phones get List and Map; Grid and Table are desktop-only, matching
@@ -219,8 +221,18 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
       {filtered.length > 0 && (
         <>
           {/* 1. Grid View (Photo-first Cards) */}
+          {/* The server renders as if on a desktop (useMediaQuery's default), so
+              in Grid the list is also rendered below lg: a phone shows its list
+              from the first paint instead of flashing the grid until hydration. */}
           {viewMode === "grid" && (
-            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-6 space-y-4 lg:hidden">
+              {featured.map((card) => (
+                <PropertyListCard key={card.id} property={card} />
+              ))}
+            </div>
+          )}
+          {viewMode === "grid" && (
+            <div className="mt-6 hidden gap-5 lg:grid lg:grid-cols-3">
               {featured.map((card) => (
                 <article
                   key={card.id}

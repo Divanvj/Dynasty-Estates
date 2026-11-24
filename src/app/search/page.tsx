@@ -410,8 +410,8 @@ function SearchContent() {
           MobileAppBar. This one repeated Home · Collections · Compare · Saved,
           all of which the global menu and account menu already carry. */}
       {/* Comprehensive Search & Filter Console */}
-      <section className="relative z-30 rounded-panel border border-white/80 bg-white/60 dark:border-white/10 dark:bg-surface-panel/65 p-4 sm:p-6 shadow-[0_20px_45px_rgba(36,48,50,0.1)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)] backdrop-blur-xl">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 dark:border-white/10 pb-4">
+      <section className="relative z-30 rounded-panel border border-white/80 bg-white/60 dark:border-white/10 dark:bg-surface-panel/65 px-4 py-3 sm:p-6 shadow-[0_20px_45px_rgba(36,48,50,0.1)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 dark:border-white/10 pb-3 sm:pb-4">
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-1.5">
               {/* Category Segmented Control: Strict Separation. Order matches
@@ -458,7 +458,7 @@ function SearchContent() {
         </div>
 
         {/* Private Property-Style Expandable Single Search Bar & Modal Panel */}
-        <div className="mt-4">
+        <div className="mt-3 sm:mt-4">
           <ExpandableSearchPanel
             key={`${listingCategory}-${query}-${minPrice}-${maxPrice}-${minBeds}-${minBaths}-${minParking}-${furnished}`}
             defaultIntent={listingCategory}
@@ -484,7 +484,7 @@ function SearchContent() {
         {/* Quick-Click Lifestyle & Resilience Pills */}
         {/* One swipeable row on phones — wrapping these chips cost four rows and
             pushed the first listing off the screen. Unchanged from `sm` up. */}
-        <div className="mt-4 border-t border-slate-200/60 dark:border-white/10 pt-3 -mx-4 px-4 sm:mx-0 sm:px-0 flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:overflow-visible sm:flex-wrap sm:justify-center">
+        <div className="mt-3 sm:mt-4 border-t border-slate-200/60 dark:border-white/10 pt-2.5 sm:pt-3 -mx-4 px-4 sm:mx-0 sm:px-0 flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:overflow-visible sm:flex-wrap sm:justify-center">
           <span className="hidden sm:inline text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mr-1">
             Quick Filters:
           </span>
@@ -521,7 +521,7 @@ function SearchContent() {
           on the results sit with the results — view switch on the left, then
           the count, sort on the right — instead of inside the search card,
           250px above the list they change. Same order at every width. */}
-      <div className="mt-6 flex items-center gap-2.5">
+      <div className="mt-4 sm:mt-6 flex items-center gap-2.5">
         <div className="inline-flex items-center rounded-2xl border border-slate-200/90 bg-white/80 dark:border-white/10 dark:bg-surface-ink/60 p-1 shadow-2xs backdrop-blur-md">
           <button
             type="button"
@@ -644,7 +644,7 @@ function SearchContent() {
       )}
 
       {/* Results Grid */}
-      <section className="relative z-10 mt-4">
+      <section className="relative z-10 mt-3 sm:mt-4">
         {loading ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[1, 2, 3].map((n) => (
@@ -879,7 +879,7 @@ function SearchContent() {
 
 export default function SearchPage() {
   return (
-    <main className="min-h-screen bg-transparent px-4 py-5 text-slate-900 dark:text-slate-100 md:px-6 lg:px-8 transition-colors duration-300">
+    <main className="min-h-screen bg-transparent px-4 pt-3 pb-5 sm:pt-5 text-slate-900 dark:text-slate-100 md:px-6 lg:px-8 transition-colors duration-300">
       <Suspense fallback={<div className="text-center py-20 text-slate-600 dark:text-slate-400">Loading search engine...</div>}>
         <SearchContent />
       </Suspense>
