@@ -10,12 +10,15 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | ALET-ELIZE | `ALET-ELIZE/dark-hero-text` | `globals.css` hero headline block (`.hh-*`) — dark-mode hero text | 2026-11-20 |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/search-ssr` | `src/app/search/` (page.tsx split into server page + client search-content.tsx) — /search first results server-rendered | 2026-11-24 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-24 — `DESKTOP-1R37EBU/search-ssr` merged. **`src/app/search/page.tsx` is now a server page**; the old client page moved to
+  `search/search-content.tsx` (default export `SearchContent`, prop `initialProperties`). Edit the search UI there. The catalogue is cached 5 minutes
+  (`unstable_cache`), so listing changes can take up to 5 minutes to show on /search.
 
 - 2026-11-24 — `DESKTOP-1R37EBU/listing-paywall` merged (owner). **A new listing needs a paid package** (sellers, landlords, agents, admins). Until online
   payment exists only accounts with the `developer` claim may create `properties` docs (`mayStartListing()` in `firestore.rules`; rule tests use `devSeller`),
