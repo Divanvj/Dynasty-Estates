@@ -10,6 +10,7 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | ALET-ELIZE | `ALET-ELIZE/dark-hero-text` | `globals.css` hero headline block (`.hh-*`) — dark-mode hero text | 2026-11-20 |
+| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/phone-speed-u2` | U2: `home-spotlight.tsx` (next/image), `property-card-photos.tsx` + `property-list-card.tsx` (photo priority opt-in), one prop in `search/page.tsx` and `saved/page.tsx` | 2026-11-24 |
 
 ## Recently merged
 
