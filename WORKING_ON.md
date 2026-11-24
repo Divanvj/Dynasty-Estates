@@ -10,16 +10,19 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | ALET-ELIZE | `ALET-ELIZE/dark-hero-text` | `globals.css` hero headline block (`.hh-*`) — dark-mode hero text | 2026-11-20 |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/page-heights-u3` | U3: home listings grid (`home-trending-listings.tsx`), search card spacing on phones, listing page top (`property/[slug]/page.tsx`: photo + agent card side by side at lg) | 2026-11-24 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
 
-- 2026-11-24 — `DESKTOP-1R37EBU/phone-pass-u1` merged (U1). **New `tap-44` class** (end of `globals.css`, below 1024px only): an invisible 44px tap layer on a
-  small standalone link or button, without moving anything; it is part of `linkClass`. Add `tap-44` to any new small text link that is not inside a
-  sentence (it skips links inside a <p>). Print, `/pricing` tabs and package buttons are 44px tall below lg.
+- 2026-11-24 — `DESKTOP-1R37EBU/page-heights-u3` merged (U3, owner chose the layouts). **Listing page**: `PropertyHeroGallery` and the on-show / off-plan /
+  sold banners now sit at the top of the LEFT column of the details grid, so the aside (agent card) starts beside the photos at lg. **Home**: the homes
+  start in Grid on desktop (list below lg). **/search**: slightly tighter vertical spacing below `sm`.
+
+- 2026-11-24 — `DESKTOP-1R37EBU/phone-pass-u1` merged (U1), then fixed (`tap-44-fix`). **`tap-44` is the existing helper** in `globals.css` (below 1024px: an
+  invisible 44px tap layer). It does NOT set `position` — the element needs Tailwind `relative` or `absolute` itself (U1 briefly added a rule that set it and
+  knocked the card photo arrows to the left edge on phones). `linkClass` now carries `tap-44 relative`; a `tap-44` inside a `<p>` gets no layer.
 
 - 2026-11-23 — `DESKTOP-1R37EBU/phone-fixes` merged (U4–U6). New `components/google-logo.tsx` on the Google buttons. The listing page works out its price box once
   (`priceLabel` / `priceText` in `property/[slug]/page.tsx`): a Sold/Rented home shows the recorded sale, never the asking price. `dashboard-ui.tsx` gains
