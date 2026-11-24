@@ -301,7 +301,7 @@ export default function SiteNavigation() {
                   Plans for agents
                 </p>
                 <p className="text-xs text-slate-600 dark:text-slate-400 leading-snug">
-                  Monthly plans by number of live listings, from free.
+                  Monthly plans by number of live listings, from R 99 a month.
                 </p>
               </div>
             </Link>

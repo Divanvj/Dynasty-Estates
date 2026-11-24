@@ -74,7 +74,15 @@ service cloud.firestore {
       function ownerProtectedFields() {
         return ['example', 'sale', 'agentId'];
       }
+      // A new listing needs a paid package (owner, 24 Nov 2026), for agents and
+      // admins as well as private sellers. Online payment is not built yet, so
+      // until it is only developer accounts may start one; the payment step
+      // adds its own condition here. Listings that already exist are untouched.
+      function mayStartListing() {
+        return request.auth.token.get('developer', false) == true;
+      }
       allow create: if signedIn()
+        && mayStartListing()
         && request.resource.data.ownerId == request.auth.uid
         && (isAgentOrAdmin()
             || (request.resource.data.status in ['Draft', 'Submitted']

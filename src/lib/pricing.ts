@@ -80,7 +80,7 @@ export const listingExtensions: ListingExtension[] = [
 
 /** Only live listings count towards a plan: drafts, paused, sold and let do not. */
 export const agentPlans: AgentPlan[] = [
-  { id: "starter", name: "Starter", liveListings: 3, monthlyZAR: 0, note: "For a newly registered agent getting started." },
+  { id: "starter", name: "Starter", liveListings: 2, monthlyZAR: 99, note: "For a newly registered agent getting started." },
   { id: "solo", name: "Solo", liveListings: 10, monthlyZAR: 399, note: "An individual practitioner." },
   { id: "team", name: "Team", liveListings: 25, monthlyZAR: 799, popular: true, note: "A small team or a busy agent." },
   { id: "agency", name: "Agency", liveListings: 60, monthlyZAR: 1499, note: "An independent agency." },
