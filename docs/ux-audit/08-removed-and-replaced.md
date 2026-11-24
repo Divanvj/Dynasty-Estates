@@ -516,3 +516,10 @@ Nothing visible changed. Measured with PageSpeed Insights, mobile, on the live s
 - **Fixed - one browser, one draft for everyone**: the wizard's autosave is now kept per account (`dynasty_seller_wizard_autosave:<uid>`); the old browser-wide copy is deleted unread because it can't be traced to its owner. Sign-out clears "Recently viewed" so the next person on the device doesn't see it.
 - **Checked, no change**: every per-person read in the app filters by the signed-in account (listings, enquiries, saved homes, collections, applications, stats, agency), and the rule tests refuse cross-account reads and writes for each role.
 - **Not done**: the screen non-developers see was not opened with a real non-developer account here (this PC only has a developer account); nothing unlocks listing until online payment (P4) is built; there is no limit yet on how many listings a paid plan allows (P3).
+
+## /search first results from the server (24 Nov)
+
+Nothing visible changed.
+
+- **Replaced - "Loading search engine..." then a browser-side Firestore query** with results rendered on the server. The catalogue is cached for 5 minutes (like the home page), so a listing published, sold or removed can take up to 5 minutes to show or drop off /search.
+- **Kept**: filtering, sorting and view switching still happen in the browser; if the server can't load the catalogue the browser tries once more and shows the error as before.
