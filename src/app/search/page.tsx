@@ -674,7 +674,7 @@ function SearchContent() {
             {/* 1. Grid View (Photo-first 3-Column Cards) */}
             {viewMode === "grid" && (
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {filteredProperties.map((property) => (
+                {filteredProperties.map((property, i) => (
                   <article
                     key={property.id}
                     // `relative` anchors the .card-link overlay on the title
@@ -687,6 +687,7 @@ function SearchContent() {
                         images={property.gallery?.length ? property.gallery : [property.image]}
                         title={property.title}
                         frameClassName="transition-transform duration-500 group-hover:scale-105"
+                        preload={i === 0}
                       />
                       {/* z-10, like the list card's. PropertyCardPhotos paints
                           its frames at z-10, so everything meant to sit ON the
@@ -808,8 +809,8 @@ function SearchContent() {
             {/* 2. List View (Detailed Horizontal Cards) */}
             {viewMode === "list" && (
               <div className="space-y-4">
-                {filteredProperties.map((property) => (
-                  <PropertyListCard key={property.id} property={property} />
+                {filteredProperties.map((property, i) => (
+                  <PropertyListCard key={property.id} property={property} preloadPhoto={i === 0} />
                 ))}
               </div>
             )}

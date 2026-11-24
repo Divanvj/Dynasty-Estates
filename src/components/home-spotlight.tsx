@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 
@@ -117,24 +118,37 @@ export default function HomeSpotlight({ properties }: { properties: PropertyReco
       <div className="rounded-panel border border-white/70 bg-white/45 p-4 shadow-[0_20px_45px_rgba(36,48,50,0.08)] backdrop-blur-xl md:p-5 dark:border-white/10 dark:bg-surface-panel/65 dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)]">
         <div className="group relative overflow-hidden rounded-card border border-white/60 bg-[#dbe8f0] shadow-sm dark:border-white/10 dark:bg-[#071113]">
           <div className="relative h-[400px] sm:h-[460px] md:h-[500px]">
-            {slides.map((slide, i) => (
-              <div
-                key={slide.id}
-                aria-hidden={i !== safeIndex}
-                className={`absolute inset-0 bg-cover bg-center transition-opacity ${
-                  i === safeIndex ? "opacity-100" : "opacity-0"
-                }`}
-                style={{
-                  backgroundImage:
-                    i === safeIndex ||
-                    i === (safeIndex + 1) % slides.length ||
-                    i === (safeIndex - 1 + slides.length) % slides.length
-                      ? `url(${slide.image})`
-                      : undefined,
-                  transitionDuration: `${FADE_MS}ms`,
-                }}
-              />
-            ))}
+            {/* next/image, not a CSS background (U2): a background is found only
+                once the CSS has been applied, and it was the full-size original
+                — the home page's largest paint on a phone at 14 s on slow 4G.
+                Now it is a resized AVIF/WebP, and the first slide is preloaded.
+                Only the current slide and its two neighbours are mounted, as
+                before. */}
+            {slides.map((slide, i) => {
+              const near =
+                i === safeIndex ||
+                i === (safeIndex + 1) % slides.length ||
+                i === (safeIndex - 1 + slides.length) % slides.length;
+              return (
+                <div
+                  key={slide.id}
+                  aria-hidden={i !== safeIndex}
+                  className={`absolute inset-0 transition-opacity ${i === safeIndex ? "opacity-100" : "opacity-0"}`}
+                  style={{ transitionDuration: `${FADE_MS}ms` }}
+                >
+                  {near ? (
+                    <Image
+                      src={slide.image}
+                      alt=""
+                      fill
+                      preload={i === 0}
+                      sizes="(max-width: 1440px) 100vw, 1400px"
+                      className="object-cover object-center"
+                    />
+                  ) : null}
+                </div>
+              );
+            })}
 
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/20" />
 
