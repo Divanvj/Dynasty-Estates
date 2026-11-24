@@ -10,12 +10,16 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | ALET-ELIZE | `ALET-ELIZE/dark-hero-text` | `globals.css` hero headline block (`.hh-*`) — dark-mode hero text | 2026-11-20 |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/listing-paywall` | New listings need payment (only developer accounts until online payment): `firestore.rules` properties create + tests, `seller/listings/new`; listing-wizard autosave per account; agent Starter R99 (`lib/pricing.ts`) | 2026-11-24 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-24 — `DESKTOP-1R37EBU/listing-paywall` merged (owner). **A new listing needs a paid package** (sellers, landlords, agents, admins). Until online
+  payment exists only accounts with the `developer` claim may create `properties` docs (`mayStartListing()` in `firestore.rules`; rule tests use `devSeller`),
+  and `/seller/listings/new` shows non-developers "Choose a package first". When P4 lands, add the paid condition to `mayStartListing()`.
+  Also: wizard autosave is per account (`dynasty_seller_wizard_autosave:<uid>`); agent Starter is R 99 for 2 listings.
 
 - 2026-11-24 — `DESKTOP-1R37EBU/phone-speed-u2` merged (U2). **Firebase Auth is now created with `initializeAuth` (no popup resolver)** in `lib/firebase.ts`,
   so Google's sign-in iframe and gapi load only when `signInWithGoogle` passes `browserPopupRedirectResolver`. Any NEW popup/redirect call
