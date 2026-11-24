@@ -10,6 +10,7 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | ALET-ELIZE | `ALET-ELIZE/dark-hero-text` | `globals.css` hero headline block (`.hh-*`) — dark-mode hero text | 2026-11-20 |
+| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/listing-paywall` | New listings need payment (only developer accounts until online payment): `firestore.rules` properties create + tests, `seller/listings/new`; listing-wizard autosave per account; agent Starter R99 (`lib/pricing.ts`) | 2026-11-24 |
 
 ## Recently merged
 
