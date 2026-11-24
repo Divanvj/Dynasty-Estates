@@ -1,4 +1,5 @@
 import {
+  browserPopupRedirectResolver,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   RecaptchaVerifier,
@@ -344,7 +345,9 @@ export async function signInWithGoogle(defaultRole: UserRole = "buyer") {
     );
   }
 
-  const userCredential = await signInWithPopup(auth, new GoogleAuthProvider());
+  // The resolver is passed here rather than set on Auth, so the sign-in
+  // iframe and gapi load on this click and not on every page (lib/firebase.ts).
+  const userCredential = await signInWithPopup(auth, new GoogleAuthProvider(), browserPopupRedirectResolver);
 
   if (db) {
     const userDoc = await getDoc(doc(db, "users", userCredential.user.uid));
