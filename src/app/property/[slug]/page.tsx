@@ -219,168 +219,172 @@ export default async function PropertyPage({
           </p>
         </div>
 
-        {/* Photographs lead. The on-show and off-plan banners used to sit above
-            the hero and pushed it below the fold; they are supporting context
-            and now follow it. */}
-
-        {/* Hero Media Showcase — crossfading slideshow with a thumbnail rail. */}
-        <PropertyHeroGallery
-          title={property.title}
-          images={property.gallery?.length ? property.gallery : [property.image]}
-        >
-          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-                <div>
-                  <div className="flex items-center gap-2 flex-wrap mb-1">
-                    {/* No For Sale / To Rent pill: the visitor chose sale or rent
-                        to get here, and the page title and price say it again. */}
-                    {property.status === "Sold" && (
-                      <span className="rounded-full border border-red-400 bg-red-950/90 px-3 py-1 text-xs uppercase tracking-widest font-extrabold text-red-200 backdrop-blur-md">
-                        Sold
-                      </span>
-                    )}
-                    {property.status === "Rented" && (
-                      <span className="rounded-full border border-purple-400 bg-purple-950/90 px-3 py-1 text-xs uppercase tracking-widest font-extrabold text-purple-200 backdrop-blur-md">
-                        Let Agreed / Rented
-                      </span>
-                    )}
-                    {/* S1-8: an offer is in, but the home is still listed and
-                        still takes enquiries, so the pill is a state, not a
-                        closing notice. Set from the agent or seller portal. */}
-                    {property.status === "Under offer" && (
-                      <span className="rounded-full border border-amber-300 bg-amber-950/90 px-3 py-1 text-xs uppercase tracking-widest font-extrabold text-amber-100 backdrop-blur-md">
-                        Under offer
-                      </span>
-                    )}
-                    {/* No "On Show Sunday" pill: it gave no date or time and
-                        stayed up after the show. The show-day section under
-                        the photo carries the real details. */}
-                    {/* Said again within a screen of here, by the off-plan
-                        banner directly below the hero, so it is hidden at 375px
-                        where it pushed the title down. No category or "Example
-                        listing" pill on the photo (owner, 19 Nov): the category
-                        is in the specs and the example notice is in the sidebar. */}
-                    {property.developmentInfo?.noTransferDuty && (
-                      <span className="hidden rounded-full border border-sky-300/80 bg-sky-950/85 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-sky-200 backdrop-blur-md sm:inline">
-                        0% Transfer Duty
-                      </span>
-                    )}
-                  </div>
-                  <h1 className="mt-1 text-2xl font-light tracking-[-0.04em] text-slate-950 dark:text-white sm:text-4xl sm:text-white md:text-5xl lg:text-6xl">
-                    {property.title}
-                  </h1>
-                  <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-300 mt-1 sm:text-slate-200 md:text-sm">
-                    <LocationPinIcon className="h-4 w-4 text-emerald-700 dark:text-emerald-300 sm:text-emerald-300 shrink-0" />
-                    <span>{property.location}</span>
-                  </div>
-                </div>
-
-                {/*
-                  Hidden below `lg`, because below `lg` the sticky bar at the
-                  foot of this page carries the same label and the same price
-                  and never leaves the screen. Two copies of the asking price
-                  within one viewport is the duplication this page has been
-                  taken apart for twice already, and this copy was the
-                  expensive one: it cost the lower third of the photograph.
-
-                  `lg`, not `md`, so it hands over exactly where the sticky bar
-                  takes over — see the bar's own note.
-                */}
-                <div className="hidden text-left lg:block lg:text-right">
-                  <span className="text-xs uppercase tracking-widest text-slate-300 block">
-                    {concluded ? priceLabel : rent ? "Monthly Rental" : "Asking Price"}
-                  </span>
-                  {/* nowrap: at 1280px "R 2,950,000" broke after the "R". */}
-                  <span className={`whitespace-nowrap tabular-nums font-extrabold text-white ${priceIsWords ? "text-xl md:text-2xl" : "text-2xl sm:text-3xl md:text-4xl"}`}>{priceText}</span>
-                </div>
-              </div>
-        </PropertyHeroGallery>
-
-        {/* Sold / Concluded Listing Retention & Internal Navigation */}
-        {(property.status === "Sold" || property.status === "Rented") && (
-          <div className="mt-6 rounded-card border border-amber-300/80 bg-gradient-to-r from-amber-50/90 to-orange-50/80 p-5 shadow-sm backdrop-blur-xl dark:border-amber-500/20 dark:from-amber-950/30 dark:to-orange-950/20">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <span className="rounded-full bg-amber-800 px-3 py-0.5 text-xs font-extrabold uppercase tracking-widest text-white">
-                  Listing Concluded · Historical Record Retained
-                </span>
-                <h2 className="text-sm sm:text-base font-bold text-slate-950 mt-1.5 dark:text-white">
-                  {/* Recorded by the listing's agent or seller (lib/sales.ts); the
-                      price shows only when the seller agreed. */}
-                  {property.sale
-                    ? `${property.status} on ${formatDate(`${property.sale.soldOn}T12:00:00Z`)}${
-                        property.sale.price
-                          ? ` for R ${formatNumber(property.sale.price)}${property.listingType === "rent" ? " a month" : ""}`
-                          : " · price not disclosed"
-                      }`
-                    : `This home has been ${property.status.toLowerCase()}`}
-                </h2>
-                <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
-                  Explore other active mandates and property market trends in {property.suburb || property.city || "this region"}.
-                </p>
-              </div>
-              <div className="flex flex-wrap items-center gap-2 shrink-0">
-                {property.province && property.city && (
-                  <Link
-                    href={`/${property.listingType === "rent" ? "to-rent" : "for-sale"}/${property.province.toLowerCase().replace(/\s+/g, "-")}/${property.city.toLowerCase().replace(/\s+/g, "-")}`}
-                    className="pill bg-slate-950 font-bold text-white shadow-xs hover:bg-slate-800 dark:bg-emerald-700 dark:hover:bg-emerald-800 transition-colors"
-                  >
-                    View Active {property.city} Listings →
-                  </Link>
-                )}
-                <Link
-                  href="/search"
-                  className="pill border border-slate-300/80 bg-white/80 font-bold text-slate-800 shadow-xs hover:bg-white dark:bg-surface-panel dark:border-white/10 dark:text-slate-200 transition-colors"
-                >
-                  Catalogue Search →
-                </Link>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* On Show Weekend Viewing Showcase */}
-        {property.onShow && (
-          <div className="mt-6">
-            <OnShowBanner
-              propertyId={property.id}
-              propertyTitle={property.title}
-              ownerId={property.ownerId}
-              location={property.location}
-              onShow={property.onShow}
-            />
-          </div>
-        )}
-
-        {/* Developer Off-Plan Release Banner */}
-        {property.isDevelopment && property.developmentInfo && (
-          <div className="mt-6 rounded-card border border-sky-200/90 bg-gradient-to-r from-sky-50 via-sky-50/70 to-emerald-50/40 p-4 sm:p-5 shadow-sm backdrop-blur-xl dark:border-sky-500/20 dark:from-sky-950/40 dark:via-sky-950/20 dark:to-emerald-950/20">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div>
-                <span className="rounded-full bg-sky-800 px-3 py-0.5 text-xs font-extrabold uppercase tracking-widest text-white shadow-xs">
-                  Official Off-Plan Development Release
-                </span>
-                <h2 className="text-sm sm:text-base font-bold text-slate-950 mt-1.5 dark:text-white">
-                  {property.developmentInfo.developerName} · {property.developmentInfo.phase}
-                </h2>
-                <p className="text-xs text-slate-600 dark:text-slate-300">
-                  Target Completion: <strong className="text-slate-800 dark:text-slate-300">{property.developmentInfo.estimatedCompletion}</strong> ·{" "}
-                  {property.developmentInfo.unitsAvailable} Units Available Directly from Developer
-                </p>
-              </div>
-              <div className="rounded-2xl border border-sky-300 bg-white/95 px-4 py-2 text-center shadow-xs shrink-0 self-start sm:self-auto dark:bg-sky-950/60 dark:border-sky-500/30">
-                <span className="text-xs uppercase font-bold text-slate-600 block dark:text-slate-400">SARS Tax Exemption</span>
-                <span className="text-xs font-extrabold text-sky-800 dark:text-sky-300">0% Transfer Duty (VAT Inclusive)</span>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Details & Interactive Calculator Grid */}
         {/* grid-cols-1 below lg: the implicit `auto` track sizes to
             max-content and overflowed a 320px screen. See the same fix on the
             home page's market-pulse section. */}
-        <section className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-          <div className="space-y-6">
+        <section className="grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+          <div className="min-w-0 space-y-6">
+            {/* U3 (owner, 24 Nov): the photographs head the left column instead of
+                spanning the page, so on a laptop the agent card sits beside them
+                and is on screen without scrolling. Below lg the order is the same
+                as before: photos, banners, details, then the sidebar. */}
+          {/* Photographs lead. The on-show and off-plan banners used to sit above
+              the hero and pushed it below the fold; they are supporting context
+              and now follow it. */}
+
+          {/* Hero Media Showcase — crossfading slideshow with a thumbnail rail. */}
+          <PropertyHeroGallery
+            title={property.title}
+            images={property.gallery?.length ? property.gallery : [property.image]}
+          >
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between lg:flex-col lg:items-start xl:flex-row xl:items-end">
+                  <div>
+                    <div className="flex items-center gap-2 flex-wrap mb-1">
+                      {/* No For Sale / To Rent pill: the visitor chose sale or rent
+                          to get here, and the page title and price say it again. */}
+                      {property.status === "Sold" && (
+                        <span className="rounded-full border border-red-400 bg-red-950/90 px-3 py-1 text-xs uppercase tracking-widest font-extrabold text-red-200 backdrop-blur-md">
+                          Sold
+                        </span>
+                      )}
+                      {property.status === "Rented" && (
+                        <span className="rounded-full border border-purple-400 bg-purple-950/90 px-3 py-1 text-xs uppercase tracking-widest font-extrabold text-purple-200 backdrop-blur-md">
+                          Let Agreed / Rented
+                        </span>
+                      )}
+                      {/* S1-8: an offer is in, but the home is still listed and
+                          still takes enquiries, so the pill is a state, not a
+                          closing notice. Set from the agent or seller portal. */}
+                      {property.status === "Under offer" && (
+                        <span className="rounded-full border border-amber-300 bg-amber-950/90 px-3 py-1 text-xs uppercase tracking-widest font-extrabold text-amber-100 backdrop-blur-md">
+                          Under offer
+                        </span>
+                      )}
+                      {/* No "On Show Sunday" pill: it gave no date or time and
+                          stayed up after the show. The show-day section under
+                          the photo carries the real details. */}
+                      {/* Said again within a screen of here, by the off-plan
+                          banner directly below the hero, so it is hidden at 375px
+                          where it pushed the title down. No category or "Example
+                          listing" pill on the photo (owner, 19 Nov): the category
+                          is in the specs and the example notice is in the sidebar. */}
+                      {property.developmentInfo?.noTransferDuty && (
+                        <span className="hidden rounded-full border border-sky-300/80 bg-sky-950/85 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-sky-200 backdrop-blur-md sm:inline">
+                          0% Transfer Duty
+                        </span>
+                      )}
+                    </div>
+                    <h1 className="mt-1 text-2xl font-light tracking-[-0.04em] text-slate-950 dark:text-white sm:text-4xl sm:text-white md:text-5xl lg:text-4xl 2xl:text-5xl">
+                      {property.title}
+                    </h1>
+                    <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-300 mt-1 sm:text-slate-200 md:text-sm">
+                      <LocationPinIcon className="h-4 w-4 text-emerald-700 dark:text-emerald-300 sm:text-emerald-300 shrink-0" />
+                      <span>{property.location}</span>
+                    </div>
+                  </div>
+
+                  {/*
+                    Hidden below `lg`, because below `lg` the sticky bar at the
+                    foot of this page carries the same label and the same price
+                    and never leaves the screen. Two copies of the asking price
+                    within one viewport is the duplication this page has been
+                    taken apart for twice already, and this copy was the
+                    expensive one: it cost the lower third of the photograph.
+
+                    `lg`, not `md`, so it hands over exactly where the sticky bar
+                    takes over — see the bar's own note.
+                  */}
+                  <div className="hidden text-left lg:block xl:text-right">
+                    <span className="text-xs uppercase tracking-widest text-slate-300 block">
+                      {concluded ? priceLabel : rent ? "Monthly Rental" : "Asking Price"}
+                    </span>
+                    {/* nowrap: at 1280px "R 2,950,000" broke after the "R". */}
+                    <span className={`whitespace-nowrap tabular-nums font-extrabold text-white ${priceIsWords ? "text-xl md:text-2xl" : "text-2xl sm:text-3xl md:text-4xl"}`}>{priceText}</span>
+                  </div>
+                </div>
+          </PropertyHeroGallery>
+
+          {/* Sold / Concluded Listing Retention & Internal Navigation */}
+          {(property.status === "Sold" || property.status === "Rented") && (
+            <div className="mt-6 rounded-card border border-amber-300/80 bg-gradient-to-r from-amber-50/90 to-orange-50/80 p-5 shadow-sm backdrop-blur-xl dark:border-amber-500/20 dark:from-amber-950/30 dark:to-orange-950/20">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <span className="rounded-full bg-amber-800 px-3 py-0.5 text-xs font-extrabold uppercase tracking-widest text-white">
+                    Listing Concluded · Historical Record Retained
+                  </span>
+                  <h2 className="text-sm sm:text-base font-bold text-slate-950 mt-1.5 dark:text-white">
+                    {/* Recorded by the listing's agent or seller (lib/sales.ts); the
+                        price shows only when the seller agreed. */}
+                    {property.sale
+                      ? `${property.status} on ${formatDate(`${property.sale.soldOn}T12:00:00Z`)}${
+                          property.sale.price
+                            ? ` for R ${formatNumber(property.sale.price)}${property.listingType === "rent" ? " a month" : ""}`
+                            : " · price not disclosed"
+                        }`
+                      : `This home has been ${property.status.toLowerCase()}`}
+                  </h2>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
+                    Explore other active mandates and property market trends in {property.suburb || property.city || "this region"}.
+                  </p>
+                </div>
+                <div className="flex flex-wrap items-center gap-2 shrink-0">
+                  {property.province && property.city && (
+                    <Link
+                      href={`/${property.listingType === "rent" ? "to-rent" : "for-sale"}/${property.province.toLowerCase().replace(/\s+/g, "-")}/${property.city.toLowerCase().replace(/\s+/g, "-")}`}
+                      className="pill bg-slate-950 font-bold text-white shadow-xs hover:bg-slate-800 dark:bg-emerald-700 dark:hover:bg-emerald-800 transition-colors"
+                    >
+                      View Active {property.city} Listings →
+                    </Link>
+                  )}
+                  <Link
+                    href="/search"
+                    className="pill border border-slate-300/80 bg-white/80 font-bold text-slate-800 shadow-xs hover:bg-white dark:bg-surface-panel dark:border-white/10 dark:text-slate-200 transition-colors"
+                  >
+                    Catalogue Search →
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* On Show Weekend Viewing Showcase */}
+          {property.onShow && (
+            <div className="mt-6">
+              <OnShowBanner
+                propertyId={property.id}
+                propertyTitle={property.title}
+                ownerId={property.ownerId}
+                location={property.location}
+                onShow={property.onShow}
+              />
+            </div>
+          )}
+
+          {/* Developer Off-Plan Release Banner */}
+          {property.isDevelopment && property.developmentInfo && (
+            <div className="mt-6 rounded-card border border-sky-200/90 bg-gradient-to-r from-sky-50 via-sky-50/70 to-emerald-50/40 p-4 sm:p-5 shadow-sm backdrop-blur-xl dark:border-sky-500/20 dark:from-sky-950/40 dark:via-sky-950/20 dark:to-emerald-950/20">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <span className="rounded-full bg-sky-800 px-3 py-0.5 text-xs font-extrabold uppercase tracking-widest text-white shadow-xs">
+                    Official Off-Plan Development Release
+                  </span>
+                  <h2 className="text-sm sm:text-base font-bold text-slate-950 mt-1.5 dark:text-white">
+                    {property.developmentInfo.developerName} · {property.developmentInfo.phase}
+                  </h2>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    Target Completion: <strong className="text-slate-800 dark:text-slate-300">{property.developmentInfo.estimatedCompletion}</strong> ·{" "}
+                    {property.developmentInfo.unitsAvailable} Units Available Directly from Developer
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-sky-300 bg-white/95 px-4 py-2 text-center shadow-xs shrink-0 self-start sm:self-auto dark:bg-sky-950/60 dark:border-sky-500/30">
+                  <span className="text-xs uppercase font-bold text-slate-600 block dark:text-slate-400">SARS Tax Exemption</span>
+                  <span className="text-xs font-extrabold text-sky-800 dark:text-sky-300">0% Transfer Duty (VAT Inclusive)</span>
+                </div>
+              </div>
+            </div>
+          )}
+
             {/* Overview & Key Specs */}
             <div className="rounded-panel border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] backdrop-blur-xl md:p-8 dark:bg-surface-panel/75 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
               <h2 className="text-lg font-bold text-slate-950 dark:text-white">Property Overview</h2>

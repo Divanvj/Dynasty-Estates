@@ -485,3 +485,12 @@ Nothing removed and nothing moves on screen; only what a finger can hit changed.
 ## Fix to U1: carousel arrows (24 Nov)
 
 - **Fixed** - U1 added a second `.tap-44` rule that set `position: relative` outside Tailwind's layers, which beat `absolute` on the photo arrows of every card, the home spotlight, the gallery lightbox and the listing photo header on phones and tablets (both arrows dropped to the left edge). The existing `.tap-44` note warned against exactly this. The duplicate rule is gone; the U1 links carry Tailwind's `relative` instead, and one rule switches the layer off for links inside a paragraph. Live for about an hour on 24 Nov.
+
+## Page heights U3 (24 Nov, owner chose both layouts)
+
+Nothing removed.
+
+- **Changed - home page homes on desktop**: a 3 × 2 grid of photo cards instead of six full-width list cards stacked (the Grid / List / Map / Table switch is still there; Grid is now the starting view). Home at 1280 is 3,130 px tall, was 4,492. Phones keep the list, rendered from the first paint so there is no grid flash.
+- **Changed - listing page on desktop**: the photographs head the left column instead of spanning the page, so the agent card (or the example notice) sits beside them and is on screen without scrolling (top at 204 px on 1280×800; was 874). The title is one size smaller from 1024 px and the asking price sits under it between 1024 and 1279 px, where the photo column is narrow. Phones are unchanged: photos, banners, details, then the sidebar.
+- **Changed - /search on phones**: a little less vertical spacing in the search card, the results line and the page top, so the first result starts at 404 px on a 375×812 screen (was 446), inside the top half. Nothing moved or removed; tablet and desktop unchanged.
+- **Not done**: the search measurement was with no filters applied (the row of active-filter chips adds height when there are some); Lighthouse/speed (U2) not measured.
