@@ -10,12 +10,16 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | ALET-ELIZE | `ALET-ELIZE/dark-hero-text` | `globals.css` hero headline block (`.hh-*`) — dark-mode hero text | 2026-11-20 |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/phone-speed-u2` | U2: `home-spotlight.tsx` (next/image), `property-card-photos.tsx` + `property-list-card.tsx` (photo priority opt-in), one prop in `search/page.tsx` and `saved/page.tsx` | 2026-11-24 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-24 — `DESKTOP-1R37EBU/phone-speed-u2` merged (U2). **Firebase Auth is now created with `initializeAuth` (no popup resolver)** in `lib/firebase.ts`,
+  so Google's sign-in iframe and gapi load only when `signInWithGoogle` passes `browserPopupRedirectResolver`. Any NEW popup/redirect call
+  (`signInWithPopup`, `linkWithPopup`, `reauthenticateWithPopup`, `signInWithRedirect`, `getRedirectResult`) must pass that resolver too, or it throws.
+  `PropertyCardPhotos` takes `preload` (default false; was on for every card); `PropertyListCard` takes `preloadPhoto`. Home spotlight uses next/image.
 
 - 2026-11-24 — `DESKTOP-1R37EBU/page-heights-u3` merged (U3, owner chose the layouts). **Listing page**: `PropertyHeroGallery` and the on-show / off-plan /
   sold banners now sit at the top of the LEFT column of the details grid, so the aside (agent card) starts beside the photos at lg. **Home**: the homes

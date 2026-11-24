@@ -494,3 +494,17 @@ Nothing removed.
 - **Changed - listing page on desktop**: the photographs head the left column instead of spanning the page, so the agent card (or the example notice) sits beside them and is on screen without scrolling (top at 204 px on 1280×800; was 874). The title is one size smaller from 1024 px and the asking price sits under it between 1024 and 1279 px, where the photo column is narrow. Phones are unchanged: photos, banners, details, then the sidebar.
 - **Changed - /search on phones**: a little less vertical spacing in the search card, the results line and the page top, so the first result starts at 404 px on a 375×812 screen (was 446), inside the top half. Nothing moved or removed; tablet and desktop unchanged.
 - **Not done**: the search measurement was with no filters applied (the row of active-filter chips adds height when there are some); Lighthouse/speed (U2) not measured.
+
+## Phone speed U2 (24 Nov)
+
+Nothing visible changed. Measured with PageSpeed Insights, mobile, on the live site:
+
+| Page | Score | Largest paint | Blocking time |
+| --- | --- | --- | --- |
+| Home | 71 → 98 | 14.2 s → 2.3 s | 20 → 40 ms |
+| /search | 74 → 77 | 7.3 s → 5.3 s | 10 → 130 ms |
+
+- **Replaced - spotlight photos as CSS backgrounds** with next/image: resized AVIF/WebP (46 KB at phone size), first slide preloaded. Still only the current slide and its two neighbours are loaded.
+- **Changed - card photo priority**: was on the first photo of every card (six on the home page, every result on /search). Now only the first result on /search and /saved; the rest load lazily.
+- **Changed - Firebase Auth setup** (`lib/firebase.ts`): no longer loads Google's sign-in iframe (`firebaseapp.com/__/auth/iframe.js`) and gapi on every page; "Continue with Google" loads them on the click. Sessions use the same storage as before, so nobody is signed out.
+- **Not done**: /search loads its listings in the browser after the page starts, which is what keeps its largest paint at 5.3 s; server-rendering the first results would fix it. Google sign-in was checked up to the point where it opens Google's window (the test browser blocks that window), not through to a signed-in account. Local Lighthouse runs on this PC are not comparable (benchmark index 215-406, far below a normal machine).
