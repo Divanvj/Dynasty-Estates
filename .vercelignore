@@ -3,7 +3,6 @@
 node_modules
 
 # Local-only tooling and notes that need not ship.
-scratch
 tests
 mobile
 docs

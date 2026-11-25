@@ -15,7 +15,7 @@ with the reason.
 | `/admin` | Unchanged. The console links to it; moderation stays there. |
 | Data access | All console data goes through server route handlers using `firebase-admin`, after verifying the caller's ID token and claim. No Firestore rule grants a developer anything, so **no rules deploy is needed**. |
 | New collections | `app_errors`, `app_error_groups`, `web_vitals`, `console_events`, `platform_config`. Server-only (admin SDK); clients have no rule, so default deny. |
-| Credentials | `FIREBASE_SERVICE_ACCOUNT` (JSON or base64) on Vercel; `FIREBASE_SERVICE_ACCOUNT_PATH` locally. |
+| Credentials | `FIREBASE_SERVICE_ACCOUNT` (JSON or base64) on Vercel and in `.env.local` (`node scripts/key-to-env.mjs <key.json>`). A key-file path is no longer read (audit item 2.12). |
 | Dependency | `firebase-admin` moves from devDependencies to dependencies (server routes need it at runtime). No new packages. |
 
 ## Sections

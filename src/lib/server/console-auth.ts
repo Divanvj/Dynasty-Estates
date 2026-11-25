@@ -94,9 +94,12 @@ export function consoleRoute(
       if (error instanceof AdminUnavailableError) {
         return NextResponse.json({ error: error.message, notConnected: true }, { status: 503 });
       }
+      // The details go to the server log, not the response (audit item 2.12):
+      // an unexpected error's message can carry internal paths, queries or
+      // provider responses.
       console.error("[console]", error instanceof Error ? (error.stack ?? error.message) : error);
       return NextResponse.json(
-        { error: error instanceof Error ? error.message : "Console request failed." },
+        { error: "The console request failed on the server. The details are in the Vercel function log." },
         { status: 500 },
       );
     }

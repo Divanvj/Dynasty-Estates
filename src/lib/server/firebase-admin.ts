@@ -1,6 +1,3 @@
-import { readFileSync } from "node:fs";
-import path from "node:path";
-
 import { cert, getApp, getApps, initializeApp, type App, type ServiceAccount } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
 import { getFirestore } from "firebase-admin/firestore";
@@ -11,9 +8,12 @@ import { getSecurityRules } from "firebase-admin/security-rules";
  * telemetry endpoints). It bypasses Firestore rules entirely, so every route that
  * uses it must decide for itself who may call it — see console-auth.ts.
  *
- * Credentials, in order:
- *   FIREBASE_SERVICE_ACCOUNT       the key JSON itself, raw or base64 (Vercel)
- *   FIREBASE_SERVICE_ACCOUNT_PATH  a path to the key file (local .env.local)
+ * Credentials: FIREBASE_SERVICE_ACCOUNT, the key JSON itself, raw or base64,
+ * on Vercel and in .env.local alike (`node scripts/key-to-env.mjs <key.json>`
+ * prints the line). Reading a key *file* by a path from the environment
+ * (FIREBASE_SERVICE_ACCOUNT_PATH) made the bundler pack the whole project
+ * folder into every server function, since it could not tell which file was
+ * meant (audit item 2.12); the scripts in scripts/ still take --key <file>.
  *
  * Nothing is thrown at import time. A deployment without a key still serves the
  * site; the console reports "not connected" instead of a 500 on every page.
@@ -25,15 +25,9 @@ type KeyFile = ServiceAccount & { project_id?: string; client_email?: string; pr
 
 function readServiceAccount(): KeyFile | null {
   const inline = process.env.FIREBASE_SERVICE_ACCOUNT?.trim();
-  if (inline) {
-    const json = inline.startsWith("{") ? inline : Buffer.from(inline, "base64").toString("utf8");
-    return JSON.parse(json) as KeyFile;
-  }
-  const file = process.env.FIREBASE_SERVICE_ACCOUNT_PATH?.trim();
-  if (file) {
-    return JSON.parse(readFileSync(path.resolve(process.cwd(), file), "utf8")) as KeyFile;
-  }
-  return null;
+  if (!inline) return null;
+  const json = inline.startsWith("{") ? inline : Buffer.from(inline, "base64").toString("utf8");
+  return JSON.parse(json) as KeyFile;
 }
 
 let cached: App | null | undefined;
@@ -45,7 +39,9 @@ export function adminApp(): App | null {
   try {
     const key = readServiceAccount();
     if (!key) {
-      configError = "No service-account key. Set FIREBASE_SERVICE_ACCOUNT (Vercel) or FIREBASE_SERVICE_ACCOUNT_PATH (local).";
+      configError = process.env.FIREBASE_SERVICE_ACCOUNT_PATH
+        ? "FIREBASE_SERVICE_ACCOUNT_PATH is no longer read. Put the key itself in FIREBASE_SERVICE_ACCOUNT (node scripts/key-to-env.mjs <key.json> prints the line)."
+        : "No service-account key. Set FIREBASE_SERVICE_ACCOUNT (the key JSON, raw or base64) on Vercel and in .env.local.";
       cached = null;
       return null;
     }
