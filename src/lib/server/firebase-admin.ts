@@ -5,6 +5,7 @@ import { cert, getApp, getApps, initializeApp, type App, type ServiceAccount } f
 import { getAuth } from "firebase-admin/auth";
 import { getFirestore } from "firebase-admin/firestore";
 import { getSecurityRules } from "firebase-admin/security-rules";
+import "server-only";
 
 /**
  * The Admin SDK, for server route handlers only (the developer console and the

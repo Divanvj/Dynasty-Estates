@@ -3,7 +3,7 @@ import PropertyGridCard from "@/components/property-grid-card";
 import Link from "next/link";
 
 import { getPropertyList } from "@/lib/property-data";
-import { getListingsByLocation, enrichedListingToPropertyRecord } from "@/lib/server/property-service";
+import { getListingsByLocation, enrichedListingToPropertyRecord } from "@/lib/property-service";
 import { absoluteUrl, SITE_URL } from "@/lib/site-url";
 
 // The catalogue changes without a deploy (listings published, sold, removed),

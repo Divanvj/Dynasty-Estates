@@ -1,3 +1,7 @@
+// Server code only (audit item 3.2): importing this from a Client Component
+// fails the build, so nothing here (keys, Admin SDK) can reach the browser.
+import "server-only";
+
 import { DEFAULT_EMAIL_PREFS, EMAIL_PREFS, isEmailPref, normaliseEmailPrefs, type EmailPref, type EmailPrefs } from "@/lib/email-prefs";
 import { SITE_URL } from "@/lib/site-url";
 import { buildUnsubscribeToken, readUnsubscribeToken, searchIdFromTarget, searchTarget } from "@/lib/unsubscribe-token";

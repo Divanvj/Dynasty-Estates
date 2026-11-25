@@ -33,11 +33,11 @@ function statusForDecision(decision: ModerationDecision): ListingLifecycleStatus
 import {
   findDuplicatesInCatalog,
   type DuplicateMatchResult,
-} from "./server/duplicate-detector";
+} from "./duplicate-detector";
 import {
   decomposePropertyRecord,
   getEnrichedListings,
-} from "./server/property-service";
+} from "./property-service";
 import type { PropertyRecord } from "./property-data";
 
 export type ModerationDecision = "Approved" | "Needs changes" | "Rejected";

@@ -1,3 +1,7 @@
+// Server code only (audit item 3.2): importing this from a Client Component
+// fails the build, so nothing here (keys, Admin SDK) can reach the browser.
+import "server-only";
+
 import { adminAuth, adminDb } from "./firebase-admin";
 import { optOutLink, readEmailPrefs } from "./email-prefs";
 import { isUndeliverable } from "./email-verification";

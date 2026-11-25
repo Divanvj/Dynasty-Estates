@@ -1,3 +1,7 @@
+// Server code only (audit item 3.2): importing this from a Client Component
+// fails the build, so nothing here (keys, Admin SDK) can reach the browser.
+import "server-only";
+
 import type { UserRecord } from "firebase-admin/auth";
 
 import { RETIRED_SAMPLE_LISTING_IDS } from "@/lib/property-data";
