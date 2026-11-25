@@ -10,8 +10,9 @@ import { useEffect, useRef, useState } from "react";
  * It is a layer over the still photo in HomeHeroPhoto, never a replacement:
  * the still is the first paint, and stays the whole experience for anyone who
  * turns motion off, has Data Saver on, or is on a 2G connection. For
- * everyone else the frames load only after the page has finished loading and
- * the browser is idle, and the canvas fades in once all of them are ready.
+ * everyone else the frames start loading once the still has loaded, every
+ * sixth frame first: the canvas fades in after that coarse pass and the
+ * in-between frames fill in behind it.
  *
  *   Desktop (from md): 36 frames, 1600×900 WebP, about 0.9 MB in all. The
  *   hero is held (sticky) for 70vh of scrolling while the camera moves; see
@@ -74,10 +75,14 @@ export default function HomeHeroScene() {
     function draw(force = false) {
       raf = 0;
       const i = Math.round(progress() * (set.count - 1));
-      // Nearest loaded frame, so a slow load never shows a blank.
-      let pick = i;
-      while (pick > 0 && !frames[pick]) pick--;
-      const img = frames[pick];
+      // Nearest loaded frame either side, so the move works (in coarser steps)
+      // while the in-between frames are still arriving.
+      let pick = -1;
+      for (let d = 0; d < set.count && pick < 0; d++) {
+        if (frames[i - d]) pick = i - d;
+        else if (frames[i + d]) pick = i + d;
+      }
+      const img = pick >= 0 ? frames[pick] : null;
       if (!img || (!force && pick === drawn)) return;
       const ctx = canvas!.getContext("2d");
       if (!ctx) return;
@@ -101,35 +106,68 @@ export default function HomeHeroScene() {
       if (!raf) raf = requestAnimationFrame(() => draw());
     };
 
+    // Coarse to fine: every sixth frame first, so the whole move is usable
+    // after a handful of downloads; then every third; then the rest.
+    const coarse = new Set<number>([set.count - 1]); // the end of the move too
+    for (let i = 0; i < set.count; i += 6) coarse.add(i);
+    const order = [...coarse].sort((a, b) => a - b);
+    for (const step of [3, 1]) {
+      for (let i = 0; i < set.count; i += step) if (!order.includes(i)) order.push(i);
+    }
+    const firstPass = coarse.size;
+
+    async function fetchFrame(i: number) {
+      const img = new Image();
+      img.decoding = "async";
+      img.src = frameUrl(set.dir, i);
+      try {
+        await img.decode();
+        frames[i] = img;
+      } catch {
+        // A missing frame is skipped; the nearest loaded one is drawn.
+      }
+    }
+
     async function load() {
       let next = 0;
+      let done = 0;
       const worker = async () => {
-        while (!cancelled && next < set.count) {
-          const i = next++;
-          const img = new Image();
-          img.decoding = "async";
-          img.src = frameUrl(set.dir, i);
-          try {
-            await img.decode();
-            frames[i] = img;
-          } catch {
-            // A missing frame is skipped; the nearest earlier one is drawn.
+        while (!cancelled && next < order.length) {
+          await fetchFrame(order[next++]);
+          done++;
+          // Show the canvas once the coarse pass is in; later frames only
+          // make the move smoother.
+          if (!cancelled && done === firstPass && frames.some(Boolean)) {
+            size();
+            setReady(true);
+          } else if (!cancelled && done > firstPass) {
+            draw(true);
           }
         }
       };
       await Promise.all([worker(), worker(), worker(), worker()]);
-      if (cancelled || !frames[0]) return;
-      size();
-      setReady(true);
+      if (!cancelled && frames.some(Boolean)) {
+        size();
+        setReady(true);
+      }
     }
 
-    // Only once the page has loaded and the browser is idle: the frames never
-    // compete with the still photo, the search or the listings.
+    // As soon as the still photo has loaded (the page's largest paint), not
+    // after the whole page: waiting for window `load` also waited for every
+    // listing photo below the hero, which kept the move off for 5–10s.
+    let started = false;
     const start = () => {
-      const idle = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }).requestIdleCallback;
-      if (idle) idle(() => void load(), { timeout: 3000 });
-      else setTimeout(() => void load(), 1500);
+      if (started) return;
+      started = true;
+      void load();
     };
+    const still = canvas.parentElement?.querySelector("img");
+    if (!still || still.complete) start();
+    else {
+      still.addEventListener("load", start, { once: true });
+      still.addEventListener("error", start, { once: true });
+    }
+    // Safety net: if the still never reports in, start with the page load.
     if (document.readyState === "complete") start();
     else window.addEventListener("load", start, { once: true });
 
@@ -137,6 +175,8 @@ export default function HomeHeroScene() {
     window.addEventListener("resize", size);
     return () => {
       cancelled = true;
+      still?.removeEventListener("load", start);
+      still?.removeEventListener("error", start);
       window.removeEventListener("load", start);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", size);
