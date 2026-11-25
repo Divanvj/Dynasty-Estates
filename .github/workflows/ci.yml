@@ -66,4 +66,9 @@ jobs:
       - name: Run Firestore security-rule tests
         run: npm run test:rules
 
+      # Storage security rules (audit item 1.6): uploads, reads, folder
+      # listing and deletes against the local Storage emulator.
+      - name: Run Storage security-rule tests
+        run: npm run test:storage-rules
+
 
