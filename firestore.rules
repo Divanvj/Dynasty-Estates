@@ -21,6 +21,17 @@ service cloud.firestore {
       return signedIn() && request.auth.token.role == 'admin';
     }
 
+    // A moderator reviews submitted listings and reads the audit trail, and
+    // nothing else (item 1.3, decision 2). Decisions go through
+    // /api/admin/moderation (Admin SDK), which writes the listing's status and
+    // the audit entry together, so a moderator writes nothing directly.
+    function isModerator() {
+      return signedIn() && request.auth.token.role == 'moderator';
+    }
+    function canModerate() {
+      return isAdmin() || isModerator();
+    }
+
     // Agencies (PLAN.md F4, Phase G). A principal's agency is agencies/{their
     // uid}; each agent who joined has agency_members/{principalUid}_{memberUid}.
     // The principal reaches a member's enquiries and stats through that link,
@@ -35,15 +46,17 @@ service cloud.firestore {
 
     // The physical entity behind a listing (size, rooms, location). A listing in
     // /properties references one of these, so it must be world-readable for the
-    // public catalogue, but only its creator or a practitioner may change it.
+    // public catalogue. Only its creator, their agency principal or an admin
+    // may change it (item 1.3: any agent used to be able to change any home).
     match /physical_properties/{physicalPropertyId} {
       allow read: if true;
       allow create: if signedIn() && request.resource.data.ownerId == request.auth.uid;
-      allow update: if isAgentOrAdmin()
+      allow update: if isAdmin()
         || (signedIn()
-            && resource.data.ownerId == request.auth.uid
+            && (resource.data.ownerId == request.auth.uid
+                || (resource.data.get('ownerId', null) is string && principalOf(resource.data.ownerId)))
             && request.resource.data.ownerId == resource.data.ownerId);
-      allow delete: if isAgentOrAdmin()
+      allow delete: if isAdmin()
         || (signedIn() && resource.data.ownerId == request.auth.uid);
     }
 
@@ -60,11 +73,14 @@ service cloud.firestore {
       }
 
       // An owner must also be able to read back their own drafts, or the seller
-      // portal cannot show them what they just filed; practitioners see
-      // everything in order to moderate it.
+      // portal cannot show them what they just filed, and an agency principal
+      // sees their members' listings. Admins and moderators see everything in
+      // order to review it. Any agent used to read every draft on the platform
+      // (item 1.3).
       allow read: if resource.data.status in publicStatuses()
-      || isAgentOrAdmin()
-      || (signedIn() && resource.data.ownerId == request.auth.uid);
+      || canModerate()
+      || (signedIn() && resource.data.ownerId == request.auth.uid)
+      || (resource.data.get('ownerId', null) is string && principalOf(resource.data.ownerId));
       // An owner may file a listing but not publish it: the button says "Submit
       // for Moderation", so only a practitioner may move it into a live state.
       // Set only by the server or a practitioner, never by the listing's own
@@ -93,17 +109,37 @@ service cloud.firestore {
         && mayStartListing()
         && !('ownerEmail' in request.resource.data)
         && request.resource.data.ownerId == request.auth.uid
-        && (isAgentOrAdmin()
+        // Every new listing is reviewed, an agent's included (item 1.3): only an
+        // admin may file one straight into another state.
+        && (isAdmin()
             || (request.resource.data.status in ['Draft', 'Submitted']
                 && !request.resource.data.keys().hasAny(['example', 'sale'])
                 && request.resource.data.get('agentId', request.auth.uid) == request.auth.uid));
-      allow update: if ownerEmailOnlyRemoved() && (isAgentOrAdmin()
-        || (signedIn()
-            && resource.data.ownerId == request.auth.uid
+      // Who may change a listing (decision 1, owner 25 Nov 2026): its owner and
+      // the principal of the agency the owner belongs to. Any agent used to be
+      // able to edit or delete every listing on the platform (item 1.3).
+      function mayEditListing() {
+        return signedIn()
+          && (resource.data.ownerId == request.auth.uid
+              || (resource.data.get('ownerId', null) is string && principalOf(resource.data.ownerId)));
+      }
+      // Putting a listing in front of the public is a review decision (admin or
+      // moderator, through /api/admin/moderation), never the owner's. An owner
+      // may take a listing out of view, save a draft or resubmit it; an agent
+      // may also edit a live listing and keep its status, as the wizard does.
+      // Under offer / Sold / Rented go through the server's own routes.
+      function ownerStatusAllowed() {
+        return request.resource.data.status in ['Draft', 'Submitted', 'Paused', 'Archived']
+          || (isAgentOrAdmin() && request.resource.data.status == resource.data.status);
+      }
+      allow update: if ownerEmailOnlyRemoved() && (isAdmin()
+        || (mayEditListing()
             && request.resource.data.ownerId == resource.data.ownerId
-            && request.resource.data.status in ['Draft', 'Submitted', 'Paused', 'Archived']
+            && ownerStatusAllowed()
             && !request.resource.data.diff(resource.data).affectedKeys().hasAny(ownerProtectedFields())));
-      allow delete: if isAgentOrAdmin()
+      // Only the owner (or an admin) deletes; a principal may edit a member's
+      // listing but not remove it.
+      allow delete: if isAdmin()
         || (signedIn() && resource.data.ownerId == request.auth.uid);
     }
 
@@ -209,7 +245,10 @@ service cloud.firestore {
         && request.resource.data.listingId is string
         && getAfter(/databases/$(database)/documents/properties/$(request.resource.data.listingId)).data.ownerId == request.auth.uid;
       allow update: if false;
-      allow delete: if isAgentOrAdmin();
+      // The nightly clean-up deletes stale ones with the Admin SDK. From the
+      // browser only the listing's owner or an admin may (item 1.3: any agent
+      // could delete anyone's, letting a re-used photo past the duplicate check).
+      allow delete: if isAdmin() || (signedIn() && resource.data.ownerId == request.auth.uid);
     }
 
     // Shared property shortlists (src/lib/collections.ts). Access is scoped to
@@ -354,14 +393,13 @@ service cloud.firestore {
     // themselves, so a decision cannot be attributed to someone else; and
     // nothing may edit or remove one, because an audit trail that its own
     // subject can rewrite is not evidence of anything.
+    // The audit trail is written only by the server (Admin SDK): moderation
+    // decisions (/api/admin/moderation), practitioner decisions, sales and
+    // market-status changes. Any agent used to be able to file entries from the
+    // browser and read the whole trail (item 1.3).
     match /audit_logs/{logId} {
-      allow read: if isAgentOrAdmin();
-      allow create: if isAgentOrAdmin()
-        && request.resource.data.keys().hasOnly(['actorId', 'actorEmail', 'action', 'resource', 'details', 'createdAt'])
-        && request.resource.data.actorId == request.auth.uid
-        && request.resource.data.action is string
-        && request.resource.data.resource is string;
-      allow update, delete: if false;
+      allow read: if canModerate();
+      allow create, update, delete: if false;
     }
   }
 }

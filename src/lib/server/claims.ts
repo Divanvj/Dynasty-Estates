@@ -15,7 +15,7 @@
 export type ClaimSet = Record<string, unknown> | undefined | null;
 
 /** Roles a developer account can switch itself into for testing. */
-export const TEST_ROLES = ["buyer", "seller", "agent", "admin", "developer"] as const;
+export const TEST_ROLES = ["buyer", "seller", "agent", "moderator", "admin", "developer"] as const;
 export type TestRole = (typeof TEST_ROLES)[number];
 
 export function isDeveloperAccount(claims: ClaimSet): boolean {

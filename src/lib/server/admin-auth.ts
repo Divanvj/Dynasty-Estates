@@ -31,3 +31,27 @@ export async function requireAdminCaller(request: Request): Promise<AdminCaller>
   if (decoded.role !== "admin") throw new AdminAuthError("Only an admin can do this.", 403);
   return { uid: decoded.uid, email: decoded.email ?? null };
 }
+
+/**
+ * Who may review listings (/admin/moderation and its routes): an admin or a
+ * moderator (item 1.3, decision 2). A moderator gets nothing else that an
+ * admin has.
+ */
+export type ModeratorCaller = AdminCaller & { role: "admin" | "moderator" };
+
+export async function requireModeratorCaller(request: Request): Promise<ModeratorCaller> {
+  const header = request.headers.get("authorization") ?? "";
+  const token = header.startsWith("Bearer ") ? header.slice(7) : "";
+  if (!token) throw new AdminAuthError("Sign in as an admin or moderator to do this.", 401);
+  let decoded;
+  try {
+    decoded = await adminAuth().verifyIdToken(token, true);
+  } catch (error) {
+    if (error instanceof AdminUnavailableError) throw error;
+    throw new AdminAuthError("Your session has expired. Sign in again.", 401);
+  }
+  if (decoded.role !== "admin" && decoded.role !== "moderator") {
+    throw new AdminAuthError("Only an admin or moderator can do this.", 403);
+  }
+  return { uid: decoded.uid, email: decoded.email ?? null, role: decoded.role };
+}

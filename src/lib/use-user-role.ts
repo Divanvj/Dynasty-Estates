@@ -2,7 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 
-export type UserRole = "Buyer" | "Seller" | "Agent" | "Admin" | "Developer";
+export type UserRole = "Buyer" | "Seller" | "Agent" | "Moderator" | "Admin" | "Developer";
 
 /**
  * The active role is derived from the signed-in account, never chosen by the
@@ -24,7 +24,7 @@ export type UserRole = "Buyer" | "Seller" | "Agent" | "Admin" | "Developer";
  * valid Fidelity Fund Certificate, so "agency" is a verified status and cannot
  * be a preference a visitor selects.
  */
-export type Capability = "sell" | "agency" | "admin" | "console";
+export type Capability = "sell" | "agency" | "moderate" | "admin" | "console";
 
 /**
  * What this account may do. Deliberately mirrors the guard on each route, so the
@@ -54,6 +54,10 @@ export function accountCan(
     case "agency":
       // A regulated status. See the note on Capability above.
       return account.role === "Agent" || account.role === "Admin";
+    case "moderate":
+      // Reviewing submitted listings (/admin/moderation): admins and moderators,
+      // as /api/admin/moderation and firestore.rules' canModerate() check.
+      return account.role === "Admin" || account.role === "Moderator";
     case "admin":
       return account.role === "Admin";
     case "console":
@@ -116,6 +120,7 @@ export function getActiveUserRole(): UserRole {
       stored === "Buyer" ||
       stored === "Seller" ||
       stored === "Agent" ||
+      stored === "Moderator" ||
       stored === "Admin" ||
       stored === "Developer"
     ) {

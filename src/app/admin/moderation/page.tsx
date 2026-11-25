@@ -134,7 +134,7 @@ function ModerationQueue() {
     setBusy(true);
     setActionError(null);
     try {
-      await executeModerationDecision(item.id, decision, feedback, user.uid, user.email ?? user.uid);
+      await executeModerationDecision(user, item.id, decision, feedback);
     } catch (error) {
       setActionError(error instanceof Error ? error.message : `Could not apply the "${decision}" decision.`);
       setBusy(false);

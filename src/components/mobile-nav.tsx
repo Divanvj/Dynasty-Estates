@@ -65,6 +65,11 @@ const NAV: Record<UserRole, NavItem[]> = {
     { href: "/agent/enquiries", label: "Enquiries", icon: UsersIcon },
     ACCOUNT,
   ],
+  Moderator: [
+    { href: "/admin/moderation", label: "Review", icon: ShieldIcon, match: ["/admin/audit"] },
+    { href: "/search", label: "Listings", icon: SearchIcon, match: ["/property", "/for-sale", "/to-rent"] },
+    ACCOUNT,
+  ],
   Admin: [
     { href: "/admin", label: "Admin", icon: ShieldIcon },
     { href: "/search", label: "Listings", icon: SearchIcon, match: ["/property", "/for-sale", "/to-rent"] },
