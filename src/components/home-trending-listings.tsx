@@ -32,9 +32,10 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
   // hero on For Sale and this feed listing rentals underneath it.
   const [intent, setIntent] = useState<"rent" | "buy">("buy");
   const [activeFilter, setActiveFilter] = useState("All");
-  // Grid on desktop (U3, owner 24 Nov): six full-width list cards made the home
-  // page ~4,500px tall at 1280. Phones still get the list (see below).
-  const [selectedView, setViewMode] = useState<ViewMode>("grid");
+  // List by default everywhere (owner, 25 Nov), undoing U3's desktop Grid
+  // default; Grid is one click away on desktop. The home page is taller at
+  // 1280 as a result (about 1,400px), which the owner accepted.
+  const [selectedView, setViewMode] = useState<ViewMode>("list");
 
   /**
    * Phones get List and Map; Grid and Table are desktop-only, matching
