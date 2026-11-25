@@ -48,6 +48,9 @@ jobs:
       - name: Run certificate-reminder tests
         run: node tests/ffc-reminders.test.mjs
 
+      - name: Run file clean-up guard tests
+        run: node tests/cleanup-guard.test.mjs
+
       - name: Run price-drop tests
         run: node tests/price-drops.test.mjs
 
