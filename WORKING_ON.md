@@ -10,13 +10,16 @@ lines keep its own merges trivial.
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
 | ALET-ELIZE | `ALET-ELIZE/dark-hero-text` | `globals.css` hero headline block (`.hh-*`) — dark-mode hero text | 2026-11-20 |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/photo-hero` | `app/page.tsx` hero section, new `components/home-hero-photo.tsx`, `public/hero/`, `home-spotlight.tsx` preload — full-width photo hero (not `.hh-*`) | 2026-11-25 |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/home-list-header` | `home-trending-listings.tsx` default view, `site-header.tsx` show on scroll up (desktop) | 2026-11-25 |
 
 ## Recently merged
 
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
+
+- 2026-11-25 — `DESKTOP-1R37EBU/photo-hero` merged (owner). **Home hero** is a full-width photo (our Blender render) with a scroll-driven camera move:
+  `home-hero-photo.tsx` + `home-hero-scene.tsx` (canvas over the still; frames in `public/hero/frames/`; desktop hero held sticky via a `motion-safe:lg:h-[…]` on #discover in `app/page.tsx`).
+  **Desktop header is now sticky** (`site-header-reveal.tsx`): hides on scroll down, returns on a small scroll up. Page bars that pin to `top-0` on desktop will sit under it when shown.
+  Home listings default to **List** again (owner). "Popular in SA" chips under the hero search removed.
 
 - 2026-11-24 — `DESKTOP-1R37EBU/search-ssr` merged. **`src/app/search/page.tsx` is now a server page**; the old client page moved to
   `search/search-content.tsx` (default export `SearchContent`, prop `initialProperties`). Edit the search UI there. The catalogue is cached 5 minutes
