@@ -28,7 +28,10 @@ export async function signedInCaller(request: Request): Promise<{ uid: string; e
   const token = header.startsWith("Bearer ") ? header.slice(7) : "";
   if (!token) throw new NotifyError("Sign in first.", 401);
   try {
-    const decoded = await adminAuth().verifyIdToken(token);
+    // checkRevoked: a disabled account, or one an admin signed out, stops
+    // sending e-mails at once, not when its hour-long ID token expires
+    // (audit finding S9). Same check as the console and admin routes.
+    const decoded = await adminAuth().verifyIdToken(token, true);
     return { uid: decoded.uid, email: decoded.email ?? null };
   } catch (error) {
     if (error instanceof AdminUnavailableError) throw new NotifyError("The server isn't connected to Firebase.", 503);

@@ -38,7 +38,10 @@ export async function saleCaller(request: Request): Promise<Caller> {
   const token = header.startsWith("Bearer ") ? header.slice(7) : "";
   if (!token) throw new SaleError("Sign in first.", 401);
   try {
-    const decoded = await adminAuth().verifyIdToken(token);
+    // checkRevoked: a disabled account, a signed-out one, or an admin whose
+    // role was just removed loses these routes at once, not within the hour
+    // its ID token still claims the old role (audit finding S9).
+    const decoded = await adminAuth().verifyIdToken(token, true);
     return { uid: decoded.uid, admin: decoded.role === "admin", email: typeof decoded.email === "string" ? decoded.email : null };
   } catch (error) {
     if (error instanceof AdminUnavailableError) throw new SaleError("The server isn't connected right now. Try again in a moment.", 503);
