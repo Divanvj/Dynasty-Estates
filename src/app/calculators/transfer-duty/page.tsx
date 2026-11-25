@@ -3,14 +3,14 @@ import CalculatorsView from "@/components/calculators-view";
 import { absoluteUrl } from "@/lib/site-url";
 
 export const metadata: Metadata = {
-  title: "SARS Transfer Duty Calculator 2024/2025 | South African Property Tax",
+  title: "SARS Transfer Duty Calculator | South African Property Tax",
   description:
-    "Calculate official SARS Transfer Duty on residential property purchases in South Africa. Free tax exemption up to R1.1 million, graduated tax brackets, and 0% transfer duty developer exemptions.",
+    "Calculate SARS transfer duty on a South African property purchase with the current SARS table: no duty up to R1,210,000, then graduated brackets from 3% to 13%, and no transfer duty on VAT-inclusive new developments.",
   alternates: {
     canonical: absoluteUrl("/calculators/transfer-duty"),
   },
   openGraph: {
-    title: "SARS Transfer Duty Calculator 2024/2025 | Dynasty Estates",
+    title: "SARS Transfer Duty Calculator | Dynasty Estates",
     description:
       "Interactive South African Transfer Duty calculator based on official statutory SARS tax brackets. Understand property tax exemptions and legal closing costs.",
     url: absoluteUrl("/calculators/transfer-duty"),
@@ -25,10 +25,10 @@ export default function TransferDutyCalculatorPage() {
     mainEntity: [
       {
         "@type": "Question",
-        name: "What is the SARS Transfer Duty threshold in South Africa for 2024/2025?",
+        name: "What is the SARS transfer duty threshold in South Africa?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Under the current SARS tax schedule, property transactions valued up to R1,100,000 are completely exempt from Transfer Duty (0% rate). Transactions above R1.1 million are taxed on a graduated sliding scale from 3% up to 13% for properties over R11 million.",
+          text: "For properties acquired from 1 April 2025 (SARS lists no change from 1 April 2026), there is no transfer duty up to R1,210,000. Above that, duty is charged on a sliding scale: 3% of the value above R1,210,000, rising through 6%, 8% and 11% to 13% of the value above R13,310,000. The calculator uses the same table.",
         },
       },
       {

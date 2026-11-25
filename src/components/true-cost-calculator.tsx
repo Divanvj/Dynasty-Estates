@@ -11,15 +11,8 @@ import {
   XMarkIcon,
 } from "@/components/icons";
 import TenantApplicationModal from "@/components/tenant-application-modal";
+import { monthlyRepayment, TRANSFER_DUTY_THRESHOLD, transferDuty as dutyFor } from "@/lib/finance";
 import { formatNumber } from "@/lib/formatters";
-
-export function calculateSARSTransferDuty(price: number): number {
-  if (price <= 1100000) return 0;
-  if (price <= 1512500) return Math.round((price - 1100000) * 0.03);
-  if (price <= 2722500) return Math.round(25250 + (price - 1512500) * 0.08);
-  if (price <= 12100000) return Math.round(98250 + (price - 2722500) * 0.11);
-  return Math.round(1129775 + (price - 12100000) * 0.13);
-}
 
 export default function TrueCostCalculator({
   askingPriceZAR,
@@ -123,18 +116,10 @@ export default function TrueCostCalculator({
   } = useMemo(() => {
     const dep = Math.round((purchasePrice * depositPercent) / 100);
     const loan = Math.max(0, purchasePrice - dep);
-    const monthlyRate = interestRate / 100 / 12;
-    const numMonths = tenureYears * 12;
+    // One copy of the loan formula and the SARS table (src/lib/finance.ts, item 2.3).
+    const bond = monthlyRepayment(loan, interestRate, tenureYears);
 
-    let bond = 0;
-    if (loan > 0 && monthlyRate > 0) {
-      bond = Math.round(
-        (loan * (monthlyRate * Math.pow(1 + monthlyRate, numMonths))) /
-          (Math.pow(1 + monthlyRate, numMonths) - 1)
-      );
-    }
-
-    const duty = calculateSARSTransferDuty(purchasePrice);
+    const duty = dutyFor(purchasePrice);
     const legalConveyancing =
       purchasePrice > 0 ? Math.round(18000 + Math.min(purchasePrice, 10000000) * 0.0055) : 0;
     const legalBond =
@@ -1031,7 +1016,7 @@ export default function TrueCostCalculator({
                   <InfoCircleIcon className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
                 </div>
                 <span className="font-bold text-slate-900 dark:text-white">
-                  {transferDuty === 0 ? "EXEMPT (Under R1.1M)" : `R ${formatNumber(transferDuty)}`}
+                  {transferDuty === 0 ? `None (up to R ${formatNumber(TRANSFER_DUTY_THRESHOLD)})` : `R ${formatNumber(transferDuty)}`}
                 </span>
               </div>
               <div className="flex justify-between py-1.5 border-b border-slate-100 dark:border-white/10">

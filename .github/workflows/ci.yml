@@ -45,6 +45,9 @@ jobs:
       - name: Run listing market-status tests
         run: node tests/listing-status.test.mjs
 
+      - name: Run finance tests (SARS transfer duty, loan repayments)
+        run: node tests/finance.test.mjs
+
       - name: Run certificate-reminder tests
         run: node tests/ffc-reminders.test.mjs
 
