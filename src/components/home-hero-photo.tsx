@@ -1,5 +1,7 @@
 import { getImageProps } from "next/image";
 
+import HomeHeroScene from "@/components/home-hero-scene";
+
 /**
  * The photograph behind the home hero (owner, 25 Nov 2026): a coastal living
  * room opening onto a pool and the sea. It is our own 3D render (Blender, CC0
@@ -43,6 +45,9 @@ export default function HomeHeroPhoto() {
           className="h-full w-full object-cover object-[center_58%]"
         />
       </picture>
+      {/* The scroll-driven camera move, drawn over the still once its frames
+          have loaded (never for reduced motion, Data Saver or 2G). */}
+      <HomeHeroScene />
       {/* Dark mode: the render is daylight, so it is dimmed rather than swapped. */}
       <div className="absolute inset-0 dark:bg-[rgba(4,10,12,0.45)]" />
       <div className="home-hero-fade absolute inset-0" />

@@ -45,11 +45,19 @@ export default async function Home() {
           menus (z-[60]/61), over the sections below. No transform or filter
           on this section: the search panel's full-screen dialog is `fixed`,
           and either would trap it inside the hero.
+
+          The scroll-driven camera move (HomeHeroScene, inside HomeHeroPhoto):
+          from `lg`, when motion is allowed, the section is 70vh taller than
+          its stage and the stage is sticky, so the hero holds still while the
+          camera moves through the house; the search stays in place and usable
+          the whole time. Phones and reduced motion get no hold. `sticky` does
+          not trap the fixed filters dialog (only transform/filter would).
         */}
         <section
           id="discover"
-          className="relative z-40 -mx-3 -mt-4 flex min-h-[580px] flex-col justify-end sm:min-h-[640px] md:-mx-6 lg:-mx-8 lg:-mt-[114px] lg:min-h-[min(860px,94vh)]"
+          className="relative z-40 -mx-3 -mt-4 md:-mx-6 lg:-mx-8 lg:-mt-[114px] motion-safe:lg:h-[calc(min(860px,94vh)+70vh)]"
         >
+          <div className="relative isolate flex min-h-[580px] flex-col justify-end sm:min-h-[640px] lg:h-[min(860px,94vh)] lg:min-h-0 motion-safe:lg:sticky motion-safe:lg:top-0">
           <HomeHeroPhoto />
           <div className="mx-auto w-full max-w-[1440px] px-3 pb-8 pt-40 sm:px-6 sm:pb-12 md:px-8 lg:px-10 lg:pb-16">
             {/*
@@ -91,6 +99,7 @@ export default async function Home() {
               does not substantiate. Counts belong on the results page, where
               they describe a real query. Removed per the Improvement Notes.
             */}
+          </div>
           </div>
         </section>
 
