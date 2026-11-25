@@ -155,11 +155,27 @@ export default function HomeHeroScene() {
     // As soon as the still photo has loaded (the page's largest paint), not
     // after the whole page: waiting for window `load` also waited for every
     // listing photo below the hero, which kept the move off for 5–10s.
+    //
+    // Phones wait a little longer: until the first touch, scroll or key, or
+    // 3 s after the still, whichever comes first. On a phone the first seconds
+    // belong to the photo, the search and the page's scripts (PageSpeed mobile
+    // counted the frames against the page); the move only matters once the
+    // visitor scrolls, and the coarse pass is in well within a second of that.
     let started = false;
-    const start = () => {
-      if (started) return;
+    let timer = 0;
+    const intents = ["touchstart", "pointerdown", "keydown", "scroll"] as const;
+    const go = () => {
+      if (started || cancelled) return;
       started = true;
+      window.clearTimeout(timer);
+      intents.forEach((t) => window.removeEventListener(t, go));
       void load();
+    };
+    const start = () => {
+      if (desktop) return go();
+      if (timer) return;
+      timer = window.setTimeout(go, 3000);
+      intents.forEach((t) => window.addEventListener(t, go, { once: true, passive: true }));
     };
     const still = canvas.parentElement?.querySelector("img");
     if (!still || still.complete) start();
@@ -175,6 +191,8 @@ export default function HomeHeroScene() {
     window.addEventListener("resize", size);
     return () => {
       cancelled = true;
+      window.clearTimeout(timer);
+      intents.forEach((t) => window.removeEventListener(t, go));
       still?.removeEventListener("load", start);
       still?.removeEventListener("error", start);
       window.removeEventListener("load", start);

@@ -1,4 +1,5 @@
 import { getImageProps } from "next/image";
+import { preload } from "react-dom";
 
 import HomeHeroScene from "@/components/home-hero-scene";
 
@@ -25,11 +26,18 @@ export default function HomeHeroPhoto() {
   // 16:9 picture to the hero's height × 16/9, about 168vh at most; with plain
   // "100vw" the browser picked a picture that size and stretched it soft.
   const {
-    props: { srcSet: wide },
+    props: { srcSet: wide, src: wideSrc },
   } = getImageProps({ alt: "", sizes: "(min-aspect-ratio: 16/9) 100vw, 168vh", src: "/hero/home-hero-wide.webp", width: 2560, height: 1440 });
   const {
     props: { srcSet: tall, ...img },
   } = getImageProps({ alt: "", sizes: "100vw", src: "/hero/home-hero-tall.webp", width: 1080, height: 1920 });
+
+  // Preloaded from the <head>, one per screen size (`media`), so the browser
+  // starts the photo before it has parsed down to the <picture>, and never
+  // fetches the crop it will not show. Without it, PageSpeed (mobile) found
+  // the photo ~620 ms late and the hero's largest paint was 4.4–4.8 s.
+  preload(wideSrc, { as: "image", imageSrcSet: wide, imageSizes: "(min-aspect-ratio: 16/9) 100vw, 168vh", media: "(min-width: 768px)", fetchPriority: "high" });
+  preload(img.src, { as: "image", imageSrcSet: tall, imageSizes: "100vw", media: "(max-width: 767px)", fetchPriority: "high" });
 
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
