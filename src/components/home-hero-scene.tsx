@@ -54,7 +54,7 @@ export default function HomeHeroScene() {
 
     const desktop = window.matchMedia("(min-width: 768px)").matches;
     const set = desktop ? SETS.desktop : SETS.phone;
-    const frames: (HTMLImageElement | null)[] = new Array(set.count).fill(null);
+    const frames: (ImageBitmap | HTMLImageElement | null)[] = new Array(set.count).fill(null);
     let cancelled = false;
     let drawn = -1;
     let raf = 0;
@@ -87,9 +87,11 @@ export default function HomeHeroScene() {
       const ctx = canvas!.getContext("2d");
       if (!ctx) return;
       const { width: cw, height: ch } = canvas!;
-      const scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
-      const w = img.naturalWidth * scale;
-      const h = img.naturalHeight * scale;
+      const iw = img instanceof HTMLImageElement ? img.naturalWidth : img.width;
+      const ih = img instanceof HTMLImageElement ? img.naturalHeight : img.height;
+      const scale = Math.max(cw / iw, ch / ih);
+      const w = iw * scale;
+      const h = ih * scale;
       ctx.drawImage(img, (cw - w) / 2, (ch - h) * OBJECT_Y, w, h);
       drawn = pick;
     }
@@ -116,13 +118,23 @@ export default function HomeHeroScene() {
     }
     const firstPass = coarse.size;
 
+    // Decoded off the main thread with createImageBitmap. `img.decode()` was
+    // queued behind the page's own work: on a slow phone the coarse frames had
+    // downloaded half a second after the first scroll but took ~8 s more to
+    // decode, so the move stayed off. Older browsers fall back to decode().
     async function fetchFrame(i: number) {
-      const img = new Image();
-      img.decoding = "async";
-      img.src = frameUrl(set.dir, i);
+      const url = frameUrl(set.dir, i);
       try {
-        await img.decode();
-        frames[i] = img;
+        if (typeof createImageBitmap === "function") {
+          const res = await fetch(url);
+          if (!res.ok) return;
+          frames[i] = await createImageBitmap(await res.blob());
+        } else {
+          const img = new Image();
+          img.src = url;
+          await img.decode();
+          frames[i] = img;
+        }
       } catch {
         // A missing frame is skipped; the nearest loaded one is drawn.
       }
@@ -191,6 +203,9 @@ export default function HomeHeroScene() {
     window.addEventListener("resize", size);
     return () => {
       cancelled = true;
+      frames.forEach((f) => {
+        if (f && "close" in f) f.close(); // free decoded bitmaps
+      });
       window.clearTimeout(timer);
       intents.forEach((t) => window.removeEventListener(t, go));
       still?.removeEventListener("load", start);
