@@ -2,6 +2,7 @@ import React from "react";
 import { featureLabel } from "@/lib/feature-labels";
 import { PropertyRecord } from "@/lib/property-data";
 import { SITE_URL } from "@/lib/site-url";
+import { jsonLd } from "@/lib/json-ld";
 
 interface SeoStructuredDataProps {
   property: PropertyRecord;
@@ -117,11 +118,11 @@ export default function SeoStructuredData({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbsSchema) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbsSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(realEstateListingSchema) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(realEstateListingSchema) }}
       />
     </>
   );

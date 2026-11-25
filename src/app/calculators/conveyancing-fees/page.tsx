@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import CalculatorsView from "@/components/calculators-view";
 import { absoluteUrl } from "@/lib/site-url";
+import { jsonLd } from "@/lib/json-ld";
 
 export const metadata: Metadata = {
   title: "Conveyancing Fees & Deeds Office Tariffs Calculator | South Africa",
@@ -67,11 +68,11 @@ export default function ConveyancingFeesCalculatorPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(faqSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(softwareSchema) }}
       />
       <CalculatorsView initialTab="conveyancing" />
     </>

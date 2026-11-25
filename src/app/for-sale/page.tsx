@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { getPropertyList, southAfricanProvinces } from "@/lib/property-data";
 import { absoluteUrl, SITE_URL } from "@/lib/site-url";
+import { jsonLd } from "@/lib/json-ld";
 
 // The catalogue changes without a deploy (listings published, sold, removed),
 // so this page is rebuilt at most every 5 minutes. Without it the build-time
@@ -55,7 +56,7 @@ export default async function ForSaleNationalPage() {
     <div className="min-h-screen bg-[var(--background)] text-slate-900 dark:text-white">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbSchema) }}
       />
       <main className="mx-auto max-w-[1400px] px-4 py-8 sm:px-6 lg:px-8">
         {/* Breadcrumbs */}

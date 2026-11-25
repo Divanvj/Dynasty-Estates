@@ -54,6 +54,9 @@ jobs:
       - name: Run unsubscribe-token tests
         run: node tests/unsubscribe-token.test.mjs
 
+      - name: Run structured-data escaping tests
+        run: node tests/json-ld.test.mjs
+
       # Firestore security rules (S1-4): every role and collection against the
       # local emulator, which needs Java. No secrets: the demo- project id keeps
       # the emulator offline.

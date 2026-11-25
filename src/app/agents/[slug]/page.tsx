@@ -8,6 +8,7 @@ import { ShieldCheckIcon, PhoneIcon, WhatsAppIcon } from "@/components/icons";
 import { getAgentByIdOrSlug, verifiedPractitioners } from "@/lib/agents-data";
 import { getPropertyList } from "@/lib/property-data";
 import { absoluteUrl } from "@/lib/site-url";
+import { jsonLd } from "@/lib/json-ld";
 
 // The catalogue changes without a deploy (listings published, sold, removed),
 // so this page is rebuilt at most every 5 minutes. Without it the build-time
@@ -134,11 +135,11 @@ export default async function AgentProfilePage({
     <main className="min-h-screen bg-[var(--background)] px-3 py-4 text-slate-900 md:px-8 dark:text-white">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(agentSchema) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(agentSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbSchema) }}
       />
 
       <div className="mx-auto max-w-6xl">
