@@ -12,6 +12,7 @@ type TestResult = { result: { status: string; reason?: string; error?: string; m
 
 const KIND: Record<string, string> = {
   enquiry: "New enquiry",
+  tenant_application: "Tenancy application",
   agency_invite: "Agency invitation",
   ops_alert: "Nightly alert",
   weekly_report: "Weekly report",

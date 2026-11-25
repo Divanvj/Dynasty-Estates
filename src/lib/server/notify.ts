@@ -3,7 +3,7 @@ import { FieldValue } from "firebase-admin/firestore";
 import { AdminUnavailableError, adminApp, adminAuth, adminDb } from "./firebase-admin";
 import { optOutLink } from "./email-prefs";
 import { sendMail, type MailResult } from "./mail";
-import { agencyInviteEmail, enquiryEmail } from "./mail-templates";
+import { agencyInviteEmail, applicationEmail, enquiryEmail } from "./mail-templates";
 
 /**
  * Notifications that follow a user's own write. The browser saves the record
@@ -105,6 +105,55 @@ export async function notifyEnquiry(caller: { uid: string; email: string | null 
     to: { email: owner.email, name: owner.displayName ?? undefined },
     replyTo: caller.email ? { email: caller.email, name: String(data.contactName ?? "") || undefined } : undefined,
     ref: `inquiries/${inquiryId}`,
+    ...mail,
+  });
+  await record(path, "ownerNotify", result.status, result.status === "skipped" ? result.reason : result.status === "failed" ? result.error : undefined);
+  return { status: result.status };
+}
+
+/** E-mails a listing's owner about a new tenancy application, filed by the caller. */
+export async function notifyApplication(caller: { uid: string; email: string | null }, applicationId: string): Promise<Outcome> {
+  const path = `applications/${applicationId}`;
+  const data = await claim(path, "ownerNotify", (d) => {
+    if (d.applicantId !== caller.uid) throw new NotifyError("Only the tenant who filed this application can do this.", 403);
+  });
+  if (!data) return { status: "already" };
+
+  const ownerId = typeof data.ownerId === "string" ? data.ownerId : "";
+  if (!ownerId) {
+    await record(path, "ownerNotify", "no_recipient", "The listing has no owner (sample listing).");
+    return { status: "no_recipient" };
+  }
+  const owner = await adminAuth().getUser(ownerId).catch(() => null);
+  if (!owner?.email || owner.disabled) {
+    await record(path, "ownerNotify", "no_recipient", "The owner has no e-mail address or is disabled.");
+    return { status: "no_recipient" };
+  }
+  // The title comes from the listing itself, not from the tenant's copy of it.
+  const listingId = String(data.propertyId ?? "");
+  const listing = listingId ? (await adminDb().doc(`properties/${listingId}`).get()).data() : undefined;
+  const role = owner.customClaims?.role;
+  const inboxPath = role === "agent" || role === "admin" ? "/agent/enquiries#applications" : "/seller/portal#applications";
+
+  const mail = applicationEmail({
+    listingTitle: String(listing?.title ?? data.propertyTitle ?? ""),
+    listingId,
+    reference: `DY-TEN-${applicationId.slice(-6).toUpperCase()}`,
+    applicantName: String(data.fullName ?? ""),
+    // The verified address on the tenant's session, not a field they typed.
+    applicantEmail: caller.email,
+    applicantPhone: String(data.phone ?? ""),
+    occupationDate: String(data.occupationDate ?? ""),
+    leaseTerm: String(data.leaseTerm ?? ""),
+    inboxPath,
+    optOut: optOutLink(ownerId, "enquiryEmails"),
+  });
+  const result = await sendMail({
+    kind: "tenant_application",
+    optOut: { uid: ownerId, pref: "enquiryEmails" },
+    to: { email: owner.email, name: owner.displayName ?? undefined },
+    replyTo: caller.email ? { email: caller.email, name: String(data.fullName ?? "") || undefined } : undefined,
+    ref: path,
     ...mail,
   });
   await record(path, "ownerNotify", result.status, result.status === "skipped" ? result.reason : result.status === "failed" ? result.error : undefined);

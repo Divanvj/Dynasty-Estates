@@ -14,7 +14,7 @@ export const revalidate = 300;
 export const metadata: Metadata = {
   title: "Properties & Apartments To Rent in South Africa",
   description:
-    "Discover verified executive apartments, family homes, and security estate rentals across South Africa. Features transparent move-in schedules and digital tenant vetting.",
+    "Discover verified executive apartments, family homes, and security estate rentals across South Africa. Features transparent move-in schedules and online tenancy applications.",
   alternates: {
     canonical: absoluteUrl("/to-rent"),
   },
@@ -74,7 +74,7 @@ export default async function ToRentNationalPage() {
             Executive Properties & Apartments To Rent in South Africa
           </h1>
           <p className="mt-2 text-sm text-slate-600 max-w-3xl leading-relaxed dark:text-slate-300">
-            Browse verified luxury rentals across all 9 provinces. Transparent upfront fee schedules, 1-click digital tenancy applications with TPN vetting, and solar energy backup.
+            Browse verified luxury rentals across all 9 provinces. Transparent upfront fee schedules, online tenancy applications sent straight to the letting agent, and solar energy backup.
           </p>
         </div>
 

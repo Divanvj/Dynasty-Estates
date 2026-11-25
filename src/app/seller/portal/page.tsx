@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 import { EnquiryList, useOwnerInquiries } from "@/components/enquiry-inbox";
 import RoleGuard from "@/components/role-guard";
+import TenancyApplications from "@/components/tenancy-applications";
 import { auth } from "@/lib/firebase";
 import { ACTIVE_CATALOGUE_STATUSES, PUBLIC_LISTING_STATUSES } from "@/lib/types/domain";
 import { CLOSED_LISTING_STATUSES, getSellerListings, type SellerListing } from "@/lib/seller-listings";
@@ -225,6 +226,9 @@ export default function SellerPortal() {
 
           <EnquiryList {...inbox} emptyMessage="No enquiries yet. When a buyer messages you or asks to view one of your homes, it shows here." />
         </section>
+
+        {/* Online tenancy applications, when this owner lets out a home. */}
+        <TenancyApplications uid={user === undefined ? undefined : (user?.uid ?? null)} />
       </div>
     </main>
     </RoleGuard>

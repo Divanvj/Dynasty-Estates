@@ -13,6 +13,8 @@ interface TenantApplicationModalProps {
   onClose: () => void;
   propertyId: string;
   propertyTitle: string;
+  /** The listing's owner (letting agent or landlord), who receives the application. */
+  ownerId?: string;
   monthlyRentZAR: number;
   depositZAR?: number;
 }
@@ -22,6 +24,7 @@ export default function TenantApplicationModal({
   onClose,
   propertyId,
   propertyTitle,
+  ownerId,
   monthlyRentZAR,
   depositZAR,
 }: TenantApplicationModalProps) {
@@ -92,6 +95,7 @@ export default function TenantApplicationModal({
         applicantEmail: signedInUser.email ?? null,
         propertyId,
         propertyTitle,
+        ownerId,
         fullName,
         idNumber,
         email,
@@ -309,7 +313,10 @@ export default function TenantApplicationModal({
                 </div>
               </div>
 
-              {/* TPN Credit Consent Checkbox */}
+              {/* Credit and reference consent. The checks are run by the
+                  listing's agent or landlord (usually through a credit bureau
+                  such as TPN); Dynasty Estates passes the application on and
+                  runs no check itself, so the consent names who actually does. */}
               <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-surface-ink/60 p-3">
                 <label className="flex items-start gap-2.5 cursor-pointer">
                   <input
@@ -320,10 +327,15 @@ export default function TenantApplicationModal({
                     className="mt-0.5 h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer accent-emerald-500"
                   />
                   <span className="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
-                    I hereby give consent to Dynasty Estates to perform a credit bureau verification via{" "}
-                    <span className="font-bold text-slate-900 dark:text-emerald-400">TPN (Tenant Profile Network)</span> and contact my employer and prior landlord for references under the National Credit Act and POPIA.
+                    I consent to the listing&rsquo;s letting agent or landlord, or a registered credit bureau acting for them, checking my
+                    credit record and contacting my employer and previous landlord for references for this application, under the National
+                    Credit Act and POPIA.
                   </span>
                 </label>
+                <p className="mt-2 pl-6 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
+                  Your application goes to the listing&rsquo;s agent or landlord and to Dynasty Estates administrators, and is used only for
+                  this rental.
+                </p>
               </div>
 
               {error ? (
@@ -360,7 +372,9 @@ export default function TenantApplicationModal({
               {refNumber || "DY-TEN-849201"}
             </div>
             <p className="text-xs text-slate-600 dark:text-slate-400 max-w-sm mx-auto">
-              Your application is saved. The listing practitioner will review it and contact you to collect FICA documents (3 months bank statements & payslips).
+              {ownerId
+                ? "Your application has been sent to the listing’s agent or landlord. They will review it and contact you to collect FICA documents (3 months’ bank statements and payslips)."
+                : "Your application is saved. Our team will review it and contact you about the next steps."}
             </p>
             <button
               onClick={handleReset}

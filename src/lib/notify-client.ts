@@ -6,7 +6,7 @@ import { auth } from "./firebase";
  * saved, so a failed e-mail must never turn the user's action into an error.
  * The outcome is logged on the server (mail_log, /console/email).
  */
-export function requestNotification(path: "/api/notify/enquiry" | "/api/notify/agency-invite", body: Record<string, string>): void {
+export function requestNotification(path: "/api/notify/enquiry" | "/api/notify/application" | "/api/notify/agency-invite", body: Record<string, string>): void {
   const user = auth?.currentUser;
   if (!user) return;
   void user

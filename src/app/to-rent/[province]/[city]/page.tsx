@@ -130,7 +130,7 @@ export default async function ToRentLocationPage({
             Executive Properties & Apartments To Rent in {cityName}, {provName}
           </h1>
           <p className="mt-2 text-sm text-slate-600 max-w-3xl leading-relaxed dark:text-slate-300">
-            Browse premium rental homes in {cityName}. Benefit from transparent move-in fee schedules, 1-click digital tenancy applications with TPN vetting, and solar energy backup.
+            Browse premium rental homes in {cityName}. Benefit from transparent move-in fee schedules, online tenancy applications sent straight to the letting agent, and solar energy backup.
           </p>
         </div>
 

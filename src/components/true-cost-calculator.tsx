@@ -31,6 +31,7 @@ export default function TrueCostCalculator({
   furnishedStatus,
   propertyId,
   propertyTitle,
+  ownerId,
 }: {
   askingPriceZAR: number;
   monthlyLevy?: number;
@@ -42,6 +43,8 @@ export default function TrueCostCalculator({
   /** When given, "Apply to Lease" opens the real tenancy application for this listing. */
   propertyId?: string;
   propertyTitle?: string;
+  /** The listing's owner, who receives a tenancy application. */
+  ownerId?: string;
 }) {
   const [purchasePrice, setPurchasePrice] = useState<number>(askingPriceZAR);
   const [depositPercent, setDepositPercent] = useState<number>(10);
@@ -561,6 +564,7 @@ export default function TrueCostCalculator({
             onClose={() => setShowTenantApplication(false)}
             propertyId={propertyId}
             propertyTitle={propertyTitle}
+            ownerId={ownerId}
             monthlyRentZAR={monthlyRent}
             depositZAR={depositZAR}
           />

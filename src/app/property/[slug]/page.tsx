@@ -622,6 +622,7 @@ export default async function PropertyPage({
                   <TenantApplicationButton
                     propertyId={property.id}
                     propertyTitle={property.title}
+                    ownerId={property.ownerId}
                     monthlyRentZAR={property.numericPrice}
                     depositZAR={property.depositRequired}
                   />
@@ -640,6 +641,7 @@ export default async function PropertyPage({
               furnishedStatus={property.furnishedStatus}
               propertyId={property.id}
               propertyTitle={property.title}
+              ownerId={property.ownerId}
             />
 
             {/* Move-In Cost Schedule for Rentals */}
@@ -658,7 +660,7 @@ export default async function PropertyPage({
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Lease Prep & TPN Vetting Fee:</span>
+                    <span>Lease Prep & Vetting Fee:</span>
                     <span className="font-semibold text-slate-900 dark:text-white">R 1,500</span>
                   </div>
                   <div className="flex justify-between">
