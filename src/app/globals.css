@@ -1860,3 +1860,22 @@ html, body { overflow-x: clip; }
     content: none;
   }
 }
+
+/*
+ * Home hero photo fade (owner chose "low", 25 Nov 2026). The page colour, so it
+ * follows light and dark: a light band at the top so the floating header reads,
+ * then a rise from the bottom behind the headline and search that ends in solid
+ * page colour, so the photo dissolves into the sections below without an edge.
+ * Kept apart from the .hh-* headline block (claimed by the other machine).
+ */
+.home-hero-fade {
+  background:
+    linear-gradient(to bottom, color-mix(in srgb, var(--background) 55%, transparent) 0%, transparent 14%),
+    linear-gradient(
+      to top,
+      var(--background) 0%,
+      color-mix(in srgb, var(--background) 82%, transparent) 20%,
+      color-mix(in srgb, var(--background) 38%, transparent) 40%,
+      transparent 62%
+    );
+}

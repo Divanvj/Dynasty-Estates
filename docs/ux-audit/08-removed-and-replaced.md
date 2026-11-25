@@ -523,3 +523,12 @@ Nothing visible changed.
 
 - **Replaced - "Loading search engine..." then a browser-side Firestore query** with results rendered on the server. The catalogue is cached for 5 minutes (like the home page), so a listing published, sold or removed can take up to 5 minutes to show or drop off /search.
 - **Kept**: filtering, sorting and view switching still happen in the browser; if the server can't load the catalogue the browser tries once more and shows the error as before.
+
+## Home hero: full-width photo (25 Nov, owner)
+
+- **Replaced - the frosted hero panel** (rounded glass card, no picture) with a full-width photo hero: our own 3D render of a coastal living room opening onto a pool and the sea. It runs under the floating header from `lg`, starts under the phone bar below `lg`, and has no caption or place name because it is not a listing.
+- **Added - the low fade**: the page colour rises from the bottom behind the headline and search and ends in solid page colour, plus a light band at the top for the header. Dark mode dims the photo.
+- **Removed - "Popular in SA" chips** (Johannesburg, Cape Town, Pretoria East, Solar & Inverter, Security Estate) under the search bar, at the owner's request. The same places are one search away; the filters panel keeps Solar and Security.
+- **Changed - Spotlight first slide** is no longer preloaded; the hero photo is now the page's largest paint.
+- **Unchanged**: headline (HeroHeadline), the search panel and its For Sale default, header and menus (checked: Sell, Tools and Profile menus and the filters dialog all open above the hero and take clicks).
+- **Not done**: live PageSpeed (after merge); the scroll-driven camera move (concept A) is parked.

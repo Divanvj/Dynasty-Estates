@@ -121,7 +121,7 @@ export default function HomeSpotlight({ properties }: { properties: PropertyReco
             {/* next/image, not a CSS background (U2): a background is found only
                 once the CSS has been applied, and it was the full-size original
                 — the home page's largest paint on a phone at 14 s on slow 4G.
-                Now it is a resized AVIF/WebP, and the first slide is preloaded.
+                Now it is a resized AVIF/WebP (no longer preloaded: the hero photo above leads).
                 Only the current slide and its two neighbours are mounted, as
                 before. */}
             {slides.map((slide, i) => {
@@ -141,7 +141,9 @@ export default function HomeSpotlight({ properties }: { properties: PropertyReco
                       src={slide.image}
                       alt=""
                       fill
-                      preload={i === 0}
+                      // Not preloaded since the photo hero (25 Nov): the hero
+                      // photo is now the page's largest paint, and the
+                      // Spotlight starts below the fold.
                       sizes="(max-width: 1440px) 100vw, 1400px"
                       className="object-cover object-center"
                     />
