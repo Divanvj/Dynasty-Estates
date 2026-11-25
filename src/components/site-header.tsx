@@ -1,5 +1,6 @@
 import AccountActions from "@/components/account-actions";
 import BrandLogo from "@/components/brand-logo";
+import SiteHeaderReveal from "@/components/site-header-reveal";
 import SiteNavigation from "@/components/site-navigation";
 
 /**
@@ -20,15 +21,17 @@ import SiteNavigation from "@/components/site-navigation";
  * the DOM, painted over the open dropdowns. Page content stays at ≤ z-50;
  * dialogs that must cover the header sit at z-[80] or above (or portal to the
  * body, as ExpandableSearchPanel does).
+ *
+ * SiteHeaderReveal makes it sticky and brings it back on any small scroll up.
  */
 export default function SiteHeader() {
   return (
-    <div className="no-print relative z-[60] hidden px-8 pt-6 lg:block">
-      <header className="mx-auto flex max-w-[1440px] items-center justify-between rounded-card border border-white/70 bg-white/40 px-6 py-3 shadow-[0_12px_30px_rgba(36,48,50,0.06)] backdrop-blur-xl dark:border-white/10 dark:bg-[#0b1719]/70 dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
+    <SiteHeaderReveal>
+      <header className="pointer-events-auto mx-auto flex max-w-[1440px] items-center justify-between rounded-card border border-white/70 bg-white/40 px-6 py-3 shadow-[0_12px_30px_rgba(36,48,50,0.06)] backdrop-blur-xl dark:border-white/10 dark:bg-[#0b1719]/70 dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
         <BrandLogo />
         <SiteNavigation />
         <AccountActions />
       </header>
-    </div>
+    </SiteHeaderReveal>
   );
 }

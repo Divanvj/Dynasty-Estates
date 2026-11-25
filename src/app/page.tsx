@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import BrandLogo from "@/components/brand-logo";
 import HeroHeadline from "@/components/hero-headline";
+import HomeHeroPhoto from "@/components/home-hero-photo";
 import HomeHeroSearch from "@/components/home-hero-search";
 import HomeTrendingListings from "@/components/home-trending-listings";
 import { SparklesIcon } from "@/components/icons";
@@ -27,10 +28,38 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-transparent px-3 py-4 text-slate-900 dark:text-slate-100 md:px-6 lg:px-8">
-      <div className="mx-auto max-w-[1500px]">
-        {/* Full-Width Hero Section */}
-        <section id="discover" className="relative z-40 mx-auto mt-4 sm:mt-6 max-w-[1440px]">
-          <div className="relative rounded-card sm:rounded-panel border border-white/70 bg-white/45 dark:border-white/10 dark:bg-surface-panel/65 p-3.5 sm:p-6 shadow-[0_20px_45px_rgba(36,48,50,0.08)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.5)] backdrop-blur-xl md:p-8 lg:p-10">
+        {/*
+          Full-width photo hero (owner, 25 Nov 2026). Was a frosted panel with
+          no picture, which read as plain. Now the hero runs edge to edge over
+          our own render of a coastal home (HomeHeroPhoto), with the page
+          colour fading up from the bottom behind the headline and search.
+
+          It sits outside the 1500px container, and the negative margins undo
+          <main>'s padding so the photo reaches both edges. From `lg` the
+          floating SiteHeader (z-[60], 98px tall with its top gap) sits over
+          the photo: -mt (98px + main's 16px top padding) pulls the hero up under it, and the top padding
+          keeps the content clear of it. Below `lg` the phone bar is sticky and
+          solid, so the photo starts under it.
+
+          z-40, the same layer the hero always had: under the header and its
+          menus (z-[60]/61), over the sections below. No transform or filter
+          on this section: the search panel's full-screen dialog is `fixed`,
+          and either would trap it inside the hero.
+
+          The scroll-driven camera move (HomeHeroScene, inside HomeHeroPhoto):
+          from `lg`, when motion is allowed, the section is 70vh taller than
+          its stage and the stage is sticky, so the hero holds still while the
+          camera moves through the house; the search stays in place and usable
+          the whole time. Phones and reduced motion get no hold. `sticky` does
+          not trap the fixed filters dialog (only transform/filter would).
+        */}
+        <section
+          id="discover"
+          className="relative z-40 -mx-3 -mt-4 md:-mx-6 lg:-mx-8 lg:-mt-[114px] motion-safe:lg:h-[calc(min(860px,94vh)+70vh)]"
+        >
+          <div className="relative isolate flex min-h-[580px] flex-col justify-end sm:min-h-[640px] lg:h-[min(860px,94vh)] lg:min-h-0 motion-safe:lg:sticky motion-safe:lg:top-0">
+          <HomeHeroPhoto />
+          <div className="mx-auto w-full max-w-[1440px] px-3 pb-8 pt-40 sm:px-6 sm:pb-12 md:px-8 lg:px-10 lg:pb-16">
             {/*
               <AmbientCursorHue heroScoped /> was mounted here: an animated
               aurora field with cursor parallax, running a canvas and a
@@ -71,8 +100,10 @@ export default async function Home() {
               they describe a real query. Removed per the Improvement Notes.
             */}
           </div>
+          </div>
         </section>
 
+      <div className="mx-auto max-w-[1500px]">
         {/* Spotlight — led by the viewer's own recent views, falling back to the
             catalogue's best for a first-time visitor. Was a single hardcoded
             Camps Bay listing with a stock photograph, shown to everyone. */}
