@@ -45,30 +45,34 @@ AI_CONCIERGE_API_KEY="sk-..."
 
 ---
 
-## 3. Database Migration & Deployment Procedure
+## 3. Deployment Procedure
 
-1. **Pre-flight Check**:
+Every change reaches the live site through a pull request into `main`.
+
+1. **Checks.** CI runs these on every pull request and every push to `main`; run them locally before opening one:
    ```bash
    npm run lint
+   npx tsc --noEmit
    npm run build
+   npm run test:rules            # Firestore rules, on the local emulator (needs Java 21)
    ```
-2. **Apply Security Rules**:
+   plus the unit tests in `tests/` (see `.github/workflows/ci.yml` for the full list).
+2. **Web app.** Merge the pull request into `main`. Vercel builds and deploys every push to `main`, and every pull request gets a preview deployment first: check the preview before merging. Do not run `vercel --prod` from a laptop: it uploads the working folder, untracked files included, instead of what is on `main`.
+3. **Firebase rules and indexes** (owner's OK first; needs the Firebase CLI login):
    ```bash
-   firebase deploy --only firestore:rules,storage:rules
+   npm run firebase:deploy:rules      # Firestore rules
+   npm run firebase:deploy:indexes    # Firestore indexes
+   npm run firebase:deploy:storage    # Storage rules
    ```
-3. **Execute Production Build & Deployment**:
-   ```bash
-   vercel --prod
-   ```
-4. **Health Check Validation**:
-   - Query `https://dynastyestates.co.za/api/progress` to verify system health and release version.
+   These deploy only what is on `origin/main`, refuse if your copy differs, and run the matching rule tests first. Add `-- --dry-run` to check without deploying. Never run `firebase deploy` directly: it would deploy your working copy.
+4. **Check.** `GET /api/platform/build` on the live site returns the commit that is live; open a listing and check its photos load.
 
 ---
 
 ## 4. Rollback Procedure
 
-If a critical incident or regression occurs post-deployment:
-1. **Instant Web Rollback**: In the Vercel/Hosting dashboard, designate the previous production deployment as the Instant Active Alias (under 15 seconds).
-2. **Database Schema Rollback**: Revert any non-additive migrations using pre-tested down-migrations. Additive schema migrations should maintain backward compatibility with previous client versions.
-3. **Audit Incident**: Record root cause analysis in `docs/INCIDENT_LOG.md`.
+1. **Web app.** In the Vercel dashboard, promote the previous production deployment (Instant Rollback). Then revert the bad commit on `main` with a pull request, so the next push does not bring it back.
+2. **Rules.** The Firebase console keeps each project's rules history, so a previous ruleset can be republished there at once. Then revert the rules change on `main` with a pull request, so the files and the live rules agree again.
+3. **Data.** There is no way to roll back data yet: Firestore point-in-time recovery and scheduled backups are not switched on (audit item 1.8). Until they are, treat any bulk data change as permanent.
+4. **Record it.** Add a dated note on what happened, why and what fixed it to the Go-Live Tracker's updates (or `docs/TO-DO.md`).
 
