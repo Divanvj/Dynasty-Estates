@@ -81,19 +81,28 @@ service cloud.firestore {
       function mayStartListing() {
         return request.auth.token.get('developer', false) == true;
       }
+      // A listing never carries its owner's e-mail address (audit item 1.5):
+      // once published, anyone can read it. Buyers reach the owner through
+      // enquiries, which the server e-mails. Listings filed before then may
+      // still have one, so an edit may remove it but never add or change it.
+      function ownerEmailOnlyRemoved() {
+        return !('ownerEmail' in request.resource.data)
+          || !request.resource.data.diff(resource.data).affectedKeys().hasAny(['ownerEmail']);
+      }
       allow create: if signedIn()
         && mayStartListing()
+        && !('ownerEmail' in request.resource.data)
         && request.resource.data.ownerId == request.auth.uid
         && (isAgentOrAdmin()
             || (request.resource.data.status in ['Draft', 'Submitted']
                 && !request.resource.data.keys().hasAny(['example', 'sale'])
                 && request.resource.data.get('agentId', request.auth.uid) == request.auth.uid));
-      allow update: if isAgentOrAdmin()
+      allow update: if ownerEmailOnlyRemoved() && (isAgentOrAdmin()
         || (signedIn()
             && resource.data.ownerId == request.auth.uid
             && request.resource.data.ownerId == resource.data.ownerId
             && request.resource.data.status in ['Draft', 'Submitted', 'Paused', 'Archived']
-            && !request.resource.data.diff(resource.data).affectedKeys().hasAny(ownerProtectedFields()));
+            && !request.resource.data.diff(resource.data).affectedKeys().hasAny(ownerProtectedFields())));
       allow delete: if isAgentOrAdmin()
         || (signedIn() && resource.data.ownerId == request.auth.uid);
     }

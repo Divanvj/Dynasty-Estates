@@ -46,7 +46,11 @@ export type ModerationItem = {
   id: string;
   propertyId: string;
   title: string;
-  sellerEmail: string;
+  /**
+   * The listing's owner. Their e-mail address is no longer on the listing
+   * (audit item 1.5); an admin gets it through /api/admin/listing-seller.
+   */
+  ownerId: string | null;
   price: string;
   location: string;
   qualityScore: number;
@@ -72,7 +76,7 @@ const fallbackModerationQueue: ModerationItem[] = [
     id: "mod-1",
     propertyId: "prop-bryanston-1",
     title: "Bryanston Contemporary Villa with Solar",
-    sellerEmail: "seller@bryanston.co.za",
+    ownerId: null,
     price: "R 7,500,000",
     location: "Bryanston, Johannesburg, Gauteng",
     qualityScore: 92,
@@ -84,7 +88,7 @@ const fallbackModerationQueue: ModerationItem[] = [
     id: "mod-2",
     propertyId: "prop-campsbay-2",
     title: "Camps Bay Luxury Ocean View Villa",
-    sellerEmail: "unverified@agentmail.co.za",
+    ownerId: null,
     price: "R 24,000,000",
     location: "Camps Bay, Cape Town, Western Cape",
     qualityScore: 86,
@@ -143,7 +147,7 @@ export async function getPendingModerationQueue(): Promise<ModerationItem[]> {
         id: d.id,
         propertyId: data.propertyId ?? d.id,
         title: data.title ?? "Untitled",
-        sellerEmail: data.ownerEmail ?? "Unknown",
+        ownerId: typeof data.ownerId === "string" && data.ownerId ? data.ownerId : null,
         price: data.price ?? "On request",
         location: data.location ?? "",
         qualityScore: Number(data.qualityScore ?? 80),

@@ -22,6 +22,7 @@ import {
   collection,
   connectFirestoreEmulator,
   deleteDoc,
+  deleteField,
   doc,
   getDoc,
   getDocs,
@@ -199,6 +200,14 @@ await check("signed-out query over every listing", false, () => getDocs(collecti
 await check("seller files a listing for review", true, () => setDoc(doc(devSeller, "properties/new1"), { ownerId: "seller1", status: "Submitted", title: "New" }));
 await check("seller publishes their own listing directly", false, () => setDoc(doc(devSeller, "properties/new2"), { ownerId: "seller1", status: "Published", title: "Sneaky" }));
 await check("seller files a listing under someone else", false, () => setDoc(doc(devSeller, "properties/new3"), { ownerId: "seller2", status: "Submitted" }));
+// ---- item 1.5: no owner e-mail address on a listing
+// Filed before item 1.5, so it still carries the owner's e-mail address.
+await seed("properties/oldWithEmail", { ownerId: "seller1", status: "Draft", title: "Old listing", ownerEmail: "seller1@example.test" });
+await check("seller files a listing carrying their e-mail address", false, () => setDoc(doc(devSeller, "properties/newEmail"), { ownerId: "seller1", status: "Submitted", title: "New", ownerEmail: "seller1@example.test" }));
+await check("seller edits an old listing without touching its address", true, () => updateDoc(doc(seller, "properties/oldWithEmail"), { title: "Old listing, edited" }));
+await check("seller changes the address on an old listing", false, () => updateDoc(doc(seller, "properties/oldWithEmail"), { ownerEmail: "someone@example.test" }));
+await check("agent adds an address to a listing", false, () => updateDoc(doc(agent, "properties/pub1"), { ownerEmail: "seller1@example.test" }));
+await check("seller's edit removes the old address", true, () => updateDoc(doc(seller, "properties/oldWithEmail"), { ownerEmail: deleteField(), title: "Old listing" }));
 await check("buyer starts a listing without a paid package", false, () => setDoc(doc(buyer, "properties/paywall1"), { ownerId: "buyer1", status: "Submitted", agentId: "buyer1" }));
 await check("seller starts a listing without a paid package", false, () => setDoc(doc(seller, "properties/paywall2"), { ownerId: "seller1", status: "Submitted", agentId: "seller1" }));
 await check("agent starts a listing without a paid package", false, () => setDoc(doc(agent, "properties/paywall3"), { ownerId: "agentA", status: "Submitted" }));
@@ -331,7 +340,7 @@ await check("owner files a fingerprint with their new listing (batch)", true, as
 await check("new listing as the app writes it: physical record + listing + fingerprint in one batch", true, async () => {
   const b = writeBatch(devSeller);
   b.set(doc(devSeller, "physical_properties/physNew"), { ownerId: "seller1", bedrooms: 3, bathrooms: 2, createdAt: now() });
-  b.set(doc(devSeller, "properties/withPhys"), { propertyId: "physNew", ownerId: "seller1", ownerEmail: "seller1@example.test", agentId: "seller1", status: "Submitted", title: "Batch", createdAt: now() });
+  b.set(doc(devSeller, "properties/withPhys"), { propertyId: "physNew", ownerId: "seller1", agentId: "seller1", status: "Submitted", title: "Batch", createdAt: now() });
   b.set(doc(devSeller, "photo_fingerprints/fp4"), { hash: "fedcba9876543212", bands: ["a", "b", "c", "d"], ownerId: "seller1", listingId: "withPhys", createdAt: now() });
   await b.commit();
 });
