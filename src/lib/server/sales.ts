@@ -2,6 +2,10 @@ import { FieldValue } from "firebase-admin/firestore";
 
 import { AdminUnavailableError, adminApp, adminAuth, adminDb } from "./firebase-admin";
 import {
+  bandAmount,
+  bandDays,
+  bandRatio,
+  countBand,
   DATE_PATTERN,
   median,
   MIN_SALES,
@@ -189,7 +193,8 @@ const norm = (s: unknown) => String(s ?? "").trim().toLowerCase();
 /**
  * Area figures from recorded sales over the last SALES_MONTHS. `area` matches
  * the sale's suburb or city. Anyone may read these: prices that weren't agreed
- * to be shown only ever appear inside a median of MIN_SALES or more.
+ * to be shown only ever appear inside a median of MIN_SALES or more, rounded
+ * into bands, and the number of sales only as a band (audit item 2.10).
  */
 export async function salesSummary(filter: { kind: SaleKind; area?: string; type?: string; now?: number }): Promise<SalesSummary> {
   const now = filter.now ?? Date.now();
@@ -223,13 +228,14 @@ export async function salesSummary(filter: { kind: SaleKind; area?: string; type
 
   return {
     kind: filter.kind,
-    count: rows.length,
+    hasSales: rows.length > 0,
+    countBand: countBand(rows.length),
     figures: enough
       ? {
-          medianPrice: Math.round(median(rows.map((d) => Number(d.price)))!),
-          medianRatio: ratios.length >= MIN_SALES ? median(ratios) : null,
-          medianDays: days.length >= MIN_SALES ? Math.round(median(days)!) : null,
-          medianPerSqm: perSqm.length >= MIN_SALES ? Math.round(median(perSqm)!) : null,
+          medianPrice: bandAmount(median(rows.map((d) => Number(d.price)))!),
+          medianRatio: ratios.length >= MIN_SALES ? bandRatio(median(ratios)!) : null,
+          medianDays: days.length >= MIN_SALES ? bandDays(median(days)!) : null,
+          medianPerSqm: perSqm.length >= MIN_SALES ? bandAmount(median(perSqm)!) : null,
         }
       : null,
     publicSales,

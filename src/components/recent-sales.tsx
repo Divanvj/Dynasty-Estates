@@ -65,7 +65,7 @@ export function RecentSales({
         <SummaryStrip
           label={`Recorded ${noun}s`}
           items={[
-            { label: rental ? "Median rent" : "Median sold price", value: rand(data.figures.medianPrice), note: `${data.count} ${noun}s · ${areaLabel}`, tone: "accent" },
+            { label: rental ? "Median rent" : "Median sold price", value: `about ${rand(data.figures.medianPrice)}`, note: `${data.countBand} ${noun}s · ${areaLabel}`, tone: "accent" },
             {
               label: rental ? "Rent vs asking" : "Sold vs asking",
               value: data.figures.medianRatio !== null ? `${Math.round(data.figures.medianRatio * 100)}%` : "–",
@@ -74,20 +74,20 @@ export function RecentSales({
             {
               label: rental ? "Days to let" : "Days to sell",
               value: data.figures.medianDays !== null ? String(data.figures.medianDays) : "–",
-              note: data.figures.medianDays !== null ? "Median, from going live" : `Fewer than ${MIN_SALES} had both dates`,
+              note: data.figures.medianDays !== null ? "Median, from going live, to the nearest 5" : `Fewer than ${MIN_SALES} had both dates`,
             },
             {
               label: "Median per m²",
-              value: data.figures.medianPerSqm !== null ? rand(data.figures.medianPerSqm) : "–",
+              value: data.figures.medianPerSqm !== null ? `about ${rand(data.figures.medianPerSqm)}` : "–",
               note: data.figures.medianPerSqm !== null ? "Where a floor size was given" : `Fewer than ${MIN_SALES} gave a floor size`,
             },
           ]}
         />
       ) : (
         <p className="mb-4 text-sm text-slate-700 dark:text-slate-300">
-          {data.count === 0
+          {!data.hasSales
             ? `No ${noun}s recorded on Dynasty here yet.`
-            : `${data.count} ${noun}${data.count === 1 ? "" : "s"} recorded here; figures need at least ${MIN_SALES}, so no one home's price can be worked out from them.`}
+            : `Fewer than ${MIN_SALES} ${noun}s recorded here; figures need at least ${MIN_SALES}, so no one home's price can be worked out from them.`}
         </p>
       )}
 
@@ -133,7 +133,7 @@ export function RecentSales({
             </div>
           </section>
         )
-      ) : data.count > 0 ? (
+      ) : data.hasSales ? (
         <p className="text-sm text-slate-600 dark:text-slate-400">No seller here has agreed to show their price, so none are listed one by one.</p>
       ) : null}
       <p className="mt-3 text-xs text-slate-600 dark:text-slate-400">{source}</p>
