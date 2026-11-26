@@ -6,7 +6,7 @@ import { ConsoleRequestError, consoleJson, dateTime, timeAgo, useConsole, useCon
 import type { ConsoleUser } from "../_lib/types";
 import { Button, Empty, ErrorNotice, PageHeader, Panel, Pill, RefreshButton, SkeletonRows, StateBadge, cx } from "../_components/ui";
 
-const ROLES = ["buyer", "seller", "agent", "admin", "developer"] as const;
+const ROLES = ["buyer", "seller", "agent", "moderator", "admin", "developer"] as const;
 
 type Pending = { uid: string; kind: "role"; role: string } | { uid: string; kind: "disable" | "enable" | "revoke" };
 

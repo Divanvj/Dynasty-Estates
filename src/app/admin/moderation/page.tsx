@@ -14,6 +14,7 @@ import {
   formatAge,
   ListingThumb,
   listingStatusTone,
+  linkClass,
   PageHeading,
   panelClass,
   primaryButtonClass,
@@ -94,7 +95,7 @@ function ModerationQueue() {
   const term = search.trim().toLowerCase();
   const visible = items
     .filter((item) => show === "all" || (item.fraudSignals ?? []).length > 0)
-    .filter((item) => !term || `${item.title} ${item.sellerEmail} ${item.location}`.toLowerCase().includes(term));
+    .filter((item) => !term || `${item.title} ${item.location}`.toLowerCase().includes(term));
   const selected = visible.find((item) => item.id === selectedId) ?? visible[0] ?? null;
   const note = selected ? notes[selected.id] ?? "" : "";
 
@@ -133,7 +134,7 @@ function ModerationQueue() {
     setBusy(true);
     setActionError(null);
     try {
-      await executeModerationDecision(item.id, decision, feedback, user.uid, user.email ?? user.uid);
+      await executeModerationDecision(user, item.id, decision, feedback);
     } catch (error) {
       setActionError(error instanceof Error ? error.message : `Could not apply the "${decision}" decision.`);
       setBusy(false);
@@ -251,7 +252,7 @@ function ModerationQueue() {
                           tone={now - new Date(item.submittedAt).getTime() > QUEUE_TARGET_MS ? "late" : "neutral"}
                         />
                       </span>
-                      <span className="truncate text-xs text-slate-600 dark:text-slate-400">{item.location || item.sellerEmail}</span>
+                      <span className="truncate text-xs text-slate-600 dark:text-slate-400">{item.location || "Location not given"}</span>
                       {flagged ? (
                         <span className="mt-1 inline-flex w-fit items-center gap-1 rounded-full bg-[var(--dash-down-soft)] px-2 py-0.5 text-xs font-semibold text-[var(--dash-down)]">
                           <InfoCircleIcon className="h-3.5 w-3.5" /> Fraud signal
@@ -301,7 +302,7 @@ function ModerationQueue() {
               <p className="mt-1 text-lg font-semibold tabular-nums text-slate-900 dark:text-white">{selected.price}</p>
               <dl className="mt-3 grid gap-x-6 gap-y-1 text-sm sm:grid-cols-2">
                 <div><dt className="inline text-slate-600 dark:text-slate-400">Where: </dt><dd className="inline">{selected.location || "Not given"}</dd></div>
-                <div><dt className="inline text-slate-600 dark:text-slate-400">Seller: </dt><dd className="inline break-all">{selected.sellerEmail}</dd></div>
+                <div><dt className="inline text-slate-600 dark:text-slate-400">Seller: </dt><dd className="inline break-all">{selected.ownerId ? <SellerContact key={selected.id} listingId={selected.id} /> : "No owner on record"}</dd></div>
                 <div><dt className="inline text-slate-600 dark:text-slate-400">Submitted: </dt><dd className="inline">{formatDate(selected.submittedAt)} ({formatAge(new Date(selected.submittedAt), now)} ago)</dd></div>
               </dl>
 
@@ -381,5 +382,66 @@ export default function AdminModerationPage() {
     <Suspense fallback={<p role="status" className="text-sm text-slate-600 dark:text-slate-400">Loading…</p>}>
       <ModerationQueue />
     </Suspense>
+  );
+}
+
+/**
+ * "Contact seller": the listing owner's name and e-mail address, fetched for
+ * an admin from /api/admin/listing-seller when asked. The address used to sit
+ * on the listing itself (ownerEmail), where anyone could read it once the
+ * listing was published (audit item 1.5).
+ */
+function SellerContact({ listingId }: { listingId: string }) {
+  const { user } = useAuth();
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [seller, setSeller] = useState<{ name: string | null; email: string | null } | null>(null);
+
+  async function load() {
+    if (!user) return;
+    setBusy(true);
+    setError(null);
+    try {
+      const token = await user.getIdToken();
+      const response = await fetch("/api/admin/listing-seller", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ listingId }),
+      });
+      const body = (await response.json().catch(() => null)) as { error?: string; name?: string | null; email?: string | null } | null;
+      if (!response.ok) throw new Error(body?.error ?? "The seller’s details couldn’t be loaded.");
+      setSeller({ name: body?.name ?? null, email: body?.email ?? null });
+    } catch (loadError) {
+      setError(loadError instanceof Error ? loadError.message : "The seller’s details couldn’t be loaded.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  if (seller) {
+    return (
+      <>
+        {seller.name ? `${seller.name} · ` : ""}
+        {seller.email ? (
+          <a href={`mailto:${seller.email}`} className={linkClass}>
+            {seller.email}
+          </a>
+        ) : (
+          "No e-mail address on the account"
+        )}
+      </>
+    );
+  }
+  return (
+    <>
+      <button type="button" onClick={() => void load()} disabled={busy || !user} className={`${linkClass} disabled:opacity-60`}>
+        {busy ? "Loading…" : "Contact seller"}
+      </button>
+      {error ? (
+        <span role="alert" className="ml-2 text-xs text-[var(--dash-down)]">
+          {error}
+        </span>
+      ) : null}
+    </>
   );
 }

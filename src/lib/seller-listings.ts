@@ -67,7 +67,6 @@ export const MANDATE_LABEL: Record<MandateType, string> = { sole: "Sole mandate"
 
 export type ListingFormData = {
   ownerId: string;
-  ownerEmail: string | null;
   title: string;
   location: string;
   suburb?: string;
@@ -298,7 +297,10 @@ export async function createSellerListing(formData: ListingFormData): Promise<st
   batch.set(listing, {
     propertyId: physicalPropertyRef.id,
     ownerId: formData.ownerId,
-    ownerEmail: formData.ownerEmail,
+    // No ownerEmail (audit item 1.5): a published listing is readable by
+    // anyone, so the owner's address must not be on it. Buyers reach the owner
+    // through the enquiry buttons, which the server e-mails; admins see the
+    // address through /api/admin/listing-seller.
     // Who a buyer contacts about this listing. The creator is the contact, so
     // it starts as the owner. It only resolves to a callable practitioner once
     // that account is a registered agent — a private seller's listing correctly
@@ -399,7 +401,6 @@ export async function loadListingForEdit(listingId: string, uid: string): Promis
     moderationFeedback: typeof data.moderationFeedback === "string" && data.moderationFeedback ? data.moderationFeedback : undefined,
     form: {
       ownerId: uid,
-      ownerEmail: data.ownerEmail ?? null,
       title: data.title ?? "",
       location: data.location ?? "",
       suburb,
@@ -463,6 +464,9 @@ export async function updateSellerListing(
     ...editableListingFields(formData, status),
     // A fresh submission is reviewed on its own merits, not against old notes.
     ...(status === "Submitted" ? { moderationFeedback: deleteField() } : {}),
+    // Listings filed before item 1.5 carry the owner's e-mail address in
+    // public view; the next edit removes it.
+    ownerEmail: deleteField(),
     updatedAt: serverTimestamp(),
   });
   const known = new Set(edit.existingPhotoIds);

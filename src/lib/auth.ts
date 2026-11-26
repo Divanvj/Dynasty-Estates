@@ -110,7 +110,9 @@ const ROLE_TO_PERSONA: Record<string, PersonaRole> = {
   agent: "Agent",
   agency_admin: "Admin",
   admin: "Admin",
-  moderator: "Admin",
+  // Its own persona since item 1.3: a moderator reviews listings and nothing
+  // else, so it must not be shown the admin screens the rules would refuse.
+  moderator: "Moderator",
   developer: "Developer",
 };
 
@@ -119,6 +121,7 @@ const ROLE_LANDING: Record<PersonaRole, string> = {
   Seller: "/seller/portal",
   Agent: "/agent/dashboard",
   Admin: "/admin",
+  Moderator: "/admin/moderation",
   Developer: "/console",
 };
 
@@ -179,7 +182,7 @@ export async function resolveAccount(
  */
 export async function switchTestRole(
   user: User,
-  role: "buyer" | "seller" | "agent" | "admin" | "developer",
+  role: "buyer" | "seller" | "agent" | "moderator" | "admin" | "developer",
 ): Promise<{ role: PersonaRole; landing: string }> {
   const token = await user.getIdToken();
   const response = await fetch("/api/console/test-role", {

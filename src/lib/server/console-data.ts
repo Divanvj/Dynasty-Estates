@@ -706,7 +706,8 @@ export async function runIntegrityScan(): Promise<{ ranAt: string; findings: Int
 
 // ---------------------------------------------------------------- users
 
-export const ASSIGNABLE_ROLES = ["buyer", "seller", "agent", "admin", "developer"] as const;
+// "moderator" reviews listings and reads the audit trail, nothing else (item 1.3).
+export const ASSIGNABLE_ROLES = ["buyer", "seller", "agent", "moderator", "admin", "developer"] as const;
 export type AssignableRole = (typeof ASSIGNABLE_ROLES)[number];
 
 /**

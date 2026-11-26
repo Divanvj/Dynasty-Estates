@@ -22,6 +22,7 @@ import {
   collection,
   connectFirestoreEmulator,
   deleteDoc,
+  deleteField,
   doc,
   getDoc,
   getDocs,
@@ -130,6 +131,10 @@ const principal = as("principal1", { role: "agent", email: "principal1@example.t
 const member = as("member1", { role: "agent", email: "member1@example.test" });
 const invitee = as("invitee1", { role: "agent", email: "invitee1@example.test" });
 const admin = as("admin1", { role: "admin", email: "admin1@example.test" });
+// Reviews listings and reads the audit trail; nothing else (item 1.3).
+const moderator = as("mod1", { role: "moderator", email: "mod1@example.test" });
+// agentA on a developer account, so it may start a listing (paid packages).
+const devAgent = as("agentA", { role: "agent", developer: true, email: "agenta@example.test" });
 // A role claim the app never issues: it must not count as anything.
 const fakeRole = as("faker1", { role: "superuser", email: "faker1@example.test" });
 
@@ -191,7 +196,11 @@ await check("anyone reads a published listing", true, () => getDoc(doc(stranger,
 await check("signed-out visitor reads a draft", false, () => getDoc(doc(stranger, "properties/draft1")));
 await check("another seller reads someone's draft", false, () => getDoc(doc(seller2, "properties/draft1")));
 await check("owner reads their own draft", true, () => getDoc(doc(seller, "properties/draft1")));
-await check("agent reads a submitted listing (moderation)", true, () => getDoc(doc(agent, "properties/sub1")));
+await check("agent reads someone else's submitted listing", false, () => getDoc(doc(agent, "properties/sub1")));
+await check("moderator reads a submitted listing", true, () => getDoc(doc(moderator, "properties/sub1")));
+await check("admin reads a submitted listing", true, () => getDoc(doc(admin, "properties/sub1")));
+await check("moderator lists the review queue", true, () => getDocs(query(collection(moderator, "properties"), where("status", "==", "Submitted"))));
+await check("agent lists the review queue", false, () => getDocs(query(collection(agent, "properties"), where("status", "==", "Submitted"))));
 await check("made-up role reads a draft", false, () => getDoc(doc(fakeRole, "properties/draft1")));
 await check("catalogue query on Published", true, () => getDocs(query(collection(stranger, "properties"), where("status", "==", "Published"))));
 await check("signed-out query over every listing", false, () => getDocs(collection(stranger, "properties")));
@@ -199,6 +208,14 @@ await check("signed-out query over every listing", false, () => getDocs(collecti
 await check("seller files a listing for review", true, () => setDoc(doc(devSeller, "properties/new1"), { ownerId: "seller1", status: "Submitted", title: "New" }));
 await check("seller publishes their own listing directly", false, () => setDoc(doc(devSeller, "properties/new2"), { ownerId: "seller1", status: "Published", title: "Sneaky" }));
 await check("seller files a listing under someone else", false, () => setDoc(doc(devSeller, "properties/new3"), { ownerId: "seller2", status: "Submitted" }));
+// ---- item 1.5: no owner e-mail address on a listing
+// Filed before item 1.5, so it still carries the owner's e-mail address.
+await seed("properties/oldWithEmail", { ownerId: "seller1", status: "Draft", title: "Old listing", ownerEmail: "seller1@example.test" });
+await check("seller files a listing carrying their e-mail address", false, () => setDoc(doc(devSeller, "properties/newEmail"), { ownerId: "seller1", status: "Submitted", title: "New", ownerEmail: "seller1@example.test" }));
+await check("seller edits an old listing without touching its address", true, () => updateDoc(doc(seller, "properties/oldWithEmail"), { title: "Old listing, edited" }));
+await check("seller changes the address on an old listing", false, () => updateDoc(doc(seller, "properties/oldWithEmail"), { ownerEmail: "someone@example.test" }));
+await check("agent adds an address to a listing", false, () => updateDoc(doc(agent, "properties/pub1"), { ownerEmail: "seller1@example.test" }));
+await check("seller's edit removes the old address", true, () => updateDoc(doc(seller, "properties/oldWithEmail"), { ownerEmail: deleteField(), title: "Old listing" }));
 await check("buyer starts a listing without a paid package", false, () => setDoc(doc(buyer, "properties/paywall1"), { ownerId: "buyer1", status: "Submitted", agentId: "buyer1" }));
 await check("seller starts a listing without a paid package", false, () => setDoc(doc(seller, "properties/paywall2"), { ownerId: "seller1", status: "Submitted", agentId: "seller1" }));
 await check("agent starts a listing without a paid package", false, () => setDoc(doc(agent, "properties/paywall3"), { ownerId: "agentA", status: "Submitted" }));
@@ -209,7 +226,10 @@ await check("seller pauses their own listing", true, () => updateDoc(doc(seller,
 await check("seller hands their listing to another owner", false, () => updateDoc(doc(seller, "properties/draft1"), { ownerId: "seller2" }));
 await check("another seller edits someone's listing", false, () => updateDoc(doc(seller2, "properties/draft1"), { title: "Hijacked" }));
 await check("another seller deletes someone's listing", false, () => deleteDoc(doc(seller2, "properties/sub1")));
-await check("agent publishes a submitted listing", true, () => updateDoc(doc(agent, "properties/sub1"), { status: "Published" }));
+await check("agent publishes someone else's submitted listing", false, () => updateDoc(doc(agent, "properties/sub1"), { status: "Published" }));
+await check("moderator publishes from the browser (must use the server)", false, () => updateDoc(doc(moderator, "properties/sub1"), { status: "Published" }));
+await check("agent files a new listing straight into Published", false, () => setDoc(doc(devAgent, "properties/agentNew1"), { ownerId: "agentA", status: "Published", title: "Self-published" }));
+await check("agent files a new listing for review", true, () => setDoc(doc(devAgent, "properties/agentNew2"), { ownerId: "agentA", status: "Submitted", title: "For review" }));
 await check("made-up role publishes a listing", false, () => updateDoc(doc(fakeRole, "properties/draft1"), { status: "Published" }));
 await check("seller marks their own listing as a Dynasty example (example: true)", false, () => updateDoc(doc(seller, "properties/draft1"), { example: true }));
 await check("seller points their listing's contact at another agent (agentId)", false, () => updateDoc(doc(seller, "properties/draft1"), { agentId: "agentA" }));
@@ -218,12 +238,28 @@ await check("seller files a new listing as an example", false, () => setDoc(doc(
 await check("seller files a new listing with another agent as contact", false, () => setDoc(doc(devSeller, "properties/new6"), { ownerId: "seller1", status: "Submitted", agentId: "agentA" }));
 await check("seller files a listing with themselves as contact (what the app sends)", true, () => setDoc(doc(devSeller, "properties/new7"), { ownerId: "seller1", status: "Submitted", agentId: "seller1" }));
 await check("seller edits their listing's title and price", true, () => updateDoc(doc(seller, "properties/draft1"), { title: "Renamed", price: "R 2 000 000" }));
-await check("agent marks a listing as an example", true, () => updateDoc(doc(agent, "properties/agentPub"), { example: true }));
-await gap("any agent edits another agent's listing (price, title)", () => updateDoc(doc(agentB, "properties/agentPub"), { price: "R 1" }));
-await gap("any agent deletes another agent's listing", () => deleteDoc(doc(agentB, "properties/memberPub")));
+await check("agent marks their own listing as an example", false, () => updateDoc(doc(agent, "properties/agentPub"), { example: true }));
+await check("admin marks a listing as an example", true, () => updateDoc(doc(admin, "properties/agentPub"), { example: true }));
+await check("admin takes the example mark off again", true, () => updateDoc(doc(admin, "properties/agentPub"), { example: false }));
+await check("agent edits another agent's listing (price, title)", false, () => updateDoc(doc(agentB, "properties/agentPub"), { price: "R 1" }));
+await check("agent deletes another agent's listing", false, () => deleteDoc(doc(agentB, "properties/memberPub")));
+await check("agent edits their own live listing and keeps it live", true, () => updateDoc(doc(agent, "properties/agentPub"), { price: "R 2 000 000" }));
+await check("agent pauses their own live listing", true, () => updateDoc(doc(agent, "properties/agentPub"), { status: "Paused" }));
+await check("agent puts their paused listing back live (needs review)", false, () => updateDoc(doc(agent, "properties/agentPub"), { status: "Published" }));
+await check("agent hands their listing to another owner", false, () => updateDoc(doc(agent, "properties/agentPub"), { ownerId: "agentB" }));
+await check("principal reads a member's listing", true, () => getDoc(doc(principal, "properties/memberPub")));
+await check("principal edits a member's listing", true, () => updateDoc(doc(principal, "properties/memberPub"), { price: "R 3 000 000" }));
+await check("principal deletes a member's listing", false, () => deleteDoc(doc(principal, "properties/memberPub")));
+await check("other agent reads a member's paused listing", false, async () => {
+  await updateDoc(doc(member, "properties/memberPub"), { status: "Paused" });
+  await getDoc(doc(agentB, "properties/memberPub"));
+});
+await check("moderator edits a listing's price", false, () => updateDoc(doc(moderator, "properties/memberPub"), { price: "R 1" }));
 
 await check("anyone reads a physical property", true, () => getDoc(doc(stranger, "physical_properties/phys1")));
 await check("another seller edits someone's physical property", false, () => updateDoc(doc(seller2, "physical_properties/phys1"), { bedrooms: 9 }));
+await check("an agent edits someone's physical property", false, () => updateDoc(doc(agent, "physical_properties/phys1"), { bedrooms: 9 }));
+await check("an agent deletes someone's physical property", false, () => deleteDoc(doc(agent, "physical_properties/phys1")));
 await check("owner edits their physical property", true, () => updateDoc(doc(seller, "physical_properties/phys1"), { bedrooms: 4 }));
 
 // ================================================================= accounts
@@ -331,7 +367,7 @@ await check("owner files a fingerprint with their new listing (batch)", true, as
 await check("new listing as the app writes it: physical record + listing + fingerprint in one batch", true, async () => {
   const b = writeBatch(devSeller);
   b.set(doc(devSeller, "physical_properties/physNew"), { ownerId: "seller1", bedrooms: 3, bathrooms: 2, createdAt: now() });
-  b.set(doc(devSeller, "properties/withPhys"), { propertyId: "physNew", ownerId: "seller1", ownerEmail: "seller1@example.test", agentId: "seller1", status: "Submitted", title: "Batch", createdAt: now() });
+  b.set(doc(devSeller, "properties/withPhys"), { propertyId: "physNew", ownerId: "seller1", agentId: "seller1", status: "Submitted", title: "Batch", createdAt: now() });
   b.set(doc(devSeller, "photo_fingerprints/fp4"), { hash: "fedcba9876543212", bands: ["a", "b", "c", "d"], ownerId: "seller1", listingId: "withPhys", createdAt: now() });
   await b.commit();
 });
@@ -344,6 +380,8 @@ await check("a batch whose physical record names someone else writes nothing", f
 await check("…and the listing from that failed batch does not exist", false, () => getDoc(doc(admin, "properties/withPhysBad")).then((s) => { if (!s.exists()) throw Object.assign(new Error("missing"), { code: "permission-denied" }); }));
 await check("fingerprint filed against someone else's listing", false, () => setDoc(doc(seller2, "photo_fingerprints/fp3"), { hash: "fedcba9876543211", bands: ["a", "b", "c", "d"], ownerId: "seller2", listingId: "pub1", createdAt: now() }));
 await check("fingerprint edited after filing", false, () => updateDoc(doc(seller, "photo_fingerprints/fp1"), { hash: "0000000000000000" }));
+await check("an agent deletes someone's photo fingerprint", false, () => deleteDoc(doc(agent, "photo_fingerprints/fp1")));
+await check("owner deletes their own photo fingerprint", true, () => deleteDoc(doc(seller, "photo_fingerprints/fp1")));
 
 await check("owner reads their collection", true, () => getDoc(doc(buyer, "collections/col1")));
 await check("someone else reads the collection", false, () => getDoc(doc(buyer2, "collections/col1")));
@@ -360,7 +398,11 @@ await check("owner reads their listing stats", true, () => getDoc(doc(seller, "l
 await check("owner inflates their own view count", false, () => updateDoc(doc(seller, "listing_stats/pub1_20261119"), { views: 9999 }));
 await check("someone else reads the listing stats", false, () => getDoc(doc(seller2, "listing_stats/pub1_20261119")));
 
-await check("agent files an audit entry as themselves", true, () => addDoc(collection(agent, "audit_logs"), { actorId: "agentA", actorEmail: "agenta@example.test", action: "approve", resource: "sub1" }));
+await check("moderator reads the audit trail", true, () => getDoc(doc(moderator, "audit_logs/log1")));
+await check("admin reads the audit trail", true, () => getDoc(doc(admin, "audit_logs/log1")));
+await check("agent reads the audit trail", false, () => getDoc(doc(agent, "audit_logs/log1")));
+await check("admin files an audit entry from the browser (server only)", false, () => addDoc(collection(admin, "audit_logs"), { actorId: "admin1", actorEmail: "admin1@example.test", action: "approve", resource: "sub1", details: "", createdAt: now() }));
+await check("agent files an audit entry as themselves", false, () => addDoc(collection(agent, "audit_logs"), { actorId: "agentA", actorEmail: "agenta@example.test", action: "approve", resource: "sub1" }));
 await check("audit entry filed in someone else's name", false, () => addDoc(collection(agent, "audit_logs"), { actorId: "agentB", actorEmail: "x", action: "approve", resource: "sub1" }));
 await check("audit entry edited", false, () => updateDoc(doc(admin, "audit_logs/log1"), { action: "reject" }));
 await check("seller reads the audit trail", false, () => getDoc(doc(seller, "audit_logs/log1")));

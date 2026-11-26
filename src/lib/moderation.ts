@@ -1,35 +1,17 @@
+import type { User } from "firebase/auth";
 import {
-  addDoc,
   collection,
-  doc,
   getDocs,
   limit,
   orderBy,
   query,
-  serverTimestamp,
-  updateDoc,
   where,
 } from "firebase/firestore";
 
 import { db, isFirebaseConfigured } from "./firebase";
+import { statusForDecision, type ModerationDecision } from "./moderation-decisions";
 import { type ListingLifecycleStatus } from "./types/domain";
 
-/**
- * Approving a listing publishes it. It used to write "Approved", which is not in
- * the rules' public read list, so a moderator could approve a listing and it
- * would stay invisible to every visitor with nothing reporting a problem.
- * "Approved" remains in the vocabulary for a future two-step review flow.
- */
-function statusForDecision(decision: ModerationDecision): ListingLifecycleStatus {
-  switch (decision) {
-    case "Approved":
-      return "Published";
-    case "Needs changes":
-      return "Needs changes";
-    case "Rejected":
-      return "Archived";
-  }
-}
 import {
   findDuplicatesInCatalog,
   type DuplicateMatchResult,
@@ -40,13 +22,17 @@ import {
 } from "./server/property-service";
 import type { PropertyRecord } from "./property-data";
 
-export type ModerationDecision = "Approved" | "Needs changes" | "Rejected";
+export type { ModerationDecision } from "./moderation-decisions";
 
 export type ModerationItem = {
   id: string;
   propertyId: string;
   title: string;
-  sellerEmail: string;
+  /**
+   * The listing's owner. Their e-mail address is no longer on the listing
+   * (audit item 1.5); an admin gets it through /api/admin/listing-seller.
+   */
+  ownerId: string | null;
   price: string;
   location: string;
   qualityScore: number;
@@ -72,7 +58,7 @@ const fallbackModerationQueue: ModerationItem[] = [
     id: "mod-1",
     propertyId: "prop-bryanston-1",
     title: "Bryanston Contemporary Villa with Solar",
-    sellerEmail: "seller@bryanston.co.za",
+    ownerId: null,
     price: "R 7,500,000",
     location: "Bryanston, Johannesburg, Gauteng",
     qualityScore: 92,
@@ -84,7 +70,7 @@ const fallbackModerationQueue: ModerationItem[] = [
     id: "mod-2",
     propertyId: "prop-campsbay-2",
     title: "Camps Bay Luxury Ocean View Villa",
-    sellerEmail: "unverified@agentmail.co.za",
+    ownerId: null,
     price: "R 24,000,000",
     location: "Camps Bay, Cape Town, Western Cape",
     qualityScore: 86,
@@ -143,7 +129,7 @@ export async function getPendingModerationQueue(): Promise<ModerationItem[]> {
         id: d.id,
         propertyId: data.propertyId ?? d.id,
         title: data.title ?? "Untitled",
-        sellerEmail: data.ownerEmail ?? "Unknown",
+        ownerId: typeof data.ownerId === "string" && data.ownerId ? data.ownerId : null,
         price: data.price ?? "On request",
         location: data.location ?? "",
         qualityScore: Number(data.qualityScore ?? 80),
@@ -161,94 +147,36 @@ export async function getPendingModerationQueue(): Promise<ModerationItem[]> {
   }
 }
 
-export async function recordAuditLog({
-  actorId,
-  actorEmail,
-  action,
-  resource,
-  details,
-}: {
-  actorId: string;
-  actorEmail?: string;
-  action: string;
-  resource: string;
-  details: string;
-}): Promise<void> {
-  const newLog: AuditLogEntry = {
-    id: `log-${Date.now()}`,
-    actorId,
-    actorEmail,
-    action,
-    resource,
-    details,
-    timestamp: new Date().toISOString(),
-  };
-
-  fallbackAuditLogs.unshift(newLog);
-
-  if (isFirebaseConfigured && db) {
-    try {
-      await addDoc(collection(db, "audit_logs"), {
-        actorId,
-        actorEmail: actorEmail ?? "system",
-        action,
-        resource,
-        details,
-        createdAt: serverTimestamp(),
-      });
-    } catch (error) {
-      // The `audit_logs` rule only accepts this exact field set, from a
-      // practitioner, with actorId == their own uid — so adding a field here
-      // means updating firestore.rules in the same change. Swallowing the
-      // error meant the audit trail existed only in an in-memory array while
-      // the console reported "Audit log recorded".
-      console.error("Failed to write audit log:", error);
-      throw new Error("Could not record the audit log entry.", { cause: error });
-    }
-  }
-}
-
+/**
+ * Applies a moderator's decision through /api/admin/moderation, which checks
+ * the caller is an admin or moderator, changes the listing's status and files
+ * the audit entry in one transaction (item 1.3). The browser used to do both
+ * itself, as two separate writes any agent was allowed to make.
+ */
 export async function executeModerationDecision(
+  user: User,
   listingId: string,
   decision: ModerationDecision,
   feedback: string,
-  moderatorId: string,
-  moderatorEmail: string
 ): Promise<void> {
-  const targetStatus = statusForDecision(decision);
-
-  const item = fallbackModerationQueue.find((i) => i.id === listingId);
-  if (item) {
-    item.status = targetStatus;
+  if (!isFirebaseConfigured || !db) {
+    // Demo mode: no Firebase, so only the sample queue changes.
+    const item = fallbackModerationQueue.find((i) => i.id === listingId);
+    if (item) item.status = statusForDecision(decision);
+    return;
   }
 
-  await recordAuditLog({
-    actorId: moderatorId,
-    actorEmail: moderatorEmail,
-    action: `moderation.${decision.toLowerCase().replace(" ", "_")}`,
-    resource: `properties/${listingId}`,
-    details: `Decision: ${decision}. Feedback: ${feedback || "None"}`,
+  const token = await user.getIdToken();
+  const response = await fetch("/api/admin/moderation", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ listingId, decision, feedback }),
   });
-
-  if (isFirebaseConfigured && db) {
-    try {
-      await updateDoc(doc(db, "properties", listingId), {
-        status: targetStatus,
-        moderationFeedback: feedback,
-        moderatedBy: moderatorId,
-        moderatedAt: serverTimestamp(),
-        // Stamped on the transition to Published so structured data can emit a
-        // real datePosted instead of a hardcoded one, and so a listing's history
-        // has a first-published date to work from.
-        ...(targetStatus === "Published" ? { publishedAt: serverTimestamp() } : {}),
-      });
-    } catch (error) {
-      // The admin console reported "Listing successfully marked as Approved"
-      // regardless of what happened here. The decision has to fail loudly, or a
-      // moderator believes they have published something they have not.
-      console.error("Failed to apply moderation decision:", error);
-      throw new Error(`Could not apply the "${decision}" decision to this listing.`, { cause: error });
-    }
+  const body = (await response.json().catch(() => null)) as { error?: string } | null;
+  if (!response.ok) {
+    // The decision has to fail loudly, or a moderator believes they have
+    // published something they have not.
+    throw new Error(body?.error ?? `Could not apply the "${decision}" decision to this listing.`);
   }
 }
 

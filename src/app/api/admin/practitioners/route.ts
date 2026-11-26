@@ -17,8 +17,8 @@ export const dynamic = "force-dynamic";
  * role claim (and the profile's display mirror). Admin and developer accounts
  * keep their role: they already reach the agent console, and claimsForRole
  * would strip a developer's flag. Reject needs a note, which the applicant
- * sees. Both file an append-only audit_logs entry, in the shape the rule for
- * client-filed entries requires.
+ * sees. Both file an append-only audit_logs entry, in the same shape as every
+ * other entry (only the server writes the audit trail since item 1.3).
  */
 
 type Body = { uid?: unknown; decision?: unknown; note?: unknown };

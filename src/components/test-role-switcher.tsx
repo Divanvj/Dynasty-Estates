@@ -15,12 +15,13 @@ import { useIsDeveloperAccount, useUserRole, type UserRole } from "@/lib/use-use
  * developer flag, which is why this control stays available.
  */
 
-export const TEST_ROLE_OPTIONS: Array<{ claim: "developer" | "buyer" | "seller" | "agent" | "admin"; persona: UserRole; hint: string }> = [
+export const TEST_ROLE_OPTIONS: Array<{ claim: "developer" | "buyer" | "seller" | "agent" | "moderator" | "admin"; persona: UserRole; hint: string }> = [
   { claim: "developer", persona: "Developer", hint: "Yourself, with the console" },
   { claim: "buyer", persona: "Buyer", hint: "Search, save, enquire" },
   { claim: "seller", persona: "Seller", hint: "List privately" },
   { claim: "agent", persona: "Agent", hint: "Practitioner workspace" },
-  { claim: "admin", persona: "Admin", hint: "Moderation at /admin" },
+  { claim: "moderator", persona: "Moderator", hint: "Review listings only" },
+  { claim: "admin", persona: "Admin", hint: "Everything at /admin" },
 ];
 
 export function useTestRoleSwitch(onSwitched?: (persona: UserRole) => void) {
