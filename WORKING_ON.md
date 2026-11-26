@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/intent-memory` | For Sale / To Rent kept across pages: new `lib/search-intent.ts`, `search-content.tsx`, `expandable-search-panel.tsx`, `home-trending-listings.tsx`, `property/[slug]/page.tsx` back links, for-sale / to-rent pages | 2026-11-26 |
 | ALET-ELIZE | `ALET-ELIZE/dark-hero-text` | `globals.css` hero headline block (`.hh-*`) — dark-mode hero text | 2026-11-20 |
 
 ## Recently merged
