@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 
 import PropertyGridCard from "@/components/property-grid-card";
 import { ShieldCheckIcon, PhoneIcon, WhatsAppIcon } from "@/components/icons";
-import { getAgentByIdOrSlug, verifiedPractitioners } from "@/lib/agents-data";
+import { getAgentByIdOrSlug } from "@/lib/agents-data";
 import { getPropertyList } from "@/lib/property-data";
 import { absoluteUrl } from "@/lib/site-url";
 
