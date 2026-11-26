@@ -71,7 +71,11 @@ export default function PrivacyPolicyPage() {
           <section className="space-y-2">
             <h3 className="text-sm font-bold text-slate-900 dark:text-white">4. Data Subject Rights & Deletion</h3>
             <p>
-              You maintain the statutory right to request access to, rectification of, or erasure of your personal records and saved property searches. Contact our Information Officer at <strong className="text-slate-900 dark:text-white">privacy@dynastyestates.co.za</strong>.
+              You maintain the statutory right to request access to, rectification of, or erasure of your personal records and saved property searches. Contact our Information Officer at{" "}
+              <a href="mailto:info@dynastyestates.co.za" className="font-bold text-slate-900 underline-offset-2 hover:underline dark:text-white">
+                info@dynastyestates.co.za
+              </a>
+              .
             </p>
           </section>
         </article>
