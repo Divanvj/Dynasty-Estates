@@ -54,7 +54,7 @@ export default function HomeHeroScene() {
 
     const desktop = window.matchMedia("(min-width: 768px)").matches;
     const set = desktop ? SETS.desktop : SETS.phone;
-    const frames: (HTMLImageElement | null)[] = new Array(set.count).fill(null);
+    const frames: (ImageBitmap | HTMLImageElement | null)[] = new Array(set.count).fill(null);
     let cancelled = false;
     let drawn = -1;
     let raf = 0;
@@ -87,9 +87,11 @@ export default function HomeHeroScene() {
       const ctx = canvas!.getContext("2d");
       if (!ctx) return;
       const { width: cw, height: ch } = canvas!;
-      const scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
-      const w = img.naturalWidth * scale;
-      const h = img.naturalHeight * scale;
+      const iw = img instanceof HTMLImageElement ? img.naturalWidth : img.width;
+      const ih = img instanceof HTMLImageElement ? img.naturalHeight : img.height;
+      const scale = Math.max(cw / iw, ch / ih);
+      const w = iw * scale;
+      const h = ih * scale;
       ctx.drawImage(img, (cw - w) / 2, (ch - h) * OBJECT_Y, w, h);
       drawn = pick;
     }
@@ -116,13 +118,23 @@ export default function HomeHeroScene() {
     }
     const firstPass = coarse.size;
 
+    // Decoded off the main thread with createImageBitmap. `img.decode()` was
+    // queued behind the page's own work: on a slow phone the coarse frames had
+    // downloaded half a second after the first scroll but took ~8 s more to
+    // decode, so the move stayed off. Older browsers fall back to decode().
     async function fetchFrame(i: number) {
-      const img = new Image();
-      img.decoding = "async";
-      img.src = frameUrl(set.dir, i);
+      const url = frameUrl(set.dir, i);
       try {
-        await img.decode();
-        frames[i] = img;
+        if (typeof createImageBitmap === "function") {
+          const res = await fetch(url);
+          if (!res.ok) return;
+          frames[i] = await createImageBitmap(await res.blob());
+        } else {
+          const img = new Image();
+          img.src = url;
+          await img.decode();
+          frames[i] = img;
+        }
       } catch {
         // A missing frame is skipped; the nearest loaded one is drawn.
       }
@@ -155,11 +167,27 @@ export default function HomeHeroScene() {
     // As soon as the still photo has loaded (the page's largest paint), not
     // after the whole page: waiting for window `load` also waited for every
     // listing photo below the hero, which kept the move off for 5–10s.
+    //
+    // Phones wait a little longer: until the first touch, scroll or key, or
+    // 3 s after the still, whichever comes first. On a phone the first seconds
+    // belong to the photo, the search and the page's scripts (PageSpeed mobile
+    // counted the frames against the page); the move only matters once the
+    // visitor scrolls, and the coarse pass is in well within a second of that.
     let started = false;
-    const start = () => {
-      if (started) return;
+    let timer = 0;
+    const intents = ["touchstart", "pointerdown", "keydown", "scroll"] as const;
+    const go = () => {
+      if (started || cancelled) return;
       started = true;
+      window.clearTimeout(timer);
+      intents.forEach((t) => window.removeEventListener(t, go));
       void load();
+    };
+    const start = () => {
+      if (desktop) return go();
+      if (timer) return;
+      timer = window.setTimeout(go, 3000);
+      intents.forEach((t) => window.addEventListener(t, go, { once: true, passive: true }));
     };
     const still = canvas.parentElement?.querySelector("img");
     if (!still || still.complete) start();
@@ -175,6 +203,11 @@ export default function HomeHeroScene() {
     window.addEventListener("resize", size);
     return () => {
       cancelled = true;
+      frames.forEach((f) => {
+        if (f && "close" in f) f.close(); // free decoded bitmaps
+      });
+      window.clearTimeout(timer);
+      intents.forEach((t) => window.removeEventListener(t, go));
       still?.removeEventListener("load", start);
       still?.removeEventListener("error", start);
       window.removeEventListener("load", start);
