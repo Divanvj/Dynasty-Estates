@@ -21,15 +21,17 @@ import { useEffect, useRef, useState } from "react";
  *   Desktop (from md): 36 frames, 1600×900 WebP, about 0.9 MB in all. The
  *   hero is held (sticky) for 70vh of scrolling while the camera moves; see
  *   the `motion-safe:` height on #discover in app/page.tsx.
- *   Phones: 18 upright frames, 828×1472 WebP, about 0.3 MB. Nothing is held;
- *   the move plays as the hero scrolls away, so the page is no longer.
+ *   Phones: 36 upright frames, 828×1472 WebP, about 0.65 MB (was 18; every
+ *   frame since 26 Nov, so the cross-fades are as fine as on desktop). Nothing
+ *   is held; the move plays as the hero scrolls away, so the page is no
+ *   longer. They download only after the first touch or scroll (or 3 s).
  *
  * Frames are static files in public/hero/frames, rendered with the Blender
  * set-up in hero-render/ (outside the repo).
  */
 const SETS = {
   desktop: { dir: "/hero/frames/d", count: 36 },
-  phone: { dir: "/hero/frames/p", count: 18 },
+  phone: { dir: "/hero/frames/p", count: 36 },
 } as const;
 const OBJECT_Y = 0.58; // matches the still's object-position: center 58%
 
@@ -133,8 +135,10 @@ export default function HomeHeroScene() {
     // to it, so a mouse-wheel notch (~100 px, six frames on desktop) plays as
     // a short move through the frames. Time-based, so it settles in about
     // 0.3 s at any refresh rate; the loop stops once it has caught up, so
-    // nothing runs while the page is still.
-    const GLIDE_MS = 90;
+    // nothing runs while the page is still. Phones glide for less: a finger
+    // already scrolls smoothly, and a long glide leaves the picture trailing
+    // behind it.
+    const GLIDE_MS = desktop ? 90 : 45;
     function tick(now: number) {
       raf = 0;
       const goal = target();
