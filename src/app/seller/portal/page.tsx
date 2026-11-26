@@ -218,9 +218,14 @@ export default function SellerPortal() {
               <p className="text-sm font-semibold text-emerald-800 dark:text-emerald-300">{newInquiries} new</p>
             ) : null}
           </div>
-          {/* Honest about the gap: nothing emails or texts the seller yet. */}
+          {/* Each new enquiry is also e-mailed to the owner (notify.ts, since
+              18 Nov), unless they turned it off on /alerts. No SMS yet. */}
           <p className="mb-4 text-sm text-slate-600 dark:text-slate-300">
-            Messages and viewing requests from buyers. We don&rsquo;t send email or SMS alerts yet, so check back here.
+            Messages and viewing requests from buyers. Each new one is also e-mailed to you; you can turn that off on{" "}
+            <Link href="/alerts" className="font-semibold text-emerald-800 underline-offset-2 hover:underline dark:text-emerald-300">
+              Alerts &amp; e-mails
+            </Link>
+            .
           </p>
 
           <EnquiryList {...inbox} emptyMessage="No enquiries yet. When a buyer messages you or asks to view one of your homes, it shows here." />

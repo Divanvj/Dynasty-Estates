@@ -53,7 +53,7 @@ function EnquiriesInbox() {
     <>
       <PageHeading
         title="Enquiries"
-        description="Buyers’ messages and viewing requests on your listings, newest first. Move each one through its stages as it progresses. We don’t send email or SMS alerts yet, so check back here."
+        description="Buyers’ messages and viewing requests on your listings, newest first. Move each one through its stages as it progresses. Each new one is also e-mailed to you, unless you turned that off on Alerts & e-mails."
       />
       <SummaryStrip
         label="Enquiries at a glance"
