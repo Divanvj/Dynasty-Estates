@@ -15,7 +15,20 @@ function buildSha(): string {
   }
 }
 
+/**
+ * The one Firebase Storage bucket the image optimiser may fetch from: this
+ * project's own. With a bare hostname, `/_next/image` would resize files from
+ * any Firebase project or public Google Cloud bucket (audit finding S5), feeding
+ * outside files to the optimiser and billing this project for the work. The
+ * bucket comes from the variable the browser SDK already uses, so a staging
+ * project gets its own bucket without a code change.
+ */
+const storageBucket = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "dynasty-estates.firebasestorage.app";
+
 const nextConfig: NextConfig = {
+  // No `X-Powered-By: Next.js` header: it only tells a visitor which framework,
+  // and so which published advisories, to try (audit finding S11).
+  poweredByHeader: false,
   env: {
     NEXT_PUBLIC_BUILD_SHA: buildSha(),
     NEXT_PUBLIC_BUILD_TIME: new Date().toISOString(),
@@ -44,13 +57,13 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "images.unsplash.com",
       },
+      // Listing photos and floor plans: download URLs from getDownloadURL, which
+      // all have the shape /v0/b/<bucket>/o/<encoded path>. storage.googleapis.com
+      // is not allowed: no saved photo uses it, and it would admit any public bucket.
       {
         protocol: "https",
         hostname: "firebasestorage.googleapis.com",
-      },
-      {
-        protocol: "https",
-        hostname: "storage.googleapis.com",
+        pathname: `/v0/b/${storageBucket}/o/**`,
       },
     ],
   },
