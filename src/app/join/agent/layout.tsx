@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Apply for agent access | Dynasty Estates",
+  title: "Apply for agent access",
   robots: { index: false, follow: false },
 };
 

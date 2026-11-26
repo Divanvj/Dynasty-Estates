@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Seller Portal | Dynasty Estates",
+  title: "Seller dashboard",
   robots: {
     index: false,
     follow: false,

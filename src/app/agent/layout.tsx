@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import AgentShell from "./agent-shell";
 
 export const metadata: Metadata = {
-  title: "Practitioner Workspace | Dynasty Estates",
+  title: "Agent dashboard",
   robots: {
     index: false,
     follow: false,

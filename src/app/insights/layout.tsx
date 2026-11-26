@@ -6,7 +6,7 @@ import { absoluteUrl } from "@/lib/site-url";
 // "Independent real estate analytics" were describing a feed that does not
 // exist, in the text search engines show.
 export const metadata: Metadata = {
-  title: "South Africa Property Market Insights | Dynasty Estates",
+  title: "Property market trends in South Africa",
   description:
     "How suburb growth, days on market and price per square metre will be presented on Dynasty Estates. Sample figures while the platform is in beta.",
   alternates: {
