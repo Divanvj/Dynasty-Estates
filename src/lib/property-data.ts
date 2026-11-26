@@ -370,12 +370,22 @@ const publicStatuses: readonly string[] = PUBLIC_LISTING_STATUSES;
  * long time, so plenty of records carry a tag that is really a transaction
  * label. Guarding at the display layer means it stays fixed regardless of what
  * any individual record holds.
+ *
+ * Review states are never shown either. A listing is saved with the tag "Under
+ * Review" when it is submitted, and approving it changes its status but not
+ * its tag, so every approved listing told buyers it was still under review.
+ * Where a listing stands in review is its `status`, shown to its owner in
+ * their own portal; a public card has nothing to say about it.
  */
+const REVIEW_LABELS: ReadonlySet<string> = new Set(["under review", "submitted", "pending review", "needs changes", "draft"]);
+
 export function getDisplayTag(property: Pick<PropertyRecord, "tag" | "listingType">): string | null {
   const tag = property.tag?.trim();
   if (!tag) return null;
+  const label = tag.toLowerCase();
+  if (REVIEW_LABELS.has(label)) return null;
   const transactionLabel = property.listingType === "rent" ? "to rent" : "for sale";
-  return tag.toLowerCase() === transactionLabel ? null : tag;
+  return label === transactionLabel ? null : tag;
 }
 
 /**
