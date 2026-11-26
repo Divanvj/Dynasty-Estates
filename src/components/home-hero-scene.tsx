@@ -14,6 +14,10 @@ import { useEffect, useRef, useState } from "react";
  * sixth frame first: the canvas fades in after that coarse pass and the
  * in-between frames fill in behind it.
  *
+ * Smoothness (owner, 26 Nov): the picture glides to the scroll position
+ * rather than snapping, and positions between two frames are a cross-fade of
+ * both, so 36 frames read as a continuous move. Only while scrolling.
+ *
  *   Desktop (from md): 36 frames, 1600×900 WebP, about 0.9 MB in all. The
  *   hero is held (sticky) for 70vh of scrolling while the camera moves; see
  *   the `motion-safe:` height on #discover in app/page.tsx.
@@ -56,8 +60,10 @@ export default function HomeHeroScene() {
     const set = desktop ? SETS.desktop : SETS.phone;
     const frames: (ImageBitmap | HTMLImageElement | null)[] = new Array(set.count).fill(null);
     let cancelled = false;
-    let drawn = -1;
+    let pos = -1; // the position on screen, in frames; fractional between two
+    let shown = ""; // what the canvas holds now, so an unchanged paint is skipped
     let raf = 0;
+    let lastTick = 0;
 
     function progress(): number {
       const rect = hero!.getBoundingClientRect();
@@ -72,20 +78,21 @@ export default function HomeHeroScene() {
       return Math.min(1, Math.max(0, travelled / span));
     }
 
-    function draw(force = false) {
-      raf = 0;
-      const i = Math.round(progress() * (set.count - 1));
-      // Nearest loaded frame either side, so the move works (in coarser steps)
-      // while the in-between frames are still arriving.
-      let pick = -1;
-      for (let d = 0; d < set.count && pick < 0; d++) {
-        if (frames[i - d]) pick = i - d;
-        else if (frames[i + d]) pick = i + d;
+    function target(): number {
+      return progress() * (set.count - 1);
+    }
+
+    // Nearest loaded frame either side, so the move works (in coarser steps)
+    // while the in-between frames are still arriving.
+    function nearest(i: number): number {
+      for (let d = 0; d < set.count; d++) {
+        if (frames[i - d]) return i - d;
+        if (frames[i + d]) return i + d;
       }
-      const img = pick >= 0 ? frames[pick] : null;
-      if (!img || (!force && pick === drawn)) return;
-      const ctx = canvas!.getContext("2d");
-      if (!ctx) return;
+      return -1;
+    }
+
+    function drawFrame(ctx: CanvasRenderingContext2D, img: ImageBitmap | HTMLImageElement) {
       const { width: cw, height: ch } = canvas!;
       const iw = img instanceof HTMLImageElement ? img.naturalWidth : img.width;
       const ih = img instanceof HTMLImageElement ? img.naturalHeight : img.height;
@@ -93,7 +100,55 @@ export default function HomeHeroScene() {
       const w = iw * scale;
       const h = ih * scale;
       ctx.drawImage(img, (cw - w) / 2, (ch - h) * OBJECT_Y, w, h);
-      drawn = pick;
+    }
+
+    // Blend: between two rendered frames, the next one is laid over the
+    // current one at the fraction of the way between them, so the in-between
+    // positions are a soft cross-fade instead of a held frame. Falls back to
+    // the nearest single frame while a neighbour has not loaded yet.
+    function paint(p: number, force = false) {
+      const i = Math.floor(p);
+      const f = p - i;
+      let a = i;
+      let b = -1;
+      if (!frames[i] || !frames[i + 1] || f < 0.02) a = nearest(Math.round(p));
+      else if (f > 0.98) a = i + 1;
+      else b = i + 1;
+      if (a < 0) return;
+      // Blend steps of 1/32 are invisible and spare repaints of the same picture.
+      const key = b < 0 ? `${a}` : `${a}:${Math.round(f * 32)}`;
+      if (!force && key === shown) return;
+      const ctx = canvas!.getContext("2d");
+      if (!ctx) return;
+      drawFrame(ctx, frames[a]!);
+      if (b >= 0) {
+        ctx.globalAlpha = f;
+        drawFrame(ctx, frames[b]!);
+        ctx.globalAlpha = 1;
+      }
+      shown = key;
+    }
+
+    // Glide: the picture eases towards the scroll position instead of jumping
+    // to it, so a mouse-wheel notch (~100 px, six frames on desktop) plays as
+    // a short move through the frames. Time-based, so it settles in about
+    // 0.3 s at any refresh rate; the loop stops once it has caught up, so
+    // nothing runs while the page is still.
+    const GLIDE_MS = 90;
+    function tick(now: number) {
+      raf = 0;
+      const goal = target();
+      if (pos < 0) pos = goal;
+      const dt = lastTick ? Math.min(64, now - lastTick) : 16;
+      pos += (goal - pos) * (1 - Math.exp(-dt / GLIDE_MS));
+      if (Math.abs(goal - pos) < 0.01) pos = goal;
+      paint(pos);
+      if (pos !== goal) {
+        lastTick = now;
+        raf = requestAnimationFrame(tick);
+      } else {
+        lastTick = 0;
+      }
     }
 
     function size() {
@@ -101,11 +156,12 @@ export default function HomeHeroScene() {
       const dpr = Math.min(1.5, window.devicePixelRatio || 1);
       canvas!.width = Math.round(box.width * dpr);
       canvas!.height = Math.round(box.height * dpr);
-      draw(true);
+      if (pos < 0) pos = target();
+      paint(pos, true);
     }
 
     const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(() => draw());
+      if (!raf) raf = requestAnimationFrame(tick);
     };
 
     // Coarse to fine: every sixth frame first, so the whole move is usable
@@ -152,8 +208,8 @@ export default function HomeHeroScene() {
           if (!cancelled && done === firstPass && frames.some(Boolean)) {
             size();
             setReady(true);
-          } else if (!cancelled && done > firstPass) {
-            draw(true);
+          } else if (!cancelled && done > firstPass && pos >= 0) {
+            paint(pos, true);
           }
         }
       };
