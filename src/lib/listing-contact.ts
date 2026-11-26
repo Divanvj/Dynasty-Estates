@@ -1,5 +1,5 @@
 import type { PropertyRecord } from "@/lib/property-data";
-import { authoritativeAgencies, authoritativeAgents } from "@/lib/server/property-service";
+import { authoritativeAgencies, authoritativeAgents } from "@/lib/property-service";
 import { absoluteUrl } from "@/lib/site-url";
 
 export type ListingContact = {
