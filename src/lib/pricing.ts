@@ -93,7 +93,8 @@ export const packageInclusions: string[] = [
   "Up to 30 photos, each checked for quality and for copies of other listings",
   "A floor plan, and a link to a 3D or video tour",
   "The True Cost of the home and its solar and water backup on the listing",
-  "Enquiry and viewing-request buttons on your listing",
+  "Enquiry and viewing-request buttons on your listing, with each enquiry in your seller portal and e-mailed to you",
+  "A weekly e-mail and a printable report of your listing's views, saves and enquiries",
   "A check by our team before the listing goes live",
 ];
 
@@ -101,6 +102,8 @@ export const packageInclusions: string[] = [
 export const planInclusions: string[] = [
   "The listing tools private sellers get: photos, floor plan, tour link",
   "The agent dashboard: your listings, their views and your enquiries",
+  "Each new enquiry e-mailed to you, and a weekly report of your listings every Monday",
+  "A printable report of each listing's views, saves and enquiries, to send to your seller",
   "A profile in the verified agent directory, once your PPRA registration is checked",
 ];
 
@@ -109,11 +112,9 @@ export const planInclusions: string[] = [
  * so the plan stays visible without selling anything that does not exist.
  */
 export const plannedFeatures: { name: string; detail: string }[] = [
-  { name: "Your enquiry inbox", detail: "Buyers' questions and viewing requests delivered to you, in your seller portal and by email." },
   { name: "Pay online", detail: "Card and instant EFT at checkout. Until then, we email an invoice." },
   { name: "Boosts and featured placement", detail: "Lift a listing to the top of its suburb for a day, a week or a month." },
   { name: "WhatsApp and SMS lead alerts", detail: "A new enquiry reaches your phone the moment it arrives." },
-  { name: "Listing performance reports", detail: "Views, saves and enquiries over time, to send to your seller." },
   { name: "Intelligence Console", detail: "For agents: the full funnel from search impression to sale, and cost per lead." },
   { name: "Comparable sales and CMA reports", detail: "Price a listing against similar homes nearby." },
 ];
