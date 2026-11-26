@@ -11,6 +11,18 @@ import {
   TagIcon,
 } from "@/components/icons";
 import CustomSelect from "@/components/custom-select";
+import {
+  describeDutyBracket,
+  describeDutyRange,
+  maxLoanForRepayment,
+  monthlyRepayment,
+  TRANSFER_DUTY_BRACKETS,
+  TRANSFER_DUTY_TABLE_LABEL,
+  TRANSFER_DUTY_THRESHOLD,
+  transferDuty as dutyFor,
+  transferDutyBracket,
+  VAT_RATE,
+} from "@/lib/finance";
 import { formatNumber } from "@/lib/formatters";
 
 export type CalculatorTab =
@@ -71,24 +83,14 @@ export default function CalculatorsView({
     return Math.round((purchasePrice * depositPct) / 100);
   }, [purchasePrice, depositPct]);
 
-  const transferDuty = useMemo(() => {
-    if (purchasePrice <= 1100000) return 0;
-    if (purchasePrice <= 1512500) return Math.round((purchasePrice - 1100000) * 0.03);
-    if (purchasePrice <= 2722500) return Math.round(25250 + (purchasePrice - 1512500) * 0.08);
-    if (purchasePrice <= 12100000) return Math.round(98250 + (purchasePrice - 2722500) * 0.11);
-    return Math.round(1129775 + (purchasePrice - 12100000) * 0.13);
-  }, [purchasePrice]);
+  // Duty and repayments come from src/lib/finance.ts (audit item 2.3), the one
+  // copy of the SARS table and the loan formula for every calculator.
+  const transferDuty = useMemo(() => dutyFor(purchasePrice), [purchasePrice]);
 
-  const monthlyBond = useMemo(() => {
-    const loanAmount = Math.max(0, purchasePrice - depositAmount);
-    const monthlyRate = interestRate / 100 / 12;
-    const numberOfPayments = loanYears * 12;
-    if (loanAmount <= 0 || monthlyRate <= 0) return 0;
-    return Math.round(
-      (loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments))) /
-        (Math.pow(1 + monthlyRate, numberOfPayments) - 1)
-    );
-  }, [purchasePrice, depositAmount, interestRate, loanYears]);
+  const monthlyBond = useMemo(
+    () => monthlyRepayment(Math.max(0, purchasePrice - depositAmount), interestRate, loanYears),
+    [purchasePrice, depositAmount, interestRate, loanYears],
+  );
 
   const totalMonthly = useMemo(() => {
     return monthlyBond + rates + levy;
@@ -100,15 +102,7 @@ export default function CalculatorsView({
     const netDisposable = Math.max(0, grossIncome - monthlyExpenses);
     const maxInstallment = Math.max(0, Math.min(maxInstallmentByIncome, netDisposable));
 
-    const monthlyRate = interestRate / 100 / 12;
-    const numberOfPayments = loanYears * 12;
-
-    let maxLoan = 0;
-    if (monthlyRate > 0 && maxInstallment > 0) {
-      maxLoan =
-        (maxInstallment * (Math.pow(1 + monthlyRate, numberOfPayments) - 1)) /
-        (monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments));
-    }
+    const maxLoan = maxLoanForRepayment(maxInstallment, interestRate, loanYears);
 
     // Assuming a 10% deposit, max purchase price is maxLoan / 0.9
     const maxPrice = Math.round(maxLoan / 0.9);
@@ -121,24 +115,8 @@ export default function CalculatorsView({
 
   // Tab 3 Calculations: Live SARS Transfer Duty
   const customDutyCalc = useMemo(() => {
-    let duty = 0;
-    let bracketDesc = "0% (Exempt under R1,100,000)";
-    if (customTransferPrice <= 1100000) {
-      duty = 0;
-      bracketDesc = "0% (Fully Exempt)";
-    } else if (customTransferPrice <= 1512500) {
-      duty = Math.round((customTransferPrice - 1100000) * 0.03);
-      bracketDesc = "3% on the value above R 1,100,000";
-    } else if (customTransferPrice <= 2722500) {
-      duty = Math.round(25250 + (customTransferPrice - 1512500) * 0.08);
-      bracketDesc = "R 25,250 + 8% on the value above R 1,512,500";
-    } else if (customTransferPrice <= 12100000) {
-      duty = Math.round(98250 + (customTransferPrice - 2722500) * 0.11);
-      bracketDesc = "R 98,250 + 11% on the value above R 2,722,500";
-    } else {
-      duty = Math.round(1129775 + (customTransferPrice - 12100000) * 0.13);
-      bracketDesc = "R 1,129,775 + 13% on the value above R 12,100,000";
-    }
+    const duty = dutyFor(customTransferPrice);
+    const bracketDesc = describeDutyBracket(transferDutyBracket(customTransferPrice));
     const effectiveRate = customTransferPrice > 0 ? (duty / customTransferPrice) * 100 : 0;
     return { duty, bracketDesc, effectiveRate };
   }, [customTransferPrice]);
@@ -154,7 +132,7 @@ export default function CalculatorsView({
     } else if (conveyPrice > 7000000) {
       transferAttorneyFee = 78500 + Math.round((conveyPrice - 7000000) * 0.005);
     }
-    const transferVat = Math.round(transferAttorneyFee * 0.15);
+    const transferVat = Math.round(transferAttorneyFee * VAT_RATE);
 
     // Deeds Office Transfer Fee
     let deedsTransferFee = 1185;
@@ -166,12 +144,7 @@ export default function CalculatorsView({
     const transferPetties = 1450; // FICA & disbursements
 
     // SARS Transfer duty for conveyPrice
-    let duty = 0;
-    if (conveyPrice <= 1100000) duty = 0;
-    else if (conveyPrice <= 1512500) duty = Math.round((conveyPrice - 1100000) * 0.03);
-    else if (conveyPrice <= 2722500) duty = Math.round(25250 + (conveyPrice - 1512500) * 0.08);
-    else if (conveyPrice <= 12100000) duty = Math.round(98250 + (conveyPrice - 2722500) * 0.11);
-    else duty = Math.round(1129775 + (conveyPrice - 12100000) * 0.13);
+    const duty = dutyFor(conveyPrice);
 
     const totalTransferCosts = transferAttorneyFee + transferVat + deedsTransferFee + transferPetties + duty;
 
@@ -192,7 +165,7 @@ export default function CalculatorsView({
       } else {
         bondAttorneyFee = 69000 + Math.round((conveyBond - 7000000) * 0.0045);
       }
-      bondVat = Math.round(bondAttorneyFee * 0.15);
+      bondVat = Math.round(bondAttorneyFee * VAT_RATE);
 
       if (conveyBond <= 1000000) deedsBondFee = 1185;
       else if (conveyBond <= 2000000) deedsBondFee = 1515;
@@ -242,9 +215,7 @@ export default function CalculatorsView({
       };
     }
 
-    const standardMonthly = Math.round(
-      (amortLoan * (r * Math.pow(1 + r, n))) / (Math.pow(1 + r, n) - 1)
-    );
+    const standardMonthly = monthlyRepayment(amortLoan, amortRate, amortYears);
     const originalTotalInterest = Math.round(standardMonthly * n - amortLoan);
     const acceleratedMonthly = standardMonthly + amortExtraMonthly;
 
@@ -576,7 +547,7 @@ export default function CalculatorsView({
                   <div className="flex justify-between py-2 border-t border-slate-200 dark:border-white/10 font-bold text-slate-900 dark:text-white">
                     <span>Upfront SARS Transfer Duty:</span>
                     <span className="text-emerald-800 dark:text-emerald-400">
-                      {transferDuty === 0 ? "EXEMPT (Under R1.1M)" : `R ${formatNumber(transferDuty)}`}
+                      {transferDuty === 0 ? `None (up to R ${formatNumber(TRANSFER_DUTY_THRESHOLD)})` : `R ${formatNumber(transferDuty)}`}
                     </span>
                   </div>
                 </div>
@@ -832,6 +803,7 @@ export default function CalculatorsView({
 
               <div className="overflow-hidden rounded-2xl border border-white/80 bg-white/80 shadow-sm dark:bg-surface-ink/60 dark:border-white/10">
                 <table className="w-full text-left">
+                  <caption className="caption-bottom px-4 py-2 text-left text-xs text-slate-600 dark:text-slate-400">{TRANSFER_DUTY_TABLE_LABEL}.</caption>
                   <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase font-bold text-slate-600 dark:border-white/10 dark:bg-surface-ink/90 dark:text-slate-300">
                     <tr>
                       <th className="py-3 px-4">Property Value Range</th>
@@ -839,26 +811,14 @@ export default function CalculatorsView({
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-200 dark:divide-white/10 text-slate-700 dark:text-slate-300">
-                    <tr>
-                      <td className="py-3 px-4 font-semibold">R 0 – R 1,100,000</td>
-                      <td className="py-3 px-4 text-emerald-800 font-bold dark:text-emerald-400">0% (Exempt)</td>
-                    </tr>
-                    <tr>
-                      <td className="py-3 px-4 font-semibold">R 1,100,001 – R 1,512,500</td>
-                      <td className="py-3 px-4">3% on the value above R 1,100,000</td>
-                    </tr>
-                    <tr>
-                      <td className="py-3 px-4 font-semibold">R 1,512,501 – R 2,722,500</td>
-                      <td className="py-3 px-4">R 25,250 + 8% on the value above R 1,512,500</td>
-                    </tr>
-                    <tr>
-                      <td className="py-3 px-4 font-semibold">R 2,722,501 – R 12,100,000</td>
-                      <td className="py-3 px-4">R 98,250 + 11% on the value above R 2,722,500</td>
-                    </tr>
-                    <tr>
-                      <td className="py-3 px-4 font-semibold">R 12,100,001+</td>
-                      <td className="py-3 px-4">R 1,129,775 + 13% on the value above R 12,100,000</td>
-                    </tr>
+                    {TRANSFER_DUTY_BRACKETS.map((bracket) => (
+                      <tr key={bracket.from}>
+                        <td className="py-3 px-4 font-semibold">{describeDutyRange(bracket)}</td>
+                        <td className={bracket.rate === 0 ? "py-3 px-4 text-emerald-800 font-bold dark:text-emerald-400" : "py-3 px-4"}>
+                          {describeDutyBracket(bracket)}
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
