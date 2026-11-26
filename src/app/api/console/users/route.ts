@@ -42,6 +42,10 @@ export const PATCH = consoleRoute(async (request, caller) => {
       return NextResponse.json({ error: "Only a developer can grant or remove the developer role." }, { status: 403 });
     }
     await adminAuth().setCustomUserClaims(target.uid, claimsForRole(target.customClaims, body.role));
+    // Sign the account out everywhere, so the change applies at once: an ID
+    // token keeps its old role claim for up to an hour, and a demoted admin
+    // could otherwise use that hour to promote another account (audit S9).
+    await adminAuth().revokeRefreshTokens(target.uid);
     // The profile role is a display mirror of the claim; keep them agreeing.
     await adminDb()
       .doc(`users/${target.uid}`)
@@ -53,7 +57,7 @@ export const PATCH = consoleRoute(async (request, caller) => {
     });
     return NextResponse.json({
       ok: true,
-      note: "The new role applies when that account next refreshes its sign-in (within an hour, or at once on sign-in).",
+      note: "That account was signed out everywhere; the new role applies when it next signs in.",
     });
   }
 
