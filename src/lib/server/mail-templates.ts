@@ -116,6 +116,59 @@ export function enquiryEmail(input: {
   };
 }
 
+/**
+ * To a listing's owner (letting agent or private landlord) about a tenancy
+ * application. Deliberately without the ID number or income: those stay behind
+ * sign-in, in the owner's inbox, rather than sitting in a mailbox.
+ */
+export function applicationEmail(input: {
+  listingTitle: string;
+  listingId: string;
+  reference: string;
+  applicantName: string;
+  applicantEmail: string | null;
+  applicantPhone: string;
+  occupationDate: string;
+  leaseTerm: string;
+  /** Where the owner reads their applications. */
+  inboxPath: string;
+  optOut?: OptOutLink;
+}) {
+  const title = line(input.listingTitle || "your listing", 100);
+  const applicant = line(input.applicantName || "A tenant", 80);
+  const inbox = `${SITE_URL}${input.inboxPath}`;
+  const listing = `${SITE_URL}/property/${encodeURIComponent(input.listingId)}`;
+  const rows: Array<[string, string]> = [
+    ["Reference", line(input.reference, 40)],
+    ["Name", applicant],
+    ["E-mail", input.applicantEmail ?? ""],
+    ["Phone", line(input.applicantPhone, 40)],
+    ["Move-in", line(input.occupationDate, 40)],
+    ["Lease", line(input.leaseTerm, 40)],
+  ];
+  return {
+    subject: `New tenancy application: ${title}`,
+    text: [
+      `${applicant} applied to rent ${title}.`,
+      "",
+      ...rows.filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`),
+      "",
+      "They consented to credit and reference checks for this application. Their ID number, employer and income are in your applications, behind sign-in.",
+      `Open your applications: ${inbox}`,
+      `Listing: ${listing}`,
+      ...optOutText(input.optOut),
+    ].join("\n"),
+    html: layout(
+      `New tenancy application on ${title}`,
+      paragraph(`${applicant} applied to rent your listing.`) +
+        facts(rows) +
+        paragraph("They consented to credit and reference checks for this application. Their ID number, employer and income are in your applications, behind sign-in."),
+      { label: "Open your applications", href: inbox },
+      input.optOut,
+    ),
+  };
+}
+
 export function agencyInviteEmail(input: { agencyName: string; principalName: string | null }) {
   const agency = line(input.agencyName || "an agency", 100);
   const who = input.principalName ? line(input.principalName, 80) : "The agency's principal";

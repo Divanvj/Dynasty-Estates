@@ -6,6 +6,8 @@ import TenantApplicationModal from "@/components/tenant-application-modal";
 interface TenantApplicationButtonProps {
   propertyId: string;
   propertyTitle: string;
+  /** The listing's owner, who receives the application. */
+  ownerId?: string;
   monthlyRentZAR: number;
   depositZAR?: number;
   className?: string;
@@ -14,6 +16,7 @@ interface TenantApplicationButtonProps {
 export default function TenantApplicationButton({
   propertyId,
   propertyTitle,
+  ownerId,
   monthlyRentZAR,
   depositZAR,
   className = "",
@@ -43,6 +46,7 @@ export default function TenantApplicationButton({
         onClose={() => setIsOpen(false)}
         propertyId={propertyId}
         propertyTitle={propertyTitle}
+        ownerId={ownerId}
         monthlyRentZAR={monthlyRentZAR}
         depositZAR={depositZAR}
       />

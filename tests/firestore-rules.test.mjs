@@ -150,7 +150,10 @@ await seed("physical_properties/phys1", { ownerId: "seller1", bedrooms: 3 });
 await seed("users/buyer1", { displayName: "Buyer One" });
 await seed("users/buyer1/savedProperties/pub1", { propertyId: "pub1" });
 
-await seed("applications/app1", { applicantId: "buyer1", propertyId: "pub1", creditConsent: true, status: "submitted", idNumber: "test-only" });
+await seed("applications/app1", { applicantId: "buyer1", propertyId: "pub1", ownerId: "seller1", creditConsent: true, status: "submitted", idNumber: "test-only" });
+// On a member agent's listing, so the agency principal can read it.
+await seed("applications/appMember", { applicantId: "buyer1", propertyId: "memberPub", ownerId: "member1", creditConsent: true, status: "submitted", idNumber: "test-only" });
+await seed("applications/appWithdrawn", { applicantId: "buyer1", propertyId: "pub1", ownerId: "seller1", creditConsent: true, status: "withdrawn", idNumber: "test-only" });
 
 const enq = (ownerId, status, extra = {}) => ({ userId: "buyer1", userEmail: "buyer1@example.test", ownerId, propertyId: "pub1", status, notes: "Hello", ...extra });
 await seed("inquiries/sellerNew", enq("seller1", "new"));
@@ -245,6 +248,21 @@ await check("application filed in someone else's name", false, () => setDoc(doc(
 await check("applicant reads their own application", true, () => getDoc(doc(buyer, "applications/app1")));
 await check("another buyer reads the application (ID data)", false, () => getDoc(doc(buyer2, "applications/app1")));
 await check("seller of a different home reads the application", false, () => getDoc(doc(seller2, "applications/app1")));
+await check("applicant files naming the listing's owner", true, () => setDoc(doc(buyer2, "applications/app6"), { applicantId: "buyer2", propertyId: "pub1", ownerId: "seller1", creditConsent: true, status: "submitted" }));
+await check("applicant files naming someone else as the owner", false, () => setDoc(doc(buyer2, "applications/app7"), { applicantId: "buyer2", propertyId: "pub1", ownerId: "seller2", creditConsent: true, status: "submitted" }));
+await check("listing owner reads an application on their home", true, () => getDoc(doc(seller, "applications/app1")));
+await check("listing owner lists the applications on their homes", true, () => getDocs(query(collection(seller, "applications"), where("ownerId", "==", "seller1"))));
+await check("another seller lists someone else's applications", false, () => getDocs(query(collection(seller2, "applications"), where("ownerId", "==", "seller1"))));
+await check("agency principal reads a member's application", true, () => getDoc(doc(principal, "applications/appMember")));
+await check("other agent reads a member's application", false, () => getDoc(doc(agentB, "applications/appMember")));
+await check("listing owner moves an application to checking", true, () => updateDoc(doc(seller, "applications/app1"), { status: "vetting", updatedAt: now() }));
+await check("listing owner edits the applicant's ID number", false, () => updateDoc(doc(seller, "applications/app1"), { idNumber: "changed", updatedAt: now() }));
+await check("listing owner sets a status that doesn't exist", false, () => updateDoc(doc(seller, "applications/app1"), { status: "shortlisted", updatedAt: now() }));
+await check("listing owner revives a withdrawn application", false, () => updateDoc(doc(seller, "applications/appWithdrawn"), { status: "approved", updatedAt: now() }));
+await check("seller of a different home changes the status", false, () => updateDoc(doc(seller2, "applications/app1"), { status: "declined", updatedAt: now() }));
+await check("applicant approves their own application", false, () => updateDoc(doc(buyer, "applications/app1"), { status: "approved", updatedAt: now() }));
+await check("applicant withdraws their application", true, () => updateDoc(doc(buyer, "applications/app1"), { status: "withdrawn", updatedAt: now() }));
+await check("applicant deletes their application", false, () => deleteDoc(doc(buyer, "applications/app1")));
 await check("applicant approves their own application", false, () => updateDoc(doc(buyer, "applications/app1"), { status: "approved" }));
 await check("admin deletes an application", false, () => deleteDoc(doc(admin, "applications/app1")));
 await check("an agent reads a tenant's application (ID data)", false, () => getDoc(doc(agentB, "applications/app1")));

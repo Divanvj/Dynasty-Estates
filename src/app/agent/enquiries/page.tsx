@@ -5,6 +5,7 @@ import { Suspense, useEffect, useState } from "react";
 
 import { FilterChips, formatAge, PageHeading, panelClass, SummaryStrip } from "@/components/dashboard-ui";
 import { EnquiryList, useOwnerInquiries } from "@/components/enquiry-inbox";
+import TenancyApplications from "@/components/tenancy-applications";
 import { replyFigures, REPLY_TARGET_MS } from "@/lib/dashboard-math";
 import { asStage, INQUIRY_STAGES, STAGE_LABEL, type InquiryStage } from "@/lib/seller-inquiries";
 import { useAccountUid } from "@/lib/use-owner-listings";
@@ -94,6 +95,8 @@ function EnquiriesInbox() {
           }
         />
       </section>
+      {/* Online tenancy applications on this agent's rental listings. */}
+      <TenancyApplications uid={uid} />
     </>
   );
 }

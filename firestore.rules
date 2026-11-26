@@ -108,19 +108,44 @@ service cloud.firestore {
     }
 
     // Tenancy applications carry identity-document and income data, so reads are
-    // limited to the applicant and admins. Any agent used to be able to read
-    // every application on the platform; an application carries no listing
-    // owner to scope a vetting agent to, and no agent screen reads them, so
-    // that access is closed until vetting is built with an owner on each one.
-    // Nobody may delete one, and an applicant may not edit an application
-    // after filing it or promote their own status.
+    // limited to the applicant, the listing's owner (the letting agent or
+    // private landlord, who runs the credit and reference checks), that
+    // owner's agency principal, and admins. Any agent used to be able to read
+    // every application on the platform; now each one names its listing's
+    // owner (ownerId), checked against the listing as for enquiries, and only
+    // that owner sees it. Sample listings have no owner: the field is left
+    // off and only the applicant and admins see the application.
+    // Nobody may delete one. The applicant may not edit an application after
+    // filing it or promote its status; they may only withdraw it. The owner
+    // moves it through review (submitted / vetting / approved / declined) and
+    // may change nothing else, and not once the applicant has withdrawn it.
     match /applications/{applicationId} {
+      function onlyStatusChanges() {
+        return request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt'])
+          && request.resource.data.get('updatedAt', null) == request.time;
+      }
+      function ownerOfApplication() {
+        return signedIn() && resource.data.get('ownerId', null) == request.auth.uid;
+      }
       allow create: if signedIn()
         && request.resource.data.applicantId == request.auth.uid
         && request.resource.data.creditConsent == true
-        && request.resource.data.status == 'submitted';
-      allow read: if isAdmin() || (signedIn() && resource.data.applicantId == request.auth.uid);
-      allow update: if isAdmin();
+        && request.resource.data.status == 'submitted'
+        && (!('ownerId' in request.resource.data)
+            || request.resource.data.ownerId == get(/databases/$(database)/documents/properties/$(request.resource.data.propertyId)).data.ownerId);
+      allow read: if isAdmin()
+        || (signedIn() && resource.data.applicantId == request.auth.uid)
+        || ownerOfApplication()
+        || (resource.data.get('ownerId', null) != null && principalOf(resource.data.ownerId));
+      allow update: if isAdmin()
+        || (ownerOfApplication()
+            && resource.data.status != 'withdrawn'
+            && request.resource.data.status in ['submitted', 'vetting', 'approved', 'declined']
+            && onlyStatusChanges())
+        || (signedIn()
+            && resource.data.applicantId == request.auth.uid
+            && request.resource.data.status == 'withdrawn'
+            && onlyStatusChanges());
       allow delete: if false;
     }
 
