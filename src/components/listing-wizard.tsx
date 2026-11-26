@@ -79,7 +79,6 @@ function autosaveKey(uid: string | null | undefined): string | null {
 
 const defaultFormData: ListingFormData = {
   ownerId: "",
-  ownerEmail: "",
   title: "",
   location: "",
   suburb: "",
@@ -310,7 +309,6 @@ export default function ListingWizard({ edit }: { edit?: ListingWizardEdit }) {
         // Stamp ownership from the live session rather than from form state, so
         // it cannot drift or be edited through the autosaved draft.
         ownerId: user.uid,
-        ownerEmail: user.email ?? null,
         image: coverUrl,
         gallery: [],
         location: fullLocation,
