@@ -17,6 +17,9 @@ import { SparklesIcon } from "@/components/icons";
  * until its agents are checked against the PPRA. No admin or agent back-office
  * links (removed from the footer on purpose, docs/ux-audit/05).
  *
+ * It also carries the contact address, the one way to reach Dynasty Estates
+ * without an account.
+ *
  * Not shown where a page fills the screen with its own frame: the developer
  * console (always dark, own shell), the sign-in pages (full-bleed), and the
  * map search (a map sized to the viewport).
@@ -76,6 +79,15 @@ export default function SiteFooter() {
             <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
               Homes for sale and to rent across South Africa, with the true monthly cost and the solar and water backup on
               every listing.
+            </p>
+            {/* The one way to reach Dynasty Estates without an account (Help &
+                support in the account menu needs one). The mailbox exists
+                (owner, 26 Nov 2026). */}
+            <p className="mt-3 text-slate-600 dark:text-slate-400">
+              Questions?{" "}
+              <a href="mailto:info@dynastyestates.co.za" className={`${linkClass} font-semibold text-emerald-800 dark:text-emerald-300`}>
+                info@dynastyestates.co.za
+              </a>
             </p>
           </div>
 
