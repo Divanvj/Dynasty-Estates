@@ -1,11 +1,9 @@
 import Link from "next/link";
 
-import BrandLogo from "@/components/brand-logo";
 import HeroHeadline from "@/components/hero-headline";
 import HomeHeroPhoto from "@/components/home-hero-photo";
 import HomeHeroSearch from "@/components/home-hero-search";
 import HomeTrendingListings from "@/components/home-trending-listings";
-import { SparklesIcon } from "@/components/icons";
 import HomeSpotlight from "@/components/home-spotlight";
 import { getPropertyList } from "@/lib/property-data";
 
@@ -140,89 +138,6 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* Global Obsidian Glass Footer */}
-        {/* p-8 is 64px of horizontal padding on a phone, inside main's own
-            gutter. Halved below `md`; the footer's own height is Phase 4. */}
-        <footer className="mx-auto mt-12 max-w-[1440px] rounded-panel border border-white/70 bg-white/40 dark:border-white/10 dark:bg-[#091517]/75 p-8 max-md:p-5 shadow-sm backdrop-blur-xl">
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 text-xs">
-            <div>
-              <BrandLogo showOnMobile className="mb-3" />
-              <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                South Africa&rsquo;s premium property discovery, intelligence and transaction platform. Developed for Tricore Enterprises.
-              </p>
-            </div>
-
-            <div>
-              <p className="font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-2.5">Discovery & Tools</p>
-              {/* space-y-1, not -2: the links below gained `py-1` so each tap
-                  target clears the 24px WCAG 2.2 AA floor (they were 18px).
-                  Tightening the gap by the same amount the padding adds keeps
-                  the footer close to the height it was. */}
-              <ul className="space-y-1 text-slate-600 dark:text-slate-400">
-                <li><Link href="/search" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Property Catalogue</Link></li>
-                <li><Link href="/map-search" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Interactive Map Search</Link></li>
-                <li>
-                  <Link href="/ai-search" className="inline-flex items-center gap-1.5 py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">
-                    <SparklesIcon className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
-                    <span>AI Search</span>
-                  </Link>
-                </li>
-                <li><Link href="/calculators" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Bond & True Cost™ Calculator</Link></li>
-                <li><Link href="/compare" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Compare</Link></li>
-              </ul>
-            </div>
-
-            <div>
-              <p className="font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-2.5">Portals & Practitioners</p>
-              {/* space-y-1, not -2: the links below gained `py-1` so each tap
-                  target clears the 24px WCAG 2.2 AA floor (they were 18px).
-                  Tightening the gap by the same amount the padding adds keeps
-                  the footer close to the height it was. */}
-              <ul className="space-y-1 text-slate-600 dark:text-slate-400">
-                <li><Link href="/collections" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Collaborative Shortlists</Link></li>
-                <li><Link href="/agents" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">PPRA Verified Agents</Link></li>
-                <li><Link href="/sell" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Sell Your Home Privately</Link></li>
-                <li><Link href="/pricing" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Prices for Sellers & Agents</Link></li>
-                <li><Link href="/seller/portal" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Private Seller Portal</Link></li>
-                <li><Link href="/seller/listings/new" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Publish New Listing</Link></li>
-                {/* "Agent Command Console" (/agent/dashboard) removed. The
-                    route is role-guarded, so this was never a breach — but no
-                    portal advertises its practitioner back-office to logged-out
-                    visitors, and an agent who has signed in reaches it from the
-                    account menu. */}
-              </ul>
-            </div>
-
-            <div>
-              <p className="font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-2.5">Governance & Legal</p>
-              {/* space-y-1, not -2: the links below gained `py-1` so each tap
-                  target clears the 24px WCAG 2.2 AA floor (they were 18px).
-                  Tightening the gap by the same amount the padding adds keeps
-                  the footer close to the height it was. */}
-              <ul className="space-y-1 text-slate-600 dark:text-slate-400">
-                <li><Link href="/insights" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">Market Insights</Link></li>
-                {/* "Platform Command & Moderation" (/admin) removed, for the
-                    same reason as the agent console above: a public footer is
-                    not where a moderation console belongs. */}
-                <li><Link href="/legal/privacy" className="inline-block py-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors">POPIA Privacy & Data Rights</Link></li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="mt-8 border-t border-slate-200/80 dark:border-white/10 pt-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-600 dark:text-slate-400">
-            <p>© 2026 Dynasty Estates / Tricore Enterprises. All rights reserved.</p>
-            {/* The framework line that stood here ("Built with Next.js,
-                TypeScript & Obsidian Glass") is the kind of thing a template
-                leaves behind.
-
-                A regulatory statement would be the natural replacement — it is
-                what a seller checks — but the listings and agent records are
-                still demo data, so claiming PPRA registration of the
-                practitioners on this site would swap one unfounded claim for
-                another. Beta status is the thing that is true today. */}
-            <p>Beta — listings shown are sample data.</p>
-          </div>
-        </footer>
       </div>
     </main>
   );

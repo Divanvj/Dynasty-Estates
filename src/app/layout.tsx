@@ -6,6 +6,7 @@ import MobileAppBar from "@/components/mobile-app-bar";
 import MobileNav from "@/components/mobile-nav";
 import { MaintenanceBanner } from "@/components/platform-status";
 import SiteChrome from "@/components/site-chrome";
+import SiteFooter from "@/components/site-footer";
 import SiteHeader from "@/components/site-header";
 import VerifyEmailBanner from "@/components/verify-email-banner";
 import TelemetryReporter from "@/components/telemetry-reporter";
@@ -137,6 +138,9 @@ export default function RootLayout({
               <SiteHeader />
             </SiteChrome>
             {children}
+            {/* One footer under every page (hidden on the console, sign-in and
+                map search, which fill the screen with their own frame). */}
+            <SiteFooter />
             <MobileNav />
             {/* Developer accounts only: switch the account's role for testing. */}
             <TestRoleDock />
