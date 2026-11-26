@@ -52,13 +52,13 @@ const NAV: Record<UserRole, NavItem[]> = {
     ACCOUNT,
   ],
   Seller: [
-    { href: "/seller/portal", label: "Portal", icon: HomeIcon },
+    { href: "/seller/portal", label: "Dashboard", icon: HomeIcon },
     { href: "/seller/listings/new", label: "List", icon: BriefcaseIcon },
     { href: "/search", label: "Browse", icon: SearchIcon, match: ["/property", "/for-sale", "/to-rent"] },
     ACCOUNT,
   ],
   Agent: [
-    { href: "/agent/dashboard", label: "Console", icon: BriefcaseIcon, match: ["/agent/listings"] },
+    { href: "/agent/dashboard", label: "Dashboard", icon: BriefcaseIcon, match: ["/agent/listings"] },
     { href: "/seller/listings/new", label: "Mandate", icon: HomeIcon },
     { href: "/search", label: "Browse", icon: SearchIcon, match: ["/property", "/for-sale", "/to-rent"] },
     // Was Directory (/agents, the public practitioner list, still in the header).

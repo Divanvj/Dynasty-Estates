@@ -225,7 +225,7 @@ export default function CollectionsPage() {
             <div className="w-full max-w-md rounded-panel border border-white/80 bg-white/90 p-6 shadow-2xl backdrop-blur-2xl dark:bg-surface-panel dark:border-white/10 dark:shadow-[0_25px_60px_rgba(0,0,0,0.8)]">
               <h2 className="text-xl font-semibold text-slate-950 dark:text-white">Create Property Collection</h2>
               <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
-                Create a shared shortlist for you and your partner, family, or property co-investors.
+                Group homes into a shortlist and mark each one Love, Like or Reject. Sharing a collection with someone else isn’t available yet.
               </p>
               <form onSubmit={handleCreateCollection} className="mt-4 space-y-4">
                 <div>
@@ -448,7 +448,7 @@ export default function CollectionsPage() {
                           href={`/property/${prop.slug}`}
                           className="block text-center text-xs font-semibold text-emerald-700 hover:text-emerald-900 dark:text-emerald-400 dark:hover:text-emerald-300"
                         >
-                          View Full Property Experience →
+                          View home
                         </Link>
                       </div>
                     </div>

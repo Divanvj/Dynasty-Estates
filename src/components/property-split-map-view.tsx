@@ -145,7 +145,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                   : "text-slate-600 hover:bg-slate-100/80 hover:text-emerald-950 dark:text-slate-300 dark:hover:bg-surface-panel dark:hover:text-white"
               }`}
             >
-              {pane === "map" ? "🗺️ Map" : `☰ List (${visibleProperties.length})`}
+              {pane === "map" ? "Map" : `List (${visibleProperties.length})`}
             </button>
           ))}
         </div>
@@ -167,7 +167,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
               : `Showing ${properties.length} mapped residences`}
           </span>
           <span className="text-emerald-800 dark:text-emerald-400">
-            💡 Click any property or &ldquo;Street View&rdquo; to inspect
+            Choose a home, or Street View, to look closer
           </span>
         </div>
 
@@ -276,7 +276,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                         className="tap-44 relative pill-sm bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-700 dark:to-emerald-800 border border-emerald-500/50 font-bold text-white shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] hover:from-[#093e3f] hover:to-[#052c2d] dark:hover:from-emerald-800 dark:hover:to-emerald-900 transition-all cursor-pointer gap-1"
                         title="View Street View for this property"
                       >
-                        <span>👁️ Street View</span>
+                        <span>Street View</span>
                       </button>
                       <button
                         type="button"
@@ -286,7 +286,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                         }}
                         className="tap-44 relative pill-sm border border-slate-200 dark:border-white/10 bg-white dark:bg-surface-ink/60 font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-surface-panel dark:hover:text-white transition-all cursor-pointer"
                       >
-                        🗺️ Locate
+                        Locate
                       </button>
                     </div>
 
@@ -341,14 +341,14 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                   onClick={() => setDisplayMode("map")}
                   className={`pill-sm font-bold transition-all cursor-pointer ${ displayMode === "map" ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white" }`}
                 >
-                  🗺️ Map
+                  Map
                 </button>
                 <button
                   type="button"
                   onClick={() => setDisplayMode("street")}
                   className={`pill-sm font-bold transition-all cursor-pointer ${ displayMode === "street" ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] shadow-xs" : "text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white" }`}
                 >
-                  👁️ Street View
+                  Street View
                 </button>
               </div>
             </div>
@@ -467,7 +467,7 @@ export default function PropertySplitMapView({ properties }: PropertySplitMapVie
                       className="pill flex-1 sm:flex-none bg-slate-900 text-white dark:bg-emerald-700 dark:text-white dark:border-emerald-500/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)] font-bold shadow-xs hover:opacity-90 transition-all cursor-pointer"
                       title="Inspect Street View"
                     >
-                      👁️ Street View
+                      Street View
                     </button>
                     <a
                       href={externalGoogleMapsUrl}

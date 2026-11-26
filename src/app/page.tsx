@@ -125,9 +125,9 @@ export default async function Home() {
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="min-w-0 max-w-2xl">
                 <p className="text-xs uppercase tracking-[0.2em] text-emerald-400 font-semibold">Collections</p>
-                <h3 className="mt-1 text-2xl font-light text-white">Find homes with your partner</h3>
+                <h3 className="mt-1 text-2xl font-light text-white">Keep a shortlist</h3>
                 <p className="mt-3 text-sm leading-relaxed text-emerald-100/80">
-                  Save homes into a shared collection, invite your partner or family, and vote Love, Like or Reject on each one together.
+                  Save homes into collections and mark each one Love, Like or Reject as you narrow down your choice.
                 </p>
               </div>
               <Link

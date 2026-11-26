@@ -94,7 +94,7 @@ function SupportInbox() {
     <>
       <PageHeading
         title="Support"
-        description="Messages from Support & Guidance and package requests, newest first. Reply by email; mark each one so the team knows where it stands."
+        description="Messages sent through Help & support, and package requests, newest first. Reply by email; mark each one so the team knows where it stands."
       />
       <SummaryStrip
         label="Support at a glance"

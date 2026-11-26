@@ -66,16 +66,16 @@ export default function SignupPage() {
             <div>
               <p className="text-xs uppercase tracking-[0.24em] text-emerald-200 dark:text-emerald-400">Your next move</p>
               <h1 className="mt-4 max-w-md text-4xl font-semibold leading-tight tracking-[-0.06em]">
-                Save homes, compare matches, and move faster.
+                Save homes, compare them, and hear first when new ones list.
               </h1>
             </div>
 
             <div className="rounded-card border border-white/15 bg-white/5 p-5 backdrop-blur-sm dark:bg-surface-ink/80 dark:border-white/10 dark:shadow-lg">
-              <p className="text-sm text-slate-200 dark:text-slate-300">Curated for you</p>
+              <p className="text-sm text-slate-200 dark:text-slate-300">With a free account</p>
               <div className="mt-4 space-y-3 text-sm text-slate-100 dark:text-slate-300">
-                <p>• Personalised shortlist</p>
-                <p>• Market alerts and property updates</p>
-                <p>• AI-guided lifestyle recommendations</p>
+                <p>• Save homes and compare them side by side</p>
+                <p>• E-mail alerts for new homes and price drops</p>
+                <p>• Collections to sort your shortlist</p>
               </div>
             </div>
           </div>
@@ -84,7 +84,7 @@ export default function SignupPage() {
             <div className="mb-8 flex items-center justify-between">
               <div>
                 <p className="text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-slate-400">New account</p>
-                <h2 className="mt-2 text-3xl font-semibold tracking-[-0.06em] text-slate-900 dark:text-white">Create profile</h2>
+                <h2 className="mt-2 text-3xl font-semibold tracking-[-0.06em] text-slate-900 dark:text-white">Create an account</h2>
               </div>
               <Link href="/" className="text-sm text-slate-600 hover:text-slate-900 transition-colors dark:text-slate-300 dark:hover:text-emerald-400">Home</Link>
             </div>
