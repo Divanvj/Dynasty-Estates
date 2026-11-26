@@ -9,15 +9,18 @@
  *   properties/{id}.sale    { soldOn, price? } on the public listing; `price`
  *                           only when the seller agreed to show it.
  * Area figures (median sold price, sold vs asking, days to sell) count every
- * recorded sale but are shown only from MIN_SALES upward, so no single
- * home's private price can be worked out from them.
+ * recorded sale but are shown only from MIN_SALES upward, rounded into bands,
+ * with the number of sales itself given only as a band, so no single home's
+ * private price can be worked out from them (audit item 2.10). With three
+ * sales the median *was* one buyer's exact price, and an exact count going up
+ * by one showed when a sale had just been added.
  *
  * Not Deeds Office or Lightstone data. A paid feed can later write the same
  * records with another `source`.
  */
 
 export type SaleKind = "sale" | "rental";
-export const MIN_SALES = 3;
+export const MIN_SALES = 5;
 /** Area figures look back this far. */
 export const SALES_MONTHS = 12;
 
@@ -52,9 +55,14 @@ export type PublicSale = {
 
 export type SalesSummary = {
   kind: SaleKind;
-  /** Every recorded sale matching the filter in the last SALES_MONTHS. */
-  count: number;
-  /** Null below MIN_SALES. */
+  /** Whether any sale matches the filter in the last SALES_MONTHS. */
+  hasSales: boolean;
+  /**
+   * How many match, as a band (countBand): never the exact number, which
+   * would change by one the moment a sale is recorded.
+   */
+  countBand: string;
+  /** Null below MIN_SALES. Every figure is banded (bandAmount, bandDays, bandRatio). */
   figures: {
     medianPrice: number;
     /** Median of sold ÷ asking, e.g. 0.96; null when fewer than MIN_SALES had an asking price. */
@@ -74,6 +82,39 @@ export function saleWords(kind: SaleKind) {
   return kind === "rental"
     ? { status: "Rented", verb: "rented", mark: "Mark as rented", price: "Monthly rent", agreed: "The landlord agreed to show the rent on the listing" }
     : { status: "Sold", verb: "sold", mark: "Mark as sold", price: "Selling price", agreed: "The seller agreed to show the price on the listing" };
+}
+
+/**
+ * A rand figure rounded to two significant figures: R 1 234 567 becomes
+ * R 1 200 000, a rent of R 12 345 becomes R 12 000. Coarse enough that no one
+ * sale's price can be read back from a median, fine enough to compare areas.
+ */
+export function bandAmount(value: number): number {
+  if (!Number.isFinite(value) || value <= 0) return 0;
+  const step = 10 ** Math.max(0, Math.floor(Math.log10(value)) - 1);
+  return Math.round(value / step) * step;
+}
+
+/** Days on the market, to the nearest five. */
+export function bandDays(days: number): number {
+  if (!Number.isFinite(days) || days <= 0) return 0;
+  return Math.round(days / 5) * 5;
+}
+
+/** Sold ÷ asking, to the nearest whole percent (0.9634 becomes 0.96). */
+export function bandRatio(ratio: number): number {
+  if (!Number.isFinite(ratio) || ratio <= 0) return 0;
+  return Math.round(ratio * 100) / 100;
+}
+
+/** How many sales, as words for a band: "none", "fewer than 5", "5–9", "10–19", "20–49", "50 or more". */
+export function countBand(count: number): string {
+  if (!Number.isFinite(count) || count <= 0) return "none";
+  if (count < MIN_SALES) return `fewer than ${MIN_SALES}`;
+  if (count < 10) return `${MIN_SALES}–9`;
+  if (count < 20) return "10–19";
+  if (count < 50) return "20–49";
+  return "50 or more";
 }
 
 export function median(values: number[]): number | null {

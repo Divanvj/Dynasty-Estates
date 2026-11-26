@@ -42,6 +42,9 @@ jobs:
       - name: Run sign-in return-path tests
         run: node tests/return-path.test.mjs
 
+      - name: Run sales-figure banding tests
+        run: node tests/sales-figures.test.mjs
+
       - name: Run listing market-status tests
         run: node tests/listing-status.test.mjs
 
