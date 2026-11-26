@@ -2,16 +2,16 @@ import type { Metadata } from "next";
 import { absoluteUrl } from "@/lib/site-url";
 
 export const metadata: Metadata = {
-  title: "PPRA Verified Property Practitioners & Real Estate Agents",
+  title: "Estate agents",
   description:
-    "Connect with licensed South African Property Practitioners holding verified PPRA Fidelity Fund Certificates. Expert real estate advisory in Waterkloof, Camps Bay, Sandton, and Ballito.",
+    "Estate agents who list homes on Dynasty Estates, by area, with their contact details and the homes they have listed.",
   alternates: {
     canonical: absoluteUrl("/agents"),
   },
   openGraph: {
-    title: "PPRA Verified Property Practitioners Directory | Dynasty Estates",
+    title: "Estate agents | Dynasty Estates",
     description:
-      "Find certified estate agents with active luxury mandates, valid statutory FFC licensing, and hyper-local property market knowledge across South Africa.",
+      "Find an estate agent by area and see the homes they have listed on Dynasty Estates.",
     url: absoluteUrl("/agents"),
     type: "website",
   },
