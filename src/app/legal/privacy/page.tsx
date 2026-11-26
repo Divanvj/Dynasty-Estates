@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import DownloadMyData from "@/components/download-my-data";
 import { absoluteUrl } from "@/lib/site-url";
 
 export const metadata: Metadata = {
@@ -75,6 +76,16 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
         </article>
+
+        {/* A copy of your data, in one file (POPIA section 23; audit item 2.5). */}
+        <section id="your-data" className="mt-6 space-y-3 rounded-2xl border border-emerald-600/20 bg-emerald-50/60 p-5 dark:border-emerald-500/20 dark:bg-emerald-950/20">
+          <h2 className="text-base font-bold text-slate-900 dark:text-white">Download your data</h2>
+          <p className="text-sm text-slate-700 dark:text-slate-300">
+            One file with everything your account holds: your profile, saved homes, collections, saved searches, the enquiries and
+            applications you sent, your listings and your e-mail settings.
+          </p>
+          <DownloadMyData />
+        </section>
       </div>
     </main>
   );
