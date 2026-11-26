@@ -7,9 +7,14 @@ rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
     match /listing-photos/{ownerId}/{photoId} {
-      // Public: listing photos are shown to every visitor. Paths carry a
-      // random UUID, so draft photos are not discoverable by listing them.
-      allow read: if true;
+      // Public: anyone may fetch a photo whose address they have, since
+      // listing photos are shown to every visitor. Nobody may LIST a folder:
+      // `read` would allow both, and a list of listing-photos/<uid>/ shows a
+      // seller's draft and rejected photos too (audit finding D6). Owner ids
+      // are public on every listing, so the random file names alone do not
+      // keep a folder private.
+      allow get: if true;
+      allow list: if false;
       // resource == null: Storage counts overwriting an existing file as a
       // create, so this is what stops a checked file being replaced in place.
       allow create: if request.auth != null
@@ -27,7 +32,9 @@ service firebase.storage {
     // Floor plans attached by the listing agent. Drawings and PDFs, stored
     // as uploaded (see uploadFloorPlan in src/lib/photo-intake.ts).
     match /floor-plans/{ownerId}/{fileId} {
-      allow read: if true;
+      // Fetch by address only; no folder listing (see listing photos above).
+      allow get: if true;
+      allow list: if false;
       // resource == null: Storage counts overwriting an existing file as a
       // create, so this is what stops a checked file being replaced in place.
       allow create: if request.auth != null

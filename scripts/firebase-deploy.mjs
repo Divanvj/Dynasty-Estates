@@ -25,9 +25,9 @@ import { fileURLToPath } from "node:url";
 const PROJECT = "dynasty-estates";
 const FIREBASE_TOOLS = "firebase-tools@15.37.0"; // same version as test:rules
 const TARGETS = {
-  rules: { only: "firestore:rules", file: "firestore.rules", config: { firestore: { rules: "firestore.rules" } }, test: true },
+  rules: { only: "firestore:rules", file: "firestore.rules", config: { firestore: { rules: "firestore.rules" } }, test: "test:rules" },
   indexes: { only: "firestore:indexes", file: "firestore.indexes.json", config: { firestore: { indexes: "firestore.indexes.json" } } },
-  storage: { only: "storage", file: "storage.rules", config: { storage: { rules: "storage.rules" } } },
+  storage: { only: "storage", file: "storage.rules", config: { storage: { rules: "storage.rules" } }, test: "test:storage-rules" },
 };
 
 const repo = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -65,8 +65,8 @@ if (!existsSync(localPath) || normalize(readFileSync(localPath, "utf8")) !== nor
 }
 
 if (spec.test && !skipTests) {
-  console.log(`Running the rule tests on ${spec.file} (npm run test:rules, about 2 minutes) …`);
-  const tests = run("npm", ["run", "test:rules"], repo);
+  console.log(`Running the rule tests on ${spec.file} (npm run ${spec.test}, a minute or two) …`);
+  const tests = run("npm", ["run", spec.test], repo);
   if (tests.status !== 0) fail("the rule tests failed, so nothing was deployed.");
 }
 

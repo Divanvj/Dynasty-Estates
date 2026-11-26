@@ -12,6 +12,7 @@
     "start": "next start -p 3000 -H 0.0.0.0",
     "lint": "eslint",
     "test:rules": "npx --yes firebase-tools@15.37.0 emulators:exec --only firestore --project demo-dynasty-rules \"node tests/firestore-rules.test.mjs\"",
+    "test:storage-rules": "npx --yes firebase-tools@15.37.0 emulators:exec --only storage --project demo-dynasty-rules \"node tests/storage-rules.test.mjs\"",
     "firebase:config": "npx --yes firebase-tools@15.37.0 apps:sdkconfig WEB --project dynasty-estates",
     "firebase:deploy:rules": "node scripts/firebase-deploy.mjs rules",
     "firebase:deploy:indexes": "node scripts/firebase-deploy.mjs indexes",
