@@ -79,6 +79,21 @@ const nextConfig: NextConfig = {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=(self)",
           },
+          // Report-only for now (audit item 1.2): browsers log what the policy
+          // would block, but block nothing. Switch the key to
+          // "Content-Security-Policy" once a preview shows no reports from
+          // sign-in, maps, tours and video.
+          {
+            key: "Content-Security-Policy-Report-Only",
+            value: contentSecurityPolicy(),
+          },
+          // Keeps other sites' windows from scripting this one, while still
+          // letting Google's sign-in pop-up report back (Firebase's
+          // documented setting for signInWithPopup).
+          {
+            key: "Cross-Origin-Opener-Policy",
+            value: "same-origin-allow-popups",
+          },
         ],
       },
     ];
@@ -86,3 +101,38 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+/**
+ * The Content-Security-Policy (audit findings S2 and S11).
+ *
+ * script-src keeps 'unsafe-inline' because Next.js writes its page bootstrap as
+ * inline scripts; removing it needs per-request nonces, which would make every
+ * page dynamic (no 5-minute catalogue cache). The other directives still cut
+ * what an injected script could load, frame, connect to or submit to.
+ * Sources come from what the site uses: Firebase Auth, Firestore and Storage;
+ * Google sign-in and reCAPTCHA (phone sign-in); OpenStreetMap tiles; Unsplash
+ * photos; Google Maps, YouTube, Vimeo and Matterport embeds; Vercel's preview
+ * toolbar.
+ */
+function contentSecurityPolicy(): string {
+  const authDomain = process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "dynasty-estates.firebaseapp.com";
+  const dev = process.env.NODE_ENV !== "production";
+  const directives: Record<string, string[]> = {
+    "default-src": ["'self'"],
+    "script-src": ["'self'", "'unsafe-inline'", ...(dev ? ["'unsafe-eval'"] : []), "https://apis.google.com", "https://www.google.com", "https://www.gstatic.com", "https://vercel.live"],
+    "style-src": ["'self'", "'unsafe-inline'"],
+    "img-src": ["'self'", "data:", "blob:", "https://images.unsplash.com", "https://firebasestorage.googleapis.com", "https://tile.openstreetmap.org", "https://*.tile.openstreetmap.org", "https://*.googleusercontent.com", "https://www.gstatic.com", "https://maps.gstatic.com", "https://vercel.com"],
+    "font-src": ["'self'", "data:"],
+    "connect-src": ["'self'", "https://*.googleapis.com", `https://${authDomain}`, "https://www.google.com", "https://vercel.live", ...(dev ? ["ws:"] : [])],
+    "frame-src": ["'self'", `https://${authDomain}`, "https://accounts.google.com", "https://www.google.com", "https://maps.google.com", "https://www.youtube-nocookie.com", "https://www.youtube.com", "https://player.vimeo.com", "https://my.matterport.com", "https://vercel.live"],
+    "media-src": ["'self'", "blob:", "https://firebasestorage.googleapis.com"],
+    "worker-src": ["'self'", "blob:"],
+    "object-src": ["'none'"],
+    "base-uri": ["'self'"],
+    "form-action": ["'self'"],
+    "frame-ancestors": ["'self'"],
+  };
+  return Object.entries(directives)
+    .map(([name, sources]) => `${name} ${sources.join(" ")}`)
+    .join("; ");
+}

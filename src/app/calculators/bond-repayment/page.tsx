@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import CalculatorsView from "@/components/calculators-view";
 import { absoluteUrl } from "@/lib/site-url";
+import { jsonLd } from "@/lib/json-ld";
 
 export const metadata: Metadata = {
   title: "Home Loan Bond Repayment Calculator | South Africa Interest & Amortization",
@@ -67,11 +68,11 @@ export default function BondRepaymentCalculatorPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(faqSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(softwareSchema) }}
       />
       <CalculatorsView initialTab="amortization" />
     </>
