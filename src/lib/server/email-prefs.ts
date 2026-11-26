@@ -11,9 +11,11 @@ import { adminApp, adminDb } from "./firebase-admin";
  * stop that one kind of e-mail, or that one saved search, for that one person
  * and nothing else.
  *
- * The signing secret is MAIL_LINK_SECRET, or CRON_SECRET when that is not set
- * (both are server-only and already in Vercel). Without either, e-mails go out
- * without the link and the preference can still be changed on /alerts.
+ * The signing secret is MAIL_LINK_SECRET, and only that (audit item 2.12): it
+ * used to fall back to CRON_SECRET, so one leaked value would both trigger the
+ * nightly jobs and forge opt-out links. Without it, e-mails go out without the
+ * link and the preference can still be changed on /alerts; the go-live list
+ * flags it.
  */
 
 export const EMAIL_PREFS_COLLECTION = "email_prefs";
@@ -37,7 +39,7 @@ export async function writeEmailPrefs(uid: string, changes: Partial<EmailPrefs>,
 }
 
 function secret(): string {
-  const value = (process.env.MAIL_LINK_SECRET || process.env.CRON_SECRET || "").trim();
+  const value = (process.env.MAIL_LINK_SECRET ?? "").trim();
   return value.length >= 16 ? value : "";
 }
 

@@ -32,6 +32,17 @@ const clip = (value: unknown, max: number): string | null =>
   typeof value === "string" && value.length ? value.slice(0, max) : null;
 
 /**
+ * A page address without its query string or fragment (audit item 2.12). They
+ * can carry one-time codes (?oobCode= on the e-mail action page), unsubscribe
+ * tokens or search terms, and the error log is kept and read by developers.
+ * The browser already drops them; server errors and hand-made reports did not.
+ */
+export function stripQuery(url: unknown): string | null {
+  if (typeof url !== "string" || !url) return null;
+  return url.split("#")[0].split("?")[0] || null;
+}
+
+/**
  * Turns a concrete path into its route shape, so /property/abc-123 and
  * /property/def-456 count as one place. Long hex-ish or numeric segments are
  * treated as ids.
@@ -80,7 +91,7 @@ export async function recordError(report: ErrorReport): Promise<boolean> {
       stack: clip(report.stack, 4000),
       digest: clip(report.digest, 120),
       route: routeShape(report.route ?? report.url),
-      url: clip(report.url, 500),
+      url: clip(stripQuery(report.url), 500),
       userAgent: clip(report.userAgent, 300),
       sessionId: clip(report.sessionId, 64),
       release: clip(report.release, 64) ?? process.env.NEXT_PUBLIC_BUILD_SHA ?? null,

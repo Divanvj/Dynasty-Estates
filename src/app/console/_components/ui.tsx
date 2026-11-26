@@ -322,8 +322,9 @@ export function ErrorNotice({ error, onRetry }: { error: ConsoleRequestError; on
           <p className="mt-1 text-xs leading-relaxed text-rose-200/90 break-words">{error.message}</p>
           {error.notConnected ? (
             <p className="mt-2 text-xs leading-relaxed text-rose-200/90">
-              On Vercel, add the service-account key JSON as <code className="font-mono">FIREBASE_SERVICE_ACCOUNT</code> and
-              redeploy. Locally, set <code className="font-mono">FIREBASE_SERVICE_ACCOUNT_PATH</code> in .env.local.
+              Add the service-account key JSON as <code className="font-mono">FIREBASE_SERVICE_ACCOUNT</code>: on Vercel
+              (then redeploy), and in .env.local, where <code className="font-mono">node scripts/key-to-env.mjs &lt;key.json&gt;</code>{" "}
+              prints the line.
             </p>
           ) : null}
         </div>

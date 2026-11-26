@@ -555,5 +555,22 @@ export async function getGoLiveChecks(): Promise<Check[]> {
     href: "/console/email",
   });
 
+  // Opt-out links are signed with their own secret (audit item 2.12).
+  const linkSecret = (process.env.MAIL_LINK_SECRET ?? "").trim();
+  const sameAsCron = linkSecret !== "" && linkSecret === (process.env.CRON_SECRET ?? "").trim();
+  checks.push({
+    id: "mail-link-secret",
+    label: "E-mail opt-out links",
+    state: linkSecret.length < 16 || sameAsCron ? "error" : "ok",
+    summary:
+      linkSecret.length < 16
+        ? "MAIL_LINK_SECRET is not set (or shorter than 16 characters), so e-mails go out without a one-click \u201cstop these e-mails\u201d link. People can still turn alerts off on /alerts."
+        : sameAsCron
+          ? "MAIL_LINK_SECRET is the same value as CRON_SECRET. Give it its own value, so one leaked secret cannot also forge opt-out links."
+          : "Opt-out links are signed with their own secret (MAIL_LINK_SECRET).",
+    fix: "In Vercel \u2192 dynasty-estates \u2192 Settings \u2192 Environment Variables, add MAIL_LINK_SECRET (a new random value of 16+ characters, not CRON_SECRET) for Production, then redeploy.",
+    href: "/console/email",
+  });
+
   return checks;
 }
