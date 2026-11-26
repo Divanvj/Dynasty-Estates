@@ -1,3 +1,7 @@
+> **This describes the original plan (September 2026), not what was built.**
+> The built system is in [ARCHITECTURE.md](ARCHITECTURE.md), and the stack
+> decision in [STACK_DECISION.md](STACK_DECISION.md).
+
 # Dynasty Estates - System Architecture Specification
 
 **Organisation:** Tricore Enterprises  

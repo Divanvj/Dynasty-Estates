@@ -1,3 +1,5 @@
+> **Out of date: a September 2026 spec.** The app's real routes are the folders under `src/app` (pages) and `src/app/api` (API routes).
+
 # Dynasty Estates - Screen & Route Inventory
 
 **Organisation:** Tricore Enterprises  
