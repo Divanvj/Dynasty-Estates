@@ -382,7 +382,7 @@ export default function SiteNavigation() {
                 <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
                   Map Search
                 </p>
-                <p className="text-xs text-slate-600 dark:text-slate-400 truncate">Geospatial interactive exploration</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 truncate">Browse homes on a map</p>
               </div>
             </Link>
 
@@ -408,7 +408,7 @@ export default function SiteNavigation() {
                 <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-800 dark:group-hover:text-emerald-300">
                   Calculators
                 </p>
-                <p className="text-xs text-slate-600 dark:text-slate-400 truncate">Bond repayments, transfer duty & SARS</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 truncate">Bond repayments and transfer duty</p>
               </div>
             </Link>
 
@@ -440,7 +440,7 @@ export default function SiteNavigation() {
                     registration route. /agency/register, /register-agency and
                     /agency all 404, and the flow needs the agency_applications
                     collection, which is blocked on the Firestore rules deploy. */}
-                <p className="text-xs text-slate-600 dark:text-slate-400 truncate">PPRA verified practitioner directory</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 truncate">Browse agents by area</p>
               </div>
             </Link>
 
@@ -454,8 +454,8 @@ export default function SiteNavigation() {
                 +
               </span>
               <div className="min-w-0">
-                <p className="text-xs font-bold">Add a Listing (Sell / Rent)</p>
-                <p className="text-xs text-emerald-700 dark:text-emerald-300/80 truncate">6-Step configuration wizard</p>
+                <p className="text-xs font-bold">List a home to sell or rent</p>
+                <p className="text-xs text-emerald-700 dark:text-emerald-300/80 truncate">Six short steps, saved as you go</p>
               </div>
             </Link>
           </div>

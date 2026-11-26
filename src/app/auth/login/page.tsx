@@ -153,7 +153,7 @@ export default function LoginPage() {
             <BrandLogo onDark showOnMobile />
 
             <div>
-              <p className="text-xs uppercase tracking-[0.24em] text-emerald-200 dark:text-emerald-400">Property intelligence</p>
+              <p className="text-xs uppercase tracking-[0.24em] text-emerald-200 dark:text-emerald-400">Your account</p>
               <h1 className="mt-4 max-w-md text-4xl font-semibold leading-tight tracking-[-0.06em]">
                 Find homes that fit the way you live.
               </h1>

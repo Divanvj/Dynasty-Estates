@@ -271,7 +271,7 @@ export default function AccountActions({
           className="group relative flex h-11 items-center gap-1.5 sm:gap-2 rounded-full border border-slate-300/80 bg-white/70 dark:border-white/10 dark:bg-surface-ink/80 p-1 sm:p-1.5 pr-2.5 sm:pr-3 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:bg-white dark:hover:bg-surface-panel hover:border-emerald-500/50 dark:hover:border-emerald-400/50 transition-all cursor-pointer shadow-xs"
           aria-expanded={isOpen}
           aria-controls="account-menu-panel"
-          title="Account & Profile Menu"
+          title="Account menu"
         >
           {/* Avatar Icon */}
           <div className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 group-hover:bg-emerald-500/10 dark:group-hover:bg-emerald-500/20 group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors">
@@ -280,7 +280,7 @@ export default function AccountActions({
 
           {/* Reveal Text Hover Animation: Smoothly expands on hover */}
           <span className="inline-block max-w-[55px] sm:max-w-[80px] lg:max-w-[70px] lg:group-hover:max-w-[120px] overflow-hidden text-ellipsis whitespace-nowrap transition-all duration-300 ease-out">
-            {user ? userDisplayName : "Profile"}
+            {user ? userDisplayName : "Sign in"}
           </span>
 
           <ChevronDownIcon
@@ -362,7 +362,7 @@ export default function AccountActions({
               >
                 <span className="flex items-center gap-2.5">
                   <HeartIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                  <span>Saved Properties</span>
+                  <span>Saved homes</span>
                 </span>
                 <span className="text-xs text-slate-600 dark:text-slate-500 font-bold">View →</span>
               </Link>
@@ -430,7 +430,7 @@ export default function AccountActions({
               >
                 <span className="flex items-center gap-2.5">
                   <BriefcaseIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                  <span>My Agency / Console</span>
+                  <span>Agent dashboard</span>
                 </span>
                 <span className="text-xs text-slate-600 dark:text-slate-500 font-bold">Manage →</span>
               </Link>
@@ -461,7 +461,7 @@ export default function AccountActions({
               >
                 <span className="flex items-center gap-2.5">
                   <InfoCircleIcon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                  <span>Support & Guidance</span>
+                  <span>Help & support</span>
                 </span>
                 <span className="text-xs text-slate-600 dark:text-slate-500 font-bold">Help →</span>
               </button>
@@ -475,7 +475,7 @@ export default function AccountActions({
                   onClick={() => void handleSignOut()}
                   className="w-full text-center rounded-xl py-2 text-xs font-bold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors cursor-pointer"
                 >
-                  Sign Out of Account
+                  Sign out
                 </button>
               ) : (
                 <Link
@@ -483,7 +483,7 @@ export default function AccountActions({
                   onClick={() => setIsOpen(false)}
                   className="w-full text-center rounded-xl py-2 text-xs font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-colors"
                 >
-                  Sign In / Register
+                  Sign in or create an account
                 </Link>
               )}
             </div>
@@ -513,7 +513,7 @@ export default function AccountActions({
                 <InfoCircleIcon className="h-5 w-5" />
               </div>
               <div>
-                <h2 className="text-base font-bold">Support & Guidance</h2>
+                <h2 className="text-base font-bold">Help & support</h2>
                 <p className="text-xs text-slate-600 dark:text-slate-400">Tricore Enterprises Customer Care</p>
               </div>
             </div>
