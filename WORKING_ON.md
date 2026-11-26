@@ -9,7 +9,6 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/hero-glide` | `home-hero-scene.tsx` — smoother scroll move (glide + frame blend) | 2026-11-26 |
 | ALET-ELIZE | `ALET-ELIZE/dark-hero-text` | `globals.css` hero headline block (`.hh-*`) — dark-mode hero text | 2026-11-20 |
 
 ## Recently merged
@@ -17,6 +16,7 @@ lines keep its own merges trivial.
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
 
+- 2026-11-26 — `DESKTOP-1R37EBU/hero-glide` merged (owner). Hero scroll move glides to the scroll position and cross-fades between frames (`home-hero-scene.tsx`).
 - 2026-11-26 — `DESKTOP-1R37EBU/hero-speed` merged (owner). Hero photo preloaded per screen size from the head; phone scroll frames wait for the first touch/scroll or 3 s; frames decoded with `createImageBitmap`.
 - 2026-11-25 — `DESKTOP-1R37EBU/photo-hero` merged (owner). **Home hero** is a full-width photo (our Blender render) with a scroll-driven camera move:
   `home-hero-photo.tsx` + `home-hero-scene.tsx` (canvas over the still; frames in `public/hero/frames/`; desktop hero held sticky via a `motion-safe:lg:h-[…]` on #discover in `app/page.tsx`).
