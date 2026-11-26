@@ -9,6 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
+| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/hero-phone-smooth` | `home-hero-scene.tsx`, `public/hero/frames/p/` — smoother scroll move on phones | 2026-11-26 |
 | ALET-ELIZE | `ALET-ELIZE/dark-hero-text` | `globals.css` hero headline block (`.hh-*`) — dark-mode hero text | 2026-11-20 |
 
 ## Recently merged
