@@ -4,7 +4,7 @@ import { parseTourUrl } from "./virtual-tour";
 
 import { db, isFirebaseConfigured } from "./firebase";
 import { formatListingPrice } from "./formatters";
-import { ACTIVE_CATALOGUE_STATUSES, PUBLIC_LISTING_STATUSES } from "./types/domain";
+import { PUBLIC_LISTING_STATUSES } from "./types/domain";
 export * from "./types/domain";
 
 export type PropertyType =
