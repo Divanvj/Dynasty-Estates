@@ -242,6 +242,9 @@ export default function SearchContent({ initialProperties }: { initialProperties
   }, [initialProperties]);
 
   function handleCategoryChange(cat: "rent" | "buy") {
+    // Remembered on the click, not only once the new URL has rendered, so
+    // leaving the page straight away still keeps it.
+    rememberIntent(cat);
     const params = new URLSearchParams(searchParams.toString());
     params.set("intent", cat);
     params.delete("minPrice");
