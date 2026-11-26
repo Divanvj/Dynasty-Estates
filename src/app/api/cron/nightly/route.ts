@@ -105,10 +105,15 @@ export async function GET(request: Request) {
   try {
     const files = await cleanUpListingFiles();
     report.files = files;
+    // A held-back run deleted nothing because its numbers looked wrong
+    // (lib/cleanup-guard.ts): treat it as a failure so a person is told.
+    if (files.blocked) failures.push(`files: clean-up held back, nothing deleted: ${files.blocked}`);
     await recordConsoleEvent(
       null,
       "nightly.files",
-      `Nightly file clean-up: ${files.deleted} unused file(s) and ${files.fingerprintsDeleted} stale photo fingerprint(s) deleted, ${files.waiting} newer than ${GRACE_DAYS} days kept${files.more ? ", more left for tomorrow" : ""}`,
+      files.blocked
+        ? `Nightly file clean-up held back, nothing deleted: ${files.blocked}`
+        : `Nightly file clean-up: ${files.deleted} unused file(s) and ${files.fingerprintsDeleted} stale photo fingerprint(s) deleted, ${files.waiting} newer than ${GRACE_DAYS} days kept${files.more ? ", more left for tomorrow" : ""}`,
       { ...files },
     );
   } catch (error) {

@@ -1,5 +1,7 @@
 import { getStorage } from "firebase-admin/storage";
 
+import { cleanupVerdict } from "@/lib/cleanup-guard";
+
 import { adminApp, adminDb, AdminUnavailableError, PROJECT_ID } from "./firebase-admin";
 
 /**
@@ -42,6 +44,11 @@ export type StorageCleanup = {
   waiting: number;
   fingerprintsDeleted: number;
   more: boolean;
+  /**
+   * Set when the run deleted nothing because the numbers looked wrong
+   * (lib/cleanup-guard.ts): why. The nightly job reports it as a failure.
+   */
+  blocked?: string;
 };
 
 /** `dryRun` counts what would go without deleting anything (the console's check). */
@@ -69,28 +76,46 @@ export async function cleanUpListingFiles(options: { now?: number; dryRun?: bool
     photoIdsByListing.set(listing.id, ids);
   }
 
-  let deleted = 0;
+  // First pass: sort the bucket's files without deleting anything.
   let waiting = 0;
   let scanned = 0;
-  let more = false;
+  let matched = 0;
+  const candidates: { delete: (options: { ignoreNotFound: boolean }) => Promise<unknown> }[] = [];
   const bucket = getStorage(adminApp()!).bucket(bucketName());
   for (const prefix of PREFIXES) {
     const [files] = await bucket.getFiles({ prefix, autoPaginate: true });
     for (const file of files) {
       scanned += 1;
-      if (referenced.has(file.name)) continue;
+      if (referenced.has(file.name)) {
+        matched += 1;
+        continue;
+      }
       const created = Date.parse(String(file.metadata.timeCreated ?? ""));
       if (!Number.isFinite(created) || created > cutoff) {
         waiting += 1;
         continue;
       }
-      if (deleted >= MAX_DELETES) {
-        more = true;
-        continue;
-      }
-      if (!options.dryRun) await file.delete({ ignoreNotFound: true });
-      deleted += 1;
+      candidates.push(file);
     }
+  }
+
+  // Stop if the numbers look like a bad read rather than an ordinary night:
+  // there are no backups to bring deleted photos back (audit item 1.8).
+  const verdict = cleanupVerdict({ listings: listings.size, referenced: referenced.size, scanned, matched, candidates: candidates.length });
+  if (!verdict.ok) {
+    return { scanned, referenced: referenced.size, deleted: 0, waiting, fingerprintsDeleted: 0, more: candidates.length > 0, blocked: verdict.reason };
+  }
+
+  // Second pass: delete, at most MAX_DELETES a night.
+  let deleted = 0;
+  let more = false;
+  for (const file of candidates) {
+    if (deleted >= MAX_DELETES) {
+      more = true;
+      break;
+    }
+    if (!options.dryRun) await file.delete({ ignoreNotFound: true });
+    deleted += 1;
   }
 
   // Fingerprints are written with the listing (one batch), so any whose photo
