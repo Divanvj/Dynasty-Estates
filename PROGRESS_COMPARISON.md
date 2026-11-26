@@ -1,3 +1,8 @@
+> **Superseded, and not accurate.** The audit of 26 Nov 2026 found that this
+> file overstated what was built. It is kept for the record only. For current
+> status see the [Go-Live Tracker](https://claude.ai/artifact/94B8e5KTcx8CYX5R36ooGg);
+> for what the code does see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
 # Dynasty Estates Progress Comparison
 
 Date updated: 2026-09-03  
