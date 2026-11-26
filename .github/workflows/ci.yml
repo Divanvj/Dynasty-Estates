@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [ main, master ]
 
+# CI only reads the code (audit item 1.9): the workflow token cannot push,
+# change settings or write to the repository.
+permissions:
+  contents: read
+
 jobs:
   validate:
     name: Lint, Typecheck & Automated Domain Tests
@@ -30,6 +35,12 @@ jobs:
       - name: Run TypeScript typecheck
         run: npx tsc --noEmit
 
+      # The production build, as Vercel runs it (audit item 1.9). Catches
+      # what the type check cannot: config, route and bundling errors.
+      # No secrets: without Firebase settings the build still completes.
+      - name: Build the production app
+        run: npm run build
+
       - name: Run automated domain test suite
         run: node tests/domain.test.mjs
 
@@ -38,6 +49,11 @@ jobs:
 
       - name: Run automated duplicate detection test suite
         run: node tests/duplicate-detector.test.mjs
+
+      # Photo checks (format, sharpness, screenshots, perceptual-hash
+      # duplicates): 14 tests on the real code, not run in CI until now.
+      - name: Run photo-analysis tests
+        run: node --test tests/photo-analysis.test.mjs
 
       - name: Run sign-in return-path tests
         run: node tests/return-path.test.mjs
