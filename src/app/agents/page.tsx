@@ -35,7 +35,7 @@ export default function AgentsPage() {
     if (!selectedAgent) return;
     const user = auth?.currentUser;
     if (!user) {
-      setSendError("Sign in to send a message to a practitioner.");
+      setSendError("Sign in to send a message to an agent.");
       return;
     }
     setSending(true);
@@ -71,9 +71,9 @@ export default function AgentsPage() {
         <div className="relative z-50 mb-6 flex items-center justify-between rounded-card border border-white/75 bg-white/45 px-3.5 sm:px-5 py-3 shadow-[0_12px_28px_rgba(36,48,50,0.08)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-600 font-bold hidden sm:block dark:text-slate-400">Practitioners Directory</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-600 font-bold hidden sm:block dark:text-slate-400">Agent directory</p>
               <h1 className="text-xs sm:text-sm font-semibold tracking-wide text-slate-900 dark:text-white">
-                <span className="hidden sm:inline">PPRA Verified </span>Property Practitioners
+                Estate agents
               </h1>
             </div>
           </div>
@@ -134,7 +134,7 @@ export default function AgentsPage() {
                   </p>
                   <p className="flex items-center gap-1.5">
                     <HomeIcon className="h-3.5 w-3.5 text-slate-600 shrink-0 dark:text-emerald-400" />
-                    <span><strong className="text-slate-900 dark:text-white">Active Mandates:</strong> {agent.activeMandates} Exclusive Homes</span>
+                    <span><strong className="text-slate-900 dark:text-white">Homes listed:</strong> {agent.activeMandates}</span>
                   </p>
                 </div>
               </div>
@@ -144,7 +144,7 @@ export default function AgentsPage() {
                   href={`/agents/${agent.slug}`}
                   className="w-full rounded-xl bg-slate-950 py-2.5 text-center text-xs font-bold text-white shadow-md hover:bg-slate-800 transition-all cursor-pointer dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
                 >
-                  View Practitioner Profile →
+                  View agent profile
                 </Link>
                 <div className="grid grid-cols-2 gap-2">
                   <button
@@ -158,7 +158,7 @@ export default function AgentsPage() {
                     href={`/search?q=${encodeURIComponent(agent.location.split("&")[0].trim())}`}
                     className="rounded-xl border border-slate-300/80 bg-white/60 py-2 text-center text-xs font-semibold text-slate-700 hover:bg-white dark:bg-surface-ink/60 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/10"
                   >
-                    All Mandates
+                    Homes in their area
                   </Link>
                 </div>
               </div>
@@ -205,7 +205,7 @@ export default function AgentsPage() {
                 <form onSubmit={handleSendMessage} className="mt-4 space-y-3 text-xs">
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1 dark:text-slate-400">
-                      Your Message or Mandate Enquiry
+                      Your message
                     </label>
                     <textarea
                       rows={3}
@@ -229,7 +229,7 @@ export default function AgentsPage() {
                     disabled={sending}
                     className="w-full disabled:opacity-60 rounded-full bg-slate-950 py-2.5 text-xs font-bold text-white shadow-md hover:bg-slate-800 cursor-pointer dark:bg-emerald-700 dark:hover:bg-emerald-800 dark:text-white dark:shadow-[0_0_15px_rgba(16,185,129,0.35)]"
                   >
-                    {sending ? "Sending…" : "Send to Practitioner"}
+                    {sending ? "Sending…" : "Send message"}
                   </button>
                 </form>
               )}

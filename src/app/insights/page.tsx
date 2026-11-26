@@ -148,7 +148,7 @@ export default function InsightsPage() {
                 {marketMetrics.map((row) => (
                   <tr key={row.region} className="hover:bg-white/40 dark:hover:bg-surface-ink/60 transition-colors">
                     <td className="py-3.5 px-4 font-bold text-slate-900 dark:text-white">{row.region}</td>
-                    <td className="py-3.5 px-4 font-extrabold text-emerald-800 dark:text-emerald-400 dark:drop-shadow-[0_0_10px_rgba(16,185,129,0.3)]">{row.growth}</td>
+                    <td className="py-3.5 px-4 font-extrabold text-emerald-800 dark:text-emerald-400">{row.growth}</td>
                     <td className="py-3.5 px-4 font-semibold text-slate-900 dark:text-white">{row.avgPrice}</td>
                     <td className="py-3.5 px-4">{row.daysOnMarket} days</td>
                     <td className="py-3.5 px-4 text-slate-600 text-xs dark:text-slate-300">{row.driver}</td>
@@ -195,7 +195,7 @@ export default function InsightsPage() {
               <span className="text-xs uppercase tracking-wider text-slate-600 font-bold dark:text-slate-400">
                 5-Year Capital Appreciation
               </span>
-              <p className="mt-1 text-2xl font-extrabold text-emerald-800 dark:text-emerald-400 dark:drop-shadow-[0_0_12px_rgba(16,185,129,0.3)]">
+              <p className="mt-1 text-2xl font-extrabold text-emerald-800 dark:text-emerald-400">
                 {activeNodeData.fiveYearAppreciation}
               </p>
               <p className="text-xs text-slate-600 mt-0.5 dark:text-slate-400">Compound value trajectory</p>
@@ -254,7 +254,7 @@ export default function InsightsPage() {
                     <td className="py-3 px-4 text-slate-600 dark:text-slate-300">{sale.type}</td>
                     <td className="py-3 px-4 font-extrabold text-slate-900 dark:text-white">{sale.price}</td>
                     <td className="py-3 px-4 text-slate-600 dark:text-slate-400">{sale.date}</td>
-                    <td className="py-3 px-4 text-emerald-800 font-bold dark:text-emerald-400 dark:drop-shadow-[0_0_8px_rgba(16,185,129,0.25)]">{sale.ratePerM2}</td>
+                    <td className="py-3 px-4 text-emerald-800 font-bold dark:text-emerald-400">{sale.ratePerM2}</td>
                   </tr>
                 ))}
               </tbody>

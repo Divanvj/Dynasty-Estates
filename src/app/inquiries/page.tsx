@@ -12,7 +12,7 @@ import { useAuthHref } from "@/lib/use-return-path";
 const labels: Record<string, string> = {
   tour: "Private Tour Appointment",
   viewing: "Viewing Request",
-  message: "Direct Practitioner Message",
+  message: "Message to an agent",
 };
 
 // The two sample enquiries that used to stand in here (one marked
