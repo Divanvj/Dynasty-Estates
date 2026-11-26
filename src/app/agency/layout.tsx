@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import AgencyShell from "./agency-shell";
 
 export const metadata: Metadata = {
-  title: "Agency | Dynasty Estates",
+  title: "Agency",
   robots: { index: false, follow: false },
 };
 
