@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import AddToCollectionButton from "@/components/add-to-collection-button";
+import CatalogueLink from "@/components/catalogue-link";
 import OnShowBanner from "@/components/on-show-banner";
 import ExpandableText from "@/components/expandable-text";
 import PropertyHeroGallery from "@/components/property-hero-gallery";
@@ -176,14 +177,16 @@ export default async function PropertyPage({
             {/* One back link, not two. There were separate desktop and mobile
                 copies differing only in whether the label showed — which is
                 what `hidden sm:inline` on the label does, with one control. */}
-            <Link
-              href="/search"
+            {/* Back to the visitor's own search (For Sale / To Rent and
+                filters), not a bare /search that opened on To Rent. */}
+            <CatalogueLink
+              fallback={rent ? "rent" : "buy"}
               aria-label="Back to search catalogue"
               className="pill mr-auto border border-slate-300/80 bg-white/60 font-semibold text-slate-700 hover:bg-white transition-all dark:border-white/10 dark:bg-surface-ink/60 dark:text-slate-200 dark:hover:bg-white/10"
             >
               <ArrowLeftIcon className="h-4 w-4" />
               <span className="hidden sm:inline">Search Catalogue</span>
-            </Link>
+            </CatalogueLink>
 
             <PrintButton label="Print" title="Print this listing or save it as a PDF" />
             <PropertyShareButton title={property.title} />
@@ -337,12 +340,12 @@ export default async function PropertyPage({
                       View Active {property.city} Listings →
                     </Link>
                   )}
-                  <Link
-                    href="/search"
+                  <CatalogueLink
+                    fallback={rent ? "rent" : "buy"}
                     className="pill border border-slate-300/80 bg-white/80 font-bold text-slate-800 shadow-xs hover:bg-white dark:bg-surface-panel dark:border-white/10 dark:text-slate-200 transition-colors"
                   >
                     Catalogue Search →
-                  </Link>
+                  </CatalogueLink>
                 </div>
               </div>
             </div>
@@ -518,12 +521,12 @@ export default async function PropertyPage({
                 <p className="mt-3 text-sm leading-relaxed text-slate-800 dark:text-slate-200">
                   This home is not for sale. It shows how a listing looks on Dynasty Estates while the first real listings come in.
                 </p>
-                <Link
-                  href="/search"
+                <CatalogueLink
+                  fallback={rent ? "rent" : "buy"}
                   className="no-print pill-lg mt-4 w-full bg-slate-950 font-bold text-white hover:bg-slate-800 transition-all dark:bg-emerald-700 dark:hover:bg-emerald-800"
                 >
                   Browse listings
-                </Link>
+                </CatalogueLink>
               </div>
             ) : (
             <div className="rounded-panel border border-white/80 bg-white/55 p-6 shadow-[0_20px_45px_rgba(36,48,50,0.06)] backdrop-blur-xl dark:bg-surface-panel/80 dark:border-white/10 dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)]">
