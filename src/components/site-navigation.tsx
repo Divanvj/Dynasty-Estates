@@ -190,7 +190,7 @@ export default function SiteNavigation() {
     <nav
       ref={navRef}
       aria-label="Main Navigation"
-      className="hidden items-center gap-1.5 md:gap-2.5 lg:gap-4 xl:gap-6 text-xs font-semibold text-slate-700 dark:text-slate-200 lg:flex"
+      className="hidden items-center gap-1.5 md:gap-2.5 lg:gap-4 xl:gap-6 text-xs font-semibold text-slate-900 dark:text-slate-200 lg:flex"
     >
       {/*
         "Home" used to sit here. The logo to the left of this bar already links
@@ -482,7 +482,7 @@ export default function SiteNavigation() {
         className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-bold text-xs transition-all ${
           isAiActive
             ? "bg-emerald-900 text-white dark:bg-emerald-400/20 dark:text-emerald-300 border border-emerald-400/50 shadow-xs"
-            : "text-emerald-800 dark:text-emerald-300 hover:text-emerald-950 dark:hover:text-emerald-200 hover:bg-emerald-500/10 border border-emerald-500/30 dark:border-emerald-500/20"
+            : "text-emerald-950 dark:text-emerald-300 dark:hover:text-emerald-200 hover:bg-emerald-500/10 border border-emerald-500/30 dark:border-emerald-500/20"
         }`}
       >
         <SparklesIcon className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
