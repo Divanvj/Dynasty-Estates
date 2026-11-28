@@ -195,6 +195,8 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
                 ariaLabel={`Property type: ${activeFilter === ALL_TYPES ? "all" : activeFilter}`}
                 active={activeFilter !== ALL_TYPES}
                 align="right"
+                // Seven short rows at most: show them all, no inner scrollbar.
+                menuClassName="[&>div]:max-h-none"
                 className="min-w-0 flex-1 sm:h-11 sm:w-[12.5rem] sm:flex-none"
               />
             )}
