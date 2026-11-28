@@ -9,7 +9,6 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/intent-memory` | For Sale / To Rent kept across pages: new `lib/search-intent.ts`, `search-content.tsx`, `expandable-search-panel.tsx`, `home-trending-listings.tsx`, `property/[slug]/page.tsx` back links, for-sale / to-rent pages | 2026-11-26 |
 | ALET-ELIZE | `ALET-ELIZE/dark-hero-text` | `globals.css` hero headline block (`.hh-*`) — dark-mode hero text | 2026-11-20 |
 
 ## Recently merged
@@ -17,6 +16,7 @@ lines keep its own merges trivial.
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
 
+- 2026-11-28 — `DESKTOP-1R37EBU/intent-memory` merged (owner). The For Sale / To Rent choice follows the visitor for the tab (`lib/search-intent.ts`). `/search` without `?intent` opens on it, else **For Sale** (was To Rent). Link back to the catalogue with `<CatalogueLink fallback=…>`, not a bare `/search`; new switches call `rememberIntent()`.
 - 2026-11-26 — `DESKTOP-1R37EBU/hero-phone-smooth` merged (owner). Phones load all 36 hero frames (`public/hero/frames/p/`, 648 KB) and glide for 45 ms.
 - 2026-11-26 — `DESKTOP-1R37EBU/hero-glide` merged (owner). Hero scroll move glides to the scroll position and cross-fades between frames (`home-hero-scene.tsx`).
 - 2026-11-26 — `DESKTOP-1R37EBU/hero-speed` merged (owner). Hero photo preloaded per screen size from the head; phone scroll frames wait for the first touch/scroll or 3 s; frames decoded with `createImageBitmap`.
