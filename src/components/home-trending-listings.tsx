@@ -6,6 +6,7 @@ import { useState } from "react";
 import SavePropertyButton from "@/components/save-property-button";
 import PropertyListCard from "@/components/property-list-card";
 import PropertyCompactTable from "@/components/property-compact-table";
+import CustomSelect from "@/components/custom-select";
 import PropertySplitMapView from "@/components/property-split-map-view";
 import {
   AreaIcon,
@@ -24,14 +25,17 @@ import { LG_QUERY, useMediaQuery } from "@/lib/use-media-query";
 
 export type ViewMode = "grid" | "list" | "map" | "compact";
 
-const filters = ["All", "House", "Villa", "Estate Home", "Apartment", "Penthouse", "Townhouse"];
+const ALL_TYPES = "All";
+/** The order types are offered in; any other type follows alphabetically. */
+const TYPE_ORDER = ["House", "Villa", "Estate Home", "Apartment", "Penthouse", "Townhouse"];
+const typeRank = (type: string) => (TYPE_ORDER.indexOf(type) + 1 || TYPE_ORDER.length + 1);
 
 export default function HomeTrendingListings({ properties }: { properties: PropertyRecord[] }) {
   // The visitor's For Sale / To Rent choice for the session, shared with the
   // hero search and the catalogue (lib/search-intent.ts); For Sale until
   // they choose. One store, so the hero and this feed can't disagree.
   const intent = useRememberedIntent() ?? DEFAULT_SEARCH_INTENT;
-  const [activeFilter, setActiveFilter] = useState("All");
+  const [chosenType, setChosenType] = useState(ALL_TYPES);
   // List by default everywhere (owner, 25 Nov), undoing U3's desktop Grid
   // default; Grid is one click away on desktop. The home page is taller at
   // 1280 as a result (about 1,400px), which the owner accepted.
@@ -54,13 +58,16 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
   }
 
   // Strict separation: Zero mixing of buy and rent!
-  const filtered = properties.filter((p) => {
-    if (intent === "rent" && p.listingType !== "rent") return false;
-    if (intent === "buy" && p.listingType === "rent") return false;
+  const onThisSide = properties.filter((p) => (p.listingType === "rent") === (intent === "rent"));
 
-    if (activeFilter === "All") return true;
-    return p.type === activeFilter;
-  });
+  // Only types that have a home on this side (owner, 28 Nov), so a choice can
+  // never lead to an empty section. A type chosen on the other side that has
+  // none here reads as All, and comes back when the visitor switches back.
+  const availableTypes = [...new Set<string>(onThisSide.map((p) => p.type))].sort(
+    (a, b) => typeRank(a) - typeRank(b) || a.localeCompare(b),
+  );
+  const activeFilter = availableTypes.includes(chosenType) ? chosenType : ALL_TYPES;
+  const filtered = activeFilter === ALL_TYPES ? onThisSide : onThisSide.filter((p) => p.type === activeFilter);
 
   /*
     Six homes, then a way into the full search. The home page used to render
@@ -70,7 +77,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
   */
   const FEATURED_COUNT = 6;
   const featured = filtered.slice(0, FEATURED_COUNT);
-  const seeAllHref = `/search?intent=${intent}${activeFilter !== "All" ? `&type=${encodeURIComponent(activeFilter)}` : ""}`;
+  const seeAllHref = `/search?intent=${intent}${activeFilter !== ALL_TYPES ? `&type=${encodeURIComponent(activeFilter)}` : ""}`;
 
   /*
     Full-bleed below `md`. This panel is a bordered, padded, blurred box whose
@@ -87,119 +94,110 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
   */
   return (
     <section id="listings" className="mx-auto mt-8 max-w-[1440px] rounded-panel border border-white/45 bg-white/35 dark:border-white/10 dark:bg-surface-panel/65 p-4 shadow-[0_20px_45px_rgba(15,23,42,0.06)] dark:shadow-[0_20px_45px_rgba(0,0,0,0.4)] backdrop-blur-xl md:p-6 max-md:rounded-none max-md:border-0 max-md:bg-transparent max-md:p-0 max-md:shadow-none max-md:backdrop-blur-none dark:max-md:bg-transparent">
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between border-b border-slate-200/60 dark:border-white/10 pb-4">
-        <div>
-          {/* `flex-wrap`, and the separator dot hides once it wraps. The
-              eyebrow is `tracking-[0.22em]` uppercase, so at 320px it and the
-              169px toggle needed 20px more than the row had and pushed the
-              document into a horizontal scroll. */}
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-            {/* Direct Rent vs Buy Switcher */}
-            <div className="inline-flex rounded-full border border-slate-200/90 bg-white/80 dark:border-white/10 dark:bg-surface-ink/60 p-0.5 shadow-sm">
-              <button
-                type="button"
-                onClick={() => handleIntentChange("buy")}
-                className={`pill-sm font-bold transition-all cursor-pointer ${ intent === "buy" ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-700 dark:to-emerald-800 text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white" }`}
-              >
-                For Sale
-              </button>
-              <button
-                type="button"
-                onClick={() => handleIntentChange("rent")}
-                className={`pill-sm font-bold transition-all cursor-pointer ${ intent === "rent" ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-700 dark:to-emerald-800 text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white" }`}
-              >
-                To Rent
-              </button>
-            </div>
+      <div className="border-b border-slate-200/60 dark:border-white/10 pb-4">
+        {/* `flex-wrap`, and the separator dot hides once it wraps. The
+            eyebrow is `tracking-[0.22em]` uppercase, so at 320px it and the
+            169px toggle needed 20px more than the row had and pushed the
+            document into a horizontal scroll. */}
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+          {/* Direct Rent vs Buy Switcher */}
+          <div className="inline-flex rounded-full border border-slate-200/90 bg-white/80 dark:border-white/10 dark:bg-surface-ink/60 p-0.5 shadow-sm">
+            <button
+              type="button"
+              onClick={() => handleIntentChange("buy")}
+              className={`pill-sm font-bold transition-all cursor-pointer ${ intent === "buy" ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-700 dark:to-emerald-800 text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white" }`}
+            >
+              For Sale
+            </button>
+            <button
+              type="button"
+              onClick={() => handleIntentChange("rent")}
+              className={`pill-sm font-bold transition-all cursor-pointer ${ intent === "rent" ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-700 dark:to-emerald-800 text-white shadow-sm dark:shadow-[0_0_12px_rgba(16,185,129,0.3)]" : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white" }`}
+            >
+              To Rent
+            </button>
           </div>
-          <h2 className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white md:text-3xl">
+        </div>
+        {/* One row from `sm`: heading left, view switch and type dropdown right
+            and level with it (owner, 28 Nov; the seven type pills squeezed the
+            heading onto two lines and wrapped themselves). On a phone the
+            controls are one row under the heading. View first, then dropdown,
+            the order /search uses. */}
+        <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <h2 className="text-2xl font-semibold text-slate-900 dark:text-white sm:whitespace-nowrap md:text-3xl">
             {intent === "rent" ? "Homes to rent" : "Homes for sale"}
           </h2>
-        </div>
 
-        {/* View Switcher & Type Filter Toolbar. On a phone this is one row: a
-            compact List / Map switch and a single swipeable row of type chips.
-            It was two 44px squares on their own line and chips wrapping onto
-            two more — four rows of controls before the first home. */}
-        <div className="flex min-w-0 items-center gap-2 lg:flex-wrap lg:gap-3">
-          {/* View Mode Switcher Segmented Control */}
-          <div className="inline-flex shrink-0 items-center rounded-full border border-slate-200/90 bg-white/80 p-0.5 shadow-2xs backdrop-blur-md lg:rounded-2xl lg:p-1 dark:border-white/10 dark:bg-surface-ink/60">
-            <button
-              type="button"
-              onClick={() => setViewMode("grid")}
-              // Desktop-only, matching /search: phones get List and Map.
-              className={`hidden min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:flex lg:min-h-0 lg:min-w-0 ${
-                viewMode === "grid"
-                  ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                  : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
-              }`}
-              title="Grid View (Photo Cards)"
-            >
-              <GridIcon className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Grid</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setViewMode("list")}
-              className={`flex h-10 w-10 items-center justify-center gap-1.5 rounded-full text-xs font-bold transition-all cursor-pointer lg:h-auto lg:w-auto lg:rounded-xl lg:px-2.5 lg:py-1 ${
-                viewMode === "list"
-                  ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                  : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
-              }`}
-              title="List View (Detailed Cards)"
-            >
-              <ListIcon className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">List</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setViewMode("map")}
-              className={`flex h-10 w-10 items-center justify-center gap-1.5 rounded-full text-xs font-bold transition-all cursor-pointer lg:h-auto lg:w-auto lg:rounded-xl lg:px-2.5 lg:py-1 ${
-                viewMode === "map"
-                  ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                  : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
-              }`}
-              title="Split Map View (Interactive Map + Listings)"
-            >
-              <MapSplitIcon className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Map</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setViewMode("compact")}
-              // Desktop-only, matching /search.
-              className={`hidden min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:flex lg:min-h-0 lg:min-w-0 ${
-                viewMode === "compact"
-                  ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                  : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
-              }`}
-              title="Compact Table View (Investor Spreadsheet)"
-            >
-              <TableIcon className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Table</span>
-            </button>
-          </div>
-
-          {/* Property Type Sub-filter Pills — one swipeable row on phones. */}
-          <div className="flex min-w-0 flex-1 gap-1.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:flex-wrap lg:overflow-visible">
-            {filters.map((filter) => (
+          <div className="flex min-w-0 items-center gap-2 lg:gap-3">
+            {/* View Mode Switcher Segmented Control */}
+            <div className="inline-flex shrink-0 items-center rounded-full border border-slate-200/90 bg-white/80 p-0.5 shadow-2xs backdrop-blur-md lg:rounded-2xl lg:p-1 dark:border-white/10 dark:bg-surface-ink/60">
               <button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
-                /* Sized rather than given `tap-44`: these pills wrap into rows
-                   1.5 apart, so centred 44px overlays would cover each other
-                   and the last in the DOM would take its neighbours' taps.
-                   Real height instead, back to compact from `lg` where there
-                   is a pointer. */
-                className={`inline-flex h-10 shrink-0 items-center justify-center rounded-full px-3.5 text-xs font-semibold transition-all cursor-pointer lg:h-auto lg:py-1 ${
-                  activeFilter === filter
-                    ? "bg-gradient-to-r from-[#0b4d4e] to-[#07393a] dark:from-emerald-700 dark:to-emerald-800 text-white shadow-md border border-emerald-400/30 dark:border-emerald-400/50 dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "border border-slate-200/80 bg-white/60 dark:border-white/10 dark:bg-surface-ink/60 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-surface-panel hover:border-emerald-400/50"
+                type="button"
+                onClick={() => setViewMode("grid")}
+                // Desktop-only, matching /search: phones get List and Map.
+                className={`hidden min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:flex lg:min-h-0 lg:min-w-0 ${
+                  viewMode === "grid"
+                    ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
                 }`}
+                title="Grid View (Photo Cards)"
               >
-                {filter}
+                <GridIcon className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">Grid</span>
               </button>
-            ))}
+              <button
+                type="button"
+                onClick={() => setViewMode("list")}
+                className={`flex h-10 w-10 items-center justify-center gap-1.5 rounded-full text-xs font-bold transition-all cursor-pointer lg:h-auto lg:w-auto lg:rounded-xl lg:px-2.5 lg:py-1 ${
+                  viewMode === "list"
+                    ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
+                }`}
+                title="List View (Detailed Cards)"
+              >
+                <ListIcon className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">List</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode("map")}
+                className={`flex h-10 w-10 items-center justify-center gap-1.5 rounded-full text-xs font-bold transition-all cursor-pointer lg:h-auto lg:w-auto lg:rounded-xl lg:px-2.5 lg:py-1 ${
+                  viewMode === "map"
+                    ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
+                }`}
+                title="Split Map View (Interactive Map + Listings)"
+              >
+                <MapSplitIcon className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">Map</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode("compact")}
+                // Desktop-only, matching /search.
+                className={`hidden min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:flex lg:min-h-0 lg:min-w-0 ${
+                  viewMode === "compact"
+                    ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
+                }`}
+                title="Compact Table View (Investor Spreadsheet)"
+              >
+                <TableIcon className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">Table</span>
+              </button>
+            </div>
+
+            {availableTypes.length > 0 && (
+              <CustomSelect
+                value={activeFilter}
+                onChange={setChosenType}
+                options={[{ value: ALL_TYPES, label: "All property types" }, ...availableTypes]}
+                ariaLabel={`Property type: ${activeFilter === ALL_TYPES ? "all" : activeFilter}`}
+                active={activeFilter !== ALL_TYPES}
+                align="right"
+                className="min-w-0 flex-1 sm:h-11 sm:w-[12.5rem] sm:flex-none"
+              />
+            )}
           </div>
         </div>
       </div>
@@ -348,7 +346,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
 
       {filtered.length === 0 && (
         <div className="mt-8 rounded-2xl border border-dashed border-slate-300 dark:border-white/10 p-8 text-center text-xs text-slate-600 dark:text-slate-400">
-          No {intent === "rent" ? "rental properties" : "properties for sale"} in the catalogue currently match the &ldquo;{activeFilter}&rdquo; filter.
+          No {intent === "rent" ? "homes to rent" : "homes for sale"} at the moment.
         </div>
       )}
     </section>
