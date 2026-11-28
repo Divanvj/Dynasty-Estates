@@ -21,9 +21,6 @@ const DOWN_THRESHOLD = 12; // px of downward scroll that hides it again
 export default function SiteHeaderReveal({ children }: { children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
   const [hidden, setHidden] = useState(false);
-  // Away from the top the bar floats over listings and text, so it turns
-  // nearly opaque there; at the top it keeps its light, see-through look.
-  const [floating, setFloating] = useState(false);
 
   useEffect(() => {
     let last = window.scrollY;
@@ -35,7 +32,6 @@ export default function SiteHeaderReveal({ children }: { children: ReactNode }) 
       const el = ref.current;
       const height = el?.offsetHeight ?? 100;
       const delta = y - last;
-      setFloating(y > height);
       if (y <= height) {
         setHidden(false);
         last = y;
@@ -66,10 +62,7 @@ export default function SiteHeaderReveal({ children }: { children: ReactNode }) 
       className={[
         "no-print pointer-events-none sticky top-0 z-[60] hidden px-8 pt-6 transition-transform duration-300 ease-out motion-reduce:transition-none lg:block",
         hidden ? "-translate-y-[calc(100%+2rem)]" : "translate-y-0",
-        floating && "[&>header]:bg-white/90 dark:[&>header]:bg-[#0b1719]/92",
-      ]
-        .filter(Boolean)
-        .join(" ")}
+      ].join(" ")}
     >
       {children}
     </div>

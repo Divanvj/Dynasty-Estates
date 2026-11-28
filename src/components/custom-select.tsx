@@ -24,6 +24,8 @@ export interface CustomSelectProps {
   align?: "left" | "right" | "mobile-right";
   ariaLabel?: string;
   icon?: React.ReactNode;
+  /** Green tint: this dropdown is narrowing what is on the page. */
+  active?: boolean;
 }
 
 export default function CustomSelect({
@@ -41,6 +43,7 @@ export default function CustomSelect({
   align = "left",
   ariaLabel,
   icon,
+  active = false,
 }: CustomSelectProps) {
   const generatedId = useId();
   const selectId = id || generatedId;
@@ -178,7 +181,11 @@ export default function CustomSelect({
           disabled={disabled}
           aria-label={ariaLabel || label || placeholder}
           onChange={(e) => onChange(e.target.value)}
-          className={`h-11 w-full rounded-xl border border-slate-300 bg-white px-3 font-semibold text-slate-800 shadow-2xs focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 dark:border-white/10 dark:bg-[#0c181a] dark:text-slate-200 ${
+          className={`h-11 w-full rounded-xl border px-3 font-semibold text-slate-800 shadow-2xs focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 dark:text-slate-200 ${
+            active
+              ? "border-emerald-600 bg-emerald-50 dark:border-emerald-400/60 dark:bg-emerald-950"
+              : "border-slate-300 bg-white dark:border-white/10 dark:bg-[#0c181a]"
+          } ${
             disabled ? "cursor-not-allowed opacity-50" : ""
           }`}
         >
@@ -209,7 +216,11 @@ export default function CustomSelect({
         onClick={toggleMenu}
         className={`w-full h-full text-left transition-all duration-200 cursor-pointer select-none ${
           buttonClassName ||
-          `flex items-center justify-between rounded-xl border border-slate-300 dark:border-white/10 bg-white dark:bg-[#0c181a] px-3.5 py-2.5 text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-2xs hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_16px_rgba(16,185,129,0.35)] dark:hover:shadow-[0_0_20px_rgba(52,211,153,0.35)] focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:shadow-[0_0_20px_rgba(16,185,129,0.4)] ${
+          `flex items-center justify-between rounded-xl border ${
+            active
+              ? "border-emerald-600 bg-emerald-50 dark:border-emerald-400/60 dark:bg-emerald-950"
+              : "border-slate-300 dark:border-white/10 bg-white dark:bg-[#0c181a]"
+          } px-3.5 py-2.5 text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-2xs hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-[0_0_16px_rgba(16,185,129,0.35)] dark:hover:shadow-[0_0_20px_rgba(52,211,153,0.35)] focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:shadow-[0_0_20px_rgba(16,185,129,0.4)] ${
             isOpen
               ? "border-emerald-500 dark:border-emerald-400 ring-2 ring-emerald-500/20 shadow-[0_0_16px_rgba(16,185,129,0.3)] dark:shadow-[0_0_20px_rgba(52,211,153,0.35)]"
               : ""

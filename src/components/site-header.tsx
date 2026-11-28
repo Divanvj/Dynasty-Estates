@@ -23,11 +23,14 @@ import SiteNavigation from "@/components/site-navigation";
  * body, as ExpandableSearchPanel does).
  *
  * SiteHeaderReveal makes it sticky and brings it back on any small scroll up.
+ *
+ * One frosted-glass look everywhere (owner, 28 Nov 2026), at the top of the
+ * page and floating over listings alike.
  */
 export default function SiteHeader() {
   return (
     <SiteHeaderReveal>
-      <header className="pointer-events-auto mx-auto flex max-w-[1440px] items-center justify-between rounded-card border border-white/70 bg-white/40 px-6 py-3 shadow-[0_12px_30px_rgba(36,48,50,0.06)] backdrop-blur-xl dark:border-white/10 dark:bg-[#0b1719]/70 dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
+      <header className="pointer-events-auto mx-auto flex max-w-[1440px] items-center justify-between rounded-card border border-white/70 bg-white/60 px-6 py-3 shadow-[0_12px_30px_rgba(36,48,50,0.06)] backdrop-blur-2xl backdrop-saturate-150 dark:border-white/10 dark:bg-[#0b1719]/70 dark:shadow-[0_12px_30px_rgba(0,0,0,0.4)]">
         <BrandLogo />
         <SiteNavigation />
         <AccountActions />
