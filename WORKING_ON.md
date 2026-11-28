@@ -9,7 +9,7 @@ lines keep its own merges trivial.
 
 | Machine | Branch | Area / files | Since |
 | ------- | ------ | ------------ | ----- |
-| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/header-glass` | `site-header.tsx`, `site-header-reveal.tsx` — header always frosted glass; may follow with the `home-trending-listings.tsx` toolbar | 2026-11-28 |
+| DESKTOP-1R37EBU | `DESKTOP-1R37EBU/ui-audit` | UI consistency audit, all pages and roles (owner, 28 Nov): small copy, label and control fixes. Not touching `globals.css` `.hh-*`, the footer, 404/titles, or the developer console | 2026-11-28 |
 | ALET-ELIZE | `ALET-ELIZE/dark-hero-text` | `globals.css` hero headline block (`.hh-*`) — dark-mode hero text | 2026-11-20 |
 
 ## Recently merged
@@ -17,6 +17,7 @@ lines keep its own merges trivial.
 Leave a line here when you merge something the other agent should know about
 before they start, then delete it after a few days.
 
+- 2026-11-28 — `DESKTOP-1R37EBU/header-glass` merged (owner). Desktop header keeps one frosted look (`site-header.tsx`; nav text in `site-navigation.tsx` is a step darker: **plain-words also edits that file**). Home listings: type pills replaced by a dropdown beside the view switch, level with the heading. New `<ViewSwitch>` (Grid/List/Map/Table); `CustomSelect` has an optional `active` (green) look.
 - 2026-11-28 — `DESKTOP-1R37EBU/intent-memory` merged (owner). The For Sale / To Rent choice follows the visitor for the tab (`lib/search-intent.ts`). `/search` without `?intent` opens on it, else **For Sale** (was To Rent). Link back to the catalogue with `<CatalogueLink fallback=…>`, not a bare `/search`; new switches call `rememberIntent()`.
 - 2026-11-26 — `DESKTOP-1R37EBU/hero-phone-smooth` merged (owner). Phones load all 36 hero frames (`public/hero/frames/p/`, 648 KB) and glide for 45 ms.
 - 2026-11-26 — `DESKTOP-1R37EBU/hero-glide` merged (owner). Hero scroll move glides to the scroll position and cross-fades between frames (`home-hero-scene.tsx`).
