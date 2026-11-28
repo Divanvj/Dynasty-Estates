@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import SavePropertyButton from "@/components/save-property-button";
 import PropertyListCard from "@/components/property-list-card";
@@ -19,6 +19,7 @@ import {
 } from "@/components/icons";
 import { featureLabel } from "@/lib/feature-labels";
 import { getDisplayTag, type PropertyRecord } from "@/lib/property-data";
+import { DEFAULT_SEARCH_INTENT, type SearchIntent, rememberIntent, useRememberedIntent } from "@/lib/search-intent";
 import { LG_QUERY, useMediaQuery } from "@/lib/use-media-query";
 
 export type ViewMode = "grid" | "list" | "map" | "compact";
@@ -26,11 +27,10 @@ export type ViewMode = "grid" | "list" | "map" | "compact";
 const filters = ["All", "House", "Villa", "Estate Home", "Apartment", "Penthouse", "Townhouse"];
 
 export default function HomeTrendingListings({ properties }: { properties: PropertyRecord[] }) {
-  // Must match the hero search panel's default ("buy"). The two only sync
-  // through `dynasty:intent-change`, which fires on a *change* — so if they
-  // start on different values the page loads contradicting itself, with the
-  // hero on For Sale and this feed listing rentals underneath it.
-  const [intent, setIntent] = useState<"rent" | "buy">("buy");
+  // The visitor's For Sale / To Rent choice for the session, shared with the
+  // hero search and the catalogue (lib/search-intent.ts); For Sale until
+  // they choose. One store, so the hero and this feed can't disagree.
+  const intent = useRememberedIntent() ?? DEFAULT_SEARCH_INTENT;
   const [activeFilter, setActiveFilter] = useState("All");
   // List by default everywhere (owner, 25 Nov), undoing U3's desktop Grid
   // default; Grid is one click away on desktop. The home page is taller at
@@ -49,22 +49,8 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
   const isDesktop = useMediaQuery(LG_QUERY, true);
   const viewMode: ViewMode = isDesktop || selectedView === "map" ? selectedView : "list";
 
-  useEffect(() => {
-    function handleExternalIntent(e: Event) {
-      const customEvent = e as CustomEvent<"rent" | "buy">;
-      if (customEvent.detail === "rent" || customEvent.detail === "buy") {
-        setIntent(customEvent.detail);
-      }
-    }
-    window.addEventListener("dynasty:intent-change", handleExternalIntent);
-    return () => window.removeEventListener("dynasty:intent-change", handleExternalIntent);
-  }, []);
-
-  function handleIntentChange(newIntent: "rent" | "buy") {
-    setIntent(newIntent);
-    if (typeof window !== "undefined") {
-      window.dispatchEvent(new CustomEvent("dynasty:intent-change", { detail: newIntent }));
-    }
+  function handleIntentChange(newIntent: SearchIntent) {
+    rememberIntent(newIntent);
   }
 
   // Strict separation: Zero mixing of buy and rent!

@@ -14,6 +14,15 @@ import PropertySplitMapView from "@/components/property-split-map-view";
 import CustomSelect from "@/components/custom-select";
 import { featureLabel } from "@/lib/feature-labels";
 import { criteriaFromParams, criteriaToParams, matchesCriteria } from "@/lib/search-criteria";
+import {
+  DEFAULT_SEARCH_INTENT,
+  type SearchIntent,
+  isSearchIntent,
+  readIntent,
+  rememberIntent,
+  rememberSearch,
+  useRememberedIntent,
+} from "@/lib/search-intent";
 import { LG_QUERY, useMediaQuery } from "@/lib/use-media-query";
 import {
   AreaIcon,
@@ -101,9 +110,31 @@ export default function SearchContent({ initialProperties }: { initialProperties
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Filter State: strictly "rent" or "buy" (no mixing), derived directly from searchParams
+  // Filter State: strictly "rent" or "buy" (no mixing). The URL decides; a
+  // link without one (the nav's "Advanced Search", a listing's way back)
+  // opens on the visitor's remembered choice, else For Sale. It used to fall
+  // back to To Rent, so For Sale → a listing → back landed on rentals
+  // (owner, 26 Nov 2026). See lib/search-intent.ts.
   const urlIntent = searchParams.get("intent");
-  const listingCategory: "rent" | "buy" = urlIntent === "buy" ? "buy" : "rent";
+  const rememberedIntent = useRememberedIntent();
+  const listingCategory: SearchIntent = isSearchIntent(urlIntent)
+    ? urlIntent
+    : (rememberedIntent ?? DEFAULT_SEARCH_INTENT);
+
+  // Keep the choice in the address (so Back and a copied link hold it) and
+  // remember it, with the whole query, for the rest of the site.
+  useEffect(() => {
+    if (!isSearchIntent(urlIntent)) {
+      // Read storage here, not `listingCategory`: on the hydration pass the
+      // remembered value is still the server's null.
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("intent", readIntent() ?? DEFAULT_SEARCH_INTENT);
+      router.replace(`/search?${params.toString()}`, { scroll: false });
+      return;
+    }
+    rememberIntent(urlIntent);
+    rememberSearch(searchParams.toString());
+  }, [urlIntent, searchParams, router]);
 
   const rawProv = searchParams.get("province");
   const province = rawProv && rawProv !== "All Provinces" ? rawProv : "";
@@ -211,6 +242,9 @@ export default function SearchContent({ initialProperties }: { initialProperties
   }, [initialProperties]);
 
   function handleCategoryChange(cat: "rent" | "buy") {
+    // Remembered on the click, not only once the new URL has rendered, so
+    // leaving the page straight away still keeps it.
+    rememberIntent(cat);
     const params = new URLSearchParams(searchParams.toString());
     params.set("intent", cat);
     params.delete("minPrice");
@@ -246,7 +280,8 @@ export default function SearchContent({ initialProperties }: { initialProperties
   }
 
   function handleResetFilters() {
-    router.replace("/search?intent=rent", { scroll: false });
+    // Filters reset; For Sale / To Rent is the visitor's choice, not a filter.
+    router.replace(`/search?intent=${listingCategory}`, { scroll: false });
   }
 
   function handlePanelSearch(filters: SearchFilters) {

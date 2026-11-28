@@ -29,6 +29,7 @@ import {
 } from "@/components/icons";
 import CustomSelect from "@/components/custom-select";
 import { matchProvinceName, southAfricanProvinces } from "@/lib/property-data";
+import { rememberIntent, useRememberedIntent } from "@/lib/search-intent";
 import { getAllCitiesAlphabetical, searchCities } from "@/lib/location-data";
 
 export type SearchFilters = {
@@ -48,6 +49,12 @@ export type SearchFilters = {
 
 interface ExpandableSearchPanelProps {
   defaultIntent?: "rent" | "buy";
+  /**
+   * Start from, and write back to, the visitor's remembered For Sale / To
+   * Rent choice (lib/search-intent.ts). The home hero sets it; /search does
+   * not, because there the URL decides and is passed as `defaultIntent`.
+   */
+  followRememberedIntent?: boolean;
   initialLocations?: string[];
   initialCategory?: "Residential" | "Commercial" | "Farms" | "Developments";
   initialTypes?: string[];
@@ -188,6 +195,7 @@ export default function ExpandableSearchPanel({
   // For Sale unless a caller says otherwise. /search overrides this from the
   // URL, so a rental search still opens on To Rent.
   defaultIntent = "buy",
+  followRememberedIntent = false,
   initialLocations = [],
   initialCategory = "Residential",
   initialTypes = ["All types"],
@@ -352,7 +360,9 @@ export default function ExpandableSearchPanel({
   }, [isOpen, closing]);
 
   // Filter States
-  const [intent, setIntent] = useState<"rent" | "buy">(defaultIntent);
+  const rememberedIntent = useRememberedIntent();
+  const [localIntent, setIntent] = useState<"rent" | "buy">(defaultIntent);
+  const intent = followRememberedIntent ? (rememberedIntent ?? defaultIntent) : localIntent;
   const [locations, setLocations] = useState<string[]>(initialLocations);
   const [locationInput, setLocationInput] = useState("");
 
@@ -488,9 +498,9 @@ export default function ExpandableSearchPanel({
     setIntent(newIntent);
     setMinPrice(0);
     setMaxPrice(0);
-    if (typeof window !== "undefined") {
-      window.dispatchEvent(new CustomEvent("dynasty:intent-change", { detail: newIntent }));
-    }
+    // Remembers it for the rest of the site and tells the other switches on
+    // the page (the home listings) through `dynasty:intent-change`.
+    rememberIntent(newIntent);
   }
 
   function addLocationTag(tag: string) {

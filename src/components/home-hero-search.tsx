@@ -18,10 +18,12 @@ export default function HomeHeroSearch() {
       */}
 
       {/* The one way to search from this page. "buy" (For Sale) is the
-          default per the Improvement Notes: the platform leads with sales. */}
+          default per the Improvement Notes: the platform leads with sales; after
+          that it is whatever the visitor last chose (lib/search-intent.ts). */}
       <div className="relative z-50">
         <ExpandableSearchPanel
           defaultIntent="buy"
+          followRememberedIntent
           placeholder="Suburb or city"
         />
       </div>

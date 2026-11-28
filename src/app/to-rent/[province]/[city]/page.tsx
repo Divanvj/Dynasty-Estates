@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RememberIntent from "@/components/remember-intent";
 import PropertyGridCard from "@/components/property-grid-card";
 import Link from "next/link";
 
@@ -95,6 +96,8 @@ export default async function ToRentLocationPage({
 
   return (
     <div className="min-h-screen bg-[var(--background)] text-slate-900 dark:text-white">
+      {/* Opening this page is choosing To Rent: home and the catalogue follow it. */}
+      <RememberIntent intent="rent" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
