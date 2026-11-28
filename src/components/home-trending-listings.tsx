@@ -7,23 +7,18 @@ import SavePropertyButton from "@/components/save-property-button";
 import PropertyListCard from "@/components/property-list-card";
 import PropertyCompactTable from "@/components/property-compact-table";
 import CustomSelect from "@/components/custom-select";
+import ViewSwitch, { type ViewMode } from "@/components/view-switch";
 import PropertySplitMapView from "@/components/property-split-map-view";
 import {
   AreaIcon,
   BathIcon,
   BedIcon,
-  GridIcon,
-  ListIcon,
   LocationPinIcon,
-  MapSplitIcon,
-  TableIcon,
 } from "@/components/icons";
 import { featureLabel } from "@/lib/feature-labels";
 import { getDisplayTag, type PropertyRecord } from "@/lib/property-data";
 import { DEFAULT_SEARCH_INTENT, type SearchIntent, rememberIntent, useRememberedIntent } from "@/lib/search-intent";
 import { LG_QUERY, useMediaQuery } from "@/lib/use-media-query";
-
-export type ViewMode = "grid" | "list" | "map" | "compact";
 
 const ALL_TYPES = "All";
 /** The order types are offered in; any other type follows alphabetically. */
@@ -129,64 +124,7 @@ export default function HomeTrendingListings({ properties }: { properties: Prope
           </h2>
 
           <div className="flex min-w-0 items-center gap-2 lg:gap-3">
-            {/* View Mode Switcher Segmented Control */}
-            <div className="inline-flex shrink-0 items-center rounded-full border border-slate-200/90 bg-white/80 p-0.5 shadow-2xs backdrop-blur-md lg:rounded-2xl lg:p-1 dark:border-white/10 dark:bg-surface-ink/60">
-              <button
-                type="button"
-                onClick={() => setViewMode("grid")}
-                // Desktop-only, matching /search: phones get List and Map.
-                className={`hidden min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:flex lg:min-h-0 lg:min-w-0 ${
-                  viewMode === "grid"
-                    ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
-                }`}
-                title="Grid View (Photo Cards)"
-              >
-                <GridIcon className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">Grid</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setViewMode("list")}
-                className={`flex h-10 w-10 items-center justify-center gap-1.5 rounded-full text-xs font-bold transition-all cursor-pointer lg:h-auto lg:w-auto lg:rounded-xl lg:px-2.5 lg:py-1 ${
-                  viewMode === "list"
-                    ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
-                }`}
-                title="List View (Detailed Cards)"
-              >
-                <ListIcon className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">List</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setViewMode("map")}
-                className={`flex h-10 w-10 items-center justify-center gap-1.5 rounded-full text-xs font-bold transition-all cursor-pointer lg:h-auto lg:w-auto lg:rounded-xl lg:px-2.5 lg:py-1 ${
-                  viewMode === "map"
-                    ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
-                }`}
-                title="Split Map View (Interactive Map + Listings)"
-              >
-                <MapSplitIcon className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">Map</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setViewMode("compact")}
-                // Desktop-only, matching /search.
-                className={`hidden min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all cursor-pointer lg:flex lg:min-h-0 lg:min-w-0 ${
-                  viewMode === "compact"
-                    ? "bg-[#0b4d4e] dark:bg-emerald-700 text-white border border-emerald-400/50 dark:border-emerald-400/60 shadow-xs dark:shadow-[0_0_12px_rgba(16,185,129,0.35)]"
-                    : "text-slate-600 dark:text-slate-300 hover:text-emerald-950 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-surface-panel"
-                }`}
-                title="Compact Table View (Investor Spreadsheet)"
-              >
-                <TableIcon className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">Table</span>
-              </button>
-            </div>
-
+            <ViewSwitch value={viewMode} onChange={setViewMode} />
             {availableTypes.length > 0 && (
               <CustomSelect
                 value={activeFilter}
